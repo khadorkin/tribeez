@@ -1,15 +1,17 @@
-import React from 'react';
+import React from 'react'
+import { Link } from 'react-router'
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {test: 'foo'};
-  }
+
   render() {
     return (
       <div className="app">
-        Hello, World!
+        <h1>MyTribe</h1>
+        <p>Hello, World!</p>
+        <Link to="login">login</Link>
+        <div className="main">{this.props.children}</div>
       </div>
-    );
+    )
   }
+
 }
