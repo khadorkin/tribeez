@@ -1,35 +1,32 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default class Login extends React.Component {
+import login from '../actions/login'
+import store from '../store'
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      error: false
-    }
-  }
+class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
 
-    const email = this.refs.email.value
-    const pass = this.refs.pass.value
-
-    //TODO: invoke API then store received token
-    this.setState({error:true})
+    store.dispatch(login(this.refs.email.value, this.refs.password.value))
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <label><input ref="email" placeholder="email" /></label>
-        <label><input ref="pass" placeholder="password" /></label>
+        <label><input type="text" ref="email" placeholder="email" defaultValue="antoine@rousseau.im" /></label>
+        <label><input type="password" ref="password" placeholder="password" defaultValue="test" /></label>
         <button type="submit">login</button>
-        {this.state.error && (
-          <p>WIP</p>
-        )}
+        <p>{store.getState().login.token ? store.getState().login.email : ''}</p>
       </form>
     )
   }
 
 }
+
+export default connect(
+  state => ({
+    login: state.login
+  })
+)(Login)
