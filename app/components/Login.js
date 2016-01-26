@@ -2,14 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import login from '../actions/login'
-import store from '../store'
 
 class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
 
-    store.dispatch(login(this.refs.email.value, this.refs.password.value))
+    this.props.dispatch(login(this.refs.email.value, this.refs.password.value))
   }
 
   render() {
@@ -18,15 +17,21 @@ class Login extends React.Component {
         <label><input type="text" ref="email" placeholder="email" defaultValue="antoine@rousseau.im" /></label>
         <label><input type="password" ref="password" placeholder="password" defaultValue="test" /></label>
         <button type="submit">login</button>
-        <p>{store.getState().login.token ? store.getState().login.email : ''}</p>
+        <p>{this.props.token ? 'Welcome, ' + this.props.email : ''}</p>
       </form>
     )
   }
 
 }
 
+Login.propTypes = {
+  token: React.PropTypes.string,
+  email: React.PropTypes.string,
+}
+
 export default connect(
   state => ({
-    login: state.login
+    token: state.login.token,
+    email: state.login.email,
   })
 )(Login)
