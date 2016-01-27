@@ -1,3 +1,5 @@
+import { routeActions } from 'react-router-redux'
+
 import api from '../api'
 
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions'
@@ -18,6 +20,7 @@ export default (email, password) => {
           email,
           token: data.token,
         })
+        dispatch(routeActions.push('/home'))
       })
       .catch((err) => {
         console.error('API error:', err)

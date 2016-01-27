@@ -10,6 +10,7 @@ import createLogger from 'redux-logger';
 import reducers from './reducers'
 import App from './App.js'
 import Login from './components/Login.js'
+import Home from './components/Home.js'
 import NotFound from './components/NotFound.js'
 
 import styles from './App.css'
@@ -33,6 +34,7 @@ ReactDOM.render((
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <Route path="login" component={Login}/>
+        <Route path="home" component={Home}/>
         <Route path="*" component={NotFound}/>
       </Route>
     </Router>
