@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { routeActions } from 'react-router-redux'
+import { FormattedMessage } from 'react-intl'
 
 import fetchUser from '../actions/user'
 
@@ -18,7 +19,9 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>Welcome, {this.props.name}</div>
+      <div>
+        <FormattedMessage id="welcome" values={{name: this.props.name}} />
+      </div>
     )
   }
 

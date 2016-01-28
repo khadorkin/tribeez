@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import AppBar from 'material-ui/lib/app-bar'
 import FlatButton from 'material-ui/lib/flat-button'
+import { IntlProvider } from 'react-intl'
+
+import messages from './messages/en' // TODO
 
 class App extends Component {
 
@@ -11,10 +14,12 @@ class App extends Component {
     const logoutButton = <FlatButton label="Logout" containerElement={<Link to="/logout" />} />
 
     return (
-      <div className="app">
-        <AppBar title="MyTribe" iconElementRight={this.props.token ? logoutButton : loginButton} />
-        <div className="main">{this.props.children}</div>
-      </div>
+      <IntlProvider locale="en" messages={messages}>
+        <div className="app">
+          <AppBar title="MyTribe" iconElementRight={this.props.token ? logoutButton : loginButton} />
+          <div className="main">{this.props.children}</div>
+        </div>
+      </IntlProvider>
     )
   }
 
