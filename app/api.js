@@ -9,9 +9,10 @@ const get = (route, params) => {
   }
   return fetch(API_ENDPOINT + route + '?' + arr.join('&'))
     .then((response) => {
-      if (response.status >= 400) {
-        throw new Error('HTTP ' + response.status)
+      if (response.status >= 500) {
+        throw new Error('Internal Server Error')
       }
+      // if status >= 400, the error will be in the returned JSON and is handled by the component
       return response.json()
     })
 }

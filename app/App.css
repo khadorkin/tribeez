@@ -1,14 +1,29 @@
-.app {
-  background-color: #ccddff;
-  padding: 10px;
+/*@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);*/
+
+html {
+  font-family: 'Roboto', sans-serif;
 }
 
-.main {
-  border: 1px solid #ccc;
-  margin: 10px;
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
-label, button {
-  display: block;
-  margin: 10px;
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+.error {
+  color: #f44336;
+}
+
+@media (min-width: 400px) {
+  #login {
+    position: absolute;
+    width: 300px;
+    margin-left: -150px;
+    left: 50%;
+    top: 20%;
+  }
 }

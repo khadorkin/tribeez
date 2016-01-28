@@ -15,18 +15,30 @@ export default (email, password) => {
       password,
     })
       .then((data) => {
-        dispatch({
-          type: LOGIN_SUCCESS,
-          email,
-          token: data.token,
-        })
-        dispatch(routeActions.push('/home'))
+        if (data.error) {
+          dispatch({
+            type: LOGIN_FAILURE,
+            email,
+            emailError: (data.error == 'email'),
+            passwordError: (data.error == 'password'),
+            otherError: false,
+          })
+        } else {
+          dispatch({
+            type: LOGIN_SUCCESS,
+            email,
+            token: data.token,
+          })
+          dispatch(routeActions.push('/home'))
+        }
       })
-      .catch((err) => {
-        console.error('API error:', err)
+      .catch((error) => {
         dispatch({
           type: LOGIN_FAILURE,
           email,
+          emailError: false,
+          passwordError: false,
+          otherError: true,
         })
       })
   }

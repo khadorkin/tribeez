@@ -2,28 +2,32 @@ import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions'
 
 const initialState = {
   loading: false,
-  email: undefined,
-  token: undefined,
+  email: null,
+  token: null,
+  emailError: false,
+  passwordError: false,
+  otherError: false,
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return Object.assign({}, state, {
+      return Object.assign({}, initialState, {
         loading: true,
         email: action.email,
       })
     case LOGIN_SUCCESS:
-      return Object.assign({}, state, {
-        loading: false,
+      return Object.assign({}, initialState, {
         email: action.email,
         token: action.token,
       })
     case LOGIN_FAILURE:
-      return Object.assign({}, state, {
+      return Object.assign({}, initialState, {
         loading: false,
         email: action.email,
-        token: undefined, // reset
+        emailError: action.emailError,
+        passwordError: action.passwordError,
+        otherError: action.otherError,
       })
     default:
       return state

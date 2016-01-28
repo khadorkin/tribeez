@@ -1,23 +1,50 @@
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+// import { reduxForm } from 'redux-form'
+
+import Card from 'material-ui/lib/card/card'
+import CardActions from 'material-ui/lib/card/card-actions'
+import CardTitle from 'material-ui/lib/card/card-title'
+import RaisedButton from 'material-ui/lib/raised-button'
+import CardText from 'material-ui/lib/card/card-text'
+import TextField from 'material-ui/lib/text-field'
 
 import login from '../actions/login'
 
-class Login extends React.Component {
+// export const fields = ['email', 'password']
+
+class Login extends Component {
+
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
   handleSubmit(event) {
-    event.preventDefault()
-
-    this.props.dispatch(login(this.refs.email.value, this.refs.password.value))
+    // event.preventDefault()
+    this.props.login(this.refs.email.getValue(), this.refs.password.getValue())
   }
 
   render() {
+    const emailError = (this.props.emailError && 'Unknown email address')
+    const passwordError = (this.props.passwordError && 'Wrong password')
+    const otherError = (this.props.otherError && 'Internal server error: please try again later')
+
     return (
-      <form onSubmit={this.handleSubmit.bind(this)}>
-        <label><input type="text" ref="email" placeholder="email" defaultValue="antoine@rousseau.im" /></label>
-        <label><input type="password" ref="password" placeholder="password" defaultValue="test" /></label>
-        <button type="submit">login</button>
-        <p>{this.props.token ? 'Welcome, ' + this.props.email : ''}</p>
+      <form onSubmit={this.handleSubmit} id="login">
+        <Card>
+          <CardTitle title="Login" />
+          <CardText>
+            <TextField ref="email" floatingLabelText="Email" errorText={emailError} />
+            <br />
+            <TextField ref="password" type="password" floatingLabelText="Password" errorText={passwordError} />
+          </CardText>
+          <CardActions>
+            <RaisedButton label="Login" onTouchTap={this.handleSubmit} />
+            <p className="error">{otherError}</p>
+          </CardActions>
+        </Card>
       </form>
     )
   }
@@ -25,13 +52,23 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  token: React.PropTypes.string,
-  email: React.PropTypes.string,
+  token: PropTypes.string,
+  email: PropTypes.string,
+  emailError: PropTypes.bool,
+  passwordError: PropTypes.bool,
+  otherError: PropTypes.bool,
 }
 
-export default connect(
-  state => ({
-    token: state.login.token,
-    email: state.login.email,
-  })
-)(Login)
+const mapStateToProps = (state) => ({
+  token: state.login.token,
+  email: state.login.email,
+  emailError: state.login.emailError,
+  passwordError: state.login.passwordError,
+  otherError: state.login.otherError,
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  login,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
