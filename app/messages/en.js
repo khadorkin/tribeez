@@ -1,3 +1,3 @@
 export default {
-  welcome: 'Welcome, {name}!'
+  welcome: 'Welcome, {name}!',
 }

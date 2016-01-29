@@ -14,13 +14,13 @@ import Login from './components/Login'
 import Home from './components/Home'
 import NotFound from './components/NotFound'
 
-import styles from './App.css'
+import './App.css'
 
 //Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
 const reducer = combineReducers(Object.assign({}, reducers, {
-  routing: routeReducer
+  routing: routeReducer,
 }))
 const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history
 const logger = createLogger()

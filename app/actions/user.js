@@ -22,7 +22,7 @@ export default (token) => {
           })
         }
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch({
           type: USER_FAILURE,
         })

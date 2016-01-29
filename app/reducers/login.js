@@ -9,7 +9,7 @@ const initialState = {
   otherError: false,
 }
 
-export default (state = initialState, action) => {
+export default (state = initialState, action = null) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return Object.assign({}, initialState, {

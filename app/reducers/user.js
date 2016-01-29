@@ -6,7 +6,7 @@ const initialState = {
   error: false,
 }
 
-export default (state = initialState, action) => {
+export default (state = initialState, action = null) => {
   switch (action.type) {
     case USER_REQUEST:
       return Object.assign({}, initialState, {

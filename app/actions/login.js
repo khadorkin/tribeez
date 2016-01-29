@@ -32,7 +32,7 @@ export default (email, password) => {
           dispatch(routeActions.push('/home'))
         }
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch({
           type: LOGIN_FAILURE,
           email,

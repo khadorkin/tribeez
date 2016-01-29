@@ -21,7 +21,7 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(event) {
+  handleSubmit() {
     // event.preventDefault()
     this.props.login(this.refs.email.getValue(), this.refs.password.getValue())
   }
