@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-// import { reduxForm } from 'redux-form'
+import { FormattedMessage } from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'
@@ -12,8 +12,6 @@ import TextField from 'material-ui/lib/text-field'
 
 import login from '../actions/login'
 
-// export const fields = ['email', 'password']
-
 class Login extends Component {
 
   constructor(props) {
@@ -21,28 +19,24 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit() {
-    // event.preventDefault()
+  handleSubmit(event) {
+    event.preventDefault()
     this.props.login(this.refs.email.getValue(), this.refs.password.getValue())
   }
 
   render() {
-    const emailError = (this.props.emailError && 'Unknown email address')
-    const passwordError = (this.props.passwordError && 'Wrong password')
-    const otherError = (this.props.otherError && 'Internal server error: please try again later')
-
     return (
-      <form onSubmit={this.handleSubmit} id="login">
+      <form onSubmit={this.handleSubmit}>
         <Card>
           <CardTitle title="Login" />
           <CardText>
-            <TextField ref="email" floatingLabelText="Email" errorText={emailError} />
+            <TextField ref="email" floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
             <br />
-            <TextField ref="password" type="password" floatingLabelText="Password" errorText={passwordError} />
+            <TextField ref="password" type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
           </CardText>
           <CardActions>
-            <RaisedButton label="Login" onTouchTap={this.handleSubmit} />
-            <p className="error">{otherError}</p>
+            <RaisedButton label="Login" type="submit" />
+            <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
           </CardActions>
         </Card>
       </form>
@@ -52,19 +46,11 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  token: PropTypes.string,
-  email: PropTypes.string,
-  emailError: PropTypes.bool,
-  passwordError: PropTypes.bool,
-  otherError: PropTypes.bool,
+  error: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
-  token: state.login.token,
-  email: state.login.email,
-  emailError: state.login.emailError,
-  passwordError: state.login.passwordError,
-  otherError: state.login.otherError,
+  error: state.login.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

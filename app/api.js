@@ -1,13 +1,24 @@
 const API_ENDPOINT = 'http://localhost:3000/'
 
-const get = (route, params) => {
+const request = (route, params, method) => {
   let arr = []
   for (let key in params) {
     if (params.hasOwnProperty(key)) {
       arr.push(key + '=' + encodeURIComponent(params[key]))
     }
   }
-  return fetch(API_ENDPOINT + route + '?' + arr.join('&'))
+  let url = API_ENDPOINT + route
+  let query = arr.join('&')
+  let init = { method }
+  if (method === 'POST') {
+    init.headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+    init.body = query
+  } else {
+    url += '?' + query
+  }
+  return fetch(url, init)
     .then((response) => {
       if (response.status >= 500) {
         throw new Error('Internal Server Error')
@@ -18,5 +29,6 @@ const get = (route, params) => {
 }
 
 export default {
-  get,
+  get: (route, params) => request(route, params, 'GET'),
+  post: (route, params) => request(route, params, 'POST'),
 }

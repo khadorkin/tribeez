@@ -1,5 +1,5 @@
-/*@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 html {
   font-family: 'Roboto', sans-serif;
@@ -10,6 +10,7 @@ html, body {
   padding: 0;
 }
 
+/* remove the yellow autofill background */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
@@ -19,11 +20,21 @@ input:-webkit-autofill {
 }
 
 @media (min-width: 400px) {
-  #login {
+  form {
     position: absolute;
     width: 300px;
     margin-left: -150px;
     left: 50%;
     top: 20%;
   }
+}
+
+/* hacking the google autocomplete field */
+.pac-container {
+  margin-top: -22px;
+}
+.pac-logo::after {
+  background: none !important;
+  height: 0;
+  padding: 0;
 }

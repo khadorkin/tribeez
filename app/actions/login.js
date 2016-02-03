@@ -8,7 +8,6 @@ export default (email, password) => {
   return function(dispatch) {
     dispatch({
       type: LOGIN_REQUEST,
-      email,
     })
     api.get('login', {
       email,
@@ -18,15 +17,11 @@ export default (email, password) => {
         if (data.error) {
           dispatch({
             type: LOGIN_FAILURE,
-            email,
-            emailError: (data.error == 'email'),
-            passwordError: (data.error == 'password'),
-            otherError: false,
+            error: data.error,
           })
         } else {
           dispatch({
             type: LOGIN_SUCCESS,
-            email,
             token: data.token,
           })
           dispatch(routeActions.push('/home'))
@@ -35,10 +30,7 @@ export default (email, password) => {
       .catch(() => {
         dispatch({
           type: LOGIN_FAILURE,
-          email,
-          emailError: false,
-          passwordError: false,
-          otherError: true,
+          error: 'other',
         })
       })
   }
