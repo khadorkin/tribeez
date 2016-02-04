@@ -9,7 +9,7 @@ export default (email, password) => {
     dispatch({
       type: LOGIN_REQUEST,
     })
-    api.get('login', {
+    api.post('login', {
       email,
       password,
     })
@@ -22,12 +22,11 @@ export default (email, password) => {
         } else {
           dispatch({
             type: LOGIN_SUCCESS,
-            token: data.token,
           })
           dispatch(routeActions.push('/home'))
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: LOGIN_FAILURE,
           error: 'other',

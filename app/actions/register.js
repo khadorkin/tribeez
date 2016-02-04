@@ -22,7 +22,6 @@ export default (data) => {
           })
           dispatch({
             type: LOGIN_SUCCESS,
-            token: res.token,
           })
           dispatch(routeActions.push('/home'))
         }

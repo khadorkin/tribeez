@@ -2,7 +2,7 @@ import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from '../actions
 
 const initialState = {
   loading: false,
-  error: '',
+  error: null,
 }
 
 export default (state = initialState, action = null) => {

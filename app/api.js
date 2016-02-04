@@ -10,13 +10,15 @@ const request = (route, params, method) => {
   let url = API_ENDPOINT + route
   let query = arr.join('&')
   let init = { method }
-  if (method === 'POST') {
-    init.headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
+  if (query) {
+    if (method === 'POST') {
+      init.headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }
+      init.body = query
+    } else {
+      url += '?' + query
     }
-    init.body = query
-  } else {
-    url += '?' + query
   }
   return fetch(url, init)
     .then((response) => {

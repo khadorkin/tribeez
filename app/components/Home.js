@@ -9,11 +9,6 @@ import fetchUser from '../actions/user'
 export default class Home extends Component {
 
   componentDidMount() {
-    if (!this.props.token) {
-      this.props.redirectToLogin()
-      return
-    }
-
     this.props.fetchUser(this.props.token)
   }
 
@@ -49,7 +44,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchUser,
-  redirectToLogin: () => routeActions.replace('/login'),
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

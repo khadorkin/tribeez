@@ -98,7 +98,7 @@ class Register extends Component {
           <CardText>
             <TextField ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
             <br />
-            <TextField ref="email" floatingLabelText="Email" required errorText={this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
+            <TextField ref="email" floatingLabelText="Email" required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
             <br />
             <TextField ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
             <br />
