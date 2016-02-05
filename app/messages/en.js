@@ -11,4 +11,5 @@ export default {
   'error.other': 'Internal server error: please try again later',
   'error.login.email': 'Unknown email address',
   'error.login.password': 'Wrong password',
+  invited_by: '{name} invited you',
 }

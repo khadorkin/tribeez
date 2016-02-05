@@ -21,6 +21,7 @@ class Register extends Component {
 
   constructor(props) {
     super(props)
+
     let lang = (navigator.language || navigator.userLanguage || 'en').substr(0, 2).toLowerCase()
     if (!langs.find((item) => (item.code === lang))) {
       lang = 'en'
@@ -28,6 +29,7 @@ class Register extends Component {
     this.state = {
       lang,
     }
+
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCurrencyChange = this.handleCurrencyChange.bind(this)
     this.handleLangChange = this.handleLangChange.bind(this)
@@ -120,7 +122,7 @@ class Register extends Component {
             </SelectField>
           </CardText>
           <CardActions>
-            <RaisedButton label="Register" type="submit" />
+            <RaisedButton label="Register & create this tribe" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
           </CardActions>
         </Card>

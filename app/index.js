@@ -12,6 +12,7 @@ import reducers from './reducers'
 import App from './App'
 import Login from './components/Login'
 import Register from './components/Register'
+import Join from './components/Join'
 import Home from './components/Home'
 import NotFound from './components/NotFound'
 
@@ -40,6 +41,7 @@ ReactDOM.render((
       <Route path="/" component={App}>
         <Route path="login" component={Login}/>
         <Route path="register" component={Register}/>
+        <Route path="join/:token" component={Join}/>
         <Route path="home" component={Home}/>
         <Route path="*" component={NotFound}/>
       </Route>

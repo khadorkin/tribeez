@@ -2,30 +2,30 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { USER_REQUEST, USER_SUCCESS, USER_FAILURE } from '../actions'
+import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE } from '../actions'
 
 export default (token) => {
   return function(dispatch) {
     dispatch({
-      type: USER_REQUEST,
+      type: GET_INVITE_REQUEST,
     })
-    api.get('user')
+    api.get('invitation', { token })
       .then((data) => {
         if (data.error) {
           dispatch({
-            type: USER_FAILURE,
+            type: GET_INVITE_FAILURE,
           })
           dispatch(routeActions.push('/login'))
         } else {
           dispatch({
-            type: USER_SUCCESS,
+            type: GET_INVITE_SUCCESS,
             data,
           })
         }
       })
       .catch(() => {
         dispatch({
-          type: USER_FAILURE,
+          type: GET_INVITE_FAILURE,
         })
         dispatch(routeActions.push('/login'))
       })

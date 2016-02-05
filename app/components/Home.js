@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux'
 import { routeActions } from 'react-router-redux'
 import { FormattedMessage } from 'react-intl'
 
-import fetchUser from '../actions/user'
+import getUser from '../actions/getUser'
 
 export default class Home extends Component {
 
   componentDidMount() {
-    this.props.fetchUser(this.props.token)
+    this.props.getUser()
   }
 
   render() {
@@ -23,7 +23,6 @@ export default class Home extends Component {
 }
 
 Home.propTypes = {
-  token: PropTypes.string,
   loading: PropTypes.bool,
   error: PropTypes.bool,
   id: PropTypes.number,
@@ -33,7 +32,6 @@ Home.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.login.token,
   loading: state.user.loading,
   error: state.user.error,
   id: state.user.data.id,
@@ -43,7 +41,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchUser,
+  getUser,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

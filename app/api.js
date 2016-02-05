@@ -9,7 +9,7 @@ const request = (route, params, method) => {
   }
   let url = API_ENDPOINT + route
   let query = arr.join('&')
-  let init = { method }
+  let init = { method, credentials: 'include' }
   if (query) {
     if (method === 'POST') {
       init.headers = {
