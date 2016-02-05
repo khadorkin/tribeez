@@ -1,16 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { routeActions } from 'react-router-redux'
 import { FormattedMessage } from 'react-intl'
 
-import getUser from '../actions/getUser'
-
-export default class Home extends Component {
-
-  componentDidMount() {
-    this.props.getUser()
-  }
+class Home extends Component {
 
   render() {
     return (
@@ -40,8 +33,4 @@ const mapStateToProps = (state) => ({
   balance: state.user.data.balance,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getUser,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps)(Home)

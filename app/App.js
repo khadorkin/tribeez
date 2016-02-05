@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <IntlProvider locale="en" messages={messages}>
         <div className="app">
-          <AppBar title="MyTribe" iconElementRight={this.props.token ? logoutButton : loginButton} />
+          <AppBar title={this.props.tribe_name || 'MyTribe'} iconElementRight={this.props.uid ? logoutButton : loginButton} />
           <div className="main">{this.props.children}</div>
         </div>
       </IntlProvider>
@@ -26,11 +26,13 @@ class App extends Component {
 }
 
 App.propTypes = {
+  tribe_name: PropTypes.string,
   token: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
-  token: state.login.token,
+  tribe_name: state.user.tribe.name,
+  uid: state.user.data.id,
 })
 
 export default connect(mapStateToProps)(App)

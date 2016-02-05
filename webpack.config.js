@@ -19,7 +19,7 @@ module.exports = {
       }
     }),
     new webpack.ProvidePlugin({
-      'Promise': 'es6-promise',
+      //'Promise': 'es6-promise',
       'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
   ],

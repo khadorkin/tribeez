@@ -9,17 +9,20 @@ export default () => {
     dispatch({
       type: GET_USER_REQUEST,
     })
+
     api.get('user')
       .then((data) => {
         if (data.error) {
           dispatch({
             type: GET_USER_FAILURE,
+            error: data.error,
           })
           dispatch(routeActions.push('/login'))
         } else {
           dispatch({
             type: GET_USER_SUCCESS,
-            data,
+            user: data.user,
+            tribe: data.tribe,
           })
         }
       })
@@ -29,5 +32,6 @@ export default () => {
         })
         dispatch(routeActions.push('/login'))
       })
+
   }
 }
