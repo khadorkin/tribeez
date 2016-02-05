@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { FormattedMessage } from 'react-intl'
+import { Link } from 'react-router'
 
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'
@@ -37,6 +38,7 @@ class Login extends Component {
           <CardActions>
             <RaisedButton label="Login" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
+            <p>No account yet? <Link to="/register">Register now!</Link></p>
           </CardActions>
         </Card>
       </form>
