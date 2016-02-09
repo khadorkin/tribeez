@@ -16,22 +16,23 @@ import langs from '../resources/langs'
 
 import getInvite from '../actions/getInvite'
 import updateInvite from '../actions/updateInvite'
-import join from '../actions/join'
+import postJoin from '../actions/postJoin'
 
 class Register extends Component {
 
   constructor(props) {
     super(props)
-
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleEmailChange = this.handleEmailChange.bind(this)
     this.handleLangChange = this.handleLangChange.bind(this)
+  }
 
+  componentWillMount() {
     this.props.getInvite(this.props.params.token)
   }
 
   handleEmailChange(event) {
-    this.props.updateInvite({ email: this.refs.email.getValue() })
+    this.props.updateInvite({ email: event.target.value })
   }
 
   handleLangChange(event, index, value) {
@@ -40,10 +41,10 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.join({
+    this.props.postJoin({
       token: this.props.params.token,
       name: this.refs.name.getValue(),
-      email: this.refs.email.getValue(),
+      email: this.props.email,
       password: this.refs.password.getValue(),
       lang: this.props.lang,
     })
@@ -53,17 +54,17 @@ class Register extends Component {
     const langItems = langs.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name} />)
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Card>
+      <Card className="main">
+        <form onSubmit={this.handleSubmit}>
           <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" defaultMessage="{name} invited you" values={{name: this.props.inviter}} />} />
           <CardText>
             <TextField ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
             <br />
-            <TextField ref="email" floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
+            <TextField floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
             <br />
             <TextField ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
             <br />
-            <SelectField ref="lang" floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <SelectField floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
               {langItems}
             </SelectField>
           </CardText>
@@ -71,8 +72,8 @@ class Register extends Component {
             <RaisedButton label="Register & join this tribe" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
           </CardActions>
-        </Card>
-      </form>
+        </form>
+      </Card>
     )
   }
 
@@ -97,7 +98,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getInvite,
   updateInvite,
-  join,
+  postJoin,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register)

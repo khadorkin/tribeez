@@ -46,7 +46,7 @@ class App extends Component {
                   onLeftIconButtonTouchTap={this.openMenu}
                   iconElementLeft={this.props.uid ? null : <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>}
           />
-          <div className="main">{this.props.children}</div>
+          <div className="page">{this.props.children}</div>
         </div>
       </IntlProvider>
     )

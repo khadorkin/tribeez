@@ -12,15 +12,13 @@ export default class Welcome extends Component {
 
   render() {
     return (
-      <form>
-        <Card>
-          <CardTitle title="Welcome" subtitle="Organize your group life" />
-          <CardText></CardText>
-          <CardActions>
-            <FlatButton primary={true} label="Register" containerElement={<Link to="/register" />} />
-          </CardActions>
-        </Card>
-      </form>
+      <Card className="main">
+        <CardTitle title="Welcome" subtitle="Organize your group life" />
+        <CardText></CardText>
+        <CardActions>
+          <FlatButton primary={true} label="Register" containerElement={<Link to="/register" />} />
+        </CardActions>
+      </Card>
     )
   }
 

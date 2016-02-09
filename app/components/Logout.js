@@ -8,26 +8,24 @@ import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
 import FlatButton from 'material-ui/lib/flat-button'
 
-import logout from '../actions/logout'
+import getLogout from '../actions/getLogout'
 
 class Logout extends Component {
 
-  componentDidMount() {
-    this.props.logout()
+  componentWillMount() {
+    this.props.getLogout()
   }
 
   render() {
     return (
-      <form>
-        <Card>
-          <CardText>
-            <p className="error">{this.props.error && <FormattedMessage id={'error.' + this.props.error} />}</p>
-          </CardText>
-          <CardActions>
-            <FlatButton label="Try again" onClick={this.props.logout} />
-          </CardActions>
-        </Card>
-      </form>
+      <Card className="main">
+        <CardText>
+          <p className="error">{this.props.error && <FormattedMessage id={'error.' + this.props.error} />}</p>
+        </CardText>
+        <CardActions>
+          <FlatButton label="Try again" onClick={this.props.logout} />
+        </CardActions>
+      </Card>
     )
   }
 
@@ -42,7 +40,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  logout,
+  getLogout,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout)

@@ -22,7 +22,7 @@ export default (state = initialState, action = null) => {
       })
     case UPDATE_JOIN_DATA:
       let data = Object.assign({}, state.data)
-      if (action.data.email) {
+      if (action.data.email !== undefined) {
         data.email = action.data.email
       }
       if (action.data.lang) {

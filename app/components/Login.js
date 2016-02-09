@@ -11,7 +11,7 @@ import TextField from 'material-ui/lib/text-field'
 import CardActions from 'material-ui/lib/card/card-actions'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import login from '../actions/login'
+import postLogin from '../actions/postLogin'
 
 class Login extends Component {
 
@@ -22,13 +22,14 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.login(this.refs.email.getValue(), this.refs.password.getValue())
+    this.props.postLogin(this.refs.email.getValue(), this.refs.password.getValue())
   }
 
   render() {
+    //const { fields: { email, password }, handleSubmit } = this.props
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Card>
+      <Card className="main">
+        <form onSubmit={this.handleSubmit}>
           <CardTitle title="Login" />
           <CardText>
             <TextField ref="email" floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
@@ -40,8 +41,8 @@ class Login extends Component {
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
             <p>No account yet? <Link to="/register">Register now!</Link></p>
           </CardActions>
-        </Card>
-      </form>
+        </form>
+      </Card>
     )
   }
 
@@ -56,7 +57,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  login,
+  postLogin,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

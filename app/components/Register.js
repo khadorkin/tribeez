@@ -16,7 +16,7 @@ import currencies from '../resources/currencies'
 import langs from '../resources/langs'
 import lang from '../utils/lang'
 
-import register from '../actions/register'
+import postRegister from '../actions/postRegister'
 
 class Register extends Component {
 
@@ -73,7 +73,7 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.register({
+    this.props.postRegister({
       name: this.refs.name.getValue(),
       email: this.refs.email.getValue(),
       password: this.refs.password.getValue(),
@@ -91,7 +91,7 @@ class Register extends Component {
     const langItems = langs.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name} />)
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="main">
         <Card>
           <CardTitle title="Register" />
           <CardText>
@@ -138,7 +138,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  register,
+  postRegister,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register)

@@ -20,7 +20,7 @@ import Home from './components/Home'
 import Invite from './components/Invite'
 import NotFound from './components/NotFound'
 
-import user from './actions/user'
+import getUser from './actions/getUser'
 
 import './App.css'
 
@@ -40,7 +40,7 @@ reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions 
 
 const requireAuth = (nextState, replaceState, callback) => {
   if (!store.getState().user.data.id) {
-    user(nextState.location.pathname)(store.dispatch)
+    getUser(nextState.location.pathname)(store.dispatch)
   }
   callback()
 }
