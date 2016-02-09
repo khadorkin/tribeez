@@ -4,7 +4,7 @@ import api from '../api'
 
 import { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE } from '../actions'
 
-export default () => {
+export default (destination) => {
   return function(dispatch) {
     dispatch({
       type: GET_USER_REQUEST,
@@ -24,6 +24,7 @@ export default () => {
             user: data.user,
             tribe: data.tribe,
           })
+          dispatch(routeActions.push(destination))
         }
       })
       .catch(() => {

@@ -14,6 +14,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 
 import currencies from '../resources/currencies'
 import langs from '../resources/langs'
+import lang from '../utils/lang'
 
 import register from '../actions/register'
 
@@ -22,12 +23,8 @@ class Register extends Component {
   constructor(props) {
     super(props)
 
-    let lang = (navigator.language || navigator.userLanguage || 'en').substr(0, 2).toLowerCase()
-    if (!langs.find((item) => (item.code === lang))) {
-      lang = 'en'
-    }
     this.state = {
-      lang,
+      lang: lang.getDefault(),
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -115,7 +112,7 @@ class Register extends Component {
           <CardText>
             <TextField ref="tribe_name" floatingLabelText="Tribe name" required errorText={this.props.error === 'tribe_name' && <FormattedMessage id="error.tribe_name" />} />
             <br />
-            <TextField ref="city" id="autocomplete" placeholder="" floatingLabelText="City" required errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >=0 && <FormattedMessage id="error.city" />} />
+            <TextField ref="city" autoComplete="off" id="autocomplete" placeholder="" floatingLabelText="City" required errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >=0 && <FormattedMessage id="error.city" />} />
             <br />
             <SelectField ref="currency" floatingLabelText="Currency" value={this.state.currency} onChange={this.handleCurrencyChange} errorText={this.props.error === 'currency' && <FormattedMessage id="error.currency" />}>
               {currencyItems}

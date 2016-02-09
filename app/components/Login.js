@@ -5,11 +5,11 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router'
 
 import Card from 'material-ui/lib/card/card'
-import CardActions from 'material-ui/lib/card/card-actions'
 import CardTitle from 'material-ui/lib/card/card-title'
-import RaisedButton from 'material-ui/lib/raised-button'
 import CardText from 'material-ui/lib/card/card-text'
 import TextField from 'material-ui/lib/text-field'
+import CardActions from 'material-ui/lib/card/card-actions'
+import RaisedButton from 'material-ui/lib/raised-button'
 
 import login from '../actions/login'
 
