@@ -12,4 +12,6 @@ export default {
   'error.login.email': 'Unknown email address',
   'error.login.password': 'Wrong password',
   invited_by: '{name} invited you',
+  'entry.new_user': '{name} has joined the tribe!',
+  'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
 }

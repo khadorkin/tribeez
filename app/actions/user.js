@@ -10,7 +10,7 @@ export default (destination) => {
       type: GET_USER_REQUEST,
     })
 
-    api.get('user')
+    api.get('member')
       .then((data) => {
         if (data.error) {
           dispatch({

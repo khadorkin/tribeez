@@ -15,6 +15,8 @@ import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 import messages from './messages' // TODO
 import lang from './utils/lang'
 
+import { toggleMenu } from './actions/app'
+
 class App extends Component {
 
   constructor(props) {
@@ -25,7 +27,7 @@ class App extends Component {
 
   openMenu() {
     if (this.props.uid) {
-      this.setState({ open: !this.state.open })
+      this.props.toggleMenu(true)
     }
   }
 
@@ -36,7 +38,7 @@ class App extends Component {
     return (
       <IntlProvider locale={this.props.lang} messages={messages[this.props.lang]}>
         <div className="app">
-          <LeftNav open={this.state.open} docked={false} onRequestChange={open => this.setState({open})}>
+          <LeftNav open={this.props.menu_visible} docked={false} onRequestChange={open => this.props.toggleMenu(open)}>
             <MenuItem checked={this.props.path === '/home'} containerElement={<Link to="/home" />}>Home</MenuItem>
             <MenuItem checked={this.props.path === '/invite'} containerElement={<Link to="/invite" />}>Invite</MenuItem>
           </LeftNav>
@@ -64,6 +66,11 @@ const mapStateToProps = (state) => ({
   uid: state.user.data.id,
   lang: state.user.data.lang || lang.getDefault(), // here is the app language
   path: state.routing.location.pathname,
+  menu_visible: state.app.menu_visible,
 })
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  toggleMenu,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
