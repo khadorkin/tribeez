@@ -24,7 +24,7 @@ export default (destination) => {
             user: data.user,
             tribe: data.tribe,
           })
-          dispatch(routeActions.push(destination))
+          dispatch(routeActions.push(destination)) // reload view to reload lang changed in 'app' reducer
         }
       })
       .catch(() => {

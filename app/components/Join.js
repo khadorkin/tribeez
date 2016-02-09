@@ -15,6 +15,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import langs from '../resources/langs'
 
 import getInvite from '../actions/getInvite'
+import updateInvite from '../actions/updateInvite'
 import join from '../actions/join'
 
 class Register extends Component {
@@ -23,8 +24,18 @@ class Register extends Component {
     super(props)
 
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleEmailChange = this.handleEmailChange.bind(this)
+    this.handleLangChange = this.handleLangChange.bind(this)
 
     this.props.getInvite(this.props.params.token)
+  }
+
+  handleEmailChange(event) {
+    this.props.updateInvite({ email: this.refs.email.getValue() })
+  }
+
+  handleLangChange(event, index, value) {
+    this.props.updateInvite({ lang: value })
   }
 
   handleSubmit(event) {
@@ -44,15 +55,15 @@ class Register extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <Card>
-          <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" values={{name: this.props.inviter}} />} />
+          <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" defaultMessage="{name} invited you" values={{name: this.props.inviter}} />} />
           <CardText>
             <TextField ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
             <br />
-            <TextField ref="email" floatingLabelText="Email" value={this.props.email/* TODO: allow user input */} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
+            <TextField ref="email" floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
             <br />
             <TextField ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
             <br />
-            <SelectField ref="lang" floatingLabelText="Language" value={this.props.lang/* TODO: allow user input */} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <SelectField ref="lang" floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
               {langItems}
             </SelectField>
           </CardText>
@@ -85,6 +96,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getInvite,
+  updateInvite,
   join,
 }, dispatch)
 

@@ -21,6 +21,7 @@ export default (token) => {
             type: GET_INVITE_SUCCESS,
             data,
           })
+          dispatch(routeActions.push('/join/' + token)) // reload view to reload lang changed in 'app' reducer
         }
       })
       .catch(() => {

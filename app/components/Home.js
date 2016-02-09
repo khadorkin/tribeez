@@ -50,14 +50,12 @@ class Home extends Component {
 
 Home.propTypes = {
   name: PropTypes.string,
-  lang: PropTypes.string,
   balance: PropTypes.number,
   entries: PropTypes.array,
 }
 
 const mapStateToProps = (state) => ({
   name: state.user.data.name,
-  lang: state.user.data.lang,
   balance: state.user.data.balance,
   entries: state.activity.entries,
 })

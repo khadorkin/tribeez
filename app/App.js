@@ -13,7 +13,6 @@ import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 
 import messages from './messages' // TODO
-import lang from './utils/lang'
 
 import { toggleMenu } from './actions/app'
 
@@ -64,7 +63,7 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   tribe_name: state.user.tribe.name,
   uid: state.user.data.id,
-  lang: state.user.data.lang || lang.getDefault(), // here is the app language
+  lang: state.app.lang, // here is the app language
   path: state.routing.location.pathname,
   menu_visible: state.app.menu_visible,
 })
