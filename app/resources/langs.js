@@ -1,6 +1,6 @@
 const obj = {
   en: 'English',
-  fr: 'French',
+  fr: 'Français',
 }
 
 // export a sorted array instead of this object:

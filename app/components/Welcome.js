@@ -13,7 +13,7 @@ export default class Welcome extends Component {
   render() {
     return (
       <Card className="main">
-        <CardTitle title="Welcome" subtitle="Organize your group life" />
+        <CardTitle title={<FormattedMessage id="welcome" />} subtitle="Organize your group life" />
         <CardText></CardText>
         <CardActions>
           <FlatButton primary={true} label="Register" containerElement={<Link to="/register" />} />

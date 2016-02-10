@@ -40,7 +40,7 @@ reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions 
 
 const requireAuth = (nextState, replaceState, callback) => {
   if (!store.getState().user.data.id) {
-    getUser(nextState.location.pathname)(store.dispatch)
+    getUser()(store.dispatch)
   }
   callback()
 }

@@ -17,16 +17,14 @@ import langs from '../resources/langs'
 import lang from '../utils/lang'
 import scriptLoader from '../utils/scriptLoader'
 
+import updateLang from '../actions/updateLang'
 import postRegister from '../actions/postRegister'
 
 class Register extends Component {
 
   constructor(props) {
     super(props)
-
-    this.state = {
-      lang: lang.getDefault(),
-    }
+    this.state = {}
 
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCurrencyChange = this.handleCurrencyChange.bind(this)
@@ -56,9 +54,7 @@ class Register extends Component {
   }
 
   handleLangChange(event, index, value) {
-    this.setState({
-      lang: value,
-    })
+    this.props.updateLang(value)
   }
 
   handleCurrencyChange(event, index, value) {
@@ -73,7 +69,7 @@ class Register extends Component {
       name: this.refs.name.getValue(),
       email: this.refs.email.getValue(),
       password: this.refs.password.getValue(),
-      lang: this.state.lang,
+      lang: this.props.lang,
       tribe_name: this.refs.tribe_name.getValue(),
       city_name: this.state.city_name,
       country_code: this.state.country_code,
@@ -89,7 +85,7 @@ class Register extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="main">
         <Card>
-          <CardTitle title="Register" />
+          <CardTitle title={<FormattedMessage id="register" />} />
           <CardText>
             <TextField ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
             <br />
@@ -97,7 +93,7 @@ class Register extends Component {
             <br />
             <TextField ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
             <br />
-            <SelectField ref="lang" floatingLabelText="Language" value={this.state.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <SelectField ref="lang" floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
               {langItems}
             </SelectField>
           </CardText>
@@ -127,13 +123,16 @@ class Register extends Component {
 
 Register.propTypes = {
   error: PropTypes.string,
+  lang: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   error: state.register.error,
+  lang: state.app.lang,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateLang,
   postRegister,
 }, dispatch)
 

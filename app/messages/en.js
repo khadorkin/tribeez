@@ -1,4 +1,8 @@
 export default {
+  welcome: 'Welcome',
+  register: 'Register',
+  login: 'Login',
+  invited_by: '{name} invited you',
   'error.name': 'Invalid user name',
   'error.email': 'Invalid email',
   'error.email_exists': 'This email address is already registered! Please login if it is your account.',
@@ -12,4 +16,5 @@ export default {
   'error.login.password': 'Wrong password',
   'entry.new_user': '{name} has joined the tribe!',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
+  comment: 'Your comment...',
 }

@@ -2,7 +2,7 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE } from '../actions'
+import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE, UPDATE_LANG } from '../actions'
 
 export default (token) => {
   return function(dispatch) {
@@ -17,11 +17,15 @@ export default (token) => {
           })
           dispatch(routeActions.push('/login'))
         } else {
+          //TODO: understand why the UI doesn't reflect the new lang if this dispatch is placed after the GET_INVITE_SUCCESS one:
+          dispatch({
+            type: UPDATE_LANG,
+            lang: data.lang,
+          })
           dispatch({
             type: GET_INVITE_SUCCESS,
             data,
           })
-          dispatch(routeActions.push('/join/' + token)) // reload view to reload lang changed in 'app' reducer
         }
       })
       .catch(() => {

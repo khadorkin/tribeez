@@ -16,6 +16,7 @@ import langs from '../resources/langs'
 
 import getInvite from '../actions/getInvite'
 import updateInvite from '../actions/updateInvite'
+import updateLang from '../actions/updateLang'
 import postJoin from '../actions/postJoin'
 
 class Register extends Component {
@@ -36,7 +37,7 @@ class Register extends Component {
   }
 
   handleLangChange(event, index, value) {
-    this.props.updateInvite({ lang: value })
+    this.props.updateLang(value)
   }
 
   handleSubmit(event) {
@@ -56,7 +57,7 @@ class Register extends Component {
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
-          <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" defaultMessage="{name} invited you" values={{name: this.props.inviter}} />} />
+          <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" values={{name: this.props.inviter}} />} />
           <CardText>
             <TextField ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
             <br />
@@ -89,7 +90,7 @@ Register.propTypes = {
 
 const mapStateToProps = (state) => ({
   email: state.invite.data.email,
-  lang: state.invite.data.lang,
+  lang: state.app.lang,
   inviter: state.invite.data.inviter,
   tribe: state.invite.data.tribe,
   error: state.join.error,
@@ -97,6 +98,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getInvite,
+  updateLang,
   updateInvite,
   postJoin,
 }, dispatch)

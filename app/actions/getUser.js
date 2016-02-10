@@ -4,7 +4,7 @@ import api from '../api'
 
 import { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE } from '../actions'
 
-export default (destination) => {
+export default () => {
   return function(dispatch) {
     dispatch({
       type: GET_USER_REQUEST,
@@ -24,7 +24,6 @@ export default (destination) => {
             user: data.user,
             tribe: data.tribe,
           })
-          dispatch(routeActions.push(destination)) // reload view to reload lang changed in 'app' reducer
         }
       })
       .catch(() => {

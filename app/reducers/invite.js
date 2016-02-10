@@ -25,9 +25,6 @@ export default (state = initialState, action = null) => {
       if (action.data.email !== undefined) {
         data.email = action.data.email
       }
-      if (action.data.lang) {
-        data.lang = action.data.lang
-      }
       return Object.assign({}, state, {
         data,
       })

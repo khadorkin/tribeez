@@ -50,7 +50,7 @@ class Home extends Component {
                 }
                 <CardText expandable={true}>
                   <form onSubmit={this.postComment.bind(this, entry.id)}>
-                    <TextField value={this.props.boxComments[entry.id]} onChange={this.handleCommentChange.bind(this, entry.id)} hintText={<FormattedMessage id="comment" defaultMessage="Your comment..." />} />
+                    <TextField value={this.props.boxComments[entry.id]} onChange={this.handleCommentChange.bind(this, entry.id)} hintText={<FormattedMessage id="comment" />} />
                     <IconButton type="submit"><SendIcon /></IconButton>
                   </form>
                 </CardText>

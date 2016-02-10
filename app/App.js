@@ -12,8 +12,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 
-import messages from './messages' // TODO
-
 import { toggleMenu } from './actions/app'
 
 class App extends Component {
@@ -35,7 +33,7 @@ class App extends Component {
     const logoutButton = <FlatButton label="Logout" containerElement={<Link to="/logout" />} />
 
     return (
-      <IntlProvider locale={this.props.lang} messages={messages[this.props.lang]}>
+      <IntlProvider locale={this.props.lang} messages={this.props.messages}>
         <div className="app">
           <LeftNav open={this.props.menu_visible} docked={false} onRequestChange={open => this.props.toggleMenu(open)}>
             <MenuItem checked={this.props.path === '/home'} containerElement={<Link to="/home" />}>Home</MenuItem>
@@ -64,6 +62,7 @@ const mapStateToProps = (state) => ({
   tribe_name: state.user.tribe.name,
   uid: state.user.data.id,
   lang: state.app.lang, // here is the app language
+  messages: state.app.messages,
   path: state.routing.location.pathname,
   menu_visible: state.app.menu_visible,
 })
