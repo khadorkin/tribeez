@@ -30,7 +30,7 @@ class Login extends Component {
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
-          <CardTitle title="Login" />
+          <CardTitle title={<FormattedMessage id="login" />} />
           <CardText>
             <TextField ref="email" floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
             <br />
