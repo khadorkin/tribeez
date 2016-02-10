@@ -15,6 +15,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import currencies from '../resources/currencies'
 import langs from '../resources/langs'
 import lang from '../utils/lang'
+import scriptLoader from '../utils/scriptLoader'
 
 import postRegister from '../actions/postRegister'
 
@@ -33,12 +34,8 @@ class Register extends Component {
   }
 
   componentDidMount() {
-    const gapi = document.createElement('script')
-    gapi.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&language=fr' // &callback=initAutocomplete&key=AIzaSyDIFUJPOdN0JtTtMYBc743QA_NtzYL1S1M&signed_in=true
-    gapi.async = true
-    gapi.defer = true
-    gapi.onload = () => {
-      const autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), {types: ['(cities)']})
+    scriptLoader.load('https://maps.googleapis.com/maps/api/js?libraries=places&language=fr', () => {
+      const autocomplete = new google.maps.places.Autocomplete(document.getElementById('city'), {types: ['(cities)']})
       autocomplete.addListener('place_changed', () => {
         let place = autocomplete.getPlace()
         if (!place || !place.address_components) {
@@ -55,8 +52,7 @@ class Register extends Component {
           })
         }
       })
-    }
-    document.body.appendChild(gapi)
+    })
   }
 
   handleLangChange(event, index, value) {
@@ -112,7 +108,7 @@ class Register extends Component {
           <CardText>
             <TextField ref="tribe_name" floatingLabelText="Tribe name" required errorText={this.props.error === 'tribe_name' && <FormattedMessage id="error.tribe_name" />} />
             <br />
-            <TextField ref="city" autoComplete="off" id="autocomplete" placeholder="" floatingLabelText="City" required errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >=0 && <FormattedMessage id="error.city" />} />
+            <TextField ref="city" autoComplete="off" id="city" placeholder="" floatingLabelText="City" required errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >=0 && <FormattedMessage id="error.city" />} />
             <br />
             <SelectField ref="currency" floatingLabelText="Currency" value={this.state.currency} onChange={this.handleCurrencyChange} errorText={this.props.error === 'currency' && <FormattedMessage id="error.currency" />}>
               {currencyItems}

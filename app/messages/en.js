@@ -5,7 +5,7 @@ export default {
   'error.password': 'Invalid password',
   'error.lang': 'Invalid language',
   'error.tribe_name': 'Invalid tribe name',
-  'error.city': 'Invalid city',
+  'error.city': 'Please choose a city in the dropdown suggestions list',
   'error.currency': 'Invalid currency',
   'error.other': 'Internal server error: please try again later',
   'error.login.email': 'Unknown email address',
