@@ -17,11 +17,6 @@ export default (token) => {
           })
           dispatch(routeActions.push('/login'))
         } else {
-          //TODO: understand why the UI doesn't reflect the new lang if this dispatch is placed after the GET_INVITE_SUCCESS one:
-          dispatch({
-            type: UPDATE_LANG,
-            lang: data.lang,
-          })
           dispatch({
             type: GET_INVITE_SUCCESS,
             data,
