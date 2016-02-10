@@ -3,17 +3,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
-//import { reducer as formReducer } from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {syncHistory, routeReducer} from 'react-router-redux'
 import createLogger from 'redux-logger'
-import injectTapEventPlugin from 'react-tap-event-plugin'
+import injectTapEventPlugin from 'react-tap-event-plugin' // TODO: remove when React is fixed
 
-import reducers from './reducers'
+// react components
 import App from './App'
-
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Password from './pages/Password'
@@ -22,7 +21,7 @@ import Register from './pages/Register'
 import Join from './pages/Join'
 import Activity from './pages/Activity'
 import Profile from './pages/Profile'
-// TODO: Tribe
+// import Tribe from './pages/Tribe' //TODO
 import NewTribe from './pages/NewTribe'
 import Members from './pages/Members'
 import NewMember from './pages/NewMember'
@@ -34,9 +33,14 @@ import Notes from './pages/Notes'
 import Polls from './pages/Polls'
 import NotFound from './pages/NotFound'
 
+// redux actions
 import getMember from './actions/getMember'
 
+// react-router routes
 import routes from './constants/routes'
+
+// redux reducers
+import reducers from './reducers'
 
 // static assets not being explicitely used in app but still needed in index.html:
 import './static'
@@ -52,10 +56,7 @@ let createStoreWithMiddleware
 if (__DEBUG__) {
   const logger = createLogger({
     errorTransformer: (error) => {
-      if (window.Rollbar) {
-        /*global Rollbar:false*/
-        Rollbar.error(error)
-      }
+      Rollbar.error(error)
       return error
     },
   })
@@ -64,7 +65,7 @@ if (__DEBUG__) {
   createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore)
 }
 
-//reducers.form = formReducer
+reducers.form = formReducer
 reducers.routing = routeReducer
 const rootReducer = combineReducers(reducers)
 const store = createStoreWithMiddleware(rootReducer)

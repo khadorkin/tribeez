@@ -2,35 +2,23 @@ import {routeActions} from 'react-router-redux'
 
 import api from '../api'
 
-import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE} from '../constants/actions'
+import {GET_MEMBER_SUCCESS} from '../constants/actions'
 import routes from '../constants/routes'
 
-export default (email, password, destination) => {
-  return function(dispatch) {
-    dispatch({
-      type: LOGIN_REQUEST,
-    })
-    dispatch({
-      type: GET_MEMBER_REQUEST,
-    })
-    api.post('login', {
-      email,
-      password,
-    })
+export default (destination, values, dispatch) => {
+  return new Promise((resolve, reject) => {
+    api.post('login', values)
       .then((response) => {
         if (response.error) {
-          dispatch({
-            type: LOGIN_FAILURE,
-            error: response.error,
-          })
-          dispatch({
-            type: GET_MEMBER_FAILURE,
-            error: response.error,
-          })
+          const reason = {}
+          if (values[response.error]) {
+            reason[response.error] = 'error.login.' + response.error
+            reject(reason)
+          } else {
+            throw new Error(response.error)
+          }
         } else {
-          dispatch({
-            type: LOGIN_SUCCESS,
-          })
+          resolve()
           dispatch({
             type: GET_MEMBER_SUCCESS,
             user: response.user,
@@ -39,15 +27,9 @@ export default (email, password, destination) => {
           dispatch(routeActions.push(destination || routes.ACTIVITY))
         }
       })
-      .catch(() => {
-        dispatch({
-          type: LOGIN_FAILURE,
-          error: 'other',
-        })
-        dispatch({
-          type: GET_MEMBER_FAILURE,
-          error: 'other',
-        })
+      .catch((error) => {
+        reject({_error: 'error.other'})
+        Rollbar.error('API error', error)
       })
-  }
+  })
 }
