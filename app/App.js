@@ -11,6 +11,7 @@ import LeftNav from 'material-ui/lib/left-nav'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
+import CircularProgress from 'material-ui/lib/circular-progress'
 
 import Nav from './components/Nav'
 
@@ -32,15 +33,19 @@ class App extends Component {
 
   render() {
     const loginButton = <FlatButton label="Login" containerElement={<Link to="/login" />} />
+    const loading = this.props.loading ? <CircularProgress color="white" size="0.5" /> : null
+    const nav = this.props.uid && (
+      <LeftNav open={this.props.menu_visible} docked={false} onRequestChange={open => this.props.toggleMenu(open)}>
+        <Nav />
+      </LeftNav>
+    ) // do not load left nav if not logged in
 
     return (
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
         <div className="app">
-          <LeftNav open={this.props.menu_visible} docked={false} onRequestChange={open => this.props.toggleMenu(open)}>
-            <Nav />
-          </LeftNav>
+          {nav}
           <AppBar title={this.props.tribe_name || 'MyTribe'}
-                  iconElementRight={this.props.uid ? null : loginButton}
+                  iconElementRight={this.props.uid ? loading : loginButton}
                   onLeftIconButtonTouchTap={this.openMenu}
                   iconElementLeft={this.props.uid ? null : <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>}
           />
@@ -68,6 +73,7 @@ const mapStateToProps = (state) => ({
   messages: state.app.messages,
   path: state.routing.location.pathname,
   menu_visible: state.app.menu_visible,
+  loading: state.activity.loading || state.invite.loading || state.logout.loading || state.user.loading, //TODO: mutualize
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -8,6 +8,8 @@ import CardTitle from 'material-ui/lib/card/card-title'
 import FlatButton from 'material-ui/lib/flat-button'
 import CardText from 'material-ui/lib/card/card-text'
 
+import css from './Welcome.css'
+
 export default class Welcome extends Component {
 
   render() {
@@ -15,7 +17,7 @@ export default class Welcome extends Component {
       <Card className="main">
         <CardTitle title={<FormattedMessage id="welcome" />} subtitle="Organize your group life" />
         <CardText></CardText>
-        <CardActions>
+        <CardActions className={css.actions}>
           <FlatButton primary={true} label="Register" containerElement={<Link to="/register" />} />
         </CardActions>
       </Card>

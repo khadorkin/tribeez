@@ -13,6 +13,8 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import postLogin from '../actions/postLogin'
 
+import css from './Login.css'
+
 class Login extends Component {
 
   constructor(props) {
@@ -36,7 +38,7 @@ class Login extends Component {
             <br />
             <TextField ref="password" required type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
           </CardText>
-          <CardActions>
+          <CardActions className={css.actions}>
             <RaisedButton label="Login" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
             <p>No account yet? <Link to="/register">Register now!</Link></p>

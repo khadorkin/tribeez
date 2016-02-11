@@ -13,11 +13,11 @@ module.exports = {
     path: './dist',
     filename: 'bundle.js',
     publicPath: '/',
-    template: './app/index.tpl.html',
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'MyTribe',
+      template: 'app/index.tpl.html',
     }),
     new webpack.DefinePlugin({
       'process.env': {
