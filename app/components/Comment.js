@@ -4,21 +4,21 @@ import { FormattedMessage, FormattedRelative } from 'react-intl'
 
 import Avatar from 'material-ui/lib/avatar'
 
-import styles from './Comment.css'
+import css from './Comment.css'
 
 class Comment extends Component {
 
   render() {
     let user = this.props.users.find(user => user.id === this.props.comment.user_id)
     return (
-      <div className={styles.container}>
+      <div className={css.container}>
         <Avatar src={'https://secure.gravatar.com/avatar/' + user.gravatar + '?d=retro&s=30'} size={30} />
-        <div className={styles.body}>
+        <div className={css.body}>
           <div>
-            <span className={styles.author}>{user.name} </span>
-            <span className={styles.content}>{this.props.comment.content}</span>
+            <span className={css.author}>{user.name} </span>
+            <span className={css.content}>{this.props.comment.content}</span>
           </div>
-          <div className={styles.time}>
+          <div className={css.time}>
             <FormattedRelative value={this.props.comment.added} />
           </div>
         </div>

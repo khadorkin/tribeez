@@ -1,9 +1,9 @@
-import { UPDATE_INVITE_DATA } from '../actions'
+import { UPDATE_JOIN_DATA } from '../actions'
 
 export default (data) => {
   return function(dispatch) {
     dispatch({
-      type: UPDATE_INVITE_DATA,
+      type: UPDATE_JOIN_DATA,
       data,
     })
   }

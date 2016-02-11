@@ -16,7 +16,7 @@ import Comment from './Comment'
 import postComment from '../actions/postComment'
 import updateComment from '../actions/updateComment'
 
-import styles from './Activity.css'
+import css from './Activity.css'
 
 class Activity extends Component {
 
@@ -40,11 +40,11 @@ class Activity extends Component {
     )
 
     return (
-      <Card className={styles.container}>
+      <Card className={css.container}>
         <CardHeader title={title} subtitle={<span>{date} — {comments}</span>}
                     avatar={'https://secure.gravatar.com/avatar/' + user.gravatar + '?d=retro&s=40'}
                     actAsExpander={true} showExpandableButton={true} />
-        <CardText expandable={true} className={styles.comments}>
+        <CardText expandable={true} className={css.comments}>
           {
             this.props.entry.comments.map(comment => <Comment comment={comment} key={comment.id} />)
           }
@@ -53,7 +53,7 @@ class Activity extends Component {
                        onChange={this.handleCommentChange.bind(this, this.props.entry.id)}
                        hintText={<FormattedMessage id="comment" />}
                        autoComplete="off" />
-            <IconButton type="submit"><SendIcon /></IconButton>
+            <IconButton type="submit" className={css.button}><SendIcon /></IconButton>
           </form>
         </CardText>
       </Card>

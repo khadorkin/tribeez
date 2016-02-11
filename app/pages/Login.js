@@ -32,9 +32,9 @@ class Login extends Component {
         <form onSubmit={this.handleSubmit}>
           <CardTitle title={<FormattedMessage id="login" />} />
           <CardText>
-            <TextField ref="email" floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
+            <TextField ref="email" required floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
             <br />
-            <TextField ref="password" type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
+            <TextField ref="password" required type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
           </CardText>
           <CardActions>
             <RaisedButton label="Login" type="submit" />

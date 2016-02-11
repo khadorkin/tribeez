@@ -3,7 +3,9 @@ import { GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE, LOGOUT_SUCCESS } 
 const initialState = {
   loading: false,
   data: {},
-  tribe: {},
+  tribe: {
+    users: [],
+  },
   error: false,
 }
 

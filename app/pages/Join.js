@@ -15,7 +15,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import langs from '../resources/langs'
 
 import getInvite from '../actions/getInvite'
-import updateInvite from '../actions/updateInvite'
+import updateJoin from '../actions/updateJoin'
 import updateLang from '../actions/updateLang'
 import postJoin from '../actions/postJoin'
 
@@ -33,7 +33,7 @@ class Register extends Component {
   }
 
   handleEmailChange(event) {
-    this.props.updateInvite({ email: event.target.value })
+    this.props.updateJoin({ email: event.target.value })
   }
 
   handleLangChange(event, index, value) {
@@ -89,17 +89,17 @@ Register.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.invite.data.email,
+  email: state.join.data.email,
   lang: state.app.lang,
-  inviter: state.invite.data.inviter,
-  tribe: state.invite.data.tribe,
+  inviter: state.join.data.inviter,
+  tribe: state.join.data.tribe,
   error: state.join.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getInvite,
   updateLang,
-  updateInvite,
+  updateJoin,
   postJoin,
 }, dispatch)
 
