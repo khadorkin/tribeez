@@ -32,7 +32,6 @@ class App extends Component {
 
   render() {
     const loginButton = <FlatButton label="Login" containerElement={<Link to="/login" />} />
-    const logoutButton = <FlatButton label="Logout" containerElement={<Link to="/logout" />} />
 
     return (
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
@@ -41,7 +40,7 @@ class App extends Component {
             <Nav />
           </LeftNav>
           <AppBar title={this.props.tribe_name || 'MyTribe'}
-                  iconElementRight={this.props.uid ? logoutButton : loginButton}
+                  iconElementRight={this.props.uid ? null : loginButton}
                   onLeftIconButtonTouchTap={this.openMenu}
                   iconElementLeft={this.props.uid ? null : <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>}
           />

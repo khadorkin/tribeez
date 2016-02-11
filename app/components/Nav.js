@@ -13,6 +13,7 @@ import Avatar from 'material-ui/lib/avatar'
 
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 import GroupIcon from 'material-ui/lib/svg-icons/social/group'
+import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app'
 
 import getLogout from '../actions/getLogout'
 
@@ -24,6 +25,12 @@ const style = {
   },
   current: {
     borderLeft: '5px solid rgb(31, 188, 210)',
+  },
+  logout: {
+    borderLeft: '5px solid transparent',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
 }
 
@@ -38,6 +45,7 @@ class Nav extends Component {
         </div>
         <MenuItem style={this.props.path === '/home' ? style.current : style.default} leftIcon={<HomeIcon />} containerElement={<Link to="/home" />}>Home</MenuItem>
         <MenuItem style={this.props.path === '/members' ? style.current : style.default} leftIcon={<GroupIcon />} containerElement={<Link to="/members" />}>Members</MenuItem>
+        <MenuItem style={style.logout} leftIcon={<ExitIcon />} containerElement={<Link to="/logout" />}>Logout</MenuItem>
       </div>
     )
   }
