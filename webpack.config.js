@@ -1,26 +1,28 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+/*eslint-env node */
+
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+
+const autoprefixer = require('autoprefixer')
+const reactCssModules = require('react-css-modules')
 
 module.exports = {
-  //devtool: 'eval-source-map',
+  devtool: 'eval',
   entry: './app/index.js',
   output: {
     path: './dist',
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
+    template: './app/index.tpl.html',
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'MyTribe'
+      title: 'MyTribe',
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-      }
-    }),
-    new webpack.ProvidePlugin({
-      //'Promise': 'es6-promise',
-      //'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+      },
     }),
   ],
   module: {
@@ -28,18 +30,21 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel',
       },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader'
+        loader: 'eslint-loader',
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        loaders: ['style-loader','css-loader']
+        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' ,
       },
-    ]
-  }
+    ],
+  },
+  postcss: function () {
+    return [autoprefixer, reactCssModules]
+  },
 }

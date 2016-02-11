@@ -2,6 +2,11 @@
 // removed funds codes and unused codes
 
 const obj = {
+  EUR: 'Euro',
+  USD: 'United Stated dollar',
+  GBP: 'Pound sterling',
+  MXN: 'Mexican peso',
+/*
   AED: 'United Arab Emirates dirham',
   AFN: 'Afghan afghani',
   ALL: 'Albanian lek',
@@ -159,6 +164,7 @@ const obj = {
   YER: 'Yemeni rial',
   ZAR: 'South African rand',
   ZMW: 'Zambian kwacha',
+*/
 }
 
 // export a sorted array instead of this object:

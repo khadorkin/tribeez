@@ -9,7 +9,7 @@ import CardActions from 'material-ui/lib/card/card-actions'
 import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 
-class Invite extends Component {
+class Members extends Component {
 
   render() {
     return (
@@ -21,7 +21,7 @@ class Invite extends Component {
 
 }
 
-Invite.propTypes = {
+Members.propTypes = {
   name: PropTypes.string,
 }
 
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => ({
   name: state.user.data.name,
 })
 
-export default connect(mapStateToProps)(Invite)
+export default connect(mapStateToProps)(Members)

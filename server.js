@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+/*eslint-env node */
 'use strict'
 
 const PORT = 3001

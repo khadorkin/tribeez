@@ -1,0 +1,17 @@
+.container {
+  padding: 10px 0;
+}
+
+.container img {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+.body {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.author, .time {
+  color: #aaaaaa;
+}

@@ -11,18 +11,18 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import reducers from './reducers'
 import App from './App'
-import Welcome from './components/Welcome'
-import Login from './components/Login'
-import Logout from './components/Logout'
-import Register from './components/Register'
-import Join from './components/Join'
-import Home from './components/Home'
-import Invite from './components/Invite'
-import NotFound from './components/NotFound'
+import Welcome from './pages/Welcome'
+import Login from './pages/Login'
+import Logout from './pages/Logout'
+import Register from './pages/Register'
+import Join from './pages/Join'
+import Home from './pages/Home'
+import Members from './pages/Members'
+import NotFound from './pages/NotFound'
 
 import getUser from './actions/getUser'
 
-import './App.css'
+import './index.css'
 
 // Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
@@ -59,7 +59,7 @@ ReactDOM.render((
         <Route path="register" component={Register}/>
         <Route path="join/:token" component={Join}/>
         <Route path="home" component={Home} onEnter={requireAuth}/>
-        <Route path="invite" component={Invite} onEnter={requireAuth}/>
+        <Route path="members" component={Members} onEnter={requireAuth}/>
         <Route path="*" component={NotFound}/>
       </Route>
     </Router>

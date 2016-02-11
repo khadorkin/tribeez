@@ -1,26 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
-
-html {
-  font-family: 'Roboto', sans-serif;
-}
-
 html, body {
   margin: 0;
   padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: rgb(226,226,226);
 }
 
-/* remove the yellow autofill background */
+/* remove the yellow autofill background in Chrome */
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0 1000px white inset;
 }
 
-.error {
+:global .error {
   color: #f44336;
 }
 
 @media (min-width: 400px) {
-  .main {
+  :global .main {
     position: absolute;
     width: 300px;
     margin-left: -150px;
@@ -30,10 +25,10 @@ input:-webkit-autofill {
 }
 
 /* hacking the google autocomplete field */
-.pac-container {
+:global .pac-container {
   margin-top: -22px;
 }
-.pac-logo::after {
+:global .pac-logo::after {
   background: none !important;
   height: 0;
   padding: 0;

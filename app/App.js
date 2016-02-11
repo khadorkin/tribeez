@@ -12,6 +12,8 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 
+import Nav from './components/Nav'
+
 import { toggleMenu } from './actions/app'
 
 class App extends Component {
@@ -36,15 +38,14 @@ class App extends Component {
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
         <div className="app">
           <LeftNav open={this.props.menu_visible} docked={false} onRequestChange={open => this.props.toggleMenu(open)}>
-            <MenuItem checked={this.props.path === '/home'} containerElement={<Link to="/home" />}>Home</MenuItem>
-            <MenuItem checked={this.props.path === '/invite'} containerElement={<Link to="/invite" />}>Invite</MenuItem>
+            <Nav />
           </LeftNav>
           <AppBar title={this.props.tribe_name || 'MyTribe'}
                   iconElementRight={this.props.uid ? logoutButton : loginButton}
                   onLeftIconButtonTouchTap={this.openMenu}
                   iconElementLeft={this.props.uid ? null : <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>}
           />
-          <div className="page">{this.props.children}</div>
+          <div>{this.props.children}</div>
         </div>
       </IntlProvider>
     )
@@ -54,8 +55,11 @@ class App extends Component {
 
 App.propTypes = {
   tribe_name: PropTypes.string,
-  token: PropTypes.string,
-  lang: PropTypes.string,
+  uid: PropTypes.number,
+  messages: PropTypes.object.isRequired,
+  lang: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  menu_visible: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
