@@ -31,7 +31,13 @@ class Activity extends Component {
 
   render() {
     let user = this.props.users.find(user => user.id === this.props.entry.user_id)
-    let title = <FormattedMessage id={'entry.' + this.props.entry.type} values={{name: user.name}} />
+    let title
+    if (this.props.entry.item_id) {
+      let inviter = this.props.entry.item_id && this.props.users.find(user => user.id === this.props.entry.item_id)
+      title = <FormattedMessage id={'entry.' + this.props.entry.type + '.item'} values={{name: user.name, item: inviter.name}} />
+    } else {
+      title = <FormattedMessage id={'entry.' + this.props.entry.type} values={{name: user.name}} />
+    }
     let date = <FormattedRelative value={this.props.entry.added} />
     let comments = (
       <span style={{fontWeight: this.props.entry.comments.length ? 'bold' : 'normal'}}>
