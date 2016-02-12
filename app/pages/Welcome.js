@@ -2,25 +2,20 @@ import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router'
 
-import Card from 'material-ui/lib/card/card'
-import CardActions from 'material-ui/lib/card/card-actions'
-import CardTitle from 'material-ui/lib/card/card-title'
-import FlatButton from 'material-ui/lib/flat-button'
-import CardText from 'material-ui/lib/card/card-text'
+import RaisedButton from 'material-ui/lib/raised-button'
 
-import css from './Welcome.css'
+import Logo from './logo.svg'
 
 export default class Welcome extends Component {
 
   render() {
     return (
-      <Card className="main">
-        <CardTitle title={<FormattedMessage id="welcome" />} subtitle="Organize your group life" />
-        <CardText></CardText>
-        <CardActions className={css.actions}>
-          <FlatButton primary={true} label="Register" containerElement={<Link to="/register" />} />
-        </CardActions>
-      </Card>
+      <div>
+        <div style={{backgroundColor:'#00bcd4', padding:'100px 0 60px', textAlign:'center'}}>
+          <Logo style={{width:'200px', marginBottom:'60px'}} /><br />
+          <RaisedButton label="Register" containerElement={<Link to="/register" />} />
+        </div>
+      </div>
     )
   }
 
