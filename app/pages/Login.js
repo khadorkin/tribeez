@@ -13,7 +13,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import postLogin from '../actions/postLogin'
 
-import css from './Login.css'
+import styles from '../styles'
 
 class Login extends Component {
 
@@ -34,11 +34,10 @@ class Login extends Component {
         <form onSubmit={this.handleSubmit}>
           <CardTitle title={<FormattedMessage id="login" />} />
           <CardText>
-            <TextField ref="email" required floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
-            <br />
-            <TextField ref="password" required type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
+            <TextField style={styles.field} ref="email" required floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
+            <TextField style={styles.field} ref="password" required type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
           </CardText>
-          <CardActions className={css.actions}>
+          <CardActions style={styles.actions}>
             <RaisedButton label="Login" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
             <p>No account yet? <Link to="/register">Register now!</Link></p>

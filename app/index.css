@@ -14,13 +14,18 @@ input:-webkit-autofill {
   color: #f44336;
 }
 
+:global .main {
+  transition: none !important;
+}
+
 @media (min-width: 400px) {
   :global .main {
     position: absolute;
-    width: 300px;
-    margin-left: -150px;
+    width: 360px;
+    margin-left: -180px;
     left: 50%;
-    top: 15%;
+    top: 80px;
+    margin-bottom: 50px;
   }
 }
 

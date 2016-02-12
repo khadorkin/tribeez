@@ -19,6 +19,8 @@ import updateJoin from '../actions/updateJoin'
 import updateLang from '../actions/updateLang'
 import postJoin from '../actions/postJoin'
 
+import styles from '../styles'
+
 class Register extends Component {
 
   constructor(props) {
@@ -59,17 +61,14 @@ class Register extends Component {
         <form onSubmit={this.handleSubmit}>
           <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" values={{name: this.props.inviter}} />} />
           <CardText>
-            <TextField ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
-            <br />
-            <TextField floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
-            <br />
-            <TextField ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
-            <br />
-            <SelectField floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <TextField style={styles.field} ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
+            <TextField style={styles.field} floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
+            <TextField style={styles.field} ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
+            <SelectField style={styles.field} floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
               {langItems}
             </SelectField>
           </CardText>
-          <CardActions>
+          <CardActions style={styles.actions}>
             <RaisedButton label="Register & join this tribe" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
           </CardActions>
