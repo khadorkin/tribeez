@@ -1,7 +1,8 @@
 /*eslint-env node */
 
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const autoprefixer = require('autoprefixer')
 const reactCssModules = require('react-css-modules')
@@ -10,6 +11,7 @@ const configs = {
   development: {
     devtool: 'eval',
     plugins: [
+      new CleanWebpackPlugin(['dist']),
       new HtmlWebpackPlugin({
         title: 'MyTribe',
         template: 'app/index.tpl.html',

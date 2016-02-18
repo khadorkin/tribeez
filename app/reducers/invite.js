@@ -8,6 +8,7 @@ const initialState = {
   email: '',
   lang: lang.getDefault(),
   snack: false,
+  modal: false,
 }
 
 export default (state = initialState, action = null) => {
@@ -28,6 +29,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: null,
         snack: true,
+        modal: false,
         email: '',
       })
     case INVITE_END:

@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import Logo from './logo.svg'
+import Logo from '../images/logo.svg'
 
 export default class Welcome extends Component {
 

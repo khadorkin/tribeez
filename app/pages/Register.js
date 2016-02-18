@@ -54,6 +54,10 @@ class Register extends Component {
         }
       })
     })
+
+    setTimeout(() => {
+      this.refs.name.focus()
+    }, 300)
   }
 
   handleLangChange(event, index, value) {

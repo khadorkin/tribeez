@@ -27,6 +27,14 @@ class Login extends Component {
     this.props.postLogin(this.refs.email.getValue(), this.refs.password.getValue())
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      if (!this.refs.email.getValue()) {
+        this.refs.email.focus()
+      }
+    }, 300)
+  }
+
   render() {
     //const { fields: { email, password }, handleSubmit } = this.props
     return (

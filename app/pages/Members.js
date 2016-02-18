@@ -17,13 +17,18 @@ import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 import TextField from 'material-ui/lib/text-field'
 import CardActions from 'material-ui/lib/card/card-actions'
+import FlatButton from 'material-ui/lib/flat-button'
 import RaisedButton from 'material-ui/lib/raised-button'
 import SelectField from 'material-ui/lib/select-field'
 import MenuItem from 'material-ui/lib/menus/menu-item'
-
+import Dialog from 'material-ui/lib/dialog'
+import FloatingActionButton from 'material-ui/lib/floating-action-button'
+import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 import Snackbar from 'material-ui/lib/snackbar'
 
 import langs from '../resources/langs'
+
+import styles from '../styles'
 
 import updateInvite from '../actions/updateInvite'
 import postInvite from '../actions/postInvite'
@@ -36,6 +41,17 @@ class Members extends Component {
     this.handleLangChange = this.handleLangChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.closeSnack = this.closeSnack.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
+
+  openModal() {
+    this.props.updateInvite({
+      modal: true,
+    })
+    setTimeout(() => {
+      this.refs.email.focus()
+    }, 300)
   }
 
   handleEmailChange(event) {
@@ -55,6 +71,12 @@ class Members extends Component {
     this.props.postInvite(this.refs.email.getValue(), this.props.lang)
   }
 
+  closeModal() {
+    this.props.updateInvite({
+      modal: false,
+    })
+  }
+
   closeSnack() {
     this.props.updateInvite({
       snack: false,
@@ -63,6 +85,20 @@ class Members extends Component {
 
   render() {
     const langItems = langs.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name} />)
+
+    const modalActions = [
+      <FlatButton
+        label="Cancel"
+        secondary={true}
+        onTouchTap={this.closeModal}
+      />,
+      <FlatButton
+        label="Send invite"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleSubmit}
+      />,
+    ]
 
     return (
       <div>
@@ -88,21 +124,26 @@ class Members extends Component {
             }
           </TableBody>
         </Table>
-        <Card style={{marginTop:'20px'}}>
+
+        <Dialog
+          title="Add a member"
+          actions={modalActions}
+          modal={false}
+          open={this.props.modal}
+          onRequestClose={this.closeModal}
+        >
           <form onSubmit={this.handleSubmit}>
-            <CardTitle title="Add members" />
-            <CardText>
-              <TextField ref="email" value={this.props.email} onChange={this.handleEmailChange} floatingLabelText="Email" required errorText={this.props.error === 'email' && <FormattedMessage id="error.invite.email" />} />
-              <br />
-              <SelectField floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
-                {langItems}
-              </SelectField>
-            </CardText>
-            <CardActions>
-              <RaisedButton type="submit" label="Send invite" />
-            </CardActions>
+            <TextField style={styles.field} ref="email" value={this.props.email} onChange={this.handleEmailChange} floatingLabelText="Email" required errorText={this.props.error === 'email' && <FormattedMessage id="error.email" />} />
+            <SelectField style={styles.field} floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+              {langItems}
+            </SelectField>
           </form>
-        </Card>
+        </Dialog>
+
+        <FloatingActionButton onMouseUp={this.openModal} style={{position:'absolute',bottom:'20px',right:'20px'}}>
+          <ContentAdd />
+        </FloatingActionButton>
+
         <Snackbar
           open={this.props.snack}
           message="Invite sent!"
@@ -119,6 +160,8 @@ Members.propTypes = {
   email: PropTypes.string.isRequired,
   lang: PropTypes.string.isRequired,
   error: PropTypes.string,
+  modal: PropTypes.bool.isRequired,
+  snack: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -126,6 +169,7 @@ const mapStateToProps = (state) => ({
   email: state.invite.email,
   lang: state.invite.lang,
   error: state.invite.error,
+  modal: state.invite.modal,
   snack: state.invite.snack,
 })
 

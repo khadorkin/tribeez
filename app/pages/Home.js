@@ -6,8 +6,11 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router'
 
 import Activity from '../components/Activity'
+import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../actions/getActivity'
+
+import styles from '../styles'
 
 class Home extends Component {
 
@@ -21,6 +24,7 @@ class Home extends Component {
         {
           this.props.entries.map(entry => <Activity entry={entry} key={entry.id} />)
         }
+        <SpeedDial />
       </div>
     )
   }
