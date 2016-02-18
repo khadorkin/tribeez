@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { IntlProvider } from 'react-intl'
 import { routeActions } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
+import { FormattedMessage } from 'react-intl'
 
 //import ThemeManager from 'material-ui/lib/styles/theme-manager'
 
@@ -55,7 +56,7 @@ class App extends Component {
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
         <div className="app">
           {nav}
-          <AppBar title={this.props.tribe_name} zDepth={0}
+          <AppBar title={<FormattedMessage id={this.props.page} />} zDepth={0}
                   iconElementRight={this.props.uid ? loading : loginButton}
                   onLeftIconButtonTouchTap={this.openMenu}
                   iconElementLeft={this.props.uid ? null : <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>}
@@ -73,7 +74,7 @@ App.childContextTypes = {
 }
 
 App.propTypes = {
-  tribe_name: PropTypes.string,
+  page: PropTypes.string,
   uid: PropTypes.number,
   messages: PropTypes.object.isRequired,
   lang: PropTypes.string.isRequired,
@@ -81,7 +82,7 @@ App.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  tribe_name: state.user.tribe.name,
+  page: state.routing.location.pathname.split('/')[1],
   uid: state.user.data.id,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,

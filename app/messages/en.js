@@ -3,6 +3,8 @@ export default {
   welcome: 'Welcome',
   register: 'Register',
   login: 'Login',
+  home: 'Home',
+  members: 'Members',
 
   // speed dial
   'new_expense': 'New expense',

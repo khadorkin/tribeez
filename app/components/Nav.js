@@ -42,9 +42,10 @@ class Nav extends Component {
         <div className={css.header}>
           <Avatar src={'https://secure.gravatar.com/avatar/' + this.props.gravatar + '?d=retro&s=80'} size={80} />
           <div className={css.name}>{this.props.name}</div>
+          <div>{this.props.tribe}</div>
         </div>
-        <MenuItem style={this.props.path === '/home' ? style.current : style.default} leftIcon={<HomeIcon />} containerElement={<Link to="/home" />}>Home</MenuItem>
-        <MenuItem style={this.props.path === '/members' ? style.current : style.default} leftIcon={<GroupIcon />} containerElement={<Link to="/members" />}>Members</MenuItem>
+        <MenuItem style={this.props.page === 'home' ? style.current : style.default} leftIcon={<HomeIcon />} containerElement={<Link to="/home" />}>Home</MenuItem>
+        <MenuItem style={this.props.page === 'members' ? style.current : style.default} leftIcon={<GroupIcon />} containerElement={<Link to="/members" />}>Members</MenuItem>
         <MenuItem style={style.logout} leftIcon={<ExitIcon />} containerElement={<Link to="/logout" />}>Logout</MenuItem>
       </div>
     )
@@ -59,7 +60,8 @@ Nav.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  path: state.routing.location.pathname,
+  page: state.routing.location.pathname.split('/')[1],
+  tribe: state.user.tribe.name,
   name: state.user.data.name,
   gravatar: state.user.data.gravatar,
 })
