@@ -18,7 +18,7 @@ import CircularProgress from 'material-ui/lib/circular-progress'
 
 import Nav from './components/Nav'
 
-import { toggleMenu } from './actions/app'
+import { toggleMenu, resize } from './actions/app'
 
 class App extends Component {
 
@@ -26,6 +26,8 @@ class App extends Component {
     super(props)
     this.state = { open: false }
     this.openMenu = this.openMenu.bind(this)
+    window.onresize = this.props.resize
+    this.props.resize()
   }
 /*
   // modify global theme:
@@ -47,19 +49,22 @@ class App extends Component {
     const loginButton = <FlatButton label="Login" containerElement={<Link to="/login" />} />
     const loading = this.props.loading ? <CircularProgress color="white" size={0.5} /> : null
     const nav = this.props.uid && (
-      <LeftNav open={this.props.menu_visible} docked={false} onRequestChange={open => this.props.toggleMenu(open)}>
+      <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={open => this.props.toggleMenu(open)}>
         <Nav />
       </LeftNav>
     ) // do not load left nav if not logged in
+    const homeButton = <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>
+    const dockedUserMenu = this.props.uid && this.props.desktop
 
     return (
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
-        <div className="app">
+        <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
           {nav}
           <AppBar title={<FormattedMessage id={this.props.page} />} zDepth={0}
                   iconElementRight={this.props.uid ? loading : loginButton}
                   onLeftIconButtonTouchTap={this.openMenu}
-                  iconElementLeft={this.props.uid ? null : <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>}
+                  iconElementLeft={this.props.uid ? null : homeButton}
+                  showMenuIconButton={!dockedUserMenu}
           />
           <div>{this.props.children}</div>
         </div>
@@ -85,6 +90,7 @@ const mapStateToProps = (state) => ({
   page: state.routing.location.pathname.split('/')[1],
   uid: state.user.data.id,
   lang: state.app.lang, // here is the app language
+  desktop: state.app.width > 800,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   loading: state.activity.loading || state.invite.loading || state.logout.loading || state.user.loading, //TODO: mutualize
@@ -92,6 +98,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
+  resize,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

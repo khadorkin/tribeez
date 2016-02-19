@@ -1,6 +1,6 @@
 import { UPDATE_LOCATION } from 'react-router-redux'
 
-import { TOGGLE_MENU, GET_USER_SUCCESS, UPDATE_LANG } from '../actions'
+import { TOGGLE_MENU, RESIZE, GET_USER_SUCCESS, UPDATE_LANG } from '../actions'
 
 import lang from '../utils/lang'
 import messages from '../messages' // TODO
@@ -22,6 +22,11 @@ export default (state = initialState, action = null) => {
     case TOGGLE_MENU:
       return Object.assign({}, state, {
         menu_visible: action.open,
+      })
+    case RESIZE:
+      return Object.assign({}, state, {
+        width: action.width,
+        height: action.height,
       })
     case GET_USER_SUCCESS:
       return Object.assign({}, state, {

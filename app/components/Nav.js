@@ -54,7 +54,8 @@ class Nav extends Component {
 }
 
 Nav.propTypes = {
-  path: PropTypes.string.isRequired,
+  page: PropTypes.string.isRequired,
+  tribe: PropTypes.string,
   name: PropTypes.string,
   gravatar: PropTypes.string,
 }
