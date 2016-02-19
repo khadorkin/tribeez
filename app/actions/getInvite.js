@@ -21,6 +21,9 @@ export default (token) => {
             type: GET_INVITE_SUCCESS,
             data,
           })
+          if (data.redirect) {
+            dispatch(routeActions.push('/' + data.redirect))
+          }
         }
       })
       .catch(() => {

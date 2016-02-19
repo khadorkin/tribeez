@@ -14,6 +14,7 @@ export default {
 
   // login/register forms
   invited_by: '{name} invited you',
+  login_to_join: '{inviter} invited you to join {tribe}',
   'error.name': 'Invalid user name',
   'error.email': 'Invalid email',
   'error.email_exists': 'This email address is already registered! Please login if it is your account.',

@@ -40,6 +40,7 @@ export default (state = initialState, action = null) => {
     case JOIN_SUCCESS:
       return Object.assign({}, state, {
         loading: false,
+        data: {},
         error: null,
       })
     case JOIN_FAILURE:

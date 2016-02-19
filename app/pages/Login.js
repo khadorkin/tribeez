@@ -27,23 +27,30 @@ class Login extends Component {
     this.props.postLogin(this.refs.email.getValue(), this.refs.password.getValue())
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      if (!this.refs.email.getValue()) {
-        this.refs.email.focus()
-      }
-    }, 300)
-  }
-
   render() {
     //const { fields: { email, password }, handleSubmit } = this.props
+
+    const subtitle = this.props.invite.email ? <FormattedMessage id="login_to_join" values={{inviter: this.props.invite.inviter, tribe: this.props.invite.tribe}} /> : null
+
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
-          <CardTitle title={<FormattedMessage id="login" />} />
+          <CardTitle title={<FormattedMessage id="login" />} subtitle={subtitle} />
           <CardText>
-            <TextField style={styles.field} ref="email" required floatingLabelText="Email" errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />} />
-            <TextField style={styles.field} ref="password" required type="password" floatingLabelText="Password" errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />} />
+            <TextField style={styles.field}
+                       defaultValue={this.props.invite.email}
+                       ref="email"
+                       required
+                       floatingLabelText="Email"
+                       errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />}
+                       />
+            <TextField style={styles.field}
+                       type="password"
+                       ref="password"
+                       required
+                       floatingLabelText="Password"
+                       errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />}
+                       />
           </CardText>
           <CardActions style={styles.actions}>
             <RaisedButton label="Login" type="submit" />
@@ -58,10 +65,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  invite: PropTypes.object.isRequired,
   error: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
+  invite: state.join.data,
   error: state.login.error,
 })
 

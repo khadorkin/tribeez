@@ -34,14 +34,6 @@ class Register extends Component {
     this.props.getInvite(this.props.params.token)
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      if (!this.refs.email.getValue()) {
-        this.refs.email.focus()
-      }
-    }, 300)
-  }
-
   handleEmailChange(event) {
     this.props.updateJoin({ email: event.target.value })
   }

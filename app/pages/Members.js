@@ -49,9 +49,6 @@ class Members extends Component {
     this.props.updateInvite({
       modal: true,
     })
-    setTimeout(() => {
-      this.refs.email.focus()
-    }, 300)
   }
 
   handleEmailChange(event) {
