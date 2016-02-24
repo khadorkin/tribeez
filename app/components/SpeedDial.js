@@ -1,24 +1,27 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
+import { Link } from 'react-router'
 
 import colors from 'material-ui/lib/styles/colors'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 
 import AddIcon from 'material-ui/lib/svg-icons/content/add'
-import EventIcon from 'material-ui/lib/svg-icons/action/event'
 import CartIcon from 'material-ui/lib/svg-icons/action/shopping-cart'
+import EventIcon from 'material-ui/lib/svg-icons/action/event'
 import CheckIcon from 'material-ui/lib/svg-icons/action/assignment-turned-in'
-import NoteIcon from 'material-ui/lib/svg-icons/action/description'
+import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
+import PollIcon from 'material-ui/lib/svg-icons/social/poll'
 
 import css from './SpeedDial.css'
 const color = 'rgb(95,193,178)'
 
 const actions = [
-  {id: 'expense', icon: <CartIcon color={color} />},
-  {id: 'event', icon: <EventIcon color={color} />},
+  {id: 'poll', icon: <PollIcon color={color} />},
+  {id: 'note', icon: <PasteIcon color={color} />},
   {id: 'task', icon: <CheckIcon color={color} />},
-  {id: 'note', icon: <NoteIcon color={color} />},
+  {id: 'event', icon: <EventIcon color={color} />},
+  {id: 'bill', icon: <CartIcon color={color} />},
 ]
 
 class SpeedDial extends Component {
@@ -40,13 +43,14 @@ class SpeedDial extends Component {
   render() {
     const actionButtons = actions.map((action, index) => {
       const delay = (30 * (this.state.open ? (actions.length - index) : index))
+      const link = <Link to={'/' + action.id + 's/new'} />
       return (
         <div className={css.action} key={action.id}>
           <div className={css.tooltip} style={{transitionDelay: delay + 'ms'}}>
             <FormattedMessage id={'new_' + action.id} />
           </div>
           <div className={css.button} style={{transitionDelay: delay + 'ms'}}>
-            <FloatingActionButton backgroundColor="white">
+            <FloatingActionButton backgroundColor="white" containerElement={link}>
               {action.icon}
             </FloatingActionButton>
           </div>

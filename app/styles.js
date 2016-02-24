@@ -7,4 +7,9 @@ export default {
   actions: {
     textAlign: 'center',
   },
+  fab: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
 }

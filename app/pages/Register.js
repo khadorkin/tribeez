@@ -100,8 +100,8 @@ class Register extends Component {
           <CardTitle title={<FormattedMessage id="register" />} />
           <CardText>
             <TextField style={styles.field} ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
-            <TextField style={styles.field} ref="email" floatingLabelText="Email" required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
-            <TextField style={styles.field} ref="password" type="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
+            <TextField style={styles.field} type="email" ref="email" floatingLabelText="Email" required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
+            <TextField style={styles.field} type="password" ref="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
             <SelectField style={styles.field} ref="lang" floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
               {langItems}
             </SelectField>

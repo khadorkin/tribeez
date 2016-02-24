@@ -2,7 +2,7 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE, INVITE_END } from '../actions'
+import { INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE } from '../actions'
 
 export default (email, lang) => {
   return function(dispatch) {
@@ -20,11 +20,7 @@ export default (email, lang) => {
           dispatch({
             type: INVITE_SUCCESS,
           })
-          setTimeout(() => {
-            dispatch({
-              type: INVITE_END,
-            })
-          }, 5000)
+          dispatch(routeActions.push('/members'))
         }
       })
       .catch(() => {

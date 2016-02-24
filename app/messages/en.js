@@ -5,12 +5,19 @@ export default {
   login: 'Login',
   home: 'Home',
   members: 'Members',
+  bills: 'Bills',
+  events: 'Events',
+  tasks: 'Tasks',
+  notes: 'Notes',
+  polls: 'Polls',
 
   // speed dial
-  'new_expense': 'New expense',
+  'new_member': 'New member',
+  'new_bill': 'New bill',
   'new_task': 'New task',
   'new_event': 'New event',
   'new_note': 'New note',
+  'new_poll': 'New poll',
 
   // login/register forms
   invited_by: '{name} invited you',

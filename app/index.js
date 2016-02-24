@@ -13,6 +13,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import reducers from './reducers'
 import App from './App'
+
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Logout from './pages/Logout'
@@ -20,6 +21,13 @@ import Register from './pages/Register'
 import Join from './pages/Join'
 import Home from './pages/Home'
 import Members from './pages/Members'
+import NewMember from './pages/NewMember'
+import Bills from './pages/Bills'
+import NewBill from './pages/NewBill'
+import Events from './pages/Events'
+import Tasks from './pages/Tasks'
+import Notes from './pages/Notes'
+import Polls from './pages/Polls'
 import NotFound from './pages/NotFound'
 
 import getMember from './actions/getMember'
@@ -55,7 +63,6 @@ const requireAuth = (nextState, replaceState, callback) => {
 }
 
 const container = document.createElement('div')
-// container.id = 'root'
 document.body.appendChild(container)
 
 ReactDOM.render((
@@ -69,6 +76,13 @@ ReactDOM.render((
         <Route path="join/:token" component={Join}/>
         <Route path="home" component={Home} onEnter={requireAuth}/>
         <Route path="members" component={Members} onEnter={requireAuth}/>
+        <Route path="members/new" component={NewMember} onEnter={requireAuth}/>
+        <Route path="bills" component={Bills} onEnter={requireAuth}/>
+        <Route path="bills/new" component={NewBill} onEnter={requireAuth}/>
+        <Route path="events" component={Events} onEnter={requireAuth}/>
+        <Route path="tasks" component={Tasks} onEnter={requireAuth}/>
+        <Route path="notes" component={Notes} onEnter={requireAuth}/>
+        <Route path="polls" component={Polls} onEnter={requireAuth}/>
         <Route path="*" component={NotFound}/>
       </Route>
     </Router>

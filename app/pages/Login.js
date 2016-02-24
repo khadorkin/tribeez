@@ -38,6 +38,7 @@ class Login extends Component {
           <CardTitle title={<FormattedMessage id="login" />} subtitle={subtitle} />
           <CardText>
             <TextField style={styles.field}
+                       type="email"
                        defaultValue={this.props.invite.email}
                        ref="email"
                        required

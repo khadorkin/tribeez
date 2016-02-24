@@ -14,6 +14,12 @@ import IconButton from 'material-ui/lib/icon-button'
 
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 import GroupIcon from 'material-ui/lib/svg-icons/social/group'
+import CartIcon from 'material-ui/lib/svg-icons/action/shopping-cart'
+import EventIcon from 'material-ui/lib/svg-icons/action/event'
+import CheckIcon from 'material-ui/lib/svg-icons/action/assignment-turned-in'
+import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
+import PollIcon from 'material-ui/lib/svg-icons/social/poll'
+
 import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app'
 import DropDownIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-down'
 import DropUpIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-up'
@@ -48,6 +54,16 @@ const style = {
   },
 }
 
+const menuEntries = [
+  {id: 'home', icon: <HomeIcon />},
+  {id: 'members', icon: <GroupIcon />},
+  {id: 'bills', icon: <CartIcon />},
+  {id: 'events', icon: <EventIcon />},
+  {id: 'tasks', icon: <CheckIcon />},
+  {id: 'notes', icon: <PasteIcon />},
+  {id: 'polls', icon: <PollIcon />},
+]
+
 class Nav extends Component {
 
   constructor(props) {
@@ -72,11 +88,6 @@ class Nav extends Component {
   }
 
   render() {
-    const menuEntries = [
-      {id: 'home', icon: <HomeIcon />},
-      {id: 'members', icon: <GroupIcon />},
-    ]
-
     const menuItems = menuEntries.map(entry =>
       <MenuItem key={entry.id}
                 style={this.props.page === entry.id ? style.current : style.default}
