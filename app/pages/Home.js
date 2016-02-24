@@ -15,7 +15,7 @@ import styles from '../styles'
 class Home extends Component {
 
   componentWillMount() {
-    this.props.getActivity(0, 10)
+    this.props.getActivity()
   }
 
   render() {
@@ -36,7 +36,7 @@ Home.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  entries: state.activity.entries,
+  entries: state.member.loading ? [] : state.activity.entries, // the entries need the tribe users
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

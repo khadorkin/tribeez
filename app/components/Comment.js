@@ -34,7 +34,7 @@ Comment.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.user.tribe.users,
+  users: state.member.tribe.users,
 })
 
 export default connect(mapStateToProps)(Comment)

@@ -162,7 +162,7 @@ Members.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  tribe: state.user.tribe,
+  tribe: state.member.tribe,
   email: state.invite.email,
   lang: state.invite.lang,
   error: state.invite.error,

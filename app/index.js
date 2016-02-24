@@ -20,7 +20,7 @@ import Home from './pages/Home'
 import Members from './pages/Members'
 import NotFound from './pages/NotFound'
 
-import getUser from './actions/getUser'
+import getMember from './actions/getMember'
 
 import './index.css'
 
@@ -39,8 +39,8 @@ const store = createStoreWithMiddleware(rootReducer)
 reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
 
 const requireAuth = (nextState, replaceState, callback) => {
-  if (!store.getState().user.data.id) {
-    getUser()(store.dispatch)
+  if (!store.getState().member.user.id) {
+    store.dispatch(getMember())
   }
   callback()
 }

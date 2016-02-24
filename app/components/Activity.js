@@ -30,10 +30,11 @@ class Activity extends Component {
   }
 
   render() {
+    // to render an activity, the users must be loaded for the current tribe activity (see parent component)
     let user = this.props.users.find(user => user.id === this.props.entry.user_id)
     let title
     if (this.props.entry.item_id) {
-      let inviter = this.props.entry.item_id && this.props.users.find(user => user.id === this.props.entry.item_id)
+      let inviter = this.props.users.find(user => user.id === this.props.entry.item_id)
       title = <FormattedMessage id={'entry.' + this.props.entry.type + '.item'} values={{name: user.name, item: inviter.name}} />
     } else {
       title = <FormattedMessage id={'entry.' + this.props.entry.type} values={{name: user.name}} />
@@ -76,7 +77,7 @@ Activity.propTypes = {
 
 const mapStateToProps = (state) => ({
   boxComments: state.activity.boxComments,
-  users: state.user.tribe.users,
+  users: state.member.tribe.users,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

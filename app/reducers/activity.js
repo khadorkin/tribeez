@@ -13,6 +13,7 @@ export default (state = initialState, action = null) => {
     case GET_ACTIVITY_REQUEST:
       return Object.assign({}, state, {
         loading: true,
+        entries: [],
         error: false,
       })
     case GET_ACTIVITY_SUCCESS:

@@ -9,7 +9,7 @@ export default () => {
     dispatch({
       type: LOGOUT_REQUEST,
     })
-    api.get('logout')
+    api.post('logout')
       .then((data) => {
         if (data.error) {
           dispatch({

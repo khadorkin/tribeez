@@ -1,4 +1,4 @@
-import { GET_USER_SUCCESS, UPDATE_INVITE_DATA, INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE, INVITE_END } from '../actions'
+import { GET_MEMBER_SUCCESS, UPDATE_INVITE_DATA, INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE, INVITE_END } from '../actions'
 
 import lang from '../utils/lang'
 
@@ -13,7 +13,7 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case GET_USER_SUCCESS:
+    case GET_MEMBER_SUCCESS:
       return Object.assign({}, state, {
         lang: action.user.lang,
       })

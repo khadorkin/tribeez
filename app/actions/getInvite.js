@@ -9,7 +9,7 @@ export default (token) => {
     dispatch({
       type: GET_INVITE_REQUEST,
     })
-    api.get('invitation', { token })
+    api.get('invite', { token })
       .then((data) => {
         if (data.error) {
           dispatch({

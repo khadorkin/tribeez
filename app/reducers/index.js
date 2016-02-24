@@ -1,7 +1,7 @@
 import app from './app'
 import login from './login'
 import logout from './logout'
-import user from './user'
+import member from './member'
 import invite from './invite'
 import register from './register'
 import join from './join'
@@ -11,7 +11,7 @@ export default {
   app,
   login,
   logout,
-  user,
+  member,
   invite,
   register,
   join,

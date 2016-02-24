@@ -8,22 +8,24 @@ import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
 import FlatButton from 'material-ui/lib/flat-button'
 
-import getLogout from '../actions/getLogout'
+import postLogout from '../actions/postLogout'
+
+//TODO: is this component really useful?
 
 class Logout extends Component {
 
   componentWillMount() {
-    this.props.getLogout()
+    this.props.postLogout()
   }
 
   render() {
     return (
-      <Card className="main">
+      <Card style={{margin:'15px 10px 0'}}>
         <CardText>
           <p className="error">{this.props.error && <FormattedMessage id={'error.' + this.props.error} />}</p>
         </CardText>
         <CardActions>
-          <FlatButton label="Try again" onClick={this.props.logout} />
+          <FlatButton label="Try again" onTouchTap={this.props.postLogout} />
         </CardActions>
       </Card>
     )
@@ -40,7 +42,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getLogout,
+  postLogout,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout)

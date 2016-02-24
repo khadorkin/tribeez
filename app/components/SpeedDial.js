@@ -56,7 +56,7 @@ class SpeedDial extends Component {
 
     return (
       <div className={this.state.open ? css.opened : css.closed}>
-        <div className={css.cover} onClick={this.toggle}></div>
+        <div className={css.cover} onTouchTap={this.toggle}></div>
         <div className={css.container}>
           <div className={css.actions}>
             {actionButtons}

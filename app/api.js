@@ -11,13 +11,13 @@ const request = (route, params, method) => {
   let query = arr.join('&')
   let init = { method, credentials: 'include' }
   if (query) {
-    if (method === 'POST') {
+    if (method === 'GET') {
+      url += '?' + query
+    } else {
       init.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
       }
       init.body = query
-    } else {
-      url += '?' + query
     }
   }
   return fetch(url, init)
@@ -33,4 +33,6 @@ const request = (route, params, method) => {
 export default {
   get: (route, params) => request(route, params, 'GET'),
   post: (route, params) => request(route, params, 'POST'),
+  put: (route, params) => request(route, params, 'PUT'),
+  delete: (route, params) => request(route, params, 'DELETE'),
 }

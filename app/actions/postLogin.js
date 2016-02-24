@@ -2,7 +2,7 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILURE } from '../actions'
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE } from '../actions'
 
 export default (email, password) => {
   return function(dispatch) {
@@ -10,7 +10,7 @@ export default (email, password) => {
       type: LOGIN_REQUEST,
     })
     dispatch({
-      type: GET_USER_REQUEST,
+      type: GET_MEMBER_REQUEST,
     })
     api.post('login', {
       email,
@@ -23,7 +23,7 @@ export default (email, password) => {
             error: data.error,
           })
           dispatch({
-            type: GET_USER_FAILURE,
+            type: GET_MEMBER_FAILURE,
             error: data.error,
           })
         } else {
@@ -31,7 +31,7 @@ export default (email, password) => {
             type: LOGIN_SUCCESS,
           })
           dispatch({
-            type: GET_USER_SUCCESS,
+            type: GET_MEMBER_SUCCESS,
             user: data.user,
             tribe: data.tribe,
           })
@@ -44,7 +44,7 @@ export default (email, password) => {
           error: 'other',
         })
         dispatch({
-          type: GET_USER_FAILURE,
+          type: GET_MEMBER_FAILURE,
           error: 'other',
         })
       })

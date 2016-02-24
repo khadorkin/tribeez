@@ -88,12 +88,12 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   page: state.routing.location.pathname.split('/')[1],
-  uid: state.user.data.id,
+  uid: state.member.user.id,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
-  loading: state.activity.loading || state.invite.loading || state.logout.loading || state.user.loading, //TODO: mutualize
+  loading: state.activity.loading || state.invite.loading || state.logout.loading || state.member.loading, //TODO: mutualize
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
