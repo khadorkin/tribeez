@@ -1,4 +1,12 @@
-/*eslint-env node */
+/*eslint-env node*/
+
+const API_ENDPOINTS = {
+  development: 'http://localhost:3000',
+  production: 'https://api.sortmytribe.com',
+}
+
+const env = process.env.NODE_ENV || 'development'
+console.log('Building for', env)
 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -7,32 +15,37 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const reactCssModules = require('react-css-modules')
 
+const htmlPlugin = new HtmlWebpackPlugin({
+  title: 'MyTribe',
+  template: 'app/index.tpl.html',
+})
+
+const definePlugin = new webpack.DefinePlugin({
+  'process.env': { NODE_ENV: JSON.stringify(env) },
+  __API_ENDPOINT__: JSON.stringify(API_ENDPOINTS[env]),
+  __DEBUG__: (env === 'development'),
+})
+
 const configs = {
   development: {
     devtool: 'eval',
     plugins: [
       new CleanWebpackPlugin(['dist']),
-      new HtmlWebpackPlugin({
-        title: 'MyTribe',
-        template: 'app/index.tpl.html',
-      }),
+      htmlPlugin,
+      definePlugin,
     ],
   },
   production: {
     devtool: 'cheap-module-source-map', // or even null for no sourcemap
     plugins: [
-      new HtmlWebpackPlugin({
-        title: 'MyTribe',
-        template: 'app/index.tpl.html',
-      }),
-      new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify(env) } }),
+      htmlPlugin,
+      definePlugin,
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
     ],
   },
 }
-const env = process.env.NODE_ENV || 'development'
 
 const config = configs[env]
 

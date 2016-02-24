@@ -2,7 +2,7 @@
 /*eslint-env node */
 'use strict'
 
-const PORT = 3001
+const PORT = process.env.PORT || 3000
 const path = require('path')
 const express = require('express')
 const compression = require('compression')

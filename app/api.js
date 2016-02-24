@@ -1,4 +1,4 @@
-const API_ENDPOINT = 'http://localhost:3000/'
+/*global __API_ENDPOINT__:false*/
 
 const request = (route, params, method) => {
   let arr = []
@@ -7,7 +7,7 @@ const request = (route, params, method) => {
       arr.push(key + '=' + encodeURIComponent(params[key]))
     }
   }
-  let url = API_ENDPOINT + route
+  let url = __API_ENDPOINT__ + '/' + route
   let query = arr.join('&')
   let init = { method, credentials: 'include' }
   if (query) {

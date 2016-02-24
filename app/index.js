@@ -1,3 +1,5 @@
+/*global __DEBUG__:false*/
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
@@ -27,16 +29,23 @@ import './index.css'
 // Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
+const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history
+let createStoreWithMiddleware
+if (__DEBUG__) {
+  const logger = createLogger()
+  createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware, logger)(createStore)
+} else {
+  createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore)
+}
+
 reducers.form = formReducer
 reducers.routing = routeReducer
-
 const rootReducer = combineReducers(reducers)
-const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history
-const logger = createLogger()
-const createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware, logger)(createStore)
 const store = createStoreWithMiddleware(rootReducer)
 
-reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
+if (__DEBUG__) {
+  reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
+}
 
 const requireAuth = (nextState, replaceState, callback) => {
   if (!store.getState().member.user.id) {
