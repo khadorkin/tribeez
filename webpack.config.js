@@ -18,6 +18,7 @@ const env = process.env.NODE_ENV || 'development'
 console.log('Building for', env)
 
 const webpack = require('webpack')
+const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
@@ -56,11 +57,11 @@ const configs = {
     debug: false,
     devtool: 'cheap-module-source-map', // or even null for no sourcemap
     plugins: [
-      htmlPlugin,
+      //htmlPlugin,
       definePlugin,
-      new webpack.optimize.OccurenceOrderPlugin(),
+      //new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
+      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}, sourceMap: false}),
     ],
   },
 }
@@ -69,9 +70,24 @@ const config = configs[env]
 
 // common config:
 Object.assign(config, {
-  entry: './app/index.js',
+  context: path.join(__dirname, './app'),
+  entry: {
+    js: './index.js',
+    vendor: [
+      'react',
+      'react-dom',
+      'redux',
+      'react-redux',
+      'redux-thunk',
+      'react-router',
+      'react-router-redux',
+      'react-tap-event-plugin',
+      'react-intl',
+      'material-ui',
+    ],
+  },
   output: {
-    path: './dist',
+    path: path.join(__dirname, './dist'),
     filename: env === 'development' ? 'app.js' : `${revision}.js`,
     publicPath: '/',
   },
@@ -84,7 +100,7 @@ Object.assign(config, {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loaders: [
-          'babel', // ES6
+          'babel-loader', // ES6
           'eslint-loader', // JS linter
         ],
       },
@@ -119,6 +135,13 @@ Object.assign(config, {
           'svg-react', // inline SVGs into React components
         ],
       },
+    ],
+  },
+  resolve: {
+    extensions: ['.js'],
+    modules: [
+      path.resolve('./app'),
+      'node_modules',
     ],
   },
   postcss: function() {
