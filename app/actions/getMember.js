@@ -4,7 +4,7 @@ import api from '../api'
 
 import { GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE } from '../actions'
 
-export default () => {
+export default (redirectOnLoggedIn, redirectOnAnonymous) => {
   return function(dispatch) {
     dispatch({
       type: GET_MEMBER_REQUEST,
@@ -17,20 +17,25 @@ export default () => {
             type: GET_MEMBER_FAILURE,
             error: data.error,
           })
-          dispatch(routeActions.push('/login'))
+          if (redirectOnAnonymous) {
+            dispatch(routeActions.push(redirectOnAnonymous))
+          }
         } else {
           dispatch({
             type: GET_MEMBER_SUCCESS,
             user: data.user,
             tribe: data.tribe,
           })
+          if (redirectOnLoggedIn) {
+            dispatch(routeActions.push(redirectOnLoggedIn))
+          }
         }
       })
       .catch(() => {
         dispatch({
           type: GET_MEMBER_FAILURE,
         })
-        dispatch(routeActions.push('/login'))
+        //TODO: show an error
       })
 
   }

@@ -45,14 +45,20 @@ class App extends Component {
   }
 
   render() {
-    const loginButton = <FlatButton label="Login" containerElement={<Link to="/login" />} />
-    const loading = this.props.loading ? <CircularProgress color="white" size={0.5} /> : null
+    let iconLeft = null, iconRight = null
+    if (!this.props.uid) { // i.e. anonymous
+      iconLeft = <IconButton containerElement={<Link to="/" />}><HomeIcon /></IconButton>
+      iconRight = <FlatButton label="Login" containerElement={<Link to="/login" />} />
+    }
+    if (this.props.loading) {
+      iconRight = <CircularProgress color="white" size={0.5} />
+    }
+
     const nav = this.props.uid && (
       <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={open => this.props.toggleMenu(open)}>
         <Nav />
       </LeftNav>
     ) // do not load left nav if not logged in
-    const homeButton = <IconButton containerElement={<Link to="/"/>}><HomeIcon /></IconButton>
     const dockedUserMenu = this.props.uid && this.props.desktop
 
     return (
@@ -60,9 +66,8 @@ class App extends Component {
         <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
           {nav}
           <AppBar title={<FormattedMessage id={this.props.page} />} zDepth={0}
-                  iconElementRight={this.props.uid ? loading : loginButton}
+                  iconElementLeft={iconLeft} iconElementRight={iconRight}
                   onLeftIconButtonTouchTap={this.openMenu}
-                  iconElementLeft={this.props.uid ? null : homeButton}
                   showMenuIconButton={!dockedUserMenu}
           />
           <div>{this.props.children}</div>
