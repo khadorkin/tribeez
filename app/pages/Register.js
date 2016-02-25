@@ -89,10 +89,16 @@ class Register extends Component {
   }
 
   render() {
-    const currencyItems = currencies.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name + ' (' + item.code + ')'} />)
-    const langItems = langs.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name} />)
-    const types = ['houseshare', 'family', 'friends', 'organization', 'other']
-    const typeItems = types.map((type) => <MenuItem value={type} key={type} primaryText={type} />)
+    const currencyItems = currencies.map(item =>
+      <MenuItem value={item.code} key={item.code} primaryText={item.name + ' (' + item.code + ')'} />
+    )
+    const langItems = langs.map(item =>
+      <MenuItem value={item.code} key={item.code} primaryText={item.name} />
+    )
+    const types = ['houseshare', 'family', 'friends', 'organization', 'other'] //TODO: constant
+    const typeItems = types.map(type =>
+      <MenuItem value={type} key={type} primaryText={type} />
+    )
 
     return (
       <form onSubmit={this.handleSubmit} className="main">

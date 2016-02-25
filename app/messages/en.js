@@ -37,6 +37,7 @@ export default {
 
   // Members
   'add_member': 'Add a member',
+  'member_since': 'Member since {date}',
 
   // Home
   'entry.new_user': '{name} has joined the tribe!',

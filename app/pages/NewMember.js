@@ -47,7 +47,9 @@ class NewMember extends Component {
   }
 
   render() {
-    const langItems = langs.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name} />)
+    const langItems = langs.map(item =>
+      <MenuItem value={item.code} key={item.code} primaryText={item.name} />
+    )
 
     return (
       <form onSubmit={this.handleSubmit}>

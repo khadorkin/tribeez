@@ -54,7 +54,9 @@ class Register extends Component {
   }
 
   render() {
-    const langItems = langs.map((item) => <MenuItem value={item.code} key={item.code} primaryText={item.name} />)
+    const langItems = langs.map(item =>
+      <MenuItem value={item.code} key={item.code} primaryText={item.name} />
+    )
 
     return (
       <Card className="main">

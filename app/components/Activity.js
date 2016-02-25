@@ -53,7 +53,9 @@ class Activity extends Component {
                     actAsExpander={true} showExpandableButton={true} />
         <CardText expandable={true} className={css.comments}>
           {
-            this.props.entry.comments.map(comment => <Comment comment={comment} key={comment.id} />)
+            this.props.entry.comments.map(comment =>
+              <Comment comment={comment} key={comment.id} />
+            )
           }
           <form onSubmit={this.postComment.bind(this, this.props.entry.id)}>
             <TextField value={this.props.boxComments[this.props.entry.id]}

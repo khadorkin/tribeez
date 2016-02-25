@@ -23,6 +23,8 @@ import Snackbar from 'material-ui/lib/snackbar'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 
+import Member from '../components/Member'
+
 import styles from '../styles'
 
 import updateInvite from '../actions/updateInvite'
@@ -43,28 +45,11 @@ class Members extends Component {
   render() {
     return (
       <div>
-        <Table multiSelectable={true}>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-              <TableHeaderColumn>Email</TableHeaderColumn>
-              <TableHeaderColumn>Phone number</TableHeaderColumn>
-              <TableHeaderColumn>Birthdate</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {
-              this.props.tribe.users.map(user => (
-                <TableRow key={user.id} /*selected={user.current_tribe_id === this.props.tribe.id}*/>
-                  <TableRowColumn>{user.name}</TableRowColumn>
-                  <TableRowColumn><a href={'mailto:' + user.email}>{user.email}</a></TableRowColumn>
-                  <TableRowColumn>{user.phone}</TableRowColumn>
-                  <TableRowColumn>{user.birthdate && <FormattedDate value={user.birthdate} day="numeric" month="long" year="numeric" />}</TableRowColumn>
-                </TableRow>
-              ))
-            }
-          </TableBody>
-        </Table>
+        {
+          this.props.tribe.users.map(user =>
+            <Member user={user} key={user.id} />
+          )
+        }
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to="/members/new" />}>
           <ContentAdd />

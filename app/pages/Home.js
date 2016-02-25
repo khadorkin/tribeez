@@ -17,7 +17,9 @@ class Home extends Component {
     return (
       <div>
         {
-          this.props.entries.map(entry => <Activity entry={entry} key={entry.id} />)
+          this.props.entries.map(entry =>
+            <Activity entry={entry} key={entry.id} />
+          )
         }
         <SpeedDial />
       </div>
