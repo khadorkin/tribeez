@@ -7,15 +7,8 @@ const path = require('path')
 const express = require('express')
 const compression = require('compression')
 
-//const webpack = require('webpack')
-//const webpackMiddleware = require('webpack-dev-middleware')
-//const config = require('./webpack.config.js')
-
 var app = express()
 app.use(compression())
-
-//var compiler = webpack(config)
-//app.use(webpackMiddleware(compiler))
 
 app.use(express.static(__dirname + '/dist'))
 

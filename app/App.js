@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { IntlProvider } from 'react-intl'
+import { IntlProvider, FormattedMessage } from 'react-intl'
 import { routeActions } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
 
 //import ThemeManager from 'material-ui/lib/styles/theme-manager'
 

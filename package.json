@@ -7,8 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "PATH=$(npm bin):$PATH webpack -d --progress --display-error-details",
-    "deploy": "PATH=$(npm bin):$PATH NODE_ENV=production webpack -p"
+    "dev": "PATH=$(npm bin):$PATH webpack --progress --display-error-details",
+    "deploy": "PATH=$(npm bin):$PATH NODE_ENV=production webpack"
   },
   "author": "Antoine Rousseau <antoine@rousseau.im>",
   "license": "ISC",

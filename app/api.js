@@ -1,5 +1,10 @@
 /*global __API_ENDPOINT__:false*/
 
+// when the API is HTTPS but the App is HTTP, redirect to the HTTPS version of the App:
+if (__API_ENDPOINT__.indexOf('https') === 0 && location.protocol !== 'https:') {
+  location.protocol = 'https:' // changing the protocol acts as a redirect
+}
+
 const request = (route, params, method) => {
   let arr = []
   for (let key in params) {

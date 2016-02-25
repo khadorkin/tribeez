@@ -16,7 +16,7 @@ const autoprefixer = require('autoprefixer')
 const reactCssModules = require('react-css-modules')
 
 const htmlPlugin = new HtmlWebpackPlugin({
-  title: 'MyTribe',
+  title: 'SortMyTribe',
   template: 'app/index.tpl.html',
 })
 
@@ -28,7 +28,8 @@ const definePlugin = new webpack.DefinePlugin({
 
 const configs = {
   development: {
-    devtool: 'eval',
+    debug: true,
+    devtool: 'source-map', // eval
     plugins: [
       new CleanWebpackPlugin(['dist']),
       htmlPlugin,
@@ -36,6 +37,7 @@ const configs = {
     ],
   },
   production: {
+    debug: false,
     devtool: 'cheap-module-source-map', // or even null for no sourcemap
     plugins: [
       htmlPlugin,
