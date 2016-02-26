@@ -6,6 +6,7 @@ import invite from './invite'
 import register from './register'
 import join from './join'
 import activity from './activity'
+import invites from './invites'
 
 export default {
   app,
@@ -16,4 +17,5 @@ export default {
   register,
   join,
   activity,
+  invites,
 }

@@ -20,7 +20,7 @@ export default {
   'new_poll': 'New poll',
 
   // login/register forms
-  invited_by: '{name} invited you',
+  invited_you: '{name} invited you',
   login_to_join: '{inviter} invited you to join {tribe}',
   'error.name': 'Invalid user name',
   'error.email': 'Invalid email',
@@ -38,6 +38,7 @@ export default {
   // Members
   'add_member': 'Add a member',
   'member_since': 'Member since {date}',
+  'invited_by': 'Invited by {user} on {date}',
 
   // Home
   'entry.new_user': '{name} has joined the tribe!',

@@ -4,7 +4,7 @@ const fr = {
   welcome: 'Bienvenue',
   register: 'Inscription',
   login: 'Connexion',
-  invited_by: '{name} vous a invité',
+  invited_you: '{name} vous a invité',
   'add_member': 'Ajouter un membre',
   'entry.new_user': '{name} a rejoint la tribu !',
   'entry.new_user.item': '{name} (invité-e par {item}) a rejoint la tribu !',

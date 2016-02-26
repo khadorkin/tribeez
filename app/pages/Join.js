@@ -61,7 +61,7 @@ class Register extends Component {
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
-          <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_by" values={{name: this.props.inviter}} />} />
+          <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_you" values={{name: this.props.inviter}} />} />
           <CardText>
             <TextField style={styles.field} ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
             <TextField style={styles.field} type="email" floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
