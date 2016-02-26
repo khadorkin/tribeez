@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router'
 
-import colors from 'material-ui/lib/styles/colors'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 
 import AddIcon from 'material-ui/lib/svg-icons/content/add'
@@ -59,10 +57,10 @@ class SpeedDial extends Component {
     })
 
     return (
-      <div className={this.state.open ? css.opened : css.closed}>
-        <div className={css.cover} onTouchTap={this.toggle}></div>
+      <div className={(this.state.open ? css.opened : css.closed)}>
+        <div className={css.cover} style={{height: this.state.open ? window.innerHeight + 'px' : 0}} onTouchTap={this.toggle}></div>
         <div className={css.container}>
-          <div className={css.actions}>
+          <div className={css.actions} style={{top: this.state.open ? (actions.length * -76) + 'px' : '100px'}}>
             {actionButtons}
           </div>
           <FloatingActionButton onMouseUp={this.toggle} className={css.main} backgroundColor={color}>
@@ -75,12 +73,4 @@ class SpeedDial extends Component {
 
 }
 
-SpeedDial.propTypes = {
-  open: PropTypes.bool.isRequired,
-}
-
-const mapStateToProps = (state) => ({
-  open: true,
-})
-
-export default connect(mapStateToProps)(SpeedDial)
+export default SpeedDial
