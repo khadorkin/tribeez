@@ -2,9 +2,9 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE } from '../actions'
+import { GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE, LOGIN_DESTINATION } from '../actions'
 
-export default (redirectOnLoggedIn, redirectOnAnonymous) => {
+export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
   return function(dispatch) {
     dispatch({
       type: GET_MEMBER_REQUEST,
@@ -19,6 +19,10 @@ export default (redirectOnLoggedIn, redirectOnAnonymous) => {
           })
           if (redirectOnAnonymous) {
             dispatch(routeActions.push(redirectOnAnonymous))
+            dispatch({
+              type: LOGIN_DESTINATION,
+              destination,
+            })
           }
         } else {
           dispatch({

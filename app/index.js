@@ -57,14 +57,15 @@ if (__DEBUG__) {
 
 const authenticate = (nextState, replaceState, callback) => {
   if (!store.getState().member.user.id) {
+    const destination = nextState.location.pathname
     let redirectOnLoggedIn, redirectOnAnonymous
 
-    if (/^\/($|login|register|join)/.test(nextState.location.pathname)) { // public routes
+    if (/^\/($|login|register|join)/.test(destination)) { // public routes
       redirectOnLoggedIn = '/home'
     } else { // private routes
       redirectOnAnonymous = '/login'
     }
-    store.dispatch(getMember(redirectOnLoggedIn, redirectOnAnonymous))
+    store.dispatch(getMember(destination, redirectOnLoggedIn, redirectOnAnonymous))
   }
   callback()
 }

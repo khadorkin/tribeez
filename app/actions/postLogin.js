@@ -4,7 +4,7 @@ import api from '../api'
 
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE } from '../actions'
 
-export default (email, password) => {
+export default (email, password, destination) => {
   return function(dispatch) {
     dispatch({
       type: LOGIN_REQUEST,
@@ -35,7 +35,7 @@ export default (email, password) => {
             user: data.user,
             tribe: data.tribe,
           })
-          dispatch(routeActions.push('/home'))
+          dispatch(routeActions.push(destination || '/home'))
         }
       })
       .catch((err) => {

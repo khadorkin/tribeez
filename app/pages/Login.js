@@ -24,7 +24,7 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.postLogin(this.refs.email.getValue(), this.refs.password.getValue())
+    this.props.postLogin(this.refs.email.getValue(), this.refs.password.getValue(), this.props.destination)
   }
 
   render() {
@@ -71,6 +71,7 @@ Login.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+  destination: state.login.destination,
   invite: state.join.data,
   error: state.login.error,
 })
