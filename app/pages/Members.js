@@ -19,6 +19,7 @@ import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 import Snackbar from 'material-ui/lib/snackbar'
 
 import Member from '../components/Member'
+import Error from '../components/Error'
 
 import styles from '../styles'
 
@@ -116,6 +117,10 @@ class Members extends Component {
           </Paper>
         }
 
+        {
+          this.props.error && <Error message={this.props.error} retry={this.props.getInvites} />
+        }
+
         <FloatingActionButton style={styles.fab} containerElement={<Link to="/members/new" />}>
           <ContentAdd />
         </FloatingActionButton>
@@ -135,12 +140,14 @@ class Members extends Component {
 Members.propTypes = {
   users: PropTypes.array,
   invites: PropTypes.array,
+  error: PropTypes.string,
   snack: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   users: state.member.tribe.users,
   invites: state.invites.list,
+  error: state.invites.error,
   snack: state.invite.snack,
 })
 

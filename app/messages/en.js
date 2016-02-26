@@ -2,9 +2,11 @@ export default {
   // titles
   welcome: 'Welcome',
   register: 'Register',
+  join: 'Join',
   login: 'Login',
   home: 'Home',
   members: 'Members',
+  members_new: 'New member',
   bills: 'Bills',
   events: 'Events',
   tasks: 'Tasks',

@@ -8,7 +8,7 @@ export default {
     textAlign: 'center',
   },
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 20,
     right: 20,
   },

@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import Activity from '../components/Activity'
 import SpeedDial from '../components/SpeedDial'
+import Error from '../components/Error'
 
 import getActivity from '../actions/getActivity'
 
@@ -21,6 +22,10 @@ class Home extends Component {
             <Activity entry={entry} key={entry.id} />
           )
         }
+
+        {
+          this.props.error && <Error message={this.props.error} retry={this.props.getActivity} />
+        }
         <SpeedDial />
       </div>
     )
@@ -30,10 +35,12 @@ class Home extends Component {
 
 Home.propTypes = {
   entries: PropTypes.array,
+  error: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
   entries: state.member.loading ? [] : state.activity.entries, // the entries need the tribe users
+  error: state.activity.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

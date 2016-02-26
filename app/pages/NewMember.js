@@ -54,7 +54,6 @@ class NewMember extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <Card>
-          <CardTitle title={<FormattedMessage id="new_member" />} />
           <CardText>
             <TextField style={styles.field} type="email" ref="email" value={this.props.email} onChange={this.handleEmailChange} floatingLabelText="Email" required errorText={this.props.error === 'email' && <FormattedMessage id="error.email" />} />
             <SelectField style={styles.field} floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>

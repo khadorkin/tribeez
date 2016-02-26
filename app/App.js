@@ -59,18 +59,21 @@ class App extends Component {
         <Nav />
       </LeftNav>
     ) // do not load left nav if not logged in
+
     const dockedUserMenu = this.props.uid && this.props.desktop
+    const page_id = this.props.pathname.substr(1).replace(/\//g, '_') // e.g. "/members/new" => "members_new"
+    const title = page_id && <FormattedMessage id={page_id} />
 
     return (
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
         <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
           {nav}
-          <AppBar title={<FormattedMessage id={this.props.page} />} zDepth={0}
+          <AppBar title={title} zDepth={0}
                   iconElementLeft={iconLeft} iconElementRight={iconRight}
                   onLeftIconButtonTouchTap={this.openMenu}
                   showMenuIconButton={!dockedUserMenu}
           />
-          <div>{this.props.children}</div>
+          <div style={{marginBottom: '80px'}}>{this.props.children}</div>
         </div>
       </IntlProvider>
     )
@@ -91,13 +94,13 @@ App.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  page: state.routing.location.pathname.split('/')[1],
+  pathname: state.routing.location.pathname,
   uid: state.member.user.id,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
-  loading: state.activity.loading || state.invite.loading || state.logout.loading || state.member.loading, //TODO: mutualize
+  loading: state.activity.loading || state.invite.loading || state.logout.loading || state.member.loading || state.invites.loading, //TODO: mutualize
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

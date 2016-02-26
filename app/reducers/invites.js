@@ -3,7 +3,7 @@ import { GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE } from '.
 const initialState = {
   loading: false,
   list: [],
-  error: false,
+  error: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -13,18 +13,18 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         loading: true,
         list: [],
-        error: false,
+        error: null,
       })
     case GET_INVITES_SUCCESS:
       return Object.assign({}, state, {
         loading: false,
-        error: false,
+        error: null,
         list: action.list,
       })
     case GET_INVITES_FAILURE:
       return Object.assign({}, state, {
         loading: false,
-        error: true,
+        error: action.error,
       })
     default:
       return state

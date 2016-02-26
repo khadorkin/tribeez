@@ -3,7 +3,7 @@ import { GET_ACTIVITY_REQUEST, GET_ACTIVITY_SUCCESS, GET_ACTIVITY_FAILURE, COMME
 const initialState = {
   loading: false,
   entries: [],
-  error: false,
+  error: null,
   boxComments: {},
 }
 
@@ -14,18 +14,18 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         loading: true,
         entries: [],
-        error: false,
+        error: null,
       })
     case GET_ACTIVITY_SUCCESS:
       return Object.assign({}, state, {
         loading: false,
-        error: false,
+        error: null,
         entries: action.entries,
       })
     case GET_ACTIVITY_FAILURE:
       return Object.assign({}, state, {
         loading: false,
-        error: true,
+        error: action.error,
       })
     case COMMENT_SUCCESS:
       let entries = state.entries.slice() // copy
