@@ -2,7 +2,8 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE } from '../actions'
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE } from '../constants/actions'
+import routes from '../constants/routes'
 
 export default (email, password, destination) => {
   return function(dispatch) {
@@ -35,7 +36,7 @@ export default (email, password, destination) => {
             user: data.user,
             tribe: data.tribe,
           })
-          dispatch(routeActions.push(destination || '/home'))
+          dispatch(routeActions.push(destination || routes.ACTIVITY))
         }
       })
       .catch((err) => {

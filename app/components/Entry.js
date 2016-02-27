@@ -16,9 +16,9 @@ import Comment from './Comment'
 import postComment from '../actions/postComment'
 import updateComment from '../actions/updateComment'
 
-import css from './Activity.css'
+import css from './Entry.css'
 
-class Activity extends Component {
+class Entry extends Component {
 
   handleCommentChange(id, event) {
     this.props.updateComment(id, event.target.value)
@@ -71,7 +71,7 @@ class Activity extends Component {
 
 }
 
-Activity.propTypes = {
+Entry.propTypes = {
   entry: PropTypes.object.isRequired,
   boxComments: PropTypes.object.isRequired,
   users: PropTypes.array,
@@ -87,4 +87,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateComment,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Activity)
+export default connect(mapStateToProps, mapDispatchToProps)(Entry)

@@ -1,4 +1,4 @@
-import { GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE } from '../actions'
+import { GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE } from '../constants/actions'
 
 const initialState = {
   loading: false,

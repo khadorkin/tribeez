@@ -4,7 +4,7 @@ export default {
   register: 'Register',
   join: 'Join',
   login: 'Login',
-  home: 'Home',
+  activity: 'Activity',
   members: 'Members',
   members_new: 'New member',
   bills: 'Bills',
@@ -14,12 +14,11 @@ export default {
   polls: 'Polls',
 
   // speed dial
-  'new_member': 'New member',
-  'new_bill': 'New bill',
-  'new_task': 'New task',
-  'new_event': 'New event',
-  'new_note': 'New note',
-  'new_poll': 'New poll',
+  'bills_new': 'New bill',
+  'tasks_new': 'New task',
+  'events_new': 'New event',
+  'notes_new': 'New note',
+  'polls_new': 'New poll',
 
   // login/register forms
   invited_you: '{name} invited you',

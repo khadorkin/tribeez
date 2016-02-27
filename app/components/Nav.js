@@ -21,10 +21,13 @@ import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/lib/svg-icons/social/poll'
 
 import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app'
+import PersonIcon from 'material-ui/lib/svg-icons/social/person'
 import DropDownIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-down'
 import DropUpIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-up'
 
 import putSwitch from '../actions/putSwitch'
+
+import routes from '../constants/routes'
 
 //TODO: choose between CSS and style!
 
@@ -37,11 +40,15 @@ const style = {
   current: {
     borderLeft: '5px solid rgb(31, 188, 210)',
   },
-  logout: {
-    borderLeft: '5px solid transparent',
+  profile: {
     position: 'absolute',
-    bottom: 0,
-    width: '100%',
+    top: 0,
+    right: 0,
+  },
+  logout: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   tribe: {
     position: 'relative',
@@ -55,13 +62,13 @@ const style = {
 }
 
 const menuEntries = [
-  {id: 'home', icon: <HomeIcon />},
-  {id: 'members', icon: <GroupIcon />},
-  {id: 'bills', icon: <CartIcon />},
-  {id: 'events', icon: <EventIcon />},
-  {id: 'tasks', icon: <CheckIcon />},
-  {id: 'notes', icon: <PasteIcon />},
-  {id: 'polls', icon: <PollIcon />},
+  {route: routes.ACTIVITY, icon: <HomeIcon />},
+  {route: routes.MEMBERS, icon: <GroupIcon />},
+  {route: routes.BILLS, icon: <CartIcon />},
+  {route: routes.EVENTS, icon: <EventIcon />},
+  {route: routes.TASKS, icon: <CheckIcon />},
+  {route: routes.NOTES, icon: <PasteIcon />},
+  {route: routes.POLLS, icon: <PollIcon />},
 ]
 
 class Nav extends Component {
@@ -89,10 +96,10 @@ class Nav extends Component {
 
   render() {
     const menuItems = menuEntries.map(entry =>
-      <MenuItem key={entry.id}
-                style={this.props.page === entry.id ? style.current : style.default}
+      <MenuItem key={entry.route}
+                style={this.props.page === entry.route.substr(1) ? style.current : style.default}
                 leftIcon={entry.icon}
-                containerElement={<Link to={'/' + entry.id} />}><FormattedMessage id={entry.id} /></MenuItem>
+                containerElement={<Link to={entry.route} />}><FormattedMessage id={entry.route.substr(1)} /></MenuItem>
     )
 
     const tribeItems = this.props.tribes.map(tribe =>
@@ -104,6 +111,12 @@ class Nav extends Component {
     return (
       <div>
         <div className={css.header}>
+          <IconButton style={style.logout} containerElement={<Link to="/logout" />}>
+            <ExitIcon color="white" />
+          </IconButton>
+          <IconButton style={style.profile} containerElement={<Link to="/profile" />}>
+            <PersonIcon color="white" />
+          </IconButton>
           <Avatar src={'https://secure.gravatar.com/avatar/' + this.props.gravatar + '?d=retro&s=80'} size={80} />
           <div className={css.name}>{this.props.name}</div>
           <div style={style.tribe}>
@@ -114,7 +127,6 @@ class Nav extends Component {
           </div>
         </div>
         {this.state.showTribes ? tribeItems : menuItems}
-        <MenuItem style={style.logout} leftIcon={<ExitIcon />} containerElement={<Link to="/logout" />}>Logout</MenuItem>
       </div>
     )
   }

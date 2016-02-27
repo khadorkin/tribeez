@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import Activity from '../components/Activity'
+import Entry from '../components/Entry'
 import SpeedDial from '../components/SpeedDial'
 import Error from '../components/Error'
 
 import getActivity from '../actions/getActivity'
 
-class Home extends Component {
+class Activity extends Component {
 
   componentWillMount() {
     this.props.getActivity()
@@ -19,7 +19,7 @@ class Home extends Component {
       <div>
         {
           this.props.entries.map(entry =>
-            <Activity entry={entry} key={entry.id} />
+            <Entry entry={entry} key={entry.id} />
           )
         }
 
@@ -33,7 +33,7 @@ class Home extends Component {
 
 }
 
-Home.propTypes = {
+Activity.propTypes = {
   entries: PropTypes.array,
   error: PropTypes.string,
 }
@@ -47,4 +47,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   getActivity,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Activity)

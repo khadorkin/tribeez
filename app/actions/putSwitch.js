@@ -2,7 +2,8 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE } from '../actions'
+import { SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE } from '../constants/actions'
+import routes from '../constants/routes'
 
 import getActivity from './getActivity'
 import getMember from './getMember'
@@ -26,7 +27,7 @@ export default (id) => {
           dispatch(getMember())
           // force redirect to home page:
           dispatch(getActivity())
-          dispatch(routeActions.push('/home'))
+          dispatch(routeActions.push(routes.ACTIVITY))
         }
       })
       .catch((err) => {

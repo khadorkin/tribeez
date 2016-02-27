@@ -2,7 +2,8 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { JOIN_REQUEST, JOIN_SUCCESS, JOIN_FAILURE, LOGIN_SUCCESS } from '../actions'
+import { JOIN_REQUEST, JOIN_SUCCESS, JOIN_FAILURE, LOGIN_SUCCESS } from '../constants/actions'
+import routes from '../constants/routes'
 
 export default (data) => {
   return function(dispatch) {
@@ -23,7 +24,7 @@ export default (data) => {
           dispatch({
             type: LOGIN_SUCCESS,
           })
-          dispatch(routeActions.push('/home'))
+          dispatch(routeActions.push(routes.ACTIVITY))
         }
       })
       .catch(() => {

@@ -2,7 +2,8 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE } from '../actions'
+import { INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE } from '../constants/actions'
+import routes from '../constants/routes'
 
 export default (email, lang) => {
   return function(dispatch) {
@@ -20,7 +21,7 @@ export default (email, lang) => {
           dispatch({
             type: INVITE_SUCCESS,
           })
-          dispatch(routeActions.push('/members'))
+          dispatch(routeActions.push(routes.MEMBERS))
         }
       })
       .catch(() => {

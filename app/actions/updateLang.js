@@ -1,4 +1,4 @@
-import { UPDATE_LANG } from '../actions'
+import { UPDATE_LANG } from '../constants/actions'
 
 export default (lang) => {
   return function(dispatch) {

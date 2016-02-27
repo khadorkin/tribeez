@@ -11,15 +11,17 @@ import CheckIcon from 'material-ui/lib/svg-icons/action/assignment-turned-in'
 import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/lib/svg-icons/social/poll'
 
+import routes from '../constants/routes'
+
 import css from './SpeedDial.css'
 const color = 'rgb(95,193,178)'
 
 const actions = [
-  {id: 'poll', icon: <PollIcon color={color} />},
-  {id: 'note', icon: <PasteIcon color={color} />},
-  {id: 'task', icon: <CheckIcon color={color} />},
-  {id: 'event', icon: <EventIcon color={color} />},
-  {id: 'bill', icon: <CartIcon color={color} />},
+  {route: routes.POLLS_NEW, icon: <PollIcon color={color} />},
+  {route: routes.NOTES_NEW, icon: <PasteIcon color={color} />},
+  {route: routes.TASKS_NEW, icon: <CheckIcon color={color} />},
+  {route: routes.EVENTS_NEW, icon: <EventIcon color={color} />},
+  {route: routes.BILLS_NEW, icon: <CartIcon color={color} />},
 ]
 
 class SpeedDial extends Component {
@@ -40,12 +42,13 @@ class SpeedDial extends Component {
 
   render() {
     const actionButtons = actions.map((action, index) => {
+      const id = action.route.substr(1).replace(/\//g, '_')
       const delay = (30 * (this.state.open ? (actions.length - index) : index))
-      const link = <Link to={'/' + action.id + 's/new'} />
+      const link = <Link to={action.route} />
       return (
-        <div className={css.action} key={action.id}>
+        <div className={css.action} key={id}>
           <div className={css.tooltip} style={{transitionDelay: delay + 'ms'}}>
-            <FormattedMessage id={'new_' + action.id} />
+            <FormattedMessage id={id} />
           </div>
           <div className={css.button} style={{transitionDelay: delay + 'ms'}}>
             <FloatingActionButton backgroundColor="white" containerElement={link}>

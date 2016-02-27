@@ -2,7 +2,8 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE, UPDATE_LANG } from '../actions'
+import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE, UPDATE_LANG } from '../constants/actions'
+import routes from '../constants/routes'
 
 export default (token) => {
   return function(dispatch) {
@@ -15,7 +16,7 @@ export default (token) => {
           dispatch({
             type: GET_INVITE_FAILURE,
           })
-          dispatch(routeActions.push('/login'))
+          dispatch(routeActions.push(routes.LOGIN))
         } else {
           dispatch({
             type: GET_INVITE_SUCCESS,
@@ -30,7 +31,7 @@ export default (token) => {
         dispatch({
           type: GET_INVITE_FAILURE,
         })
-        dispatch(routeActions.push('/login'))
+        dispatch(routeActions.push(routes.LOGIN))
       })
   }
 }

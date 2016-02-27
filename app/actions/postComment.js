@@ -1,6 +1,6 @@
 import api from '../api'
 
-import { COMMENT_REQUEST, COMMENT_SUCCESS, COMMENT_FAILURE } from '../actions'
+import { COMMENT_REQUEST, COMMENT_SUCCESS, COMMENT_FAILURE } from '../constants/actions'
 
 export default (id, content) => {
   return function(dispatch) {
