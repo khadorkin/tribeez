@@ -73,7 +73,7 @@ class App extends Component {
                   onLeftIconButtonTouchTap={this.openMenu}
                   showMenuIconButton={!dockedUserMenu}
           />
-          <div style={{paddingBottom: '90px', minHeight: (window.innerHeight - 170) + 'px'}}>{this.props.children}</div>
+          <div style={{paddingBottom: '90px', minHeight: (this.props.height - 170) + 'px'}}>{this.props.children}</div>
         </div>
       </IntlProvider>
     )
@@ -98,6 +98,7 @@ const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
+  height: state.app.height,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   loading: state.activity.loading || state.invite.loading || state.logout.loading || state.member.loading || state.invites.loading, //TODO: mutualize

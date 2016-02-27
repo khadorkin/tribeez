@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router'
 
@@ -61,7 +62,7 @@ class SpeedDial extends Component {
 
     return (
       <div className={(this.state.open ? css.opened : css.closed)}>
-        <div className={css.cover} style={{height: this.state.open ? window.innerHeight + 'px' : 0}} onTouchTap={this.toggle}></div>
+        <div className={css.cover} style={{height: this.state.open ? this.props.height + 'px' : 0}} onTouchTap={this.toggle}></div>
         <div className={css.container}>
           <div className={css.actions} style={{top: this.state.open ? (actions.length * -76) + 'px' : '100px'}}>
             {actionButtons}
@@ -76,4 +77,8 @@ class SpeedDial extends Component {
 
 }
 
-export default SpeedDial
+const mapStateToProps = (state) => ({
+  height: state.app.height,
+})
+
+export default connect(mapStateToProps)(SpeedDial)
