@@ -49,6 +49,8 @@ class Entry extends Component {
     return (
       <Card className={css.container}>
         <CardHeader title={title} subtitle={<span>{date} — {comments}</span>}
+                    style={{height: 'auto', whiteSpace: 'nowrap'}}
+                    textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
                     avatar={'https://secure.gravatar.com/avatar/' + user.gravatar + '?d=retro&s=40'}
                     actAsExpander={true} showExpandableButton={true} />
         <CardText expandable={true} className={css.comments}>
