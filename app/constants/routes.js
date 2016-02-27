@@ -21,6 +21,9 @@ export default {
   POLLS: '/polls',
   POLLS_NEW: '/polls/new',
 
+  TRIBE: '/tribe',
+  TRIBE_NEW: '/tribe/new',
+
   // special route
   LOGOUT: '/logout',
 }

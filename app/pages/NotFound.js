@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 
-export default class NoMatch extends React.Component {
+import routes from '../constants/routes'
+
+import Error from '../components/Error'
+
+class NotFound extends Component {
 
   render() {
-    return (
-      <div>Page Not Found</div>
-    )
+    return <Error message="Page not found" label="Return to activity" containerElement={<Link to={routes.ACTIVITY} />} />
   }
 
 }
+
+export default NotFound

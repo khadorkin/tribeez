@@ -8,17 +8,17 @@ export default {
   members: 'Members',
   members_new: 'New member',
   bills: 'Bills',
+  bills_new: 'New bill',
   events: 'Events',
+  events_new: 'New event',
   tasks: 'Tasks',
+  tasks_new: 'New task',
   notes: 'Notes',
+  notes_new: 'New note',
   polls: 'Polls',
-
-  // speed dial
-  'bills_new': 'New bill',
-  'tasks_new': 'New task',
-  'events_new': 'New event',
-  'notes_new': 'New note',
-  'polls_new': 'New poll',
+  polls_new: 'New poll',
+  tribe: 'Tribe',
+  tribe_new: 'New tribe',
 
   // login/register forms
   invited_you: '{name} invited you',

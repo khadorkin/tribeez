@@ -24,6 +24,7 @@ import ExitIcon from 'material-ui/lib/svg-icons/action/exit-to-app'
 import PersonIcon from 'material-ui/lib/svg-icons/social/person'
 import DropDownIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-down'
 import DropUpIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-up'
+import AddIcon from 'material-ui/lib/svg-icons/content/add'
 
 import putSwitch from '../actions/putSwitch'
 
@@ -39,6 +40,12 @@ const style = {
   },
   current: {
     borderLeft: '5px solid rgb(31, 188, 210)',
+  },
+  new: {
+    borderLeft: '5px solid transparent',
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
   profile: {
     position: 'absolute',
@@ -99,13 +106,29 @@ class Nav extends Component {
       <MenuItem key={entry.route}
                 style={this.props.page === entry.route.substr(1) ? style.current : style.default}
                 leftIcon={entry.icon}
-                containerElement={<Link to={entry.route} />}><FormattedMessage id={entry.route.substr(1)} /></MenuItem>
+                containerElement={<Link to={entry.route} />}
+      >
+        <FormattedMessage id={entry.route.substr(1)} />
+      </MenuItem>
     )
 
     const tribeItems = this.props.tribes.map(tribe =>
       <MenuItem key={tribe.id}
                 onTouchTap={this.selectTribe.bind(this, tribe.id)}
-                style={tribe.active ? style.current : style.default}>{tribe.name}</MenuItem>
+                style={tribe.active ? style.current : style.default}
+      >
+        {tribe.name}
+      </MenuItem>
+    )
+
+    tribeItems.push(
+      <MenuItem key="new"
+                style={style.new}
+                leftIcon={<AddIcon />}
+                containerElement={<Link to={routes.TRIBE_NEW} />}
+      >
+        New tribe
+      </MenuItem>
     )
 
     return (

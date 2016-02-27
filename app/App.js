@@ -73,7 +73,7 @@ class App extends Component {
                   onLeftIconButtonTouchTap={this.openMenu}
                   showMenuIconButton={!dockedUserMenu}
           />
-          <div style={{marginBottom: '80px'}}>{this.props.children}</div>
+          <div style={{paddingBottom: '90px', minHeight: (window.innerHeight - 170) + 'px'}}>{this.props.children}</div>
         </div>
       </IntlProvider>
     )

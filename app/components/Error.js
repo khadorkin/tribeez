@@ -12,7 +12,7 @@ class Error extends Component {
     return (
       <div className={css.container}>
         <div className={css.message}>{'Error: ' + this.props.message}</div>
-        <RaisedButton label="Retry" onTouchTap={this.props.retry} />
+        <RaisedButton label={this.props.label || 'Retry'} onTouchTap={this.props.retry} containerElement={this.props.containerElement} />
       </div>
     )
   }
@@ -20,8 +20,9 @@ class Error extends Component {
 }
 
 Error.propTypes = {
-  message: PropTypes.string,
-  retry: PropTypes.function,
+  message: PropTypes.string.isRequired,
+  retry: PropTypes.func,
+  containerElement: PropTypes.node,
 }
 
 export default Error
