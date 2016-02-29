@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { FormattedMessage, FormattedDate } from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
@@ -58,12 +56,4 @@ Member.propTypes = {
   user: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  //
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  //
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Member)
+export default Member

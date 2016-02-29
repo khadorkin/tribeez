@@ -11,11 +11,11 @@ export default (email, lang) => {
       type: INVITE_REQUEST,
     })
     api.post('invite', { email, lang })
-      .then((res) => {
-        if (res.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: INVITE_FAILURE,
-            error: res.error,
+            error: response.error,
           })
         } else {
           dispatch({

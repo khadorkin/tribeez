@@ -8,17 +8,17 @@ export default (id, content) => {
       type: COMMENT_REQUEST,
     })
     api.post('comment', { id, content })
-      .then((res) => {
-        if (res.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: COMMENT_FAILURE,
-            error: res.error,
+            error: response.error,
           })
         } else {
           dispatch({
             type: COMMENT_SUCCESS,
             entry_id: id,
-            data: res,
+            data: response,
           })
         }
       })

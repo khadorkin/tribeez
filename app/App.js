@@ -60,7 +60,10 @@ class App extends Component {
     ) // do not load left nav if not logged in
 
     const dockedUserMenu = this.props.uid && this.props.desktop
-    const page_id = this.props.pathname.substr(1).replace(/\//g, '_') // e.g. "/members/new" => "members_new"
+
+    //TODO: improve this:
+    const path_parts = this.props.pathname.split('/')
+    const page_id = (path_parts[2] && path_parts[2].length < 32 ? `${path_parts[1]}_${path_parts[2]}` : path_parts[1]) // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
     return (

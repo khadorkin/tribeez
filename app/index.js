@@ -60,10 +60,14 @@ if (__DEBUG__) {
 const authenticate = (nextState, replaceState, callback) => {
   if (!store.getState().member.user.id) {
     const destination = nextState.location.pathname
+    if (/^\/(join)/.test(destination)) { // no auth for these routes
+      callback()
+      return
+    }
     let redirectOnLoggedIn
     let redirectOnAnonymous
 
-    if (/^\/($|login|register|join)/.test(destination)) { // public routes
+    if (/^\/($|login|register)/.test(destination)) { // public routes
       redirectOnLoggedIn = routes.ACTIVITY
     } else { // private routes
       redirectOnAnonymous = routes.LOGIN
@@ -82,7 +86,6 @@ ReactDOM.render((
       <Route path={routes.WELCOME} component={App} onEnter={authenticate}>
         <IndexRoute component={Welcome} />
         <Route path={routes.LOGIN} component={Login} />
-        <Route path={routes.LOGOUT} component={Logout} />
         <Route path={routes.REGISTER} component={Register} />
         <Route path={routes.JOIN} component={Join} />
         <Route path={routes.ACTIVITY} component={Activity} />
@@ -94,6 +97,7 @@ ReactDOM.render((
         <Route path={routes.TASKS} component={Tasks} />
         <Route path={routes.NOTES} component={Notes} />
         <Route path={routes.POLLS} component={Polls} />
+        <Route path={routes.LOGOUT} component={Logout} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

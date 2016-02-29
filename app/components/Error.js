@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import { FormattedMessage } from 'react-intl'
 
 import RaisedButton from 'material-ui/lib/raised-button'
 

@@ -11,11 +11,11 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
     })
 
     api.get('member')
-      .then((data) => {
-        if (data.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: GET_MEMBER_FAILURE,
-            error: data.error,
+            error: response.error,
           })
           if (redirectOnAnonymous) {
             dispatch(routeActions.push(redirectOnAnonymous))
@@ -27,8 +27,8 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
         } else {
           dispatch({
             type: GET_MEMBER_SUCCESS,
-            user: data.user,
-            tribe: data.tribe,
+            user: response.user,
+            tribe: response.tribe,
           })
           if (redirectOnLoggedIn) {
             dispatch(routeActions.push(redirectOnLoggedIn))

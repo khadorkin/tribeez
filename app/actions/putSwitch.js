@@ -14,11 +14,11 @@ export default (id) => {
       type: SWITCH_REQUEST,
     })
     api.put('switch', { id })
-      .then((data) => {
-        if (data.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: SWITCH_FAILURE,
-            error: data.error,
+            error: response.error,
           })
         } else {
           dispatch({

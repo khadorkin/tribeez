@@ -17,15 +17,15 @@ export default (email, password, destination) => {
       email,
       password,
     })
-      .then((data) => {
-        if (data.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: LOGIN_FAILURE,
-            error: data.error,
+            error: response.error,
           })
           dispatch({
             type: GET_MEMBER_FAILURE,
-            error: data.error,
+            error: response.error,
           })
         } else {
           dispatch({
@@ -33,8 +33,8 @@ export default (email, password, destination) => {
           })
           dispatch({
             type: GET_MEMBER_SUCCESS,
-            user: data.user,
-            tribe: data.tribe,
+            user: response.user,
+            tribe: response.tribe,
           })
           dispatch(routeActions.push(destination || routes.ACTIVITY))
         }

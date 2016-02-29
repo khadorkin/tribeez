@@ -11,8 +11,8 @@ export default (token) => {
       type: GET_INVITE_REQUEST,
     })
     api.get('invite', { token })
-      .then((data) => {
-        if (data.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: GET_INVITE_FAILURE,
           })
@@ -20,10 +20,10 @@ export default (token) => {
         } else {
           dispatch({
             type: GET_INVITE_SUCCESS,
-            data,
+            data: response,
           })
-          if (data.redirect) {
-            dispatch(routeActions.push(`/${data.redirect}`))
+          if (response.redirect) {
+            dispatch(routeActions.push(`/${response.redirect}`))
           }
         }
       })

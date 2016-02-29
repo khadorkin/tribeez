@@ -11,11 +11,11 @@ export default () => {
       type: LOGOUT_REQUEST,
     })
     api.post('logout')
-      .then((data) => {
-        if (data.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: LOGOUT_FAILURE,
-            error: data.error,
+            error: response.error,
           })
         } else {
           dispatch({

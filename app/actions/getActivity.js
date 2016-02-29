@@ -9,16 +9,16 @@ export default () => {
     })
 
     api.get('activity', { start: 0, limit: 10 }) //TODO: paging
-      .then((data) => {
-        if (data.error) {
+      .then((response) => {
+        if (response.error) {
           dispatch({
             type: GET_ACTIVITY_FAILURE,
-            error: data.error,
+            error: response.error,
           })
         } else {
           dispatch({
             type: GET_ACTIVITY_SUCCESS,
-            entries: data,
+            entries: response,
           })
         }
       })
