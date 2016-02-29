@@ -1,8 +1,14 @@
 /*eslint-env node*/
+/*eslint no-console: 0*/
+'use strict'
 
-const API_ENDPOINTS = {
-  development: 'http://localhost:3000',
-  production: 'https://api.sortmytribe.com',
+let user_config
+try {
+  user_config = require('./config.json')
+} catch (err) {
+  console.error(err.toString())
+  console.error('Could not load configuration file. You must copy `config.dist.json` into `config.json` and edit it with your settings.')
+  process.exit()
 }
 
 const env = process.env.NODE_ENV || 'development'
@@ -18,11 +24,13 @@ const reactCssModules = require('react-css-modules')
 const htmlPlugin = new HtmlWebpackPlugin({
   title: 'SortMyTribe',
   template: 'app/index.tpl.html',
+  env: env,
+  rollbar_token: user_config.rollbar_token,
 })
 
 const definePlugin = new webpack.DefinePlugin({
   'process.env': { NODE_ENV: JSON.stringify(env) },
-  __API_ENDPOINT__: JSON.stringify(API_ENDPOINTS[env]),
+  __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
   __DEBUG__: (env === 'development'),
 })
 
@@ -74,7 +82,7 @@ Object.assign(config, {
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' ,
+        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
       },
       {
         test: /\.(png|jpg)$/,
@@ -88,7 +96,7 @@ Object.assign(config, {
       },
     ],
   },
-  postcss: function () {
+  postcss: function() {
     return [autoprefixer, reactCssModules]
   },
 })
