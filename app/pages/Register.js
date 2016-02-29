@@ -19,7 +19,7 @@ import scriptLoader from '../utils/scriptLoader'
 import updateLang from '../actions/updateLang'
 import postRegister from '../actions/postRegister'
 
-import styles from '../styles'
+import styles from '../constants/styles'
 
 class Register extends Component {
 

@@ -13,7 +13,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import postLogin from '../actions/postLogin'
 
-import styles from '../styles'
+import styles from '../constants/styles'
 
 class Login extends Component {
 

@@ -13,7 +13,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import langs from '../resources/langs'
 
-import styles from '../styles'
+import styles from '../constants/styles'
 
 import updateInvite from '../actions/updateInvite'
 import postInvite from '../actions/postInvite'

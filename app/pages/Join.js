@@ -19,7 +19,7 @@ import updateJoin from '../actions/updateJoin'
 import updateLang from '../actions/updateLang'
 import postJoin from '../actions/postJoin'
 
-import styles from '../styles'
+import styles from '../constants/styles'
 
 class Register extends Component {
 

@@ -21,7 +21,7 @@ import Snackbar from 'material-ui/lib/snackbar'
 import Member from '../components/Member'
 import Error from '../components/Error'
 
-import styles from '../styles'
+import styles from '../constants/styles'
 
 import getInvites from '../actions/getInvites'
 import updateInvite from '../actions/updateInvite'
