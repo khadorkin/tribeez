@@ -11,6 +11,9 @@ try {
   process.exit()
 }
 
+const execSync = require('child_process').execSync
+const revision = execSync('git rev-parse HEAD', {cwd: __dirname}).toString().split('\n').join('')
+
 const env = process.env.NODE_ENV || 'development'
 console.log('Building for', env)
 
@@ -26,6 +29,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
   template: 'app/index.tpl.html',
   env: env,
   rollbar_token: user_config.rollbar_token,
+  revision: revision,
 })
 
 const definePlugin = new webpack.DefinePlugin({
