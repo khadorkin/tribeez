@@ -5,10 +5,6 @@ import { FormattedMessage } from 'react-intl'
 import { Link } from 'react-router'
 
 import MenuItem from 'material-ui/lib/menus/menu-item'
-import Card from 'material-ui/lib/card/card'
-import CardText from 'material-ui/lib/card/card-text'
-import CardActions from 'material-ui/lib/card/card-actions'
-import FlatButton from 'material-ui/lib/flat-button'
 import Avatar from 'material-ui/lib/avatar'
 import IconButton from 'material-ui/lib/icon-button'
 
@@ -88,7 +84,7 @@ class Nav extends Component {
     this.toggleTribeList = this.toggleTribeList.bind(this)
   }
 
-  toggleTribeList(event) {
+  toggleTribeList() {
     this.setState({
       showTribes: !this.state.showTribes,
     })
@@ -104,9 +100,9 @@ class Nav extends Component {
   render() {
     const menuItems = menuEntries.map(entry =>
       <MenuItem key={entry.route}
-                style={this.props.page === entry.route.substr(1) ? style.current : style.default}
-                leftIcon={entry.icon}
-                containerElement={<Link to={entry.route} />}
+        style={this.props.page === entry.route.substr(1) ? style.current : style.default}
+        leftIcon={entry.icon}
+        containerElement={<Link to={entry.route} />}
       >
         <FormattedMessage id={entry.route.substr(1)} />
       </MenuItem>
@@ -114,8 +110,8 @@ class Nav extends Component {
 
     const tribeItems = this.props.tribes.map(tribe =>
       <MenuItem key={tribe.id}
-                onTouchTap={this.selectTribe.bind(this, tribe.id)}
-                style={tribe.active ? style.current : style.default}
+        onTouchTap={this.selectTribe.bind(this, tribe.id)}
+        style={tribe.active ? style.current : style.default}
       >
         {tribe.name}
       </MenuItem>
@@ -123,9 +119,9 @@ class Nav extends Component {
 
     tribeItems.push(
       <MenuItem key="new"
-                style={style.new}
-                leftIcon={<AddIcon />}
-                containerElement={<Link to={routes.TRIBE_NEW} />}
+        style={style.new}
+        leftIcon={<AddIcon />}
+        containerElement={<Link to={routes.TRIBE_NEW} />}
       >
         New tribe
       </MenuItem>
@@ -140,7 +136,7 @@ class Nav extends Component {
           <IconButton style={style.profile} containerElement={<Link to="/profile" />}>
             <PersonIcon color="white" />
           </IconButton>
-          <Avatar src={'https://secure.gravatar.com/avatar/' + this.props.gravatar + '?d=retro&s=80'} size={80} />
+          <Avatar src={`https://secure.gravatar.com/avatar/${this.props.gravatar}?d=retro&s=80`} size={80} />
           <div className={css.name}>{this.props.name}</div>
           <div style={style.tribe}>
             {this.props.tribe}
@@ -160,7 +156,9 @@ Nav.propTypes = {
   page: PropTypes.string.isRequired,
   tribe: PropTypes.string,
   name: PropTypes.string,
+  tribes: PropTypes.array.isRequired,
   gravatar: PropTypes.string,
+  putSwitch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

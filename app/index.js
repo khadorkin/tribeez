@@ -60,7 +60,8 @@ if (__DEBUG__) {
 const authenticate = (nextState, replaceState, callback) => {
   if (!store.getState().member.user.id) {
     const destination = nextState.location.pathname
-    let redirectOnLoggedIn, redirectOnAnonymous
+    let redirectOnLoggedIn
+    let redirectOnAnonymous
 
     if (/^\/($|login|register|join)/.test(destination)) { // public routes
       redirectOnLoggedIn = routes.ACTIVITY

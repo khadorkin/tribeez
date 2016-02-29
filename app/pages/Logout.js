@@ -20,9 +20,9 @@ class Logout extends Component {
 
   render() {
     return (
-      <Card style={{margin:'15px 10px 0'}}>
+      <Card style={{margin: '15px 10px 0'}}>
         <CardText>
-          <p className="error">{this.props.error && <FormattedMessage id={'error.' + this.props.error} />}</p>
+          <p className="error">{this.props.error && <FormattedMessage id={`error.${this.props.error}`} />}</p>
         </CardText>
         <CardActions>
           <FlatButton label="Try again" onTouchTap={this.props.postLogout} />
@@ -35,6 +35,7 @@ class Logout extends Component {
 
 Logout.propTypes = {
   error: PropTypes.string,
+  postLogout: PropTypes.func,
 }
 
 const mapStateToProps = (state) => ({

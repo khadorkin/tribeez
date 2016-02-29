@@ -41,6 +41,5 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
         })
         //TODO: show an error
       })
-
   }
 }

@@ -2,7 +2,7 @@ import { routeActions } from 'react-router-redux'
 
 import api from '../api'
 
-import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE, UPDATE_LANG } from '../constants/actions'
+import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE } from '../constants/actions'
 import routes from '../constants/routes'
 
 export default (token) => {
@@ -23,7 +23,7 @@ export default (token) => {
             data,
           })
           if (data.redirect) {
-            dispatch(routeActions.push('/' + data.redirect))
+            dispatch(routeActions.push(`/${data.redirect}`))
           }
         }
       })

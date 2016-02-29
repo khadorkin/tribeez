@@ -48,10 +48,10 @@ class SpeedDial extends Component {
       const link = <Link to={action.route} />
       return (
         <div className={css.action} key={id}>
-          <div className={css.tooltip} style={{transitionDelay: delay + 'ms'}}>
+          <div className={css.tooltip} style={{transitionDelay: `${delay} ms`}}>
             <FormattedMessage id={id} />
           </div>
-          <div className={css.button} style={{transitionDelay: delay + 'ms'}}>
+          <div className={css.button} style={{transitionDelay: `${delay} ms`}}>
             <FloatingActionButton backgroundColor="white" containerElement={link}>
               {action.icon}
             </FloatingActionButton>
@@ -62,9 +62,9 @@ class SpeedDial extends Component {
 
     return (
       <div className={(this.state.open ? css.opened : css.closed)}>
-        <div className={css.cover} style={{height: this.state.open ? this.props.height + 'px' : 0}} onTouchTap={this.toggle}></div>
+        <div className={css.cover} style={{height: this.state.open ? `${this.props.height} px` : 0}} onTouchTap={this.toggle}></div>
         <div className={css.container}>
-          <div className={css.actions} style={{top: this.state.open ? (actions.length * -76) + 'px' : '100px'}}>
+          <div className={css.actions} style={{top: this.state.open ? `${actions.length * -76}px` : '100px'}}>
             {actionButtons}
           </div>
           <FloatingActionButton onMouseUp={this.toggle} className={css.main} backgroundColor={color}>
@@ -75,6 +75,10 @@ class SpeedDial extends Component {
     )
   }
 
+}
+
+SpeedDial.propTypes = {
+  height: PropTypes.number.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -23,24 +23,27 @@ const infos = [
 class Member extends Component {
 
   render() {
-    let date = <FormattedMessage id="member_since" values={{date: <FormattedDate value={this.props.user.registered} />}} />
+    const date = <FormattedMessage id="member_since" values={{date: <FormattedDate value={this.props.user.registered} />}} />
 
     return (
       <Card className={css.container}>
-        <CardHeader title={this.props.user.name} subtitle={date}
-                    avatar={'https://secure.gravatar.com/avatar/' + this.props.user.gravatar + '?d=retro&s=40'}
-                    actAsExpander={true} showExpandableButton={true} />
+        <CardHeader title={this.props.user.name}
+          subtitle={date}
+          avatar={`https://secure.gravatar.com/avatar/${this.props.user.gravatar}?d=retro&s=40`}
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
         <CardText expandable={true} className={css.details}>
           <List>
             {
               infos.filter(info => this.props.user[info.id]) // remove undefined infos
                    .map(info => {
                      let value = this.props.user[info.id]
-                     let href = info.href ? info.href + value : null
+                     const href = info.href ? info.href + value : null
                      if (info.date) {
                        value = <FormattedDate value={value} />
                      }
-                     return <ListItem key={info.id} leftIcon={info.icon} primaryText={value} disabled={!info.href} href={href} />
+                     return <ListItem key={info.id} leftIcon={info.icon} primaryText={value} disabled={!href} href={href} />
                    })
             }
           </List>

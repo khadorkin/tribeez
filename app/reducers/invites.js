@@ -7,7 +7,6 @@ const initialState = {
 }
 
 export default (state = initialState, action = null) => {
-  let boxComments
   switch (action.type) {
     case GET_INVITES_REQUEST:
       return Object.assign({}, state, {

@@ -1,5 +1,3 @@
-import api from '../api'
-
 import { TOGGLE_MENU, RESIZE } from '../constants/actions'
 
 export const toggleMenu = (open) => {

@@ -30,7 +30,7 @@ export default (id) => {
           dispatch(routeActions.push(routes.ACTIVITY))
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({
           type: SWITCH_FAILURE,
           error: 'other',

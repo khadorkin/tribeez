@@ -4,13 +4,11 @@ import { bindActionCreators } from 'redux'
 import { FormattedMessage } from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
-import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 import TextField from 'material-ui/lib/text-field'
 import SelectField from 'material-ui/lib/select-field'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import CardActions from 'material-ui/lib/card/card-actions'
-import FlatButton from 'material-ui/lib/flat-button'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import langs from '../resources/langs'
@@ -55,8 +53,22 @@ class NewMember extends Component {
       <form onSubmit={this.handleSubmit}>
         <Card>
           <CardText>
-            <TextField style={styles.field} type="email" ref="email" value={this.props.email} onChange={this.handleEmailChange} floatingLabelText="Email" required errorText={this.props.error === 'email' && <FormattedMessage id="error.email" />} />
-            <SelectField style={styles.field} floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <TextField ref="email"
+              style={styles.field}
+              type="email"
+              value={this.props.email}
+              onChange={this.handleEmailChange}
+              floatingLabelText="Email"
+              required={true}
+              errorText={this.props.error === 'email' && <FormattedMessage id="error.email" />}
+            />
+            <SelectField
+              style={styles.field}
+              floatingLabelText="Language"
+              value={this.props.lang}
+              onChange={this.handleLangChange}
+              errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}
+            >
               {langItems}
             </SelectField>
           </CardText>
@@ -75,6 +87,8 @@ NewMember.propTypes = {
   email: PropTypes.string.isRequired,
   lang: PropTypes.string.isRequired,
   error: PropTypes.string,
+  updateInvite: PropTypes.func.isRequired,
+  postInvite: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

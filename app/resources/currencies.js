@@ -169,8 +169,8 @@ const obj = {
 
 // export a sorted array instead of this object:
 
-let arr = []
-for (let code in obj) {
+const arr = []
+for (const code in obj) {
   arr.push({code, name: obj[code]})
 }
 arr.sort((a, b) => (a.name > b.name ? 1 : -1))

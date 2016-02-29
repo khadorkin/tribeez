@@ -11,6 +11,8 @@ const initialState = {
   menu_visible: false,
   lang: defaultLang,
   messages: messages[defaultLang],
+  width: window.innerWidth,
+  height: window.innerHeight,
 }
 
 export default (state = initialState, action = null) => {

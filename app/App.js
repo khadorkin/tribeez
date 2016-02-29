@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { IntlProvider, FormattedMessage } from 'react-intl'
-import { routeActions } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
 
 //import ThemeManager from 'material-ui/lib/styles/theme-manager'
@@ -10,7 +9,6 @@ import { bindActionCreators } from 'redux'
 import AppBar from 'material-ui/lib/app-bar'
 import FlatButton from 'material-ui/lib/flat-button'
 import LeftNav from 'material-ui/lib/left-nav'
-import MenuItem from 'material-ui/lib/menus/menu-item'
 import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 import CircularProgress from 'material-ui/lib/circular-progress'
@@ -45,7 +43,8 @@ class App extends Component {
   }
 
   render() {
-    let iconLeft = null, iconRight = null
+    let iconLeft = null
+    let iconRight = null
     if (!this.props.uid) { // i.e. anonymous
       iconLeft = <IconButton containerElement={<Link to="/" />}><HomeIcon /></IconButton>
       iconRight = <FlatButton label="Login" containerElement={<Link to="/login" />} />
@@ -69,11 +68,11 @@ class App extends Component {
         <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
           {nav}
           <AppBar title={title} zDepth={0}
-                  iconElementLeft={iconLeft} iconElementRight={iconRight}
-                  onLeftIconButtonTouchTap={this.openMenu}
-                  showMenuIconButton={!dockedUserMenu}
+            iconElementLeft={iconLeft} iconElementRight={iconRight}
+            onLeftIconButtonTouchTap={this.openMenu}
+            showMenuIconButton={!dockedUserMenu}
           />
-          <div style={{paddingBottom: '90px', minHeight: (this.props.height - 170) + 'px'}}>{this.props.children}</div>
+          <div style={{paddingBottom: '90px', minHeight: `${this.props.height - 170} px`}}>{this.props.children}</div>
         </div>
       </IntlProvider>
     )
@@ -86,11 +85,17 @@ App.childContextTypes = {
 }
 
 App.propTypes = {
-  page: PropTypes.string,
+  pathname: PropTypes.string,
   uid: PropTypes.number,
-  messages: PropTypes.object.isRequired,
   lang: PropTypes.string.isRequired,
+  desktop: PropTypes.bool.isRequired,
+  height: PropTypes.number.isRequired,
+  messages: PropTypes.object.isRequired,
   menu_visible: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  resize: PropTypes.func.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -39,7 +39,7 @@ export default (email, password, destination) => {
           dispatch(routeActions.push(destination || routes.ACTIVITY))
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({
           type: LOGIN_FAILURE,
           error: 'other',

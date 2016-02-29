@@ -36,6 +36,7 @@ class Activity extends Component {
 Activity.propTypes = {
   entries: PropTypes.array,
   error: PropTypes.string,
+  getActivity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -38,20 +38,20 @@ class Login extends Component {
           <CardTitle title={<FormattedMessage id="login" />} subtitle={subtitle} />
           <CardText>
             <TextField style={styles.field}
-                       type="email"
-                       defaultValue={this.props.invite.email}
-                       ref="email"
-                       required
-                       floatingLabelText="Email"
-                       errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />}
-                       />
+              type="email"
+              defaultValue={this.props.invite.email}
+              ref="email"
+              required={true}
+              floatingLabelText="Email"
+              errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />}
+            />
             <TextField style={styles.field}
-                       type="password"
-                       ref="password"
-                       required
-                       floatingLabelText="Password"
-                       errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />}
-                       />
+              type="password"
+              ref="password"
+              required={true}
+              floatingLabelText="Password"
+              errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />}
+            />
           </CardText>
           <CardActions style={styles.actions}>
             <RaisedButton label="Login" type="submit" />
@@ -66,8 +66,10 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  destination: PropTypes.string,
   invite: PropTypes.object.isRequired,
   error: PropTypes.string,
+  postLogin: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

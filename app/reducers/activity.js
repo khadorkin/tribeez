@@ -28,7 +28,7 @@ export default (state = initialState, action = null) => {
         error: action.error,
       })
     case COMMENT_SUCCESS:
-      let entries = state.entries.slice() // copy
+      const entries = state.entries.slice() // copy
       entries.forEach((entry) => {
         if (entry.id === action.entry_id) {
           entry.comments = [...entry.comments, action.data] // copy + push

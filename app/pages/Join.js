@@ -63,10 +63,35 @@ class Register extends Component {
         <form onSubmit={this.handleSubmit}>
           <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_you" values={{name: this.props.inviter}} />} />
           <CardText>
-            <TextField style={styles.field} ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
-            <TextField style={styles.field} type="email" floatingLabelText="Email" value={this.props.email} onChange={this.handleEmailChange} required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
-            <TextField style={styles.field} type="password" ref="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
-            <SelectField style={styles.field} floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <TextField ref="name"
+              style={styles.field}
+              floatingLabelText="Your name"
+              required={true}
+              errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />}
+            />
+            <TextField
+              style={styles.field}
+              type="email"
+              floatingLabelText="Email"
+              value={this.props.email}
+              onChange={this.handleEmailChange}
+              required={true}
+              errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={`error.${this.props.error}`} />}
+            />
+            <TextField ref="password"
+              style={styles.field}
+              type="password"
+              floatingLabelText="Password"
+              required={true}
+              errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />}
+            />
+            <SelectField
+              style={styles.field}
+              floatingLabelText="Language"
+              value={this.props.lang}
+              onChange={this.handleLangChange}
+              errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}
+            >
               {langItems}
             </SelectField>
           </CardText>
@@ -87,6 +112,11 @@ Register.propTypes = {
   inviter: PropTypes.string,
   tribe: PropTypes.string,
   error: PropTypes.string,
+  getInvite: PropTypes.func.isRequired,
+  updateLang: PropTypes.func.isRequired,
+  updateJoin: PropTypes.func.isRequired,
+  postJoin: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired, // from react-router
 }
 
 const mapStateToProps = (state) => ({

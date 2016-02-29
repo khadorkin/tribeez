@@ -14,7 +14,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 
 import currencies from '../resources/currencies'
 import langs from '../resources/langs'
-import lang from '../utils/lang'
 import scriptLoader from '../utils/scriptLoader'
 
 import updateLang from '../actions/updateLang'
@@ -38,19 +37,21 @@ class Register extends Component {
     scriptLoader.load('https://maps.googleapis.com/maps/api/js?libraries=places&language=fr', () => {
       const autocomplete = new google.maps.places.Autocomplete(document.getElementById('city'), {types: ['(cities)']})
       autocomplete.addListener('place_changed', () => {
-        let place = autocomplete.getPlace()
+        const place = autocomplete.getPlace()
         if (!place || !place.address_components) {
           return
         }
-        let country = place.address_components.find((component) => {
+        const country = place.address_components.find((component) => {
           return (component.types.includes('country') && component.short_name && component.short_name.length === 2)
         })
         if (country) {
+          /*eslint-disable react/no-did-mount-set-state */
           this.setState({
             city_name: place.name,
             country_code: country.short_name,
             place_id: place.place_id,
           })
+          /*eslint-enable react/no-did-mount-set-state */
         }
       })
     })
@@ -90,7 +91,7 @@ class Register extends Component {
 
   render() {
     const currencyItems = currencies.map(item =>
-      <MenuItem value={item.code} key={item.code} primaryText={item.name + ' (' + item.code + ')'} />
+      <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
     )
     const langItems = langs.map(item =>
       <MenuItem value={item.code} key={item.code} primaryText={item.name} />
@@ -105,21 +106,69 @@ class Register extends Component {
         <Card>
           <CardTitle title={<FormattedMessage id="register" />} />
           <CardText>
-            <TextField style={styles.field} ref="name" floatingLabelText="Your name" required errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />} />
-            <TextField style={styles.field} type="email" ref="email" floatingLabelText="Email" required errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={'error.' + this.props.error} />} />
-            <TextField style={styles.field} type="password" ref="password" floatingLabelText="Password" required errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />} />
-            <SelectField style={styles.field} ref="lang" floatingLabelText="Language" value={this.props.lang} onChange={this.handleLangChange} errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}>
+            <TextField ref="name"
+              style={styles.field}
+              floatingLabelText="Your name"
+              required={true}
+              errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />}
+            />
+            <TextField ref="email"
+              style={styles.field}
+              type="email"
+              floatingLabelText="Email"
+              required={true}
+              errorText={this.props.error && this.props.error.indexOf('email') === 0 && <FormattedMessage id={`error.${this.props.error}`} />}
+            />
+            <TextField ref="password"
+              style={styles.field}
+              type="password"
+              floatingLabelText="Password"
+              required={true}
+              errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />}
+            />
+            <SelectField ref="lang"
+              style={styles.field}
+              floatingLabelText="Language"
+              value={this.props.lang}
+              onChange={this.handleLangChange}
+              errorText={this.props.error === 'lang' && <FormattedMessage id="error.lang" />}
+            >
               {langItems}
             </SelectField>
           </CardText>
           <CardTitle title="Your tribe" />
           <CardText>
-            <TextField style={styles.field} ref="tribe_name" floatingLabelText="Tribe name" required errorText={this.props.error === 'tribe_name' && <FormattedMessage id="error.tribe_name" />} />
-            <SelectField style={styles.field} ref="tribe_type" floatingLabelText="Type" value={this.state.tribe_type} onChange={this.handleTypeChange} errorText={this.props.error === 'tribe_type' && <FormattedMessage id="error.tribe_type" />}>
+            <TextField ref="tribe_name"
+              style={styles.field}
+              floatingLabelText="Tribe name"
+              required={true}
+              errorText={this.props.error === 'tribe_name' && <FormattedMessage id="error.tribe_name" />}
+            />
+            <SelectField ref="tribe_type"
+              style={styles.field}
+              floatingLabelText="Type"
+              value={this.state.tribe_type}
+              onChange={this.handleTypeChange}
+              errorText={this.props.error === 'tribe_type' && <FormattedMessage id="error.tribe_type" />}
+            >
               {typeItems}
             </SelectField>
-            <TextField style={styles.field} ref="city" autoComplete="off" id="city" placeholder="" floatingLabelText="City" required errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >=0 && <FormattedMessage id="error.city" />} />
-            <SelectField style={styles.field} ref="currency" floatingLabelText="Currency" value={this.state.currency} onChange={this.handleCurrencyChange} errorText={this.props.error === 'currency' && <FormattedMessage id="error.currency" />}>
+            <TextField ref="city"
+              style={styles.field}
+              autoComplete="off"
+              id="city"
+              placeholder=""
+              floatingLabelText="City"
+              required={true}
+              errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >= 0 && <FormattedMessage id="error.city" />}
+            />
+            <SelectField ref="currency"
+              style={styles.field}
+              floatingLabelText="Currency"
+              value={this.state.currency}
+              onChange={this.handleCurrencyChange}
+              errorText={this.props.error === 'currency' && <FormattedMessage id="error.currency" />}
+            >
               {currencyItems}
             </SelectField>
           </CardText>
@@ -137,6 +186,8 @@ class Register extends Component {
 Register.propTypes = {
   error: PropTypes.string,
   lang: PropTypes.string.isRequired,
+  updateLang: PropTypes.func.isRequired,
+  postRegister: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

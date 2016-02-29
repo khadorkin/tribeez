@@ -94,27 +94,33 @@ class Members extends Component {
 
         {
           this.props.invites.length > 0 &&
-          <Paper>
-            <List subheader="Invites send">
-              {
-                this.props.invites.map((invite, index, arr) => {
-                  const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
-                  const inviter = this.props.users.find(user => user.id === invite.inviter_id)
-                  const date = <FormattedDate value={invite.invited} />
-                  const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, date: date}} /></div>
-                  return (
-                    <div key={invite.email}>
-                      <ListItem disabled={true} rightIconButton={refreshButton} primaryText={invite.email} secondaryText={details} />
-                      {index < arr.length - 1 && <Divider />}
-                    </div>
-                  )
-                })
-              }
-            </List>
-            <Dialog title="Re-invite" actions={dialogActions} modal={false} open={this.state.openDialog} onRequestClose={this.closeDialog}>
-              Resend invite to {this.state.invite.email}?
-            </Dialog>
-          </Paper>
+            <Paper>
+              <List subheader="Invites send">
+                {
+                  this.props.invites.map((invite, index, arr) => {
+                    const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
+                    const inviter = this.props.users.find(user => user.id === invite.inviter_id)
+                    const date = <FormattedDate value={invite.invited} />
+                    const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, date: date}} /></div>
+                    return (
+                      <div key={invite.email}>
+                        <ListItem disabled={true} rightIconButton={refreshButton} primaryText={invite.email} secondaryText={details} />
+                        {index < arr.length - 1 && <Divider />}
+                      </div>
+                    )
+                  })
+                }
+              </List>
+
+              <Dialog title="Re-invite"
+                actions={dialogActions}
+                modal={false}
+                open={this.state.openDialog}
+                onRequestClose={this.closeDialog}
+              >
+                Resend invite to {this.state.invite.email}?
+              </Dialog>
+            </Paper>
         }
 
         {
@@ -142,6 +148,9 @@ Members.propTypes = {
   invites: PropTypes.array,
   error: PropTypes.string,
   snack: PropTypes.bool.isRequired,
+  getInvites: PropTypes.func.isRequired,
+  updateInvite: PropTypes.func.isRequired,
+  postInvite: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

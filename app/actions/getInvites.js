@@ -28,6 +28,5 @@ export default () => {
           error: err.message,
         })
       })
-
   }
 }

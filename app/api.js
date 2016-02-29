@@ -6,18 +6,18 @@ if (__API_ENDPOINT__.indexOf('https') === 0 && location.protocol !== 'https:') {
 }
 
 const request = (route, params, method) => {
-  let arr = []
-  for (let key in params) {
+  const arr = []
+  for (const key in params) {
     if (params.hasOwnProperty(key)) {
-      arr.push(key + '=' + encodeURIComponent(params[key]))
+      arr.push(`${key}=${encodeURIComponent(params[key])}`)
     }
   }
-  let url = __API_ENDPOINT__ + '/' + route
-  let query = arr.join('&')
-  let init = { method, credentials: 'include' }
+  let url = `${__API_ENDPOINT__}/${route}`
+  const query = arr.join('&')
+  const init = { method, credentials: 'include' }
   if (query) {
     if (method === 'GET') {
-      url += '?' + query
+      url = `${url}?${query}`
     } else {
       init.headers = {
         'Content-Type': 'application/x-www-form-urlencoded',

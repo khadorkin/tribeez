@@ -25,7 +25,7 @@ export default (state = initialState, action = null) => {
         error: action.error,
       })
     case UPDATE_JOIN_DATA:
-      let data = Object.assign({}, state.data)
+      const data = Object.assign({}, state.data)
       if (action.data.email !== undefined) {
         data.email = action.data.email
       }

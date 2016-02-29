@@ -24,7 +24,7 @@ export default () => {
           dispatch(routeActions.push(routes.WELCOME))
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({
           type: LOGOUT_FAILURE,
           error: 'other',
