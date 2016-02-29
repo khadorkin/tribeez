@@ -33,7 +33,9 @@ class Register extends Component {
     this.handleLangChange = this.handleLangChange.bind(this)
   }
 
+  /*eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
+    /*global google:false*/
     scriptLoader.load('https://maps.googleapis.com/maps/api/js?libraries=places&language=fr', () => {
       const autocomplete = new google.maps.places.Autocomplete(document.getElementById('city'), {types: ['(cities)']})
       autocomplete.addListener('place_changed', () => {
@@ -45,16 +47,30 @@ class Register extends Component {
           return (component.types.includes('country') && component.short_name && component.short_name.length === 2)
         })
         if (country) {
-          /*eslint-disable react/no-did-mount-set-state */
           this.setState({
             city_name: place.name,
             country_code: country.short_name,
             place_id: place.place_id,
           })
-          /*eslint-enable react/no-did-mount-set-state */
         }
       })
     })
+    /*global grecaptcha:false __RECAPTCHA_SITE_KEY__:false*/
+    window.onRecaptcha = () => {
+      grecaptcha.render('captcha', {
+        sitekey: __RECAPTCHA_SITE_KEY__,
+        callback: () => {
+          this.setState({
+            captcha: grecaptcha.getResponse(),
+          })
+        },
+      })
+    }
+    if (window.grecaptcha) {
+      window.onRecaptcha()
+    } else {
+      scriptLoader.load('https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptcha')
+    }
   }
 
   handleLangChange(event, index, value) {
@@ -86,7 +102,9 @@ class Register extends Component {
       country_code: this.state.country_code,
       place_id: this.state.place_id,
       currency: this.state.currency,
+      captcha: this.state.captcha,
     })
+    grecaptcha.reset()
   }
 
   render() {
@@ -171,6 +189,8 @@ class Register extends Component {
             >
               {currencyItems}
             </SelectField>
+            <div id="captcha" style={{marginTop: '30px'}}></div>
+            <p className="error" style={{fontSize: '12px'}}>{this.props.error === 'captcha' && <FormattedMessage id="error.captcha" />}</p>
           </CardText>
           <CardActions style={styles.actions}>
             <RaisedButton label="Register & create this tribe" type="submit" />

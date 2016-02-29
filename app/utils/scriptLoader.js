@@ -5,15 +5,21 @@ class Loader {
   }
 
   load(url, callback) {
-    if (this.scripts[url]) { // already loaded
-      callback()
+    if (this.scripts[url] === 'loaded') { // already loaded
+      if (callback) callback()
       return
     }
-    this.scripts[url] = true
+    if (this.scripts[url] === 'loading') { // TODO
+      throw new Error('script is already loading')
+    }
+    this.scripts[url] = 'loading'
     const tag = document.createElement('script')
     tag.async = true
     tag.defer = true
-    tag.onload = callback
+    tag.onload = () => {
+      this.scripts[url] = 'loaded'
+      if (callback) callback()
+    }
     tag.src = url
     document.body.appendChild(tag)
   }

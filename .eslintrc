@@ -6,9 +6,6 @@ env:
   browser: true
   #node: true
 
-globals:
-  google: false
-
 extends: eslint:recommended
 
 rules:

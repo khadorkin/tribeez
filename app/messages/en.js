@@ -36,6 +36,7 @@ export default {
   'error.other': 'Internal server error: please try again later',
   'error.login.email': 'Unknown email address',
   'error.login.password': 'Wrong password',
+  'error.captcha': 'Invalid captcha',
 
   // Members
   'add_member': 'Add a member',

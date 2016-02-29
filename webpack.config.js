@@ -35,6 +35,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
 const definePlugin = new webpack.DefinePlugin({
   'process.env': { NODE_ENV: JSON.stringify(env) },
   __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
+  __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
   __DEBUG__: (env === 'development'),
 })
 
