@@ -15,7 +15,6 @@ class Loader {
     this.scripts[url] = 'loading'
     const tag = document.createElement('script')
     tag.async = true
-    tag.defer = true
     tag.onload = () => {
       this.scripts[url] = 'loaded'
       if (callback) callback()

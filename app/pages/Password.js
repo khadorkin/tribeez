@@ -11,13 +11,15 @@ import CardText from 'material-ui/lib/card/card-text'
 import TextField from 'material-ui/lib/text-field'
 import CardActions from 'material-ui/lib/card/card-actions'
 import RaisedButton from 'material-ui/lib/raised-button'
+import Dialog from 'material-ui/lib/dialog'
+import FlatButton from 'material-ui/lib/flat-button'
 
-import postLogin from '../actions/postLogin'
+import postPassword from '../actions/postPassword'
 
-import routes from '../constants/routes'
 import styles from '../constants/styles'
+import routes from '../constants/routes'
 
-class Login extends Component {
+class Password extends Component {
 
   constructor(props) {
     super(props)
@@ -32,63 +34,58 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.postLogin(this.refs.email.getValue(), this.refs.password.getValue(), this.props.destination)
+    this.props.postPassword(this.refs.email.getValue(), this.props.lang)
   }
 
   render() {
-    //const { fields: { email, password }, handleSubmit } = this.props
-
-    const subtitle = this.props.invite.email ? <FormattedMessage id="login_to_join" values={{inviter: this.props.invite.inviter, tribe: this.props.invite.tribe}} /> : null
-
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
-          <CardTitle title={<FormattedMessage id="login" />} subtitle={subtitle} />
+          <CardTitle subtitle="Fill this form to receive a reset link via email" />
           <CardText>
             <TextField ref="email"
               style={styles.field}
               type="email"
-              defaultValue={this.props.invite.email}
               required={true}
               floatingLabelText="Email"
               errorText={this.props.error === 'email' && <FormattedMessage id="error.login.email" />}
             />
-            <TextField ref="password"
-              style={styles.field}
-              type="password"
-              required={true}
-              floatingLabelText="Password"
-              errorText={this.props.error === 'password' && <FormattedMessage id="error.login.password" />}
-            />
-            <p style={{textAlign: 'right', marginBottom: 0}}><Link to={routes.PASSWORD}>Lost your password?</Link></p>
           </CardText>
           <CardActions style={styles.actions}>
-            <RaisedButton label="Login" type="submit" />
+            <RaisedButton label="Send request" type="submit" />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
-            <p style={{marginTop: '2em'}}>No account yet? <Link to={routes.REGISTER}>Register now!</Link></p>
           </CardActions>
         </form>
+
+        <Dialog
+          actions={[<FlatButton label="OK" primary={true} containerElement={<Link to={routes.WELCOME} />} style={{textAlign: 'center'}} />]}
+          modal={false}
+          open={this.props.sent}
+        >
+          A reset link has been sent to your email address.<br />
+          Click on that link to reset your password.
+        </Dialog>
       </Card>
     )
   }
 
 }
 
-Login.propTypes = {
-  destination: PropTypes.string,
-  invite: PropTypes.object.isRequired,
+Password.propTypes = {
   error: PropTypes.string,
-  postLogin: PropTypes.func.isRequired,
+  sent: PropTypes.bool.isRequired,
+  lang: PropTypes.string.isRequired,
+  postPassword: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  destination: state.login.destination,
-  invite: state.join.data,
-  error: state.login.error,
+  error: state.password.error,
+  sent: state.password.sent,
+  lang: state.app.lang,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  postLogin,
+  postPassword,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Password)

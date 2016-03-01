@@ -16,6 +16,7 @@ import App from './App'
 
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
+import Password from './pages/Password'
 import Logout from './pages/Logout'
 import Register from './pages/Register'
 import Join from './pages/Join'
@@ -67,7 +68,7 @@ const authenticate = (nextState, replaceState, callback) => {
     let redirectOnLoggedIn
     let redirectOnAnonymous
 
-    if (/^\/($|login|register)/.test(destination)) { // public routes
+    if (/^\/($|login|password|register)/.test(destination)) { // public routes
       redirectOnLoggedIn = routes.ACTIVITY
     } else { // private routes
       redirectOnAnonymous = routes.LOGIN
@@ -86,6 +87,7 @@ ReactDOM.render((
       <Route path={routes.WELCOME} component={App} onEnter={authenticate}>
         <IndexRoute component={Welcome} />
         <Route path={routes.LOGIN} component={Login} />
+        <Route path={routes.PASSWORD} component={Password} />
         <Route path={routes.REGISTER} component={Register} />
         <Route path={routes.JOIN} component={Join} />
         <Route path={routes.ACTIVITY} component={Activity} />

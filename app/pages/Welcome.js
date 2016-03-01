@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import Logo from '../images/logo.svg'
 
+import routes from '../constants/routes'
+
 export default class Welcome extends Component {
 
   render() {
@@ -12,7 +14,7 @@ export default class Welcome extends Component {
       <div>
         <div style={{backgroundColor: '#00bcd4', padding: '100px 0 60px', textAlign: 'center'}}>
           <Logo style={{width: '200px', marginBottom: '60px'}} /><br />
-          <RaisedButton label="Register" containerElement={<Link to="/register" />} />
+          <RaisedButton label="Register" containerElement={<Link to={routes.REGISTER} />} />
         </div>
       </div>
     )

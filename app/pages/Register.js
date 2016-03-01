@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { FormattedMessage } from 'react-intl'
@@ -64,12 +65,20 @@ class Register extends Component {
             captcha: grecaptcha.getResponse(),
           })
         },
+        //TODO: 'expired-callback' for front-end form validation
       })
     }
     if (window.grecaptcha) {
       window.onRecaptcha()
     } else {
       scriptLoader.load('https://www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptcha')
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.error && this.props.error !== 'captcha') {
+      const ref = this.props.error.indexOf('email') === 0 ? 'email' : this.props.error
+      ReactDOM.findDOMNode(this.refs[ref].refs.input).focus()
     }
   }
 
@@ -122,7 +131,7 @@ class Register extends Component {
     return (
       <form onSubmit={this.handleSubmit} className="main">
         <Card>
-          <CardTitle title={<FormattedMessage id="register" />} />
+          <CardTitle title="You" />
           <CardText>
             <TextField ref="name"
               style={styles.field}
@@ -178,7 +187,7 @@ class Register extends Component {
               placeholder=""
               floatingLabelText="City"
               required={true}
-              errorText={['city_name', 'country_code', 'place_id'].indexOf(this.props.error) >= 0 && <FormattedMessage id="error.city" />}
+              errorText={this.props.error === 'city' && <FormattedMessage id="error.city" />}
             />
             <SelectField ref="currency"
               style={styles.field}
@@ -189,11 +198,11 @@ class Register extends Component {
             >
               {currencyItems}
             </SelectField>
-            <div id="captcha" style={{marginTop: '30px'}}></div>
-            <p className="error" style={{fontSize: '12px'}}>{this.props.error === 'captcha' && <FormattedMessage id="error.captcha" />}</p>
           </CardText>
           <CardActions style={styles.actions}>
-            <RaisedButton label="Register & create this tribe" type="submit" />
+            <div id="captcha" style={{display: 'inline-block'}}></div>
+            <p className="error" style={{fontSize: '12px', marginTop: 0}}>{this.props.error === 'captcha' && <FormattedMessage id="error.captcha" />}</p>
+            <RaisedButton label="Register & create this tribe" type="submit" style={{marginTop: '30px'}} />
             <p className="error">{this.props.error === 'other' && <FormattedMessage id="error.other" />}</p>
           </CardActions>
         </Card>

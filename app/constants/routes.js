@@ -3,11 +3,16 @@ export default {
   // public routes
   WELCOME: '/',
   LOGIN: '/login',
+  PASSWORD: '/password',
   REGISTER: '/register',
   JOIN: '/join/:token',
 
   // private routes
   ACTIVITY: '/activity',
+  PROFILE: '/profile',
+  TRIBE: '/tribe',
+  TRIBE_NEW: '/tribe/new',
+
   MEMBERS: '/members',
   MEMBERS_NEW: '/members/new',
   BILLS: '/bills',
@@ -20,9 +25,6 @@ export default {
   NOTES_NEW: '/notes/new',
   POLLS: '/polls',
   POLLS_NEW: '/polls/new',
-
-  TRIBE: '/tribe',
-  TRIBE_NEW: '/tribe/new',
 
   // special route
   LOGOUT: '/logout',

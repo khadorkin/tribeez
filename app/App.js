@@ -17,6 +17,8 @@ import Nav from './components/Nav'
 
 import { toggleMenu, resize } from './actions/app'
 
+import routes from './constants/routes'
+
 class App extends Component {
 
   constructor(props) {
@@ -46,8 +48,8 @@ class App extends Component {
     let iconLeft = null
     let iconRight = null
     if (!this.props.uid) { // i.e. anonymous
-      iconLeft = <IconButton containerElement={<Link to="/" />}><HomeIcon /></IconButton>
-      iconRight = <FlatButton label="Login" containerElement={<Link to="/login" />} />
+      iconLeft = <IconButton containerElement={<Link to={routes.WELCOME} />}><HomeIcon /></IconButton>
+      iconRight = <FlatButton label="Login" containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
     }
     if (this.props.loading) {
       iconRight = <CircularProgress color="white" size={0.5} />

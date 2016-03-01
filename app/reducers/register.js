@@ -15,7 +15,7 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, initialState)
     case REGISTER_FAILURE:
       return Object.assign({}, initialState, {
-        error: action.error,
+        error: ['city_name', 'country_code', 'place_id'].indexOf(action.error) >= 0 ? 'city' : action.error,
       })
     default:
       return state

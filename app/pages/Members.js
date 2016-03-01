@@ -22,6 +22,7 @@ import Member from '../components/Member'
 import Error from '../components/Error'
 
 import styles from '../constants/styles'
+import routes from '../constants/routes'
 
 import getInvites from '../actions/getInvites'
 import updateInvite from '../actions/updateInvite'
@@ -127,7 +128,7 @@ class Members extends Component {
           this.props.error && <Error message={this.props.error} retry={this.props.getInvites} />
         }
 
-        <FloatingActionButton style={styles.fab} containerElement={<Link to="/members/new" />}>
+        <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.MEMBERS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
 

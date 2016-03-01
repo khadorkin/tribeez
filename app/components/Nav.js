@@ -130,10 +130,10 @@ class Nav extends Component {
     return (
       <div>
         <div className={css.header}>
-          <IconButton style={style.logout} containerElement={<Link to="/logout" />}>
+          <IconButton style={style.logout} containerElement={<Link to={routes.LOGOUT} />}>
             <ExitIcon color="white" />
           </IconButton>
-          <IconButton style={style.profile} containerElement={<Link to="/profile" />}>
+          <IconButton style={style.profile} containerElement={<Link to={routes.PROFILE} />}>
             <PersonIcon color="white" />
           </IconButton>
           <Avatar src={`https://secure.gravatar.com/avatar/${this.props.gravatar}?d=retro&s=80`} size={80} />

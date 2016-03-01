@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { FormattedMessage } from 'react-intl'
@@ -32,6 +33,13 @@ class Register extends Component {
 
   componentWillMount() {
     this.props.getInvite(this.props.params.token)
+  }
+
+  componentDidUpdate() {
+    if (this.props.error) {
+      const ref = this.props.error.indexOf('email') === 0 ? 'email' : this.props.error
+      ReactDOM.findDOMNode(this.refs[ref].refs.input).focus()
+    }
   }
 
   handleEmailChange(event) {
@@ -69,7 +77,7 @@ class Register extends Component {
               required={true}
               errorText={this.props.error === 'name' && <FormattedMessage id="error.name" />}
             />
-            <TextField
+            <TextField ref="email"
               style={styles.field}
               type="email"
               floatingLabelText="Email"
@@ -85,7 +93,7 @@ class Register extends Component {
               required={true}
               errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />}
             />
-            <SelectField
+            <SelectField ref="lang"
               style={styles.field}
               floatingLabelText="Language"
               value={this.props.lang}
