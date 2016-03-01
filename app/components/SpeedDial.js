@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
+import {Link} from 'react-router'
 
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 
@@ -29,13 +29,13 @@ class SpeedDial extends Component {
 
   constructor(props) {
     super(props)
-    this.toggle = this.toggle.bind(this)
+    this.handleToggle = this.handleToggle.bind(this)
     this.state = {
       open: false,
     }
   }
 
-  toggle() {
+  handleToggle() {
     this.setState({
       open: !this.state.open,
     })
@@ -48,10 +48,10 @@ class SpeedDial extends Component {
       const link = <Link to={action.route} />
       return (
         <div className={css.action} key={id}>
-          <div className={css.tooltip} style={{transitionDelay: `${delay} ms`}}>
+          <div className={css.tooltip} style={{transitionDelay: delay + 'ms'}}>
             <FormattedMessage id={id} />
           </div>
-          <div className={css.button} style={{transitionDelay: `${delay} ms`}}>
+          <div className={css.button} style={{transitionDelay: delay + 'ms'}}>
             <FloatingActionButton backgroundColor="white" containerElement={link}>
               {action.icon}
             </FloatingActionButton>
@@ -62,12 +62,12 @@ class SpeedDial extends Component {
 
     return (
       <div className={(this.state.open ? css.opened : css.closed)}>
-        <div className={css.cover} style={{height: this.state.open ? `${this.props.height} px` : 0}} onTouchTap={this.toggle}></div>
+        <div className={css.cover} style={{height: this.state.open ? this.props.height + 'px' : 0}} onTouchTap={this.handleToggle}></div>
         <div className={css.container}>
           <div className={css.actions} style={{top: this.state.open ? `${actions.length * -76}px` : '100px'}}>
             {actionButtons}
           </div>
-          <FloatingActionButton onMouseUp={this.toggle} className={css.main} backgroundColor={color}>
+          <FloatingActionButton onMouseUp={this.handleToggle} className={css.main} backgroundColor={color}>
             <AddIcon />
           </FloatingActionButton>
         </div>

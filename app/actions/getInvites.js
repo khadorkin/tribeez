@@ -1,6 +1,6 @@
 import api from '../api'
 
-import { GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE } from '../constants/actions'
+import {GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE} from '../constants/actions'
 
 export default () => {
   return function(dispatch) {
@@ -8,7 +8,7 @@ export default () => {
       type: GET_INVITES_REQUEST,
     })
 
-    api.get('invites', { start: 0, limit: 10 }) //TODO: paging
+    api.get('invites', {start: 0, limit: 10}) //TODO: paging
       .then((response) => {
         if (response.error) {
           dispatch({

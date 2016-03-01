@@ -1,4 +1,4 @@
-import { PASSWORD_REQUEST, PASSWORD_SUCCESS, PASSWORD_FAILURE } from '../constants/actions'
+import {PASSWORD_REQUEST, PASSWORD_SUCCESS, PASSWORD_FAILURE} from '../constants/actions'
 
 const initialState = {
   loading: false,

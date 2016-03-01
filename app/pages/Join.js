@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'
@@ -43,7 +43,7 @@ class Register extends Component {
   }
 
   handleEmailChange(event) {
-    this.props.updateJoin({ email: event.target.value })
+    this.props.updateJoin({email: event.target.value})
   }
 
   handleLangChange(event, index, value) {
@@ -62,7 +62,7 @@ class Register extends Component {
   }
 
   render() {
-    const langItems = langs.map(item =>
+    const langItems = langs.map((item) =>
       <MenuItem value={item.code} key={item.code} primaryText={item.name} />
     )
 

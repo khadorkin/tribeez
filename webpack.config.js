@@ -1,5 +1,5 @@
 /*eslint-env node*/
-/*eslint no-console: 0*/
+/*eslint-disable no-console*/
 'use strict'
 
 let user_config
@@ -33,7 +33,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
 })
 
 const definePlugin = new webpack.DefinePlugin({
-  'process.env': { NODE_ENV: JSON.stringify(env) },
+  'process.env': {NODE_ENV: JSON.stringify(env)},
   __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
   __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
   __DEBUG__: (env === 'development'),
@@ -57,7 +57,7 @@ const configs = {
       definePlugin,
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+      new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
     ],
   },
 }
@@ -69,9 +69,12 @@ Object.assign(config, {
   entry: './app/index.js',
   output: {
     path: './dist',
-    filename: 'bundle.js',
+    filename: `${revision}.js`,
     publicPath: '/',
   },
+  // eslint: {
+  //   fix: true,
+  // },
   module: {
     loaders: [
       {

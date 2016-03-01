@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 class Tasks extends Component {
 

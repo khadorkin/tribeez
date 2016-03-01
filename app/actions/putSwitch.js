@@ -1,8 +1,8 @@
-import { routeActions } from 'react-router-redux'
+import {routeActions} from 'react-router-redux'
 
 import api from '../api'
 
-import { SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE } from '../constants/actions'
+import {SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'
 
 import getActivity from './getActivity'
@@ -13,7 +13,7 @@ export default (id) => {
     dispatch({
       type: SWITCH_REQUEST,
     })
-    api.put('switch', { id })
+    api.put('switch', {id})
       .then((response) => {
         if (response.error) {
           dispatch({

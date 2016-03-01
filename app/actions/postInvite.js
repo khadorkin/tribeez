@@ -1,8 +1,8 @@
-import { routeActions } from 'react-router-redux'
+import {routeActions} from 'react-router-redux'
 
 import api from '../api'
 
-import { INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE } from '../constants/actions'
+import {INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'
 
 export default (email, lang) => {
@@ -10,7 +10,7 @@ export default (email, lang) => {
     dispatch({
       type: INVITE_REQUEST,
     })
-    api.post('invite', { email, lang })
+    api.post('invite', {email, lang})
       .then((response) => {
         if (response.error) {
           dispatch({

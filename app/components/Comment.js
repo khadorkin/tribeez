@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { FormattedRelative } from 'react-intl'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {FormattedRelative} from 'react-intl'
 
 import Avatar from 'material-ui/lib/avatar'
 
@@ -9,7 +9,7 @@ import css from './Comment.css'
 class Comment extends Component {
 
   render() {
-    const user = this.props.users.find(u => u.id === this.props.comment.user_id)
+    const user = this.props.users.find((u) => u.id === this.props.comment.user_id)
     return (
       <div className={css.container}>
         <Avatar src={`https://secure.gravatar.com/avatar/${user.gravatar}?d=retro&s=30`} size={30} />

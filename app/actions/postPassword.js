@@ -1,8 +1,8 @@
-import { routeActions } from 'react-router-redux'
+import {routeActions} from 'react-router-redux'
 
 import api from '../api'
 
-import { PASSWORD_REQUEST, PASSWORD_SUCCESS, PASSWORD_FAILURE } from '../constants/actions'
+import {PASSWORD_REQUEST, PASSWORD_SUCCESS, PASSWORD_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'
 
 export default (email, lang) => {
@@ -10,7 +10,7 @@ export default (email, lang) => {
     dispatch({
       type: PASSWORD_REQUEST,
     })
-    api.post('password', { email, lang })
+    api.post('password', {email, lang})
       .then((response) => {
         if (response.error) {
           dispatch({

@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'

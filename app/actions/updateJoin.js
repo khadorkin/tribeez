@@ -1,4 +1,4 @@
-import { UPDATE_JOIN_DATA } from '../constants/actions'
+import {UPDATE_JOIN_DATA} from '../constants/actions'
 
 export default (data) => {
   return function(dispatch) {

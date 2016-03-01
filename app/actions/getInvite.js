@@ -1,8 +1,8 @@
-import { routeActions } from 'react-router-redux'
+import {routeActions} from 'react-router-redux'
 
 import api from '../api'
 
-import { GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE } from '../constants/actions'
+import {GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'
 
 export default (token) => {
@@ -10,7 +10,7 @@ export default (token) => {
     dispatch({
       type: GET_INVITE_REQUEST,
     })
-    api.get('invite', { token })
+    api.get('invite', {token})
       .then((response) => {
         if (response.error) {
           dispatch({

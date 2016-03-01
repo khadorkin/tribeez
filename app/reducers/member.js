@@ -1,4 +1,4 @@
-import { GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE, LOGOUT_SUCCESS } from '../constants/actions'
+import {GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE, LOGOUT_SUCCESS} from '../constants/actions'
 
 const initialState = {
   loading: false,

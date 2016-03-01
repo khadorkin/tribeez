@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
@@ -18,6 +18,10 @@ class Logout extends Component {
     this.props.postLogout()
   }
 
+  handleTryAgainButton() {
+    this.props.postLogout()
+  }
+
   render() {
     return (
       <Card style={{margin: '15px 10px 0'}}>
@@ -25,7 +29,7 @@ class Logout extends Component {
           <p className="error">{this.props.error && <FormattedMessage id={`error.${this.props.error}`} />}</p>
         </CardText>
         <CardActions>
-          <FlatButton label="Try again" onTouchTap={this.props.postLogout} />
+          <FlatButton label="Try again" onTouchTap={this.handleTryAgainButton} />
         </CardActions>
       </Card>
     )

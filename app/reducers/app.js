@@ -1,6 +1,6 @@
-import { UPDATE_LOCATION } from 'react-router-redux'
+import {UPDATE_LOCATION} from 'react-router-redux'
 
-import { TOGGLE_MENU, RESIZE, GET_MEMBER_SUCCESS, UPDATE_LANG } from '../constants/actions'
+import {TOGGLE_MENU, RESIZE, GET_MEMBER_SUCCESS, UPDATE_LANG} from '../constants/actions'
 
 import lang from '../utils/lang'
 import messages from '../messages' // TODO

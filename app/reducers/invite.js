@@ -1,4 +1,4 @@
-import { GET_MEMBER_SUCCESS, UPDATE_INVITE_DATA, INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE } from '../constants/actions'
+import {GET_MEMBER_SUCCESS, UPDATE_INVITE_DATA, INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE} from '../constants/actions'
 
 import lang from '../utils/lang'
 

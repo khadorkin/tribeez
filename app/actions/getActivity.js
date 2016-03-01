@@ -1,6 +1,6 @@
 import api from '../api'
 
-import { GET_ACTIVITY_REQUEST, GET_ACTIVITY_SUCCESS, GET_ACTIVITY_FAILURE } from '../constants/actions'
+import {GET_ACTIVITY_REQUEST, GET_ACTIVITY_SUCCESS, GET_ACTIVITY_FAILURE} from '../constants/actions'
 
 export default () => {
   return function(dispatch) {
@@ -8,7 +8,7 @@ export default () => {
       type: GET_ACTIVITY_REQUEST,
     })
 
-    api.get('activity', { start: 0, limit: 10 }) //TODO: paging
+    api.get('activity', {start: 0, limit: 10}) //TODO: paging
       .then((response) => {
         if (response.error) {
           dispatch({

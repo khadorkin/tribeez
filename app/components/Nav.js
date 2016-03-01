@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
-import { Link } from 'react-router'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
+import {Link} from 'react-router'
 
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import Avatar from 'material-ui/lib/avatar'
@@ -81,10 +81,10 @@ class Nav extends Component {
     this.state = {
       showTribes: false,
     }
-    this.toggleTribeList = this.toggleTribeList.bind(this)
+    this.handleTribeListToggle = this.handleTribeListToggle.bind(this)
   }
 
-  toggleTribeList() {
+  handleTribeListToggle() {
     this.setState({
       showTribes: !this.state.showTribes,
     })
@@ -98,7 +98,7 @@ class Nav extends Component {
   }
 
   render() {
-    const menuItems = menuEntries.map(entry =>
+    const menuItems = menuEntries.map((entry) =>
       <MenuItem key={entry.route}
         style={this.props.page === entry.route.substr(1) ? style.current : style.default}
         leftIcon={entry.icon}
@@ -108,7 +108,7 @@ class Nav extends Component {
       </MenuItem>
     )
 
-    const tribeItems = this.props.tribes.map(tribe =>
+    const tribeItems = this.props.tribes.map((tribe) =>
       <MenuItem key={tribe.id}
         onTouchTap={this.selectTribe.bind(this, tribe.id)}
         style={tribe.active ? style.current : style.default}
@@ -140,7 +140,7 @@ class Nav extends Component {
           <div className={css.name}>{this.props.name}</div>
           <div style={style.tribe}>
             {this.props.tribe}
-            <IconButton style={style.switch} onTouchTap={this.toggleTribeList}>
+            <IconButton style={style.switch} onTouchTap={this.handleTribeListToggle}>
               {this.state.showTribes ? <DropUpIcon color="white" /> : <DropDownIcon color="white" />}
             </IconButton>
           </div>

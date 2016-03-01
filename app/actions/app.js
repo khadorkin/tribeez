@@ -1,4 +1,4 @@
-import { TOGGLE_MENU, RESIZE } from '../constants/actions'
+import {TOGGLE_MENU, RESIZE} from '../constants/actions'
 
 export const toggleMenu = (open) => {
   return function(dispatch) {

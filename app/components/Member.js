@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import { FormattedMessage, FormattedDate } from 'react-intl'
+import React, {Component, PropTypes} from 'react'
+import {FormattedMessage, FormattedDate} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardHeader from 'material-ui/lib/card/card-header'
@@ -34,8 +34,8 @@ class Member extends Component {
         <CardText expandable={true} className={css.details}>
           <List>
             {
-              infos.filter(info => this.props.user[info.id]) // remove undefined infos
-                   .map(info => {
+              infos.filter((info) => this.props.user[info.id]) // remove undefined infos
+                   .map((info) => {
                      let value = this.props.user[info.id]
                      const href = info.href ? info.href + value : null
                      if (info.date) {

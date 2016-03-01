@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardText from 'material-ui/lib/card/card-text'
@@ -45,7 +45,7 @@ class NewMember extends Component {
   }
 
   render() {
-    const langItems = langs.map(item =>
+    const langItems = langs.map((item) =>
       <MenuItem value={item.code} key={item.code} primaryText={item.name} />
     )
 

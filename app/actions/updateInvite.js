@@ -1,4 +1,4 @@
-import { UPDATE_INVITE_DATA } from '../constants/actions'
+import {UPDATE_INVITE_DATA} from '../constants/actions'
 
 export default (data) => {
   return function(dispatch) {

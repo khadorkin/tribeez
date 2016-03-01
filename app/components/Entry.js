@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage, FormattedRelative } from 'react-intl'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage, FormattedRelative} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardHeader from 'material-ui/lib/card/card-header'
@@ -30,10 +30,10 @@ class Entry extends Component {
 
   render() {
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
-    const user = this.props.users.find(u => u.id === this.props.entry.user_id)
+    const user = this.props.users.find((u) => u.id === this.props.entry.user_id)
     let title
     if (this.props.entry.item_id) {
-      const inviter = this.props.users.find(u => u.id === this.props.entry.item_id)
+      const inviter = this.props.users.find((u) => u.id === this.props.entry.item_id)
       title = <FormattedMessage id={`entry.${this.props.entry.type}.item`} values={{name: user.name, item: inviter.name}} />
     } else {
       title = <FormattedMessage id={`entry.${this.props.entry.type}`} values={{name: user.name}} />
@@ -55,7 +55,7 @@ class Entry extends Component {
         />
         <CardText expandable={true} className={css.comments}>
           {
-            this.props.entry.comments.map(comment =>
+            this.props.entry.comments.map((comment) =>
               <Comment comment={comment} key={comment.id} />
             )
           }

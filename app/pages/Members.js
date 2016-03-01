@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage, FormattedDate } from 'react-intl'
-import { Link } from 'react-router'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage, FormattedDate} from 'react-intl'
+import {Link} from 'react-router'
 
 import Paper from 'material-ui/lib/paper'
 import List from 'material-ui/lib/lists/list'
@@ -36,10 +36,10 @@ class Members extends Component {
       openDialog: false,
       invite: {},
     }
-    this.closeSnack = this.closeSnack.bind(this)
+    this.handleSnackClose = this.handleSnackClose.bind(this)
     this.openDialog = this.openDialog.bind(this)
-    this.resend = this.resend.bind(this)
-    this.closeDialog = this.closeDialog.bind(this)
+    this.handleResend = this.handleResend.bind(this)
+    this.handleDialogClose = this.handleDialogClose.bind(this)
   }
 
   componentWillMount() {
@@ -53,21 +53,25 @@ class Members extends Component {
     })
   }
 
-  resend() {
+  handleResend() {
     this.props.postInvite(this.state.invite.email, this.state.invite.lang)
-    this.closeDialog()
+    this.handleDialogClose()
   }
 
-  closeDialog() {
+  handleDialogClose() {
     this.setState({
       openDialog: false,
     })
   }
 
-  closeSnack() {
+  handleSnackClose() {
     this.props.updateInvite({
       snack: false,
     })
+  }
+
+  handleRetry() {
+    this.props.getInvites()
   }
 
   render() {
@@ -75,20 +79,20 @@ class Members extends Component {
       <FlatButton
         label="Cancel"
         secondary={true}
-        onTouchTap={this.closeDialog}
+        onTouchTap={this.handleDialogClose}
       />,
       <FlatButton
         label="Send"
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.resend}
+        onTouchTap={this.handleResend}
       />,
     ]
 
     return (
       <div style={{padding: '10px'}}>
         {
-          this.props.users.map(user =>
+          this.props.users.map((user) =>
             <Member user={user} key={user.id} />
           )
         }
@@ -100,7 +104,7 @@ class Members extends Component {
                 {
                   this.props.invites.map((invite, index, arr) => {
                     const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
-                    const inviter = this.props.users.find(user => user.id === invite.inviter_id)
+                    const inviter = this.props.users.find((user) => user.id === invite.inviter_id)
                     const date = <FormattedDate value={invite.invited} />
                     const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, date: date}} /></div>
                     return (
@@ -117,7 +121,7 @@ class Members extends Component {
                 actions={dialogActions}
                 modal={false}
                 open={this.state.openDialog}
-                onRequestClose={this.closeDialog}
+                onRequestClose={this.handleDialogClose}
               >
                 Resend invite to {this.state.invite.email}?
               </Dialog>
@@ -125,7 +129,7 @@ class Members extends Component {
         }
 
         {
-          this.props.error && <Error message={this.props.error} retry={this.props.getInvites} />
+          this.props.error && <Error message={this.props.error} onRetry={this.handleRetry} />
         }
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.MEMBERS_NEW} />}>
@@ -135,7 +139,7 @@ class Members extends Component {
         <Snackbar
           open={this.props.snack}
           message="Invite sent!"
-          onRequestClose={this.closeSnack}
+          onRequestClose={this.handleSnackClose}
           autoHideDuration={5000}
         />
       </div>

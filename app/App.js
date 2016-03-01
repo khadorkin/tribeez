@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { IntlProvider, FormattedMessage } from 'react-intl'
-import { bindActionCreators } from 'redux'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {Link} from 'react-router'
+import {IntlProvider, FormattedMessage} from 'react-intl'
+import {bindActionCreators} from 'redux'
 
 //import ThemeManager from 'material-ui/lib/styles/theme-manager'
 
@@ -15,7 +15,7 @@ import CircularProgress from 'material-ui/lib/circular-progress'
 
 import Nav from './components/Nav'
 
-import { toggleMenu, resize } from './actions/app'
+import {toggleMenu, resize} from './actions/app'
 
 import routes from './constants/routes'
 
@@ -23,8 +23,8 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { open: false }
-    this.openMenu = this.openMenu.bind(this)
+    this.handleMenuButton = this.handleMenuButton.bind(this)
+    this.handleNavToggle = this.handleNavToggle.bind(this)
     window.onresize = this.props.resize
     this.props.resize()
   }
@@ -38,10 +38,14 @@ class App extends Component {
     }
   }
 */
-  openMenu() {
+  handleMenuButton() {
     if (this.props.uid) {
       this.props.toggleMenu(true)
     }
+  }
+
+  handleNavToggle(open) {
+    this.props.toggleMenu(open)
   }
 
   render() {
@@ -56,7 +60,7 @@ class App extends Component {
     }
 
     const nav = this.props.uid && (
-      <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={open => this.props.toggleMenu(open)}>
+      <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={this.handleNavToggle}>
         <Nav />
       </LeftNav>
     ) // do not load left nav if not logged in
@@ -74,10 +78,10 @@ class App extends Component {
           {nav}
           <AppBar title={title} zDepth={0}
             iconElementLeft={iconLeft} iconElementRight={iconRight}
-            onLeftIconButtonTouchTap={this.openMenu}
+            onLeftIconButtonTouchTap={this.handleMenuButton}
             showMenuIconButton={!dockedUserMenu}
           />
-          <div style={{paddingBottom: '90px', minHeight: `${this.props.height - 170} px`}}>{this.props.children}</div>
+          <div style={{paddingBottom: '90px', minHeight: (this.props.height - 170) + 'px'}}>{this.props.children}</div>
         </div>
       </IntlProvider>
     )

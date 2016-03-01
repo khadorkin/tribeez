@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Entry from '../components/Entry'
 import SpeedDial from '../components/SpeedDial'
@@ -14,17 +14,21 @@ class Activity extends Component {
     this.props.getActivity()
   }
 
+  handleRetry() {
+    this.props.getActivity()
+  }
+
   render() {
     return (
       <div>
         {
-          this.props.entries.map(entry =>
+          this.props.entries.map((entry) =>
             <Entry entry={entry} key={entry.id} />
           )
         }
 
         {
-          this.props.error && <Error message={this.props.error} retry={this.props.getActivity} />
+          this.props.error && <Error message={this.props.error} onRetry={this.handleRetry} />
         }
         <SpeedDial />
       </div>

@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { FormattedMessage } from 'react-intl'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardActions from 'material-ui/lib/card/card-actions'
@@ -117,14 +117,14 @@ class Register extends Component {
   }
 
   render() {
-    const currencyItems = currencies.map(item =>
+    const currencyItems = currencies.map((item) =>
       <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
     )
-    const langItems = langs.map(item =>
+    const langItems = langs.map((item) =>
       <MenuItem value={item.code} key={item.code} primaryText={item.name} />
     )
     const types = ['houseshare', 'family', 'friends', 'organization', 'other'] //TODO: constant
-    const typeItems = types.map(type =>
+    const typeItems = types.map((type) =>
       <MenuItem value={type} key={type} primaryText={type} />
     )
 

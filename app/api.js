@@ -14,7 +14,7 @@ const request = (route, params, method) => {
   }
   let url = `${__API_ENDPOINT__}/${route}`
   const query = arr.join('&')
-  const init = { method, credentials: 'include' }
+  const init = {method, credentials: 'include'}
   if (query) {
     if (method === 'GET') {
       url = `${url}?${query}`

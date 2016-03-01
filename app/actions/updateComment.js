@@ -1,4 +1,4 @@
-import { UPDATE_COMMENT_TEXT } from '../constants/actions'
+import {UPDATE_COMMENT_TEXT} from '../constants/actions'
 
 export default (entry_id, content) => {
   return function(dispatch) {
