@@ -1,4 +1,4 @@
-import { GET_MEMBER_SUCCESS, UPDATE_INVITE_DATA, INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE, INVITE_END } from '../constants/actions'
+import { GET_MEMBER_SUCCESS, UPDATE_INVITE_DATA, INVITE_REQUEST, INVITE_SUCCESS, INVITE_FAILURE } from '../constants/actions'
 
 import lang from '../utils/lang'
 
@@ -31,10 +31,6 @@ export default (state = initialState, action = null) => {
         snack: true,
         modal: false,
         email: '',
-      })
-    case INVITE_END:
-      return Object.assign({}, state, {
-        snack: false,
       })
     case INVITE_FAILURE:
       return Object.assign({}, state, {

@@ -17,6 +17,7 @@ import App from './App'
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Password from './pages/Password'
+import Reset from './pages/Reset'
 import Logout from './pages/Logout'
 import Register from './pages/Register'
 import Join from './pages/Join'
@@ -61,7 +62,7 @@ if (__DEBUG__) {
 const authenticate = (nextState, replaceState, callback) => {
   if (!store.getState().member.user.id) {
     const destination = nextState.location.pathname
-    if (/^\/(join)/.test(destination)) { // no auth for these routes
+    if (/^\/(join|reset)/.test(destination)) { // no auth for these routes
       callback()
       return
     }
@@ -88,6 +89,7 @@ ReactDOM.render((
         <IndexRoute component={Welcome} />
         <Route path={routes.LOGIN} component={Login} />
         <Route path={routes.PASSWORD} component={Password} />
+        <Route path={routes.RESET} component={Reset} />
         <Route path={routes.REGISTER} component={Register} />
         <Route path={routes.JOIN} component={Join} />
         <Route path={routes.ACTIVITY} component={Activity} />

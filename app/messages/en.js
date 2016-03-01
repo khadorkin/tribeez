@@ -29,6 +29,7 @@ export default {
   'error.email': 'Invalid email',
   'error.email_exists': 'This email address is already registered',
   'error.password': 'Invalid password',
+  'error.password_confirmation': 'Passwords do not match',
   'error.lang': 'Invalid language',
   'error.tribe_name': 'Invalid tribe name',
   'error.city': 'Please choose a city in the dropdown suggestions list',

@@ -76,7 +76,7 @@ class Register extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.error && this.props.error !== 'captcha') {
+    if (this.props.error && this.props.error !== 'captcha' && this.props.error !== 'other') {
       const ref = this.props.error.indexOf('email') === 0 ? 'email' : this.props.error
       ReactDOM.findDOMNode(this.refs[ref].refs.input).focus()
     }

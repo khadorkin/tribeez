@@ -8,6 +8,7 @@ import join from './join'
 import activity from './activity'
 import invites from './invites'
 import password from './password'
+import reset from './reset'
 
 export default {
   app,
@@ -20,4 +21,5 @@ export default {
   activity,
   invites,
   password,
+  reset,
 }
