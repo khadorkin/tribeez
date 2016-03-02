@@ -8,7 +8,7 @@ if (__API_ENDPOINT__.indexOf('https') === 0 && location.protocol !== 'https:') {
 const request = (route, params, method) => {
   const arr = []
   for (const key in params) {
-    if (params.hasOwnProperty(key)) {
+    if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
       arr.push(`${key}=${encodeURIComponent(params[key])}`)
     }
   }

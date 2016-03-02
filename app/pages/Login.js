@@ -25,7 +25,7 @@ class Login extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.error && this.props.error !== 'other') {
+    if (['email', 'password'].indexOf(this.props.error) >= 0) {
       ReactDOM.findDOMNode(this.refs[this.props.error].refs.input).focus()
     }
   }

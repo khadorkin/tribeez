@@ -32,7 +32,7 @@ class Reset extends Component {
 
   componentDidUpdate() {
     const error = this.props.error || this.state.error
-    if (error && error !== 'other') {
+    if (['password', 'password_confirmation'].indexOf(error) >= 0) {
       ReactDOM.findDOMNode(this.refs[error].refs.input).focus()
     }
   }

@@ -1,4 +1,3 @@
-
 export default {
   // public routes
   WELCOME: '/',

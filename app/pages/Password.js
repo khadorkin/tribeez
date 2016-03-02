@@ -27,8 +27,8 @@ class Password extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.error) {
-      ReactDOM.findDOMNode(this.refs[this.props.error].refs.input).focus()
+    if (this.props.error === 'email') {
+      ReactDOM.findDOMNode(this.refs.email.refs.input).focus()
     }
   }
 
