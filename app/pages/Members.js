@@ -98,7 +98,7 @@ class Members extends Component {
         }
 
         {
-          this.props.invites.length > 0 &&
+          this.props.invites.length > 0 && this.props.users.length > 0 &&
             <Paper>
               <List subheader="Invites send">
                 {
@@ -138,7 +138,7 @@ class Members extends Component {
 
         <Snackbar
           open={this.props.snack}
-          message="Invite sent!"
+          message={this.props.sendError ? 'Error: please try again' : 'Invite sent!'}
           onRequestClose={this.handleSnackClose}
           autoHideDuration={5000}
         />
@@ -152,6 +152,7 @@ Members.propTypes = {
   users: PropTypes.array,
   invites: PropTypes.array,
   error: PropTypes.string,
+  sendError: PropTypes.string,
   snack: PropTypes.bool.isRequired,
   getInvites: PropTypes.func.isRequired,
   updateInvite: PropTypes.func.isRequired,
@@ -162,6 +163,7 @@ const mapStateToProps = (state) => ({
   users: state.member.tribe.users,
   invites: state.invites.list,
   error: state.invites.error,
+  sendError: state.invite.error,
   snack: state.invite.snack,
 })
 
