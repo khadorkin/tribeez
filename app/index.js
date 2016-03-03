@@ -47,7 +47,15 @@ injectTapEventPlugin()
 const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history
 let createStoreWithMiddleware
 if (__DEBUG__) {
-  const logger = createLogger()
+  const logger = createLogger({
+    errorTransformer: (error) => {
+      if (window.Rollbar) {
+        /*global Rollbar:false*/
+        Rollbar.error(error)
+      }
+      return error
+    },
+  })
   createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware, logger)(createStore)
 } else {
   createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore)

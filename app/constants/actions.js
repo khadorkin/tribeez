@@ -1,4 +1,5 @@
 export const TOGGLE_MENU = 'TOGGLE_MENU'
+export const TOGGLE_TRIBES = 'TOGGLE_TRIBES'
 export const RESIZE = 'RESIZE'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'

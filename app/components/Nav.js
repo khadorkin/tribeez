@@ -23,6 +23,7 @@ import DropUpIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-up'
 import AddIcon from 'material-ui/lib/svg-icons/content/add'
 
 import putSwitch from '../actions/putSwitch'
+import {toggleTribes} from '../actions/app'
 
 import routes from '../constants/routes'
 
@@ -31,6 +32,10 @@ import routes from '../constants/routes'
 import css from './Nav.css'
 
 const style = {
+  container: {
+    overflowY: 'auto',
+    paddingBottom: '20px',
+  },
   default: {
     borderLeft: '5px solid transparent',
   },
@@ -42,6 +47,7 @@ const style = {
     position: 'absolute',
     bottom: 0,
     width: '100%',
+    //boxShadow: '0 0px 10px #ddd, 0 -15px 15px white',
   },
   profile: {
     position: 'absolute',
@@ -53,13 +59,20 @@ const style = {
     top: 0,
     left: 0,
   },
+  avatar: {
+    marginTop: '30px',
+  },
+  name: {
+    marginTop: '15px',
+    fontSize: '1.5em',
+  },
   tribe: {
     position: 'relative',
     lineHeight: '30px',
   },
   switch: {
     position: 'absolute',
-    top: -11,
+    top: -10,
     right: 0,
   },
 }
@@ -78,23 +91,15 @@ class Nav extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      showTribes: false,
-    }
     this.handleTribeListToggle = this.handleTribeListToggle.bind(this)
   }
 
   handleTribeListToggle() {
-    this.setState({
-      showTribes: !this.state.showTribes,
-    })
+    this.props.toggleTribes(!this.props.menu_tribes)
   }
 
   selectTribe(id) {
     this.props.putSwitch(id)
-    this.setState({
-      showTribes: false,
-    })
   }
 
   render() {
@@ -108,6 +113,12 @@ class Nav extends Component {
       </MenuItem>
     )
 
+    const menuContainer = (
+      <div style={Object.assign({height: (this.props.height - 240 /* header=200+20, footer=20 */) + 'px'}, style.container)}>
+        {menuItems}
+      </div>
+    )
+
     const tribeItems = this.props.tribes.map((tribe) =>
       <MenuItem key={tribe.id}
         onTouchTap={this.selectTribe.bind(this, tribe.id)}
@@ -117,14 +128,19 @@ class Nav extends Component {
       </MenuItem>
     )
 
-    tribeItems.push(
-      <MenuItem key="new"
-        style={style.new}
-        leftIcon={<AddIcon />}
-        containerElement={<Link to={routes.TRIBE_NEW} />}
-      >
-        New tribe
-      </MenuItem>
+    const tribesContainer = (
+      <div>
+        <div style={Object.assign({height: (this.props.height - 288 /* header=200+20, footer=48+20 */) + 'px'}, style.container)}>
+          {tribeItems}
+        </div>
+        <MenuItem key="new"
+          style={style.new}
+          leftIcon={<AddIcon />}
+          containerElement={<Link to={routes.TRIBE_NEW} />}
+        >
+          New tribe
+        </MenuItem>
+      </div>
     )
 
     return (
@@ -136,16 +152,16 @@ class Nav extends Component {
           <IconButton style={style.profile} containerElement={<Link to={routes.PROFILE} />}>
             <PersonIcon color="white" />
           </IconButton>
-          <Avatar src={`https://secure.gravatar.com/avatar/${this.props.gravatar}?d=retro&s=80`} size={80} />
-          <div className={css.name}>{this.props.name}</div>
+          <Avatar style={style.avatar} src={`https://secure.gravatar.com/avatar/${this.props.gravatar}?d=retro&s=80`} size={80} />
+          <div style={style.name}>{this.props.name}</div>
           <div style={style.tribe}>
             {this.props.tribe}
             <IconButton style={style.switch} onTouchTap={this.handleTribeListToggle}>
-              {this.state.showTribes ? <DropUpIcon color="white" /> : <DropDownIcon color="white" />}
+              {this.props.menu_tribes ? <DropUpIcon color="white" /> : <DropDownIcon color="white" />}
             </IconButton>
           </div>
         </div>
-        {this.state.showTribes ? tribeItems : menuItems}
+        {this.props.menu_tribes ? tribesContainer : menuContainer}
       </div>
     )
   }
@@ -153,15 +169,20 @@ class Nav extends Component {
 }
 
 Nav.propTypes = {
+  menu_tribes: PropTypes.bool.isRequired,
+  height: PropTypes.number.isRequired,
   page: PropTypes.string.isRequired,
   tribe: PropTypes.string,
   name: PropTypes.string,
   tribes: PropTypes.array.isRequired,
   gravatar: PropTypes.string,
   putSwitch: PropTypes.func.isRequired,
+  toggleTribes: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
+  menu_tribes: state.app.menu_tribes,
+  height: state.app.height,
   page: state.routing.location.pathname.split('/')[1],
   tribe: state.member.tribe.name,
   name: state.member.user.name,
@@ -171,6 +192,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putSwitch,
+  toggleTribes,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav)

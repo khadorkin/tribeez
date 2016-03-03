@@ -60,7 +60,7 @@ class App extends Component {
     }
 
     const nav = this.props.uid && (
-      <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={this.handleNavToggle}>
+      <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={this.handleNavToggle} style={{overflow: 'hidden'}}>
         <Nav />
       </LeftNav>
     ) // do not load left nav if not logged in

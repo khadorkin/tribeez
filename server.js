@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /*eslint-env node */
+/*eslint-disable no-console*/
 'use strict'
 
-const PORT = process.env.PORT || 3001
+const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 3001
 
 const path = require('path')
 const express = require('express')
@@ -11,12 +12,12 @@ const compression = require('compression')
 const chalk = require('chalk')
 const moment = require('moment')
 
-var app = express()
+const app = express()
 app.use(compression())
 
-app.use(express.static(path.join(__dirname, '/dist'), { index: false }))
+app.use(express.static(path.join(__dirname, '/dist'), {index: false}))
 
-app.get('*', function response(req, res) {
+app.get('*', (req, res) => {
   const now = moment().format('YYYY-MM-DD HH:mm:ss.SSS')
   const ip = req.headers['cf-connecting-ip'] || req.ip
   const country = req.headers['cf-ipcountry']

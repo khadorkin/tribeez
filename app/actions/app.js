@@ -1,9 +1,17 @@
-import {TOGGLE_MENU, RESIZE} from '../constants/actions'
+import {TOGGLE_MENU, TOGGLE_TRIBES, RESIZE} from '../constants/actions'
 
 export const toggleMenu = (open) => {
   return function(dispatch) {
     dispatch({
       type: TOGGLE_MENU,
+      open,
+    })
+  }
+}
+export const toggleTribes = (open) => {
+  return function(dispatch) {
+    dispatch({
+      type: TOGGLE_TRIBES,
       open,
     })
   }
