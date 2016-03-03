@@ -16,7 +16,6 @@ export default (state = initialState, action = null) => {
     case GET_INVITES_REQUEST:
       return Object.assign({}, state, {
         loading: true,
-        list: [],
         error: null,
       })
     case GET_INVITES_SUCCESS:

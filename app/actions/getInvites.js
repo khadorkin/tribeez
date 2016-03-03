@@ -7,7 +7,6 @@ export default () => {
     dispatch({
       type: GET_INVITES_REQUEST,
     })
-
     api.get('invites', {start: 0, limit: 10}) //TODO: paging
       .then((response) => {
         if (response.error) {

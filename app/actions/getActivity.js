@@ -7,7 +7,6 @@ export default () => {
     dispatch({
       type: GET_ACTIVITY_REQUEST,
     })
-
     api.get('activity', {start: 0, limit: 10}) //TODO: paging
       .then((response) => {
         if (response.error) {

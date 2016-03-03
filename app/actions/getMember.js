@@ -9,7 +9,6 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
     dispatch({
       type: GET_MEMBER_REQUEST,
     })
-
     api.get('member')
       .then((response) => {
         if (response.error) {

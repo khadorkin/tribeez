@@ -98,13 +98,16 @@ class Members extends Component {
         }
 
         {
-          this.props.invites.length > 0 && this.props.users.length > 0 &&
+          this.props.invites.length > 0 &&
             <Paper>
               <List subheader="Invites send">
                 {
                   this.props.invites.map((invite, index, arr) => {
                     const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
                     const inviter = this.props.users.find((user) => user.id === invite.inviter_id)
+                    if (!inviter) {
+                      return null
+                    }
                     const date = <FormattedDate value={invite.invited} />
                     const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, date: date}} /></div>
                     return (

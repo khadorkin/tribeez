@@ -36,7 +36,7 @@ class Register extends Component {
   }
 
   componentDidUpdate() {
-    const ref = this.props.error.indexOf('email') === 0 ? 'email' : this.props.error
+    const ref = /^email/.test(this.props.error) ? 'email' : this.props.error
     if (['name', 'email', 'password', 'tribe_name', 'city'].indexOf(ref) >= 0 ) {
       ReactDOM.findDOMNode(this.refs[ref].refs.input).focus()
     }
