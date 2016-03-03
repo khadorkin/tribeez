@@ -1,4 +1,8 @@
-import {REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE} from '../constants/actions'
+import {
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE,
+} from '../constants/actions'
 
 const initialState = {
   loading: false,

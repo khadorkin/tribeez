@@ -18,7 +18,6 @@ import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Password from './pages/Password'
 import Reset from './pages/Reset'
-import Logout from './pages/Logout'
 import Register from './pages/Register'
 import Join from './pages/Join'
 import Activity from './pages/Activity'
@@ -113,7 +112,6 @@ ReactDOM.render((
         <Route path={routes.TASKS} component={Tasks} />
         <Route path={routes.NOTES} component={Notes} />
         <Route path={routes.POLLS} component={Polls} />
-        <Route path={routes.LOGOUT} component={Logout} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

@@ -20,7 +20,6 @@ export default {
   polls_new: 'New poll',
   tribe: 'Tribe',
   tribe_new: 'New tribe',
-  logout: 'Logout',
 
   // login/register forms
   invited_you: '{name} invited you',

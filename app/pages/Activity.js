@@ -10,6 +10,11 @@ import getActivity from '../actions/getActivity'
 
 class Activity extends Component {
 
+  constructor(props) {
+    super(props)
+    this.handleRetry = this.handleRetry.bind(this)
+  }
+
   componentWillMount() {
     this.props.getActivity()
   }
@@ -44,7 +49,7 @@ Activity.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  entries: state.member.loading ? [] : state.activity.entries, // the entries need the tribe users
+  entries: state.activity.entries,
   error: state.activity.error,
 })
 

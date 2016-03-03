@@ -31,12 +31,15 @@ class Entry extends Component {
   render() {
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
     const user = this.props.users.find((u) => u.id === this.props.entry.user_id)
-    let title
+    if (!user) {
+      return null
+    }
+    let title = <FormattedMessage id={`entry.${this.props.entry.type}`} values={{name: user.name}} />
     if (this.props.entry.item_id) {
       const inviter = this.props.users.find((u) => u.id === this.props.entry.item_id)
-      title = <FormattedMessage id={`entry.${this.props.entry.type}.item`} values={{name: user.name, item: inviter.name}} />
-    } else {
-      title = <FormattedMessage id={`entry.${this.props.entry.type}`} values={{name: user.name}} />
+      if (inviter) {
+        title = <FormattedMessage id={`entry.${this.props.entry.type}.item`} values={{name: user.name, item: inviter.name}} />
+      }
     }
     const date = <FormattedRelative value={this.props.entry.added} />
     const comments = (

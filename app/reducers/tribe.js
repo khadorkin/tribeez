@@ -1,4 +1,9 @@
-import {NEW_TRIBE_REQUEST, NEW_TRIBE_SUCCESS, NEW_TRIBE_FAILURE} from '../constants/actions'
+import {
+  NEW_TRIBE_REQUEST,
+  NEW_TRIBE_SUCCESS,
+  NEW_TRIBE_FAILURE,
+  LOGOUT_SUCCESS,
+} from '../constants/actions'
 
 const initialState = {
   loading: false,
@@ -17,6 +22,8 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, initialState, {
         error: ['city_name', 'country_code', 'place_id'].indexOf(action.error) >= 0 ? 'city' : action.error,
       })
+    case LOGOUT_SUCCESS:
+      return Object.assign({}, initialState)
     default:
       return state
   }

@@ -1,4 +1,11 @@
-import {GET_RESET_REQUEST, GET_RESET_SUCCESS, GET_RESET_FAILURE, RESET_REQUEST, RESET_SUCCESS, RESET_FAILURE} from '../constants/actions'
+import {
+  GET_RESET_REQUEST,
+  GET_RESET_SUCCESS,
+  GET_RESET_FAILURE,
+  RESET_REQUEST,
+  RESET_SUCCESS,
+  RESET_FAILURE,
+} from '../constants/actions'
 
 import lang from '../utils/lang'
 

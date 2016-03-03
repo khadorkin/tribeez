@@ -1,4 +1,9 @@
-import {GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE} from '../constants/actions'
+import {
+  GET_INVITES_REQUEST,
+  GET_INVITES_SUCCESS,
+  GET_INVITES_FAILURE,
+  LOGOUT_SUCCESS,
+} from '../constants/actions'
 
 const initialState = {
   loading: false,
@@ -25,6 +30,8 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       })
+    case LOGOUT_SUCCESS:
+      return Object.assign({}, initialState)
     default:
       return state
   }

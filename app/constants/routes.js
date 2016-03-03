@@ -25,7 +25,4 @@ export default {
   NOTES_NEW: '/notes/new',
   POLLS: '/polls',
   POLLS_NEW: '/polls/new',
-
-  // special route
-  LOGOUT: '/logout',
 }

@@ -22,6 +22,7 @@ import DropDownIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-down'
 import DropUpIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-up'
 import AddIcon from 'material-ui/lib/svg-icons/content/add'
 
+import postLogout from '../actions/postLogout'
 import putSwitch from '../actions/putSwitch'
 import {toggleTribes} from '../actions/app'
 
@@ -91,7 +92,12 @@ class Nav extends Component {
 
   constructor(props) {
     super(props)
+    this.handleLogout = this.handleLogout.bind(this)
     this.handleTribeListToggle = this.handleTribeListToggle.bind(this)
+  }
+
+  handleLogout() {
+    this.props.postLogout()
   }
 
   handleTribeListToggle() {
@@ -146,7 +152,7 @@ class Nav extends Component {
     return (
       <div>
         <div className={css.header}>
-          <IconButton style={style.logout} containerElement={<Link to={routes.LOGOUT} />}>
+          <IconButton style={style.logout} onTouchTap={this.handleLogout}>
             <ExitIcon color="white" />
           </IconButton>
           <IconButton style={style.profile} containerElement={<Link to={routes.PROFILE} />}>
@@ -178,6 +184,7 @@ Nav.propTypes = {
   gravatar: PropTypes.string,
   putSwitch: PropTypes.func.isRequired,
   toggleTribes: PropTypes.func.isRequired,
+  postLogout: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -193,6 +200,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putSwitch,
   toggleTribes,
+  postLogout,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav)

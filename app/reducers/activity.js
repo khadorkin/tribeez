@@ -1,4 +1,11 @@
-import {GET_ACTIVITY_REQUEST, GET_ACTIVITY_SUCCESS, GET_ACTIVITY_FAILURE, COMMENT_SUCCESS, UPDATE_COMMENT_TEXT} from '../constants/actions'
+import {
+  GET_ACTIVITY_REQUEST,
+  GET_ACTIVITY_SUCCESS,
+  GET_ACTIVITY_FAILURE,
+  COMMENT_SUCCESS,
+  UPDATE_COMMENT_TEXT,
+  LOGOUT_SUCCESS,
+} from '../constants/actions'
 
 const initialState = {
   loading: false,
@@ -13,7 +20,6 @@ export default (state = initialState, action = null) => {
     case GET_ACTIVITY_REQUEST:
       return Object.assign({}, state, {
         loading: true,
-        entries: [],
         error: null,
       })
     case GET_ACTIVITY_SUCCESS:
@@ -46,6 +52,8 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         boxComments,
       })
+    case LOGOUT_SUCCESS:
+      return Object.assign({}, initialState)
     default:
       return state
   }
