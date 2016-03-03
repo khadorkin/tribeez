@@ -12,7 +12,7 @@ try {
 }
 
 const execSync = require('child_process').execSync
-const revision = execSync('git rev-parse HEAD', {cwd: __dirname}).toString().split('\n').join('')
+const revision = execSync('git rev-parse HEAD', {cwd: __dirname}).toString().trim()
 
 const env = process.env.NODE_ENV || 'development'
 console.log('Building for', env)
@@ -25,8 +25,11 @@ const autoprefixer = require('autoprefixer')
 const reactCssModules = require('react-css-modules')
 
 const htmlPlugin = new HtmlWebpackPlugin({
-  title: 'SortMyTribe',
   template: 'app/index.tpl.html',
+  title: user_config.title,
+  description: user_config.description,
+  url: user_config.url,
+  image: user_config.url + '/img/logo.png',
   env: env,
   rollbar_token: user_config.rollbar_token,
   revision: revision,
@@ -69,7 +72,7 @@ Object.assign(config, {
   entry: './app/index.js',
   output: {
     path: './dist',
-    filename: `${revision}.js`,
+    filename: env === 'development' ? 'app.js' : `${revision}.js`,
     publicPath: '/',
   },
   // eslint: {
@@ -80,32 +83,49 @@ Object.assign(config, {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel',
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
+        loaders: [
+          'babel', // ES6
+          'eslint-loader', // JS linter
+        ],
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
+        loaders: [
+          'style', // understand css
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', // prefix css rules
+          'postcss-loader', // autoprefixer etc (see postcss method below)
+        ],
       },
       {
         test: /\.(png|jpg)$/,
-        exclude: /node_modules/,
-        loader: 'url-loader?limit=8192', // inline base64 URLs for <=8k images, direct URLs for the rest
+        exclude: /(node_modules|\/static\/)/,
+        loaders: [
+          'url-loader?limit=8192', // inline base64 URLs for <=8k images, direct URLs for the rest
+        ],
+      },
+      {
+        test: /\/static\//,
+        exclude: /\.js$/,
+        loaders: [
+          'file-loader?name=[name].[ext]', // simple copy from app/static/ to dist/
+        ],
       },
       {
         test: /\.svg$/,
         exclude: /node_modules/,
-        loader: 'babel!svg-react',
+        loaders: [
+          'babel',
+          'svg-react', // inline SVGs into React components
+        ],
       },
     ],
   },
   postcss: function() {
-    return [autoprefixer, reactCssModules]
+    return [
+      autoprefixer, // for cross browser compatibility of experimental rules
+      reactCssModules, // css rules are prefixed with the React component name
+    ]
   },
 })
 

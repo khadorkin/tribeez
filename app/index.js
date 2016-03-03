@@ -38,6 +38,10 @@ import getMember from './actions/getMember'
 
 import routes from './constants/routes'
 
+// static assets not being explicitely used in app but still needed in index.html:
+import './static'
+
+// global injected style:
 import './index.css'
 
 // Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
@@ -89,9 +93,6 @@ const authenticate = (nextState, replaceState, callback) => {
   callback()
 }
 
-const container = document.createElement('div')
-document.body.appendChild(container)
-
 ReactDOM.render((
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -116,4 +117,4 @@ ReactDOM.render((
       </Route>
     </Router>
   </Provider>
-), container)
+), document.getElementById('app'))
