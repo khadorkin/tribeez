@@ -19,6 +19,7 @@ export default (payload) => {
         } else {
           dispatch({
             type: PUT_PROFILE_SUCCESS,
+            payload,
           })
         }
       })

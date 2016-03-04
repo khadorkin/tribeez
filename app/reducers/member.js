@@ -5,6 +5,7 @@ import {
   UPDATE_PROFILE_DATA,
   LOGOUT_SUCCESS,
   NEW_TRIBE_SUCCESS,
+  PUT_PROFILE_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
@@ -55,10 +56,19 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         user,
       })
+    case PUT_PROFILE_SUCCESS:
+      const tribe = Object.assign({}, state.tribe)
+      tribe.users = state.tribe.users.map((u) => {
+        if (u.id === state.user.id) {
+          return Object.assign(u, action.payload)
+        }
+        return u
+      })
+      return Object.assign({}, state, {
+        tribe,
+      })
     case LOGOUT_SUCCESS:
       return Object.assign({}, initialState)
-    case NEW_TRIBE_SUCCESS:
-      //TODO
     default:
       return state
   }

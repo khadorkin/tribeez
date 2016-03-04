@@ -15,6 +15,9 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import DatePicker from 'material-ui/lib/date-picker/date-picker'
 import Snackbar from 'material-ui/lib/snackbar'
 
+import IconButton from 'material-ui/lib/icon-button'
+import ClearIcon from 'material-ui/lib/svg-icons/content/clear'
+
 import langs from '../resources/langs'
 
 import putProfile from '../actions/putProfile'
@@ -39,6 +42,7 @@ class Profile extends Component {
     this.handleLangChange = this.handleLangChange.bind(this)
     this.handlePhoneChange = this.handlePhoneChange.bind(this)
     this.handleBirthdateChange = this.handleBirthdateChange.bind(this)
+    this.handleBirthdateClear = this.handleBirthdateClear.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.formatDate = this.formatDate.bind(this)
     this.handleSnackClose = this.handleSnackClose.bind(this)
@@ -70,9 +74,12 @@ class Profile extends Component {
   handleBirthdateChange(event, date) {
     this.props.updateProfile({birthdate: date})
   }
+  handleBirthdateClear() {
+    this.props.updateProfile({birthdate: null})
+  }
 
   formatDate(date) {
-    return isNaN(date) ? '' : this.props.intl.formatDate(date)
+    return isNaN(date) ? '' : this.props.intl.formatDate(date, {day: 'numeric', month: 'long', year: 'numeric'})
   }
 
   handleSubmit(event) {
@@ -157,6 +164,9 @@ class Profile extends Component {
               onChange={this.handleBirthdateChange}
               errorText={this.props.error === 'birthdate' && <FormattedMessage id="error.birthdate" />}
             />
+            <IconButton onTouchTap={this.handleBirthdateClear} style={{float: 'right', marginTop: '-57px', marginRight: '-9px'}}>
+              <ClearIcon color="#e0e0e0" />
+            </IconButton>
             <TextField ref="password"
               style={styles.field}
               type="password"
