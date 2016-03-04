@@ -18,6 +18,10 @@ import styles from '../constants/styles'
 import updateInvite from '../actions/updateInvite'
 import postInvite from '../actions/postInvite'
 
+const langItems = langs.map((item) =>
+  <MenuItem value={item.code} key={item.code} primaryText={item.name} />
+)
+
 class NewMember extends Component {
 
   constructor(props) {
@@ -45,10 +49,6 @@ class NewMember extends Component {
   }
 
   render() {
-    const langItems = langs.map((item) =>
-      <MenuItem value={item.code} key={item.code} primaryText={item.name} />
-    )
-
     return (
       <form onSubmit={this.handleSubmit}>
         <Card>

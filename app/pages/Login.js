@@ -43,7 +43,7 @@ class Login extends Component {
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
-          <CardTitle title={<FormattedMessage id="login" />} subtitle={subtitle} />
+          <CardTitle subtitle={subtitle} />
           <CardText>
             <TextField ref="email"
               style={styles.field}

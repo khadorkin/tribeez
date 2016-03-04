@@ -22,6 +22,10 @@ import postJoin from '../actions/postJoin'
 
 import styles from '../constants/styles'
 
+const langItems = langs.map((item) =>
+  <MenuItem value={item.code} key={item.code} primaryText={item.name} />
+)
+
 class Register extends Component {
 
   constructor(props) {
@@ -62,10 +66,6 @@ class Register extends Component {
   }
 
   render() {
-    const langItems = langs.map((item) =>
-      <MenuItem value={item.code} key={item.code} primaryText={item.name} />
-    )
-
     return (
       <Card className="main">
         <form onSubmit={this.handleSubmit}>
@@ -93,7 +93,7 @@ class Register extends Component {
               required={true}
               errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />}
             />
-            <SelectField ref="lang"
+            <SelectField
               style={styles.field}
               floatingLabelText="Language"
               value={this.props.lang}

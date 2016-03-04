@@ -136,7 +136,7 @@ class Register extends Component {
               required={true}
               errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />}
             />
-            <SelectField ref="lang"
+            <SelectField
               style={styles.field}
               floatingLabelText="Language"
               value={this.props.lang}
@@ -154,7 +154,7 @@ class Register extends Component {
               required={true}
               errorText={this.props.error === 'tribe_name' && <FormattedMessage id="error.tribe_name" />}
             />
-            <SelectField ref="tribe_type"
+            <SelectField
               style={styles.field}
               floatingLabelText="Type"
               value={this.state.tribe_type}
@@ -172,7 +172,7 @@ class Register extends Component {
               required={true}
               errorText={this.props.error === 'city' && <FormattedMessage id="error.city" />}
             />
-            <SelectField ref="currency"
+            <SelectField
               style={styles.field}
               floatingLabelText="Currency"
               value={this.state.currency}

@@ -21,7 +21,7 @@ import Reset from './pages/Reset'
 import Register from './pages/Register'
 import Join from './pages/Join'
 import Activity from './pages/Activity'
-// TODO: Profile
+import Profile from './pages/Profile'
 // TODO: Tribe
 import NewTribe from './pages/NewTribe'
 import Members from './pages/Members'
@@ -104,6 +104,7 @@ ReactDOM.render((
         <Route path={routes.REGISTER} component={Register} />
         <Route path={routes.JOIN} component={Join} />
         <Route path={routes.ACTIVITY} component={Activity} />
+        <Route path={routes.PROFILE} component={Profile} />
         <Route path={routes.TRIBE_NEW} component={NewTribe} />
         <Route path={routes.MEMBERS} component={Members} />
         <Route path={routes.MEMBERS_NEW} component={NewMember} />

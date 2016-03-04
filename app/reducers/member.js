@@ -2,6 +2,7 @@ import {
   GET_MEMBER_REQUEST,
   GET_MEMBER_SUCCESS,
   GET_MEMBER_FAILURE,
+  UPDATE_PROFILE_DATA,
   LOGOUT_SUCCESS,
   NEW_TRIBE_SUCCESS,
 } from '../constants/actions'
@@ -9,10 +10,10 @@ import {
 const initialState = {
   loading: false,
   user: {
-    tribes: [],
+    tribes: [], // todo: immutability
   },
   tribe: {
-    users: [],
+    users: [], // todo: immutability
   },
   error: false,
 }
@@ -35,6 +36,24 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         loading: false,
         error: true,
+      })
+    case UPDATE_PROFILE_DATA:
+      const user = Object.assign({}, state.user)
+      //user.tribes = user.tribes.slice()
+      if (action.data.email !== undefined) {
+        user.email = action.data.email
+      }
+      if (action.data.name !== undefined) {
+        user.name = action.data.name
+      }
+      if (action.data.phone !== undefined) {
+        user.phone = action.data.phone
+      }
+      if (action.data.birthdate !== undefined) {
+        user.birthdate = action.data.birthdate
+      }
+      return Object.assign({}, state, {
+        user,
       })
     case LOGOUT_SUCCESS:
       return Object.assign({}, initialState)

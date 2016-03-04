@@ -12,10 +12,8 @@ import IconButton from 'material-ui/lib/icon-button'
 import RefreshIcon from 'material-ui/lib/svg-icons/navigation/refresh'
 import Dialog from 'material-ui/lib/dialog'
 import FlatButton from 'material-ui/lib/flat-button'
-
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 import ContentAdd from 'material-ui/lib/svg-icons/content/add'
-
 import Snackbar from 'material-ui/lib/snackbar'
 
 import Member from '../components/Member'

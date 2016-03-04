@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import {IntlProvider, FormattedMessage} from 'react-intl'
+import {IntlProvider, addLocaleData, FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 
 //import ThemeManager from 'material-ui/lib/styles/theme-manager'
@@ -18,6 +18,11 @@ import Nav from './components/Nav'
 import {toggleMenu, resize} from './actions/app'
 
 import routes from './constants/routes'
+
+import en from 'react-intl/lib/locale-data/en'
+import fr from 'react-intl/lib/locale-data/fr'
+addLocaleData(en)
+addLocaleData(fr)
 
 class App extends Component {
 

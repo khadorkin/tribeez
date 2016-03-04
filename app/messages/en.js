@@ -6,6 +6,7 @@ export default {
   login: 'Login',
   password: 'Lost password',
   activity: 'Activity',
+  profile: 'Profile',
   members: 'Members',
   members_new: 'New member',
   bills: 'Bills',
@@ -20,6 +21,9 @@ export default {
   polls_new: 'New poll',
   tribe: 'Tribe',
   tribe_new: 'New tribe',
+
+  // actions
+  cancel: 'Cancel',
 
   // login/register forms
   invited_you: '{name} invited you',
@@ -44,7 +48,7 @@ export default {
   'member_since': 'Member since {date}',
   'invited_by': 'Invited by {user} on {date}',
 
-  // Home
+  // Activity
   'entry.new_user': '{name} has joined the tribe!',
   'entry.new_user.item': '{name} (invited by {item}) has joined the tribe!',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
