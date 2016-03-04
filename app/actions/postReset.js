@@ -2,7 +2,14 @@ import {routeActions} from 'react-router-redux'
 
 import api from '../api'
 
-import {RESET_REQUEST, RESET_SUCCESS, RESET_FAILURE, GET_MEMBER_SUCCESS} from '../constants/actions'
+import {
+  RESET_REQUEST,
+  RESET_SUCCESS,
+  RESET_FAILURE,
+  GET_MEMBER_SUCCESS,
+  SNACK_MESSAGE,
+} from '../constants/actions'
+
 import routes from '../constants/routes'
 
 export default (token, password) => {
@@ -27,6 +34,10 @@ export default (token, password) => {
             tribe: response.tribe,
           })
           dispatch(routeActions.push(routes.ACTIVITY))
+          dispatch({
+            type: SNACK_MESSAGE,
+            message: 'password_changed',
+          })
         }
       })
       .catch(() => {

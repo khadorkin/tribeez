@@ -6,6 +6,8 @@ import {
   RESIZE,
   GET_MEMBER_SUCCESS,
   UPDATE_LANG,
+  SNACK_MESSAGE,
+  CLOSE_SNACK,
 } from '../constants/actions'
 
 import lang from '../utils/lang'
@@ -20,6 +22,8 @@ const initialState = {
   messages: messages[defaultLang],
   width: window.innerWidth,
   height: window.innerHeight,
+  snack: false,
+  snackMessage: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -51,6 +55,16 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         lang: action.lang,
         messages: messages[action.lang],
+      })
+    case SNACK_MESSAGE:
+      return Object.assign({}, state, {
+        snack: true,
+        snackMessage: action.message,
+      })
+    case CLOSE_SNACK:
+      return Object.assign({}, state, {
+        snack: false,
+        snackMessage: null,
       })
     default:
       return state

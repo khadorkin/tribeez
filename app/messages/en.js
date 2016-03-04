@@ -5,6 +5,7 @@ export default {
   join: 'Join',
   login: 'Login',
   password: 'Lost password',
+  reset: 'Password update',
   activity: 'Activity',
   profile: 'Profile',
   members: 'Members',
@@ -24,6 +25,9 @@ export default {
 
   // actions
   cancel: 'Cancel',
+
+  // snack messages
+  'snack.password_changed': 'Password changed',
 
   // login/register forms
   invited_you: '{name} invited you',

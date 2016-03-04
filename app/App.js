@@ -12,10 +12,11 @@ import LeftNav from 'material-ui/lib/left-nav'
 import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 import CircularProgress from 'material-ui/lib/circular-progress'
+import Snackbar from 'material-ui/lib/snackbar'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, resize} from './actions/app'
+import {toggleMenu, resize, closeSnack} from './actions/app'
 
 import routes from './constants/routes'
 
@@ -30,6 +31,7 @@ class App extends Component {
     super(props)
     this.handleMenuButton = this.handleMenuButton.bind(this)
     this.handleNavToggle = this.handleNavToggle.bind(this)
+    this.handleSnackClose = this.handleSnackClose.bind(this)
     window.onresize = this.props.resize
     this.props.resize()
   }
@@ -51,6 +53,10 @@ class App extends Component {
 
   handleNavToggle(open) {
     this.props.toggleMenu(open)
+  }
+
+  handleSnackClose() {
+    this.props.closeSnack()
   }
 
   render() {
@@ -86,7 +92,16 @@ class App extends Component {
             onLeftIconButtonTouchTap={this.handleMenuButton}
             showMenuIconButton={!dockedUserMenu}
           />
-          <div style={{paddingBottom: '90px', minHeight: (this.props.height - 170) + 'px'}}>{this.props.children}</div>
+          <div style={{paddingBottom: '90px', minHeight: (this.props.height - 170) + 'px'}}>
+            {this.props.children}
+          </div>
+
+          <Snackbar
+            open={this.props.snack}
+            message={this.props.snackMessage ? <FormattedMessage id={`snack.${this.props.snackMessage}`} /> : ''}
+            onRequestClose={this.handleSnackClose}
+            autoHideDuration={5000}
+          />
         </div>
       </IntlProvider>
     )
@@ -107,8 +122,11 @@ App.propTypes = {
   messages: PropTypes.object.isRequired,
   menu_visible: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  resize: PropTypes.func.isRequired,
+  snack: PropTypes.bool.isRequired,
+  snackMessage: PropTypes.string,
   toggleMenu: PropTypes.func.isRequired,
+  resize: PropTypes.func.isRequired,
+  closeSnack: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 }
 
@@ -121,11 +139,14 @@ const mapStateToProps = (state) => ({
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   loading: state.activity.loading || state.invite.loading || state.logout.loading || state.member.loading || state.invites.loading, //TODO: mutualize
+  snack: state.app.snack,
+  snackMessage: state.app.snackMessage,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
   resize,
+  closeSnack,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

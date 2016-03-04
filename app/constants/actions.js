@@ -1,6 +1,8 @@
 export const TOGGLE_MENU = 'TOGGLE_MENU'
 export const TOGGLE_TRIBES = 'TOGGLE_TRIBES'
 export const RESIZE = 'RESIZE'
+export const SNACK_MESSAGE = 'SNACK_MESSAGE'
+export const CLOSE_SNACK = 'CLOSE_SNACK'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
