@@ -1,6 +1,6 @@
 import {routeActions} from 'react-router-redux'
 
-import api from '../api'
+import api from '../utils/api'
 
 import {JOIN_REQUEST, JOIN_SUCCESS, JOIN_FAILURE, GET_MEMBER_SUCCESS} from '../constants/actions'
 import routes from '../constants/routes'

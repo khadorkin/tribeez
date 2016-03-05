@@ -1,6 +1,6 @@
 import {routeActions} from 'react-router-redux'
 
-import api from '../api'
+import api from '../utils/api'
 
 import {GET_INVITE_REQUEST, GET_INVITE_SUCCESS, GET_INVITE_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'

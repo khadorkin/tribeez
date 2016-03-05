@@ -1,6 +1,6 @@
 import {routeActions} from 'react-router-redux'
 
-import api from '../api'
+import api from '../utils/api'
 
 import {NEW_TRIBE_REQUEST, NEW_TRIBE_SUCCESS, NEW_TRIBE_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'

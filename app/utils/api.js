@@ -5,16 +5,28 @@ if (__API_ENDPOINT__.indexOf('https') === 0 && location.protocol !== 'https:') {
   location.protocol = 'https:' // changing the protocol acts as a redirect
 }
 
-const request = (route, params, method) => {
+const buildQuery = (params) => {
   const arr = []
   for (const key in params) {
     if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
       arr.push(`${key}=${encodeURIComponent(params[key])}`)
     }
   }
+  return arr.join('&')
+}
+
+let cache = {}
+
+const request = (route, params, method) => {
   let url = `${__API_ENDPOINT__}/${route}`
-  const query = arr.join('&')
   const init = {method, credentials: 'include'}
+  const query = buildQuery(params)
+  if (method === 'GET') {
+    const cached = cache[route] && cache[route][query]
+    if (cached) {
+      return Promise.resolve(cached)
+    }
+  }
   if (query) {
     if (method === 'GET') {
       url = `${url}?${query}`
@@ -33,6 +45,29 @@ const request = (route, params, method) => {
       // if status >= 400, the error will be in the returned JSON and is handled by the component
       return response.json()
     })
+    .then((json) => {
+      if (method === 'GET') {
+        if (!cache[route]) {
+          cache[route] = {}
+        }
+        cache[route][query] = json
+      }
+      return json
+    })
+}
+
+const clearCache = (route, params) => {
+  if (route) {
+    if (params) {
+      if (cache[route]) {
+        delete cache[route][buildQuery(params)]
+      } // else not in cache
+    } else {
+      delete cache[route]
+    }
+  } else {
+    cache = {}
+  }
 }
 
 export default {
@@ -40,4 +75,5 @@ export default {
   post: (route, params) => request(route, params, 'POST'),
   put: (route, params) => request(route, params, 'PUT'),
   delete: (route, params) => request(route, params, 'DELETE'),
+  clearCache,
 }

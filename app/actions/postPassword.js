@@ -1,6 +1,6 @@
 import {routeActions} from 'react-router-redux'
 
-import api from '../api'
+import api from '../utils/api'
 
 import {PASSWORD_REQUEST, PASSWORD_SUCCESS, PASSWORD_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'

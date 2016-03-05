@@ -1,4 +1,4 @@
-import api from '../api'
+import api from '../utils/api'
 
 import {GET_INVITES_REQUEST, GET_INVITES_SUCCESS, GET_INVITES_FAILURE} from '../constants/actions'
 

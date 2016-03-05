@@ -1,6 +1,6 @@
 import {routeActions} from 'react-router-redux'
 
-import api from '../api'
+import api from '../utils/api'
 
 import {SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'
@@ -24,6 +24,7 @@ export default (id) => {
           dispatch({
             type: SWITCH_SUCCESS,
           })
+          api.clearCache()
           dispatch(getMember())
           // force redirect to home page:
           dispatch(getActivity())

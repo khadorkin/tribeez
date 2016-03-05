@@ -6,6 +6,7 @@ import {
   JOIN_REQUEST,
   JOIN_SUCCESS,
   JOIN_FAILURE,
+  GET_MEMBER_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
@@ -55,6 +56,10 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         loading: false,
         error: action.error,
+      })
+    case GET_MEMBER_SUCCESS:
+      return Object.assign({}, state, {
+        data: {},
       })
     default:
       return state

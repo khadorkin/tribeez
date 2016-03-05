@@ -1,6 +1,6 @@
 import {routeActions} from 'react-router-redux'
 
-import api from '../api'
+import api from '../utils/api'
 
 import {PUT_PROFILE_REQUEST, PUT_PROFILE_SUCCESS, PUT_PROFILE_FAILURE} from '../constants/actions'
 
