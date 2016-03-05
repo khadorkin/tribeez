@@ -29,6 +29,9 @@
       }
     </style>
     <script>
+      window.addEventListener('error', function() {
+        (document.getElementById('loader') || document.body).innerHTML = 'Sorry, an error happened.';
+      });
       var _rollbarToken = "<%= htmlWebpackPlugin.options.rollbar_token %>";
       if (_rollbarToken) {
         var _rollbarConfig = {

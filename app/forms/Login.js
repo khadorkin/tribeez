@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 import {Link} from 'react-router'
 
+import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
 import TextField from 'material-ui/lib/text-field'
@@ -33,9 +34,11 @@ class LoginForm extends Component {
 
   render() {
     const {fields: {email, password}, error, submitting} = this.props
+    const subtitle = this.props.invite.email && <FormattedMessage id="login_to_join" values={{inviter: this.props.invite.inviter, tribe: this.props.invite.tribe}} />
 
     return (
       <form onSubmit={this.handleSubmit}>
+        <CardTitle subtitle={subtitle} />
         <CardText>
           <TextField ref="email"
             style={styles.field}
@@ -75,13 +78,20 @@ LoginForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  // from parent component:
+  // from redux state:
   destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
-  email: PropTypes.string, // invite email (default null when not coming from /join)
+  invite: PropTypes.object.isRequired,
+  email: PropTypes.string,
 }
+
+const mapStateToProps = (state) => ({
+  destination: state.login.destination,
+  invite: state.join.data,
+  initialValues: {email: state.join.data.email}, // email is null when not coming from /join
+})
 
 export default reduxForm({
   form: 'login',
   fields: ['email', 'password'],
   returnRejectedSubmitPromise: true,
-})(LoginForm)
+}, mapStateToProps)(LoginForm)
