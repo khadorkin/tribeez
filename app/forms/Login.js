@@ -43,7 +43,6 @@ class LoginForm extends Component {
           <TextField ref="email"
             style={styles.field}
             type="email"
-            defaultValue={this.props.email}
             required={true}
             floatingLabelText="Email"
             errorText={email.touched && email.error && <FormattedMessage id="error.login.email" />}
@@ -61,7 +60,7 @@ class LoginForm extends Component {
         <CardActions style={styles.actions}>
           <RaisedButton label="Login" type="submit" disabled={submitting} />
           <p className="error">
-            {error && <FormattedMessage id={error} />}
+            {error && <FormattedMessage id="error.other" />}
           </p>
           <p style={{marginTop: '2em'}}>
             No account yet? <Link to={routes.REGISTER}>Register now!</Link>
@@ -81,7 +80,7 @@ LoginForm.propTypes = {
   // from redux state:
   destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
   invite: PropTypes.object.isRequired,
-  email: PropTypes.string,
+  initialValues: PropTypes.object,
 }
 
 const mapStateToProps = (state) => ({

@@ -12,7 +12,7 @@ const buildQuery = (params) => {
       arr.push(`${key}=${encodeURIComponent(params[key])}`)
     }
   }
-  return arr.join('&')
+  return '?' + arr.join('&')
 }
 
 let cache = {}
@@ -20,22 +20,19 @@ let cache = {}
 const request = (route, params, method) => {
   let url = `${__API_ENDPOINT__}/${route}`
   const init = {method, credentials: 'include'}
-  const query = buildQuery(params)
+  let query
   if (method === 'GET') {
+    query = buildQuery(params)
     const cached = cache[route] && cache[route][query]
     if (cached) {
       return Promise.resolve(cached)
     }
-  }
-  if (query) {
-    if (method === 'GET') {
-      url = `${url}?${query}`
-    } else {
-      init.headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }
-      init.body = query
+    url += query
+  } else {
+    init.headers = {
+      'Content-Type': 'application/json',
     }
+    init.body = JSON.stringify(params)
   }
   return fetch(url, init)
     .then((response) => {

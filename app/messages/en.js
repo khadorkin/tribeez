@@ -32,8 +32,12 @@ export default {
   // login/register forms
   invited_you: '{name} invited you',
   login_to_join: '{inviter} invited you to join {tribe}',
+  // login :
+  'error.login.email': 'Unknown email address',
+  'error.login.password': 'Wrong password',
+  // register/join:
   'error.name': 'Invalid user name',
-  'error.email': 'Invalid email',
+  'error.email_invalid': 'Invalid email',
   'error.email_exists': 'This email address is already registered',
   'error.password': 'Invalid password',
   'error.password_confirmation': 'Passwords do not match',
@@ -42,10 +46,9 @@ export default {
   'error.city': 'Please choose a city in the dropdown suggestions list',
   'error.currency': 'Please choose a currency',
   'error.tribe_type': 'Please choose a tribe type',
-  'error.other': 'Internal server error: please try again later',
-  'error.login.email': 'Unknown email address',
-  'error.login.password': 'Wrong password',
   'error.captcha': 'Invalid captcha',
+  // common:
+  'error.other': 'Internal server error: please try again later',
 
   // Members
   'add_member': 'Add a member',

@@ -10,13 +10,7 @@ export default (destination, values, dispatch) => {
     api.post('login', values)
       .then((response) => {
         if (response.error) {
-          const reason = {}
-          if (values[response.error]) {
-            reason[response.error] = 'error.login.' + response.error
-            reject(reason)
-          } else {
-            throw new Error(response.error)
-          }
+          reject(response.error)
         } else {
           resolve()
           dispatch({
@@ -28,7 +22,7 @@ export default (destination, values, dispatch) => {
         }
       })
       .catch((error) => {
-        reject({_error: 'error.other'})
+        reject({_error: error.toString()})
         Rollbar.error('API error', error)
       })
   })

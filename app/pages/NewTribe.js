@@ -16,8 +16,6 @@ import currencies from '../resources/currencies'
 import langs from '../resources/langs'
 import {TRIBE_TYPES} from '../constants/product'
 
-import placesAutocomplete from '../utils/placesAutocomplete'
-
 import styles from '../constants/styles'
 
 import postTribe from '../actions/postTribe'
@@ -42,20 +40,6 @@ class NewTribe extends Component {
     this.handleTypeChange = this.handleTypeChange.bind(this)
     this.handleCurrencyChange = this.handleCurrencyChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  /*eslint-disable react/no-did-mount-set-state */
-  componentDidMount() {
-    placesAutocomplete('city', (infos) => {
-      this.setState({
-        city: infos,
-      })
-    }, (place) => {
-      //TODO: the user can still remove the field content and not press enter => the state will remain
-      this.setState({
-        city: {},
-      })
-    }, this.props.lang)
   }
 
   componentDidUpdate() {
