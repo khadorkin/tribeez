@@ -7,10 +7,10 @@ import {Link} from 'react-router'
 import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
-import TextField from 'material-ui/lib/text-field'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import RaisedButton from 'material-ui/lib/raised-button'
 
+import TextField from './components/TextField'
 import SelectField from './components/SelectField'
 import CityField from './components/CityField'
 
@@ -44,19 +44,17 @@ class RegisterForm extends Component {
   handleSubmit(event) {
     this.props.handleSubmit(postRegister)(event)
       .catch((errors) => {
+        if (!errors._front) { // 'empty' from backend
+          // we need to reset it because the API has already tested the value against reCAPTCHa server
+          this.refs.captcha.reset()
+        } else {
+          delete errors._front
+        }
         const field = Object.keys(errors)[0]
-        if (field && field !== '_error') {
-          const node = ReactDOM.findDOMNode(this.refs[field].refs.input)
-          if (node) {
-            if (node.nodeName === 'INPUT') {
-              node.focus()
-            } else {
-              node.scrollIntoView()
-            }
-          }
+        if (field !== '_error') {
+          this.refs[field].focus()
         }
       })
-    this.refs.captcha.reset()
   }
 
   render() {
@@ -67,14 +65,12 @@ class RegisterForm extends Component {
         <CardTitle title="You" />
         <CardText>
           <TextField ref="name"
-            style={styles.field}
             floatingLabelText="Your name"
             required={true}
             errorText={name.touched && name.error && <FormattedMessage id="error.name" />}
             {...name}
           />
           <TextField ref="email"
-            style={styles.field}
             type="email"
             required={true}
             floatingLabelText="Email"
@@ -82,7 +78,6 @@ class RegisterForm extends Component {
             {...email}
           />
           <TextField ref="password"
-            style={styles.field}
             type="password"
             required={true}
             floatingLabelText="Password"
@@ -90,7 +85,6 @@ class RegisterForm extends Component {
             {...password}
           />
           <SelectField ref="lang"
-            style={styles.field}
             floatingLabelText="Language"
             errorText={lang.touched && lang.error && <FormattedMessage id="error.lang" />}
             {...lang}
@@ -101,14 +95,12 @@ class RegisterForm extends Component {
         <CardTitle title="Your tribe" />
         <CardText>
           <TextField ref="tribe_name"
-            style={styles.field}
             floatingLabelText="Tribe name"
             required={true}
             errorText={tribe_name.touched && tribe_name.error && <FormattedMessage id="error.tribe_name" />}
             {...tribe_name}
           />
-          <SelectField
-            style={styles.field}
+          <SelectField ref="tribe_type"
             floatingLabelText="Type"
             errorText={tribe_type.touched && tribe_type.error && <FormattedMessage id="error.tribe_type" />}
             {...tribe_type}
@@ -116,14 +108,13 @@ class RegisterForm extends Component {
             {typeItems}
           </SelectField>
           <CityField ref="city"
-            style={styles.field}
             floatingLabelText="City"
             required={true}
             errorText={city.touched && city.error && <FormattedMessage id="error.city" />}
+            lang={this.props.lang}
             {...city}
           />
-          <SelectField
-            style={styles.field}
+          <SelectField ref="currency"
             floatingLabelText="Currency"
             errorText={currency.touched && currency.error && <FormattedMessage id="error.currency" />}
             {...currency}
@@ -136,7 +127,7 @@ class RegisterForm extends Component {
             errorText={captcha.error && <FormattedMessage id="error.captcha" />}
             {...captcha}
           />
-          <RaisedButton label="Register & create this tribe" type="submit" />
+          <RaisedButton label="Register & create this tribe" type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={error} />}
           </p>
@@ -154,10 +145,12 @@ RegisterForm.propTypes = {
   submitting: PropTypes.bool,
   // from redux state:
   initialValues: PropTypes.object,
+  lang: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   initialValues: {lang: state.app.lang},
+  lang: state.app.lang,
 })
 
 export default reduxForm({

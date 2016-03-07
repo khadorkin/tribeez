@@ -7,8 +7,9 @@ import {Link} from 'react-router'
 import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
-import TextField from 'material-ui/lib/text-field'
 import RaisedButton from 'material-ui/lib/raised-button'
+
+import TextField from './components/TextField'
 
 import styles from '../constants/styles'
 import routes from '../constants/routes'
@@ -41,7 +42,6 @@ class LoginForm extends Component {
         <CardTitle subtitle={subtitle} />
         <CardText>
           <TextField ref="email"
-            style={styles.field}
             type="email"
             required={true}
             floatingLabelText="Email"
@@ -49,7 +49,6 @@ class LoginForm extends Component {
             {...email}
           />
           <TextField ref="password"
-            style={styles.field}
             type="password"
             required={true}
             floatingLabelText="Password"

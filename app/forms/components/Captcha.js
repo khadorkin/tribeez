@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
 import {FormattedMessage} from 'react-intl'
 
@@ -10,6 +11,7 @@ class Captcha extends Component {
 
   constructor(props) {
     super(props)
+    this.focus = this.focus.bind(this)
   }
 
   /*eslint-disable react/no-did-mount-set-state */
@@ -33,6 +35,10 @@ class Captcha extends Component {
     }
   }
 
+  focus() {
+    ReactDOM.findDOMNode(this.refs.field).scrollIntoView()
+  }
+
   reset() {
     grecaptcha.reset()
     this.props.onChange(null)
@@ -40,7 +46,7 @@ class Captcha extends Component {
 
   render() {
     return (
-      <div style={{display: 'inline-block', marginBottom: '30px'}}>
+      <div ref="field" style={{display: 'inline-block', marginBottom: '30px'}}>
         <div id="captcha" style={{minHeight: '80px'}} ref="input"></div>
         <p className="error">{this.props.errorText}</p>
       </div>

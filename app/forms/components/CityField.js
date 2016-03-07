@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {connect} from 'react-redux'
+import ReactDOM from 'react-dom'
 
 import TextField from 'material-ui/lib/text-field'
+
+import styles from '../../constants/styles'
 
 import scriptLoader from '../../utils/scriptLoader'
 
@@ -12,6 +14,7 @@ class CityField extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.focus = this.focus.bind(this)
   }
 
   /*eslint-disable react/no-did-mount-set-state */
@@ -38,10 +41,22 @@ class CityField extends Component {
     })
   }
 
+  focus() {
+    ReactDOM.findDOMNode(this.refs.field.refs.input).focus()
+  }
+
   render() {
     const {onChange, value, ...other} = this.props // removing controlling props
 
-    return <TextField autoComplete="off" placeholder="" {...other} id="city" />
+    return (
+      <TextField ref="field"
+        style={styles.field}
+        autoComplete="off"
+        placeholder=""
+        {...other}
+        id="city"
+      />
+    )
   }
 
 }
@@ -52,8 +67,4 @@ CityField.propTypes = {
   value: PropTypes.string,
 }
 
-const mapStateToProps = (state) => ({
-  lang: state.app.lang,
-})
-
-export default connect(mapStateToProps)(CityField)
+export default CityField
