@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
@@ -10,26 +11,15 @@ import RaisedButton from 'material-ui/lib/raised-button'
 
 import TextField from './components/TextField'
 import SelectField from './components/SelectField'
-import CityField from './components/CityField'
 
-import Captcha from './components/Captcha'
-
-import currencies from '../resources/currencies'
 import langs from '../resources/langs'
-import {TRIBE_TYPES} from '../constants/product'
 
 import styles from '../constants/styles'
 
-import postRegister from '../actions/postRegister'
+import postJoin from '../actions/postJoin'
 
-const currencyItems = currencies.map((item) =>
-  <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
-)
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
-)
-const typeItems = TRIBE_TYPES.map((type) =>
-  <MenuItem value={type} key={type} primaryText={type} />
 )
 
 class RegisterForm extends Component {
@@ -40,14 +30,9 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(postRegister)(event)
+    this.props.handleSubmit(postJoin)(event)
       .catch((errors) => {
-        if (!errors._front) { // 'empty' from backend
-          // we need to reset it because the API has already tested the value against reCAPTCHa server
-          this.refs.captcha.reset()
-        } else {
-          delete errors._front
-        }
+        delete errors._front
         const field = Object.keys(errors)[0]
         if (field !== '_error') {
           this.refs[field].focus()
@@ -56,11 +41,11 @@ class RegisterForm extends Component {
   }
 
   render() {
-    const {fields: {name, email, password, lang, tribe_name, tribe_type, city, currency, captcha}, error, submitting} = this.props
+    const {fields: {name, email, password, lang}, error, submitting} = this.props
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle title="You" />
+        <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_you" values={{name: this.props.inviter}} />} />
         <CardText>
           <TextField ref="name"
             floatingLabelText="Your name"
@@ -90,42 +75,8 @@ class RegisterForm extends Component {
             {langItems}
           </SelectField>
         </CardText>
-        <CardTitle title="Your tribe" />
-        <CardText>
-          <TextField ref="tribe_name"
-            floatingLabelText="Tribe name"
-            required={true}
-            errorText={tribe_name.touched && tribe_name.error && <FormattedMessage id="error.tribe_name" />}
-            {...tribe_name}
-          />
-          <SelectField ref="tribe_type"
-            floatingLabelText="Type"
-            errorText={tribe_type.touched && tribe_type.error && <FormattedMessage id="error.tribe_type" />}
-            {...tribe_type}
-          >
-            {typeItems}
-          </SelectField>
-          <CityField ref="city"
-            floatingLabelText="City"
-            required={true}
-            errorText={city.touched && city.error && <FormattedMessage id="error.city" />}
-            lang={this.props.lang}
-            {...city}
-          />
-          <SelectField ref="currency"
-            floatingLabelText="Currency"
-            errorText={currency.touched && currency.error && <FormattedMessage id="error.currency" />}
-            {...currency}
-          >
-            {currencyItems}
-          </SelectField>
-        </CardText>
         <CardActions style={styles.actions}>
-          <Captcha ref="captcha"
-            errorText={captcha.error && <FormattedMessage id="error.captcha" />}
-            {...captcha}
-          />
-          <RaisedButton label="Register & create this tribe" type="submit" disabled={submitting} />
+          <RaisedButton label="Register & join this tribe" type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={error} />}
           </p>
@@ -136,6 +87,8 @@ class RegisterForm extends Component {
 }
 
 RegisterForm.propTypes = {
+  // from parent component:
+  token: PropTypes.string.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
@@ -143,16 +96,18 @@ RegisterForm.propTypes = {
   submitting: PropTypes.bool,
   // from redux state:
   initialValues: PropTypes.object,
-  lang: PropTypes.string.isRequired,
+  inviter: PropTypes.string,
+  tribe: PropTypes.string,
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {lang: state.app.lang},
-  lang: state.app.lang,
+const mapStateToProps = (state, ownProps) => ({
+  initialValues: {lang: state.app.lang, email: state.join.data.email, token: ownProps.token},
+  inviter: state.join.data.inviter,
+  tribe: state.join.data.tribe,
 })
 
 export default reduxForm({
-  form: 'register',
-  fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
+  form: 'join',
+  fields: ['name', 'email', 'password', 'lang', 'token'],
   returnRejectedSubmitPromise: true,
 }, mapStateToProps)(RegisterForm)

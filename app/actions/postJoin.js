@@ -1,26 +1,25 @@
 import {routeActions} from 'react-router-redux'
 
+import validate from '../utils/formValidator'
 import api from '../utils/api'
 
-import {JOIN_REQUEST, JOIN_SUCCESS, JOIN_FAILURE, GET_MEMBER_SUCCESS} from '../constants/actions'
+import {GET_MEMBER_SUCCESS} from '../constants/actions'
 import routes from '../constants/routes'
 
-export default (payload) => {
-  return function(dispatch) {
-    dispatch({
-      type: JOIN_REQUEST,
-    })
-    api.post('join', payload)
+export default (values, dispatch) => {
+  // front-end validation:
+  const errors = validate('join', values)
+  if (errors) {
+    return Promise.reject(errors)
+  }
+  // back-end validation:
+  return new Promise((resolve, reject) => {
+    api.post('join', values)
       .then((response) => {
         if (response.error) {
-          dispatch({
-            type: JOIN_FAILURE,
-            error: response.error,
-          })
+          reject(response.error)
         } else {
-          dispatch({
-            type: JOIN_SUCCESS,
-          })
+          resolve()
           dispatch({
             type: GET_MEMBER_SUCCESS,
             user: response.user,
@@ -29,11 +28,9 @@ export default (payload) => {
           dispatch(routeActions.push(routes.ACTIVITY))
         }
       })
-      .catch(() => {
-        dispatch({
-          type: JOIN_FAILURE,
-          error: 'other',
-        })
+      .catch((error) => {
+        reject({_error: error.toString()})
+        Rollbar.error('API error', error)
       })
-  }
+  })
 }
