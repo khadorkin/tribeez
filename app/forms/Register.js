@@ -8,11 +8,10 @@ import CardActions from 'material-ui/lib/card/card-actions'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import TextField from './components/TextField'
-import SelectField from './components/SelectField'
-import CityField from './components/CityField'
-
-import Captcha from './components/Captcha'
+import TextField from './fields/Text'
+import SelectField from './fields/Select'
+import CityField from './fields/City'
+import Captcha from './fields/Captcha'
 
 import currencies from '../resources/currencies'
 import langs from '../resources/langs'

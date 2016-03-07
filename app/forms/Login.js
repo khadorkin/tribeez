@@ -9,7 +9,7 @@ import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import TextField from './components/TextField'
+import TextField from './fields/Text'
 
 import styles from '../constants/styles'
 import routes from '../constants/routes'

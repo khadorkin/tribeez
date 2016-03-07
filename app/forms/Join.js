@@ -9,8 +9,8 @@ import CardActions from 'material-ui/lib/card/card-actions'
 import MenuItem from 'material-ui/lib/menus/menu-item'
 import RaisedButton from 'material-ui/lib/raised-button'
 
-import TextField from './components/TextField'
-import SelectField from './components/SelectField'
+import TextField from './fields/Text'
+import SelectField from './fields/Select'
 
 import langs from '../resources/langs'
 
