@@ -9,7 +9,6 @@ import invites from './invites'
 import password from './password'
 import reset from './reset'
 import tribe from './tribe'
-import profile from './profile'
 
 export default {
   app,
@@ -23,5 +22,4 @@ export default {
   password,
   reset,
   tribe,
-  profile,
 }

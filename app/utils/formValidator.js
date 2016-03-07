@@ -1,6 +1,7 @@
 const required_fields = {
   register: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
   join: ['name', 'email', 'password', 'lang'],
+  profile: ['name', 'email', 'lang'], //TODO: validate password2
 }
 
 const formValidator = (name, values) => {

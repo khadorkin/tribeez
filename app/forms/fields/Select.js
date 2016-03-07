@@ -10,13 +10,14 @@ class SelectFieldWrapper extends Component {
   constructor(props) {
     super(props)
     this.focus = this.focus.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   focus() {
     ReactDOM.findDOMNode(this.refs.field).scrollIntoView()
   }
 
-  onChange(event, index, value) {
+  handleChange(event, index, value) {
     this.props.onChange(value)
   }
 
@@ -24,7 +25,7 @@ class SelectFieldWrapper extends Component {
     return (
       <SelectField ref="field"
         style={styles.field} {...this.props}
-        onChange={this.onChange.bind(this)}
+        onChange={this.handleChange}
       >
         {this.props.children}
       </SelectField>

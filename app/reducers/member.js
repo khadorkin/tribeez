@@ -1,8 +1,9 @@
+import md5 from 'md5'
+
 import {
   GET_MEMBER_REQUEST,
   GET_MEMBER_SUCCESS,
   GET_MEMBER_FAILURE,
-  UPDATE_PROFILE_DATA,
   LOGOUT_SUCCESS,
   NEW_TRIBE_SUCCESS,
   PUT_PROFILE_SUCCESS,
@@ -38,33 +39,27 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: true,
       })
-    case UPDATE_PROFILE_DATA:
-      const user = Object.assign({}, state.user)
-      //user.tribes = user.tribes.slice()
-      if (action.data.email !== undefined) {
-        user.email = action.data.email
-      }
-      if (action.data.name !== undefined) {
-        user.name = action.data.name
-      }
-      if (action.data.phone !== undefined) {
-        user.phone = action.data.phone
-      }
-      if (action.data.birthdate !== undefined) {
-        user.birthdate = action.data.birthdate
-      }
-      return Object.assign({}, state, {
-        user,
-      })
     case PUT_PROFILE_SUCCESS:
+      const user = Object.assign({}, state.user, {
+        name: action.values.name,
+        email: action.values.email,
+        lang: action.values.lang,
+        birthdate: action.values.birthdate,
+        phone: action.values.phone,
+        gravatar: md5(action.values.email),
+      })
+      delete user.tribes
       const tribe = Object.assign({}, state.tribe)
       tribe.users = state.tribe.users.map((u) => {
-        if (u.id === state.user.id) {
-          return Object.assign(u, action.payload)
+        const copy = Object.assign({}, u)
+        if (copy.id === state.user.id) {
+          return Object.assign(copy, user)
         }
-        return u
+        return copy
       })
+      user.tribes = state.user.tribes.slice()
       return Object.assign({}, state, {
+        user,
         tribe,
       })
     case LOGOUT_SUCCESS:

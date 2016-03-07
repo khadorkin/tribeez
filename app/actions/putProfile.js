@@ -1,33 +1,33 @@
 import {routeActions} from 'react-router-redux'
 
+import validate from '../utils/formValidator'
 import api from '../utils/api'
 
-import {PUT_PROFILE_REQUEST, PUT_PROFILE_SUCCESS, PUT_PROFILE_FAILURE} from '../constants/actions'
+import {PUT_PROFILE_SUCCESS} from '../constants/actions'
 
-export default (payload) => {
-  return function(dispatch) {
-    dispatch({
-      type: PUT_PROFILE_REQUEST,
-    })
-    api.put('profile', payload)
+export default (values, dispatch) => {
+  // front-end validation:
+  const errors = validate('profile', values)
+  if (errors) {
+    return Promise.reject(errors)
+  }
+  // back-end validation:
+  return new Promise((resolve, reject) => {
+    api.put('profile', values)
       .then((response) => {
         if (response.error) {
-          dispatch({
-            type: PUT_PROFILE_FAILURE,
-            error: response.error,
-          })
+          reject(response.error)
         } else {
+          resolve()
           dispatch({
             type: PUT_PROFILE_SUCCESS,
-            payload,
+            values,
           })
         }
       })
-      .catch(() => {
-        dispatch({
-          type: PUT_PROFILE_FAILURE,
-          error: 'other',
-        })
+      .catch((error) => {
+        reject({_error: error.toString()})
+        Rollbar.error('API error', error)
       })
-  }
+  })
 }

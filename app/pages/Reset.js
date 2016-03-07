@@ -32,16 +32,16 @@ class Reset extends Component {
 
   componentDidUpdate() {
     const error = this.props.error || this.state.error
-    if (['password', 'password_confirmation'].indexOf(error) >= 0) {
+    if (['password', 'password2'].indexOf(error) >= 0) {
       ReactDOM.findDOMNode(this.refs[error].refs.input).focus()
     }
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    if (this.refs.password.getValue() !== this.refs.password_confirmation.getValue()) {
+    if (this.refs.password.getValue() !== this.refs.password2.getValue()) {
       this.setState({
-        error: 'password_confirmation',
+        error: 'password2',
       })
     } else {
       this.setState({
@@ -64,12 +64,12 @@ class Reset extends Component {
               required={true}
               errorText={this.props.error === 'password' && <FormattedMessage id="error.password" />}
             />
-            <TextField ref="password_confirmation"
+            <TextField ref="password2"
               style={styles.field}
               type="password"
               floatingLabelText="Password (confirmation)"
               required={true}
-              errorText={this.state.error === 'password_confirmation' && <FormattedMessage id="error.password_confirmation" />}
+              errorText={this.state.error === 'password2' && <FormattedMessage id="error.password2" />}
             />
           </CardText>
           <CardActions style={styles.actions}>
