@@ -1,19 +1,26 @@
-const required_fields = {
-  register: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
-  join: ['name', 'email', 'password', 'lang'],
-  profile: ['name', 'email', 'lang'], //TODO: validate password2
+const validator = (required_fields, optional_fields = []) => {
+  return (values) => {
+    const errors = {}
+    required_fields.forEach((field) => {
+      if (!values[field]) {
+        errors[field] = 'empty'
+      } else if (field === 'city' && !values.city.place_id) {
+        errors.city = 'invalid'
+      }
+    })
+    optional_fields.forEach((field) => {
+      if (field === 'password2' && values.password2 !== values.password) {
+        errors.password2 = 'mismatch'
+      } else if (field === 'phone' && !/^[\+\(\)0-9 ]+$/.test(values.phone)) {
+        errors.phone = 'invalid'
+      }
+    })
+    return errors
+  }
 }
 
-const formValidator = (name, values) => {
-  const errors = {_front: true}
-  required_fields[name].forEach((field) => {
-    if (!values[field]) {
-      errors[field] = 'empty'
-    } else if (field === 'city' && !values[field].place_id) {
-      errors.city = 'invalid'
-    }
-  })
-  return Object.keys(errors).length > 1 ? errors : null
+export default {
+  register: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha']),
+  join: validator(['name', 'email', 'password', 'lang']),
+  profile: validator(['name', 'email', 'lang'], ['birthdate', 'phone', 'password', 'password2']),
 }
-
-export default formValidator

@@ -19,6 +19,8 @@ import {TRIBE_TYPES} from '../constants/product'
 
 import styles from '../constants/styles'
 
+import validator from '../utils/formValidator'
+
 import postRegister from '../actions/postRegister'
 
 const currencyItems = currencies.map((item) =>
@@ -41,11 +43,10 @@ class RegisterForm extends Component {
   handleSubmit(event) {
     this.props.handleSubmit(postRegister)(event)
       .catch((errors) => {
-        if (!errors._front) { // 'empty' from backend
+        if (errors._backend) { // 'empty' from backend
           // we need to reset it because the API has already tested the value against reCAPTCHa server
           this.refs.captcha.reset()
-        } else {
-          delete errors._front
+          delete errors._backend
         }
         const field = Object.keys(errors)[0]
         if (field !== '_error') {
@@ -121,7 +122,7 @@ class RegisterForm extends Component {
         </CardText>
         <CardActions style={styles.actions}>
           <Captcha ref="captcha"
-            errorText={captcha.error && <FormattedMessage id="error.captcha" />}
+            errorText={captcha.touched && captcha.error && <FormattedMessage id="error.captcha" />}
             {...captcha}
           />
           <RaisedButton label="Register & create this tribe" type="submit" disabled={submitting} />
@@ -154,4 +155,5 @@ export default reduxForm({
   form: 'register',
   fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
   returnRejectedSubmitPromise: true,
+  validate: validator.register,
 }, mapStateToProps)(RegisterForm)

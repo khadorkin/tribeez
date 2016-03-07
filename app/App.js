@@ -138,9 +138,14 @@ const mapStateToProps = (state) => ({
   height: state.app.height,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
-  loading: state.activity.loading || state.invite.loading || state.logout.loading || state.member.loading || state.invites.loading, //TODO: mutualize
   snack: state.app.snack,
   snackMessage: state.app.snackMessage,
+  loading: state.app.submitting
+        || state.activity.loading
+        || state.invite.loading
+        || state.logout.loading
+        || state.member.loading
+        || state.invites.loading,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

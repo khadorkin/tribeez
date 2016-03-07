@@ -26,6 +26,7 @@ const initialState = {
   height: window.innerHeight,
   snack: false,
   snackMessage: null,
+  submitting: false,
 }
 
 export default (state = initialState, action = null) => {
@@ -75,6 +76,14 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         snack: false,
         snackMessage: null,
+      })
+    case formActions.START_SUBMIT:
+      return Object.assign({}, state, {
+        submitting: true,
+      })
+    case formActions.STOP_SUBMIT:
+      return Object.assign({}, state, {
+        submitting: false,
       })
     default:
       return state

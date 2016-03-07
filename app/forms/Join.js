@@ -16,6 +16,8 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
+import validator from '../utils/formValidator'
+
 import postJoin from '../actions/postJoin'
 
 const langItems = langs.map((item) =>
@@ -32,7 +34,6 @@ class RegisterForm extends Component {
   handleSubmit(event) {
     this.props.handleSubmit(postJoin)(event)
       .catch((errors) => {
-        delete errors._front
         const field = Object.keys(errors)[0]
         if (field !== '_error') {
           this.refs[field].focus()
@@ -110,4 +111,5 @@ export default reduxForm({
   form: 'join',
   fields: ['name', 'email', 'password', 'lang', 'token'],
   returnRejectedSubmitPromise: true,
+  validate: validator.join,
 }, mapStateToProps)(RegisterForm)

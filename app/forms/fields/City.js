@@ -64,7 +64,7 @@ class CityField extends Component {
 CityField.propTypes = {
   lang: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.object,
 }
 
 export default CityField

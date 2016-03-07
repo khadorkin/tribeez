@@ -17,6 +17,8 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
+import validator from '../utils/formValidator'
+
 import putProfile from '../actions/putProfile'
 
 const langItems = langs.map((item) =>
@@ -33,7 +35,6 @@ class ProfileForm extends Component {
   handleSubmit(event) {
     this.props.handleSubmit(putProfile)(event)
       .catch((errors) => {
-        delete errors._front
         const field = Object.keys(errors)[0]
         if (field !== '_error') {
           this.refs[field].focus()
@@ -93,7 +94,7 @@ class ProfileForm extends Component {
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Register & join this tribe" type="submit" disabled={submitting} />
+          <RaisedButton label="Save profile" type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={error} />}
           </p>
@@ -129,4 +130,5 @@ export default reduxForm({
   form: 'profile',
   fields: ['name', 'email', 'lang', 'phone', 'birthdate', 'password', 'password2'],
   returnRejectedSubmitPromise: true,
+  validate: validator.profile,
 }, mapStateToProps)(ProfileForm)
