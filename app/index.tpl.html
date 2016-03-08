@@ -29,8 +29,11 @@
       }
     </style>
     <script>
-      window.addEventListener('error', function() {
-        (document.getElementById('loader') || document.body).innerHTML = 'Sorry, an error happened.';
+      window.addEventListener('error', function(error) {
+        var loader = document.getElementById('loader');
+        if (loader) {
+          loader.innerHTML = 'Sorry, an error happened.';
+        }
       });
       var _rollbarToken = "<%= htmlWebpackPlugin.options.rollbar_token %>";
       if (_rollbarToken) {
@@ -52,12 +55,14 @@
       } else {
         Rollbar = {
           error: function() {
-            console.error.apply(console, ['Rollbar notification not sent:'].concat([].slice.call(arguments)));
+            console.error.apply(console, arguments);
+            console.warn('Rollbar notification not sent');
           }
         };
+        window.onerror = Rollbar.error;
       }
     </script>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Intl,Intl.~locale.en,Intl.~locale.fr,Object.assign,Array.prototype.find,Object.keys"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,Intl,Intl.~locale.en,Intl.~locale.fr,Object.assign,Array.prototype.find,Array.prototype.includes,Object.keys"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,500" rel="stylesheet" type="text/css" />
   </head>
   <body>

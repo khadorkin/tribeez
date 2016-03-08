@@ -1,9 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
-import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
 import CardActions from 'material-ui/lib/card/card-actions'
 import MenuItem from 'material-ui/lib/menus/menu-item'
@@ -83,7 +81,7 @@ class TribeForm extends Component {
         <CardActions style={styles.actions}>
           <RaisedButton label="Save profile" type="submit" disabled={submitting} />
           <p className="error">
-            {error && <FormattedMessage id={error} />}
+            {error && <FormattedMessage id="error.other" />}
           </p>
         </CardActions>
       </form>

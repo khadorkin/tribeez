@@ -24,7 +24,6 @@ export default (destination, values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: error.toString()})
-        Rollbar.error('API error', error)
       })
   })
 }

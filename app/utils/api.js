@@ -51,6 +51,10 @@ const request = (route, params, method) => {
       }
       return json
     })
+    .catch((error) => {
+      Rollbar.error('API error', error)
+      throw error
+    })
 }
 
 const clearCache = (route, params) => {

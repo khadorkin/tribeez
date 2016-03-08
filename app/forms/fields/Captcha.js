@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import {connect} from 'react-redux'
-import {FormattedMessage} from 'react-intl'
 
 import scriptLoader from '../../utils/scriptLoader'
 

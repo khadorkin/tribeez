@@ -50,7 +50,7 @@ export default {
   'error.tribe_type': 'Please choose a tribe type',
   'error.captcha': 'Invalid captcha',
   // common:
-  'error.other': 'Internal server error: please try again later',
+  'error.other': 'Request error: please try again later',
 
   // Members
   'add_member': 'Add a member',

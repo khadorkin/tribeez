@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
@@ -85,7 +84,7 @@ class RegisterForm extends Component {
         <CardActions style={styles.actions}>
           <RaisedButton label="Register & join this tribe" type="submit" disabled={submitting} />
           <p className="error">
-            {error && <FormattedMessage id={error} />}
+            {error && <FormattedMessage id="error.other" />}
           </p>
         </CardActions>
       </form>

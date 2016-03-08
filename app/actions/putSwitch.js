@@ -1,8 +1,11 @@
-import {routeActions} from 'react-router-redux'
-
 import api from '../utils/api'
 
-import {SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE} from '../constants/actions'
+import {
+  SWITCH_REQUEST,
+  SWITCH_SUCCESS,
+  SWITCH_FAILURE,
+} from '../constants/actions'
+
 import routes from '../constants/routes'
 
 import getMember from './getMember'

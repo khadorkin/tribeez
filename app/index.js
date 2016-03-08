@@ -33,9 +33,6 @@ import Notes from './pages/Notes'
 import Polls from './pages/Polls'
 import NotFound from './pages/NotFound'
 
-// redux actions
-import getMember from './actions/getMember'
-
 // react-router routes
 import routes from './constants/routes'
 
@@ -44,6 +41,11 @@ import './static'
 
 // global injected style:
 import './index.css'
+
+// redux actions
+import {resize} from './actions/app'
+import getMember from './actions/getMember'
+import updateLang from './actions/updateLang'
 
 // navigator lang detector:
 import lang from './utils/lang'
@@ -83,6 +85,11 @@ if (__DEBUG__) {
 
 // update app lang
 store.dispatch(updateLang(lang.getDefault()))
+
+// update app size
+window.onresize = store.dispatch.bind(store.dispatch, resize())
+window.onresize()
+
 // Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 

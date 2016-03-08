@@ -1,5 +1,3 @@
-import {routeActions} from 'react-router-redux'
-
 import api from '../utils/api'
 
 import getMember from './getMember'
@@ -24,7 +22,6 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: error.toString()})
-        Rollbar.error('API error', error)
       })
   })
 }

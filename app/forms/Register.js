@@ -133,7 +133,7 @@ class RegisterForm extends Component {
           />
           <RaisedButton label="Register & create this tribe" type="submit" disabled={submitting} />
           <p className="error">
-            {error && <FormattedMessage id={error} />}
+            {error && <FormattedMessage id="error.other" />}
           </p>
         </CardActions>
       </form>

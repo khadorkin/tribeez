@@ -60,7 +60,7 @@ export default (state = initialState, action = null) => {
         messages: messages[action.lang],
       })
     case formActions.CHANGE:
-      if (action.field === 'lang') {
+      if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {
         return Object.assign({}, state, {
           lang: action.value,
           messages: messages[action.value],

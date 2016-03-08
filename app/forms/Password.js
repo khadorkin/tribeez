@@ -69,7 +69,7 @@ PasswordForm.propTypes = {
   initialValues: PropTypes.object,
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   initialValues: {
     lang: state.app.lang,
   },

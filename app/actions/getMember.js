@@ -2,7 +2,12 @@ import {routeActions} from 'react-router-redux'
 
 import api from '../utils/api'
 
-import {GET_MEMBER_REQUEST, GET_MEMBER_SUCCESS, GET_MEMBER_FAILURE, LOGIN_DESTINATION} from '../constants/actions'
+import {
+  GET_MEMBER_REQUEST,
+  GET_MEMBER_SUCCESS,
+  GET_MEMBER_FAILURE,
+  LOGIN_DESTINATION,
+} from '../constants/actions'
 
 export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
   return function(dispatch) {

@@ -7,8 +7,6 @@ import {
   RESET_FAILURE,
 } from '../constants/actions'
 
-import lang from '../utils/lang'
-
 const initialState = {
   loading: false,
   error: null,

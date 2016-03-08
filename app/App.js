@@ -16,7 +16,7 @@ import Snackbar from 'material-ui/lib/snackbar'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, resize, closeSnack} from './actions/app'
+import {toggleMenu, closeSnack} from './actions/app'
 
 import routes from './constants/routes'
 
@@ -32,8 +32,6 @@ class App extends Component {
     this.handleMenuButton = this.handleMenuButton.bind(this)
     this.handleNavToggle = this.handleNavToggle.bind(this)
     this.handleSnackClose = this.handleSnackClose.bind(this)
-    window.onresize = this.props.resize
-    this.props.resize()
   }
 /*
   // modify global theme:
@@ -125,7 +123,6 @@ App.propTypes = {
   snack: PropTypes.bool.isRequired,
   snackMessage: PropTypes.string,
   toggleMenu: PropTypes.func.isRequired,
-  resize: PropTypes.func.isRequired,
   closeSnack: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 }
@@ -150,7 +147,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
-  resize,
   closeSnack,
 }, dispatch)
 

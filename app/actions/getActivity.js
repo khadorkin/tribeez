@@ -1,6 +1,10 @@
 import api from '../utils/api'
 
-import {GET_ACTIVITY_REQUEST, GET_ACTIVITY_SUCCESS, GET_ACTIVITY_FAILURE} from '../constants/actions'
+import {
+  GET_ACTIVITY_REQUEST,
+  GET_ACTIVITY_SUCCESS,
+  GET_ACTIVITY_FAILURE,
+} from '../constants/actions'
 
 export default () => {
   return function(dispatch) {

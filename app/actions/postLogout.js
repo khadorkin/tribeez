@@ -2,7 +2,12 @@ import {routeActions} from 'react-router-redux'
 
 import api from '../utils/api'
 
-import {LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE} from '../constants/actions'
+import {
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
+} from '../constants/actions'
+
 import routes from '../constants/routes'
 
 export default () => {
