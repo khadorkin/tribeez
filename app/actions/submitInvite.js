@@ -20,6 +20,7 @@ export default (values, dispatch) => {
           }
           reject(response.error)
         } else {
+          api.clearCache('invites') // TODO: could be replaced by a dispatch to avoid API call
           resolve()
           dispatch(routeActions.push(routes.MEMBERS))
           dispatch({
