@@ -39,17 +39,20 @@ import getMember from './actions/getMember'
 // react-router routes
 import routes from './constants/routes'
 
-// redux reducers
-import reducers from './reducers'
-
 // static assets not being explicitely used in app but still needed in index.html:
 import './static'
 
 // global injected style:
 import './index.css'
 
-// Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin()
+// redux-form normalizers
+import normalizers from './utils/formNormalizers'
+
+// redux reducers
+import reducers from './reducers'
+reducers.routing = routeReducer
+reducers.form = formReducer.normalize(normalizers)
+const rootReducer = combineReducers(reducers)
 
 const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history
 let createStoreWithMiddleware
@@ -65,14 +68,14 @@ if (__DEBUG__) {
   createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore)
 }
 
-reducers.form = formReducer
-reducers.routing = routeReducer
-const rootReducer = combineReducers(reducers)
 const store = createStoreWithMiddleware(rootReducer)
 
 if (__DEBUG__) {
   reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
 }
+
+// Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin()
 
 const authenticate = (nextState, replaceState, callback) => {
   if (!store.getState().member.user.id) {
