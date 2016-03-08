@@ -20,6 +20,8 @@ const validator = (required_fields, optional_fields = []) => {
 export default {
   register: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha']),
   join: validator(['name', 'email', 'password', 'lang']),
+  login: validator(['email', 'password']),
+  password: validator(['email', 'lang']),
   profile: validator(['name', 'email', 'lang'], ['birthdate', 'phone', 'password', 'password2']),
   tribe: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
   invite: validator(['email', 'lang']),

@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
-import {Link} from 'react-router'
 
 import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
@@ -12,13 +11,12 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import TextField from './fields/Text'
 
 import styles from '../constants/styles'
-import routes from '../constants/routes'
 
 import validator from '../utils/formValidator'
 
-import submitLogin from '../actions/submitLogin'
+import submitPassword from '../actions/submitPassword'
 
-class LoginForm extends Component {
+class PasswordForm extends Component {
 
   constructor(props) {
     super(props)
@@ -26,7 +24,7 @@ class LoginForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event)
+    this.props.handleSubmit(submitPassword)(event)
       .catch((errors) => {
         const field = Object.keys(errors)[0]
         if (field && field !== '_error') {
@@ -36,12 +34,11 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {fields: {email, password}, error, submitting} = this.props
-    const subtitle = this.props.invite.email && <FormattedMessage id="login_to_join" values={{inviter: this.props.invite.inviter, tribe: this.props.invite.tribe}} />
+    const {fields: {email}, error, submitting} = this.props
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle={subtitle} />
+        <CardTitle subtitle="Fill this form to receive a reset link via email" />
         <CardText>
           <TextField ref="email"
             type="email"
@@ -50,22 +47,11 @@ class LoginForm extends Component {
             errorText={email.touched && email.error && <FormattedMessage id="error.login.email" />}
             {...email}
           />
-          <TextField ref="password"
-            type="password"
-            required={true}
-            floatingLabelText="Password"
-            errorText={password.touched && password.error && <FormattedMessage id="error.login.password" />}
-            {...password}
-          />
-          <p style={{textAlign: 'right', marginBottom: 0}}><Link to={routes.PASSWORD}>Lost your password?</Link></p>
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Login" type="submit" disabled={submitting} />
+          <RaisedButton label="Send request" type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
-          </p>
-          <p style={{marginTop: '2em'}}>
-            No account yet? <Link to={routes.REGISTER}>Register now!</Link>
           </p>
         </CardActions>
       </form>
@@ -73,30 +59,26 @@ class LoginForm extends Component {
   }
 }
 
-LoginForm.propTypes = {
+PasswordForm.propTypes = {
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   // from redux state:
-  destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
-  invite: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
 }
 
-const mapStateToProps = (state) => ({
-  destination: state.login.destination,
-  invite: state.join.data,
+const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    email: state.join.data.email, // email is null when not coming from /join
+    lang: state.app.lang,
   },
 })
 
 export default reduxForm({
   form: 'login',
-  fields: ['email', 'password'],
+  fields: ['email', 'lang'],
   returnRejectedSubmitPromise: true,
-  validate: validator.login,
+  validate: validator.password,
   touchOnBlur: false,
-}, mapStateToProps)(LoginForm)
+}, mapStateToProps)(PasswordForm)
