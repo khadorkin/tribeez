@@ -10,6 +10,13 @@ export default (values, dispatch) => {
     api.post('join', values)
       .then((response) => {
         if (response.error) {
+          if (response.error.email) {
+            response.error.email = {
+              id: response.error._suggestion ? 'invalid_suggestion' : response.error.email,
+              suggestion: response.error._suggestion,
+            }
+            delete response.error._suggestion
+          }
           reject(response.error)
         } else {
           resolve()

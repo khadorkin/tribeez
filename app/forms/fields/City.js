@@ -64,7 +64,7 @@ class CityField extends Component {
 CityField.propTypes = {
   lang: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.object,
+  value: PropTypes.any, // because redux-form sets it to a string instead of object
 }
 
 export default CityField

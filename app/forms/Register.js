@@ -37,7 +37,13 @@ class RegisterForm extends Component {
 
   constructor(props) {
     super(props)
+    this.handleSuggestion = this.handleSuggestion.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSuggestion(event) {
+    event.preventDefault()
+    this.props.fields.email.onChange(event.target.innerHTML)
   }
 
   handleSubmit(event) {
@@ -72,7 +78,7 @@ class RegisterForm extends Component {
             type="email"
             required={true}
             floatingLabelText="Email"
-            errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error} />}
+            errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error.id} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
             {...email}
           />
           <TextField ref="password"

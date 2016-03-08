@@ -11,6 +11,13 @@ export default (values, dispatch) => {
       .then((response) => {
         if (response.error) {
           response.error._backend = true // to reset the captcha
+          if (response.error.email) {
+            response.error.email = {
+              id: response.error._suggestion ? 'invalid_suggestion' : response.error.email,
+              suggestion: response.error._suggestion,
+            }
+            delete response.error._suggestion
+          }
           reject(response.error)
         } else {
           resolve()

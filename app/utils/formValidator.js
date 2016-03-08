@@ -11,8 +11,6 @@ const validator = (required_fields, optional_fields = []) => {
     optional_fields.forEach((field) => {
       if (field === 'password2' && values.password2 !== values.password) {
         errors.password2 = 'mismatch'
-      } else if (field === 'phone' && !/^[\+\(\)0-9 ]+$/.test(values.phone)) {
-        errors.phone = 'invalid'
       }
     })
     return errors
