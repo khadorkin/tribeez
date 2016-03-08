@@ -160,5 +160,4 @@ export default reduxForm({
   fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
   returnRejectedSubmitPromise: true,
   validate: validator.register,
-  destroyOnUnmount: false,
 }, mapStateToProps)(RegisterForm)

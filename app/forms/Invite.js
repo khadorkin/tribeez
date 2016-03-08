@@ -91,7 +91,7 @@ InviteForm.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    lang: state.app.lang,
+    lang: state.member.user.lang,
   },
 })
 

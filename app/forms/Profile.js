@@ -119,7 +119,7 @@ const mapStateToProps = (state) => ({
   initialValues: {
     name: state.member.user.name,
     email: state.member.user.email,
-    lang: state.app.lang,
+    lang: state.member.user.lang,
     phone: state.member.user.phone,
     birthdate: state.member.user.birthdate,
   },

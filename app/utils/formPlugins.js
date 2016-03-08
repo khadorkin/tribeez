@@ -1,32 +1,28 @@
 import {
   GET_MEMBER_SUCCESS,
-  GET_MEMBER_FAILURE,
   UPDATE_LANG,
 } from '../constants/actions'
 
+import {actionTypes as formActions} from 'redux-form'
+
 import lang from './lang'
 
-const initialState = {
-  lang: {
-    value: lang.getDefault(),
-  },
-}
-
-const plugin = (state = initialState, action) => {
+const plugin = (state, action) => {
   switch (action.type) {
     case GET_MEMBER_SUCCESS:
       return {
         ...state,
         lang: {value: action.user.lang},
       }
-    case GET_MEMBER_FAILURE:
-      return {
-        ...initialState,
-      }
     case UPDATE_LANG:
       return {
         ...state,
         lang: {value: action.lang},
+      }
+    case formActions.DESTROY:
+    case formActions.INITIALIZE:
+      return {
+        lang: {value: lang.getDefault()},
       }
     default:
       return state
@@ -35,4 +31,5 @@ const plugin = (state = initialState, action) => {
 
 export default {
   register: plugin,
+  join: plugin,
 }

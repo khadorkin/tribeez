@@ -109,7 +109,6 @@ RegisterForm.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    lang: state.app.lang,
     email: state.join.data.email,
     token: ownProps.token,
   },

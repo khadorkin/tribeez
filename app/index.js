@@ -45,6 +45,9 @@ import './static'
 // global injected style:
 import './index.css'
 
+// navigator lang detector:
+import lang from './utils/lang'
+
 // redux-form normalizers and plugins
 import normalizers from './utils/formNormalizers'
 import plugins from './utils/formPlugins'
@@ -78,6 +81,8 @@ if (__DEBUG__) {
   reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
 }
 
+// update app lang
+store.dispatch(updateLang(lang.getDefault()))
 // Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin()
 
