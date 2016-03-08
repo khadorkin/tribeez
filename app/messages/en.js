@@ -28,6 +28,10 @@ export default {
 
   // snack messages
   'snack.password_changed': 'Password changed',
+  'snack.profile_updated': 'Profile updated',
+  'snack.tribe_created': 'Tribe created',
+  'snack.invite_sent': 'Invite sent',
+  'snack.invite_resent': 'Invite sent again',
 
   // login/register forms
   invited_you: '{name} invited you',

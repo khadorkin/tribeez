@@ -3,6 +3,8 @@ import api from '../utils/api'
 import getMember from './getMember'
 import getActivity from './getActivity'
 
+import {SNACK_MESSAGE} from '../constants/actions'
+
 import routes from '../constants/routes'
 
 export default (values, dispatch) => {
@@ -18,6 +20,10 @@ export default (values, dispatch) => {
           // force redirect to home page:
           dispatch(getMember(null, routes.ACTIVITY))
           dispatch(getActivity())
+          dispatch({
+            type: SNACK_MESSAGE,
+            message: 'tribe_created',
+          })
         }
       })
       .catch((error) => {

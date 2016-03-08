@@ -1,6 +1,9 @@
 import api from '../utils/api'
 
-import {PUT_PROFILE_SUCCESS} from '../constants/actions'
+import {
+  PUT_PROFILE_SUCCESS,
+  SNACK_MESSAGE,
+} from '../constants/actions'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -13,6 +16,10 @@ export default (values, dispatch) => {
           dispatch({
             type: PUT_PROFILE_SUCCESS,
             values,
+          })
+          dispatch({
+            type: SNACK_MESSAGE,
+            message: 'profile_updated',
           })
         }
       })
