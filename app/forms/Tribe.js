@@ -79,7 +79,7 @@ class TribeForm extends Component {
           </SelectField>
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Save profile" type="submit" disabled={submitting} />
+          <RaisedButton label="Create tribe" type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>
