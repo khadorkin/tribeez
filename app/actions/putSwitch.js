@@ -5,8 +5,8 @@ import api from '../utils/api'
 import {SWITCH_REQUEST, SWITCH_SUCCESS, SWITCH_FAILURE} from '../constants/actions'
 import routes from '../constants/routes'
 
-import getActivity from './getActivity'
 import getMember from './getMember'
+import getActivity from './getActivity'
 
 export default (id) => {
   return function(dispatch) {
@@ -24,11 +24,11 @@ export default (id) => {
           dispatch({
             type: SWITCH_SUCCESS,
           })
+          // user and tribe have changed, get them from the API and go to home:
           api.clearCache()
-          dispatch(getMember())
           // force redirect to home page:
+          dispatch(getMember(null, routes.ACTIVITY))
           dispatch(getActivity())
-          dispatch(routeActions.push(routes.ACTIVITY))
         }
       })
       .catch(() => {

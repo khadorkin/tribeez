@@ -5,7 +5,6 @@ import {
   GET_MEMBER_SUCCESS,
   GET_MEMBER_FAILURE,
   LOGOUT_SUCCESS,
-  NEW_TRIBE_SUCCESS,
   PUT_PROFILE_SUCCESS,
 } from '../constants/actions'
 

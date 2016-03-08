@@ -2,37 +2,29 @@ import {routeActions} from 'react-router-redux'
 
 import api from '../utils/api'
 
-import {NEW_TRIBE_REQUEST, NEW_TRIBE_SUCCESS, NEW_TRIBE_FAILURE} from '../constants/actions'
+import getMember from './getMember'
+import getActivity from './getActivity'
+
 import routes from '../constants/routes'
 
-import getMember from './getMember'
-
-export default (payload) => {
-  return function(dispatch) {
-    dispatch({
-      type: NEW_TRIBE_REQUEST,
-    })
-    api.post('tribe', payload)
+export default (values, dispatch) => {
+  return new Promise((resolve, reject) => {
+    api.post('tribe', values)
       .then((response) => {
         if (response.error) {
-          dispatch({
-            type: NEW_TRIBE_FAILURE,
-            error: response.error,
-          })
+          reject(response.error)
         } else {
-          dispatch({
-            type: NEW_TRIBE_SUCCESS,
-            tribe: response,
-          })
+          resolve()
           // user and tribe have changed, get them from the API and go to home:
-          dispatch(getMember(routes.ACTIVITY, routes.ACTIVITY))
+          api.clearCache()
+          // force redirect to home page:
+          dispatch(getMember(null, routes.ACTIVITY))
+          dispatch(getActivity())
         }
       })
-      .catch(() => {
-        dispatch({
-          type: NEW_TRIBE_FAILURE,
-          error: 'other',
-        })
+      .catch((error) => {
+        reject({_error: error.toString()})
+        Rollbar.error('API error', error)
       })
-  }
+  })
 }
