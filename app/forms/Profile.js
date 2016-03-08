@@ -19,7 +19,7 @@ import styles from '../constants/styles'
 
 import validator from '../utils/formValidator'
 
-import putProfile from '../actions/putProfile'
+import submitProfile from '../actions/submitProfile'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
@@ -33,7 +33,7 @@ class ProfileForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(putProfile)(event)
+    this.props.handleSubmit(submitProfile)(event)
       .catch((errors) => {
         const field = Object.keys(errors)[0]
         if (field !== '_error') {

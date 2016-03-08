@@ -20,7 +20,7 @@ import styles from '../constants/styles'
 
 import validator from '../utils/formValidator'
 
-import postTribe from '../actions/postTribe'
+import submitTribe from '../actions/submitTribe'
 
 const currencyItems = currencies.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
@@ -37,7 +37,7 @@ class TribeForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(postTribe)(event)
+    this.props.handleSubmit(submitTribe)(event)
       .catch((errors) => {
         const field = Object.keys(errors)[0]
         if (field !== '_error') {

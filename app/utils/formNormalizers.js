@@ -8,4 +8,5 @@ export default {
   register: normalizers,
   join: normalizers,
   profile: normalizers,
+  invite: normalizers,
 }

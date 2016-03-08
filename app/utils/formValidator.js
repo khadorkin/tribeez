@@ -22,4 +22,5 @@ export default {
   join: validator(['name', 'email', 'password', 'lang']),
   profile: validator(['name', 'email', 'lang'], ['birthdate', 'phone', 'password', 'password2']),
   tribe: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
+  invite: validator(['email', 'lang']),
 }

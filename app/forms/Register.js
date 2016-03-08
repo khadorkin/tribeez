@@ -21,7 +21,7 @@ import styles from '../constants/styles'
 
 import validator from '../utils/formValidator'
 
-import postRegister from '../actions/postRegister'
+import submitRegister from '../actions/submitRegister'
 
 const currencyItems = currencies.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
@@ -47,7 +47,7 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(postRegister)(event)
+    this.props.handleSubmit(submitRegister)(event)
       .catch((errors) => {
         if (errors._backend) { // 'empty' from backend
           // we need to reset it because the API has already tested the value against reCAPTCHa server
@@ -78,7 +78,7 @@ class RegisterForm extends Component {
             type="email"
             required={true}
             floatingLabelText="Email"
-            errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error.id} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
+            errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
             {...email}
           />
           <TextField ref="password"

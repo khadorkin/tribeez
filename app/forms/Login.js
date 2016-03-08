@@ -14,7 +14,7 @@ import TextField from './fields/Text'
 import styles from '../constants/styles'
 import routes from '../constants/routes'
 
-import postLogin from '../actions/postLogin'
+import submitLogin from '../actions/submitLogin'
 
 class LoginForm extends Component {
 
@@ -24,7 +24,7 @@ class LoginForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(postLogin.bind(null, this.props.destination))(event)
+    this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event)
       .catch((errors) => {
         const field = Object.keys(errors)[0]
         if (field && field !== '_error') {
@@ -85,7 +85,9 @@ LoginForm.propTypes = {
 const mapStateToProps = (state) => ({
   destination: state.login.destination,
   invite: state.join.data,
-  initialValues: {email: state.join.data.email}, // email is null when not coming from /join
+  initialValues: {
+    email: state.join.data.email, // email is null when not coming from /join
+  },
 })
 
 export default reduxForm({

@@ -18,13 +18,13 @@ import styles from '../constants/styles'
 
 import validator from '../utils/formValidator'
 
-import submitJoin from '../actions/submitJoin'
+import submitInvite from '../actions/submitInvite'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-class RegisterForm extends Component {
+class InviteForm extends Component {
 
   constructor(props) {
     super(props)
@@ -38,7 +38,7 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(submitJoin)(event)
+    this.props.handleSubmit(submitInvite)(event)
       .catch((errors) => {
         const field = Object.keys(errors)[0]
         if (field !== '_error') {
@@ -48,31 +48,17 @@ class RegisterForm extends Component {
   }
 
   render() {
-    const {fields: {name, email, password, lang}, error, submitting} = this.props
+    const {fields: {email, lang}, error, submitting} = this.props
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_you" values={{name: this.props.inviter}} />} />
         <CardText>
-          <TextField ref="name"
-            floatingLabelText="Your name"
-            required={true}
-            errorText={name.touched && name.error && <FormattedMessage id="error.name" />}
-            {...name}
-          />
           <TextField ref="email"
             type="email"
             required={true}
             floatingLabelText="Email"
             errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
             {...email}
-          />
-          <TextField ref="password"
-            type="password"
-            required={true}
-            floatingLabelText="Password"
-            errorText={password.touched && password.error && <FormattedMessage id="error.password" />}
-            {...password}
           />
           <SelectField ref="lang"
             floatingLabelText="Language"
@@ -83,7 +69,7 @@ class RegisterForm extends Component {
           </SelectField>
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Register & join this tribe" type="submit" disabled={submitting} />
+          <RaisedButton label="Send invite" type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={error} />}
           </p>
@@ -93,9 +79,7 @@ class RegisterForm extends Component {
   }
 }
 
-RegisterForm.propTypes = {
-  // from parent component:
-  token: PropTypes.string.isRequired,
+InviteForm.propTypes = {
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
@@ -103,23 +87,17 @@ RegisterForm.propTypes = {
   submitting: PropTypes.bool,
   // from redux state:
   initialValues: PropTypes.object,
-  inviter: PropTypes.string,
-  tribe: PropTypes.string,
 }
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
     lang: state.app.lang,
-    email: state.join.data.email,
-    token: ownProps.token,
   },
-  inviter: state.join.data.inviter,
-  tribe: state.join.data.tribe,
 })
 
 export default reduxForm({
-  form: 'join',
-  fields: ['name', 'email', 'password', 'lang', 'token'],
+  form: 'invite',
+  fields: ['email', 'lang'],
   returnRejectedSubmitPromise: true,
-  validate: validator.join,
-}, mapStateToProps)(RegisterForm)
+  validate: validator.invite,
+}, mapStateToProps)(InviteForm)

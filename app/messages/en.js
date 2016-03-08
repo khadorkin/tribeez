@@ -37,6 +37,7 @@ export default {
   'error.login.password': 'Wrong password',
   // register/join:
   'error.name': 'Invalid user name',
+  'error.email_empty': 'An email address is required',
   'error.email_invalid': 'Invalid email',
   'error.email_invalid_suggestion': 'Invalid email. Did you mean {suggestion}?',
   'error.email_exists': 'This email address is already registered',
