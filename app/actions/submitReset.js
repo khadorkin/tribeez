@@ -3,31 +3,20 @@ import {routeActions} from 'react-router-redux'
 import api from '../utils/api'
 
 import {
-  RESET_REQUEST,
-  RESET_SUCCESS,
-  RESET_FAILURE,
   GET_MEMBER_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
 import routes from '../constants/routes'
 
-export default (token, password) => {
-  return function(dispatch) {
-    dispatch({
-      type: RESET_REQUEST,
-    })
-    api.post('reset', {token, password})
+export default (values, dispatch) => {
+  return new Promise((resolve, reject) => {
+    api.post('reset', values)
       .then((response) => {
         if (response.error) {
-          dispatch({
-            type: RESET_FAILURE,
-            error: response.error,
-          })
+          reject(response.error)
         } else {
-          dispatch({
-            type: RESET_SUCCESS,
-          })
+          resolve()
           dispatch({
             type: GET_MEMBER_SUCCESS,
             user: response.user,
@@ -40,11 +29,8 @@ export default (token, password) => {
           })
         }
       })
-      .catch(() => {
-        dispatch({
-          type: RESET_FAILURE,
-          error: 'other',
-        })
+      .catch((error) => {
+        reject({_error: error.toString()})
       })
-  }
+  })
 }

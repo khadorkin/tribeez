@@ -19,7 +19,7 @@ class CityField extends Component {
 
   /*eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
-    scriptLoader.load('https://maps.googleapis.com/maps/api/js?libraries=places&language=' + this.props.lang, () => {
+    window.onGooglePlaces = () => {
       const autocomplete = new google.maps.places.Autocomplete(document.getElementById('city'), {types: ['(cities)']})
       autocomplete.addListener('place_changed', () => {
         const place = autocomplete.getPlace()
@@ -38,7 +38,13 @@ class CityField extends Component {
         }
         this.props.onChange({}) // reset
       })
-    })
+    }
+
+    if (window.google) {
+      window.onGooglePlaces()
+    } else {
+      scriptLoader.load('https://maps.googleapis.com/maps/api/js?libraries=places&callback=onGooglePlaces&language=' + this.props.lang)
+    }
   }
 
   focus() {
