@@ -59,15 +59,14 @@ export default (state = initialState, action = null) => {
         lang: action.lang,
         messages: messages[action.lang],
       })
-    // TODO: prevent from reinitializing redux forms
-    // case formActions.CHANGE:
-    //   if (action.field === 'lang') {
-    //     return Object.assign({}, state, {
-    //       lang: action.value,
-    //       messages: messages[action.value],
-    //     })
-    //   }
-    //   return state
+    case formActions.CHANGE:
+      if (action.field === 'lang') {
+        return Object.assign({}, state, {
+          lang: action.value,
+          messages: messages[action.value],
+        })
+      }
+      return state
     case SNACK_MESSAGE:
       return Object.assign({}, state, {
         snack: true,

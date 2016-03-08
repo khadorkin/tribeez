@@ -45,13 +45,17 @@ import './static'
 // global injected style:
 import './index.css'
 
-// redux-form normalizers
+// redux-form normalizers and plugins
 import normalizers from './utils/formNormalizers'
+import plugins from './utils/formPlugins'
 
 // redux reducers
 import reducers from './reducers'
 reducers.routing = routeReducer
-reducers.form = formReducer.normalize(normalizers)
+reducers.form = formReducer
+  .normalize(normalizers)
+  .plugin(plugins)
+
 const rootReducer = combineReducers(reducers)
 
 const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history

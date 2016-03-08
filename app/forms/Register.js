@@ -148,12 +148,10 @@ RegisterForm.propTypes = {
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   // from redux state:
-  initialValues: PropTypes.object,
   lang: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  initialValues: {lang: state.app.lang},
   lang: state.app.lang,
 })
 
@@ -162,4 +160,5 @@ export default reduxForm({
   fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
   returnRejectedSubmitPromise: true,
   validate: validator.register,
+  destroyOnUnmount: false,
 }, mapStateToProps)(RegisterForm)
