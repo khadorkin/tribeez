@@ -69,7 +69,7 @@ const config = configs[env]
 
 // common config:
 Object.assign(config, {
-  entry: './app/index.js',
+  entry: './app/boot.js',
   output: {
     path: './dist',
     filename: env === 'development' ? 'app.js' : `${revision}.js`,

@@ -10,6 +10,7 @@ import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {syncHistory, routeReducer} from 'react-router-redux'
 import createLogger from 'redux-logger'
 import injectTapEventPlugin from 'react-tap-event-plugin' // TODO: remove when React is fixed
+import {addLocaleData} from 'react-intl'
 
 // react components
 import App from './App'
@@ -42,6 +43,10 @@ import './static'
 // global injected style:
 import './index.css'
 
+// load Roboto from Google Fonts:
+import webfont from 'webfontloader'
+webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
+
 // redux actions
 import {resize} from './actions/app'
 import getMember from './actions/getMember'
@@ -49,6 +54,12 @@ import updateLang from './actions/updateLang'
 
 // navigator lang detector:
 import lang from './utils/lang'
+
+// app locales (keep list in sync with resources/langs.js and messages/*.js):
+import locale_en from 'react-intl/locale-data/en'
+import locale_fr from 'react-intl/locale-data/fr'
+addLocaleData(locale_en)
+addLocaleData(locale_fr)
 
 // redux-form normalizers and plugins
 import normalizers from './utils/formNormalizers'
