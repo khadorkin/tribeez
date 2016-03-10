@@ -55,6 +55,7 @@ export default (state = initialState, action = null) => {
         messages: messages[action.user.lang],
       })
     case UPDATE_LANG:
+      lang.setDefault(action.lang)
       return Object.assign({}, state, {
         lang: action.lang,
         messages: messages[action.lang],

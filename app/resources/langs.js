@@ -1,13 +1,11 @@
-const obj = {
+export const map = {
   en: 'English',
   fr: 'Français',
 }
 
 // export a sorted array instead of this object:
 
-const arr = []
-for (const code in obj) {
-  arr.push({code, name: obj[code]})
+export const list = []
+for (const code in map) {
+  list.push({code, name: map[code]})
 }
-
-export default arr

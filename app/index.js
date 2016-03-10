@@ -48,9 +48,8 @@ import webfont from 'webfontloader'
 webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
 // redux actions
-import {resize} from './actions/app'
+import {resize, updateLang} from './actions/app'
 import getMember from './actions/getMember'
-import updateLang from './actions/updateLang'
 
 // navigator lang detector:
 import lang from './utils/lang'

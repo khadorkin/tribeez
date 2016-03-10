@@ -7,6 +7,7 @@ const fr = {
   join: 'Rejoindre',
   login: 'Connexion',
   password: 'Mot de passe perdu',
+  reset: 'Nouveau mot de passe',
   activity: 'Activité',
   profile: 'Profil',
   members: 'Membres',

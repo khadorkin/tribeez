@@ -1,4 +1,10 @@
-import {TOGGLE_MENU, TOGGLE_TRIBES, RESIZE, CLOSE_SNACK} from '../constants/actions'
+import {
+  TOGGLE_MENU,
+  TOGGLE_TRIBES,
+  RESIZE,
+  CLOSE_SNACK,
+  UPDATE_LANG,
+} from '../constants/actions'
 
 export const toggleMenu = (open) => {
   return function(dispatch) {
@@ -31,6 +37,15 @@ export const closeSnack = () => {
   return function(dispatch) {
     dispatch({
       type: CLOSE_SNACK,
+    })
+  }
+}
+
+export const updateLang = (lang) => {
+  return function(dispatch) {
+    dispatch({
+      type: UPDATE_LANG,
+      lang,
     })
   }
 }

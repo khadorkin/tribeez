@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
-import langs from '../resources/langs'
+import {list as langs} from '../resources/langs'
 
 import styles from '../constants/styles'
 

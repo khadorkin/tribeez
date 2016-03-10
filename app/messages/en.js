@@ -1,3 +1,5 @@
+// base messages: this file is the fallback for other langs
+
 export default {
   // titles
   welcome: 'Welcome',

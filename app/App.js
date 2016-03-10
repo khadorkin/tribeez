@@ -11,12 +11,21 @@ import FlatButton from 'material-ui/lib/flat-button'
 import LeftNav from 'material-ui/lib/left-nav'
 import IconButton from 'material-ui/lib/icon-button'
 import HomeIcon from 'material-ui/lib/svg-icons/action/home'
+import IconMenu from 'material-ui/lib/menus/icon-menu'
+import MenuItem from 'material-ui/lib/menus/menu-item'
+import LangIcon from 'material-ui/lib/svg-icons/action/language'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import Snackbar from 'material-ui/lib/snackbar'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, closeSnack} from './actions/app'
+import {toggleMenu, closeSnack, updateLang} from './actions/app'
+
+import {list as langsList, map as langsMap} from './resources/langs'
+
+const langItems = langsList.map((item) =>
+  <MenuItem value={item.code} key={item.code} primaryText={item.name} />
+)
 
 import routes from './constants/routes'
 
@@ -27,6 +36,7 @@ class App extends Component {
     this.handleMenuButton = this.handleMenuButton.bind(this)
     this.handleNavToggle = this.handleNavToggle.bind(this)
     this.handleSnackClose = this.handleSnackClose.bind(this)
+    this.handleLangChange = this.handleLangChange.bind(this)
   }
 /*
   // modify global theme:
@@ -52,12 +62,30 @@ class App extends Component {
     this.props.closeSnack()
   }
 
+  handleLangChange(event, value) {
+    this.props.updateLang(value)
+  }
+
   render() {
     let iconLeft = null
     let iconRight = null
     if (!this.props.uid) { // i.e. anonymous
-      iconLeft = <IconButton containerElement={<Link to={routes.WELCOME} />}><HomeIcon /></IconButton>
-      iconRight = <FlatButton label="Login" containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
+      if (this.props.pathname === '/') {
+        iconLeft = (
+          <IconMenu
+            iconButtonElement={<IconButton><LangIcon color="white" /></IconButton>}
+            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+            onChange={this.handleLangChange}
+            value={this.props.lang}
+          >
+            {langItems}
+          </IconMenu>
+        )
+      } else {
+        iconLeft = <IconButton containerElement={<Link to={routes.WELCOME} />}><HomeIcon /></IconButton>
+      }
+      iconRight = <FlatButton label={<FormattedMessage id="login" />} containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
     }
     if (this.props.loading) {
       iconRight = <CircularProgress color="white" size={0.5} />
@@ -71,9 +99,11 @@ class App extends Component {
 
     const dockedUserMenu = this.props.uid && this.props.desktop
 
-    //TODO: improve this:
-    const path_parts = this.props.pathname.split('/')
-    const page_id = (path_parts[2] && path_parts[2].length < 32 ? `${path_parts[1]}_${path_parts[2]}` : path_parts[1]) // e.g. "/members/new" => "members_new"
+    const path_parts = this.props.pathname.substr(1).split('/')
+    if (this.props.params.token) {
+      path_parts.pop()
+    }
+    const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
     return (
@@ -114,12 +144,16 @@ App.propTypes = {
   height: PropTypes.number.isRequired,
   messages: PropTypes.object.isRequired,
   menu_visible: PropTypes.bool.isRequired,
-  loading: PropTypes.bool.isRequired,
   snack: PropTypes.bool.isRequired,
   snackMessage: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+    // action creators:
   toggleMenu: PropTypes.func.isRequired,
   closeSnack: PropTypes.func.isRequired,
+  updateLang: PropTypes.func.isRequired,
+  // from react-router:
   children: PropTypes.node.isRequired,
+  params: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -143,6 +177,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
   closeSnack,
+  updateLang,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
