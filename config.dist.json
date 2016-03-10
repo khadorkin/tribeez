@@ -2,6 +2,7 @@
   "title": "SortMyTribe",
   "description": "A simple app to organize your group life",
   "url": "https://sortmytribe.com",
+  "twitter": "sortmytribe",
   "api_endpoint": "https://api.sortmytribe.com",
   "rollbar_token": "xxxxxxxx",
   "recaptcha_site_key": "xxxxxxxx",

@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cleartype" content="on" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
-    <meta property="og:type" content="website" />
+    <meta name="twitter:title" property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
+    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>" />
+    <meta name="description" content="<%= htmlWebpackPlugin.options.description %>" />
+    <meta name="twitter:description" property="og:description" content="<%= htmlWebpackPlugin.options.description %>" />
     <meta property="og:url" content="<%= htmlWebpackPlugin.options.url %>" />
-    <meta property="og:image" content="<%= htmlWebpackPlugin.options.image %>" />
-    <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>" />
+    <meta name="twitter:image" property="og:image" content="<%= htmlWebpackPlugin.options.image %>" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@<%= htmlWebpackPlugin.options.twitter %>" />
     <style>
-      .loader {
+      #loader {
         position: absolute;
         width: 100px; height: 100px;
         left: 50%; top: 50%;
         margin-left: -50px; margin-top: -50px;
+        text-align: center;
       }
-      .loader .arc {
+      #loader .arc {
         position: absolute;
         border: 2px solid; border-color: transparent #00bcd4 #00bcd4 #00bcd4; border-radius: 50%;
         margin: 32% 0 0 32%;
@@ -55,7 +61,6 @@
       } else {
         Rollbar = {
           error: function() {
-            console.error.apply(console, arguments);
             console.warn('Rollbar notification not sent');
           }
         };
@@ -65,7 +70,7 @@
   </head>
   <body>
     <div id="app">
-      <div class="loader"><div class="arc"></div></div>
+      <div id="loader"><div class="arc"></div></div>
     </div>
   </body>
 </html>
