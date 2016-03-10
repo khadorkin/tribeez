@@ -1,6 +1,6 @@
 // dynamically load polyfills, and load the app when the required ones are loaded:
 
-const NUM_POLYFILLS = 5 // update this number if adding polyfills
+const NUM_POLYFILLS = 6 // update this number if adding polyfills
 
 let num = 0
 const loaded = () => {
@@ -11,6 +11,15 @@ const loaded = () => {
 }
 
 /*global require:false*/
+
+if (window.Promise) {
+  loaded()
+} else {
+  require.ensure(['es6-promise'], (require) => {
+    require('es6-promise').polyfill()
+    loaded()
+  })
+}
 
 if (window.fetch) {
   loaded()
