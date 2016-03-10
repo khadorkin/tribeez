@@ -7,7 +7,7 @@ import styles from '../../constants/styles'
 
 import scriptLoader from '../../utils/scriptLoader'
 
-/*global google:false*/
+/*global google:false __GOOGLE_API_KEY__:false*/
 
 class CityField extends Component {
 
@@ -43,7 +43,8 @@ class CityField extends Component {
     if (window.google) {
       window.onGooglePlaces()
     } else {
-      scriptLoader.load('https://maps.googleapis.com/maps/api/js?libraries=places&callback=onGooglePlaces&language=' + this.props.lang)
+      scriptLoader.load('https://maps.googleapis.com/maps/api/js?key=' + __GOOGLE_API_KEY__
+                      + '&libraries=places&callback=onGooglePlaces&language=' + this.props.lang)
     }
   }
 
