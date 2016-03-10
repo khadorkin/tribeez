@@ -38,6 +38,8 @@ export default {
   // login/register forms
   invited_you: '{name} invited you',
   login_to_join: '{inviter} invited you to join {tribe}',
+  you: 'You',
+  your_tribe: 'Your tribe',
   // login :
   'error.login.email': 'Unknown email address',
   'error.login.password': 'Wrong password',

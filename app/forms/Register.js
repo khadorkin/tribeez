@@ -66,7 +66,7 @@ class RegisterForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle title="You" />
+        <CardTitle title={<FormattedMessage id="you" />} />
         <CardText>
           <TextField ref="name"
             floatingLabelText="Your name"
@@ -96,7 +96,7 @@ class RegisterForm extends Component {
             {langItems}
           </SelectField>
         </CardText>
-        <CardTitle title="Your tribe" />
+        <CardTitle title={<FormattedMessage id="your_tribe" />} />
         <CardText>
           <TextField ref="tribe_name"
             floatingLabelText="Tribe name"

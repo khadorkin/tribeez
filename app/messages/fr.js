@@ -27,6 +27,8 @@ const fr = {
 
   // login/register forms
   invited_you: '{name} vous a invité',
+  you: 'Vous',
+  your_tribe: 'Votre tribu',
 
   // Members
   'add_member': 'Ajouter un membre',
