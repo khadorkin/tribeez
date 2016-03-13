@@ -39,4 +39,4 @@ const fr = {
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}', // http://formatjs.io/guides/message-syntax/#plural-format
 }
 
-export default Object.assign({}, en, fr) // to have English as a fallback
+export default {...en, ...fr} // to have English as a fallback

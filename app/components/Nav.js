@@ -8,7 +8,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import Avatar from 'material-ui/lib/avatar'
 import IconButton from 'material-ui/lib/icon-button'
 
-import HomeIcon from 'material-ui/lib/svg-icons/action/home'
 import GroupIcon from 'material-ui/lib/svg-icons/social/group'
 import CartIcon from 'material-ui/lib/svg-icons/action/shopping-cart'
 import EventIcon from 'material-ui/lib/svg-icons/action/event'
@@ -21,6 +20,9 @@ import PersonIcon from 'material-ui/lib/svg-icons/social/person'
 import DropDownIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-down'
 import DropUpIcon from 'material-ui/lib/svg-icons/navigation/arrow-drop-up'
 import AddIcon from 'material-ui/lib/svg-icons/content/add'
+import StreamIcon from 'material-ui/lib/svg-icons/action/view-stream'
+import SettingsIcon from 'material-ui/lib/svg-icons/action/settings'
+import * as colors from 'material-ui/lib/styles/colors'
 
 import postLogout from '../actions/postLogout'
 import putSwitch from '../actions/putSwitch'
@@ -79,7 +81,7 @@ const style = {
 }
 
 const menuEntries = [
-  {route: routes.ACTIVITY, icon: <HomeIcon />},
+  {route: routes.ACTIVITY, icon: <StreamIcon />},
   {route: routes.MEMBERS, icon: <GroupIcon />},
   {route: routes.BILLS, icon: <CartIcon />},
   {route: routes.EVENTS, icon: <EventIcon />},
@@ -120,7 +122,7 @@ class Nav extends Component {
     )
 
     const menuContainer = (
-      <div style={Object.assign({height: (this.props.height - 240 /* header=200+20, footer=20 */) + 'px'}, style.container)}>
+      <div style={{...style.container, height: (this.props.height - 240 /* header=200+20, footer=20 */) + 'px'}}>
         {menuItems}
       </div>
     )
@@ -129,6 +131,7 @@ class Nav extends Component {
       <MenuItem key={tribe.id}
         onTouchTap={this.selectTribe.bind(this, tribe.id)}
         style={tribe.active ? style.current : style.default}
+        rightIconButton={tribe.active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
       >
         {tribe.name}
       </MenuItem>
@@ -136,7 +139,7 @@ class Nav extends Component {
 
     const tribesContainer = (
       <div>
-        <div style={Object.assign({height: (this.props.height - 288 /* header=200+20, footer=48+20 */) + 'px'}, style.container)}>
+        <div style={{...style.container, height: (this.props.height - 288 /* header=200+20, footer=48+20 */) + 'px'}}>
           {tribeItems}
         </div>
         <MenuItem key="new"

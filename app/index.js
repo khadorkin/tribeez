@@ -22,7 +22,7 @@ import Register from './pages/Register'
 import Join from './pages/Join'
 import Activity from './pages/Activity'
 import Profile from './pages/Profile'
-// import Tribe from './pages/Tribe' //TODO
+import Tribe from './pages/Tribe' //TODO
 import NewTribe from './pages/NewTribe'
 import Members from './pages/Members'
 import NewMember from './pages/NewMember'
@@ -135,6 +135,7 @@ ReactDOM.render((
         <Route path={routes.JOIN} component={Join} />
         <Route path={routes.ACTIVITY} component={Activity} />
         <Route path={routes.PROFILE} component={Profile} />
+        <Route path={routes.TRIBE} component={Tribe} />
         <Route path={routes.TRIBE_NEW} component={NewTribe} />
         <Route path={routes.MEMBERS} component={Members} />
         <Route path={routes.MEMBERS_NEW} component={NewMember} />

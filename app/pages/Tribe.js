@@ -4,16 +4,16 @@ import Card from 'material-ui/lib/card/card'
 
 import TribeForm from '../forms/Tribe'
 
-class NewTribe extends Component {
+class Tribe extends Component {
 
   render() {
     return (
       <Card>
-        <TribeForm type="create" />
+        <TribeForm type="update" />
       </Card>
     )
   }
 
 }
 
-export default NewTribe
+export default Tribe

@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: #f2f2f2;/*rgb(226,226,226);*/
+  overflow-x: hidden;
 }
 
 /*

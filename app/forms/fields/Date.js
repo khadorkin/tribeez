@@ -5,6 +5,7 @@ import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
 import DatePicker from 'material-ui/lib/date-picker/date-picker'
 import IconButton from 'material-ui/lib/icon-button'
 import ClearIcon from 'material-ui/lib/svg-icons/content/clear'
+import * as colors from 'material-ui/lib/styles/colors'
 
 import styles from '../../constants/styles'
 
@@ -57,7 +58,7 @@ class DatePickerWrapper extends Component {
           onChange={this.handleChange}
         />
         <IconButton onTouchTap={this.handleClear} style={{float: 'right', marginTop: '-57px', marginRight: '-9px'}}>
-          <ClearIcon color="#e0e0e0" />
+          <ClearIcon color={colors.grey300} />
         </IconButton>
       </div>
     )

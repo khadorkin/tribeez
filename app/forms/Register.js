@@ -115,7 +115,6 @@ class RegisterForm extends Component {
             floatingLabelText="City"
             required={true}
             errorText={city.touched && city.error && <FormattedMessage id="error.city" />}
-            lang={this.props.lang}
             {...city}
           />
           <SelectField ref="currency"
@@ -147,17 +146,11 @@ RegisterForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  // from redux state:
-  lang: PropTypes.string.isRequired,
 }
-
-const mapStateToProps = (state) => ({
-  lang: state.app.lang,
-})
 
 export default reduxForm({
   form: 'register',
   fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
   returnRejectedSubmitPromise: true,
   validate: validator.register,
-}, mapStateToProps)(RegisterForm)
+})(RegisterForm)

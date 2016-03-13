@@ -32,6 +32,7 @@ export default {
   'snack.password_changed': 'Password changed',
   'snack.profile_updated': 'Profile updated',
   'snack.tribe_created': 'Tribe created',
+  'snack.tribe_updated': 'Tribe updated',
   'snack.invite_sent': 'Invite sent',
   'snack.invite_resent': 'Invite sent again',
 
@@ -59,6 +60,8 @@ export default {
   'error.captcha': 'Invalid captcha',
   // common:
   'error.other': 'Request error: please try again later',
+  'submit.tribe.create': 'Create tribe',
+  'submit.tribe.update': 'Update tribe',
 
   // Members
   'add_member': 'Add a member',
