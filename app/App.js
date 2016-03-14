@@ -16,6 +16,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item'
 import LangIcon from 'material-ui/lib/svg-icons/action/language'
 import CircularProgress from 'material-ui/lib/circular-progress'
 import Snackbar from 'material-ui/lib/snackbar'
+import TelegramIcon from './resources/telegram-icon'
 
 import Nav from './components/Nav'
 
@@ -28,6 +29,8 @@ const langItems = langsList.map((item) =>
 )
 
 import routes from './constants/routes'
+
+/*global __TELEGRAM_BOT_NAME__:false*/
 
 class App extends Component {
 
@@ -86,6 +89,12 @@ class App extends Component {
         iconLeft = <IconButton containerElement={<Link to={routes.WELCOME} />}><HomeIcon /></IconButton>
       }
       iconRight = <FlatButton label={<FormattedMessage id="login" />} containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
+    } else {
+      iconRight = (
+        <IconButton containerElement={<a href={'https://telegram.me/' + __TELEGRAM_BOT_NAME__ + '?start=' + this.props.telegram_token} target="_blank" />}>
+          <TelegramIcon color="white" />
+        </IconButton>
+      )
     }
     if (this.props.loading) {
       iconRight = <CircularProgress color="white" size={0.5} />
@@ -139,6 +148,7 @@ App.childContextTypes = {
 App.propTypes = {
   pathname: PropTypes.string,
   uid: PropTypes.number,
+  telegram_token: PropTypes.string,
   lang: PropTypes.string.isRequired,
   desktop: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
@@ -159,6 +169,7 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   pathname: state.routing.location.pathname,
   uid: state.member.user.id,
+  telegram_token: state.member.user.telegram_token,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   height: state.app.height,

@@ -6,5 +6,6 @@
   "api_endpoint": "https://api.sortmytribe.com",
   "rollbar_token": "xxxxxxxx",
   "recaptcha_site_key": "xxxxxxxx",
-  "google_api_key": "xxxxxxxx"
+  "google_api_key": "xxxxxxxx",
+  "telegram_bot_name": "xxxxxbot"
 }

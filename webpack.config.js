@@ -41,6 +41,7 @@ const definePlugin = new webpack.DefinePlugin({
   __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
   __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
   __GOOGLE_API_KEY__: JSON.stringify(user_config.google_api_key),
+  __TELEGRAM_BOT_NAME__: JSON.stringify(user_config.telegram_bot_name),
   __DEBUG__: (env === 'development'),
 })
 

@@ -39,13 +39,3 @@ input:-webkit-autofill {
     margin-bottom: 50px;
   }
 }
-
-/* hacking the google autocomplete field */
-:global .pac-container {
-  margin-top: -22px;
-}
-:global .pac-logo::after {
-  background: none !important;
-  height: 0;
-  padding: 0;
-}
