@@ -73,4 +73,7 @@ export default {
   'entry.new_user.item': '{name} (invited by {item}) has joined the tribe!',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
   comment: 'Your comment...',
+
+  // Bills
+  'bill.mypart': 'My part is {amount}',
 }

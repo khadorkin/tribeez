@@ -15,6 +15,8 @@ import Comment from './Comment'
 import postComment from '../actions/postComment'
 import updateComment from '../actions/updateComment'
 
+import gravatar from '../utils/gravatar'
+
 import css from './Entry.css'
 
 class Entry extends Component {
@@ -29,22 +31,24 @@ class Entry extends Component {
   }
 
   render() {
+    const {entry, users} = this.props
+
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
-    const user = this.props.users.find((u) => u.id === this.props.entry.user_id)
+    const user = users.find((u) => u.id === entry.user_id)
     if (!user) {
       return null
     }
-    let title = <FormattedMessage id={`entry.${this.props.entry.type}`} values={{name: user.name}} />
-    if (this.props.entry.item_id) {
-      const inviter = this.props.users.find((u) => u.id === this.props.entry.item_id)
+    let title = <FormattedMessage id={`entry.${entry.type}`} values={{name: user.name}} />
+    if (entry.item_id) {
+      const inviter = users.find((u) => u.id === entry.item_id)
       if (inviter) {
-        title = <FormattedMessage id={`entry.${this.props.entry.type}.item`} values={{name: user.name, item: inviter.name}} />
+        title = <FormattedMessage id={`entry.${entry.type}.item`} values={{name: user.name, item: inviter.name}} />
       }
     }
-    const date = <FormattedRelative value={this.props.entry.added} />
+    const date = <FormattedRelative value={entry.added} />
     const comments = (
-      <span style={{fontWeight: this.props.entry.comments.length ? 'bold' : 'normal'}}>
-        <FormattedMessage id="entry.comments" values={{num: this.props.entry.comments.length}} />
+      <span style={{fontWeight: entry.comments.length ? 'bold' : 'normal'}}>
+        <FormattedMessage id="entry.comments" values={{num: entry.comments.length}} />
       </span>
     )
 
@@ -53,18 +57,18 @@ class Entry extends Component {
         <CardHeader title={title} subtitle={<span>{date} — {comments}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
-          avatar={`https://secure.gravatar.com/avatar/${user.gravatar}?d=retro&s=40`}
+          avatar={gravatar(user)}
           actAsExpander={true} showExpandableButton={true}
         />
         <CardText expandable={true} className={css.comments}>
           {
-            this.props.entry.comments.map((comment) =>
+            entry.comments.map((comment) =>
               <Comment comment={comment} key={comment.id} />
             )
           }
-          <form onSubmit={this.postComment.bind(this, this.props.entry.id)}>
-            <TextField value={this.props.boxComments[this.props.entry.id]}
-              onChange={this.handleCommentChange.bind(this, this.props.entry.id)}
+          <form onSubmit={this.postComment.bind(this, entry.id)}>
+            <TextField value={this.props.boxComments[entry.id]}
+              onChange={this.handleCommentChange.bind(this, entry.id)}
               hintText={<FormattedMessage id="comment" />}
               autoComplete="off"
             />

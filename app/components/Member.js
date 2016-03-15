@@ -10,6 +10,8 @@ import EmailIcon from 'material-ui/lib/svg-icons/communication/email'
 import PhoneIcon from 'material-ui/lib/svg-icons/communication/call'
 import CakeIcon from 'material-ui/lib/svg-icons/social/cake'
 
+import gravatar from '../utils/gravatar'
+
 import css from './Member.css'
 
 const infos = [
@@ -21,22 +23,24 @@ const infos = [
 class Member extends Component {
 
   render() {
-    const date = <FormattedMessage id="member_since" values={{date: <FormattedDate value={this.props.user.registered} />}} />
+    const {user} = this.props
+
+    const date = <FormattedMessage id="member_since" values={{date: <FormattedDate value={user.registered} />}} />
 
     return (
       <Card className={css.container}>
-        <CardHeader title={this.props.user.name}
+        <CardHeader title={user.name}
           subtitle={date}
-          avatar={`https://secure.gravatar.com/avatar/${this.props.user.gravatar}?d=retro&s=40`}
+          avatar={gravatar(user)}
           actAsExpander={true}
           showExpandableButton={true}
         />
         <CardText expandable={true} className={css.details}>
           <List>
             {
-              infos.filter((info) => this.props.user[info.id]) // remove undefined infos
+              infos.filter((info) => user[info.id]) // remove undefined infos
                    .map((info) => {
-                     let value = this.props.user[info.id]
+                     let value = user[info.id]
                      const href = info.href ? info.href + value : null
                      if (info.date) {
                        value = <FormattedDate value={value} />

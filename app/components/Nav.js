@@ -30,6 +30,8 @@ import {toggleTribes} from '../actions/app'
 
 import routes from '../constants/routes'
 
+import gravatar from '../utils/gravatar'
+
 //TODO: choose between CSS and style!
 
 import css from './Nav.css'
@@ -111,6 +113,8 @@ class Nav extends Component {
   }
 
   render() {
+    const {user} = this.props
+
     const menuItems = menuEntries.map((entry) =>
       <MenuItem key={entry.route}
         style={this.props.page === entry.route.substr(1) ? style.current : style.default}
@@ -127,7 +131,7 @@ class Nav extends Component {
       </div>
     )
 
-    const tribeItems = this.props.tribes.map((tribe) =>
+    const tribeItems = user.tribes.map((tribe) =>
       <MenuItem key={tribe.id}
         onTouchTap={this.selectTribe.bind(this, tribe.id)}
         style={tribe.active ? style.current : style.default}
@@ -161,10 +165,10 @@ class Nav extends Component {
           <IconButton style={style.profile} containerElement={<Link to={routes.PROFILE} />}>
             <PersonIcon color="white" />
           </IconButton>
-          <Avatar style={style.avatar} src={`https://secure.gravatar.com/avatar/${this.props.gravatar}?d=retro&s=80`} size={80} />
-          <div style={style.name}>{this.props.name}</div>
+          <Avatar style={style.avatar} src={gravatar(user, 80)} size={80} />
+          <div style={style.name}>{user.name}</div>
           <div style={style.tribe}>
-            {this.props.tribe}
+            {this.props.tribe_name}
             <IconButton style={style.switch} onTouchTap={this.handleTribeListToggle}>
               {this.props.menu_tribes ? <DropUpIcon color="white" /> : <DropDownIcon color="white" />}
             </IconButton>
@@ -181,10 +185,8 @@ Nav.propTypes = {
   menu_tribes: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   page: PropTypes.string.isRequired,
-  tribe: PropTypes.string,
-  name: PropTypes.string,
-  tribes: PropTypes.array.isRequired,
-  gravatar: PropTypes.string,
+  tribe_name: PropTypes.string,
+  user: PropTypes.object,
   putSwitch: PropTypes.func.isRequired,
   toggleTribes: PropTypes.func.isRequired,
   postLogout: PropTypes.func.isRequired,
@@ -194,10 +196,8 @@ const mapStateToProps = (state) => ({
   menu_tribes: state.app.menu_tribes,
   height: state.app.height,
   page: state.routing.location.pathname.split('/')[1],
-  tribe: state.member.tribe.name,
-  name: state.member.user.name,
-  tribes: state.member.user.tribes,
-  gravatar: state.member.user.gravatar,
+  tribe_name: state.member.tribe.name,
+  user: state.member.user,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
