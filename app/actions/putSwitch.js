@@ -27,8 +27,6 @@ export default (id) => {
           dispatch({
             type: SWITCH_SUCCESS,
           })
-          // user and tribe have changed, get them from the API and go to home:
-          api.clearCache()
           // force redirect to home page:
           dispatch(getMember(null, routes.ACTIVITY))
           dispatch(getActivity())

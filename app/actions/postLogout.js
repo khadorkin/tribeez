@@ -27,7 +27,7 @@ export default () => {
             type: LOGOUT_SUCCESS,
           })
           dispatch(routeActions.push(routes.WELCOME))
-          api.clearCache()
+          //TODO: destroy the store
         }
       })
       .catch(() => {

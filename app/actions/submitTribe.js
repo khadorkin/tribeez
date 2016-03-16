@@ -19,7 +19,6 @@ export default (values, dispatch) => {
         } else {
           resolve()
           if (values.id) {
-            api.clearCache('member')
             dispatch({
               type: PUT_TRIBE_SUCCESS,
               values,
@@ -30,8 +29,6 @@ export default (values, dispatch) => {
             })
           } else {
             // user and tribe have changed, get them from the API and go to home:
-            api.clearCache()
-            // force redirect to home page:
             dispatch(getMember(null, routes.ACTIVITY))
             dispatch(getActivity())
             dispatch({

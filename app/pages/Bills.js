@@ -2,9 +2,16 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedNumber} from 'react-intl'
+import {Link} from 'react-router'
+
+import FloatingActionButton from 'material-ui/lib/floating-action-button'
+import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 
 import Bill from '../components/Bill'
 import Error from '../components/Error'
+
+import styles from '../constants/styles'
+import routes from '../constants/routes'
 
 import getBills from '../actions/getBills'
 
@@ -18,7 +25,9 @@ class Bills extends Component {
   }
 
   componentWillMount() {
-    this.props.getBills()
+    if (!this.props.bills.length) {
+      this.props.getBills()
+    }
   }
 
   handleRetry() {
@@ -48,6 +57,10 @@ class Bills extends Component {
         {
           this.props.error && <Error message={this.props.error} onRetry={this.handleRetry} />
         }
+
+        <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
+          <ContentAdd />
+        </FloatingActionButton>
       </div>
     )
   }

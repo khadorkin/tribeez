@@ -15,19 +15,11 @@ const buildQuery = (params) => {
   return '?' + arr.join('&')
 }
 
-let cache = {}
-
 const request = (route, params, method) => {
   let url = `${__API_ENDPOINT__}/${route}`
   const init = {method, credentials: 'include'}
-  let query
   if (method === 'GET') {
-    query = buildQuery(params)
-    const cached = cache[route] && cache[route][query]
-    if (cached) {
-      return Promise.resolve(cached)
-    }
-    url += query
+    url += buildQuery(params)
   } else {
     init.headers = {
       'Content-Type': 'application/json',
@@ -42,33 +34,10 @@ const request = (route, params, method) => {
       // if status >= 400, the error will be in the returned JSON and is handled by the component
       return response.json()
     })
-    .then((json) => {
-      if (method === 'GET') {
-        if (!cache[route]) {
-          cache[route] = {}
-        }
-        cache[route][query] = json
-      }
-      return json
-    })
     .catch((error) => {
       Rollbar.error('API error', error)
       throw error
     })
-}
-
-const clearCache = (route, params) => {
-  if (route) {
-    if (params) {
-      if (cache[route]) {
-        delete cache[route][buildQuery(params)]
-      } // else not in cache
-    } else {
-      delete cache[route]
-    }
-  } else {
-    cache = {}
-  }
 }
 
 export default {
@@ -76,5 +45,4 @@ export default {
   post: (route, params) => request(route, params, 'POST'),
   put: (route, params) => request(route, params, 'PUT'),
   delete: (route, params) => request(route, params, 'DELETE'),
-  clearCache,
 }

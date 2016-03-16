@@ -16,7 +16,9 @@ class Activity extends Component {
   }
 
   componentWillMount() {
-    this.props.getActivity()
+    if (!this.props.entries.length) {
+      this.props.getActivity()
+    }
   }
 
   handleRetry() {
