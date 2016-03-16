@@ -9,6 +9,14 @@ const validator = (required, optional = []) => {
         errors.city = 'invalid'
       } else if (field === 'password2' && values.password2 !== values.password) {
         errors.password2 = 'mismatch'
+      } else if (field === 'parts') {
+        const total = values.parts.reduce((prev, curr) => {
+          curr.amount = Number(curr.amount)
+          return curr.amount + prev
+        }, 0)
+        if (values.amount !== total) { //values.amount is casted in normalizer
+          errors.amount = 'mismatch'
+        }
       }
     })
     return errors
@@ -24,4 +32,5 @@ export default {
   tribe: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
   invite: validator(['email', 'lang']),
   reset: validator(['password', 'password2']),
+  bill: validator(['name', 'payer', 'amount', 'parts'], ['description']),
 }

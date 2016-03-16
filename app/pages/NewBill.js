@@ -1,32 +1,19 @@
 import React, {Component, PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {FormattedMessage} from 'react-intl'
+
+import Card from 'material-ui/lib/card/card'
+
+import BillForm from '../forms/Bill'
 
 class NewBill extends Component {
 
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
-      <div>NewBill</div>
+      <Card>
+        <BillForm />
+      </Card>
     )
   }
 
 }
 
-NewBill.propTypes = {
-  //
-}
-
-const mapStateToProps = (state) => ({
-  //
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  //
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewBill)
+export default NewBill

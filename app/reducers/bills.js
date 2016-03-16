@@ -2,6 +2,7 @@ import {
   GET_BILLS_REQUEST,
   GET_BILLS_SUCCESS,
   GET_BILLS_FAILURE,
+  NEW_BILL_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -29,6 +30,13 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       })
+    case NEW_BILL_SUCCESS:
+      if (state.list.length) {
+        const list = [action.bill, ...state.list]
+        return {...state, list}
+      } else {
+        return state
+      }
     case LOGOUT_SUCCESS:
       return Object.assign({}, initialState)
     default:

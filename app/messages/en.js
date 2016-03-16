@@ -35,6 +35,7 @@ export default {
   'snack.tribe_updated': 'Tribe updated',
   'snack.invite_sent': 'Invite sent',
   'snack.invite_resent': 'Invite sent again',
+  'snack.bill_added': 'Bill added',
 
   // login/register forms
   invited_you: '{name} invited you',
@@ -45,10 +46,10 @@ export default {
   'error.login.email': 'Unknown email address',
   'error.login.password': 'Wrong password',
   // register/join:
-  'error.name': 'Invalid user name',
+  'error.user.name': 'Invalid user name',
   'error.email_empty': 'An email address is required',
-  'error.email_invalid': 'Invalid email',
-  'error.email_invalid_suggestion': 'Invalid email. Did you mean {suggestion}?',
+  'error.email_invalid': 'Invalid email address',
+  'error.email_invalid_suggestion': 'Invalid address. Did you mean {suggestion}?',
   'error.email_exists': 'This email address is already registered',
   'error.password': 'Invalid password',
   'error.password2': 'Passwords do not match',
@@ -58,6 +59,14 @@ export default {
   'error.currency': 'Please choose a currency',
   'error.tribe_type': 'Please choose a tribe type',
   'error.captcha': 'Invalid captcha',
+  // bill:
+  'label.part': '{name}\'s share',
+  'error.payer': 'Please indicate who paid this',
+  'error.name': 'Invalid name',
+  'error.description': 'Invalid description',
+  'error.amount.invalid': 'Invalid amount',
+  'error.amount.mismatch': 'Must match the total of the shares',
+  'error.no_parts': 'Error: you must distribute at least one share',
   // common:
   'error.other': 'Request error: please try again later',
   'submit.tribe.create': 'Create tribe',

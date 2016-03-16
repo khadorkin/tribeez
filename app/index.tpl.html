@@ -62,8 +62,6 @@
         Rollbar = {
           error: function(err) {
             console.warn('Rollbar notification not sent');
-            console.error(err);
-            return true;
           }
         };
         window.onerror = Rollbar.error;

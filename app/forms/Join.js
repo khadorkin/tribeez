@@ -56,7 +56,7 @@ class RegisterForm extends Component {
           <TextField ref="name"
             floatingLabelText="Your name"
             required={true}
-            errorText={name.touched && name.error && <FormattedMessage id="error.name" />}
+            errorText={name.touched && name.error && <FormattedMessage id="error.user.name" />}
             {...name}
           />
           <TextField ref="email"
