@@ -16,7 +16,7 @@ class Password extends Component {
     return (
       <Card className="main">
         <PasswordForm />
-        <Dialog modal={false}
+        <Dialog
           actions={[<FlatButton label="OK" primary={true} containerElement={<Link to={routes.WELCOME} />} style={{textAlign: 'center'}} />]}
           open={this.props.sent}
         >

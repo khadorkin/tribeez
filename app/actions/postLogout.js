@@ -6,6 +6,7 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
+  SNACK_MESSAGE,
 } from '../constants/actions'
 
 import routes from '../constants/routes'
@@ -28,6 +29,10 @@ export default () => {
           })
           dispatch(routeActions.push(routes.WELCOME))
           //TODO: destroy the store
+          dispatch({
+            type: SNACK_MESSAGE,
+            message: 'logout_success',
+          })
         }
       })
       .catch(() => {

@@ -4,6 +4,7 @@ import {
   GET_BILLS_FAILURE,
   NEW_BILL_SUCCESS,
   LOGOUT_SUCCESS,
+  DELETE_BILL_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
@@ -39,6 +40,9 @@ export default (state = initialState, action = null) => {
       } else {
         return state
       }
+    case DELETE_BILL_SUCCESS:
+      const list = state.list.filter((bill) => bill.id !== action.id)
+      return {...state, list}
     case LOGOUT_SUCCESS:
       return Object.assign({}, initialState)
     default:

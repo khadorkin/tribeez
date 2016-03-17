@@ -9,6 +9,11 @@ import CardText from 'material-ui/lib/card/card-text'
 import List from 'material-ui/lib/lists/list'
 import ListItem from 'material-ui/lib/lists/list-item'
 import Avatar from 'material-ui/lib/avatar'
+import CardActions from 'material-ui/lib/card/card-actions'
+import IconButton from 'material-ui/lib/icon-button'
+import EditButton from 'material-ui/lib/svg-icons/image/edit'
+import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
+import * as colors from 'material-ui/lib/styles/colors'
 
 import Comment from './Comment'
 
@@ -17,6 +22,15 @@ import gravatar from '../utils/gravatar'
 import css from './Entry.css'
 
 class Bill extends Component {
+
+  constructor(props) {
+    super(props)
+    this.handleDelete = this.handleDelete.bind(this)
+  }
+
+  handleDelete() {
+    this.props.onDelete(this.props.bill)
+  }
 
   render() {
     const {bill} = this.props
@@ -50,11 +64,20 @@ class Bill extends Component {
               bill.parts.map((part) => {
                 const part_user = this.props.users.find((u) => u.id === part.user_id)
                 const part_amount = <FormattedNumber value={part.amount} style="currency" currency={this.props.currency} />
-                return <ListItem key={part.user_id} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>{part_amount}</ListItem>
+
+                return (
+                  <ListItem key={part.user_id} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
+                    {part_amount}
+                  </ListItem>
+                )
               })
             }
           </List>
         </CardText>
+        <CardActions expandable={true} style={{textAlign: 'right', marginTop: '-50px'}}>
+          <IconButton onTouchTap={this.handleEdit}><EditButton color={colors.grey600} /></IconButton>
+          <IconButton onTouchTap={this.handleDelete}><DeleteButton color={colors.red400} /></IconButton>
+        </CardActions>
       </Card>
     )
   }
@@ -62,7 +85,10 @@ class Bill extends Component {
 }
 
 Bill.propTypes = {
+  // from parent component:
   bill: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  // from redux state:
   uid: PropTypes.number,
   users: PropTypes.array,
   currency: PropTypes.string,

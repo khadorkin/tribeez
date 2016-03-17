@@ -36,6 +36,10 @@ export default {
   'snack.invite_sent': 'Invite sent',
   'snack.invite_resent': 'Invite sent again',
   'snack.bill_added': 'Bill added',
+  'snack.bill_modified': 'Bill modified',
+  'snack.bill_deleted': 'Bill deleted',
+  'snack.logout_success': 'You have been logged out',
+  'snack.error': 'Error: please try again',
 
   // login/register forms
   invited_you: '{name} invited you',

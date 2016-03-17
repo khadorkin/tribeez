@@ -118,7 +118,6 @@ class Members extends Component {
 
               <Dialog title="Re-invite"
                 actions={dialogActions}
-                modal={false}
                 open={this.state.openDialog}
                 onRequestClose={this.handleDialogClose}
               >
