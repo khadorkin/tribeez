@@ -16,7 +16,7 @@ class Activity extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.entries.length) {
+    if (!this.props.activity.got) {
       this.props.getActivity()
     }
   }
@@ -26,16 +26,18 @@ class Activity extends Component {
   }
 
   render() {
+    const {activity} = this.props
+
     return (
       <div>
         {
-          this.props.entries.map((entry) =>
+          activity.entries.map((entry) =>
             <Entry entry={entry} key={entry.id} />
           )
         }
 
         {
-          this.props.error && <Error message={this.props.error} onRetry={this.handleRetry} />
+          activity.error && <Error message={activity.error} onRetry={this.handleRetry} />
         }
         <SpeedDial />
       </div>
@@ -45,14 +47,12 @@ class Activity extends Component {
 }
 
 Activity.propTypes = {
-  entries: PropTypes.array,
-  error: PropTypes.string,
+  activity: PropTypes.object.isRequired,
   getActivity: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  entries: state.activity.entries,
-  error: state.activity.error,
+  activity: state.activity,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

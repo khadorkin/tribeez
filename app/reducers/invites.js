@@ -9,6 +9,7 @@ const initialState = {
   loading: false,
   list: [],
   error: null,
+  got: false, // true = we got the initial list through a request
 }
 
 export default (state = initialState, action = null) => {
@@ -23,6 +24,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: null,
         list: action.list,
+        got: true,
       })
     case GET_INVITES_FAILURE:
       return Object.assign({}, state, {

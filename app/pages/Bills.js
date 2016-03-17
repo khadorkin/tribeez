@@ -25,7 +25,7 @@ class Bills extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.bills.length) {
+    if (!this.props.bills.got) {
       this.props.getBills()
     }
   }
@@ -35,27 +35,29 @@ class Bills extends Component {
   }
 
   render() {
-    const prefix = this.props.balance > 0 ? '+' : ''
+    const {bills, balance, currency} = this.props
+
+    const prefix = balance > 0 ? '+' : ''
 
     return (
       <div>
         {
-          this.props.balance !== undefined &&
+          balance !== undefined &&
             <div style={{backgroundColor: colors.cyan500, padding: '5px', textAlign: 'center'}}>
               <h2 style={{fontWeight: 400, color: 'white', fontSize: '2em'}}>
-                {prefix}<FormattedNumber value={this.props.balance} style="currency" currency={this.props.currency} />
+                {prefix}<FormattedNumber value={balance} style="currency" currency={currency} />
               </h2>
             </div>
         }
 
         {
-          this.props.bills.map((bill) =>
+          bills.list.map((bill) =>
             <Bill bill={bill} key={bill.id} />
           )
         }
 
         {
-          this.props.error && <Error message={this.props.error} onRetry={this.handleRetry} />
+          bills.error && <Error message={bills.error} onRetry={this.handleRetry} />
         }
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
@@ -70,16 +72,14 @@ class Bills extends Component {
 Bills.propTypes = {
   balance: PropTypes.number,
   currency: PropTypes.string,
-  bills: PropTypes.array,
-  error: PropTypes.string,
+  bills: PropTypes.object.isRequired,
   getBills: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   balance: state.member.user.balance,
   currency: state.member.tribe.currency,
-  bills: state.bills.list,
-  error: state.bills.error,
+  bills: state.bills,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

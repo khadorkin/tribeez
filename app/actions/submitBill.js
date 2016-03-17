@@ -9,6 +9,8 @@ import {
 
 import routes from '../constants/routes'
 
+import getMember from './getMember'
+
 export default (values, dispatch) => {
   values.amount = Number(values.amount)
   values.parts = values.parts.filter((part) => {
@@ -26,6 +28,7 @@ export default (values, dispatch) => {
           }
         } else {
           resolve()
+          dispatch(getMember())
           dispatch({
             type: NEW_BILL_SUCCESS,
             bill: response,

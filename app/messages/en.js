@@ -81,6 +81,7 @@ export default {
   'entry.new_user': '{name} has joined the tribe!',
   'entry.new_user.item': '{name} (invited by {item}) has joined the tribe!',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
+  'entry.new_bill': '{name} added a bill',
   comment: 'Your comment...',
 
   // Bills

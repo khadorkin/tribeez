@@ -11,6 +11,7 @@ const initialState = {
   loading: false,
   entries: [],
   error: null,
+  got: false,
   boxComments: {},
 }
 
@@ -27,6 +28,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: null,
         entries: action.entries,
+        got: true,
       })
     case GET_ACTIVITY_FAILURE:
       return Object.assign({}, state, {

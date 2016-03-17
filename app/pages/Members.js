@@ -38,7 +38,9 @@ class Members extends Component {
   }
 
   componentWillMount() {
-    this.props.getInvites()
+    if (!this.props.invites.got) {
+      this.props.getInvites()
+    }
   }
 
   openDialog(invite) {
@@ -67,6 +69,8 @@ class Members extends Component {
   }
 
   render() {
+    const {invites, users} = this.props
+
     const dialogActions = [
       <FlatButton
         label="Cancel"
@@ -84,19 +88,19 @@ class Members extends Component {
     return (
       <div style={{padding: '10px'}}>
         {
-          this.props.users.map((user) =>
+          users.map((user) =>
             <Member user={user} key={user.id} />
           )
         }
 
         {
-          this.props.invites.length > 0 &&
+          invites.list.length > 0 &&
             <Paper>
               <List subheader="Invites send">
                 {
-                  this.props.invites.map((invite, index, arr) => {
+                  invites.list.map((invite, index, arr) => {
                     const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
-                    const inviter = this.props.users.find((user) => user.id === invite.inviter_id)
+                    const inviter = users.find((user) => user.id === invite.inviter_id)
                     if (!inviter) {
                       return null
                     }
@@ -124,7 +128,7 @@ class Members extends Component {
         }
 
         {
-          this.props.error && <Error message={this.props.error} onRetry={this.handleRetry} />
+          invites.error && <Error message={invites.error} onRetry={this.handleRetry} />
         }
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.MEMBERS_NEW} />}>
@@ -138,18 +142,14 @@ class Members extends Component {
 
 Members.propTypes = {
   users: PropTypes.array,
-  invites: PropTypes.array,
-  error: PropTypes.string,
-  sendError: PropTypes.string,
+  invites: PropTypes.object.isRequired,
   getInvites: PropTypes.func.isRequired,
   postInvite: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   users: state.member.tribe.users,
-  invites: state.invites.list,
-  error: state.invites.error,
-  sendError: state.invite.error,
+  invites: state.invites,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
