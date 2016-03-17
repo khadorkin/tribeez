@@ -12,11 +12,6 @@ import routes from '../constants/routes'
 import getMember from './getMember'
 
 export default (values, dispatch) => {
-  values.amount = Number(values.amount)
-  values.parts = values.parts.filter((part) => {
-    part.amount = Number(part.amount)
-    return part.amount
-  })
   return new Promise((resolve, reject) => {
     api.post('bill', values)
       .then((response) => {

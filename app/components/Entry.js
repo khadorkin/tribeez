@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedRelative} from 'react-intl'
+import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardHeader from 'material-ui/lib/card/card-header'
@@ -31,20 +31,40 @@ class Entry extends Component {
   }
 
   render() {
-    const {entry, users} = this.props
+    const {entry, users, currency, uid} = this.props
 
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
-    const user = users.find((u) => u.id === entry.user_id)
-    if (!user) {
+    const author = users.find((u) => u.id === entry.user_id)
+    if (!author) {
       return null
     }
-    let title = <FormattedMessage id={`entry.${entry.type}`} values={{name: user.name}} />
-    if (entry.item_id) {
-      const inviter = users.find((u) => u.id === entry.item_id)
-      if (inviter) {
-        title = <FormattedMessage id={`entry.${entry.type}.item`} values={{name: user.name, item: inviter.name}} />
-      }
+
+    const [type, action] = entry.type.split('.')
+    let extra = ''
+    const values = {
+      author: author.name,
     }
+    let infos
+    switch (type) {
+      case 'user':
+        if (entry.item_id) {
+          const inviter = users.find((u) => u.id === entry.item_id)
+          values.inviter = inviter.name
+          extra = 'invited'
+        }
+        break
+      case 'bill':
+        values.name = entry.data.name
+        values.amount = <FormattedNumber value={entry.data.amount} style="currency" currency={currency} />
+        const user_part = entry.data.parts.find((part) => part.user_id === uid)
+        const user_amount = <FormattedNumber value={user_part.amount} style="currency" currency={currency} />
+        infos = <FormattedMessage id={`entry.bill.${action}.infos`} values={{amount: user_amount}} />
+        break
+      default:
+        return null
+    }
+    const title = <FormattedMessage id={`entry.${type}.${action}${extra ? '.' + extra : ''}`} values={values} />
+
     const date = <FormattedRelative value={entry.added} />
     const comments = (
       <span style={{fontWeight: entry.comments.length ? 'bold' : 'normal'}}>
@@ -52,14 +72,23 @@ class Entry extends Component {
       </span>
     )
 
+    if (infos) {
+      infos = (
+        <CardText expandable={true}>
+          {infos}
+        </CardText>
+      )
+    }
+
     return (
       <Card className={css.container}>
         <CardHeader title={title} subtitle={<span>{date} — {comments}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
-          avatar={gravatar(user)}
+          avatar={gravatar(author)}
           actAsExpander={true} showExpandableButton={true}
         />
+        {infos}
         <CardText expandable={true} className={css.comments}>
           {
             entry.comments.map((comment) =>
@@ -84,7 +113,9 @@ class Entry extends Component {
 Entry.propTypes = {
   entry: PropTypes.object.isRequired,
   boxComments: PropTypes.object.isRequired,
-  users: PropTypes.array,
+  users: PropTypes.array.isRequired,
+  currency: PropTypes.string,
+  uid: PropTypes.number,
   postComment: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
 }
@@ -92,6 +123,8 @@ Entry.propTypes = {
 const mapStateToProps = (state) => ({
   boxComments: state.activity.boxComments,
   users: state.member.tribe.users,
+  currency: state.member.tribe.currency,
+  uid: state.member.user.id,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

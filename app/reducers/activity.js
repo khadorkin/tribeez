@@ -4,6 +4,8 @@ import {
   GET_ACTIVITY_FAILURE,
   COMMENT_SUCCESS,
   UPDATE_COMMENT_TEXT,
+  NEW_BILL_SUCCESS,
+  DELETE_BILL_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -54,6 +56,9 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         boxComments,
       })
+    case NEW_BILL_SUCCESS:
+    case DELETE_BILL_SUCCESS:
+      return {...state, got: false}
     case LOGOUT_SUCCESS:
       return Object.assign({}, initialState)
     default:

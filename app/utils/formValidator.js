@@ -10,6 +10,7 @@ const validator = (required, optional = []) => {
       } else if (field === 'password2' && values.password2 !== values.password) {
         errors.password2 = 'mismatch'
       } else if (field === 'parts') {
+        values.amount = Number(values.amount)
         const total = values.parts.reduce((prev, curr) => {
           curr.amount = Number(curr.amount)
           return curr.amount + prev

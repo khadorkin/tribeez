@@ -82,10 +82,15 @@ export default {
   'invited_by': 'Invited by {user} on {date}',
 
   // Activity
-  'entry.new_user': '{name} has joined the tribe!',
-  'entry.new_user.item': '{name} (invited by {item}) has joined the tribe!',
+  'entry.user.new': '{author} has joined the tribe!',
+  'entry.user.new.invited': '{author} (invited by {inviter}) has joined the tribe!',
+  'entry.bill.new': '{author} added a bill named "{name}" ({amount})',
+  'entry.bill.new.infos': 'Your share is {amount}',
+  'entry.bill.edit': '{author} modified the "{name}" bill ({amount})',
+  'entry.bill.edit.infos': 'Your share is now {amount}',
+  'entry.bill.delete': '{author} deleted the "{name}" bill ({amount})',
+  'entry.bill.delete.infos': 'Your share was {amount}',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
-  'entry.new_bill': '{name} added a bill',
   comment: 'Your comment...',
 
   // Bills

@@ -10,16 +10,10 @@ class MoneyFieldWrapper extends Component {
   constructor(props) {
     super(props)
     this.focus = this.focus.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   focus() {
     ReactDOM.findDOMNode(this.refs.field.refs.input).focus()
-  }
-
-  handleChange(event) {
-    // for older browsers:
-    this.props.onChange(event.target.value.replace(/,/g, '.'))
   }
 
   render() {
@@ -30,7 +24,6 @@ class MoneyFieldWrapper extends Component {
         step="0.01"
         min="0"
         {...this.props}
-        onChange={this.handleChange}
       />
     )
   }
@@ -39,7 +32,6 @@ class MoneyFieldWrapper extends Component {
 
 MoneyFieldWrapper.propTypes = {
   errorText: PropTypes.node,
-  onChange: PropTypes.func.isRequired,
 }
 
 export default MoneyFieldWrapper

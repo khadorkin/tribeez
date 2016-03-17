@@ -1,8 +1,6 @@
 const normalizers = {
   email: (value) => value && value.toLowerCase(),
   phone: (value) => value && value.replace(/[^\(\)\+\d ]/g, ''),
-  amount: (value) => value ? Number(value) : '',
-  //parts: (value) => //TODO (see formValidator)
 }
 
 export default {
