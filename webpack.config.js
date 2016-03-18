@@ -20,47 +20,23 @@ console.log('Building for', env)
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const autoprefixer = require('autoprefixer')
 const reactCssModules = require('react-css-modules')
 
-const htmlPlugin = new HtmlWebpackPlugin({
-  template: 'app/index.tpl.html',
-  title: user_config.title,
-  description: user_config.description,
-  url: user_config.url,
-  twitter: user_config.twitter,
-  image: user_config.url + '/logo.png',
-  env: env,
-  rollbar_token: user_config.rollbar_token,
-  revision: revision,
-})
-
-const definePlugin = new webpack.DefinePlugin({
-  'process.env': {NODE_ENV: JSON.stringify(env)},
-  __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
-  __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
-  __GOOGLE_API_KEY__: JSON.stringify(user_config.google_api_key),
-  __TELEGRAM_BOT_NAME__: JSON.stringify(user_config.telegram_bot_name),
-  __DEBUG__: (env === 'development'),
-})
-
 const configs = {
   development: {
     debug: true,
-    devtool: 'source-map', // eval
+    devtool: 'eval',
     plugins: [
       new CleanWebpackPlugin(['dist']),
-      htmlPlugin,
-      definePlugin,
     ],
   },
   production: {
     debug: false,
-    devtool: 'cheap-module-source-map', // or even null for no sourcemap
+    devtool: 'source-map',
     plugins: [
-      htmlPlugin,
-      definePlugin,
       new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
@@ -77,10 +53,32 @@ Object.assign(config, {
     path: './dist',
     filename: env === 'development' ? 'app.js' : `${revision}.js`,
     publicPath: '/',
+    pathinfo: (env === 'development'),
   },
-  // eslint: {
-  //   fix: true,
-  // },
+  plugins: config.plugins.concat([
+    new HtmlWebpackPlugin({
+      template: 'app/index.tpl.html',
+      title: user_config.title,
+      description: user_config.description,
+      url: user_config.url,
+      twitter: user_config.twitter,
+      image: user_config.url + '/logo.png',
+      env: env,
+      rollbar_token: user_config.rollbar_token,
+      revision: revision,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {NODE_ENV: JSON.stringify(env)},
+      __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
+      __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
+      __GOOGLE_API_KEY__: JSON.stringify(user_config.google_api_key),
+      __TELEGRAM_BOT_NAME__: JSON.stringify(user_config.telegram_bot_name),
+      __DEBUG__: (env === 'development'),
+    }),
+    new CopyWebpackPlugin([
+      {from: 'app/static'},
+    ]),
+  ]),
   module: {
     loaders: [
       {
@@ -102,16 +100,9 @@ Object.assign(config, {
       },
       {
         test: /\.(png|jpg)$/,
-        exclude: /(node_modules|\/static\/)/,
+        exclude: /node_modules/,
         loaders: [
           'url-loader?limit=8192', // inline base64 URLs for <=8k images, direct URLs for the rest
-        ],
-      },
-      {
-        test: /\/static\//,
-        exclude: /\.js$/,
-        loaders: [
-          'file-loader?name=[name].[ext]', // simple copy from app/static/ to dist/
         ],
       },
       {

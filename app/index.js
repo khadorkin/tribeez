@@ -37,9 +37,6 @@ import NotFound from './pages/NotFound'
 // react-router routes
 import routes from './constants/routes'
 
-// static assets not being explicitely used in app but still needed in index.html:
-import './static'
-
 // global injected style:
 import './index.css'
 
