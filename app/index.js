@@ -27,7 +27,7 @@ import NewTribe from './pages/NewTribe'
 import Members from './pages/Members'
 import NewMember from './pages/NewMember'
 import Bills from './pages/Bills'
-import NewBill from './pages/NewBill'
+import Bill from './pages/Bill'
 import Events from './pages/Events'
 import Tasks from './pages/Tasks'
 import Notes from './pages/Notes'
@@ -137,7 +137,8 @@ ReactDOM.render((
         <Route path={routes.MEMBERS} component={Members} />
         <Route path={routes.MEMBERS_NEW} component={NewMember} />
         <Route path={routes.BILLS} component={Bills} />
-        <Route path={routes.BILLS_NEW} component={NewBill} />
+        <Route path={routes.BILLS_NEW} component={Bill} />
+        <Route path={routes.BILLS_EDIT} component={Bill} />
         <Route path={routes.EVENTS} component={Events} />
         <Route path={routes.TASKS} component={Tasks} />
         <Route path={routes.NOTES} component={Notes} />

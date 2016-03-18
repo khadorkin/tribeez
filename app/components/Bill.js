@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
@@ -18,6 +19,8 @@ import * as colors from 'material-ui/lib/styles/colors'
 import Comment from './Comment'
 
 import gravatar from '../utils/gravatar'
+
+import routes from '../constants/routes'
 
 import css from './Entry.css'
 
@@ -75,7 +78,7 @@ class Bill extends Component {
           </List>
         </CardText>
         <CardActions expandable={true} style={{textAlign: 'right', marginTop: '-50px'}}>
-          <IconButton onTouchTap={this.handleEdit}><EditButton color={colors.grey600} /></IconButton>
+          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':id', bill.id), state: bill}} />}><EditButton color={colors.grey600} /></IconButton>
           <IconButton onTouchTap={this.handleDelete}><DeleteButton color={colors.red400} /></IconButton>
         </CardActions>
       </Card>

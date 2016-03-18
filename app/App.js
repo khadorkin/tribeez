@@ -112,6 +112,9 @@ class App extends Component {
     if (this.props.params.token) {
       path_parts.pop()
     }
+    if (this.props.params.id) {
+      path_parts[1] = 'edit'
+    }
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 

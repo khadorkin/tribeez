@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
+import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
 import CardText from 'material-ui/lib/card/card-text'
@@ -16,6 +17,7 @@ import styles from '../constants/styles'
 
 import validator from '../utils/formValidator'
 
+import getBill from '../actions/getBill'
 import submitBill from '../actions/submitBill'
 
 class BillForm extends Component {
@@ -23,6 +25,12 @@ class BillForm extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillMount() {
+    if (!this.props.bill && this.props.id) {
+      this.props.getBill(this.props.id)
+    }
   }
 
   handleSubmit(event) {
@@ -76,7 +84,7 @@ class BillForm extends Component {
           }
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Add bill" type="submit" disabled={submitting} />
+          <RaisedButton label={this.props.bill ? 'Update bill' : 'Add bill'} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={error} />}
           </p>
@@ -87,7 +95,8 @@ class BillForm extends Component {
 }
 
 BillForm.propTypes = {
-  users: PropTypes.array,
+  // from parent component:
+  id: PropTypes.number,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
@@ -95,19 +104,44 @@ BillForm.propTypes = {
   submitting: PropTypes.bool,
   // from redux state:
   initialValues: PropTypes.object,
+  users: PropTypes.array,
+  bill: PropTypes.object,
+  // action creators:
+  getBill: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
-  initialValues: {
-    payer: state.member.user.id,
-    parts: state.member.tribe.users.map((user) => ({user: user.id, amount: ''})),
-  },
-})
+const mapStateToProps = (state, ownProps) => {
+  const bill = state.routing.location.state || state.bills.current
+  let initialValues
+  if (bill) {
+    initialValues = {
+      id: bill.id,
+      name: bill.name,
+      payer: bill.payer_id,
+      amount: bill.amount,
+      description: bill.description,
+      parts: bill.parts.map((part) => ({user: part.user_id, amount: part.amount})),
+    }
+  } else {
+    initialValues = {
+      payer: state.member.user.id,
+      parts: state.member.tribe.users.map((user) => ({user: user.id, amount: ''})),
+    }
+  }
+  return {
+    users: state.member.tribe.users,
+    initialValues,
+    bill,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getBill,
+}, dispatch)
 
 export default reduxForm({
   form: 'bill',
-  fields: ['name', 'payer', 'amount', 'description', 'parts[].user', 'parts[].amount'],
+  fields: ['id', 'name', 'payer', 'amount', 'description', 'parts[].user', 'parts[].amount'],
   returnRejectedSubmitPromise: true,
   validate: validator.bill,
-}, mapStateToProps)(BillForm)
+}, mapStateToProps, mapDispatchToProps)(BillForm)

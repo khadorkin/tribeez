@@ -10,6 +10,10 @@ export default class Part extends Component {
   render() {
     const {user, amount, ...rest} = this.props
 
+    if (!user) {
+      return null // in cases users are not loaded yet
+    }
+
     return (
       <MoneyField
         floatingLabelText={<FormattedMessage id="label.part" values={{name: user.name}} />}
@@ -22,6 +26,6 @@ export default class Part extends Component {
 
 Part.propTypes = {
   // from parent form:
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   amount: PropTypes.object.isRequired,
 }

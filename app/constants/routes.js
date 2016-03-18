@@ -17,6 +17,7 @@ export default {
   MEMBERS_NEW: '/members/new',
   BILLS: '/bills',
   BILLS_NEW: '/bills/new',
+  BILLS_EDIT: '/bills/:id',
   EVENTS: '/events',
   EVENTS_NEW: '/events/new',
   TASKS: '/tasks',

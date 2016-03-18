@@ -14,6 +14,7 @@ export default {
   members_new: 'New member',
   bills: 'Bills',
   bills_new: 'New bill',
+  bills_edit: 'Edit bill',
   events: 'Events',
   events_new: 'New event',
   tasks: 'Tasks',

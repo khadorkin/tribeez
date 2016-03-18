@@ -3,8 +3,9 @@ import {
   GET_BILLS_SUCCESS,
   GET_BILLS_FAILURE,
   NEW_BILL_SUCCESS,
-  LOGOUT_SUCCESS,
+  GET_BILL_SUCCESS,
   DELETE_BILL_SUCCESS,
+  LOGOUT_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   list: [],
   error: null,
   got: false, // true = we got the initial list through a request
+  current: null, // current bill being edited
 }
 
 export default (state = initialState, action = null) => {
@@ -40,6 +42,8 @@ export default (state = initialState, action = null) => {
       } else {
         return state
       }
+    case GET_BILL_SUCCESS:
+      return {...state, current: action.data}
     case DELETE_BILL_SUCCESS:
       const list = state.list.filter((bill) => bill.id !== action.id)
       return {...state, list}
