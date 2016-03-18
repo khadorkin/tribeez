@@ -4,6 +4,7 @@
   "url": "https://sortmytribe.com",
   "twitter": "sortmytribe",
   "api_endpoint": "https://api.sortmytribe.com",
+  "environment": "production",
   "rollbar_token": "xxxxxxxx",
   "recaptcha_site_key": "xxxxxxxx",
   "google_api_key": "xxxxxxxx",
