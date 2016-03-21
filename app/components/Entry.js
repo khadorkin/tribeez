@@ -40,30 +40,37 @@ class Entry extends Component {
     }
 
     const [type, action] = entry.type.split('.')
-    let extra = ''
-    const values = {
-      author: author.name,
-    }
     let infos
+
+    const values = {}
+    if (author.id === uid) {
+      values.author = '_you_'
+    } else {
+      values.author = author.name
+    }
+
     switch (type) {
       case 'user':
         if (entry.item_id) {
           const inviter = users.find((u) => u.id === entry.item_id)
-          values.inviter = inviter.name
-          extra = 'invited'
+          infos = <FormattedMessage id={`entry.user.${action}.infos`} values={{inviter: inviter.name}} />
         }
         break
       case 'bill':
         values.name = entry.data.name
         values.amount = <FormattedNumber value={entry.data.amount} style="currency" currency={currency} />
         const user_part = entry.data.parts.find((part) => part.user_id === uid)
-        const user_amount = <FormattedNumber value={user_part.amount} style="currency" currency={currency} />
-        infos = <FormattedMessage id={`entry.bill.${action}.infos`} values={{amount: user_amount}} />
+        if (user_part) {
+          const formatted_amount = <FormattedNumber value={user_part.amount} style="currency" currency={currency} />
+          infos = <FormattedMessage id={`entry.bill.${action}.infos`} values={{amount: formatted_amount}} />
+        } else {
+          infos = <FormattedMessage id={`entry.bill.${action}.stranger`} />
+        }
         break
       default:
         return null
     }
-    const title = <FormattedMessage id={`entry.${type}.${action}${extra ? '.' + extra : ''}`} values={values} />
+    const title = <FormattedMessage id={`entry.${type}.${action}`} values={values} />
 
     const date = <FormattedRelative value={entry.added} />
     const comments = (

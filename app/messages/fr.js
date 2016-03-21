@@ -34,8 +34,8 @@ const fr = {
   'add_member': 'Ajouter un membre',
 
   // Activity
-  'entry.user.new': '{author} a rejoint la tribu !',
-  'entry.user.new.invited': '{author} (invité-e par {inviter}) a rejoint la tribu !',
+  'entry.user.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
+  'entry.user.new.infos': 'Invité-e par {inviter}',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}', // http://formatjs.io/guides/message-syntax/#plural-format
 }
 

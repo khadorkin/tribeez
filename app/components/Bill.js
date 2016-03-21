@@ -44,17 +44,23 @@ class Bill extends Component {
       return null
     }
 
-    const user_part = bill.parts.find((p) => p.user_id = this.props.uid)
+    const user_part = bill.parts.find((p) => p.user_id === this.props.uid)
 
     const total = <FormattedNumber value={bill.amount} style="currency" currency={this.props.currency} />
-    const amount = <FormattedNumber value={user_part.amount} style="currency" currency={this.props.currency} />
-    const mypart = <FormattedMessage id="bill.mypart" values={{amount}} />
+
+    let formatted_part
+    if (user_part) {
+      const amount = <FormattedNumber value={user_part.amount} style="currency" currency={this.props.currency} />
+      formatted_part = <FormattedMessage id="bill.mypart" values={{amount}} />
+    } else {
+      formatted_part = <FormattedMessage id="bill.nopart" />
+    }
     const title = <span>{total} — {bill.name}</span>
     const date = <FormattedRelative value={bill.added} />
 
     return (
       <Card className={css.container}>
-        <CardHeader title={title} subtitle={<span>{date} — {mypart}</span>}
+        <CardHeader title={title} subtitle={<span>{date} — {formatted_part}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
           avatar={gravatar(user)}

@@ -83,17 +83,21 @@ export default {
   'invited_by': 'Invited by {user} on {date}',
 
   // Activity
-  'entry.user.new': '{author} has joined the tribe!',
-  'entry.user.new.invited': '{author} (invited by {inviter}) has joined the tribe!',
-  'entry.bill.new': '{author} added a bill named "{name}" ({amount})',
+  'entry.user.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
+  'entry.user.new.infos': 'Invited by {inviter}',
+  'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added a bill named "{name}" ({amount})',
   'entry.bill.new.infos': 'Your share is {amount}',
-  'entry.bill.edit': '{author} modified the "{name}" bill ({amount})',
+  'entry.bill.new.stranger': 'You are not concerned',
+  'entry.bill.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" bill ({amount})',
   'entry.bill.edit.infos': 'Your share is now {amount}',
-  'entry.bill.delete': '{author} deleted the "{name}" bill ({amount})',
+  'entry.bill.edit.stranger': 'You are not concerned',
+  'entry.bill.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" bill ({amount})',
   'entry.bill.delete.infos': 'Your share was {amount}',
+  'entry.bill.delete.stranger': 'You were not concerned',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
   comment: 'Your comment...',
 
   // Bills
-  'bill.mypart': 'My part is {amount}',
+  'bill.mypart': 'Your share is {amount}',
+  'bill.nopart': 'You are not concerned',
 }
