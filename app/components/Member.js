@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import {FormattedMessage, FormattedDate} from 'react-intl'
+import {connect} from 'react-redux'
+import {FormattedMessage, FormattedDate, FormattedNumber} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
 import CardHeader from 'material-ui/lib/card/card-header'
@@ -9,6 +10,7 @@ import ListItem from 'material-ui/lib/lists/list-item'
 import EmailIcon from 'material-ui/lib/svg-icons/communication/email'
 import PhoneIcon from 'material-ui/lib/svg-icons/communication/call'
 import CakeIcon from 'material-ui/lib/svg-icons/social/cake'
+import BalanceIcon from 'material-ui/lib/svg-icons/action/account-balance-wallet'
 
 import gravatar from '../utils/gravatar'
 
@@ -18,6 +20,7 @@ const infos = [
   {id: 'email', icon: <EmailIcon />, href: 'mailto:'},
   {id: 'phone', icon: <PhoneIcon />, href: 'tel:'},
   {id: 'birthdate', icon: <CakeIcon />, date: true},
+  {id: 'balance', icon: <BalanceIcon />, money: true},
 ]
 
 class Member extends Component {
@@ -45,6 +48,10 @@ class Member extends Component {
                      if (info.date) {
                        value = <FormattedDate value={value} />
                      }
+                     if (info.money) {
+                       //value = <FormattedNumber value={value} style="currency" currency={this.props.currency} />
+                       value = `${value} ${this.props.currency}` //TODO: https://github.com/callemall/material-ui/issues/3769
+                     }
                      return <ListItem key={info.id} leftIcon={info.icon} primaryText={value} disabled={!href} href={href} />
                    })
             }
@@ -58,6 +65,11 @@ class Member extends Component {
 
 Member.propTypes = {
   user: PropTypes.object.isRequired,
+  currency: PropTypes.string.isRequired,
 }
 
-export default Member
+const mapStateToProps = (state) => ({
+  currency: state.member.tribe.currency,
+})
+
+export default connect(mapStateToProps)(Member)

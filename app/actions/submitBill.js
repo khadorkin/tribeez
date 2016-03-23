@@ -4,6 +4,7 @@ import api from '../utils/api'
 
 import {
   NEW_BILL_SUCCESS,
+  PUT_BILL_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -13,7 +14,7 @@ import getMember from './getMember'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    api.post('bill', values)
+    api[values.id ? 'put' : 'post']('bill', values)
       .then((response) => {
         if (response.error) {
           if (response.error.parts) {
@@ -23,20 +24,31 @@ export default (values, dispatch) => {
           }
         } else {
           resolve()
-          dispatch(getMember())
-          dispatch({
-            type: NEW_BILL_SUCCESS,
-            bill: response,
-          })
+          dispatch(getMember()) // to update balance
+          if (values.id) {
+            dispatch({
+              type: PUT_BILL_SUCCESS,
+              bill: response,
+            })
+            dispatch({
+              type: SNACK_MESSAGE,
+              message: 'bill_modified',
+            })
+          } else {
+            dispatch({
+              type: NEW_BILL_SUCCESS,
+              bill: response,
+            })
+            dispatch({
+              type: SNACK_MESSAGE,
+              message: 'bill_added',
+            })
+          }
           dispatch(routeActions.push(routes.BILLS))
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'bill_added',
-          })
         }
       })
       .catch((error) => {
-        reject({_error: 'error.other'})
+        reject({_error: error.toString()})
       })
   })
 }

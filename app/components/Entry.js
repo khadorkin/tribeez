@@ -53,7 +53,9 @@ class Entry extends Component {
       case 'user':
         if (entry.item_id) {
           const inviter = users.find((u) => u.id === entry.item_id)
-          infos = <FormattedMessage id={`entry.user.${action}.infos`} values={{inviter: inviter.name}} />
+          if (inviter) {
+            infos = <FormattedMessage id={`entry.user.${action}.infos`} values={{inviter: inviter.name}} />
+          }
         }
         break
       case 'bill':

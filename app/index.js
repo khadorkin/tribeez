@@ -75,7 +75,10 @@ let createStoreWithMiddleware
 if (__DEBUG__) {
   const logger = createLogger({
     errorTransformer: (error) => {
-      Rollbar.error(error)
+      /*eslint-disable no-console*/
+      console.error(error)
+      console.warn('Rollbar notification not sent')
+      /*eslint-enable no-console*/
       return error
     },
   })

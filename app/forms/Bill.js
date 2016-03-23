@@ -79,7 +79,7 @@ class BillForm extends Component {
           />
           {
             parts.map((part, index) =>
-              <Part key={index} amount={part.amount} user={this.props.users.find((u) => (u.id === part.user.value))} />
+              <Part key={index} amount={part.amount} user={this.props.users.find((u) => (u.id === part.user_id.value))} />
             )
           }
         </CardText>
@@ -120,12 +120,12 @@ const mapStateToProps = (state, ownProps) => {
       payer: bill.payer_id,
       amount: bill.amount,
       description: bill.description,
-      parts: bill.parts.map((part) => ({user: part.user_id, amount: part.amount})),
+      parts: bill.parts,
     }
   } else {
     initialValues = {
       payer: state.member.user.id,
-      parts: state.member.tribe.users.map((user) => ({user: user.id, amount: ''})),
+      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: ''})),
     }
   }
   return {
@@ -141,7 +141,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 export default reduxForm({
   form: 'bill',
-  fields: ['id', 'name', 'payer', 'amount', 'description', 'parts[].user', 'parts[].amount'],
+  fields: ['id', 'name', 'payer', 'amount', 'description', 'parts[].user_id', 'parts[].amount'],
   returnRejectedSubmitPromise: true,
   validate: validator.bill,
 }, mapStateToProps, mapDispatchToProps)(BillForm)

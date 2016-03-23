@@ -121,7 +121,7 @@ const mapStateToProps = (state, ownProps) => {
 
 export default reduxForm({
   form: 'tribe',
-  fields: ['tribe_name', 'tribe_type', 'city', 'currency', 'id'],
+  fields: ['id', 'tribe_name', 'tribe_type', 'city', 'currency'],
   returnRejectedSubmitPromise: true,
   validate: validator.tribe,
 }, mapStateToProps)(TribeForm)
