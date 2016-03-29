@@ -17,6 +17,7 @@ import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
 import * as colors from 'material-ui/lib/styles/colors'
 
 import Comment from './Comment'
+import Entry from '../components/Entry'
 
 import gravatar from '../utils/gravatar'
 
@@ -84,9 +85,20 @@ class Bill extends Component {
           </List>
         </CardText>
         <CardActions expandable={true} style={{textAlign: 'right', marginTop: '-50px'}}>
-          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':id', bill.id), state: bill}} />}><EditButton color={colors.grey600} /></IconButton>
-          <IconButton onTouchTap={this.handleDelete}><DeleteButton color={colors.red400} /></IconButton>
+          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':id', bill.id), state: bill}} />}>
+            <EditButton color={colors.grey600} />
+          </IconButton>
+          <IconButton onTouchTap={this.handleDelete}>
+            <DeleteButton color={colors.red400} />
+          </IconButton>
         </CardActions>
+        <CardText expandable={true}>
+          {
+            bill.entries && bill.entries.map((entry) =>
+              <Entry entry={entry} key={entry.id} />
+            )
+          }
+        </CardText>
       </Card>
     )
   }
@@ -109,8 +121,4 @@ const mapStateToProps = (state) => ({
   currency: state.member.tribe.currency,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  //
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Bill)
+export default connect(mapStateToProps)(Bill)
