@@ -5,6 +5,7 @@ import {
   COMMENT_SUCCESS,
   UPDATE_COMMENT_TEXT,
   NEW_BILL_SUCCESS,
+  PUT_BILL_SUCCESS,
   DELETE_BILL_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -57,6 +58,7 @@ export default (state = initialState, action = null) => {
         boxComments,
       })
     case NEW_BILL_SUCCESS:
+    case PUT_BILL_SUCCESS:
     case DELETE_BILL_SUCCESS:
       return {...state, got: false}
     case LOGOUT_SUCCESS:

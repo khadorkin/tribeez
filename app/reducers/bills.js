@@ -36,13 +36,13 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       })
-    case NEW_BILL_SUCCESS:
-      if (state.list.length) {
-        const list = [action.bill, ...state.list]
-        return {...state, list}
-      } else {
-        return state
-      }
+    case GET_BILL_SUCCESS:
+      return {...state, current: action.data}
+
+    case NEW_BILL_SUCCESS: {
+      const list = [action.bill, ...state.list]
+      return {...state, list}
+    }
     case PUT_BILL_SUCCESS: {
       const list = state.list.map((bill) => {
         if (bill.id === action.bill.id) {
@@ -52,11 +52,11 @@ export default (state = initialState, action = null) => {
       })
       return {...state, list}
     }
-    case GET_BILL_SUCCESS:
-      return {...state, current: action.data}
-    case DELETE_BILL_SUCCESS:
+    case DELETE_BILL_SUCCESS: {
       const list = state.list.filter((bill) => bill.id !== action.id)
       return {...state, list}
+    }
+
     case LOGOUT_SUCCESS:
       return Object.assign({}, initialState)
     default:
