@@ -9,8 +9,9 @@ import html5backend from 'react-dnd-html5-backend'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 
+import AsyncContent from '../hoc/AsyncContent'
+
 import Note from '../components/Note'
-import Error from '../components/Error'
 
 import styles from '../constants/styles'
 import routes from '../constants/routes'
@@ -23,19 +24,15 @@ class Notes extends Component {
 
   constructor(props) {
     super(props)
-    this.handleRetry = this.handleRetry.bind(this)
+    this.handleLoad = this.handleLoad.bind(this)
     this.handleMove = this.handleMove.bind(this)
     this.handleSave = this.handleSave.bind(this)
   }
 
-  componentWillMount() {
+  handleLoad() {
     if (!this.props.notes.got) {
       this.props.getNotes()
     }
-  }
-
-  handleRetry() {
-    this.props.getNotes()
   }
 
   handleMove(draggedNote, hoveredNote) {
@@ -49,22 +46,20 @@ class Notes extends Component {
   render() {
     const {notes} = this.props
 
+    const style = {display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', alignContent: 'flex-start', padding: 10}
+
     return (
-      <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', alignContent: 'flex-start', padding: 10}}>
+      <AsyncContent style={style} onLoad={this.handleLoad} error={notes.error}>
         {
           notes.list.map((note) =>
             <Note note={note} key={note.id} onMove={this.handleMove} onSave={this.handleSave} />
           )
         }
 
-        {
-          notes.error && <Error message={notes.error} onRetry={this.handleRetry} />
-        }
-
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.NOTES_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </div>
+      </AsyncContent>
     )
   }
 

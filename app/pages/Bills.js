@@ -9,8 +9,9 @@ import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 import Dialog from 'material-ui/lib/dialog'
 import FlatButton from 'material-ui/lib/flat-button'
 
+import AsyncContent from '../hoc/AsyncContent'
+
 import Bill from '../components/Bill'
-import Error from '../components/Error'
 
 import styles from '../constants/styles'
 import routes from '../constants/routes'
@@ -24,24 +25,20 @@ class Bills extends Component {
 
   constructor(props) {
     super(props)
-    this.handleRetry = this.handleRetry.bind(this)
     this.state = {
       openDialog: false,
       bill: {},
     }
+    this.handleLoad = this.handleLoad.bind(this)
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
   }
 
-  componentWillMount() {
+  handleLoad() {
     if (!this.props.bills.got) {
       this.props.getBills()
     }
-  }
-
-  handleRetry() {
-    this.props.getBills()
   }
 
   handleDialogOpen(bill) {
@@ -82,7 +79,7 @@ class Bills extends Component {
     const prefix = balance > 0 ? '+' : ''
 
     return (
-      <div>
+      <AsyncContent onLoad={this.handleLoad} error={bills.error}>
         {
           balance !== undefined &&
             <div style={{backgroundColor: colors.cyan500, padding: '5px', textAlign: 'center'}}>
@@ -98,10 +95,6 @@ class Bills extends Component {
           )
         }
 
-        {
-          bills.error && <Error message={bills.error} onRetry={this.handleRetry} />
-        }
-
         <Dialog title="Delete bill"
           actions={dialogActions}
           open={this.state.openDialog}
@@ -113,7 +106,7 @@ class Bills extends Component {
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </div>
+      </AsyncContent>
     )
   }
 

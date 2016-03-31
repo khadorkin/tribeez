@@ -2,9 +2,10 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import AsyncContent from '../hoc/AsyncContent'
+
 import Entry from '../components/Entry'
 import SpeedDial from '../components/SpeedDial'
-import Error from '../components/Error'
 
 import getActivity from '../actions/getActivity'
 
@@ -12,35 +13,28 @@ class Activity extends Component {
 
   constructor(props) {
     super(props)
-    this.handleRetry = this.handleRetry.bind(this)
+    this.handleLoad = this.handleLoad.bind(this)
   }
 
-  componentWillMount() {
+  handleLoad() {
     if (!this.props.activity.got) {
       this.props.getActivity()
     }
-  }
-
-  handleRetry() {
-    this.props.getActivity()
   }
 
   render() {
     const {activity} = this.props
 
     return (
-      <div>
+      <AsyncContent onLoad={this.handleLoad} error={activity.error}>
         {
           activity.entries.map((entry) =>
             <Entry entry={entry} key={entry.id} />
           )
         }
 
-        {
-          activity.error && <Error message={activity.error} onRetry={this.handleRetry} />
-        }
         <SpeedDial />
-      </div>
+      </AsyncContent>
     )
   }
 

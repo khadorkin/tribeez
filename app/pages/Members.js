@@ -15,8 +15,9 @@ import FlatButton from 'material-ui/lib/flat-button'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 import ContentAdd from 'material-ui/lib/svg-icons/content/add'
 
+import AsyncContent from '../hoc/AsyncContent'
+
 import Member from '../components/Member'
-import Error from '../components/Error'
 
 import styles from '../constants/styles'
 import routes from '../constants/routes'
@@ -32,12 +33,13 @@ class Members extends Component {
       openDialog: false,
       invite: {},
     }
+    this.handleLoad = this.handleLoad.bind(this)
     this.openDialog = this.openDialog.bind(this)
     this.handleResend = this.handleResend.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
   }
 
-  componentWillMount() {
+  handleLoad() {
     if (!this.props.invites.got) {
       this.props.getInvites()
     }
@@ -64,10 +66,6 @@ class Members extends Component {
     })
   }
 
-  handleRetry() {
-    this.props.getInvites()
-  }
-
   render() {
     const {invites, users} = this.props
 
@@ -86,7 +84,7 @@ class Members extends Component {
     ]
 
     return (
-      <div style={{padding: '10px'}}>
+      <AsyncContent style={{padding: '10px'}} onLoad={this.handleLoad} error={invites.error}>
         {
           users.map((user) =>
             <Member user={user} key={user.id} />
@@ -126,14 +124,10 @@ class Members extends Component {
             </Paper>
         }
 
-        {
-          invites.error && <Error message={invites.error} onRetry={this.handleRetry} />
-        }
-
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.MEMBERS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </div>
+      </AsyncContent>
     )
   }
 

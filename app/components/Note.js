@@ -49,6 +49,9 @@ class Note extends Component {
       content,
     }
     this.props.putNote(note)
+    this.setState({
+      touched: false,
+    })
   }
 
   handleDelete() {
@@ -85,9 +88,6 @@ Note.propTypes = {
   note: PropTypes.object.isRequired,
   onMove: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  // from redux state:
-  uid: PropTypes.number,
-  users: PropTypes.array,
   // action creators:
   putNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
@@ -96,12 +96,6 @@ Note.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
 }
-
-const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  users: state.member.tribe.users,
-  width: state.app.width,
-})
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putNote,
@@ -153,5 +147,5 @@ const dropConnect = (conn) => ({
 export default compose(
   dragSource('Note', cardSource, dragCollect),
   dropTarget('Note', cardTarget, dropConnect),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(null, mapDispatchToProps)
 )(Note)
