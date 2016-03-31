@@ -18,7 +18,7 @@ import * as colors from 'material-ui/lib/styles/colors'
 
 import gravatar from '../utils/gravatar'
 
-import css from './Entry.css'
+import css from './Note.css'
 
 import putNote from '../actions/putNote'
 
@@ -27,21 +27,33 @@ class Note extends Component {
   constructor(props) {
     super(props)
     const titleContentState = ContentState.createFromText(this.props.note.title)
-    const textContentState = ContentState.createFromText(this.props.note.content)
+    const contentContentState = ContentState.createFromText(this.props.note.content)
     this.state = {
       titleEditorState: EditorState.createWithContent(titleContentState),
-      textEditorState: EditorState.createWithContent(textContentState),
+      contentEditorState: EditorState.createWithContent(contentContentState),
       touched: false,
     }
-    this.handleTitleChange = (titleEditorState) => this.setState({titleEditorState, touched: true})
-    this.handleTextChange = (textEditorState) => this.setState({textEditorState, touched: true})
+    this.handleTitleChange = (titleEditorState) => this.setState({
+      titleEditorState,
+      touched: true,
+    })
+    this.handleContentChange = (contentEditorState) => this.setState({
+      contentEditorState,
+      touched: true,
+    })
     this.handleSave = this.handleSave.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
 
+  componentDidMount() {
+    if (!this.props.note.title) {
+      this.refs.title.focus()
+    }
+  }
+
   handleSave() {
     const title = this.state.titleEditorState.getCurrentContent().getPlainText()
-    const content = this.state.textEditorState.getCurrentContent().getPlainText()
+    const content = this.state.contentEditorState.getCurrentContent().getPlainText()
     const note = {
       ...this.props.note,
       title,
@@ -63,9 +75,9 @@ class Note extends Component {
     return connectDragSource(connectDropTarget(
       <div style={{margin: '10px', opacity: (isDragging ? 0 : 1), maxWidth: '50%'}}>
         <Card>
-          <CardTitle title={<Editor editorState={this.state.titleEditorState} onChange={this.handleTitleChange} />} />
+          <CardTitle title={<Editor ref="title" editorState={this.state.titleEditorState} onChange={this.handleTitleChange} placeholder="Title" />} />
           <CardText>
-            <Editor editorState={this.state.textEditorState} onChange={this.handleTextChange} />
+            <Editor ref="content" editorState={this.state.contentEditorState} onChange={this.handleContentChange} />
           </CardText>
           <CardActions style={{textAlign: 'right', cursor: 'move'}}>
             <IconButton onTouchTap={this.handleSave} style={{visibility: this.state.touched ? 'visible' : 'hidden'}}>

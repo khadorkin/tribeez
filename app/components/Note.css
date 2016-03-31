@@ -1,0 +1,10 @@
+:global .public-DraftEditorPlaceholder-root {
+  position: absolute;
+  z-index: 0;
+  color: #aaa;
+}
+
+:global .DraftEditor-editorContainer {
+  position: relative;
+  z-index: 1;
+}

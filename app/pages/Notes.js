@@ -19,6 +19,7 @@ import styles from '../constants/styles'
 import routes from '../constants/routes'
 
 import getNotes from '../actions/getNotes'
+import postNote from '../actions/postNote'
 import moveNote from '../actions/moveNote'
 import putNotes from '../actions/putNotes'
 import deleteNote from '../actions/deleteNote'
@@ -32,6 +33,7 @@ class Notes extends Component {
       note: {},
     }
     this.handleLoad = this.handleLoad.bind(this)
+    this.handleCreate = this.handleCreate.bind(this)
     this.handleMove = this.handleMove.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
@@ -43,6 +45,13 @@ class Notes extends Component {
     if (!this.props.notes.got) {
       this.props.getNotes()
     }
+  }
+
+  handleCreate() {
+    this.props.postNote({
+      title: '',
+      content: '',
+    })
   }
 
   handleMove(draggedNote, hoveredNote) {
@@ -106,7 +115,7 @@ class Notes extends Component {
           Delete the note "{this.state.note.title}"?
         </Dialog>
 
-        <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.NOTES_NEW} />}>
+        <FloatingActionButton style={styles.fab} onTouchTap={this.handleCreate}>
           <ContentAdd />
         </FloatingActionButton>
       </AsyncContent>
@@ -118,6 +127,7 @@ class Notes extends Component {
 Notes.propTypes = {
   notes: PropTypes.object.isRequired,
   getNotes: PropTypes.func.isRequired,
+  postNote: PropTypes.func.isRequired,
   moveNote: PropTypes.func.isRequired,
   putNotes: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
@@ -129,6 +139,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getNotes,
+  postNote,
   moveNote,
   putNotes,
   deleteNote,

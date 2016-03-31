@@ -2,6 +2,7 @@ import {
   GET_NOTES_REQUEST,
   GET_NOTES_SUCCESS,
   GET_NOTES_FAILURE,
+  NEW_NOTE_SUCCESS,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
   LOGOUT_SUCCESS,
@@ -33,6 +34,11 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       })
+    case NEW_NOTE_SUCCESS: {
+      const list = state.list.slice()
+      list.unshift(action.data)
+      return {...state, list}
+    }
     case DELETE_NOTE_SUCCESS: {
       const list = state.list.filter((note) => note.id !== action.id)
       return {...state, list}
