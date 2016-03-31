@@ -21,7 +21,6 @@ import gravatar from '../utils/gravatar'
 import css from './Entry.css'
 
 import putNote from '../actions/putNote'
-import deleteNote from '../actions/deleteNote'
 
 class Note extends Component {
 
@@ -55,7 +54,7 @@ class Note extends Component {
   }
 
   handleDelete() {
-    this.props.deleteNote(this.props.note.id)
+    this.props.onDelete(this.props.note)
   }
 
   render() {
@@ -88,9 +87,9 @@ Note.propTypes = {
   note: PropTypes.object.isRequired,
   onMove: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   // action creators:
   putNote: PropTypes.func.isRequired,
-  deleteNote: PropTypes.func.isRequired,
   // Injected by React DnD:
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,
@@ -99,7 +98,6 @@ Note.propTypes = {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putNote,
-  deleteNote,
 }, dispatch)
 
 const cardSource = {
