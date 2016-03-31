@@ -39,6 +39,9 @@ export default {
   'snack.bill_added': 'Bill added',
   'snack.bill_modified': 'Bill modified',
   'snack.bill_deleted': 'Bill deleted',
+  'snack.note_updated': 'Note saved',
+  'snack.notes_reordered': 'Notes reordered',
+  'snack.note_deleted': 'Note deleted',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 
