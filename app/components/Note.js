@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {findDOMNode} from 'react-dom'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
@@ -73,8 +72,8 @@ class Note extends Component {
     const {note, connectDragSource, connectDropTarget, isDragging} = this.props
 
     return connectDragSource(connectDropTarget(
-      <div style={{margin: '10px', opacity: (isDragging ? 0 : 1), maxWidth: '50%'}}>
-        <Card>
+      <div style={{opacity: (isDragging ? 0 : 1), display: 'inline-block', width: '100%'}}>
+        <Card style={{margin: 10, overflow: 'visible'}}>
           <CardTitle title={<Editor ref="title" editorState={this.state.titleEditorState} onChange={this.handleTitleChange} placeholder="Title" />} />
           <CardText>
             <Editor ref="content" editorState={this.state.contentEditorState} onChange={this.handleContentChange} />

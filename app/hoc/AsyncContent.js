@@ -32,7 +32,7 @@ class AsyncContent extends Component {
 AsyncContent.propTypes = {
   // from parent component
   onLoad: PropTypes.func.isRequired,
-  error: PropTypes.bool,
+  error: PropTypes.string,
   style: PropTypes.object,
   children: PropTypes.node.isRequired,
 }

@@ -97,7 +97,13 @@ class Notes extends Component {
       />,
     ]
 
-    const style = {display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', alignContent: 'flex-start', padding: 10}
+    const columns = Math.floor(this.props.containerWidth / 250)
+
+    const style = {
+      columnCount: columns, WebkitColumnCount: columns, MozColumnCount: columns,
+      columnGap: 0, WebkitColumnGap: 0, MozColumnGap: 0,
+      padding: 10,
+    }
 
     return (
       <AsyncContent style={style} onLoad={this.handleLoad} error={notes.error}>
@@ -125,7 +131,10 @@ class Notes extends Component {
 }
 
 Notes.propTypes = {
+  // redux state:
   notes: PropTypes.object.isRequired,
+  containerWidth: PropTypes.number.isRequired,
+  // action creators:
   getNotes: PropTypes.func.isRequired,
   postNote: PropTypes.func.isRequired,
   moveNote: PropTypes.func.isRequired,
@@ -135,6 +144,7 @@ Notes.propTypes = {
 
 const mapStateToProps = (state) => ({
   notes: state.notes,
+  containerWidth: (state.app.width > 800 ? state.app.width - 256 : state.app.width),
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
