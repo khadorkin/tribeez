@@ -9,10 +9,10 @@ html, body {
 TODO: this won't prevent from FOIT, e.g. in Safari, because
 the font-family:Roboto is inlined on elements by material-ui:
 */
-:global .wf-loading {
+.wf-loading {
   font-family: sans-serif;
 }
-:global .wf-active {
+.wf-active {
   font-family: 'Roboto', sans-serif;
 }
 
@@ -21,16 +21,16 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px white inset;
 }
 
-:global .error {
+.error {
   color: #f44336;
 }
 
-:global .main {
+.main {
   transition: none !important;
 }
 
 @media (min-width: 500px) {
-  :global .main {
+  .main {
     position: absolute;
     width: 460px;
     margin-left: -230px;
@@ -38,4 +38,26 @@ input:-webkit-autofill {
     top: 80px;
     margin-bottom: 50px;
   }
+}
+
+/* draft.js */
+
+.public-DraftEditorPlaceholder-root {
+  position: absolute;
+  z-index: 0;
+  color: #aaa;
+}
+
+.DraftEditor-editorContainer {
+  position: relative;
+  z-index: 1;
+}
+
+/* big-calendar */
+
+.rbc-btn-group button {
+  cursor: pointer;
+}
+button:focus {
+  outline: none;
 }

@@ -91,11 +91,18 @@ Object.assign(config, {
       },
       {
         test: /\.css$/,
-        exclude: /node_modules/,
+        exclude: /node_modules|index\.css/,
         loaders: [
           'style', // understand css
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', // prefix css rules
+          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', // prefix css rules and put the result in a <style> tag
           'postcss-loader', // autoprefixer etc (see postcss method below)
+        ],
+      },
+      {
+        test: /node_modules\/.+\.css|index\.css$/,
+        loaders: [
+          'style', // understand css
+          'css-loader', // simply put it in a <style> tag
         ],
       },
       {

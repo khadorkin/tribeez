@@ -102,7 +102,7 @@ class Notes extends Component {
     const style = {
       columnCount: columns, WebkitColumnCount: columns, MozColumnCount: columns,
       columnGap: 0, WebkitColumnGap: 0, MozColumnGap: 0,
-      padding: 10,
+      padding: 8,
     }
 
     return (

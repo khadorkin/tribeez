@@ -77,10 +77,10 @@ if (__DEBUG__) {
     errorTransformer: (error) => {
       /*eslint-disable no-console*/
       console.error(error)
-      console.warn('Rollbar notification not sent')
       /*eslint-enable no-console*/
       return error
     },
+    collapsed: true,
   })
   createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware, logger)(createStore)
 } else {

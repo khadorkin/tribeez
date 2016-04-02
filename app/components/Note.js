@@ -17,8 +17,6 @@ import * as colors from 'material-ui/lib/styles/colors'
 
 import gravatar from '../utils/gravatar'
 
-import css from './Note.css'
-
 import putNote from '../actions/putNote'
 
 class Note extends Component {
@@ -73,7 +71,7 @@ class Note extends Component {
 
     return connectDragSource(connectDropTarget(
       <div style={{opacity: (isDragging ? 0 : 1), display: 'inline-block', width: '100%'}}>
-        <Card style={{margin: 10, overflow: 'visible'}}>
+        <Card style={{margin: 8, overflow: 'visible'}}>
           <CardTitle title={<Editor ref="title" editorState={this.state.titleEditorState} onChange={this.handleTitleChange} placeholder="Title" />} />
           <CardText>
             <Editor ref="content" editorState={this.state.contentEditorState} onChange={this.handleContentChange} />

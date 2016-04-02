@@ -10,6 +10,7 @@ import password from './password'
 import reset from './reset'
 import bills from './bills'
 import notes from './notes'
+import events from './events'
 
 export default {
   app,
@@ -24,4 +25,5 @@ export default {
   reset,
   bills,
   notes,
+  events,
 }
