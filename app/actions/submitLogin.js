@@ -11,6 +11,9 @@ export default (destination, values, dispatch) => {
     api.post('login', values)
       .then((response) => {
         if (response.error) {
+          if (typeof response.error === 'string') {
+            response.error = {_error: response.error}
+          }
           reject(response.error)
         } else {
           resolve()

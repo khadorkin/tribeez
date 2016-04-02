@@ -20,6 +20,9 @@ export default (values, dispatch) => {
           if (response.error.parts) {
             reject({_error: 'error.no_parts'})
           } else {
+            if (typeof response.error === 'string') {
+              response.error = {_error: response.error}
+            }
             reject(response.error)
           }
         } else {

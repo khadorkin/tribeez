@@ -41,7 +41,9 @@ class Activity extends Component {
 }
 
 Activity.propTypes = {
+  // redux state:
   activity: PropTypes.object.isRequired,
+  // action creators:
   getActivity: PropTypes.func.isRequired,
 }
 

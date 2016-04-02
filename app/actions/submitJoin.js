@@ -18,6 +18,9 @@ export default (values, dispatch) => {
             }
             delete response.error._suggestion
           }
+          if (typeof response.error === 'string') {
+            response.error = {_error: response.error}
+          }
           reject(response.error)
         } else {
           resolve()

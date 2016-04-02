@@ -1,11 +1,33 @@
 import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
 
 import RaisedButton from 'material-ui/lib/raised-button'
 
 class AsyncContent extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      uid: null,
+    }
+  }
+
   componentWillMount() {
-    this.props.onLoad()
+    if (this.props.uid) {
+      this.setState({
+        uid: this.props.uid,
+      })
+      this.props.onLoad()
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.uid && !this.state.uid) {
+      this.setState({
+        uid: props.uid,
+      })
+      this.props.onLoad()
+    }
   }
 
   render() {
@@ -30,6 +52,8 @@ class AsyncContent extends Component {
 }
 
 AsyncContent.propTypes = {
+  // redux state
+  uid: PropTypes.number,
   // from parent component
   onLoad: PropTypes.func.isRequired,
   error: PropTypes.string,
@@ -37,4 +61,8 @@ AsyncContent.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default AsyncContent
+const mapStateToProps = (state) => ({
+  uid: state.member.user.id,
+})
+
+export default connect(mapStateToProps)(AsyncContent)

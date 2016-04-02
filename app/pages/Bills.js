@@ -113,9 +113,11 @@ class Bills extends Component {
 }
 
 Bills.propTypes = {
+  // redux state:
   balance: PropTypes.number,
   currency: PropTypes.string,
   bills: PropTypes.object.isRequired,
+  // action creators:
   getBills: PropTypes.func.isRequired,
   deleteBill: PropTypes.func.isRequired,
 }

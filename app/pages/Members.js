@@ -134,8 +134,10 @@ class Members extends Component {
 }
 
 Members.propTypes = {
+  // redux state:
   users: PropTypes.array,
   invites: PropTypes.object.isRequired,
+  // action creators:
   getInvites: PropTypes.func.isRequired,
   postInvite: PropTypes.func.isRequired,
 }

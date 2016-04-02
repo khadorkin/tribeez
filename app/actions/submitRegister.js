@@ -11,6 +11,9 @@ export default (values, dispatch) => {
     api.post('register', values)
       .then((response) => {
         if (response.error) {
+          if (typeof response.error === 'string') {
+            response.error = {_error: response.error}
+          }
           response.error._backend = true // to reset the captcha
           if (response.error.email) {
             response.error.email = {

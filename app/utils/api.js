@@ -34,13 +34,6 @@ const request = (route, params, method) => {
       // if status >= 400, the error will be in the returned JSON and is handled by the component
       return response.json()
     })
-    .then((obj) => {
-      if (typeof obj.error === 'string') {
-        // transform for redux-form:
-        obj.error = {_error: obj.error}
-      }
-      return obj
-    })
 }
 
 export default {
