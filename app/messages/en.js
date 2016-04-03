@@ -43,6 +43,8 @@ export default {
   'snack.note_updated': 'Note saved',
   'snack.notes_reordered': 'Notes reordered',
   'snack.note_deleted': 'Note deleted',
+  'snack.event_created': 'Event created',
+  'snack.event_updated': 'Event updated',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 

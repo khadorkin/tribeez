@@ -29,6 +29,7 @@ import NewMember from './pages/NewMember'
 import Bills from './pages/Bills'
 import Bill from './pages/Bill'
 import Events from './pages/Events'
+import Event from './pages/Event'
 import Tasks from './pages/Tasks'
 import Notes from './pages/Notes'
 import Polls from './pages/Polls'
@@ -140,6 +141,7 @@ ReactDOM.render((
         <Route path={routes.BILLS_NEW} component={Bill} />
         <Route path={routes.BILLS_EDIT} component={Bill} />
         <Route path={routes.EVENTS} component={Events} />
+        <Route path={routes.EVENTS_NEW} component={Event} />
         <Route path={routes.TASKS} component={Tasks} />
         <Route path={routes.NOTES} component={Notes} />
         <Route path={routes.POLLS} component={Polls} />

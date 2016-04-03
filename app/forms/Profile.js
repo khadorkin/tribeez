@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
+import moment from 'moment'
 
 import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'
@@ -23,6 +24,8 @@ import submitProfile from '../actions/submitProfile'
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
+
+const today = new Date()
 
 class ProfileForm extends Component {
 
@@ -70,6 +73,7 @@ class ProfileForm extends Component {
           </SelectField>
           <DatePicker ref="birthdate"
             locale={this.props.lang}
+            maxDate={today}
             floatingLabelText="Birthdate"
             errorText={birthdate.touched && birthdate.error && <FormattedMessage id="error.birthdate" />}
             {...birthdate}
