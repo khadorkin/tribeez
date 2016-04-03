@@ -1,3 +1,6 @@
+[![Dependencies](https://img.shields.io/david/antoinerousseau/mytribe.svg)](https://david-dm.org/antoinerousseau/mytribe#info=dependencies&view=list)
+[![DevDependencies](https://img.shields.io/david/dev/antoinerousseau/mytribe.svg)](https://david-dm.org/antoinerousseau/mytribe#info=devDependencies&view=list)
+
 # MyTribe app
 
     npm install
