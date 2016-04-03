@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -21,7 +21,7 @@ export default (token) => {
           dispatch({
             type: GET_RESET_FAILURE,
           })
-          dispatch(routeActions.push(routes.LOGIN))
+          dispatch(push(routes.LOGIN))
         } else {
           dispatch({
             type: GET_RESET_SUCCESS,
@@ -33,7 +33,7 @@ export default (token) => {
         dispatch({
           type: GET_RESET_FAILURE,
         })
-        dispatch(routeActions.push(routes.LOGIN))
+        dispatch(push(routes.LOGIN))
       })
   }
 }

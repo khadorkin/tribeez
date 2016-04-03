@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 

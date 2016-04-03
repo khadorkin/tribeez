@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -29,7 +29,7 @@ export default (values, dispatch) => {
             user: response.user,
             tribe: response.tribe,
           })
-          dispatch(routeActions.push(routes.ACTIVITY))
+          dispatch(push(routes.ACTIVITY))
         }
       })
       .catch((error) => {

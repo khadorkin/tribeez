@@ -59,7 +59,6 @@ class DatePickerWrapper extends Component {
     this.setState({
       time: null,
     })
-    this.refs.time.setTime(this.state.time) // TODO: deprecated
     if (this.props.value) {
       const date = new Date(this.props.value)
       date.setHours(0)

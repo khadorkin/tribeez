@@ -7,7 +7,7 @@ import {reducer as formReducer} from 'redux-form'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
-import {syncHistory, routeReducer} from 'react-router-redux'
+import {syncHistoryWithStore, routerMiddleware, routerReducer} from 'react-router-redux'
 import createLogger from 'redux-logger'
 import injectTapEventPlugin from 'react-tap-event-plugin' // TODO: remove when React is fixed
 import {addLocaleData} from 'react-intl'
@@ -64,15 +64,16 @@ import plugins from './utils/formPlugins'
 
 // redux reducers
 import reducers from './reducers'
-reducers.routing = routeReducer
+reducers.routing = routerReducer
 reducers.form = formReducer
   .normalize(normalizers)
   .plugin(plugins)
 
 const rootReducer = combineReducers(reducers)
 
-const reduxRouterMiddleware = syncHistory(browserHistory) // Sync dispatched route actions to the history
-let createStoreWithMiddleware
+const reduxRouterMiddleware = routerMiddleware(browserHistory)
+
+let store
 if (__DEBUG__) {
   const logger = createLogger({
     errorTransformer: (error) => {
@@ -83,16 +84,12 @@ if (__DEBUG__) {
     },
     collapsed: true,
   })
-  createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware, logger)(createStore)
+  store = createStore(rootReducer, applyMiddleware(thunk, reduxRouterMiddleware, logger))
 } else {
-  createStoreWithMiddleware = applyMiddleware(thunk, reduxRouterMiddleware)(createStore)
+  store = createStore(rootReducer, applyMiddleware(thunk, reduxRouterMiddleware))
 }
 
-const store = createStoreWithMiddleware(rootReducer)
-
-if (__DEBUG__) {
-  reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
-}
+const history = syncHistoryWithStore(browserHistory, store)
 
 // update app size
 window.onresize = store.dispatch.bind(store.dispatch, resize())
@@ -123,7 +120,7 @@ const authenticate = (nextState, replaceState, callback) => {
 
 ReactDOM.render((
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={history}>
       <Route path={routes.WELCOME} component={App} onEnter={authenticate}>
         <IndexRoute component={Welcome} />
         <Route path={routes.LOGIN} component={Login} />

@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -22,7 +22,7 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
             error: response.error,
           })
           if (redirectOnAnonymous) {
-            dispatch(routeActions.push(redirectOnAnonymous))
+            dispatch(push(redirectOnAnonymous))
             dispatch({
               type: LOGIN_DESTINATION,
               destination,
@@ -35,7 +35,7 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
             tribe: response.tribe,
           })
           if (redirectOnLoggedIn) {
-            dispatch(routeActions.push(redirectOnLoggedIn))
+            dispatch(push(redirectOnLoggedIn))
           }
         }
       })

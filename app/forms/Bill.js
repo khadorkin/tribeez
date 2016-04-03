@@ -111,7 +111,7 @@ BillForm.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const bill = state.routing.location.state || state.bills.current
+  const bill = ownProps.current || state.bills.current // either from routing state, or from ajax retrieval
   let initialValues
   if (bill) {
     initialValues = {

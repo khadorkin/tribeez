@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -47,7 +47,7 @@ export default (values, dispatch) => {
               message: 'bill_added',
             })
           }
-          dispatch(routeActions.push(routes.BILLS))
+          dispatch(push(routes.BILLS))
         }
       })
       .catch((error) => {

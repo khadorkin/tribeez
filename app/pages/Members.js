@@ -6,6 +6,7 @@ import {Link} from 'react-router'
 
 import Paper from 'material-ui/lib/paper'
 import List from 'material-ui/lib/lists/list'
+import Subheader from 'material-ui/lib/Subheader'
 import ListItem from 'material-ui/lib/lists/list-item'
 import Divider from 'material-ui/lib/divider'
 import IconButton from 'material-ui/lib/icon-button'
@@ -94,7 +95,8 @@ class Members extends Component {
         {
           invites.list.length > 0 &&
             <Paper>
-              <List subheader="Invites send">
+              <List>
+                <Subheader>Invites send</Subheader>
                 {
                   invites.list.map((invite, index, arr) => {
                     const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>

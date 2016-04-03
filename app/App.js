@@ -73,7 +73,7 @@ class App extends Component {
     let iconLeft = null
     let iconRight = null
     if (!this.props.uid) { // i.e. anonymous
-      if (this.props.pathname === '/') {
+      if (this.props.location.pathname === '/') {
         iconLeft = (
           <IconMenu
             iconButtonElement={<IconButton><LangIcon color="white" /></IconButton>}
@@ -102,13 +102,13 @@ class App extends Component {
 
     const nav = this.props.uid && (
       <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={this.handleNavToggle} style={{overflow: 'hidden'}}>
-        <Nav />
+        <Nav module={this.props.location.pathname.split('/')[1]} />
       </LeftNav>
     ) // do not load left nav if not logged in
 
     const dockedUserMenu = this.props.uid && this.props.desktop
 
-    const path_parts = this.props.pathname.substr(1).split('/')
+    const path_parts = this.props.location.pathname.substr(1).split('/')
     if (this.props.params.token) {
       path_parts.pop()
     }
@@ -149,7 +149,7 @@ App.childContextTypes = {
 }
 
 App.propTypes = {
-  pathname: PropTypes.string,
+  location: PropTypes.object.isRequired,
   uid: PropTypes.number,
   telegram_token: PropTypes.string,
   lang: PropTypes.string.isRequired,
@@ -170,7 +170,6 @@ App.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  pathname: state.routing.location.pathname,
   uid: state.member.user.id,
   telegram_token: state.member.user.telegram_token,
   lang: state.app.lang, // here is the app language

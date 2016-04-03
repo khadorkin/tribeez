@@ -1,4 +1,4 @@
-import {UPDATE_LOCATION} from 'react-router-redux'
+import {LOCATION_CHANGE} from 'react-router-redux'
 
 import {actionTypes as formActions} from 'redux-form'
 
@@ -31,7 +31,7 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case UPDATE_LOCATION:
+    case LOCATION_CHANGE:
       return Object.assign({}, state, {
         menu_visible: false,
       })

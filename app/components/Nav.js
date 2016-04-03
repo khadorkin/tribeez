@@ -117,7 +117,7 @@ class Nav extends Component {
 
     const menuItems = menuEntries.map((entry) =>
       <MenuItem key={entry.route}
-        style={this.props.page === entry.route.substr(1) ? style.current : style.default}
+        style={this.props.module === entry.route.substr(1) ? style.current : style.default}
         leftIcon={entry.icon}
         containerElement={<Link to={entry.route} />}
       >
@@ -182,11 +182,14 @@ class Nav extends Component {
 }
 
 Nav.propTypes = {
+  // from parent component:
+  module: PropTypes.string.isRequired,
+  // from redux store:
   menu_tribes: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
-  page: PropTypes.string.isRequired,
   tribe_name: PropTypes.string,
   user: PropTypes.object,
+  // action creators:
   putSwitch: PropTypes.func.isRequired,
   toggleTribes: PropTypes.func.isRequired,
   postLogout: PropTypes.func.isRequired,
@@ -195,7 +198,6 @@ Nav.propTypes = {
 const mapStateToProps = (state) => ({
   menu_tribes: state.app.menu_tribes,
   height: state.app.height,
-  page: state.routing.location.pathname.split('/')[1],
   tribe_name: state.member.tribe.name,
   user: state.member.user,
 })

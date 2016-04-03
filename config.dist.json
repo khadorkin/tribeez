@@ -1,9 +1,9 @@
 {
-  "title": "SortMyTribe",
+  "title": "Tribeez",
   "description": "A simple app to organize your group life",
-  "url": "https://sortmytribe.com",
-  "twitter": "sortmytribe",
-  "api_endpoint": "https://api.sortmytribe.com",
+  "url": "https://tribeez.net",
+  "twitter": "TribeezApp",
+  "api_endpoint": "https://api.tribeez.net",
   "environment": "production",
   "rollbar_token": "xxxxxxxx",
   "recaptcha_site_key": "xxxxxxxx",

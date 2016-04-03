@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -27,7 +27,7 @@ export default () => {
           dispatch({
             type: LOGOUT_SUCCESS,
           })
-          dispatch(routeActions.push(routes.WELCOME))
+          dispatch(push(routes.WELCOME))
           //TODO: destroy the store
           dispatch({
             type: SNACK_MESSAGE,

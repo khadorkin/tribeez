@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -27,7 +27,7 @@ export default (values, dispatch) => {
         } else {
           resolve()
           dispatch(getInvites()) //TODO: replace by a dispatch
-          dispatch(routeActions.push(routes.MEMBERS))
+          dispatch(push(routes.MEMBERS))
           dispatch({
             type: SNACK_MESSAGE,
             message: 'invite_sent',

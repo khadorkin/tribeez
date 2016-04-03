@@ -1,4 +1,4 @@
-import {routeActions} from 'react-router-redux'
+import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
@@ -21,14 +21,14 @@ export default (token) => {
           dispatch({
             type: GET_INVITE_FAILURE,
           })
-          dispatch(routeActions.push(routes.LOGIN))
+          dispatch(push(routes.LOGIN))
         } else {
           dispatch({
             type: GET_INVITE_SUCCESS,
             data: response,
           })
           if (response.redirect) {
-            dispatch(routeActions.push(`/${response.redirect}`))
+            dispatch(push(`/${response.redirect}`))
           }
         }
       })
@@ -36,7 +36,7 @@ export default (token) => {
         dispatch({
           type: GET_INVITE_FAILURE,
         })
-        dispatch(routeActions.push(routes.LOGIN))
+        dispatch(push(routes.LOGIN))
       })
   }
 }

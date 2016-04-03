@@ -9,7 +9,7 @@ class Bill extends Component {
   render() {
     return (
       <Card>
-        <BillForm id={this.props.params.id ? Number(this.props.params.id) : null} />
+        <BillForm id={this.props.params.id ? Number(this.props.params.id) : null} current={this.props.location.state} />
       </Card>
     )
   }
@@ -19,6 +19,7 @@ class Bill extends Component {
 Bill.propTypes = {
   // from react-router:
   params: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default Bill
