@@ -15,7 +15,7 @@ import {
 import lang from '../utils/lang'
 import messages from '../messages' // TODO
 
-const defaultLang = lang.getDefault()
+const defaultLang = lang.get()
 
 const initialState = {
   menu_visible: false,
@@ -50,18 +50,20 @@ export default (state = initialState, action = null) => {
         height: action.height,
       })
     case GET_MEMBER_SUCCESS:
+      lang.set(action.user.lang)
       return Object.assign({}, state, {
         lang: action.user.lang,
         messages: messages[action.user.lang],
       })
     case UPDATE_LANG:
-      lang.setDefault(action.lang)
+      lang.set(action.lang)
       return Object.assign({}, state, {
         lang: action.lang,
         messages: messages[action.lang],
       })
     case formActions.CHANGE:
       if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {
+        lang.set(action.value)
         return Object.assign({}, state, {
           lang: action.value,
           messages: messages[action.value],

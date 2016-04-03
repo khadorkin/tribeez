@@ -18,11 +18,11 @@ import css from './SpeedDial.css'
 const color = 'rgb(95,193,178)'
 
 const actions = [
-  {route: routes.POLLS_NEW, icon: <PollIcon color={color} />},
-  {route: routes.NOTES_NEW, icon: <PasteIcon color={color} />},
-  {route: routes.TASKS_NEW, icon: <CheckIcon color={color} />},
-  {route: routes.EVENTS_NEW, icon: <EventIcon color={color} />},
-  {route: routes.BILLS_NEW, icon: <CartIcon color={color} />},
+  {route: routes.POLLS_NEW, icon: <PollIcon />},
+  {route: routes.NOTES_NEW, icon: <PasteIcon />},
+  {route: routes.TASKS_NEW, icon: <CheckIcon />},
+  {route: routes.EVENTS_NEW, icon: <EventIcon />},
+  {route: routes.BILLS_NEW, icon: <CartIcon />},
 ]
 
 class SpeedDial extends Component {
@@ -52,7 +52,7 @@ class SpeedDial extends Component {
             <FormattedMessage id={id} />
           </div>
           <div className={css.button} style={{transitionDelay: delay + 'ms'}}>
-            <FloatingActionButton backgroundColor="white" containerElement={link}>
+            <FloatingActionButton backgroundColor="white" iconStyle={{fill: color}} containerElement={link}>
               {action.icon}
             </FloatingActionButton>
           </div>

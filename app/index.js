@@ -93,9 +93,6 @@ if (__DEBUG__) {
   reduxRouterMiddleware.listenForReplays(store) // Required for replaying actions from devtools to work
 }
 
-// update app lang
-store.dispatch(updateLang(lang.getDefault()))
-
 // update app size
 window.onresize = store.dispatch.bind(store.dispatch, resize())
 window.onresize()

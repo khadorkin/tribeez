@@ -12,7 +12,7 @@ import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DatePicker from './fields/Date'
 
-import {list as langs} from '../resources/langs'
+import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 

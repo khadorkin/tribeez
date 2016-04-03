@@ -14,7 +14,7 @@ import CityField from './fields/City'
 import Captcha from './fields/Captcha'
 
 import currencies from '../resources/currencies'
-import {list as langs} from '../resources/langs'
+import langs from '../resources/langs'
 import {TRIBE_TYPES} from '../constants/product'
 
 import styles from '../constants/styles'

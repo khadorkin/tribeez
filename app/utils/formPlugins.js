@@ -21,12 +21,12 @@ const plugin = (state, action) => {
       }
     case formActions.DESTROY:
       return {
-        lang: {value: lang.getDefault()},
+        lang: {value: lang.get()},
       }
     case formActions.INITIALIZE:
       return {
         ...state,
-        lang: {value: lang.getDefault()},
+        lang: {value: lang.get()},
       }
     default:
       return state

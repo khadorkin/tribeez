@@ -22,9 +22,9 @@ import Nav from './components/Nav'
 
 import {toggleMenu, closeSnack, updateLang} from './actions/app'
 
-import {list as langsList, map as langsMap} from './resources/langs'
+import langs from './resources/langs'
 
-const langItems = langsList.map((item) =>
+const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 

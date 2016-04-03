@@ -1,7 +1,9 @@
-import {list as langs} from '../resources/langs'
+import langs from '../resources/langs'
+
+import moment from 'moment'
 
 export default {
-  getDefault: () => {
+  get: () => {
     let lang
     if (window.localStorage) {
       lang = localStorage.getItem('lang')
@@ -14,7 +16,8 @@ export default {
     }
     return lang
   },
-  setDefault: (lang) => {
+  set: (lang) => {
+    moment.locale(lang)
     if (window.localStorage) {
       localStorage.setItem('lang', lang)
     }
