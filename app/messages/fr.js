@@ -42,6 +42,16 @@ const fr = {
   'entry.user.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
   'entry.user.new.infos': 'Invité-e par {inviter}',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}', // http://formatjs.io/guides/message-syntax/#plural-format
+
+  // Calendar
+  'calendar.allDay': 'Journée',
+  'calendar.previous': 'Prédécent',
+  'calendar.next': 'Suivant',
+  'calendar.today': 'Aujourd’hui',
+  'calendar.month': 'Mois',
+  'calendar.week': 'Semaine',
+  'calendar.day': 'Jour',
+  'calendar.agenda': 'Agenda',
 }
 
 export default {...en, ...fr} // to have English as a fallback

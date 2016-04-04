@@ -111,4 +111,14 @@ export default {
   // Bills
   'bill.mypart': 'Your share is {amount}',
   'bill.nopart': 'You are not concerned',
+
+  // Calendar
+  'calendar.allDay': 'All day',
+  'calendar.previous': 'Previous',
+  'calendar.next': 'Next',
+  'calendar.today': 'Today',
+  'calendar.month': 'Month',
+  'calendar.week': 'Week',
+  'calendar.day': 'Day',
+  'calendar.agenda': 'Agenda',
 }

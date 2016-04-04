@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedDate, FormattedTime} from 'react-intl'
+import {bindActionCreators, compose} from 'redux'
+import {FormattedMessage, FormattedDate, FormattedTime, injectIntl, intlShape} from 'react-intl'
 import {Link} from 'react-router'
 
 import BigCalendar from 'react-big-calendar'
@@ -38,6 +38,8 @@ BigCalendar.setLocalizer(
 const startAccessor = (event) => new Date(event.start)
 const endAccessor = (event) => (event.end ? new Date(event.end) : new Date(event.start))
 
+const eventPropGetter = (event, start, end, isSelected) => ({style: {backgroundColor: colors.deepOrange300}})
+
 const infos = [
   {id: 'description', icon: <DescIcon />},
   {id: 'start', icon: <StartIcon />, date: true},
@@ -51,7 +53,6 @@ class Events extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      current: new Date(),
       event: {},
       openDelete: false,
     }
@@ -100,7 +101,7 @@ class Events extends Component {
   }
 
   render() {
-    const {events} = this.props
+    const {events, intl: {formatMessage}} = this.props
     const {event} = this.state
 
     const detailsActions = [
@@ -126,18 +127,33 @@ class Events extends Component {
       />,
     ]
 
+    const messages = {
+      allDay: formatMessage({id: 'calendar.allDay'}),
+      previous: formatMessage({id: 'calendar.previous'}),
+      next: formatMessage({id: 'calendar.next'}),
+      today: formatMessage({id: 'calendar.today'}),
+      month: formatMessage({id: 'calendar.month'}),
+      week: formatMessage({id: 'calendar.week'}),
+      day: formatMessage({id: 'calendar.day'}),
+      agenda: formatMessage({id: 'calendar.agenda'}),
+    }
+
+    const views = ['month', 'week', 'agenda']
+
     return (
       <AsyncContent onLoad={this.handleLoad} error={events.error}>
         <BigCalendar
-          style={{height: '500px', backgroundColor: 'white', padding: 16}}
+          style={{height: '550px', backgroundColor: 'white', padding: 16}}
           events={events.list}
-          defaultDate={this.state.current}
+          popup={true}
+          views={views}
           culture={this.props.lang}
           titleAccessor="name"
           startAccessor={startAccessor}
           endAccessor={endAccessor}
           onSelectEvent={this.handleSelectEvent}
-          //messages={messages}
+          messages={messages}
+          eventPropGetter={eventPropGetter}
         />
 
         <Dialog title={event.name}
@@ -190,6 +206,7 @@ class Events extends Component {
 }
 
 Events.propTypes = {
+  intl: intlShape.isRequired,
   // redux state:
   lang: PropTypes.string.isRequired,
   events: PropTypes.object,
@@ -208,4 +225,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteEvent,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Events)
+export default compose(
+  injectIntl,
+  connect(mapStateToProps, mapDispatchToProps),
+)(Events)
