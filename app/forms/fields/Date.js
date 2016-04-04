@@ -26,10 +26,9 @@ class DatePickerWrapper extends Component {
     this.formatDate = this.formatDate.bind(this)
   }
 
-  // TODO: this does not get exposed to parent component due to the intl wrapper
-  // focus() {
-  //   ReactDOM.findDOMNode(this.refs.field.refs.input).focus()
-  // }
+  focus() {
+    ReactDOM.findDOMNode(this.refs.field.refs.input).focus()
+  }
 
   handleDateChange(event, date) {
     if (this.state.time) {
@@ -136,4 +135,4 @@ DatePickerWrapper.propTypes = {
   timeLabel: PropTypes.string,
 }
 
-export default injectIntl(DatePickerWrapper)
+export default injectIntl(DatePickerWrapper, {withRef: true})

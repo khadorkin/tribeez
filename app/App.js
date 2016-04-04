@@ -101,7 +101,13 @@ class App extends Component {
     }
 
     const nav = this.props.uid && (
-      <LeftNav open={this.props.menu_visible || this.props.desktop} docked={this.props.desktop} onRequestChange={this.handleNavToggle} style={{overflow: 'hidden'}}>
+      <LeftNav
+        open={this.props.menu_visible || this.props.desktop}
+        docked={this.props.desktop}
+        onRequestChange={this.handleNavToggle}
+        style={{overflow: 'hidden'}}
+        overlayStyle={{cursor: 'w-resize'}}
+      >
         <Nav module={this.props.location.pathname.split('/')[1]} />
       </LeftNav>
     ) // do not load left nav if not logged in

@@ -34,4 +34,5 @@ export default {
   invite: validator(['email', 'lang']),
   reset: validator(['password', 'password2']),
   bill: validator(['name', 'payer', 'amount', 'parts'], ['description']),
+  event: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
 }

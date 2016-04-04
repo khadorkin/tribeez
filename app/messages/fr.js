@@ -14,8 +14,10 @@ const fr = {
   members_new: 'Nouveau membre',
   bills: 'Factures',
   bills_new: 'Nouvelle facture',
+  bills_edit: 'Modifier la facture',
   events: 'Évènements',
   events_new: 'Nouvel évènement',
+  events_edit: 'Modifier l’évènement',
   tasks: 'Tâches',
   tasks_new: 'Nouvelle tâche',
   notes: 'Notes',
@@ -24,6 +26,9 @@ const fr = {
   polls_new: 'Nouveau sondage',
   tribe: 'Tribu',
   tribe_new: 'Nouvelle tribu',
+
+  // dates
+  datetime: 'Le {date, date, long} à {date, time, short}',
 
   // login/register forms
   invited_you: '{name} vous a invité',

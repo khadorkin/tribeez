@@ -20,6 +20,7 @@ export default {
   BILLS_EDIT: '/bills/:id',
   EVENTS: '/events',
   EVENTS_NEW: '/events/new',
+  EVENTS_EDIT: '/events/:id',
   TASKS: '/tasks',
   TASKS_NEW: '/tasks/new',
   NOTES: '/notes',

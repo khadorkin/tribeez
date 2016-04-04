@@ -97,14 +97,15 @@ class BillForm extends Component {
 BillForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
+  current: PropTypes.object,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   // from redux state:
-  initialValues: PropTypes.object,
   users: PropTypes.array,
+  initialValues: PropTypes.object,
   bill: PropTypes.object,
   // action creators:
   getBill: PropTypes.func.isRequired,

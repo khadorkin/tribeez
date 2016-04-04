@@ -17,6 +17,7 @@ export default {
   bills_edit: 'Edit bill',
   events: 'Events',
   events_new: 'New event',
+  events_edit: 'Edit event',
   tasks: 'Tasks',
   tasks_new: 'New task',
   notes: 'Notes',
@@ -25,6 +26,9 @@ export default {
   polls_new: 'New poll',
   tribe: 'Tribe',
   tribe_new: 'New tribe',
+
+  // dates
+  datetime: 'On {date, date, long} at {date, time, short}',
 
   // actions
   cancel: 'Cancel',
@@ -45,6 +49,7 @@ export default {
   'snack.note_deleted': 'Note deleted',
   'snack.event_created': 'Event created',
   'snack.event_updated': 'Event updated',
+  'snack.event_deleted': 'Event deleted',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 

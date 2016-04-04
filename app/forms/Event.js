@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
+import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
 import CardText from 'material-ui/lib/card/card-text'
@@ -13,6 +14,7 @@ import styles from '../constants/styles'
 
 import validator from '../utils/formValidator'
 
+import getEvent from '../actions/getEvent'
 import submitEvent from '../actions/submitEvent'
 
 const now = Date.now()
@@ -24,12 +26,23 @@ class EventForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentWillMount() {
+    if (!this.props.event && this.props.id) {
+      this.props.getEvent(this.props.id)
+    }
+  }
+
   handleSubmit(event) {
     this.props.handleSubmit(submitEvent)(event)
       .catch((errors) => {
         const field = Object.keys(errors)[0]
         if (field !== '_error') {
-          this.refs[field].focus()
+          const component = this.refs[field]
+          if (component.getWrappedInstance) {
+            component.getWrappedInstance().focus()
+          } else {
+            component.focus()
+          }
         }
       })
   }
@@ -47,6 +60,7 @@ class EventForm extends Component {
             {...name}
           />
           <DatePicker ref="start"
+            required={true}
             locale={this.props.lang}
             time={true}
             floatingLabelText="Start date"
@@ -62,9 +76,25 @@ class EventForm extends Component {
             errorText={end.touched && end.error && <FormattedMessage id="error.end" />}
             {...end}
           />
+          <TextField ref="location"
+            floatingLabelText="Location (optional)"
+            errorText={location.touched && location.error && <FormattedMessage id="error.location" />}
+            {...location}
+          />
+          <TextField ref="description"
+            multiLine={true}
+            floatingLabelText="Description (optional)"
+            errorText={description.touched && description.error && <FormattedMessage id="error.description" />}
+            {...description}
+          />
+          <TextField ref="url"
+            floatingLabelText="URL (optional)"
+            errorText={url.touched && url.error && <FormattedMessage id="error.url" />}
+            {...url}
+          />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Create event" type="submit" disabled={submitting} />
+          <RaisedButton label={this.props.event ? 'Update event' : 'Add event'} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>
@@ -75,26 +105,52 @@ class EventForm extends Component {
 }
 
 EventForm.propTypes = {
+  // from parent component:
+  id: PropTypes.number,
+  current: PropTypes.object,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   // from redux state:
-  initialValues: PropTypes.object,
   lang: PropTypes.string.isRequired,
+  initialValues: PropTypes.object,
+  event: PropTypes.object,
+  // action creators:
+  getEvent: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {
-    start: now,
-  },
-  lang: state.app.lang,
-})
+const mapStateToProps = (state, ownProps) => {
+  const event = ownProps.current || state.events.current // either from routing state, or from ajax retrieval
+  let initialValues
+  if (event) {
+    initialValues = {
+      id: event.id,
+      name: event.name,
+      description: event.description,
+      start: event.start,
+      end: event.end,
+      location: event.location,
+      url: event.url,
+    }
+  } else {
+    initialValues = {}
+  }
+  return {
+    lang: state.app.lang,
+    initialValues,
+    event,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getEvent,
+}, dispatch)
 
 export default reduxForm({
   form: 'event',
   fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url'],
   returnRejectedSubmitPromise: true,
   validate: validator.event,
-}, mapStateToProps)(EventForm)
+}, mapStateToProps, mapDispatchToProps)(EventForm)

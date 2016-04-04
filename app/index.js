@@ -139,6 +139,7 @@ ReactDOM.render((
         <Route path={routes.BILLS_EDIT} component={Bill} />
         <Route path={routes.EVENTS} component={Events} />
         <Route path={routes.EVENTS_NEW} component={Event} />
+        <Route path={routes.EVENTS_EDIT} component={Event} />
         <Route path={routes.TASKS} component={Tasks} />
         <Route path={routes.NOTES} component={Notes} />
         <Route path={routes.POLLS} component={Polls} />

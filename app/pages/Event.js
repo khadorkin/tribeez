@@ -9,11 +9,17 @@ class Event extends Component {
   render() {
     return (
       <Card>
-        <EventForm />
+        <EventForm id={this.props.params.id ? Number(this.props.params.id) : null} current={this.props.location.state} />
       </Card>
     )
   }
 
+}
+
+Event.propTypes = {
+  // from react-router:
+  params: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 }
 
 export default Event

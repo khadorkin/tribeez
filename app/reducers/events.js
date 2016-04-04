@@ -2,7 +2,9 @@ import {
   GET_EVENTS_REQUEST,
   GET_EVENTS_SUCCESS,
   GET_EVENTS_FAILURE,
+  GET_EVENT_SUCCESS,
   NEW_EVENT_SUCCESS,
+  PUT_EVENT_SUCCESS,
   DELETE_EVENT_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -12,6 +14,7 @@ const initialState = {
   list: [],
   error: null,
   got: false, // true = we got the initial list through a request
+  current: null, // current event being edited
 }
 
 export default (state = initialState, action = null) => {
@@ -25,12 +28,7 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         loading: false,
         error: null,
-        list: action.list.map((event) => ({
-          start: new Date(event.start),
-          end: new Date(event.end),
-          title: event.name,
-          desc: event.description,
-        })),
+        list: action.list,
         got: true,
       })
     case GET_EVENTS_FAILURE:
@@ -38,9 +36,21 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       })
+    case GET_EVENT_SUCCESS:
+      return {...state, current: action.data}
+
     case NEW_EVENT_SUCCESS: {
       const list = state.list.slice()
-      list.push(action.data)
+      list.push(action.event)
+      return {...state, list}
+    }
+    case PUT_EVENT_SUCCESS: {
+      const list = state.list.map((event) => {
+        if (event.id === action.event.id) {
+          return action.event
+        }
+        return event
+      })
       return {...state, list}
     }
     case DELETE_EVENT_SUCCESS: {
