@@ -4,7 +4,6 @@
   "url": "https://tribeez.net",
   "twitter": "TribeezApp",
   "api_endpoint": "https://api.tribeez.net",
-  "environment": "production",
   "rollbar_token": "xxxxxxxx",
   "recaptcha_site_key": "xxxxxxxx",
   "google_api_key": "xxxxxxxx",

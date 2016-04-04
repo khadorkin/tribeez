@@ -14,7 +14,7 @@ try {
 }
 
 const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 3001
-const ENV = process.env.NODE_ENV || config.environment || 'development'
+const environment = process.env.NODE_ENV || 'development'
 
 const path = require('path')
 const express = require('express')
@@ -26,7 +26,7 @@ const now = () => chalk.gray(moment().format('YYYY-MM-DD HH:mm:ss.SSS'))
 
 const rollbar = require('rollbar')
 if (config.rollbar_token) {
-  rollbar.init(config.rollbar_token, {environment: ENV})
+  rollbar.init(config.rollbar_token, {environment})
   rollbar.handleUncaughtExceptions()
 } else {
   console.log(now(), chalk.yellow('Rollbar has not been initialized due to missing Project Access Token in config.'))
@@ -35,12 +35,18 @@ if (config.rollbar_token) {
 const app = express()
 app.use(compression())
 
+if (environment === 'development') {
+  app.get('*', (req, res, next) => {
+    const ip = req.headers['cf-connecting-ip'] || req.ip
+    const country = req.headers['cf-ipcountry']
+    console.log(now(), chalk.green(req.method + ' ' + req.url), chalk.gray('from ' + ip + (country ? ' (' + country + ')' : '')))
+    next()
+  })
+}
+
 app.use(express.static(path.join(__dirname, '/dist'), {index: false}))
 
 app.get('*', (req, res) => {
-  const ip = req.headers['cf-connecting-ip'] || req.ip
-  const country = req.headers['cf-ipcountry']
-  console.log(now(), chalk.green(req.method + ' ' + req.url), chalk.gray('from ' + ip + (country ? ' (' + country + ')' : '')))
   res.sendFile(path.join(__dirname, 'dist/index.html'))
 })
 
@@ -56,5 +62,5 @@ app.use((err, req, res, next) => {
 })
 
 const server = app.listen(PORT, () => {
-  console.log(now(), chalk.blue('Listening on port ' + server.address().port))
+  console.log(now(), chalk.blue('Listening on port ' + server.address().port + ' for ' + environment))
 })
