@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 import {Link} from 'react-router'
@@ -14,7 +13,7 @@ import TextField from './fields/Text'
 import styles from '../constants/styles'
 import routes from '../constants/routes'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitLogin from '../actions/submitLogin'
 
@@ -27,12 +26,7 @@ class LoginForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field && field !== '_error') {
-          ReactDOM.findDOMNode(this.refs[field].refs.input).focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

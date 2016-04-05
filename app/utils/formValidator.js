@@ -35,6 +35,21 @@ export default {
   tribe: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
   invite: validator(['email', 'lang']),
   reset: validator(['password', 'password2']),
-  bill: validator(['name', 'payer', 'amount', 'method', 'parts'], ['description']),
+  bill: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
   event: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
+}
+
+export const focus = (errors, refs) => {
+  const field = Object.keys(errors)[0]
+  if (field !== '_error') {
+    const component = refs[field]
+    if (component.getWrappedInstance) {
+      component.getWrappedInstance().focus()
+    } else {
+      component.focus()
+    }
+  } else {
+    // go to bottom, where the form error is
+    window.scrollTo(0, document.body.scrollHeight)
+  }
 }

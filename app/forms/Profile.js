@@ -17,7 +17,7 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitProfile from '../actions/submitProfile'
 
@@ -36,12 +36,7 @@ class ProfileForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitProfile)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

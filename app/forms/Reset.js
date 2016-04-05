@@ -11,7 +11,7 @@ import TextField from './fields/Text'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitReset from '../actions/submitReset'
 
@@ -30,12 +30,7 @@ class ResetForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitReset)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

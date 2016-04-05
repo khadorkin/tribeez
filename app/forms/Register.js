@@ -19,7 +19,7 @@ import {TRIBE_TYPES} from '../constants/product'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitRegister from '../actions/submitRegister'
 
@@ -54,10 +54,7 @@ class RegisterForm extends Component {
           this.refs.captcha.reset()
           delete errors._backend
         }
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
+        focus(errors, this.refs)
       })
   }
 

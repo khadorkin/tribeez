@@ -18,7 +18,8 @@ class DatePickerWrapper extends Component {
     this.state = {
       time: null,
     }
-    //this.focus = this.focus.bind(this)
+    this.ref = this.ref.bind(this)
+    this.focus = this.focus.bind(this)
     this.handleDateChange = this.handleDateChange.bind(this)
     this.handleTimeChange = this.handleTimeChange.bind(this)
     this.handleClearDate = this.handleClearDate.bind(this)
@@ -26,8 +27,12 @@ class DatePickerWrapper extends Component {
     this.formatDate = this.formatDate.bind(this)
   }
 
+  ref(element) {
+    this.element = element
+  }
+
   focus() {
-    ReactDOM.findDOMNode(this.refs.field.refs.input).focus()
+    this.element.refs.input.focus()
   }
 
   handleDateChange(event, date) {
@@ -67,11 +72,11 @@ class DatePickerWrapper extends Component {
   }
 
   formatDate(date) {
-    return isNaN(date) ? '' : this.props.intl.formatDate(date, {day: 'numeric', month: 'long', year: 'numeric'})
+    return this.props.intl.formatDate(date, {day: 'numeric', month: 'long', year: 'numeric'})
   }
 
   render() {
-    const {onChange, onBlur, onFocus, value, ...other} = this.props // removing controlling props
+    const {value} = this.props
 
     const localeData = moment.localeData()
 
@@ -81,17 +86,20 @@ class DatePickerWrapper extends Component {
     return (
       <div style={containerStyle}>
         <div style={itemStyle}>
-          <DatePicker ref="field"
+          <DatePicker ref={this.ref}
             DateTimeFormat={Intl.DateTimeFormat}
             style={styles.field}
             textFieldStyle={styles.field}
             cancelLabel={<FormattedMessage id="cancel" />}
-            {...other}
-            value={value ? new Date(value) : null}
             autoOk={true}
             firstDayOfWeek={localeData.firstDayOfWeek()}
             formatDate={this.formatDate}
+            {...this.props}
+            value={value ? new Date(value) : null}
             onChange={this.handleDateChange}
+            onBlur={null}
+            onFocus={null}
+            defaultValue={null}
           />
           <IconButton onTouchTap={this.handleClearDate} style={{float: 'right', marginTop: '-57px', marginRight: '-9px'}}>
             <ClearIcon color={colors.grey300} />
@@ -127,8 +135,6 @@ class DatePickerWrapper extends Component {
 DatePickerWrapper.propTypes = {
   // from parent:
   onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-  onFocus: PropTypes.func.isRequired,
   value: PropTypes.number,
   intl: intlShape.isRequired,
   time: PropTypes.bool,

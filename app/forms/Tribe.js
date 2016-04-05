@@ -16,7 +16,7 @@ import {TRIBE_TYPES} from '../constants/product'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitTribe from '../actions/submitTribe'
 
@@ -36,12 +36,7 @@ class TribeForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitTribe)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

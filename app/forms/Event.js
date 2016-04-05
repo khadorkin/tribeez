@@ -12,7 +12,7 @@ import DatePicker from './fields/Date'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import getEvent from '../actions/getEvent'
 import submitEvent from '../actions/submitEvent'
@@ -34,17 +34,7 @@ class EventForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitEvent)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          const component = this.refs[field]
-          if (component.getWrappedInstance) {
-            component.getWrappedInstance().focus()
-          } else {
-            component.focus()
-          }
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

@@ -11,14 +11,17 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import TextField from './fields/Text'
 import MoneyField from './fields/Money'
 import SelectField from './fields/Select'
+import DatePicker from './fields/Date'
 import Part from './deep/Part'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import getBill from '../actions/getBill'
 import submitBill from '../actions/submitBill'
+
+const today = new Date()
 
 class BillForm extends Component {
 
@@ -36,12 +39,7 @@ class BillForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitBill)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   handleMethodChange(value) {
@@ -61,9 +59,9 @@ class BillForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, payer, amount, method, parts}, error, submitting} = this.props
+    const {fields: {name, description, payer, paid, amount, method, parts}, error, submitting, users, currency} = this.props
 
-    const userItems = this.props.users.map((user) =>
+    const userItems = users.map((user) =>
       <MenuItem value={user.id} key={user.id} primaryText={user.name} />
     )
 
@@ -89,9 +87,18 @@ class BillForm extends Component {
           >
             {userItems}
           </SelectField>
+          <DatePicker ref="paid"
+            required={true}
+            locale={this.props.lang}
+            maxDate={today}
+            floatingLabelText="When was it?"
+            errorText={paid.touched && paid.error && <FormattedMessage id="error.paid" />}
+            {...paid}
+          />
           <MoneyField ref="amount"
             floatingLabelText="Total amount"
             errorText={amount.touched && amount.error && <FormattedMessage id="error.amount" />}
+            currency={currency}
             {...amount}
           />
           <SelectField ref="method"
@@ -109,7 +116,8 @@ class BillForm extends Component {
               <Part key={index}
                 method={method.value}
                 amount={part.amount}
-                user={this.props.users.find((u) => (u.id === part.user_id.value))}
+                currency={currency}
+                user={users.find((u) => (u.id === part.user_id.value))}
               />
             )
           }
@@ -136,6 +144,8 @@ BillForm.propTypes = {
   submitting: PropTypes.bool,
   // from redux state:
   users: PropTypes.array,
+  currency: PropTypes.string,
+  lang: PropTypes.string,
   initialValues: PropTypes.object,
   bill: PropTypes.object,
   // action creators:
@@ -150,6 +160,7 @@ const mapStateToProps = (state, ownProps) => {
       id: bill.id,
       name: bill.name,
       payer: bill.payer_id,
+      paid: bill.paid,
       amount: bill.amount,
       method: 'amounts',
       description: bill.description,
@@ -158,12 +169,15 @@ const mapStateToProps = (state, ownProps) => {
   } else {
     initialValues = {
       payer: state.member.user.id,
+      paid: today.getTime(),
       method: 'shares',
       parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),
     }
   }
   return {
     users: state.member.tribe.users,
+    currency: state.member.tribe.currency,
+    lang: state.app.lang,
     initialValues,
     bill,
   }
@@ -175,7 +189,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 export default reduxForm({
   form: 'bill',
-  fields: ['id', 'name', 'payer', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
+  fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
   returnRejectedSubmitPromise: true,
   validate: validator.bill,
 }, mapStateToProps, mapDispatchToProps)(BillForm)

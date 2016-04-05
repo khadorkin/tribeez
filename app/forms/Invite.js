@@ -14,7 +14,7 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitInvite from '../actions/submitInvite'
 
@@ -37,12 +37,7 @@ class InviteForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitInvite)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

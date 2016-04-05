@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
@@ -12,7 +11,7 @@ import TextField from './fields/Text'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitPassword from '../actions/submitPassword'
 
@@ -25,12 +24,7 @@ class PasswordForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitPassword)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field && field !== '_error') {
-          ReactDOM.findDOMNode(this.refs[field].refs.input).focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {

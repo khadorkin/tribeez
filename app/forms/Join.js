@@ -15,7 +15,7 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
-import validator from '../utils/formValidator'
+import validator, {focus} from '../utils/formValidator'
 
 import submitJoin from '../actions/submitJoin'
 
@@ -38,12 +38,7 @@ class RegisterForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitJoin)(event)
-      .catch((errors) => {
-        const field = Object.keys(errors)[0]
-        if (field !== '_error') {
-          this.refs[field].focus()
-        }
-      })
+      .catch((errors) => focus(errors, this.refs))
   }
 
   render() {
