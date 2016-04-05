@@ -9,16 +9,22 @@ class TextFieldWrapper extends Component {
 
   constructor(props) {
     super(props)
+    this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
   }
 
+  ref(element) {
+    this.element = element
+  }
+
   focus() {
-    ReactDOM.findDOMNode(this.refs.field.refs.input).focus()
+    this.element.focus()
   }
 
   render() {
     return (
-      <TextField ref="field"
+      <TextField
+        ref={this.ref}
         style={styles.field}
         {...this.props}
       />

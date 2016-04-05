@@ -15,8 +15,10 @@ const validator = (required, optional = []) => {
           curr.amount = Number(curr.amount)
           return curr.amount + prev
         }, 0)
-        if (values.amount !== total) { //values.amount is casted in normalizer
-          errors.amount = 'mismatch'
+        if (values.method === 'shares') {
+          if (total <= 0) {
+            errors._error = 'no_parts'
+          }
         }
       }
     })
@@ -33,6 +35,6 @@ export default {
   tribe: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
   invite: validator(['email', 'lang']),
   reset: validator(['password', 'password2']),
-  bill: validator(['name', 'payer', 'amount', 'parts'], ['description']),
+  bill: validator(['name', 'payer', 'amount', 'method', 'parts'], ['description']),
   event: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
 }

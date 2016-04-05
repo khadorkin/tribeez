@@ -25,6 +25,7 @@ class BillForm extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleMethodChange = this.handleMethodChange.bind(this)
   }
 
   componentWillMount() {
@@ -43,8 +44,24 @@ class BillForm extends Component {
       })
   }
 
+  handleMethodChange(value) {
+    if (value === this.props.fields.method.value) {
+      return // no change => no reset
+    }
+    if (value === 'shares') {
+      this.props.fields.parts.forEach((part) => {
+        part.amount.onChange(1)
+      })
+    } else {
+      this.props.fields.parts.forEach((part) => {
+        part.amount.onChange('')
+      })
+    }
+    this.props.fields.method.onChange(value)
+  }
+
   render() {
-    const {fields: {name, payer, amount, description, parts}, error, submitting} = this.props
+    const {fields: {name, description, payer, amount, method, parts}, error, submitting} = this.props
 
     const userItems = this.props.users.map((user) =>
       <MenuItem value={user.id} key={user.id} primaryText={user.name} />
@@ -74,19 +91,33 @@ class BillForm extends Component {
           </SelectField>
           <MoneyField ref="amount"
             floatingLabelText="Total amount"
-            errorText={amount.touched && amount.error && <FormattedMessage id={'error.amount.' + amount.error} />}
+            errorText={amount.touched && amount.error && <FormattedMessage id="error.amount" />}
             {...amount}
           />
+          <SelectField ref="method"
+            floatingLabelText="Sharing method"
+            errorText={method.touched && method.error && <FormattedMessage id="error.method" />}
+            {...method}
+            onChange={this.handleMethodChange}
+          >
+            <MenuItem value="shares" primaryText="Shares" />
+            <MenuItem value="amounts" primaryText="Amounts" />
+            {/* TODO: add items named "Category: _____" */}
+          </SelectField>
           {
             parts.map((part, index) =>
-              <Part key={index} amount={part.amount} user={this.props.users.find((u) => (u.id === part.user_id.value))} />
+              <Part key={index}
+                method={method.value}
+                amount={part.amount}
+                user={this.props.users.find((u) => (u.id === part.user_id.value))}
+              />
             )
           }
         </CardText>
         <CardActions style={styles.actions}>
           <RaisedButton label={this.props.bill ? 'Update bill' : 'Add bill'} type="submit" disabled={submitting} />
           <p className="error">
-            {error && <FormattedMessage id={error} />}
+            {error && <FormattedMessage id={'error.' + error} />}
           </p>
         </CardActions>
       </form>
@@ -120,13 +151,15 @@ const mapStateToProps = (state, ownProps) => {
       name: bill.name,
       payer: bill.payer_id,
       amount: bill.amount,
+      method: 'amounts',
       description: bill.description,
       parts: bill.parts,
     }
   } else {
     initialValues = {
       payer: state.member.user.id,
-      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: ''})),
+      method: 'shares',
+      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),
     }
   }
   return {
@@ -142,7 +175,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 export default reduxForm({
   form: 'bill',
-  fields: ['id', 'name', 'payer', 'amount', 'description', 'parts[].user_id', 'parts[].amount'],
+  fields: ['id', 'name', 'payer', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
   returnRejectedSubmitPromise: true,
   validate: validator.bill,
 }, mapStateToProps, mapDispatchToProps)(BillForm)

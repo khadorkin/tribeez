@@ -44,6 +44,13 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
           type: GET_MEMBER_FAILURE,
         })
         //TODO: show an error
+        if (redirectOnAnonymous) {
+          dispatch(push(redirectOnAnonymous))
+          dispatch({
+            type: LOGIN_DESTINATION,
+            destination,
+          })
+        }
       })
   }
 }

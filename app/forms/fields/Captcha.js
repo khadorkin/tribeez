@@ -9,6 +9,7 @@ class Captcha extends Component {
 
   constructor(props) {
     super(props)
+    this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
   }
 
@@ -33,8 +34,12 @@ class Captcha extends Component {
     }
   }
 
+  ref(element) {
+    this.element = element
+  }
+
   focus() {
-    ReactDOM.findDOMNode(this.refs.field).scrollIntoView()
+    this.element.scrollIntoView()
   }
 
   reset() {
@@ -44,7 +49,7 @@ class Captcha extends Component {
 
   render() {
     return (
-      <div ref="field" style={{display: 'inline-block', marginBottom: '30px'}}>
+      <div ref={this.ref} style={{display: 'inline-block', marginBottom: '30px'}}>
         <div id="captcha" style={{minHeight: '80px'}} ref="input"></div>
         <p className="error">{this.props.errorText}</p>
       </div>

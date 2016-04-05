@@ -40,6 +40,7 @@ export default () => {
           type: LOGOUT_FAILURE,
           error: 'other',
         })
+        //TODO: show error
       })
   }
 }

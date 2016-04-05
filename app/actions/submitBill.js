@@ -18,7 +18,7 @@ export default (values, dispatch) => {
       .then((response) => {
         if (response.error) {
           if (response.error.parts) {
-            reject({_error: 'error.no_parts'})
+            reject({_error: 'no_parts'})
           } else {
             if (typeof response.error === 'string') {
               response.error = {_error: response.error}
@@ -51,7 +51,7 @@ export default (values, dispatch) => {
         }
       })
       .catch((error) => {
-        reject({_error: error.toString()})
+        reject({_error: 'other'})
       })
   })
 }

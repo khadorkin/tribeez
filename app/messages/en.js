@@ -80,9 +80,9 @@ export default {
   'error.payer': 'Please indicate who paid this',
   'error.name': 'Invalid name',
   'error.description': 'Invalid description',
-  'error.amount.invalid': 'Invalid amount',
-  'error.amount.mismatch': 'Must match the total of the shares',
-  'error.no_parts': 'Error: you must distribute at least one share',
+  'error.amount': 'Invalid amount',
+  'error.amount_mismatch': 'The bill amount must match the sum of the shares',
+  'error.no_parts': 'You must distribute at least one share',
   // common:
   'error.other': 'Request error: please try again later',
   'submit.tribe.create': 'Create tribe',
