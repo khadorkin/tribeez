@@ -95,7 +95,7 @@ class DatePickerWrapper extends Component {
             firstDayOfWeek={localeData.firstDayOfWeek()}
             formatDate={this.formatDate}
             {...this.props}
-            value={value ? new Date(value) : null}
+            value={value && new Date(value)}
             onChange={this.handleDateChange}
             onBlur={null}
             onFocus={null}

@@ -18,9 +18,9 @@ class CityField extends Component {
       predictions: [],
     }
     this.focus = this.focus.bind(this)
-    this.handleUpdateInput = this.handleUpdateInput.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.showPredictions = this.showPredictions.bind(this)
-    this.handleNewRequest = this.handleNewRequest.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
     this.handleDetails = this.handleDetails.bind(this)
   }
 
@@ -46,7 +46,7 @@ class CityField extends Component {
     return true // we don't want to filter
   }
 
-  handleUpdateInput(input) {
+  handleChange(input) {
     this.props.onChange({
       name: input,
     })
@@ -70,11 +70,12 @@ class CityField extends Component {
     })
   }
 
-  handleNewRequest(value, index) {
+  handleSelect(value, index) {
     const prediction = this.state.predictions[index]
     this.places.getDetails({
       placeId: prediction.place_id,
     }, this.handleDetails)
+    // MUI sets this.props.value here?
   }
 
   handleDetails(place) {
@@ -82,26 +83,26 @@ class CityField extends Component {
       return (component.types.includes('country') && component.short_name && component.short_name.length === 2)
     })
     this.props.onChange({
-      name: this.props.value.name, // could be also place.formatted_address, but place.name does not contain country
+      name: this.props.value, // could be also place.formatted_address, but place.name does not contain country
       country_code: country.short_name,
       place_id: place.place_id,
     })
   }
 
   render() {
-    const {onChange, value, ...other} = this.props
+    const {value} = this.props
 
     return (
       <AutoComplete
         ref="field"
         style={styles.field}
         dataSource={this.state.textPredictions}
-        onUpdateInput={this.handleUpdateInput}
-        onNewRequest={this.handleNewRequest}
+        onUpdateInput={this.handleChange}
+        onNewRequest={this.handleSelect}
         filter={this.filter}
-        searchText={value && value.name}
+        searchText={value && (value.name === undefined ? value : value.name)}
         autoComplete="google suggestions typeahead"
-        {...other}
+        {...this.props}
       />
     )
   }

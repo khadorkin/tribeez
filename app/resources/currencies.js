@@ -1,7 +1,7 @@
 // extracted from http://www.wikiwand.com/en/ISO_4217
 // removed funds codes and unused codes
 
-const obj = {
+export const map = {
   EUR: 'Euro',
   USD: 'United Stated dollar',
   GBP: 'Pound sterling',
@@ -34,9 +34,7 @@ const obj = {
   BZD: 'Belize dollar',
   CAD: 'Canadian dollar',
   CDF: 'Congolese franc',
-  CHE: 'WIR Euro (complementary currency)',
   CHF: 'Swiss franc',
-  CHW: 'WIR Franc (complementary currency)',
   CLP: 'Chilean peso',
   CNY: 'Chinese yuan',
   COP: 'Colombian peso',
@@ -167,11 +165,10 @@ const obj = {
 */
 }
 
-// export a sorted array instead of this object:
-
+// export a sorted array:
 const arr = []
-for (const code in obj) {
-  arr.push({code, name: obj[code]})
+for (const code in map) {
+  arr.push({code, name: map[code]})
 }
 arr.sort((a, b) => (a.name > b.name ? 1 : -1))
 
