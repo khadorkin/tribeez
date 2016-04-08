@@ -82,6 +82,7 @@ class DatePickerWrapper extends Component {
 
     const containerStyle = {display: 'flex', flexWrap: 'wrap', marginRight: -16}
     const itemStyle = {flexBasis: 250, flexGrow: 1, marginRight: 16}
+    const clearStyle = {float: 'right', marginTop: '-57px', marginRight: '-9px'}
 
     return (
       <div style={containerStyle}>
@@ -101,9 +102,13 @@ class DatePickerWrapper extends Component {
             onFocus={null}
             defaultValue={null}
           />
-          <IconButton onTouchTap={this.handleClearDate} style={{float: 'right', marginTop: '-57px', marginRight: '-9px'}}>
-            <ClearIcon color={colors.grey300} />
-          </IconButton>
+          {
+            value && (
+              <IconButton onTouchTap={this.handleClearDate} style={clearStyle}>
+                <ClearIcon color={colors.grey300} />
+              </IconButton>
+            )
+          }
         </div>
 
         {
@@ -119,9 +124,13 @@ class DatePickerWrapper extends Component {
                 onChange={this.handleTimeChange}
                 autoOk={true}
               />
-              <IconButton onTouchTap={this.handleClearTime} style={{float: 'right', marginTop: '-57px', marginRight: '-9px'}}>
-                <ClearIcon color={colors.grey300} />
-              </IconButton>
+              {
+                this.state.time && (
+                  <IconButton onTouchTap={this.handleClearTime} style={clearStyle}>
+                    <ClearIcon color={colors.grey300} />
+                  </IconButton>
+                )
+              }
             </div>
           )
         }
