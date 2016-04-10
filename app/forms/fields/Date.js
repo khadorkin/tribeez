@@ -100,7 +100,6 @@ class DatePickerWrapper extends Component {
             onChange={this.handleDateChange}
             onBlur={null}
             onFocus={null}
-            defaultValue={null}
           />
           {
             value && (
