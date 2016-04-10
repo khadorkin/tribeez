@@ -1,0 +1,196 @@
+import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
+
+import Card from 'material-ui/lib/card/card'
+import CardHeader from 'material-ui/lib/card/card-header'
+import CardText from 'material-ui/lib/card/card-text'
+import List from 'material-ui/lib/lists/list'
+import ListItem from 'material-ui/lib/lists/list-item'
+import Checkbox from 'material-ui/lib/checkbox'
+import RadioButton from 'material-ui/lib/radio-button'
+import RadioButtonGroup from 'material-ui/lib/radio-button-group'
+import Avatar from 'material-ui/lib/avatar'
+import CardActions from 'material-ui/lib/card/card-actions'
+import FlatButton from 'material-ui/lib/flat-button'
+import IconButton from 'material-ui/lib/icon-button'
+import EditButton from 'material-ui/lib/svg-icons/image/edit'
+import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
+import * as colors from 'material-ui/lib/styles/colors'
+
+import Comment from './Comment'
+import Entry from '../components/Entry'
+
+import gravatar from '../utils/gravatar'
+
+import routes from '../constants/routes'
+
+import postVote from '../actions/postVote'
+
+import css from './Entry.css'
+
+class Poll extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      choices: [],
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleCheck(id, event, checked) {
+    if (checked) {
+      this.setState({
+        choices: [...this.state.choices, id],
+      })
+    } else {
+      this.setState({
+        choices: this.state.choices.filter((i) => i !== id),
+      })
+    }
+  }
+
+  handleChange(event, id) {
+    this.setState({
+      choices: [Number(id)],
+    })
+  }
+
+  handleSubmit() {
+    this.props.postVote(this.props.poll.id, this.state.choices, this.props.uid)
+  }
+
+  handleDelete() {
+    this.props.onDelete(this.props.poll)
+  }
+
+  render() {
+    const {poll} = this.props
+
+    // to render a poll, the users must be loaded for the current tribe polls
+    const author = this.props.users.find((u) => u.id === poll.author_id)
+    if (!author) {
+      return null
+    }
+
+    const user_answer = poll.answers[this.props.uid]
+
+    const title = <span>{poll.name}</span>
+    const date = <FormattedRelative value={poll.created} />
+
+    let body
+    if (user_answer) {
+      const answered_users = Object.keys(poll.answers)
+      const counters = {}
+      answered_users.forEach((uid) => {
+        const user_answers = poll.answers[uid]
+        user_answers.forEach((cid) => {
+          if (!counters[cid]) {
+            counters[cid] = 0
+          }
+          counters[cid]++
+        })
+      })
+      body = (
+        <List>
+          {
+            poll.choices.map((choice) => {
+              const percent = Math.round((100 * counters[choice.id] / answered_users.length) || 0)
+              return (
+                <ListItem key={choice.id} primaryText={choice.name + ': ' + percent + '%'} disabled={true} />
+              )
+            })
+          }
+        </List>
+      )
+    } else {
+      if (poll.multiple) {
+        body = poll.choices.map((choice) => (
+          <Checkbox key={choice.id}
+            label={choice.name}
+            checked={this.state.choices.includes(choice.id)}
+            onCheck={this.handleCheck.bind(this, choice.id)}
+            style={{marginTop: 8}}
+          />
+        ))
+      } else {
+        body = (
+          <RadioButtonGroup name={'poll_' + poll.id} onChange={this.handleChange} valueSelected={String(this.state.choices[0] || '')}>
+            {poll.choices.map((choice) => <RadioButton key={choice.id} label={choice.name} value={String(choice.id)} style={{marginTop: 8}} />)}
+          </RadioButtonGroup>
+        )
+      }
+    }
+
+    return (
+      <Card className={css.container}>
+        <CardHeader title={title} subtitle={<span>{date}</span>}
+          style={{height: 'auto', whiteSpace: 'nowrap'}}
+          textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
+          avatar={gravatar(author)}
+          actAsExpander={true} showExpandableButton={true}
+        />
+        <CardText expandable={!poll.active} style={{paddingTop: 8}}>
+          {poll.description}
+        </CardText>
+        <CardText expandable={!poll.active} style={{paddingTop: 0}}>
+          {body}
+        </CardText>
+        <CardActions expandable={!poll.active}>
+          {
+            user_answer ? (
+              <FlatButton label="Vote again" onTouchTap={this.handleReset} />
+            ) : (
+              <FlatButton label="Submit vote" onTouchTap={this.handleSubmit} />
+            )
+          }
+        </CardActions>
+        <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20, marginBottom: -20}}>
+          <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
+            <EditButton color={colors.grey600} />
+          </IconButton>
+          <IconButton onTouchTap={this.handleDelete}>
+            <DeleteButton color={colors.red400} />
+          </IconButton>
+        </CardActions>
+        <CardText expandable={true}>
+          {
+            poll.entries && poll.entries.map((entry) =>
+              <Entry entry={entry} key={entry.id} />
+            )
+          }
+        </CardText>
+      </Card>
+    )
+  }
+
+}
+
+Poll.propTypes = {
+  // from parent component:
+  poll: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  // from redux state:
+  uid: PropTypes.number,
+  users: PropTypes.array,
+  currency: PropTypes.string,
+  // action creators:
+  postVote: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  uid: state.member.user.id,
+  users: state.member.tribe.users,
+  currency: state.member.tribe.currency,
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  postVote,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Poll)

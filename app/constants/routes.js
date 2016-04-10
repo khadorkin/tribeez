@@ -27,4 +27,5 @@ export default {
   NOTES_NEW: '/notes/new',
   POLLS: '/polls',
   POLLS_NEW: '/polls/new',
+  POLLS_EDIT: '/polls/:id',
 }

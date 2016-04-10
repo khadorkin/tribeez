@@ -50,6 +50,8 @@ export default {
   'snack.event_created': 'Event created',
   'snack.event_updated': 'Event updated',
   'snack.event_deleted': 'Event deleted',
+  'snack.poll_deleted': 'Poll deleted',
+  'snack.voted': 'Voted',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 
