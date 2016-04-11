@@ -37,6 +37,7 @@ export default {
   reset: validator(['password', 'password2']),
   bill: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
   event: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
+  poll: validator(['name', 'options'], ['description', 'multiple']),
 }
 
 export const focus = (errors, refs) => {

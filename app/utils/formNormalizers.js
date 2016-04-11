@@ -9,5 +9,4 @@ export default {
   join: normalizers,
   profile: normalizers,
   invite: normalizers,
-  bill: normalizers,
 }

@@ -33,6 +33,7 @@ import Event from './pages/Event'
 import Tasks from './pages/Tasks'
 import Notes from './pages/Notes'
 import Polls from './pages/Polls'
+import Poll from './pages/Poll'
 import NotFound from './pages/NotFound'
 
 // react-router routes
@@ -143,6 +144,8 @@ ReactDOM.render((
         <Route path={routes.TASKS} component={Tasks} />
         <Route path={routes.NOTES} component={Notes} />
         <Route path={routes.POLLS} component={Polls} />
+        <Route path={routes.POLLS_NEW} component={Poll} />
+        <Route path={routes.POLLS_EDIT} component={Poll} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

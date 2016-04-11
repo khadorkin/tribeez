@@ -37,7 +37,9 @@ class Poll extends Component {
     super(props)
     this.state = {
       choices: [],
+      again: false,
     }
+    this.handleReset = this.handleReset.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -58,6 +60,12 @@ class Poll extends Component {
   handleChange(event, id) {
     this.setState({
       choices: [Number(id)],
+    })
+  }
+
+  handleReset() {
+    this.setState({
+      again: true,
     })
   }
 
@@ -83,8 +91,10 @@ class Poll extends Component {
     const title = <span>{poll.name}</span>
     const date = <FormattedRelative value={poll.created} />
 
+    const show_results = (user_answer && !this.state.again)
+
     let body
-    if (user_answer) {
+    if (show_results) {
       const answered_users = Object.keys(poll.answers)
       const counters = {}
       answered_users.forEach((uid) => {
@@ -99,10 +109,10 @@ class Poll extends Component {
       body = (
         <List>
           {
-            poll.choices.map((choice) => {
-              const percent = Math.round((100 * counters[choice.id] / answered_users.length) || 0)
+            poll.options.map((option) => {
+              const percent = Math.round((100 * counters[option.id] / answered_users.length) || 0)
               return (
-                <ListItem key={choice.id} primaryText={choice.name + ': ' + percent + '%'} disabled={true} />
+                <ListItem key={option.id} primaryText={option.name + ': ' + percent + '%'} disabled={true} />
               )
             })
           }
@@ -110,18 +120,18 @@ class Poll extends Component {
       )
     } else {
       if (poll.multiple) {
-        body = poll.choices.map((choice) => (
-          <Checkbox key={choice.id}
-            label={choice.name}
-            checked={this.state.choices.includes(choice.id)}
-            onCheck={this.handleCheck.bind(this, choice.id)}
+        body = poll.options.map((option) => (
+          <Checkbox key={option.id}
+            label={option.name}
+            checked={this.state.choices.includes(option.id)}
+            onCheck={this.handleCheck.bind(this, option.id)}
             style={{marginTop: 8}}
           />
         ))
       } else {
         body = (
           <RadioButtonGroup name={'poll_' + poll.id} onChange={this.handleChange} valueSelected={String(this.state.choices[0] || '')}>
-            {poll.choices.map((choice) => <RadioButton key={choice.id} label={choice.name} value={String(choice.id)} style={{marginTop: 8}} />)}
+            {poll.options.map((option) => <RadioButton key={option.id} label={option.name} value={String(option.id)} style={{marginTop: 8}} />)}
           </RadioButtonGroup>
         )
       }
@@ -143,7 +153,7 @@ class Poll extends Component {
         </CardText>
         <CardActions expandable={!poll.active}>
           {
-            user_answer ? (
+            show_results ? (
               <FlatButton label="Vote again" onTouchTap={this.handleReset} />
             ) : (
               <FlatButton label="Submit vote" onTouchTap={this.handleSubmit} />

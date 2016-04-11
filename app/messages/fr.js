@@ -24,6 +24,7 @@ const fr = {
   notes_new: 'Nouvelle note',
   polls: 'Sondages',
   polls_new: 'Nouveau sondage',
+  polls_edit: 'Modifier le sondage',
   tribe: 'Tribu',
   tribe_new: 'Nouvelle tribu',
 

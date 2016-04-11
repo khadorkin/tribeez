@@ -7,7 +7,7 @@ import {actionTypes as formActions} from 'redux-form'
 
 import lang from './lang'
 
-const plugin = (state, action) => {
+const userPlugin = (state, action) => {
   switch (action.type) {
     case GET_MEMBER_SUCCESS:
       return {
@@ -33,7 +33,26 @@ const plugin = (state, action) => {
   }
 }
 
+const pollPlugin = (state, action) => {
+  switch (action.type) {
+    case formActions.CHANGE:
+      if (action.form === 'poll' && action.field.indexOf('options') === 0) {
+        const last = state.options[state.options.length - 1]
+        if (last.value) {
+          return {
+            ...state,
+            options: [...state.options, {value: ''}],
+          }
+        }
+      }
+      return state
+    default:
+      return state
+  }
+}
+
 export default {
-  register: plugin,
-  join: plugin,
+  register: userPlugin,
+  join: userPlugin,
+  poll: pollPlugin,
 }

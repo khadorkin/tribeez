@@ -2,6 +2,9 @@ import {
   GET_POLLS_REQUEST,
   GET_POLLS_SUCCESS,
   GET_POLLS_FAILURE,
+  GET_POLL_SUCCESS,
+  NEW_POLL_SUCCESS,
+  PUT_POLL_SUCCESS,
   DELETE_POLL_SUCCESS,
   POST_VOTE_SUCCESS,
   LOGOUT_SUCCESS,
@@ -34,6 +37,23 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       })
+    case GET_POLL_SUCCESS:
+      return {...state, current: action.data}
+
+    case NEW_POLL_SUCCESS: {
+      const list = state.list.slice()
+      list.unshift(action.poll)
+      return {...state, list}
+    }
+    case PUT_POLL_SUCCESS: {
+      const list = state.list.map((poll) => {
+        if (poll.id === action.poll.id) {
+          return action.poll
+        }
+        return poll
+      })
+      return {...state, list}
+    }
     case DELETE_POLL_SUCCESS: {
       const list = state.list.filter((poll) => poll.id !== action.id)
       return {...state, list}

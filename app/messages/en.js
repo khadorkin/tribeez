@@ -24,6 +24,7 @@ export default {
   notes_new: 'New note',
   polls: 'Polls',
   polls_new: 'New poll',
+  polls_edit: 'Edit poll',
   tribe: 'Tribe',
   tribe_new: 'New tribe',
 
@@ -50,6 +51,8 @@ export default {
   'snack.event_created': 'Event created',
   'snack.event_updated': 'Event updated',
   'snack.event_deleted': 'Event deleted',
+  'snack.poll_created': 'Poll created',
+  'snack.poll_updated': 'Poll updated',
   'snack.poll_deleted': 'Poll deleted',
   'snack.voted': 'Voted',
   'snack.logout_success': 'You have been logged out',
@@ -85,6 +88,8 @@ export default {
   'error.amount': 'Invalid amount',
   'error.amount_mismatch': 'The bill amount must match the sum of the shares',
   'error.no_parts': 'You must distribute at least one share',
+  // poll:
+  'error.no_options': 'You must give at lease two options',
   // common:
   'error.other': 'Request error: please try again later',
   'submit.tribe.create': 'Create tribe',
