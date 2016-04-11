@@ -27,6 +27,17 @@ class DatePickerWrapper extends Component {
     this.formatDate = this.formatDate.bind(this)
   }
 
+  componentWillReceiveProps(props) {
+    if (props.value) {
+      const time = new Date(props.value)
+      if (time.getHours() !== 0 || time.getMinutes() !== 0) {
+        this.setState({
+          time: new Date(props.value),
+        })
+      }
+    }
+  }
+
   ref(element) {
     this.element = element
   }
