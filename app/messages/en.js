@@ -112,6 +112,12 @@ export default {
   'entry.bill.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" bill ({amount})',
   'entry.bill.delete.infos': 'Your share was {amount}',
   'entry.bill.delete.stranger': 'You were not concerned',
+  'entry.poll.new': '{author, select, _you_ {You} other {{author}}} added a poll named "{name}"',
+  'entry.poll.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" poll',
+  'entry.poll.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" poll',
+  'entry.event.new': '{author, select, _you_ {You} other {{author}}} added an event named "{name}" starting {when}',
+  'entry.event.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" event starting {when}',
+  'entry.event.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" event starting {when}',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
   comment: 'Your comment...',
 

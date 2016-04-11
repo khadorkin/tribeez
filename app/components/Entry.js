@@ -68,6 +68,13 @@ class Entry extends Component {
           infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} />
         }
         break
+      case 'poll':
+        values.name = entry.data.name
+        break
+      case 'event':
+        values.name = entry.data.name
+        values.when = <FormattedRelative value={entry.data.start} />
+        break
       default:
         return null
     }

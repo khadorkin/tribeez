@@ -27,4 +27,4 @@ Then go to [http://localhost:3001](http://localhost:3001/)
 With [PM2](http://pm2.keymetrics.io/):
 
     npm run deploy
-    PORT=3001 NODE_ENV=production pm2 start server.js --name "mytribe-app" -- --color
+    PORT=3011 NODE_ENV=production pm2 start server.js --name "mytribe-app" -- --color
