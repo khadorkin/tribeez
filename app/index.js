@@ -47,11 +47,8 @@ import webfont from 'webfontloader'
 webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
 // redux actions
-import {resize, updateLang} from './actions/app'
+import {resize} from './actions/app'
 import getMember from './actions/getMember'
-
-// navigator lang detector:
-import lang from './utils/lang'
 
 // app locales (keep list in sync with resources/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'

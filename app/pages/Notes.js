@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
-import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router'
 import {DragDropContext as dragDropContext} from 'react-dnd'
 import html5backend from 'react-dnd-html5-backend'
 
@@ -16,7 +14,6 @@ import AsyncContent from '../hoc/AsyncContent'
 import Note from '../components/Note'
 
 import styles from '../constants/styles'
-import routes from '../constants/routes'
 
 import getNotes from '../actions/getNotes'
 import postNote from '../actions/postNote'

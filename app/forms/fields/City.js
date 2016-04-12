@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 
 import AutoComplete from 'material-ui/lib/auto-complete'
 
@@ -17,6 +16,7 @@ class CityField extends Component {
       textPredictions: [],
       predictions: [],
     }
+    this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.showPredictions = this.showPredictions.bind(this)
@@ -38,8 +38,12 @@ class CityField extends Component {
     }
   }
 
+  ref(element) {
+    this.element = element
+  }
+
   focus() {
-    ReactDOM.findDOMNode(this.refs.field.refs.searchTextField.refs.input).focus()
+    this.element.refs.searchTextField.refs.input.focus()
   }
 
   filter() {
@@ -94,7 +98,7 @@ class CityField extends Component {
 
     return (
       <AutoComplete
-        ref="field"
+        ref={this.ref}
         style={styles.field}
         dataSource={this.state.textPredictions}
         onUpdateInput={this.handleChange}

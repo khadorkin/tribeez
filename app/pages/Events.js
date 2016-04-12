@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
-import {FormattedMessage, FormattedDate, FormattedTime, injectIntl, intlShape} from 'react-intl'
+import {FormattedMessage, FormattedDate, injectIntl, intlShape} from 'react-intl'
 import {Link} from 'react-router'
 
 import BigCalendar from 'react-big-calendar'
@@ -38,7 +38,7 @@ BigCalendar.setLocalizer(
 const startAccessor = (event) => new Date(event.start)
 const endAccessor = (event) => (event.end ? new Date(event.end) : new Date(event.start))
 
-const eventPropGetter = (event, start, end, isSelected) => ({style: {backgroundColor: colors.deepOrange300}})
+const eventPropGetter = (/*event, start, end, isSelected*/) => ({style: {backgroundColor: colors.deepOrange300}})
 
 const infos = [
   {id: 'description', icon: <DescIcon />},

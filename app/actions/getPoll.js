@@ -1,5 +1,3 @@
-import {push} from 'react-router-redux'
-
 import api from '../utils/api'
 
 import {
@@ -7,8 +5,6 @@ import {
   GET_POLL_SUCCESS,
   GET_POLL_FAILURE,
 } from '../constants/actions'
-
-import routes from '../constants/routes'
 
 export default (id) => {
   return function(dispatch) {

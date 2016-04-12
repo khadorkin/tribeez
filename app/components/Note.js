@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
-import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
 import {Editor, EditorState, ContentState} from 'draft-js'
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd'
 
@@ -14,8 +12,6 @@ import IconButton from 'material-ui/lib/icon-button'
 import SaveButton from 'material-ui/lib/svg-icons/content/save'
 import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
 import * as colors from 'material-ui/lib/styles/colors'
-
-import gravatar from '../utils/gravatar'
 
 import putNote from '../actions/putNote'
 
@@ -67,7 +63,7 @@ class Note extends Component {
   }
 
   render() {
-    const {note, connectDragSource, connectDropTarget, isDragging} = this.props
+    const {connectDragSource, connectDropTarget, isDragging} = this.props
 
     return connectDragSource(connectDropTarget(
       <div style={{opacity: (isDragging ? 0 : 1), display: 'inline-block', width: '100%'}}>
@@ -124,10 +120,8 @@ const dragCollect = (conn, monitor) => {
   }
 }
 
-let movedNote
-
 const cardTarget = {
-  hover(props, monitor, component) {
+  hover(props, monitor) {
     const draggedNote = monitor.getItem().note
     const hoveredNote = props.note
 
@@ -142,7 +136,7 @@ const cardTarget = {
 
     props.onMove(draggedNote, hoveredNote)
   },
-  drop(props, monitor, component) {
+  drop(props) {
     props.onSave()
   },
 }

@@ -32,7 +32,7 @@ export default (state = initialState, action = null) => {
         error: action.error,
       })
     case LOGOUT_SUCCESS:
-      return Object.assign({}, initialState)
+      return {...initialState}
     default:
       return state
   }

@@ -48,7 +48,7 @@ export default (values, dispatch) => {
           dispatch(push(routes.POLLS))
         }
       })
-      .catch((error) => {
+      .catch(() => {
         reject({_error: 'other'})
       })
   })

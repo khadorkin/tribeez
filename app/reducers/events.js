@@ -57,6 +57,9 @@ export default (state = initialState, action = null) => {
       const list = state.list.filter((event) => event.id !== action.id)
       return {...state, list}
     }
+
+    case LOGOUT_SUCCESS:
+      return {...initialState}
     default:
       return state
   }

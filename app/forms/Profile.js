@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
-import moment from 'moment'
 
 import CardTitle from 'material-ui/lib/card/card-title'
 import CardText from 'material-ui/lib/card/card-text'

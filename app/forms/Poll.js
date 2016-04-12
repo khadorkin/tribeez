@@ -8,7 +8,6 @@ import CardActions from 'material-ui/lib/card/card-actions'
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import TextField from './fields/Text'
-import DatePicker from './fields/Date'
 import Checkbox from './fields/Checkbox'
 
 import styles from '../constants/styles'
@@ -17,8 +16,6 @@ import validator, {focus} from '../utils/formValidator'
 
 import getPoll from '../actions/getPoll'
 import submitPoll from '../actions/submitPoll'
-
-const now = Date.now()
 
 class PollForm extends Component {
 

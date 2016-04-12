@@ -17,8 +17,6 @@ import validator, {focus} from '../utils/formValidator'
 import getEvent from '../actions/getEvent'
 import submitEvent from '../actions/submitEvent'
 
-const now = Date.now()
-
 class EventForm extends Component {
 
   constructor(props) {

@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
 
 import Card from 'material-ui/lib/card/card'
@@ -16,7 +15,6 @@ import EditButton from 'material-ui/lib/svg-icons/image/edit'
 import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
 import * as colors from 'material-ui/lib/styles/colors'
 
-import Comment from './Comment'
 import Entry from '../components/Entry'
 
 import gravatar from '../utils/gravatar'

@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedNumber} from 'react-intl'
 import {Link} from 'react-router'
 
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
@@ -18,8 +17,6 @@ import routes from '../constants/routes'
 
 import getPolls from '../actions/getPolls'
 import deletePoll from '../actions/deletePoll'
-
-import * as colors from 'material-ui/lib/styles/colors'
 
 class Polls extends Component {
 

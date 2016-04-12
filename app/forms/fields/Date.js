@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
 import moment from 'moment'
 

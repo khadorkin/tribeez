@@ -55,6 +55,9 @@ export default (state = initialState, action = null) => {
       })
       return {...state, list}
     }
+
+    case LOGOUT_SUCCESS:
+      return {...initialState}
     default:
       return state
   }

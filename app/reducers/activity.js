@@ -62,7 +62,7 @@ export default (state = initialState, action = null) => {
     case DELETE_BILL_SUCCESS:
       return {...state, got: false}
     case LOGOUT_SUCCESS:
-      return Object.assign({}, initialState)
+      return {...initialState}
     default:
       return state
   }

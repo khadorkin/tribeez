@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 //import PureRenderMixin from 'react-addons-pure-render-mixin';
 import SvgIcon from 'material-ui/lib/svg-icon'
 

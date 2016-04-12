@@ -70,7 +70,7 @@ export default (state = initialState, action = null) => {
     }
 
     case LOGOUT_SUCCESS:
-      return Object.assign({}, initialState)
+      return {...initialState}
     default:
       return state
   }

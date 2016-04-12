@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 
 import TextField from 'material-ui/lib/text-field'
 import * as colors from 'material-ui/lib/styles/colors'

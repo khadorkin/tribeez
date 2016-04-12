@@ -50,7 +50,7 @@ export default (values, dispatch) => {
           dispatch(push(routes.BILLS))
         }
       })
-      .catch((error) => {
+      .catch(() => {
         reject({_error: 'other'})
       })
   })
