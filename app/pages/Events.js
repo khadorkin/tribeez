@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
 import {FormattedMessage, FormattedDate, FormattedTime, injectIntl, intlShape} from 'react-intl'
@@ -6,7 +7,7 @@ import {Link} from 'react-router'
 
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
+//import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 import AsyncContent from '../hoc/AsyncContent'
 
@@ -48,7 +49,7 @@ const infos = [
   {id: 'url', icon: <UrlIcon />, link: true},
 ]
 
-class Events extends Component {
+class Events extends React.Component {
 
   constructor(props) {
     super(props)

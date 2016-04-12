@@ -1,8 +1,9 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 //import PureRenderMixin from 'react-addons-pure-render-mixin';
 import SvgIcon from 'material-ui/lib/svg-icon'
 
-class TelegramIcon extends Component {
+class TelegramIcon extends React.Component {
 
   render() {
     return (

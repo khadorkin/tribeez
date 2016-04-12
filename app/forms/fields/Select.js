@@ -1,11 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import ReactDOM from 'react-dom'
 
 import SelectField from 'material-ui/lib/select-field'
 
 import styles from '../../constants/styles'
 
-class SelectFieldWrapper extends Component {
+class SelectFieldWrapper extends React.Component {
 
   constructor(props) {
     super(props)

@@ -40,7 +40,7 @@ import NotFound from './pages/NotFound'
 import routes from './constants/routes'
 
 // global injected style:
-import './index.css'
+//import './index.css'
 
 // load Roboto from Google Fonts:
 import webfont from 'webfontloader'
@@ -64,7 +64,7 @@ import normalizers from './utils/formNormalizers'
 import plugins from './utils/formPlugins'
 
 // redux reducers
-import reducers from './reducers'
+import reducers from './reducers/index'
 reducers.routing = routerReducer
 reducers.form = formReducer
   .normalize(normalizers)

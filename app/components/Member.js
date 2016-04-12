@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {FormattedMessage, FormattedDate, FormattedNumber} from 'react-intl'
 
@@ -14,7 +15,7 @@ import BalanceIcon from 'material-ui/lib/svg-icons/action/account-balance-wallet
 
 import gravatar from '../utils/gravatar'
 
-import css from './Member.css'
+const css = {} // import css from './Member.css'
 
 const infos = [
   {id: 'email', icon: <EmailIcon />, href: 'mailto:'},
@@ -23,7 +24,7 @@ const infos = [
   {id: 'balance', icon: <BalanceIcon />, money: true},
 ]
 
-class Member extends Component {
+class Member extends React.Component {
 
   render() {
     const {user} = this.props

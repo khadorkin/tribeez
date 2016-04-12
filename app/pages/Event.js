@@ -1,10 +1,11 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 
 import Card from 'material-ui/lib/card/card'
 
 import EventForm from '../forms/Event'
 
-class Event extends Component {
+class Event extends React.Component {
 
   render() {
     return (

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -8,7 +9,7 @@ import getReset from '../actions/getReset'
 
 import ResetForm from '../forms/Reset'
 
-class Reset extends Component {
+class Reset extends React.Component {
 
   componentWillMount() {
     this.props.getReset(this.props.params.token)

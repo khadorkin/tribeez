@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
@@ -34,7 +35,7 @@ import gravatar from '../utils/gravatar'
 
 //TODO: choose between CSS and style!
 
-import css from './Nav.css'
+const css = {} // import css from './Nav.css'
 
 const style = {
   container: {
@@ -92,7 +93,7 @@ const menuEntries = [
   {route: routes.POLLS, icon: <PollIcon />},
 ]
 
-class Nav extends Component {
+class Nav extends React.Component {
 
   constructor(props) {
     super(props)

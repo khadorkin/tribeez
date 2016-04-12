@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 import moment from 'moment'
@@ -27,7 +28,7 @@ const langItems = langs.map((item) =>
 
 const today = new Date()
 
-class ProfileForm extends Component {
+class ProfileForm extends React.Component {
 
   constructor(props) {
     super(props)

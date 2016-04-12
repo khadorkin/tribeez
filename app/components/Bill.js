@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -23,9 +24,9 @@ import gravatar from '../utils/gravatar'
 
 import routes from '../constants/routes'
 
-import css from './Entry.css'
+const css = {} // import css from './Entry.css'
 
-class Bill extends Component {
+class Bill extends React.Component {
 
   constructor(props) {
     super(props)

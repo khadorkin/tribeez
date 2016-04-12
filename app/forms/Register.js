@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
@@ -33,7 +34,7 @@ const typeItems = TRIBE_TYPES.map((type) =>
   <MenuItem value={type} key={type} primaryText={type} />
 )
 
-class RegisterForm extends Component {
+class RegisterForm extends React.Component {
 
   constructor(props) {
     super(props)

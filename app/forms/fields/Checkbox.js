@@ -1,11 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import ReactDOM from 'react-dom'
 
 import Checkbox from 'material-ui/lib/checkbox'
 
 import styles from '../../constants/styles'
 
-class CheckboxWrapper extends Component {
+class CheckboxWrapper extends React.Component {
 
   constructor(props) {
     super(props)

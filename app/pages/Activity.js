@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -9,7 +10,7 @@ import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../actions/getActivity'
 
-class Activity extends Component {
+class Activity extends React.Component {
 
   constructor(props) {
     super(props)

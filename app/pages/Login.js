@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React from 'react'
 
 import Card from 'material-ui/lib/card/card'
 
 import LoginForm from '../forms/Login'
 
-class Login extends Component {
+class Login extends React.Component {
 
   render() {
     return (

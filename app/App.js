@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {IntlProvider, FormattedMessage} from 'react-intl'
@@ -32,7 +33,7 @@ import routes from './constants/routes'
 
 /*global __TELEGRAM_BOT_NAME__:false*/
 
-class App extends Component {
+class App extends React.Component {
 
   constructor(props) {
     super(props)

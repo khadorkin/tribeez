@@ -1,9 +1,10 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 
-class Tasks extends Component {
+class Tasks extends React.Component {
 
   constructor(props) {
     super(props)

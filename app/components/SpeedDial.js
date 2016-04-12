@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
@@ -14,7 +15,7 @@ import PollIcon from 'material-ui/lib/svg-icons/social/poll'
 
 import routes from '../constants/routes'
 
-import css from './SpeedDial.css'
+const css = {} // import css from './SpeedDial.css'
 const color = 'rgb(95,193,178)'
 
 const actions = [
@@ -25,7 +26,7 @@ const actions = [
   {route: routes.BILLS_NEW, icon: <CartIcon />},
 ]
 
-class SpeedDial extends Component {
+class SpeedDial extends React.Component {
 
   constructor(props) {
     super(props)

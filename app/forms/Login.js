@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 import {Link} from 'react-router'
@@ -17,7 +18,7 @@ import validator, {focus} from '../utils/formValidator'
 
 import submitLogin from '../actions/submitLogin'
 
-class LoginForm extends Component {
+class LoginForm extends React.Component {
 
   constructor(props) {
     super(props)

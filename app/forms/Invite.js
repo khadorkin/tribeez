@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
@@ -22,7 +23,7 @@ const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-class InviteForm extends Component {
+class InviteForm extends React.Component {
 
   constructor(props) {
     super(props)

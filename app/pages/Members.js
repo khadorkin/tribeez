@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedDate} from 'react-intl'
@@ -26,7 +27,7 @@ import routes from '../constants/routes'
 import getInvites from '../actions/getInvites'
 import postInvite from '../actions/postInvite'
 
-class Members extends Component {
+class Members extends React.Component {
 
   constructor(props) {
     super(props)

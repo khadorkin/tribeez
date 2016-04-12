@@ -1,11 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import ReactDOM from 'react-dom'
 
 import scriptLoader from '../../utils/scriptLoader'
 
 /*global grecaptcha:false __RECAPTCHA_SITE_KEY__:false*/
 
-class Captcha extends Component {
+class Captcha extends React.Component {
 
   constructor(props) {
     super(props)

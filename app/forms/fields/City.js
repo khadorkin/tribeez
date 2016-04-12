@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import ReactDOM from 'react-dom'
 
 import AutoComplete from 'material-ui/lib/auto-complete'
@@ -9,7 +10,7 @@ import scriptLoader from '../../utils/scriptLoader'
 
 /*global google:false __GOOGLE_API_KEY__:false*/
 
-class CityField extends Component {
+class CityField extends React.Component {
 
   constructor(props) {
     super(props)

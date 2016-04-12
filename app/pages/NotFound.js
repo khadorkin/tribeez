@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Link} from 'react-router'
 
 import RaisedButton from 'material-ui/lib/raised-button'
 
 import routes from '../constants/routes'
 
-class NotFound extends Component {
+class NotFound extends React.Component {
 
   render() {
     return (

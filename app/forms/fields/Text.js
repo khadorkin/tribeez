@@ -1,11 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import ReactDOM from 'react-dom'
 
 import TextField from 'material-ui/lib/text-field'
 
 import styles from '../../constants/styles'
 
-class TextFieldWrapper extends Component {
+class TextFieldWrapper extends React.Component {
 
   constructor(props) {
     super(props)

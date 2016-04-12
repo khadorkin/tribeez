@@ -1,10 +1,11 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 
 import Card from 'material-ui/lib/card/card'
 
 import TribeForm from '../forms/Tribe'
 
-class Tribe extends Component {
+class Tribe extends React.Component {
 
   render() {
     return (

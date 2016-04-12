@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -8,7 +9,7 @@ import getInvite from '../actions/getInvite'
 
 import JoinForm from '../forms/Join'
 
-class Join extends Component {
+class Join extends React.Component {
 
   componentWillMount() {
     this.props.getInvite(this.props.params.token)

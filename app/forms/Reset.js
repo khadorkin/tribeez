@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
@@ -15,7 +16,7 @@ import validator, {focus} from '../utils/formValidator'
 
 import submitReset from '../actions/submitReset'
 
-class ResetForm extends Component {
+class ResetForm extends React.Component {
 
   constructor(props) {
     super(props)

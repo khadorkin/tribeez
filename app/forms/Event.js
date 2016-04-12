@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
@@ -19,7 +20,7 @@ import submitEvent from '../actions/submitEvent'
 
 const now = Date.now()
 
-class EventForm extends Component {
+class EventForm extends React.Component {
 
   constructor(props) {
     super(props)

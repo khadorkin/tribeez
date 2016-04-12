@@ -1,9 +1,10 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 
 import RaisedButton from 'material-ui/lib/raised-button'
 
-class AsyncContent extends Component {
+class AsyncContent extends React.Component {
 
   constructor(props) {
     super(props)

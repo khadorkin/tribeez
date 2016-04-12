@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
@@ -20,7 +21,7 @@ import submitPoll from '../actions/submitPoll'
 
 const now = Date.now()
 
-class PollForm extends Component {
+class PollForm extends React.Component {
 
   constructor(props) {
     super(props)

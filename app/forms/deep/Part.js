@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 
 import TextField from 'material-ui/lib/text-field'
@@ -10,7 +11,7 @@ import * as colors from 'material-ui/lib/styles/colors'
 
 import MoneyField from '../fields/Money'
 
-export default class Part extends Component {
+export default class Part extends React.Component {
 
   //TODO: pure rendering?
 

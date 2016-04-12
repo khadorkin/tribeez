@@ -1,9 +1,11 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
 import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
-import {Editor, EditorState, ContentState} from 'draft-js'
+import Draft from 'draft-js'
+const {Editor, EditorState, ContentState} = Draft
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd'
 
 import Card from 'material-ui/lib/card/card'
@@ -19,7 +21,7 @@ import gravatar from '../utils/gravatar'
 
 import putNote from '../actions/putNote'
 
-class Note extends Component {
+class Note extends React.Component {
 
   constructor(props) {
     super(props)

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
@@ -23,7 +24,7 @@ import submitBill from '../actions/submitBill'
 
 const today = new Date()
 
-class BillForm extends Component {
+class BillForm extends React.Component {
 
   constructor(props) {
     super(props)

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
@@ -17,9 +18,9 @@ import updateComment from '../actions/updateComment'
 
 import gravatar from '../utils/gravatar'
 
-import css from './Entry.css'
+const css = {} // import css from './Entry.css'
 
-class Entry extends Component {
+class Entry extends React.Component {
 
   handleCommentChange(id, event) {
     this.props.updateComment(id, event.target.value)

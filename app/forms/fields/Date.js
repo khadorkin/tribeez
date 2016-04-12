@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import ReactDOM from 'react-dom'
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
 import moment from 'moment'
@@ -11,7 +12,7 @@ import * as colors from 'material-ui/lib/styles/colors'
 
 import styles from '../../constants/styles'
 
-class DatePickerWrapper extends Component {
+class DatePickerWrapper extends React.Component {
 
   constructor(props) {
     super(props)

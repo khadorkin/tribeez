@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -29,9 +30,9 @@ import routes from '../constants/routes'
 
 import postVote from '../actions/postVote'
 
-import css from './Entry.css'
+const css = {} // import css from './Entry.css'
 
-class Poll extends Component {
+class Poll extends React.Component {
 
   constructor(props) {
     super(props)

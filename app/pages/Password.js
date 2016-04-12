@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
+const PropTypes = React.PropTypes
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
@@ -10,7 +11,7 @@ import PasswordForm from '../forms/Password'
 
 import routes from '../constants/routes'
 
-class Password extends Component {
+class Password extends React.Component {
 
   render() {
     return (
