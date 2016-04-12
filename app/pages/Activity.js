@@ -5,36 +5,63 @@ import {bindActionCreators} from 'redux'
 import AsyncContent from '../hoc/AsyncContent'
 
 import Entry from '../components/Entry'
+import Poll from '../components/Poll'
 import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../actions/getActivity'
+import getPolls from '../actions/getPolls'
 
 class Activity extends Component {
 
   constructor(props) {
     super(props)
-    this.handleLoad = this.handleLoad.bind(this)
+    this.handlePollsLoad = this.handlePollsLoad.bind(this)
+    this.handleActivityLoad = this.handleActivityLoad.bind(this)
   }
 
-  handleLoad() {
+  handlePollsLoad() {
+    if (!this.props.polls.got) {
+      this.props.getPolls()
+    }
+  }
+
+  handleActivityLoad() {
     if (!this.props.activity.got) {
       this.props.getActivity()
     }
   }
 
   render() {
-    const {activity} = this.props
+    const {activity, polls} = this.props
 
     return (
-      <AsyncContent onLoad={this.handleLoad} error={activity.error}>
+      <div>
+        <AsyncContent onLoad={this.handlePollsLoad} error={activity.error}>
+          {
+            polls.list
+              .filter((poll) => poll.active)
+              .map((poll) =>
+                <Poll poll={poll} key={poll.id} />
+              )
+          }
+
+          <SpeedDial />
+        </AsyncContent>
+
         {
-          activity.entries.map((entry) =>
-            <Entry entry={entry} key={entry.id} />
-          )
+          polls.list.length ? <br /> : ''
         }
 
-        <SpeedDial />
-      </AsyncContent>
+        <AsyncContent onLoad={this.handleActivityLoad} error={activity.error}>
+          {
+            activity.entries.map((entry) =>
+              <Entry entry={entry} key={entry.id} />
+            )
+          }
+
+          <SpeedDial />
+        </AsyncContent>
+      </div>
     )
   }
 
@@ -43,16 +70,20 @@ class Activity extends Component {
 Activity.propTypes = {
   // redux state:
   activity: PropTypes.object.isRequired,
+  polls: PropTypes.object.isRequired,
   // action creators:
   getActivity: PropTypes.func.isRequired,
+  getPolls: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   activity: state.activity,
+  polls: state.polls,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getActivity,
+  getPolls,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity)

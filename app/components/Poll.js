@@ -19,8 +19,6 @@ import EditButton from 'material-ui/lib/svg-icons/image/edit'
 import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
 import * as colors from 'material-ui/lib/styles/colors'
 
-import Entry from '../components/Entry'
-
 import gravatar from '../utils/gravatar'
 
 import routes from '../constants/routes'
@@ -69,6 +67,9 @@ class Poll extends Component {
 
   handleSubmit() {
     this.props.postVote(this.props.poll.id, this.state.choices, this.props.uid)
+    this.setState({
+      again: false,
+    })
   }
 
   handleDelete() {
@@ -136,20 +137,20 @@ class Poll extends Component {
     }
 
     return (
-      <Card className={css.container}>
+      <Card className={css.container} initiallyExpanded={!!poll.active}>
         <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
           avatar={gravatar(author)}
           actAsExpander={true} showExpandableButton={true}
         />
-        <CardText expandable={!poll.active} style={{paddingTop: 8}}>
+        <CardText expandable={true} style={{paddingTop: 8}}>
           {poll.description}
         </CardText>
-        <CardText expandable={!poll.active} style={{paddingTop: 0}}>
+        <CardText expandable={true} style={{paddingTop: 0}}>
           {body}
         </CardText>
-        <CardActions expandable={!poll.active}>
+        <CardActions expandable={true}>
           {
             show_results ? (
               <FlatButton label="Vote again" onTouchTap={this.handleReset} />
@@ -158,21 +159,18 @@ class Poll extends Component {
             )
           }
         </CardActions>
-        <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20, marginBottom: -20}}>
-          <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
-            <EditButton color={colors.grey600} />
-          </IconButton>
-          <IconButton onTouchTap={this.handleDelete}>
-            <DeleteButton color={colors.red400} />
-          </IconButton>
-        </CardActions>
-        <CardText expandable={true}>
-          {
-            poll.entries && poll.entries.map((entry) =>
-              <Entry entry={entry} key={entry.id} />
-            )
-          }
-        </CardText>
+        {
+          this.props.onDelete && (
+            <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20, marginBottom: -20}}>
+              <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
+                <EditButton color={colors.grey600} />
+              </IconButton>
+              <IconButton onTouchTap={this.handleDelete}>
+                <DeleteButton color={colors.red400} />
+              </IconButton>
+            </CardActions>
+          )
+        }
       </Card>
     )
   }
@@ -182,7 +180,7 @@ class Poll extends Component {
 Poll.propTypes = {
   // from parent component:
   poll: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   // from redux state:
   uid: PropTypes.number,
   users: PropTypes.array,
