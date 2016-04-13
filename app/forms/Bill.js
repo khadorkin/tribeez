@@ -143,7 +143,7 @@ BillForm.propTypes = {
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
   // from redux state:
-  users: PropTypes.array,
+  users: PropTypes.array.isRequired,
   currency: PropTypes.string,
   lang: PropTypes.string,
   initialValues: PropTypes.object,

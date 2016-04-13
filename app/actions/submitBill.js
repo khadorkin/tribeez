@@ -2,12 +2,6 @@ import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
-import {
-  NEW_BILL_SUCCESS,
-  UPDATE_BILL_SUCCESS,
-  SNACK_MESSAGE,
-} from '../constants/actions'
-
 import routes from '../constants/routes'
 
 import getMember from './getMember'
@@ -28,25 +22,6 @@ export default (values, dispatch) => {
         } else {
           resolve()
           dispatch(getMember()) // to update balance
-          if (values.id) {
-            dispatch({
-              type: UPDATE_BILL_SUCCESS,
-              bill: response,
-            })
-            dispatch({
-              type: SNACK_MESSAGE,
-              message: 'bill_modified',
-            })
-          } else {
-            dispatch({
-              type: NEW_BILL_SUCCESS,
-              bill: response,
-            })
-            dispatch({
-              type: SNACK_MESSAGE,
-              message: 'bill_added',
-            })
-          }
           dispatch(push(routes.BILLS))
         }
       })

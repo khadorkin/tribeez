@@ -35,7 +35,7 @@ class Comment extends Component {
 
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
-  users: PropTypes.array,
+  users: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state) => ({

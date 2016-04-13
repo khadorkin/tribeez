@@ -174,7 +174,7 @@ class Poll extends Component {
         </CardActions>
         {
           this.props.onDelete && (
-            <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20, marginBottom: -20}}>
+            <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20}}>
               <Toggle toggled={poll.active} onToggle={this.handleToggle} style={{display: 'inline-block', width: 'auto', padding: '14px 12px 10px', verticalAlign: 'top'}} />
               <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
                 <EditButton color={colors.grey600} />
@@ -197,7 +197,7 @@ Poll.propTypes = {
   onDelete: PropTypes.func,
   // from redux state:
   uid: PropTypes.number,
-  users: PropTypes.array,
+  users: PropTypes.array.isRequired,
   currency: PropTypes.string,
   // action creators:
   postVote: PropTypes.func.isRequired,

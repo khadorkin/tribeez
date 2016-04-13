@@ -3,9 +3,9 @@ import {
   GET_EVENTS_SUCCESS,
   GET_EVENTS_FAILURE,
   GET_EVENT_SUCCESS,
-  NEW_EVENT_SUCCESS,
-  UPDATE_EVENT_SUCCESS,
-  DELETE_EVENT_SUCCESS,
+  NEW_EVENT,
+  UPDATE_EVENT,
+  DELETE_EVENT,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -39,22 +39,22 @@ export default (state = initialState, action = null) => {
     case GET_EVENT_SUCCESS:
       return {...state, current: action.data}
 
-    case NEW_EVENT_SUCCESS: {
-      const list = state.list.slice()
-      list.push(action.event)
+    // from socket.io:
+    case NEW_EVENT: {
+      const list = [action.data, ...state.list]
       return {...state, list}
     }
-    case UPDATE_EVENT_SUCCESS: {
+    case UPDATE_EVENT: {
       const list = state.list.map((event) => {
-        if (event.id === action.event.id) {
-          return action.event
+        if (event.id === action.data.id) {
+          return action.data
         }
         return event
       })
       return {...state, list}
     }
-    case DELETE_EVENT_SUCCESS: {
-      const list = state.list.filter((event) => event.id !== action.id)
+    case DELETE_EVENT: {
+      const list = state.list.filter((event) => event.id !== action.data.id)
       return {...state, list}
     }
 

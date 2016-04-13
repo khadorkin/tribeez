@@ -2,10 +2,10 @@ import {
   GET_BILLS_REQUEST,
   GET_BILLS_SUCCESS,
   GET_BILLS_FAILURE,
-  NEW_BILL_SUCCESS,
-  UPDATE_BILL_SUCCESS,
+  NEW_BILL,
+  UPDATE_BILL,
   GET_BILL_SUCCESS,
-  DELETE_BILL_SUCCESS,
+  DELETE_BILL,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -39,21 +39,22 @@ export default (state = initialState, action = null) => {
     case GET_BILL_SUCCESS:
       return {...state, current: action.data}
 
-    case NEW_BILL_SUCCESS: {
-      const list = [action.bill, ...state.list]
+    // from socket.io:
+    case NEW_BILL: {
+      const list = [action.data, ...state.list]
       return {...state, list}
     }
-    case UPDATE_BILL_SUCCESS: {
+    case UPDATE_BILL: {
       const list = state.list.map((bill) => {
-        if (bill.id === action.bill.id) {
-          return action.bill
+        if (bill.id === action.data.id) {
+          return action.data
         }
         return bill
       })
       return {...state, list}
     }
-    case DELETE_BILL_SUCCESS: {
-      const list = state.list.filter((bill) => bill.id !== action.id)
+    case DELETE_BILL: {
+      const list = state.list.filter((bill) => bill.id !== action.data.id)
       return {...state, list}
     }
 

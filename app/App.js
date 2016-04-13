@@ -70,17 +70,19 @@ class App extends Component {
   }
 
   render() {
+    const {uid, snack, desktop, lang, location: {pathname}} = this.props
+
     let iconLeft = null
     let iconRight = null
-    if (!this.props.uid) { // i.e. anonymous
-      if (this.props.location.pathname === '/') {
+    if (!uid) { // i.e. anonymous
+      if (pathname === '/') {
         iconLeft = (
           <IconMenu
             iconButtonElement={<IconButton><LangIcon color="white" /></IconButton>}
             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
             onChange={this.handleLangChange}
-            value={this.props.lang}
+            value={lang}
           >
             {langItems}
           </IconMenu>
@@ -100,21 +102,21 @@ class App extends Component {
       iconRight = <CircularProgress color="white" size={0.5} />
     }
 
-    const nav = this.props.uid && (
+    const nav = uid && (
       <LeftNav
-        open={this.props.menu_visible || this.props.desktop}
-        docked={this.props.desktop}
+        open={this.props.menu_visible || desktop}
+        docked={desktop}
         onRequestChange={this.handleNavToggle}
         style={{overflow: 'hidden'}}
         overlayStyle={{cursor: 'w-resize'}}
       >
-        <Nav module={this.props.location.pathname.split('/')[1]} />
+        <Nav module={pathname.split('/')[1]} />
       </LeftNav>
     ) // do not load left nav if not logged in
 
-    const dockedUserMenu = this.props.uid && this.props.desktop
+    const dockedUserMenu = uid && desktop
 
-    const path_parts = this.props.location.pathname.substr(1).split('/')
+    const path_parts = pathname.substr(1).split('/')
     if (this.props.params.token) {
       path_parts.pop()
     }
@@ -124,8 +126,11 @@ class App extends Component {
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
+    const snack_author = this.props.users.find((u) => u.id === snack.author)
+    const snack_author_name = snack_author && (snack_author.id === uid ? '_you_' : snack_author.name)
+
     return (
-      <IntlProvider locale={this.props.lang} messages={this.props.messages}>
+      <IntlProvider locale={lang} messages={this.props.messages}>
         <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
           {nav}
           <AppBar title={title} zDepth={0}
@@ -138,8 +143,8 @@ class App extends Component {
           </div>
 
           <Snackbar
-            open={this.props.snack}
-            message={this.props.snackMessage ? <FormattedMessage id={`snack.${this.props.snackMessage}`} /> : ''}
+            open={snack.open}
+            message={snack.message ? <FormattedMessage id={`snack.${snack.message}`} values={{author: snack_author_name, name: snack.name}} /> : ''}
             onRequestClose={this.handleSnackClose}
             autoHideDuration={5000}
           />
@@ -155,16 +160,18 @@ App.childContextTypes = {
 }
 
 App.propTypes = {
+  // from router:
   location: PropTypes.object.isRequired,
+  // from redux:
   uid: PropTypes.number,
   telegram_token: PropTypes.string,
+  users: PropTypes.array.isRequired,
   lang: PropTypes.string.isRequired,
   desktop: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   messages: PropTypes.object.isRequired,
   menu_visible: PropTypes.bool.isRequired,
-  snack: PropTypes.bool.isRequired,
-  snackMessage: PropTypes.string,
+  snack: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
     // action creators:
   toggleMenu: PropTypes.func.isRequired,
@@ -178,13 +185,13 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   telegram_token: state.member.user.telegram_token,
+  users: state.member.tribe.users,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   height: state.app.height,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   snack: state.app.snack,
-  snackMessage: state.app.snackMessage,
   loading: state.app.submitting
         || state.activity.loading
         || state.invite.loading

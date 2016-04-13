@@ -2,7 +2,6 @@ import api from '../utils/api'
 
 import {
   DELETE_EVENT_REQUEST,
-  DELETE_EVENT_SUCCESS,
   DELETE_EVENT_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
@@ -22,15 +21,6 @@ export default (id) => {
           dispatch({
             type: SNACK_MESSAGE,
             message: 'error',
-          })
-        } else {
-          dispatch({
-            type: DELETE_EVENT_SUCCESS,
-            id,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'event_deleted',
           })
         }
       })

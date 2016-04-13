@@ -109,7 +109,7 @@ Bill.propTypes = {
   onDelete: PropTypes.func.isRequired,
   // from redux state:
   uid: PropTypes.number,
-  users: PropTypes.array,
+  users: PropTypes.array.isRequired,
   currency: PropTypes.string,
 }
 

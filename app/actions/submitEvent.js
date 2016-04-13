@@ -2,12 +2,6 @@ import {push} from 'react-router-redux'
 
 import api from '../utils/api'
 
-import {
-  NEW_EVENT_SUCCESS,
-  UPDATE_EVENT_SUCCESS,
-  SNACK_MESSAGE,
-} from '../constants/actions'
-
 import routes from '../constants/routes'
 
 export default (values, dispatch) => {
@@ -21,25 +15,6 @@ export default (values, dispatch) => {
           reject(response.error)
         } else {
           resolve()
-          if (values.id) {
-            dispatch({
-              type: UPDATE_EVENT_SUCCESS,
-              event: response,
-            })
-            dispatch({
-              type: SNACK_MESSAGE,
-              message: 'event_updated',
-            })
-          } else {
-            dispatch({
-              type: NEW_EVENT_SUCCESS,
-              event: response,
-            })
-            dispatch({
-              type: SNACK_MESSAGE,
-              message: 'event_created',
-            })
-          }
           dispatch(push(routes.EVENTS))
         }
       })

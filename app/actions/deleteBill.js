@@ -2,7 +2,6 @@ import api from '../utils/api'
 
 import {
   DELETE_BILL_REQUEST,
-  DELETE_BILL_SUCCESS,
   DELETE_BILL_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
@@ -26,15 +25,7 @@ export default (id) => {
             message: 'error',
           })
         } else {
-          dispatch({
-            type: DELETE_BILL_SUCCESS,
-            id,
-          })
-          dispatch(getMember())
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'bill_deleted',
-          })
+          dispatch(getMember()) // update balance
         }
       })
       .catch(() => {

@@ -24,8 +24,12 @@ const initialState = {
   messages: messages[defaultLang],
   width: window.innerWidth,
   height: window.innerHeight,
-  snack: false,
-  snackMessage: null,
+  snack: {
+    open: false,
+    message: null,
+    author: null,
+    name: null,
+  },
   submitting: false,
 }
 
@@ -71,10 +75,13 @@ export default (state = initialState, action = null) => {
       }
       return state
     case SNACK_MESSAGE:
-      return Object.assign({}, state, {
-        snack: true,
-        snackMessage: action.message,
-      })
+      const snack = {
+        open: true,
+        message: action.message,
+        author: action.author,
+        name: action.name,
+      }
+      return {...state, snack}
     case CLOSE_SNACK:
       return Object.assign({}, state, {
         snack: false,

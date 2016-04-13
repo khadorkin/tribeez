@@ -3,10 +3,10 @@ import {
   GET_POLLS_SUCCESS,
   GET_POLLS_FAILURE,
   GET_POLL_SUCCESS,
-  NEW_POLL_SUCCESS,
-  UPDATE_POLL_SUCCESS,
+  NEW_POLL,
+  UPDATE_POLL,
   PUT_POLL_SUCCESS,
-  DELETE_POLL_SUCCESS,
+  DELETE_POLL,
   POST_VOTE_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -41,20 +41,26 @@ export default (state = initialState, action = null) => {
     case GET_POLL_SUCCESS:
       return {...state, current: action.data}
 
-    case NEW_POLL_SUCCESS: {
-      const list = state.list.slice()
-      list.unshift(action.poll)
+    // from socket.io:
+    case NEW_POLL: {
+      const list = [action.data, ...state.list]
       return {...state, list}
     }
-    case UPDATE_POLL_SUCCESS: {
+    case UPDATE_POLL: {
       const list = state.list.map((poll) => {
-        if (poll.id === action.poll.id) {
-          return action.poll
+        if (poll.id === action.data.id) {
+          return action.data
         }
         return poll
       })
       return {...state, list}
     }
+    case DELETE_POLL: {
+      const list = state.list.filter((poll) => poll.id !== action.data.id)
+      return {...state, list}
+    }
+
+    // toggle active:
     case PUT_POLL_SUCCESS: {
       const list = state.list.map((poll) => {
         if (poll.id === action.data.id) {
@@ -64,11 +70,8 @@ export default (state = initialState, action = null) => {
       })
       return {...state, list}
     }
-    case DELETE_POLL_SUCCESS: {
-      const list = state.list.filter((poll) => poll.id !== action.id)
-      return {...state, list}
-    }
 
+    // vote:
     case POST_VOTE_SUCCESS: {
       const list = state.list.slice()
       list.forEach((poll) => {

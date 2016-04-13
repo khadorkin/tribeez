@@ -84,7 +84,7 @@ Event.propTypes = {
   event: PropTypes.object.isRequired,
   // from redux state:
   uid: PropTypes.number,
-  users: PropTypes.array,
+  users: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state) => ({

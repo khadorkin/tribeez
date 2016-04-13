@@ -4,16 +4,16 @@ import {
   GET_ACTIVITY_FAILURE,
   COMMENT_SUCCESS,
   UPDATE_COMMENT_TEXT,
-  NEW_BILL_SUCCESS,
-  UPDATE_BILL_SUCCESS,
-  DELETE_BILL_SUCCESS,
-  NEW_EVENT_SUCCESS,
-  UPDATE_EVENT_SUCCESS,
-  DELETE_EVENT_SUCCESS,
-  NEW_POLL_SUCCESS,
-  UPDATE_POLL_SUCCESS,
+  NEW_BILL,
+  UPDATE_BILL,
+  DELETE_BILL,
+  NEW_EVENT,
+  UPDATE_EVENT,
+  DELETE_EVENT,
+  NEW_POLL,
+  UPDATE_POLL,
   PUT_POLL_SUCCESS,
-  DELETE_POLL_SUCCESS,
+  DELETE_POLL,
   POST_VOTE_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -69,16 +69,16 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         boxComments,
       })
-    case NEW_BILL_SUCCESS:
-    case UPDATE_BILL_SUCCESS:
-    case DELETE_BILL_SUCCESS:
-    case NEW_EVENT_SUCCESS:
-    case UPDATE_EVENT_SUCCESS:
-    case DELETE_EVENT_SUCCESS:
-    case NEW_POLL_SUCCESS:
-    case UPDATE_POLL_SUCCESS:
+    case NEW_BILL:
+    case UPDATE_BILL:
+    case DELETE_BILL:
+    case NEW_EVENT:
+    case UPDATE_EVENT:
+    case DELETE_EVENT:
+    case NEW_POLL:
+    case UPDATE_POLL:
+    case DELETE_POLL:
     case PUT_POLL_SUCCESS:
-    case DELETE_POLL_SUCCESS:
     case POST_VOTE_SUCCESS:
       return {...state, got: false}
     case LOGOUT_SUCCESS:

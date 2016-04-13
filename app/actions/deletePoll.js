@@ -2,12 +2,9 @@ import api from '../utils/api'
 
 import {
   DELETE_POLL_REQUEST,
-  DELETE_POLL_SUCCESS,
   DELETE_POLL_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
-
-import getMember from './getMember'
 
 export default (id) => {
   return function(dispatch) {
@@ -24,16 +21,6 @@ export default (id) => {
           dispatch({
             type: SNACK_MESSAGE,
             message: 'error',
-          })
-        } else {
-          dispatch({
-            type: DELETE_POLL_SUCCESS,
-            id,
-          })
-          dispatch(getMember())
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'poll_deleted',
           })
         }
       })
