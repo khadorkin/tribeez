@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux'
 import AsyncContent from '../hoc/AsyncContent'
 
 import Entry from '../components/Entry'
+import Event from '../components/Event'
 import Poll from '../components/Poll'
 import SpeedDial from '../components/SpeedDial'
 
@@ -24,7 +25,7 @@ class Activity extends Component {
   }
 
   render() {
-    const {activity: {entries, polls, error}} = this.props
+    const {activity: {entries, polls, events, error}} = this.props
 
     return (
       <AsyncContent onLoad={this.handleLoad} error={error}>
@@ -36,6 +37,16 @@ class Activity extends Component {
 
         {
           polls.length > 0 && <br />
+        }
+
+        {
+          events.map((event) =>
+            <Event event={event} key={event.id} />
+          )
+        }
+
+        {
+          events.length > 0 && <br />
         }
 
         {

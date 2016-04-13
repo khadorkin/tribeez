@@ -7,6 +7,9 @@ import {
   NEW_BILL_SUCCESS,
   UPDATE_BILL_SUCCESS,
   DELETE_BILL_SUCCESS,
+  NEW_EVENT_SUCCESS,
+  UPDATE_EVENT_SUCCESS,
+  DELETE_EVENT_SUCCESS,
   NEW_POLL_SUCCESS,
   UPDATE_POLL_SUCCESS,
   PUT_POLL_SUCCESS,
@@ -18,6 +21,7 @@ import {
 const initialState = {
   loading: false,
   entries: [],
+  events: [],
   polls: [],
   error: null,
   got: false,
@@ -37,6 +41,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: null,
         entries: action.data.entries,
+        events: action.data.events,
         polls: action.data.polls,
         got: true,
       })
@@ -67,6 +72,9 @@ export default (state = initialState, action = null) => {
     case NEW_BILL_SUCCESS:
     case UPDATE_BILL_SUCCESS:
     case DELETE_BILL_SUCCESS:
+    case NEW_EVENT_SUCCESS:
+    case UPDATE_EVENT_SUCCESS:
+    case DELETE_EVENT_SUCCESS:
     case NEW_POLL_SUCCESS:
     case UPDATE_POLL_SUCCESS:
     case PUT_POLL_SUCCESS:
