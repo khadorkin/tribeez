@@ -28,6 +28,7 @@ export default (state = initialState, action = null) => {
         error: false,
       })
     case GET_MEMBER_SUCCESS:
+      ga('set', 'userId', action.user.id)
       return Object.assign({}, state, {
         loading: false,
         error: false,

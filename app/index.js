@@ -89,6 +89,10 @@ if (__DEBUG__) {
 
 const history = syncHistoryWithStore(browserHistory, store)
 
+history.listen((location) => {
+  ga('send', 'pageview', location.pathname)
+})
+
 // update app size
 window.onresize = store.dispatch.bind(store.dispatch, resize())
 window.onresize()

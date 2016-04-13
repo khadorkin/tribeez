@@ -5,6 +5,7 @@
   "twitter": "TribeezApp",
   "api_endpoint": "https://api.tribeez.net",
   "rollbar_token": "xxxxxxxx",
+  "ga_id": "UA-XXXXXXXX-X",
   "recaptcha_site_key": "xxxxxxxx",
   "google_api_key": "xxxxxxxx",
   "telegram_bot_name": "xxxxxbot"

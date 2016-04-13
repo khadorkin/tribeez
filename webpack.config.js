@@ -65,6 +65,7 @@ Object.assign(config, {
       image: user_config.url + '/logo.png',
       env: env,
       rollbar_token: user_config.rollbar_token,
+      ga_id: user_config.ga_id,
       revision: revision,
     }),
     new webpack.DefinePlugin({
