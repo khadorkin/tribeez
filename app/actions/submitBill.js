@@ -4,7 +4,7 @@ import api from '../utils/api'
 
 import {
   NEW_BILL_SUCCESS,
-  PUT_BILL_SUCCESS,
+  UPDATE_BILL_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -30,7 +30,7 @@ export default (values, dispatch) => {
           dispatch(getMember()) // to update balance
           if (values.id) {
             dispatch({
-              type: PUT_BILL_SUCCESS,
+              type: UPDATE_BILL_SUCCESS,
               bill: response,
             })
             dispatch({

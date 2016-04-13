@@ -5,8 +5,8 @@ import {
   GET_MEMBER_SUCCESS,
   GET_MEMBER_FAILURE,
   LOGOUT_SUCCESS,
-  PUT_PROFILE_SUCCESS,
-  PUT_TRIBE_SUCCESS,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_TRIBE_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
@@ -39,7 +39,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: true,
       })
-    case PUT_PROFILE_SUCCESS: {
+    case UPDATE_PROFILE_SUCCESS: {
       const user = {
         ...state.user,
         name: action.values.name,
@@ -61,7 +61,7 @@ export default (state = initialState, action = null) => {
       user.tribes = state.user.tribes.slice()
       return {...state, user, tribe}
     }
-    case PUT_TRIBE_SUCCESS: {
+    case UPDATE_TRIBE_SUCCESS: {
       const tribe = {
         id: action.values.id,
         name: action.values.tribe_name,

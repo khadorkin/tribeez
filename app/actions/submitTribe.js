@@ -4,7 +4,7 @@ import getMember from './getMember'
 import getActivity from './getActivity'
 
 import {
-  PUT_TRIBE_SUCCESS,
+  UPDATE_TRIBE_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -23,7 +23,7 @@ export default (values, dispatch) => {
           resolve()
           if (values.id) {
             dispatch({
-              type: PUT_TRIBE_SUCCESS,
+              type: UPDATE_TRIBE_SUCCESS,
               values,
             })
             dispatch({

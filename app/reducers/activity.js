@@ -5,14 +5,20 @@ import {
   COMMENT_SUCCESS,
   UPDATE_COMMENT_TEXT,
   NEW_BILL_SUCCESS,
-  PUT_BILL_SUCCESS,
+  UPDATE_BILL_SUCCESS,
   DELETE_BILL_SUCCESS,
+  NEW_POLL_SUCCESS,
+  UPDATE_POLL_SUCCESS,
+  PUT_POLL_SUCCESS,
+  DELETE_POLL_SUCCESS,
+  POST_VOTE_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
   loading: false,
   entries: [],
+  polls: [],
   error: null,
   got: false,
   boxComments: {},
@@ -30,7 +36,8 @@ export default (state = initialState, action = null) => {
       return Object.assign({}, state, {
         loading: false,
         error: null,
-        entries: action.entries,
+        entries: action.data.entries,
+        polls: action.data.polls,
         got: true,
       })
     case GET_ACTIVITY_FAILURE:
@@ -58,8 +65,13 @@ export default (state = initialState, action = null) => {
         boxComments,
       })
     case NEW_BILL_SUCCESS:
-    case PUT_BILL_SUCCESS:
+    case UPDATE_BILL_SUCCESS:
     case DELETE_BILL_SUCCESS:
+    case NEW_POLL_SUCCESS:
+    case UPDATE_POLL_SUCCESS:
+    case PUT_POLL_SUCCESS:
+    case DELETE_POLL_SUCCESS:
+    case POST_VOTE_SUCCESS:
       return {...state, got: false}
     case LOGOUT_SUCCESS:
       return {...initialState}

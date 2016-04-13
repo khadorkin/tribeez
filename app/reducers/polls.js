@@ -4,6 +4,7 @@ import {
   GET_POLLS_FAILURE,
   GET_POLL_SUCCESS,
   NEW_POLL_SUCCESS,
+  UPDATE_POLL_SUCCESS,
   PUT_POLL_SUCCESS,
   DELETE_POLL_SUCCESS,
   POST_VOTE_SUCCESS,
@@ -45,10 +46,19 @@ export default (state = initialState, action = null) => {
       list.unshift(action.poll)
       return {...state, list}
     }
-    case PUT_POLL_SUCCESS: {
+    case UPDATE_POLL_SUCCESS: {
       const list = state.list.map((poll) => {
         if (poll.id === action.poll.id) {
           return action.poll
+        }
+        return poll
+      })
+      return {...state, list}
+    }
+    case PUT_POLL_SUCCESS: {
+      const list = state.list.map((poll) => {
+        if (poll.id === action.data.id) {
+          return {...poll, active: action.data.active}
         }
         return poll
       })

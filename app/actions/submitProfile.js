@@ -1,7 +1,7 @@
 import api from '../utils/api'
 
 import {
-  PUT_PROFILE_SUCCESS,
+  UPDATE_PROFILE_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -17,7 +17,7 @@ export default (values, dispatch) => {
         } else {
           resolve()
           dispatch({
-            type: PUT_PROFILE_SUCCESS,
+            type: UPDATE_PROFILE_SUCCESS,
             values,
           })
           dispatch({

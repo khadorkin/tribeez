@@ -3,7 +3,7 @@ import {
   GET_BILLS_SUCCESS,
   GET_BILLS_FAILURE,
   NEW_BILL_SUCCESS,
-  PUT_BILL_SUCCESS,
+  UPDATE_BILL_SUCCESS,
   GET_BILL_SUCCESS,
   DELETE_BILL_SUCCESS,
   LOGOUT_SUCCESS,
@@ -43,7 +43,7 @@ export default (state = initialState, action = null) => {
       const list = [action.bill, ...state.list]
       return {...state, list}
     }
-    case PUT_BILL_SUCCESS: {
+    case UPDATE_BILL_SUCCESS: {
       const list = state.list.map((bill) => {
         if (bill.id === action.bill.id) {
           return action.bill

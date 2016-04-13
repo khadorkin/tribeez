@@ -17,6 +17,7 @@ import FlatButton from 'material-ui/lib/flat-button'
 import IconButton from 'material-ui/lib/icon-button'
 import EditButton from 'material-ui/lib/svg-icons/image/edit'
 import DeleteButton from 'material-ui/lib/svg-icons/action/delete'
+import Toggle from 'material-ui/lib/toggle'
 import * as colors from 'material-ui/lib/styles/colors'
 
 import gravatar from '../utils/gravatar'
@@ -24,6 +25,7 @@ import gravatar from '../utils/gravatar'
 import routes from '../constants/routes'
 
 import postVote from '../actions/postVote'
+import putPoll from '../actions/putPoll'
 
 import css from './Entry.css'
 
@@ -37,6 +39,7 @@ class Poll extends Component {
     }
     this.handleReset = this.handleReset.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleToggle = this.handleToggle.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -66,9 +69,19 @@ class Poll extends Component {
   }
 
   handleSubmit() {
-    this.props.postVote(this.props.poll.id, this.state.choices, this.props.uid)
-    this.setState({
-      again: false,
+    const choices = this.state.choices
+    if (choices.length) {
+      this.props.postVote(this.props.poll.id, choices, this.props.uid)
+      this.setState({
+        again: false,
+      })
+    }
+  }
+
+  handleToggle(event, active) {
+    this.props.putPoll({
+      id: this.props.poll.id,
+      active,
     })
   }
 
@@ -137,7 +150,7 @@ class Poll extends Component {
     }
 
     return (
-      <Card className={css.container} initiallyExpanded={!!poll.active}>
+      <Card className={css.container} initiallyExpanded={poll.active}>
         <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -162,6 +175,7 @@ class Poll extends Component {
         {
           this.props.onDelete && (
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20, marginBottom: -20}}>
+              <Toggle toggled={poll.active} onToggle={this.handleToggle} style={{display: 'inline-block', width: 'auto', padding: '14px 12px 10px', verticalAlign: 'top'}} />
               <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
                 <EditButton color={colors.grey600} />
               </IconButton>
@@ -187,6 +201,7 @@ Poll.propTypes = {
   currency: PropTypes.string,
   // action creators:
   postVote: PropTypes.func.isRequired,
+  putPoll: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -197,6 +212,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   postVote,
+  putPoll,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Poll)

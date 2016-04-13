@@ -4,7 +4,7 @@ import api from '../utils/api'
 
 import {
   NEW_POLL_SUCCESS,
-  PUT_POLL_SUCCESS,
+  UPDATE_POLL_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -28,7 +28,7 @@ export default (values, dispatch) => {
           resolve()
           if (values.id) {
             dispatch({
-              type: PUT_POLL_SUCCESS,
+              type: UPDATE_POLL_SUCCESS,
               poll: response,
             })
             dispatch({

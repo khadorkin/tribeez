@@ -4,7 +4,7 @@ import api from '../utils/api'
 
 import {
   NEW_EVENT_SUCCESS,
-  PUT_EVENT_SUCCESS,
+  UPDATE_EVENT_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -23,7 +23,7 @@ export default (values, dispatch) => {
           resolve()
           if (values.id) {
             dispatch({
-              type: PUT_EVENT_SUCCESS,
+              type: UPDATE_EVENT_SUCCESS,
               event: response,
             })
             dispatch({

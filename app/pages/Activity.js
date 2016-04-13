@@ -9,59 +9,43 @@ import Poll from '../components/Poll'
 import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../actions/getActivity'
-import getPolls from '../actions/getPolls'
 
 class Activity extends Component {
 
   constructor(props) {
     super(props)
-    this.handlePollsLoad = this.handlePollsLoad.bind(this)
-    this.handleActivityLoad = this.handleActivityLoad.bind(this)
+    this.handleLoad = this.handleLoad.bind(this)
   }
 
-  handlePollsLoad() {
-    if (!this.props.polls.got) {
-      this.props.getPolls()
-    }
-  }
-
-  handleActivityLoad() {
+  handleLoad() {
     if (!this.props.activity.got) {
       this.props.getActivity()
     }
   }
 
   render() {
-    const {activity, polls} = this.props
+    const {activity: {entries, polls, error}} = this.props
 
     return (
-      <div>
-        <AsyncContent onLoad={this.handlePollsLoad} error={activity.error}>
-          {
-            polls.list
-              .filter((poll) => poll.active)
-              .map((poll) =>
-                <Poll poll={poll} key={poll.id} />
-              )
-          }
-
-          <SpeedDial />
-        </AsyncContent>
-
+      <AsyncContent onLoad={this.handleLoad} error={error}>
         {
-          polls.list.length ? <br /> : ''
+          polls.map((poll) =>
+            <Poll poll={poll} key={poll.id} />
+          )
         }
 
-        <AsyncContent onLoad={this.handleActivityLoad} error={activity.error}>
-          {
-            activity.entries.map((entry) =>
-              <Entry entry={entry} key={entry.id} />
-            )
-          }
+        {
+          polls.length > 0 && <br />
+        }
 
-          <SpeedDial />
-        </AsyncContent>
-      </div>
+        {
+          entries.map((entry) =>
+            <Entry entry={entry} key={entry.id} />
+          )
+        }
+
+        <SpeedDial />
+      </AsyncContent>
     )
   }
 
@@ -70,20 +54,16 @@ class Activity extends Component {
 Activity.propTypes = {
   // redux state:
   activity: PropTypes.object.isRequired,
-  polls: PropTypes.object.isRequired,
   // action creators:
   getActivity: PropTypes.func.isRequired,
-  getPolls: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   activity: state.activity,
-  polls: state.polls,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getActivity,
-  getPolls,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity)

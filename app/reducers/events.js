@@ -4,7 +4,7 @@ import {
   GET_EVENTS_FAILURE,
   GET_EVENT_SUCCESS,
   NEW_EVENT_SUCCESS,
-  PUT_EVENT_SUCCESS,
+  UPDATE_EVENT_SUCCESS,
   DELETE_EVENT_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -44,7 +44,7 @@ export default (state = initialState, action = null) => {
       list.push(action.event)
       return {...state, list}
     }
-    case PUT_EVENT_SUCCESS: {
+    case UPDATE_EVENT_SUCCESS: {
       const list = state.list.map((event) => {
         if (event.id === action.event.id) {
           return action.event

@@ -21,7 +21,7 @@ export default () => {
         } else {
           dispatch({
             type: GET_ACTIVITY_SUCCESS,
-            entries: response,
+            data: response,
           })
         }
       })

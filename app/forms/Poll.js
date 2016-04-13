@@ -100,12 +100,14 @@ const mapStateToProps = (state, ownProps) => {
   const poll = ownProps.current || state.polls.current // either from routing state, or from ajax retrieval
   let initialValues
   if (poll) {
+    const options = poll.options.map((option) => option.name)
+    options.push('')
     initialValues = {
       id: poll.id,
       name: poll.name,
       description: poll.description,
       multiple: Boolean(poll.multiple),
-      options: poll.options.map((option) => option.name),
+      options,
     }
   } else {
     initialValues = {
