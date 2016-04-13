@@ -11,6 +11,11 @@ import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../actions/getActivity'
 
+const h3style = {
+  margin: '20px 10px 0',
+  fontWeight: 300,
+}
+
 class Activity extends Component {
 
   constructor(props) {
@@ -30,13 +35,17 @@ class Activity extends Component {
     return (
       <AsyncContent onLoad={this.handleLoad} error={error}>
         {
+          polls.length > 0 && <h3 style={h3style}>Open polls</h3>
+        }
+
+        {
           polls.map((poll) =>
             <Poll poll={poll} key={poll.id} />
           )
         }
 
         {
-          polls.length > 0 && <br />
+          events.length > 0 && <h3 style={h3style}>Upcoming events</h3>
         }
 
         {
@@ -46,7 +55,7 @@ class Activity extends Component {
         }
 
         {
-          events.length > 0 && <br />
+          entries.length > 0 && (polls.length > 0 || events.length > 0) && <h3 style={h3style}>Activity</h3>
         }
 
         {

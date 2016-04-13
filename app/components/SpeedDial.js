@@ -9,7 +9,7 @@ import AddIcon from 'material-ui/lib/svg-icons/content/add'
 import CartIcon from 'material-ui/lib/svg-icons/action/shopping-cart'
 import EventIcon from 'material-ui/lib/svg-icons/action/event'
 import CheckIcon from 'material-ui/lib/svg-icons/action/assignment-turned-in'
-import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
+//import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/lib/svg-icons/social/poll'
 
 import routes from '../constants/routes'
@@ -19,7 +19,7 @@ const color = 'rgb(95,193,178)'
 
 const actions = [
   {route: routes.POLLS_NEW, icon: <PollIcon />},
-  {route: routes.NOTES_NEW, icon: <PasteIcon />},
+  //{route: routes.NOTES_NEW, icon: <PasteIcon />}, //TODO
   {route: routes.TASKS_NEW, icon: <CheckIcon />},
   {route: routes.EVENTS_NEW, icon: <EventIcon />},
   {route: routes.BILLS_NEW, icon: <CartIcon />},
