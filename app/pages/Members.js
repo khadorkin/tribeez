@@ -34,16 +34,9 @@ class Members extends Component {
       openDialog: false,
       invite: {},
     }
-    this.handleLoad = this.handleLoad.bind(this)
     this.openDialog = this.openDialog.bind(this)
     this.handleResend = this.handleResend.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
-  }
-
-  handleLoad() {
-    if (!this.props.invites.got) {
-      this.props.getInvites()
-    }
   }
 
   openDialog(invite) {
@@ -85,7 +78,7 @@ class Members extends Component {
     ]
 
     return (
-      <AsyncContent style={{padding: '10px'}} onLoad={this.handleLoad} error={invites.error}>
+      <AsyncContent style={{padding: '10px'}} fetcher={this.props.getInvites} data={invites}>
         {
           users.map((user) =>
             <Member user={user} key={user.id} />
@@ -93,12 +86,12 @@ class Members extends Component {
         }
 
         {
-          invites.list.length > 0 &&
+          invites.items.length > 0 &&
             <Paper>
               <List>
                 <Subheader>Invites send</Subheader>
                 {
-                  invites.list.map((invite, index, arr) => {
+                  invites.items.map((invite, index, arr) => {
                     const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
                     const inviter = users.find((user) => user.id === invite.inviter_id)
                     if (!inviter) {

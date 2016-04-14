@@ -7,9 +7,10 @@ import {
 
 const initialState = {
   loading: false,
-  list: [],
   error: null,
-  got: false, // true = we got the initial list through a request
+  items: [],
+  pages: 0,
+  paging: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -25,8 +26,9 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        list: action.list,
-        got: true,
+        items: [...state.items, ...action.data.items],
+        pages: state.pages + 1,
+        paging: action.data.paging || state.paging,
       }
     case GET_INVITES_FAILURE:
       return {
@@ -34,6 +36,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       }
+
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

@@ -21,7 +21,7 @@ export default () => {
         } else {
           dispatch({
             type: GET_EVENTS_SUCCESS,
-            list: response,
+            data: response,
           })
         }
       })

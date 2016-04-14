@@ -18,22 +18,11 @@ const h3style = {
 
 class Activity extends Component {
 
-  constructor(props) {
-    super(props)
-    this.handleLoad = this.handleLoad.bind(this)
-  }
-
-  handleLoad() {
-    if (!this.props.activity.got) {
-      this.props.getActivity()
-    }
-  }
-
   render() {
-    const {activity: {entries, polls, events, error}} = this.props
+    const {activity: {items, polls, events}} = this.props
 
     return (
-      <AsyncContent onLoad={this.handleLoad} error={error}>
+      <AsyncContent fetcher={this.props.getActivity} data={this.props.activity}>
         {
           polls.length > 0 && <h3 style={h3style}>Open polls</h3>
         }
@@ -55,11 +44,11 @@ class Activity extends Component {
         }
 
         {
-          entries.length > 0 && (polls.length > 0 || events.length > 0) && <h3 style={h3style}>Activity</h3>
+          items.length > 0 && (polls.length > 0 || events.length > 0) && <h3 style={h3style}>Activity</h3>
         }
 
         {
-          entries.map((entry) =>
+          items.map((entry) =>
             <Entry entry={entry} key={entry.id} />
           )
         }

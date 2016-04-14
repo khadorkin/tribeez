@@ -11,9 +11,9 @@ import {
 
 const initialState = {
   loading: false,
-  list: [],
   error: null,
-  got: false, // true = we got the initial list through a request
+  items: [],
+  pages: 0,
   current: null, // current event being edited
 }
 
@@ -30,8 +30,8 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        list: action.list,
-        got: true,
+        items: [...state.items, ...action.data.items],
+        pages: state.pages + 1,
       }
     case GET_EVENTS_FAILURE:
       return {
@@ -47,14 +47,14 @@ export default (state = initialState, action = null) => {
 
     // from socket.io:
     case NEW_EVENT: {
-      const list = [action.data, ...state.list]
+      const items = [action.data, ...state.items]
       return {
         ...state,
-        list,
+        items,
       }
     }
     case UPDATE_EVENT: {
-      const list = state.list.map((event) => {
+      const items = state.items.map((event) => {
         if (event.id === action.data.id) {
           return action.data
         }
@@ -62,14 +62,14 @@ export default (state = initialState, action = null) => {
       })
       return {
         ...state,
-        list,
+        items,
       }
     }
     case DELETE_EVENT: {
-      const list = state.list.filter((event) => event.id !== action.data.id)
+      const items = state.items.filter((event) => event.id !== action.data.id)
       return {
         ...state,
-        list,
+        items,
       }
     }
 

@@ -21,7 +21,7 @@ export default () => {
         } else {
           dispatch({
             type: GET_NOTES_SUCCESS,
-            list: response,
+            data: response,
           })
         }
       })

@@ -26,16 +26,9 @@ class Polls extends Component {
       openDialog: false,
       poll: {},
     }
-    this.handleLoad = this.handleLoad.bind(this)
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
-  }
-
-  handleLoad() {
-    if (!this.props.polls.got) {
-      this.props.getPolls()
-    }
   }
 
   handleDialogOpen(poll) {
@@ -74,9 +67,9 @@ class Polls extends Component {
     ]
 
     return (
-      <AsyncContent onLoad={this.handleLoad} error={polls.error}>
+      <AsyncContent fetcher={this.props.getPolls} data={polls}>
         {
-          polls.list.map((poll) =>
+          polls.items.map((poll) =>
             <Poll poll={poll} key={poll.id} onDelete={this.handleDialogOpen} />
           )
         }

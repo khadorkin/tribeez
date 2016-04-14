@@ -56,18 +56,11 @@ class Events extends Component {
       event: {},
       openDelete: false,
     }
-    this.handleLoad = this.handleLoad.bind(this)
     this.handleSelectEvent = this.handleSelectEvent.bind(this)
     this.handleDetailsClose = this.handleDetailsClose.bind(this)
     this.handleDeleteOpen = this.handleDeleteOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDeleteClose = this.handleDeleteClose.bind(this)
-  }
-
-  handleLoad() {
-    if (!this.props.events.got) {
-      this.props.getEvents()
-    }
   }
 
   handleSelectEvent(event) {
@@ -141,10 +134,10 @@ class Events extends Component {
     const views = ['month', 'week', 'agenda']
 
     return (
-      <AsyncContent onLoad={this.handleLoad} error={events.error}>
+      <AsyncContent fetcher={this.props.getEvents} data={events}>
         <BigCalendar
           style={{height: '550px', backgroundColor: 'white', padding: 16}}
-          events={events.list}
+          events={events.items}
           popup={true}
           views={views}
           culture={this.props.lang}

@@ -20,11 +20,13 @@ import {
 
 const initialState = {
   loading: false,
-  entries: [],
+  error: null,
+  items: [],
+  pages: 0,
+  paging: null,
+  // extras:
   events: [],
   polls: [],
-  error: null,
-  got: false,
   boxComments: {},
 }
 
@@ -42,10 +44,11 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        entries: action.data.entries,
-        events: action.data.events,
-        polls: action.data.polls,
-        got: true,
+        items: [...state.items, ...action.data.items],
+        pages: state.pages + 1,
+        paging: action.data.paging || state.paging,
+        events: action.data.events || state.events,
+        polls: action.data.polls || state.polls,
       }
     case GET_ACTIVITY_FAILURE:
       return {
@@ -55,8 +58,8 @@ export default (state = initialState, action = null) => {
       }
 
     case COMMENT_SUCCESS:
-      const entries = state.entries.slice() // copy
-      entries.forEach((entry) => {
+      const items = state.items.slice() // copy
+      items.forEach((entry) => {
         if (entry.id === action.entry_id) {
           entry.comments = [...entry.comments, action.data] // copy + push
         }
@@ -65,7 +68,7 @@ export default (state = initialState, action = null) => {
       boxComments[action.entry_id] = '' // reset
       return {
         ...state,
-        entries,
+        items,
         boxComments,
       }
     case UPDATE_COMMENT_TEXT:
@@ -87,7 +90,13 @@ export default (state = initialState, action = null) => {
     case DELETE_POLL:
     case PUT_POLL_SUCCESS:
     case POST_VOTE_SUCCESS:
-      return {...state, got: false}
+      return {
+        ...state,
+        items: [],
+        pages: 0,
+        events: [],
+        polls: [],
+      }
 
     case LOGOUT_SUCCESS:
       return {...initialState}

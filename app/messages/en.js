@@ -54,6 +54,7 @@ export default {
   'snack.NEW_POLL': '{author, select, _you_ {Poll created} other {{author} created the "{name}" poll}}',
   'snack.UPDATE_POLL': '{author, select, _you_ {Poll updated} other {{author} updated the "{name}" poll}}',
   'snack.DELETE_POLL': '{author, select, _you_ {Poll deleted} other {{author} deleted the "{name}" poll}}',
+  'snack.poll_updated': 'Poll updated',
   'snack.voted': 'Voted',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',

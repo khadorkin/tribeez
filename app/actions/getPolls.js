@@ -6,12 +6,12 @@ import {
   GET_POLLS_FAILURE,
 } from '../constants/actions'
 
-export default () => {
+export default (page) => {
   return function(dispatch) {
     dispatch({
       type: GET_POLLS_REQUEST,
     })
-    api.get('polls', {start: 0, limit: 10}) //TODO: paging
+    api.get('polls', {page})
       .then((response) => {
         if (response.error) {
           dispatch({
@@ -21,7 +21,7 @@ export default () => {
         } else {
           dispatch({
             type: GET_POLLS_SUCCESS,
-            list: response,
+            data: response,
           })
         }
       })

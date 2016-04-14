@@ -6,12 +6,12 @@ import {
   GET_ACTIVITY_FAILURE,
 } from '../constants/actions'
 
-export default () => {
+export default (page) => {
   return function(dispatch) {
     dispatch({
       type: GET_ACTIVITY_REQUEST,
     })
-    api.get('activity', {start: 0, limit: 10}) //TODO: paging
+    api.get('activity', {page})
       .then((response) => {
         if (response.error) {
           dispatch({

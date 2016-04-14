@@ -6,12 +6,12 @@ import {
   GET_BILLS_FAILURE,
 } from '../constants/actions'
 
-export default () => {
+export default (page) => {
   return function(dispatch) {
     dispatch({
       type: GET_BILLS_REQUEST,
     })
-    api.get('bills', {start: 0, limit: 10}) //TODO: paging
+    api.get('bills', {page})
       .then((response) => {
         if (response.error) {
           dispatch({
@@ -21,7 +21,7 @@ export default () => {
         } else {
           dispatch({
             type: GET_BILLS_SUCCESS,
-            list: response,
+            data: response,
           })
         }
       })

@@ -29,19 +29,12 @@ class Notes extends Component {
       openDialog: false,
       note: {},
     }
-    this.handleLoad = this.handleLoad.bind(this)
     this.handleCreate = this.handleCreate.bind(this)
     this.handleMove = this.handleMove.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
-  }
-
-  handleLoad() {
-    if (!this.props.notes.got) {
-      this.props.getNotes()
-    }
   }
 
   handleCreate() {
@@ -103,9 +96,9 @@ class Notes extends Component {
     }
 
     return (
-      <AsyncContent style={style} onLoad={this.handleLoad} error={notes.error}>
+      <AsyncContent style={style} fetcher={this.props.getNotes} data={notes}>
         {
-          notes.list.map((note) =>
+          notes.items.map((note) =>
             <Note note={note} key={note.id} onMove={this.handleMove} onSave={this.handleSave} onDelete={this.handleDialogOpen} />
           )
         }

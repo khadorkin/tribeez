@@ -10,9 +10,9 @@ import {
 
 const initialState = {
   loading: false,
-  list: [],
   error: null,
-  got: false, // true = we got the initial list through a request
+  items: [],
+  pages: 0,
 }
 
 export default (state = initialState, action = null) => {
@@ -28,8 +28,8 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        list: action.list,
-        got: true,
+        items: [...state.items, ...action.data.items],
+        pages: state.pages + 1,
       }
     case GET_NOTES_FAILURE:
       return {
@@ -38,22 +38,22 @@ export default (state = initialState, action = null) => {
         error: action.error,
       }
     case NEW_NOTE_SUCCESS: {
-      const list = state.list.slice()
-      list.unshift(action.data)
+      const items = state.items.slice()
+      items.unshift(action.data)
       return {
         ...state,
-        list,
+        items,
       }
     }
     case DELETE_NOTE_SUCCESS: {
-      const list = state.list.filter((note) => note.id !== action.id)
+      const items = state.items.filter((note) => note.id !== action.id)
       return {
         ...state,
-        list,
+        items,
       }
     }
     case MOVE_NOTE: {
-      const list = state.list.map((note) => {
+      const items = state.items.map((note) => {
         if (note.id === action.hoveredNote.id) {
           return action.draggedNote
         }
@@ -64,7 +64,7 @@ export default (state = initialState, action = null) => {
       })
       return {
         ...state,
-        list,
+        items,
       }
     }
 

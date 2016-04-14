@@ -29,16 +29,9 @@ class Bills extends Component {
       openDialog: false,
       bill: {},
     }
-    this.handleLoad = this.handleLoad.bind(this)
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
-  }
-
-  handleLoad() {
-    if (!this.props.bills.got) {
-      this.props.getBills()
-    }
   }
 
   handleDialogOpen(bill) {
@@ -79,7 +72,7 @@ class Bills extends Component {
     const prefix = balance > 0 ? '+' : ''
 
     return (
-      <AsyncContent onLoad={this.handleLoad} error={bills.error}>
+      <AsyncContent fetcher={this.props.getBills} data={bills}>
         {
           balance !== undefined &&
             <div style={{backgroundColor: colors.cyan500, padding: '5px', textAlign: 'center'}}>
@@ -90,7 +83,7 @@ class Bills extends Component {
         }
 
         {
-          bills.list.map((bill) =>
+          bills.items.map((bill) =>
             <Bill bill={bill} key={bill.id} onDelete={this.handleDialogOpen} />
           )
         }

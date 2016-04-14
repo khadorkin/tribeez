@@ -11,9 +11,10 @@ import {
 
 const initialState = {
   loading: false,
-  list: [],
   error: null,
-  got: false, // true = we got the initial list through a request
+  items: [],
+  pages: 0,
+  paging: null,
   current: null, // current bill being edited
 }
 
@@ -30,8 +31,9 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        list: action.list,
-        got: true,
+        items: [...state.items, ...action.data.items],
+        pages: state.pages + 1,
+        paging: action.data.paging || state.paging,
       }
     case GET_BILLS_FAILURE:
       return {
@@ -47,14 +49,14 @@ export default (state = initialState, action = null) => {
 
     // from socket.io:
     case NEW_BILL: {
-      const list = [action.data, ...state.list]
+      const items = [action.data, ...state.items]
       return {
         ...state,
-        list,
+        items,
       }
     }
     case UPDATE_BILL: {
-      const list = state.list.map((bill) => {
+      const items = state.items.map((bill) => {
         if (bill.id === action.data.id) {
           return action.data
         }
@@ -62,14 +64,14 @@ export default (state = initialState, action = null) => {
       })
       return {
         ...state,
-        list,
+        items,
       }
     }
     case DELETE_BILL: {
-      const list = state.list.filter((bill) => bill.id !== action.data.id)
+      const items = state.items.filter((bill) => bill.id !== action.data.id)
       return {
         ...state,
-        list,
+        items,
       }
     }
 
