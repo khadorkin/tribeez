@@ -92,8 +92,7 @@ export default (state = initialState, action = null) => {
     case CLOSE_SNACK:
       return {
         ...state,
-        snack: false,
-        snackMessage: null,
+        snack: {...initialState.snack},
       }
     case formActions.START_SUBMIT:
       return {

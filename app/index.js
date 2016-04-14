@@ -1,4 +1,4 @@
-/*global __DEBUG__:false __API_ENDPOINT__:false*/
+/*global __DEBUG__:false*/
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -47,7 +47,7 @@ import webfont from 'webfontloader'
 webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
 // redux actions
-import {resize, message} from './actions/app'
+import {resize} from './actions/app'
 import getMember from './actions/getMember'
 
 // app locales (keep list in sync with resources/langs.js and messages/*.js):
@@ -91,13 +91,6 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 history.listen((location) => {
   ga('send', 'pageview', location.pathname)
-})
-
-// Socket connection:
-import io from 'socket.io-client'
-const socket = io(__API_ENDPOINT__)
-socket.on('message', (msg) => {
-  store.dispatch(message(msg))
 })
 
 // update app size

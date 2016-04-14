@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {IntlProvider, FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
+import io from 'socket.io-client'
 
 //import ThemeManager from 'material-ui/lib/styles/theme-manager'
 
@@ -20,7 +21,7 @@ import TelegramIcon from './resources/telegram-icon'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, closeSnack, updateLang} from './actions/app'
+import {toggleMenu, closeSnack, updateLang, message} from './actions/app'
 
 import langs from './resources/langs'
 
@@ -30,7 +31,7 @@ const langItems = langs.map((item) =>
 
 import routes from './constants/routes'
 
-/*global __TELEGRAM_BOT_NAME__:false*/
+/*global __TELEGRAM_BOT_NAME__:false __API_ENDPOINT__:false*/
 
 class App extends Component {
 
@@ -40,6 +41,19 @@ class App extends Component {
     this.handleNavToggle = this.handleNavToggle.bind(this)
     this.handleSnackClose = this.handleSnackClose.bind(this)
     this.handleLangChange = this.handleLangChange.bind(this)
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.uid && !this.socket) { // log in
+      this.socket = io(__API_ENDPOINT__)
+      this.socket.on('message', (msg) => {
+        this.props.message(msg)
+      })
+    }
+    if (!props.uid && this.socket) { // log out
+      this.socket.disconnect(true)
+      this.socket = null
+    }
   }
 /*
   // modify global theme:
@@ -177,6 +191,7 @@ App.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
   closeSnack: PropTypes.func.isRequired,
   updateLang: PropTypes.func.isRequired,
+  message: PropTypes.func.isRequired,
   // from react-router:
   children: PropTypes.node.isRequired,
   params: PropTypes.object.isRequired,
@@ -204,6 +219,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
   closeSnack,
   updateLang,
+  message,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
