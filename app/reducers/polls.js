@@ -22,29 +22,38 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_POLLS_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: null,
-      })
+      }
     case GET_POLLS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: null,
         list: action.list,
         got: true,
-      })
+      }
     case GET_POLLS_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: action.error,
-      })
+      }
     case GET_POLL_SUCCESS:
-      return {...state, current: action.data}
+      return {
+        ...state,
+        current: action.data,
+      }
 
     // from socket.io:
     case NEW_POLL: {
       const list = [action.data, ...state.list]
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case UPDATE_POLL: {
       const list = state.list.map((poll) => {
@@ -53,11 +62,17 @@ export default (state = initialState, action = null) => {
         }
         return poll
       })
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case DELETE_POLL: {
       const list = state.list.filter((poll) => poll.id !== action.data.id)
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
 
     // toggle active:
@@ -68,7 +83,10 @@ export default (state = initialState, action = null) => {
         }
         return poll
       })
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
 
     // vote:
@@ -79,7 +97,10 @@ export default (state = initialState, action = null) => {
           poll.answers[action.uid] = action.choices
         }
       })
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
 
     case LOGOUT_SUCCESS:

@@ -32,24 +32,28 @@ export default (state = initialState, action = null) => {
   let boxComments
   switch (action.type) {
     case GET_ACTIVITY_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: null,
-      })
+      }
     case GET_ACTIVITY_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: null,
         entries: action.data.entries,
         events: action.data.events,
         polls: action.data.polls,
         got: true,
-      })
+      }
     case GET_ACTIVITY_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: action.error,
-      })
+      }
+
     case COMMENT_SUCCESS:
       const entries = state.entries.slice() // copy
       entries.forEach((entry) => {
@@ -57,18 +61,21 @@ export default (state = initialState, action = null) => {
           entry.comments = [...entry.comments, action.data] // copy + push
         }
       })
-      boxComments = Object.assign({}, state.boxComments)
+      boxComments = {...state.boxComments}
       boxComments[action.entry_id] = '' // reset
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entries,
         boxComments,
-      })
+      }
     case UPDATE_COMMENT_TEXT:
-      boxComments = Object.assign({}, state.boxComments)
+      boxComments = {...state.boxComments}
       boxComments[action.entry_id] = action.content
-      return Object.assign({}, state, {
+      return {
+        ...state,
         boxComments,
-      })
+      }
+
     case NEW_BILL:
     case UPDATE_BILL:
     case DELETE_BILL:
@@ -81,6 +88,7 @@ export default (state = initialState, action = null) => {
     case PUT_POLL_SUCCESS:
     case POST_VOTE_SUCCESS:
       return {...state, got: false}
+
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

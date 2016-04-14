@@ -12,15 +12,23 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case LOGOUT_REQUEST:
-      return Object.assign({}, initialState, {
+      return {
+        //...state,
         loading: true,
-      })
+        error: null,
+      }
     case LOGOUT_SUCCESS:
-      return Object.assign({}, initialState, {})
+      return {
+        //...state,
+        loading: false,
+        error: null,
+      }
     case LOGOUT_FAILURE:
-      return Object.assign({}, initialState, {
+      return {
+        //...state,
+        loading: false,
         error: action.error,
-      })
+      }
     default:
       return state
   }

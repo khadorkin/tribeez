@@ -15,22 +15,25 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_INVITES_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: null,
-      })
+      }
     case GET_INVITES_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: null,
         list: action.list,
         got: true,
-      })
+      }
     case GET_INVITES_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: action.error,
-      })
+      }
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

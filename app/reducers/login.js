@@ -9,9 +9,10 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case LOGIN_DESTINATION:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         destination: action.destination,
-      })
+      }
     default:
       return state
   }

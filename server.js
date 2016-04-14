@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*eslint-env node */
-/*eslint-disable no-console*/
+/*eslint-disable no-console, no-unused-vars */
 'use strict'
 
 // load server config, based on config.dist.json:

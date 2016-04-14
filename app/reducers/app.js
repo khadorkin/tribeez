@@ -36,42 +36,49 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case LOCATION_CHANGE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         menu_visible: false,
-      })
+      }
     case TOGGLE_MENU:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         menu_visible: action.open,
         menu_tribes: false,
-      })
+      }
     case TOGGLE_TRIBES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         menu_tribes: action.open,
-      })
+      }
     case RESIZE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         width: action.width,
         height: action.height,
-      })
+      }
     case GET_MEMBER_SUCCESS:
       lang.set(action.user.lang)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         lang: action.user.lang,
         messages: messages[action.user.lang],
-      })
+      }
     case UPDATE_LANG:
       lang.set(action.lang)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         lang: action.lang,
         messages: messages[action.lang],
-      })
+      }
     case formActions.CHANGE:
       if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {
         lang.set(action.value)
-        return Object.assign({}, state, {
+        return {
+          ...state,
           lang: action.value,
           messages: messages[action.value],
-        })
+        }
       }
       return state
     case SNACK_MESSAGE:
@@ -83,18 +90,21 @@ export default (state = initialState, action = null) => {
       }
       return {...state, snack}
     case CLOSE_SNACK:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         snack: false,
         snackMessage: null,
-      })
+      }
     case formActions.START_SUBMIT:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         submitting: true,
-      })
+      }
     case formActions.STOP_SUBMIT:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         submitting: false,
-      })
+      }
     default:
       return state
   }

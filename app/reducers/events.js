@@ -20,29 +20,38 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_EVENTS_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: null,
-      })
+      }
     case GET_EVENTS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: null,
         list: action.list,
         got: true,
-      })
+      }
     case GET_EVENTS_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: action.error,
-      })
+      }
     case GET_EVENT_SUCCESS:
-      return {...state, current: action.data}
+      return {
+        ...state,
+        current: action.data,
+      }
 
     // from socket.io:
     case NEW_EVENT: {
       const list = [action.data, ...state.list]
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case UPDATE_EVENT: {
       const list = state.list.map((event) => {
@@ -51,11 +60,17 @@ export default (state = initialState, action = null) => {
         }
         return event
       })
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case DELETE_EVENT: {
       const list = state.list.filter((event) => event.id !== action.data.id)
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
 
     case LOGOUT_SUCCESS:

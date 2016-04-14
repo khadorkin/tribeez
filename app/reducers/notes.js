@@ -18,30 +18,39 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_NOTES_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: null,
-      })
+      }
     case GET_NOTES_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: null,
         list: action.list,
         got: true,
-      })
+      }
     case GET_NOTES_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: action.error,
-      })
+      }
     case NEW_NOTE_SUCCESS: {
       const list = state.list.slice()
       list.unshift(action.data)
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case DELETE_NOTE_SUCCESS: {
       const list = state.list.filter((note) => note.id !== action.id)
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case MOVE_NOTE: {
       const list = state.list.map((note) => {
@@ -53,7 +62,10 @@ export default (state = initialState, action = null) => {
         }
         return note
       })
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
 
     case LOGOUT_SUCCESS:

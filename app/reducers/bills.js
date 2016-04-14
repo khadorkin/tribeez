@@ -20,29 +20,38 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_BILLS_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: null,
-      })
+      }
     case GET_BILLS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: null,
         list: action.list,
         got: true,
-      })
+      }
     case GET_BILLS_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: action.error,
-      })
+      }
     case GET_BILL_SUCCESS:
-      return {...state, current: action.data}
+      return {
+        ...state,
+        current: action.data,
+      }
 
     // from socket.io:
     case NEW_BILL: {
       const list = [action.data, ...state.list]
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case UPDATE_BILL: {
       const list = state.list.map((bill) => {
@@ -51,11 +60,17 @@ export default (state = initialState, action = null) => {
         }
         return bill
       })
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
     case DELETE_BILL: {
       const list = state.list.filter((bill) => bill.id !== action.data.id)
-      return {...state, list}
+      return {
+        ...state,
+        list,
+      }
     }
 
     case LOGOUT_SUCCESS:

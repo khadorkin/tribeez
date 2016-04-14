@@ -23,23 +23,27 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_MEMBER_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: true,
         error: false,
-      })
+      }
     case GET_MEMBER_SUCCESS:
       ga('set', 'userId', action.user.id)
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: false,
         user: action.user,
         tribe: action.tribe,
-      })
+      }
     case GET_MEMBER_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: false,
         error: true,
-      })
+      }
+
     case UPDATE_PROFILE_SUCCESS: {
       const user = {
         ...state.user,
@@ -60,7 +64,11 @@ export default (state = initialState, action = null) => {
         return copy
       })
       user.tribes = state.user.tribes.slice()
-      return {...state, user, tribe}
+      return {
+        ...state,
+        user,
+        tribe,
+      }
     }
     case UPDATE_TRIBE_SUCCESS: {
       const tribe = {
@@ -81,8 +89,13 @@ export default (state = initialState, action = null) => {
         }
         return copy
       })
-      return {...state, user, tribe}
+      return {
+        ...state,
+        user,
+        tribe,
+      }
     }
+
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

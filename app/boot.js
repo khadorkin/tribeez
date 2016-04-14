@@ -1,6 +1,8 @@
+/*global require:false*/
+
 // dynamically load polyfills, and load the app when the required ones are loaded:
 
-const NUM_POLYFILLS = 6 // update this number if adding polyfills
+const NUM_POLYFILLS = 5 // update this number if adding polyfills
 
 let num = 0
 const loaded = () => {
@@ -9,8 +11,6 @@ const loaded = () => {
     require('./index')
   }
 }
-
-/*global require:false*/
 
 if (window.Promise) {
   loaded()
@@ -41,15 +41,6 @@ if (window.Intl) {
     require('intl')
     require('intl/locale-data/jsonp/en.js')
     require('intl/locale-data/jsonp/fr.js')
-    loaded()
-  })
-}
-
-if (Object.assign) {
-  loaded()
-} else {
-  require.ensure(['object.assign'], (require) => {
-    require('object.assign').shim()
     loaded()
   })
 }

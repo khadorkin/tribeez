@@ -9,9 +9,10 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case PASSWORD_SUCCESS:
-      return Object.assign({}, initialState, {
+      return {
+        ...state,
         sent: true,
-      })
+      }
     default:
       return state
   }
