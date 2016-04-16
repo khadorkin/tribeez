@@ -3,6 +3,7 @@ import {
   GET_NOTES_SUCCESS,
   GET_NOTES_FAILURE,
   NEW_NOTE_SUCCESS,
+  PUT_NOTE_SUCCESS,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
   LOGOUT_SUCCESS,
@@ -40,6 +41,19 @@ export default (state = initialState, action = null) => {
     case NEW_NOTE_SUCCESS: {
       const items = state.items.slice()
       items.unshift(action.data)
+      return {
+        ...state,
+        items,
+      }
+    }
+    case PUT_NOTE_SUCCESS: {
+      const items = state.items.map((item) => {
+        if (item.id === action.data.id) {
+          action.data.saved = true
+          return action.data
+        }
+        return item
+      })
       return {
         ...state,
         items,

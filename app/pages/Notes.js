@@ -30,8 +30,8 @@ class Notes extends Component {
       note: {},
     }
     this.handleCreate = this.handleCreate.bind(this)
-    this.handleMove = this.handleMove.bind(this)
-    this.handleSave = this.handleSave.bind(this)
+    this.handleMoving = this.handleMoving.bind(this)
+    this.handleMoved = this.handleMoved.bind(this)
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
@@ -44,11 +44,11 @@ class Notes extends Component {
     })
   }
 
-  handleMove(draggedNote, hoveredNote) {
+  handleMoving(draggedNote, hoveredNote) {
     this.props.moveNote(draggedNote, hoveredNote)
   }
 
-  handleSave() {
+  handleMoved() {
     this.props.putNotes(this.props.notes.items.map((note) => note.id))
   }
 
@@ -87,7 +87,7 @@ class Notes extends Component {
       />,
     ]
 
-    const columns = Math.floor(this.props.containerWidth / 250)
+    const columns = Math.min(notes.items.length, Math.floor(this.props.containerWidth / 250))
 
     const style = {
       columnCount: columns, WebkitColumnCount: columns, MozColumnCount: columns,
@@ -99,7 +99,12 @@ class Notes extends Component {
       <AsyncContent style={style} fetcher={this.props.getNotes} data={notes}>
         {
           notes.items.map((note) =>
-            <Note note={note} key={note.id} onMove={this.handleMove} onSave={this.handleSave} onDelete={this.handleDialogOpen} />
+            <Note key={note.id}
+              note={note}
+              onMoving={this.handleMoving}
+              onMoved={this.handleMoved}
+              onDelete={this.handleDialogOpen}
+            />
           )
         }
 
@@ -123,6 +128,7 @@ class Notes extends Component {
 Notes.propTypes = {
   // redux state:
   notes: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
   containerWidth: PropTypes.number.isRequired,
   // action creators:
   getNotes: PropTypes.func.isRequired,

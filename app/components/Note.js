@@ -6,7 +6,8 @@ import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd'
 
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
-import SaveButton from 'material-ui/svg-icons/content/save'
+import CloudQueue from 'material-ui/svg-icons/file/cloud-queue'
+import CloudDone from 'material-ui/svg-icons/file/cloud-done'
 import DeleteButton from 'material-ui/svg-icons/action/delete'
 import * as colors from 'material-ui/styles/colors'
 
@@ -21,17 +22,11 @@ class Note extends Component {
     this.state = {
       titleEditorState: EditorState.createWithContent(titleContentState),
       contentEditorState: EditorState.createWithContent(contentContentState),
-      touched: false,
+      unsaved: false,
     }
-    this.handleTitleChange = (titleEditorState) => this.setState({
-      titleEditorState,
-      touched: true,
-    })
-    this.handleContentChange = (contentEditorState) => this.setState({
-      contentEditorState,
-      touched: true,
-    })
-    this.handleSave = this.handleSave.bind(this)
+    this.save = this.save.bind(this)
+    this.handleTitleChange = this.handleTitleChange.bind(this)
+    this.handleContentChange = this.handleContentChange.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
   }
 
@@ -41,18 +36,61 @@ class Note extends Component {
     }
   }
 
-  handleSave() {
+  componentWillReceiveProps(props) {
+    if (props.note.saved) {
+      this.setState({
+        unsaved: false,
+      })
+    }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeoutId)
+    if (this.state.unsaved) {
+      this.save()
+    }
+  }
+
+  save() {
     const title = this.state.titleEditorState.getCurrentContent().getPlainText()
     const content = this.state.contentEditorState.getCurrentContent().getPlainText()
-    const note = {
+    this.props.putNote({
       ...this.props.note,
       title,
       content,
-    }
-    this.props.putNote(note)
-    this.setState({
-      touched: false,
     })
+  }
+
+  handleTitleChange(titleEditorState) {
+    const title = this.state.titleEditorState.getCurrentContent().getPlainText()
+    this.setState({
+      titleEditorState,
+    })
+    if (this.props.note.title !== title) {
+      if (!this.state.unsaved) {
+        this.setState({
+          unsaved: true,
+        })
+      }
+      clearTimeout(this.timeoutId)
+      this.timeoutId = setTimeout(this.save, 2000)
+    }
+  }
+
+  handleContentChange(contentEditorState) {
+    const content = this.state.contentEditorState.getCurrentContent().getPlainText()
+    this.setState({
+      contentEditorState,
+    })
+    if (this.props.note.content !== content) {
+      if (!this.state.unsaved) {
+        this.setState({
+          unsaved: true,
+        })
+      }
+      clearTimeout(this.timeoutId)
+      this.timeoutId = setTimeout(this.save, 2000)
+    }
   }
 
   handleDelete() {
@@ -70,9 +108,7 @@ class Note extends Component {
             <Editor ref="content" editorState={this.state.contentEditorState} onChange={this.handleContentChange} />
           </CardText>
           <CardActions style={{textAlign: 'right', cursor: 'move'}}>
-            <IconButton onTouchTap={this.handleSave} style={{visibility: this.state.touched ? 'visible' : 'hidden'}}>
-              <SaveButton color={colors.grey600} />
-            </IconButton>
+            {this.state.unsaved ? <CloudQueue color={colors.grey600} /> : <CloudDone color={colors.grey600} />}
             <IconButton onTouchTap={this.handleDelete}>
               <DeleteButton color={colors.red400} />
             </IconButton>
@@ -87,8 +123,8 @@ class Note extends Component {
 Note.propTypes = {
   // from parent component:
   note: PropTypes.object.isRequired,
-  onMove: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
+  onMoving: PropTypes.func.isRequired,
+  onMoved: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   // action creators:
   putNote: PropTypes.func.isRequired,
@@ -131,10 +167,10 @@ const cardTarget = {
       return
     }
 
-    props.onMove(draggedNote, hoveredNote)
+    props.onMoving(draggedNote, hoveredNote)
   },
   drop(props) {
-    props.onSave()
+    props.onMoved()
   },
 }
 

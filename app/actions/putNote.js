@@ -4,7 +4,7 @@ import {
   PUT_NOTE_REQUEST,
   PUT_NOTE_SUCCESS,
   PUT_NOTE_FAILURE,
-  SNACK_MESSAGE,
+  //SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default (data) => {
@@ -22,11 +22,14 @@ export default (data) => {
         } else {
           dispatch({
             type: PUT_NOTE_SUCCESS,
+            data,
           })
+          /*
           dispatch({
             type: SNACK_MESSAGE,
             message: 'note_updated',
           })
+          */
         }
       })
       .catch(() => {

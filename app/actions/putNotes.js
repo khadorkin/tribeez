@@ -1,17 +1,16 @@
 import api from '../utils/api'
 
 import {
-  PUT_NOTE_REQUEST,
-  PUT_NOTE_SUCCESS,
+  //PUT_NOTE_REQUEST,
   PUT_NOTE_FAILURE,
-  SNACK_MESSAGE,
+  //SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default (ids) => {
   return function(dispatch) {
-    dispatch({
+    /*dispatch({
       type: PUT_NOTE_REQUEST,
-    })
+    })*/
     api.put('notes', {ids})
       .then((response) => {
         if (response.error) {
@@ -19,15 +18,12 @@ export default (ids) => {
             type: PUT_NOTE_FAILURE,
             error: response.error,
           })
-        } else {
-          dispatch({
-            type: PUT_NOTE_SUCCESS,
-          })
+        }/* else {
           dispatch({
             type: SNACK_MESSAGE,
             message: 'notes_reordered',
           })
-        }
+        }*/
       })
       .catch(() => {
         dispatch({
