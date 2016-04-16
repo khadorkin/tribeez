@@ -100,6 +100,7 @@ class CityField extends Component {
       <AutoComplete
         ref={this.ref}
         style={styles.field}
+        fullWidth={true}
         dataSource={this.state.textPredictions}
         onUpdateInput={this.handleChange}
         onNewRequest={this.handleSelect}
