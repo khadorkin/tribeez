@@ -97,15 +97,35 @@ class Note extends Component {
     this.props.onDelete(this.props.note)
   }
 
+  preventDrop() {
+    return true // disable drag & drops to prevent conflict with react-dnd
+  }
+
   render() {
     const {connectDragSource, connectDropTarget, isDragging} = this.props
+
+    const titleEditor = (
+      <Editor ref="title"
+        placeholder="Title"
+        editorState={this.state.titleEditorState}
+        onChange={this.handleTitleChange}
+        handleDrop={this.preventDrop}
+      />
+    )
+    const textEditor = (
+      <Editor ref="content"
+        editorState={this.state.contentEditorState}
+        onChange={this.handleContentChange}
+        handleDrop={this.preventDrop}
+      />
+    )
 
     return connectDragSource(connectDropTarget(
       <div style={{opacity: (isDragging ? 0 : 1), display: 'inline-block', width: '100%'}}>
         <Card style={{margin: 8, overflow: 'visible'}}>
-          <CardTitle title={<Editor ref="title" editorState={this.state.titleEditorState} onChange={this.handleTitleChange} placeholder="Title" />} />
+          <CardTitle title={titleEditor} />
           <CardText>
-            <Editor ref="content" editorState={this.state.contentEditorState} onChange={this.handleContentChange} />
+            {textEditor}
           </CardText>
           <CardActions style={{textAlign: 'right', cursor: 'move'}}>
             {this.state.unsaved ? <CloudQueue color={colors.grey600} /> : <CloudDone color={colors.grey600} />}
