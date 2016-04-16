@@ -4,10 +4,10 @@ import {bindActionCreators, compose} from 'redux'
 import {DragDropContext as dragDropContext} from 'react-dnd'
 import html5backend from 'react-dnd-html5-backend'
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button'
-import ContentAdd from 'material-ui/lib/svg-icons/content/add'
-import Dialog from 'material-ui/lib/dialog'
-import FlatButton from 'material-ui/lib/flat-button'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 import AsyncContent from '../hoc/AsyncContent'
 
@@ -49,7 +49,7 @@ class Notes extends Component {
   }
 
   handleSave() {
-    this.props.putNotes(this.props.notes.list.map((note) => note.id))
+    this.props.putNotes(this.props.notes.items.map((note) => note.id))
   }
 
   handleDialogOpen(note) {

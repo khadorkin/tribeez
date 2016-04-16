@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {Link} from 'react-router'
 import {FormattedMessage} from 'react-intl'
 
-import RaisedButton from 'material-ui/lib/raised-button'
-import * as colors from 'material-ui/lib/styles/colors'
+import RaisedButton from 'material-ui/RaisedButton'
+import * as colors from 'material-ui/styles/colors'
 
 import Logo from '../images/logo.svg'
 

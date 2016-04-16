@@ -2,11 +2,11 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl'
 import moment from 'moment'
 
-import DatePicker from 'material-ui/lib/date-picker/date-picker'
-import TimePicker from 'material-ui/lib/time-picker/time-picker'
-import IconButton from 'material-ui/lib/icon-button'
-import ClearIcon from 'material-ui/lib/svg-icons/content/clear'
-import * as colors from 'material-ui/lib/styles/colors'
+import DatePicker from 'material-ui/DatePicker'
+import TimePicker from 'material-ui/TimePicker'
+import IconButton from 'material-ui/IconButton'
+import ClearIcon from 'material-ui/svg-icons/content/clear'
+import * as colors from 'material-ui/styles/colors'
 
 import styles from '../../constants/styles'
 
@@ -153,7 +153,7 @@ class DatePickerWrapper extends Component {
 DatePickerWrapper.propTypes = {
   // from parent:
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number,
+  value: PropTypes.number, //TODO: allow form init to send empty string
   intl: intlShape.isRequired,
   time: PropTypes.bool,
   timeLabel: PropTypes.string,

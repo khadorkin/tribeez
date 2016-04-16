@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 
-import TextField from 'material-ui/lib/text-field'
-import IconButton from 'material-ui/lib/icon-button'
-import AddIcon from 'material-ui/lib/svg-icons/content/add'
-import RemoveIcon from 'material-ui/lib/svg-icons/content/remove'
-import * as colors from 'material-ui/lib/styles/colors'
+import TextField from 'material-ui/TextField'
+import IconButton from 'material-ui/IconButton'
+import AddIcon from 'material-ui/svg-icons/content/add'
+import RemoveIcon from 'material-ui/svg-icons/content/remove'
+import * as colors from 'material-ui/styles/colors'
 
 export default class Part extends Component {
 

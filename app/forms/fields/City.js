@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-import AutoComplete from 'material-ui/lib/auto-complete'
+import AutoComplete from 'material-ui/AutoComplete'
 
 import styles from '../../constants/styles'
 

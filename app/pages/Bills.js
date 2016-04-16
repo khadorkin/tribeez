@@ -4,10 +4,10 @@ import {bindActionCreators} from 'redux'
 import {FormattedNumber} from 'react-intl'
 import {Link} from 'react-router'
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button'
-import ContentAdd from 'material-ui/lib/svg-icons/content/add'
-import Dialog from 'material-ui/lib/dialog'
-import FlatButton from 'material-ui/lib/flat-button'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 import AsyncContent from '../hoc/AsyncContent'
 
@@ -19,7 +19,7 @@ import routes from '../constants/routes'
 import getBills from '../actions/getBills'
 import deleteBill from '../actions/deleteBill'
 
-import * as colors from 'material-ui/lib/styles/colors'
+import * as colors from 'material-ui/styles/colors'
 
 class Bills extends Component {
 

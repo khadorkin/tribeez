@@ -3,10 +3,8 @@ import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 import {Link} from 'react-router'
 
-import CardTitle from 'material-ui/lib/card/card-title'
-import CardText from 'material-ui/lib/card/card-text'
-import CardActions from 'material-ui/lib/card/card-actions'
-import RaisedButton from 'material-ui/lib/raised-button'
+import {CardTitle, CardText, CardActions} from 'material-ui/Card'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from './fields/Text'
 

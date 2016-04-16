@@ -2,9 +2,9 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
-import Card from 'material-ui/lib/card/card'
-import Dialog from 'material-ui/lib/dialog'
-import FlatButton from 'material-ui/lib/flat-button'
+import {Card} from 'material-ui/Card'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 import PasswordForm from '../forms/Password'
 

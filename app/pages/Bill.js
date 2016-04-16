@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-import Card from 'material-ui/lib/card/card'
+import {Card} from 'material-ui/Card'
 
 import BillForm from '../forms/Bill'
 

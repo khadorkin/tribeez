@@ -3,12 +3,10 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
 
-import Card from 'material-ui/lib/card/card'
-import CardHeader from 'material-ui/lib/card/card-header'
-import CardText from 'material-ui/lib/card/card-text'
-import TextField from 'material-ui/lib/text-field'
-import IconButton from 'material-ui/lib/icon-button'
-import SendIcon from 'material-ui/lib/svg-icons/content/send'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
+import TextField from 'material-ui/TextField'
+import IconButton from 'material-ui/IconButton'
+import SendIcon from 'material-ui/svg-icons/content/send'
 
 import Comment from './Comment'
 

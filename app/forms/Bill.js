@@ -3,10 +3,9 @@ import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
-import CardText from 'material-ui/lib/card/card-text'
-import CardActions from 'material-ui/lib/card/card-actions'
-import MenuItem from 'material-ui/lib/menus/menu-item'
-import RaisedButton from 'material-ui/lib/raised-button'
+import {CardActions, CardText} from 'material-ui/Card'
+import MenuItem from 'material-ui/MenuItem'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from './fields/Text'
 import MoneyField from './fields/Money'

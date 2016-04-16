@@ -5,18 +5,18 @@ import {IntlProvider, FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import io from 'socket.io-client'
 
-//import ThemeManager from 'material-ui/lib/styles/theme-manager'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import AppBar from 'material-ui/lib/app-bar'
-import FlatButton from 'material-ui/lib/flat-button'
-import LeftNav from 'material-ui/lib/left-nav'
-import IconButton from 'material-ui/lib/icon-button'
-import HomeIcon from 'material-ui/lib/svg-icons/action/home'
-import IconMenu from 'material-ui/lib/menus/icon-menu'
-import MenuItem from 'material-ui/lib/menus/menu-item'
-import LangIcon from 'material-ui/lib/svg-icons/action/language'
-import CircularProgress from 'material-ui/lib/circular-progress'
-import Snackbar from 'material-ui/lib/snackbar'
+import AppBar from 'material-ui/AppBar'
+import FlatButton from 'material-ui/FlatButton'
+import Drawer from 'material-ui/Drawer'
+import IconButton from 'material-ui/IconButton'
+import HomeIcon from 'material-ui/svg-icons/action/home'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import LangIcon from 'material-ui/svg-icons/action/language'
+import CircularProgress from 'material-ui/CircularProgress'
+import Snackbar from 'material-ui/Snackbar'
 import TelegramIcon from './resources/telegram-icon'
 
 import Nav from './components/Nav'
@@ -43,6 +43,14 @@ class App extends Component {
     this.handleLangChange = this.handleLangChange.bind(this)
   }
 
+  // modify global theme:
+  getChildContext() {
+    const theme = getMuiTheme(/* baseTheme */)
+    return {
+      muiTheme: theme,
+    }
+  }
+
   componentWillReceiveProps(props) {
     if (props.uid && !this.socket) { // log in
       this.socket = io(__API_ENDPOINT__)
@@ -55,16 +63,7 @@ class App extends Component {
       this.socket = null
     }
   }
-/*
-  // modify global theme:
-  getChildContext() {
-    let theme = ThemeManager.getMuiTheme() // optionally pass a raw theme as parameter
-    //theme.flatButton.primaryTextColor = '#00FF00'
-    return {
-      muiTheme: theme,
-    }
-  }
-*/
+
   handleMenuButton() {
     if (this.props.uid) {
       this.props.toggleMenu(true)
@@ -117,7 +116,7 @@ class App extends Component {
     }
 
     const nav = uid && (
-      <LeftNav
+      <Drawer
         open={this.props.menu_visible || desktop}
         docked={desktop}
         onRequestChange={this.handleNavToggle}
@@ -125,7 +124,7 @@ class App extends Component {
         overlayStyle={{cursor: 'w-resize'}}
       >
         <Nav module={pathname.split('/')[1]} />
-      </LeftNav>
+      </Drawer>
     ) // do not load left nav if not logged in
 
     const dockedUserMenu = uid && desktop

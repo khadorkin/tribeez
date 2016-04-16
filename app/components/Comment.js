@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {FormattedRelative} from 'react-intl'
 
-import Avatar from 'material-ui/lib/avatar'
+import Avatar from 'material-ui/Avatar'
 
 import gravatar from '../utils/gravatar'
 

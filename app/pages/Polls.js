@@ -3,10 +3,10 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Link} from 'react-router'
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button'
-import ContentAdd from 'material-ui/lib/svg-icons/content/add'
-import Dialog from 'material-ui/lib/dialog'
-import FlatButton from 'material-ui/lib/flat-button'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 import AsyncContent from '../hoc/AsyncContent'
 

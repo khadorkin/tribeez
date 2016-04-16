@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 //import PureRenderMixin from 'react-addons-pure-render-mixin';
-import SvgIcon from 'material-ui/lib/svg-icon'
+import SvgIcon from 'material-ui/SvgIcon'
 
 class TelegramIcon extends Component {
 

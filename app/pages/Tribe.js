@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import Card from 'material-ui/lib/card/card'
+import {Card} from 'material-ui/Card'
 
 import TribeForm from '../forms/Tribe'
 

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 
-import TextField from 'material-ui/lib/text-field'
-import * as colors from 'material-ui/lib/styles/colors'
+import TextField from 'material-ui/TextField'
+import * as colors from 'material-ui/styles/colors'
 
 import styles from '../../constants/styles'
 

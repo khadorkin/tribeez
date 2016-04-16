@@ -3,9 +3,8 @@ import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
-import CardText from 'material-ui/lib/card/card-text'
-import CardActions from 'material-ui/lib/card/card-actions'
-import RaisedButton from 'material-ui/lib/raised-button'
+import {CardActions, CardText} from 'material-ui/Card'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from './fields/Text'
 import DatePicker from './fields/Date'

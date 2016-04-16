@@ -3,14 +3,14 @@ import {connect} from 'react-redux'
 import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
-import FloatingActionButton from 'material-ui/lib/floating-action-button'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
 
-import AddIcon from 'material-ui/lib/svg-icons/content/add'
-import CartIcon from 'material-ui/lib/svg-icons/action/shopping-cart'
-import EventIcon from 'material-ui/lib/svg-icons/action/event'
-import CheckIcon from 'material-ui/lib/svg-icons/action/assignment-turned-in'
-//import PasteIcon from 'material-ui/lib/svg-icons/content/content-paste'
-import PollIcon from 'material-ui/lib/svg-icons/social/poll'
+import AddIcon from 'material-ui/svg-icons/content/add'
+import CartIcon from 'material-ui/svg-icons/action/shopping-cart'
+import EventIcon from 'material-ui/svg-icons/action/event'
+import CheckIcon from 'material-ui/svg-icons/action/assignment-turned-in'
+//import PasteIcon from 'material-ui/svg-icons/content/content-paste'
+import PollIcon from 'material-ui/svg-icons/social/poll'
 
 import routes from '../constants/routes'
 
