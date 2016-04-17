@@ -54,6 +54,7 @@ input:-webkit-autofill {
   margin: -20px 0;
 }
 
+.public-DraftEditorPlaceholder-root,
 .public-DraftEditor-content {
   padding: 20px 0;
 }

@@ -32,9 +32,9 @@ class Notes extends Component {
     this.handleCreate = this.handleCreate.bind(this)
     this.handleMoving = this.handleMoving.bind(this)
     this.handleMoved = this.handleMoved.bind(this)
-    this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
+    this.handleCloseDelete = this.handleCloseDelete.bind(this)
   }
 
   handleCreate() {
@@ -52,19 +52,24 @@ class Notes extends Component {
     this.props.putNotes(this.props.notes.items.map((note) => note.id))
   }
 
-  handleDialogOpen(note) {
-    this.setState({
-      openDialog: true,
-      note,
-    })
+  handleDelete(note, unsaved) {
+    if (!unsaved && !note.title && !note.content) {
+      // skip confirmation
+      this.props.deleteNote(note.id)
+    } else {
+      this.setState({
+        openDialog: true,
+        note,
+      })
+    }
   }
 
-  handleDelete() {
+  handleConfirmDelete() {
     this.props.deleteNote(this.state.note.id)
-    this.handleDialogClose()
+    this.handleCloseDelete()
   }
 
-  handleDialogClose() {
+  handleCloseDelete() {
     this.setState({
       openDialog: false,
     })
@@ -78,12 +83,12 @@ class Notes extends Component {
         label="Cancel"
         secondary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleDialogClose}
+        onTouchTap={this.handleCloseDelete}
       />,
       <FlatButton
         label="Delete"
         primary={true}
-        onTouchTap={this.handleDelete}
+        onTouchTap={this.handleConfirmDelete}
       />,
     ]
 
@@ -103,7 +108,7 @@ class Notes extends Component {
               note={note}
               onMoving={this.handleMoving}
               onMoved={this.handleMoved}
-              onDelete={this.handleDialogOpen}
+              onDelete={this.handleDelete}
             />
           )
         }
@@ -111,7 +116,7 @@ class Notes extends Component {
         <Dialog title="Delete note"
           actions={dialogActions}
           open={this.state.openDialog}
-          onRequestClose={this.handleDialogClose}
+          onRequestClose={this.handleCloseDelete}
         >
           Delete the note "{this.state.note.title}"?
         </Dialog>

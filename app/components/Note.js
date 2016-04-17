@@ -62,7 +62,7 @@ class Note extends Component {
   }
 
   handleTitleChange(titleEditorState) {
-    const title = this.state.titleEditorState.getCurrentContent().getPlainText()
+    const title = titleEditorState.getCurrentContent().getPlainText()
     this.setState({
       titleEditorState,
     })
@@ -78,7 +78,7 @@ class Note extends Component {
   }
 
   handleContentChange(contentEditorState) {
-    const content = this.state.contentEditorState.getCurrentContent().getPlainText()
+    const content = contentEditorState.getCurrentContent().getPlainText()
     this.setState({
       contentEditorState,
     })
@@ -94,7 +94,7 @@ class Note extends Component {
   }
 
   handleDelete() {
-    this.props.onDelete(this.props.note)
+    this.props.onDelete(this.props.note, this.state.unsaved)
   }
 
   preventDrop() {
@@ -110,6 +110,7 @@ class Note extends Component {
         editorState={this.state.titleEditorState}
         onChange={this.handleTitleChange}
         handleDrop={this.preventDrop}
+        stripPastedStyles={true}
       />
     )
     const textEditor = (
@@ -117,6 +118,7 @@ class Note extends Component {
         editorState={this.state.contentEditorState}
         onChange={this.handleContentChange}
         handleDrop={this.preventDrop}
+        stripPastedStyles={true}
       />
     )
 

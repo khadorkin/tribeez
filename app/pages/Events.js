@@ -56,10 +56,10 @@ class Events extends Component {
       openDelete: false,
     }
     this.handleSelectEvent = this.handleSelectEvent.bind(this)
-    this.handleDetailsClose = this.handleDetailsClose.bind(this)
-    this.handleDeleteOpen = this.handleDeleteOpen.bind(this)
+    this.handleCloseDetails = this.handleCloseDetails.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleDeleteClose = this.handleDeleteClose.bind(this)
+    this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
+    this.handleCloseDelete = this.handleCloseDelete.bind(this)
   }
 
   handleSelectEvent(event) {
@@ -68,25 +68,25 @@ class Events extends Component {
     })
   }
 
-  handleDetailsClose() {
+  handleCloseDetails() {
     this.setState({
       event: {},
     })
   }
 
-  handleDeleteOpen() {
+  handleDelete() {
     this.setState({
       openDelete: true,
     })
   }
 
-  handleDelete() {
+  handleConfirmDelete() {
     this.props.deleteEvent(this.state.event.id)
-    this.handleDeleteClose()
-    this.handleDetailsClose()
+    this.handleCloseDelete()
+    this.handleCloseDetails()
   }
 
-  handleDeleteClose() {
+  handleCloseDelete() {
     this.setState({
       openDelete: false,
     })
@@ -100,7 +100,7 @@ class Events extends Component {
       <IconButton containerElement={<Link to={{pathname: routes.EVENTS_EDIT.replace(':id', event.id), state: event}} />}>
         <EditButton color={colors.grey600} />
       </IconButton>,
-      <IconButton onTouchTap={this.handleDeleteOpen}>
+      <IconButton onTouchTap={this.handleDelete}>
         <DeleteButton color={colors.red400} />
       </IconButton>,
     ]
@@ -110,12 +110,12 @@ class Events extends Component {
         label="Cancel"
         secondary={true}
         keyboardFocused={true}
-        onTouchTap={this.handleDeleteClose}
+        onTouchTap={this.handleCloseDelete}
       />,
       <FlatButton
         label="Delete"
         primary={true}
-        onTouchTap={this.handleDelete}
+        onTouchTap={this.handleConfirmDelete}
       />,
     ]
 
@@ -151,7 +151,7 @@ class Events extends Component {
         <Dialog title={event.name}
           actions={detailsActions}
           open={Boolean(event.id)}
-          onRequestClose={this.handleDetailsClose}
+          onRequestClose={this.handleCloseDetails}
         >
           <List>
             {
@@ -183,7 +183,7 @@ class Events extends Component {
         <Dialog title="Delete event"
           actions={deleteActions}
           open={this.state.openDelete}
-          onRequestClose={this.handleDeleteClose}
+          onRequestClose={this.handleCloseDelete}
         >
           Delete "{event.name}"?
         </Dialog>
