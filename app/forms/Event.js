@@ -100,7 +100,7 @@ EventForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  // from redux state:
+  // from redux:
   lang: PropTypes.string.isRequired,
   initialValues: PropTypes.object,
   event: PropTypes.object,

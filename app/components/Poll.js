@@ -190,7 +190,7 @@ Poll.propTypes = {
   // from parent component:
   poll: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
-  // from redux state:
+  // from redux:
   uid: PropTypes.number,
   users: PropTypes.array.isRequired,
   currency: PropTypes.string,

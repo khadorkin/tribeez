@@ -37,6 +37,29 @@ class Notes extends Component {
     this.handleCloseDelete = this.handleCloseDelete.bind(this)
   }
 
+  componentDidMount() {
+    this.autoCreate(this.props)
+  }
+
+  componentWillReceiveProps(props) {
+    this.autoCreate(props)
+  }
+
+  autoCreate(props) {
+    const locationState = this.props.location.state
+    if (locationState && locationState.do === 'new' && !this.autoCreated && props.notes.pages > 0) {
+      const lastNote = props.notes.items[0]
+      if (!lastNote || lastNote.title || lastNote.content) {
+        // no note, or the last one is not empty
+        this.props.postNote({
+          title: '',
+          content: '',
+        })
+        this.autoCreated = true
+      }
+    }
+  }
+
   handleCreate() {
     this.props.postNote({
       title: '',
@@ -131,6 +154,8 @@ class Notes extends Component {
 }
 
 Notes.propTypes = {
+  // from react-router:
+  location: PropTypes.object.isRequired,
   // redux state:
   notes: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,

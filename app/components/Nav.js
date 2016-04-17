@@ -184,7 +184,7 @@ class Nav extends Component {
 Nav.propTypes = {
   // from parent component:
   module: PropTypes.string.isRequired,
-  // from redux store:
+  // from redux:
   menu_tribes: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   tribe_name: PropTypes.string,

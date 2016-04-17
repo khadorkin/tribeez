@@ -141,7 +141,7 @@ BillForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  // from redux state:
+  // from redux:
   users: PropTypes.array.isRequired,
   currency: PropTypes.string,
   lang: PropTypes.string,

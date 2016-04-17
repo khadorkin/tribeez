@@ -9,7 +9,7 @@ import AddIcon from 'material-ui/svg-icons/content/add'
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart'
 import EventIcon from 'material-ui/svg-icons/action/event'
 import CheckIcon from 'material-ui/svg-icons/action/assignment-turned-in'
-//import PasteIcon from 'material-ui/svg-icons/content/content-paste'
+import PasteIcon from 'material-ui/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/svg-icons/social/poll'
 
 import routes from '../constants/routes'
@@ -18,21 +18,21 @@ import css from './SpeedDial.css'
 const color = 'rgb(95,193,178)'
 
 const actions = [
-  {route: routes.POLLS_NEW, icon: <PollIcon />},
-  //{route: routes.NOTES_NEW, icon: <PasteIcon />}, //TODO
-  {route: routes.TASKS_NEW, icon: <CheckIcon />},
-  {route: routes.EVENTS_NEW, icon: <EventIcon />},
-  {route: routes.BILLS_NEW, icon: <CartIcon />},
+  {icon: <PollIcon />, route: routes.POLLS_NEW},
+  {icon: <PasteIcon />, route: routes.NOTES, id: 'notes_new'},
+  {icon: <CheckIcon />, route: routes.TASKS_NEW},
+  {icon: <EventIcon />, route: routes.EVENTS_NEW},
+  {icon: <CartIcon />, route: routes.BILLS_NEW},
 ]
 
 class SpeedDial extends Component {
 
   constructor(props) {
     super(props)
-    this.handleToggle = this.handleToggle.bind(this)
     this.state = {
       open: false,
     }
+    this.handleToggle = this.handleToggle.bind(this)
   }
 
   handleToggle() {
@@ -43,9 +43,16 @@ class SpeedDial extends Component {
 
   render() {
     const actionButtons = actions.map((action, index) => {
-      const id = action.route.substr(1).replace(/\//g, '_')
+      const linkTo = {pathname: action.route}
+      if (action.id) {
+        linkTo.state = {do: 'new'}
+      }
+      const link = <Link to={linkTo} />
+
+      const id = action.id || action.route.substr(1).replace(/\//g, '_')
+
       const delay = (30 * (this.state.open ? (actions.length - index) : index))
-      const link = <Link to={action.route} />
+
       return (
         <div className={css.action} key={id}>
           <div className={css.tooltip} style={{transitionDelay: delay + 'ms'}}>
@@ -78,6 +85,7 @@ class SpeedDial extends Component {
 }
 
 SpeedDial.propTypes = {
+  // from redux:
   height: PropTypes.number.isRequired,
 }
 

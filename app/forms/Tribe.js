@@ -90,7 +90,7 @@ TribeForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  // from redux state:
+  // from redux:
   initialValues: PropTypes.object,
 }
 

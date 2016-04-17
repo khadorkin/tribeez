@@ -103,7 +103,7 @@ Bill.propTypes = {
   // from parent component:
   bill: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
-  // from redux state:
+  // from redux:
   uid: PropTypes.number,
   users: PropTypes.array.isRequired,
   currency: PropTypes.string,

@@ -71,7 +71,7 @@ LoginForm.propTypes = {
   error: PropTypes.string,
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  // from redux state:
+  // from redux:
   destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
   invite: PropTypes.object.isRequired,
   initialValues: PropTypes.object,

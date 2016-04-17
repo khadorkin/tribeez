@@ -79,7 +79,7 @@ class Event extends Component {
 Event.propTypes = {
   // from parent component:
   event: PropTypes.object.isRequired,
-  // from redux state:
+  // from redux:
   uid: PropTypes.number,
   users: PropTypes.array.isRequired,
 }
