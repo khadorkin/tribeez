@@ -1,4 +1,3 @@
-# So parent files don't get applied
 root: true
 
 env:
@@ -18,7 +17,9 @@ ecmaFeatures:
   jsx: true
   modules: true
 
-extends: eslint:recommended
+extends:
+  - eslint:recommended
+  - plugin:react/recommended
 
 rules:
   array-bracket-spacing: [2, never]
@@ -67,7 +68,7 @@ rules:
   padded-blocks: [2, never]
   prefer-arrow-callback: 2
   prefer-const: 2
-  #prefer-template: 2 # template literals in render() causes changed variables not being reflected... (react bug?)
+  #prefer-template: 2 # template literals in render() causes changed variables not being reflected
   quotes: [2, single, avoid-escape]
   semi: [2, never]
   space-before-blocks: [2, always]
@@ -76,7 +77,6 @@ rules:
   space-unary-ops: [2, { words: true, nonwords: false }]
   yoda: 2
 
-  react/display-name: 2
   react/jsx-boolean-value: [2, always]
   react/jsx-closing-bracket-location: 2
   react/jsx-curly-spacing: 2
@@ -84,27 +84,17 @@ rules:
   react/jsx-handler-names: 2
   react/jsx-indent-props: [2, 2]
   react/jsx-max-props-per-line: [2, {maximum: 5}]
-  react/jsx-no-duplicate-props: 2
   react/jsx-no-undef: 2
   react/jsx-pascal-case: 2
   react/jsx-space-before-closing: 2
-  react/jsx-uses-react: 2
-  react/jsx-uses-vars: 2
-  react/no-danger: 2
-  react/no-did-mount-set-state: 2
-  react/no-did-update-set-state: 2
-  react/no-direct-mutation-state: 2
   react/no-multi-comp: 2
-  react/no-unknown-property: 2
-  react/no-is-mounted: 2
   react/prefer-es6-class: 2
-  react/prop-types: 2
-  react/react-in-jsx-scope: 2
   react/require-extension: 2
   react/self-closing-comp: 2
   react/sort-comp: 2
   react/wrap-multilines: 2
   react/jsx-indent: [2, 2]
+  react/require-render-return: 2
   #react/jsx-no-bind: 2 #TODO
   #react/jsx-no-literals: 2 #TODO?
   #react/no-set-state: 0 # maybe, maybe not (does everything have to go through redux?...)

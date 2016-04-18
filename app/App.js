@@ -281,9 +281,15 @@ const mapStateToProps = (state) => ({
   snack: state.app.snack,
   loading: state.app.submitting
         || state.activity.loading
+        || state.bills.loading
+        || state.events.loading
+        || state.notes.loading
+        || state.polls.loading
         || state.invite.loading
         || state.logout.loading
         || state.member.loading
+        || state.join.loading
+        || state.reset.loading
         || state.invites.loading,
 })
 
