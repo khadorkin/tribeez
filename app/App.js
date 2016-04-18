@@ -18,6 +18,8 @@ import LangIcon from 'material-ui/svg-icons/action/language'
 import CircularProgress from 'material-ui/CircularProgress'
 import Snackbar from 'material-ui/Snackbar'
 import TelegramIcon from './resources/telegram-icon'
+import MessengerIcon from './resources/messenger-icon'
+import Dialog from 'material-ui/Dialog'
 
 import Nav from './components/Nav'
 
@@ -29,18 +31,31 @@ const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
+const fbLocales = {
+  fr: 'fr_FR',
+  en: 'en_US',
+}
+
 import routes from './constants/routes'
 
-/*global __TELEGRAM_BOT_NAME__:false __API_ENDPOINT__:false*/
+import scriptLoader from './utils/scriptLoader'
+
+/*global __TELEGRAM_BOT_NAME__:false __API_ENDPOINT__:false __FB_APP_ID__:false __FB_PAGE_ID__:false*/
 
 class App extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      messengerDialog: false,
+    }
     this.handleMenuButton = this.handleMenuButton.bind(this)
     this.handleNavToggle = this.handleNavToggle.bind(this)
     this.handleSnackClose = this.handleSnackClose.bind(this)
     this.handleLangChange = this.handleLangChange.bind(this)
+    this.handleMessenger = this.handleMessenger.bind(this)
+    this.messengerMounted = this.messengerMounted.bind(this)
+    this.handleDialogClose = this.handleDialogClose.bind(this)
   }
 
   // modify global theme:
@@ -62,6 +77,41 @@ class App extends Component {
       this.socket.disconnect(true)
       this.socket = null
     }
+  }
+
+  handleMessenger() {
+    this.setState({
+      messengerDialog: true,
+    })
+  }
+
+  messengerMounted(node) {
+    if (node) {
+      node.innerHTML = `<div class="fb-send-to-messenger"
+                          messenger_app_id="${__FB_APP_ID__}"
+                          page_id="${__FB_PAGE_ID__}"
+                          data-ref="${this.props.messenger_token}"
+                          color="blue"
+                          size="xlarge"></div>`
+      if (window.FB) {
+        FB.XFBML.parse(node)
+      } else {
+        window.fbAsyncInit = () => {
+          FB.init({
+            appId: __FB_APP_ID__,
+            version: 'v2.6',
+          })
+          FB.XFBML.parse(node)
+        }
+        scriptLoader.load('//connect.facebook.net/' + fbLocales[this.props.lang] + '/sdk.js')
+      }
+    }
+  }
+
+  handleDialogClose() {
+    this.setState({
+      messengerDialog: false,
+    })
   }
 
   handleMenuButton() {
@@ -106,9 +156,14 @@ class App extends Component {
       iconRight = <FlatButton label={<FormattedMessage id="login" />} containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
     } else {
       iconRight = (
-        <IconButton containerElement={<a href={'https://telegram.me/' + __TELEGRAM_BOT_NAME__ + '?start=' + this.props.telegram_token} target="_blank" />}>
-          <TelegramIcon color="white" />
-        </IconButton>
+        <div>
+          <IconButton onTouchTap={this.handleMessenger}>
+            <MessengerIcon color="white" />
+          </IconButton>
+          <IconButton containerElement={<a href={'https://telegram.me/' + __TELEGRAM_BOT_NAME__ + '?start=' + this.props.telegram_token} target="_blank" />}>
+            <TelegramIcon color="white" />
+          </IconButton>
+        </div>
       )
     }
     if (this.props.loading) {
@@ -142,6 +197,14 @@ class App extends Component {
     const snack_author = this.props.users.find((u) => u.id === snack.author)
     const snack_author_name = snack_author && (snack_author.id === uid ? '_you_' : snack_author.name)
 
+    const dialogActions = [
+      <FlatButton
+        label="Close"
+        secondary={true}
+        onTouchTap={this.handleDialogClose}
+      />,
+    ]
+
     return (
       <IntlProvider locale={lang} messages={this.props.messages}>
         <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
@@ -154,6 +217,14 @@ class App extends Component {
           <div style={{paddingBottom: '90px', minHeight: (this.props.height - 170) + 'px'}}>
             {this.props.children}
           </div>
+
+          <Dialog title="Facebook Messenger Bot"
+            actions={dialogActions}
+            open={this.state.messengerDialog}
+            onRequestClose={this.handleDialogClose}
+          >
+            <div ref={this.messengerMounted}></div>
+          </Dialog>
 
           <Snackbar
             open={snack.open}
@@ -178,6 +249,7 @@ App.propTypes = {
   // from redux:
   uid: PropTypes.number,
   telegram_token: PropTypes.string,
+  messenger_token: PropTypes.string,
   users: PropTypes.array.isRequired,
   lang: PropTypes.string.isRequired,
   desktop: PropTypes.bool.isRequired,
@@ -199,6 +271,7 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   telegram_token: state.member.user.telegram_token,
+  messenger_token: state.member.user.messenger_token,
   users: state.member.tribe.users,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,

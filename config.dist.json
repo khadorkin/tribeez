@@ -8,5 +8,7 @@
   "ga_id": "UA-XXXXXXXX-X",
   "recaptcha_site_key": "xxxxxxxx",
   "google_api_key": "xxxxxxxx",
-  "telegram_bot_name": "xxxxxbot"
+  "telegram_bot_name": "xxxxxBot",
+  "facebook_app_id": "xxxxxxxx",
+  "facebook_page_id": "xxxxxxxx"
 }

@@ -74,6 +74,8 @@ Object.assign(config, {
       __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
       __GOOGLE_API_KEY__: JSON.stringify(user_config.google_api_key),
       __TELEGRAM_BOT_NAME__: JSON.stringify(user_config.telegram_bot_name),
+      __FB_APP_ID__: JSON.stringify(user_config.facebook_app_id),
+      __FB_PAGE_ID__: JSON.stringify(user_config.facebook_page_id),
       __DEBUG__: (env === 'development'),
     }),
     new CopyWebpackPlugin([
