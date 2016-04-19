@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
 import {Editor, EditorState, ContentState} from 'draft-js'
 import {DragSource as dragSource, DropTarget as dropTarget} from 'react-dnd'
+import {FormattedMessage} from 'react-intl'
 
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
@@ -106,7 +107,7 @@ class Note extends Component {
 
     const titleEditor = (
       <Editor ref="title"
-        placeholder="Title"
+        placeholder={<FormattedMessage id="title" />}
         editorState={this.state.titleEditorState}
         onChange={this.handleTitleChange}
         handleDrop={this.preventDrop}

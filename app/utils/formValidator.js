@@ -7,7 +7,7 @@ const validator = (required, optional = []) => {
         errors[field] = 'empty'
       } else if (field === 'city' && !values.city.place_id) {
         errors.city = 'invalid'
-      } else if (field === 'password2' && values.password2 !== values.password) {
+      } else if (field === 'password2' && values.password && values.password2 !== values.password) {
         errors.password2 = 'mismatch'
       } else if (field === 'parts') {
         values.amount = Number(values.amount)

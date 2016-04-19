@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {FormattedMessage} from 'react-intl'
 
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -58,8 +59,8 @@ class AsyncContent extends Component {
     if (error) {
       return (
         <div style={{textAlign: 'center', padding: '40px 0'}}>
-          <div style={{marginBottom: 20, color: 'red'}}>Error: {error}</div>
-          <RaisedButton label="Retry" onTouchTap={this.handleLoad} />
+          <div style={{marginBottom: 20, color: 'red'}}>{error}</div>
+          <RaisedButton label={<FormattedMessage id="retry" />} onTouchTap={this.handleLoad} />
         </div>
       )
     } else {

@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import scriptLoader from '../../utils/scriptLoader'
 
@@ -50,7 +51,7 @@ class Captcha extends Component {
     return (
       <div ref={this.ref} style={{display: 'inline-block', marginBottom: '30px'}}>
         <div id="captcha" style={{minHeight: '80px'}} ref="input"></div>
-        <p className="error">{this.props.errorText}</p>
+        <p className="error">{this.props.touched && this.props.error && <FormattedMessage id="error.captcha" />}</p>
       </div>
     )
   }
@@ -58,7 +59,8 @@ class Captcha extends Component {
 }
 
 Captcha.propTypes = {
-  errorText: PropTypes.node,
+  touched: PropTypes.bool.isRequired,
+  error: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 }
 

@@ -30,18 +30,16 @@ class PasswordForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle="Fill this form to receive a reset link via email" />
+        <CardTitle subtitle={<FormattedMessage id="password_reset" />} />
         <CardText>
           <TextField ref="email"
             type="email"
             required={true}
-            floatingLabelText="Email"
-            errorText={email.touched && email.error && <FormattedMessage id="error.login.email" />}
             {...email}
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Send request" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.password" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

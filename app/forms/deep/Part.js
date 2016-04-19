@@ -39,7 +39,7 @@ export default class Part extends Component {
 
     return (
       <div style={{display: 'flex', height: 72}}>
-        <label style={labelStyle} htmlFor={'' + user.id}>
+        <label style={labelStyle}>
           {user.name}
         </label>
         {
@@ -70,7 +70,6 @@ export default class Part extends Component {
                 step="0.01"
                 min="0"
                 {...amount}
-                //TODO: show currency
               />
               <div style={{position: 'absolute', top: 26, right: 4, color: colors.grey300}}>
                 {this.props.currency}

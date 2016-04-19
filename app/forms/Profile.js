@@ -44,21 +44,17 @@ class ProfileForm extends Component {
         <CardTitle subtitle={<span>To change your profile picture, go to <a href="https://gravatar.com" target="_blank">gravatar.com</a></span>} />
         <CardText>
           <TextField ref="name"
-            floatingLabelText="Your name"
             required={true}
-            errorText={name.touched && name.error && <FormattedMessage id="error.user.name" />}
             {...name}
+            name="username"
           />
           <TextField ref="email"
             type="email"
             required={true}
-            floatingLabelText="Email"
             errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error} />}
             {...email}
           />
           <SelectField ref="lang"
-            floatingLabelText="Language"
-            errorText={lang.touched && lang.error && <FormattedMessage id="error.lang" />}
             {...lang}
           >
             {langItems}
@@ -66,30 +62,23 @@ class ProfileForm extends Component {
           <DatePicker ref="birthdate"
             locale={this.props.lang}
             maxDate={today}
-            floatingLabelText="Birthdate"
-            errorText={birthdate.touched && birthdate.error && <FormattedMessage id="error.birthdate" />}
             {...birthdate}
           />
           <TextField ref="phone"
-            floatingLabelText="Phone number"
-            errorText={phone.touched && phone.error && <FormattedMessage id="error.phone" />}
             {...phone}
           />
           <TextField ref="password"
             type="password"
-            floatingLabelText="Password (leave blank for no change)"
-            errorText={password.touched && password.error && <FormattedMessage id="error.password" />}
             {...password}
+            name="new_password"
           />
           <TextField ref="password2"
             type="password"
-            floatingLabelText="Password (confirmation)"
-            errorText={password2.touched && password2.error && <FormattedMessage id="error.password2" />}
             {...password2}
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Save profile" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.profile" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

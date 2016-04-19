@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
+import {FormattedMessage} from 'react-intl'
 import {DragDropContext as dragDropContext} from 'react-dnd'
 import html5backend from 'react-dnd-html5-backend'
 
@@ -103,13 +104,13 @@ class Notes extends Component {
 
     const dialogActions = [
       <FlatButton
-        label="Cancel"
+        label={<FormattedMessage id="cancel" />}
         secondary={true}
         keyboardFocused={true}
         onTouchTap={this.handleCloseDelete}
       />,
       <FlatButton
-        label="Delete"
+        label={<FormattedMessage id="delete" />}
         primary={true}
         onTouchTap={this.handleConfirmDelete}
       />,
@@ -136,12 +137,12 @@ class Notes extends Component {
           )
         }
 
-        <Dialog title="Delete note"
+        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'note'}} />}
           actions={dialogActions}
           open={this.state.openDialog}
           onRequestClose={this.handleCloseDelete}
         >
-          Delete the note "{this.state.note.title}"?
+          <FormattedMessage id="delete_body" values={{type: 'note', name: this.state.note.title}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} onTouchTap={this.handleCreate}>

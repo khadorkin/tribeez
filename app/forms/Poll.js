@@ -42,33 +42,29 @@ class PollForm extends Component {
         <CardText>
           <TextField ref="name"
             required={true}
-            floatingLabelText="Name"
-            errorText={name.touched && name.error && <FormattedMessage id="error.name" />}
             {...name}
+            name="title"
           />
           <TextField ref="description"
             multiLine={true}
-            floatingLabelText="Description (optional)"
-            errorText={description.touched && description.error && <FormattedMessage id="error.description" />}
             {...description}
           />
           {
             options.map((option, index) => {
               return (
                 <TextField key={index}
-                  floatingLabelText="Option"
                   {...option}
+                  name="option"
                 />
               )
             })
           }
           <Checkbox ref="multiple"
-            label="Multiple answers"
             {...multiple}
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label={this.props.poll ? 'Update poll' : 'Add poll'} type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id={'submit.poll.' + (this.props.poll ? 'update' : 'create')} />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={'error.' + error} />}
           </p>
@@ -100,7 +96,7 @@ const mapStateToProps = (state, ownProps) => {
   let initialValues
   if (poll) {
     const options = poll.options.map((option) => option.name)
-    options.push('')
+    options.push('') // update poll => add an empty option to be able to add options
     initialValues = {
       id: poll.id,
       name: poll.name,
@@ -111,7 +107,7 @@ const mapStateToProps = (state, ownProps) => {
   } else {
     initialValues = {
       multiple: false,
-      options: ['', ''],
+      options: ['', ''], // new poll => two empty options
     }
   }
   return {

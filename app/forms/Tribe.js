@@ -45,27 +45,19 @@ class TribeForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <CardText>
           <TextField ref="tribe_name"
-            floatingLabelText="Tribe name"
             required={true}
-            errorText={tribe_name.touched && tribe_name.error && <FormattedMessage id="error.tribe_name" />}
             {...tribe_name}
           />
           <SelectField ref="tribe_type"
-            floatingLabelText="Type"
-            errorText={tribe_type.touched && tribe_type.error && <FormattedMessage id="error.tribe_type" />}
             {...tribe_type}
           >
             {typeItems}
           </SelectField>
           <CityField ref="city"
-            floatingLabelText="City"
             required={true}
-            errorText={city.touched && city.error && <FormattedMessage id="error.city" />}
             {...city}
           />
           <SelectField ref="currency"
-            floatingLabelText="Currency"
-            errorText={currency.touched && currency.error && <FormattedMessage id="error.currency" />}
             {...currency}
           >
             {currencyItems}

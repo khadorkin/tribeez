@@ -105,6 +105,8 @@ class DatePickerWrapper extends Component {
             autoOk={true}
             firstDayOfWeek={localeData.firstDayOfWeek()}
             formatDate={this.formatDate}
+            floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
+            errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
             {...this.props}
             value={value && new Date(value)}
             onChange={this.handleDateChange}
@@ -128,7 +130,7 @@ class DatePickerWrapper extends Component {
                 textFieldStyle={styles.field}
                 cancelLabel={<FormattedMessage id="cancel" />}
                 format="24hr"
-                floatingLabelText={this.props.timeLabel}
+                floatingLabelText={<FormattedMessage id={'field.time.' + this.props.name} />}
                 value={this.state.time}
                 onChange={this.handleTimeChange}
                 autoOk={true}
@@ -151,12 +153,13 @@ class DatePickerWrapper extends Component {
 }
 
 DatePickerWrapper.propTypes = {
-  // from parent:
+  touched: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.number, //TODO: allow form init to send empty string
   intl: intlShape.isRequired,
   time: PropTypes.bool,
-  timeLabel: PropTypes.string,
 }
 
 export default injectIntl(DatePickerWrapper, {withRef: true})

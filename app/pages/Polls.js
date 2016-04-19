@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {Link} from 'react-router'
+import {FormattedMessage} from 'react-intl'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
@@ -54,13 +55,13 @@ class Polls extends Component {
 
     const dialogActions = [
       <FlatButton
-        label="Cancel"
+        label={<FormattedMessage id="cancel" />}
         secondary={true}
         keyboardFocused={true}
         onTouchTap={this.handleDialogClose}
       />,
       <FlatButton
-        label="Delete"
+        label={<FormattedMessage id="delete" />}
         primary={true}
         onTouchTap={this.handleDelete}
       />,
@@ -74,12 +75,12 @@ class Polls extends Component {
           )
         }
 
-        <Dialog title="Delete poll"
+        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'poll'}} />}
           actions={dialogActions}
           open={this.state.openDialog}
           onRequestClose={this.handleDialogClose}
         >
-          Delete the poll named "{this.state.poll.name}"?
+          <FormattedMessage id="delete_body" values={{type: 'poll', name: this.state.poll.name}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.POLLS_NEW} />}>

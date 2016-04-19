@@ -38,26 +38,25 @@ class LoginForm extends Component {
           <TextField ref="email"
             type="email"
             required={true}
-            floatingLabelText="Email"
-            errorText={email.touched && email.error && <FormattedMessage id="error.login.email" />}
             {...email}
           />
           <TextField ref="password"
             type="password"
             required={true}
-            floatingLabelText="Password"
-            errorText={password.touched && password.error && <FormattedMessage id="error.login.password" />}
             {...password}
+            name="login_password"
           />
-          <p style={{textAlign: 'right', marginBottom: 0}}><Link to={routes.PASSWORD}>Lost your password?</Link></p>
+          <p style={{textAlign: 'right', marginBottom: 0}}>
+            <Link to={routes.PASSWORD}><FormattedMessage id="password_lost" /></Link>
+          </p>
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Login" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.login" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>
           <p style={{marginTop: '2em'}}>
-            No account yet? <Link to={routes.REGISTER}>Register now!</Link>
+            <FormattedMessage id="no_account" /> <Link to={routes.REGISTER}><FormattedMessage id="register_now" /></Link>
           </p>
         </CardActions>
       </form>

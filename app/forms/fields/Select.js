@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import SelectField from 'material-ui/SelectField'
 
@@ -30,6 +31,8 @@ class SelectFieldWrapper extends Component {
       <SelectField
         ref={this.ref}
         style={styles.field}
+        floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
+        errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
         {...this.props}
         onChange={this.handleChange}
       >
@@ -41,6 +44,9 @@ class SelectFieldWrapper extends Component {
 }
 
 SelectFieldWrapper.propTypes = {
+  touched: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 }

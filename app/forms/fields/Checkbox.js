@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import Checkbox from 'material-ui/Checkbox'
 
@@ -30,6 +31,7 @@ class CheckboxWrapper extends Component {
       <Checkbox
         ref={this.ref}
         style={styles.field}
+        label={<FormattedMessage id={'field.' + this.props.name} />}
         {...this.props}
         onCheck={this.handleCheck}
         checked={Boolean(this.props.value)}
@@ -42,6 +44,7 @@ class CheckboxWrapper extends Component {
 }
 
 CheckboxWrapper.propTypes = {
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any, // because redux-form sets it to a string instead of boolean
 }

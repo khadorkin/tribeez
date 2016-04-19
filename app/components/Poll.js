@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedRelative} from 'react-intl'
+import {FormattedMessage, FormattedRelative} from 'react-intl'
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import {List, ListItem} from 'material-ui/List'
@@ -161,9 +161,9 @@ class Poll extends Component {
         <CardActions expandable={true}>
           {
             show_results ? (
-              <FlatButton label="Vote again" onTouchTap={this.handleReset} />
+              <FlatButton label={<FormattedMessage id="vote_again" />} onTouchTap={this.handleReset} />
             ) : (
-              <FlatButton label="Submit vote" onTouchTap={this.handleSubmit} />
+              <FlatButton label={<FormattedMessage id="submit_vote" />} onTouchTap={this.handleSubmit} />
             )
           }
         </CardActions>

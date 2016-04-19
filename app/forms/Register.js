@@ -64,28 +64,22 @@ class RegisterForm extends Component {
         <CardTitle title={<FormattedMessage id="you" />} />
         <CardText>
           <TextField ref="name"
-            floatingLabelText="Your name"
             required={true}
-            errorText={name.touched && name.error && <FormattedMessage id="error.user.name" />}
             {...name}
+            name="username"
           />
           <TextField ref="email"
             type="email"
             required={true}
-            floatingLabelText="Email"
             errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
             {...email}
           />
           <TextField ref="password"
             type="password"
             required={true}
-            floatingLabelText="Password"
-            errorText={password.touched && password.error && <FormattedMessage id="error.password" />}
             {...password}
           />
           <SelectField ref="lang"
-            floatingLabelText="Language"
-            errorText={lang.touched && lang.error && <FormattedMessage id="error.lang" />}
             {...lang}
           >
             {langItems}
@@ -94,27 +88,19 @@ class RegisterForm extends Component {
         <CardTitle title={<FormattedMessage id="your_tribe" />} />
         <CardText>
           <TextField ref="tribe_name"
-            floatingLabelText="Tribe name"
             required={true}
-            errorText={tribe_name.touched && tribe_name.error && <FormattedMessage id="error.tribe_name" />}
             {...tribe_name}
           />
           <SelectField ref="tribe_type"
-            floatingLabelText="Type"
-            errorText={tribe_type.touched && tribe_type.error && <FormattedMessage id="error.tribe_type" />}
             {...tribe_type}
           >
             {typeItems}
           </SelectField>
           <CityField ref="city"
-            floatingLabelText="City"
             required={true}
-            errorText={city.touched && city.error && <FormattedMessage id="error.city" />}
             {...city}
           />
           <SelectField ref="currency"
-            floatingLabelText="Currency"
-            errorText={currency.touched && currency.error && <FormattedMessage id="error.currency" />}
             {...currency}
           >
             {currencyItems}
@@ -122,10 +108,9 @@ class RegisterForm extends Component {
         </CardText>
         <CardActions style={styles.actions}>
           <Captcha ref="captcha"
-            errorText={captcha.touched && captcha.error && <FormattedMessage id="error.captcha" />}
             {...captcha}
           />
-          <RaisedButton label="Register & create this tribe" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.register" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

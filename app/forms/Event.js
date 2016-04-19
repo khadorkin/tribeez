@@ -42,25 +42,18 @@ class EventForm extends Component {
         <CardText>
           <TextField ref="name"
             required={true}
-            floatingLabelText="Name"
-            errorText={name.touched && name.error && <FormattedMessage id="error.name" />}
             {...name}
+            name="title"
           />
           <DatePicker ref="start"
             required={true}
             locale={this.props.lang}
             time={true}
-            floatingLabelText="Start date"
-            timeLabel="Start time (optional)"
-            errorText={start.touched && start.error && <FormattedMessage id="error.start" />}
             {...start}
           />
           <DatePicker ref="end"
             locale={this.props.lang}
             time={true}
-            floatingLabelText="End date (optional)"
-            timeLabel="End time (optional)"
-            errorText={end.touched && end.error && <FormattedMessage id="error.end" />}
             {...end}
           />
           <TextField ref="location"
@@ -70,18 +63,14 @@ class EventForm extends Component {
           />
           <TextField ref="description"
             multiLine={true}
-            floatingLabelText="Description (optional)"
-            errorText={description.touched && description.error && <FormattedMessage id="error.description" />}
             {...description}
           />
           <TextField ref="url"
-            floatingLabelText="URL (optional)"
-            errorText={url.touched && url.error && <FormattedMessage id="error.url" />}
             {...url}
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label={this.props.event ? 'Update event' : 'Add event'} type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id={'submit.event.' + (this.props.event ? 'update' : 'create')} />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

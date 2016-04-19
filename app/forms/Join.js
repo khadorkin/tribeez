@@ -47,35 +47,29 @@ class RegisterForm extends Component {
         <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_you" values={{name: this.props.inviter}} />} />
         <CardText>
           <TextField ref="name"
-            floatingLabelText="Your name"
             required={true}
-            errorText={name.touched && name.error && <FormattedMessage id="error.user.name" />}
             {...name}
+            name="username"
           />
           <TextField ref="email"
             type="email"
             required={true}
-            floatingLabelText="Email"
             errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
             {...email}
           />
           <TextField ref="password"
             type="password"
             required={true}
-            floatingLabelText="Password"
-            errorText={password.touched && password.error && <FormattedMessage id="error.password" />}
             {...password}
           />
           <SelectField ref="lang"
-            floatingLabelText="Language"
-            errorText={lang.touched && lang.error && <FormattedMessage id="error.lang" />}
             {...lang}
           >
             {langItems}
           </SelectField>
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Register & join this tribe" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.join" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

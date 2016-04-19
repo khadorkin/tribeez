@@ -36,25 +36,21 @@ class ResetForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle={this.props.name && `${this.props.name}, please choose a new password`} />
+        <CardTitle subtitle={this.props.name && <FormattedMessage id="password_change" values={{name: this.props.name}} />} />
         <CardText>
           <TextField ref="password"
             type="password"
-            floatingLabelText="Password"
             required={true}
-            errorText={password.touched && password.error && <FormattedMessage id="error.password" />}
             {...password}
           />
           <TextField ref="password2"
             type="password"
-            floatingLabelText="Password (again, for confirmation)"
             required={true}
-            errorText={password2.touched && password2.error && <FormattedMessage id="error.password2" />}
             {...password2}
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Change my password" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.reset" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

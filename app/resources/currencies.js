@@ -6,6 +6,9 @@ export const map = {
   USD: 'United Stated dollar',
   GBP: 'Pound sterling',
   MXN: 'Mexican peso',
+  COP: 'Colombian peso',
+  JPY: 'Japanese yen',
+  BTC: 'Bitcoin',
 /*
   AED: 'United Arab Emirates dirham',
   AFN: 'Afghan afghani',

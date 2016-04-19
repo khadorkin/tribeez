@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import TextField from 'material-ui/TextField'
 import * as colors from 'material-ui/styles/colors'
@@ -31,8 +32,9 @@ class MoneyFieldWrapper extends Component {
           type="number"
           step="0.01"
           min="0"
+          floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
+          errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
           {...this.props}
-          //TODO: show currency
         />
         <div style={{position: 'absolute', top: 40, right: 4, color: colors.grey300}}>
           {this.props.currency}
@@ -44,7 +46,9 @@ class MoneyFieldWrapper extends Component {
 }
 
 MoneyFieldWrapper.propTypes = {
-  // from parent form:
+  touched: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  name: PropTypes.string,
   currency: PropTypes.string,
 }
 

@@ -64,12 +64,12 @@ class Members extends Component {
 
     const dialogActions = [
       <FlatButton
-        label="Cancel"
+        label={<FormattedMessage id="cancel" />}
         secondary={true}
         onTouchTap={this.handleDialogClose}
       />,
       <FlatButton
-        label="Send"
+        label={<FormattedMessage id="send" />}
         primary={true}
         keyboardFocused={true}
         onTouchTap={this.handleResend}
@@ -108,12 +108,12 @@ class Members extends Component {
                 }
               </List>
 
-              <Dialog title="Re-invite"
+              <Dialog title={<FormattedMessage id="reinvite_title" />}
                 actions={dialogActions}
                 open={this.state.openDialog}
                 onRequestClose={this.handleDialogClose}
               >
-                Resend invite to {this.state.invite.email}?
+                <FormattedMessage id="reinvite_body" values={{email: this.state.invite.email}} />
               </Dialog>
             </Paper>
         }

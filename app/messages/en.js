@@ -28,11 +28,29 @@ export default {
   tribe: 'Tribe',
   tribe_new: 'New tribe',
 
+  // subtitles
+  messenger_bot: 'Facebook Messenger Bot',
+  not_found: 'Page not found',
+  title: 'Title',
+
+  // html:
+  sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',
+
   // dates
   datetime: 'On {date, date, long} at {date, time, short}',
 
   // actions
+  delete: 'Delete',
+  send: 'Send',
   cancel: 'Cancel',
+  close: 'Close',
+  delete_title: 'Delete {type, select, bill {bill} event {event} note {note} poll {poll}}',
+  delete_body: 'Delete the {type, select, bill {bill} event {event} note {note} poll {poll}} named "{name}"?',
+  reinvite_title: 'Re-invite',
+  reinvite_body: 'Resend invite to {email}?',
+  vote_again: 'Vote again',
+  submit_vote: 'Submit vote',
+  return_home: 'Return to Activity',
 
   // snack messages
   'snack.password_changed': 'Password changed',
@@ -59,42 +77,97 @@ export default {
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 
-  // login/register forms
+  // FORMS
+  // subtitles:
+  password_reset: 'Fill this form to receive a reset link via email',
+  password_change: '{name}, please choose a new password',
   invited_you: '{name} invited you',
   login_to_join: '{inviter} invited you to join {tribe}',
   you: 'You',
   your_tribe: 'Your tribe',
-  // login :
-  'error.login.email': 'Unknown email address',
-  'error.login.password': 'Wrong password',
-  // register/join:
-  'error.user.name': 'Invalid user name',
+  password_lost: 'Lost your password?',
+  no_account: 'No account yet?',
+  register_now: 'Register now!',
+  // register/login/join/profile/tribe:
+  'field.login_password': 'Password',
+  'error.login_password': 'Wrong password',
+  'field.username': 'Your name',
+  'error.username': 'Invalid name',
+  'field.email': 'Email address',
+  'error.email': 'Unknown email address',
   'error.email_empty': 'An email address is required',
   'error.email_invalid': 'Invalid email address',
   'error.email_invalid_suggestion': 'Invalid address. Did you mean {suggestion}?',
   'error.email_exists': 'This email address is already registered',
+  'field.password': 'Choose a password',
   'error.password': 'Invalid password',
+  'field.password2': 'Password (confirmation)',
   'error.password2': 'Passwords do not match',
+  'field.lang': 'Language',
   'error.lang': 'Invalid language',
+  'field.birthdate': 'Birthdate',
+  'error.birthdate': 'Invalid birthdate',
+  'field.phone': 'Phone number',
+  'error.phone': 'Invalid phone number',
+  'field.new_password': 'Password (leave blank for no change)',
+  'error.new_password': 'Invalid password',
+  'field.tribe_name': 'Tribe name',
   'error.tribe_name': 'Invalid tribe name',
+  'field.city': 'City',
   'error.city': 'Please choose a city in the dropdown suggestions list',
+  'field.currency': 'Currency',
   'error.currency': 'Please choose a currency',
+  'field.tribe_type': 'Type',
   'error.tribe_type': 'Please choose a tribe type',
   'error.captcha': 'Invalid captcha',
-  // bill:
-  'label.part': '{name}\'s share',
-  'error.payer': 'Please indicate who paid this',
+  // common for entities:
+  'field.name': 'Name',
   'error.name': 'Invalid name',
-  'error.description': 'Invalid description',
+  'field.title': 'Title',
+  'error.title': 'Invalid title',
+  'field.description': 'Description (optional)',
+  'error.other': 'Request error: please try again later',
+  // bill:
+  'field.payer': 'Who paid?',
+  'error.payer': 'Please indicate who paid this',
+  'field.paid': 'When was it?',
+  'error.paid': 'Invalid date',
+  'field.amount': 'Total amount',
   'error.amount': 'Invalid amount',
+  'field.method': 'Sharing method',
+  'method.shares': 'Shares',
+  'method.amounts': 'Amounts',
+  'error.method': 'Invalid method',
   'error.amount_mismatch': 'The bill amount must match the sum of the shares',
   'error.no_parts': 'You must distribute at least one share',
   // poll:
+  'field.option': 'Option',
+  'field.multiple': 'Allow multiple choices',
   'error.no_options': 'You must give at lease two options',
-  // common:
-  'error.other': 'Request error: please try again later',
+  // event:
+  'field.start': 'Start date',
+  'field.time.start': 'Start time (optional)',
+  'error.start': 'Invalid date',
+  'field.end': 'End date (optional)',
+  'field.time.end': 'End time (optional)',
+  'field.location': 'Location (optional)',
+  'field.url': 'Link (optional)',
+  // submit buttons:
+  'submit.register': 'Register & create this tribe',
+  'submit.join': 'Register & join this tribe',
+  'submit.login': 'Login',
+  'submit.password': 'Send',
+  'submit.reset': 'Set my password',
+  'submit.profile': 'Save profile',
+  'submit.invite': 'Send invite',
   'submit.tribe.create': 'Create tribe',
   'submit.tribe.update': 'Update tribe',
+  'submit.bill.create': 'Add bill',
+  'submit.bill.update': 'Update bill',
+  'submit.poll.create': 'Create poll',
+  'submit.poll.update': 'Update poll',
+  'submit.event.create': 'Add event',
+  'submit.event.update': 'Update event',
 
   // Members
   'add_member': 'Add a member',

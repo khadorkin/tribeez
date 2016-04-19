@@ -69,19 +69,14 @@ class BillForm extends Component {
         <CardText>
           <TextField ref="name"
             required={true}
-            floatingLabelText="Title"
-            errorText={name.touched && name.error && <FormattedMessage id="error.name" />}
             {...name}
+            name="title"
           />
           <TextField ref="description"
             multiLine={true}
-            floatingLabelText="Description (optional)"
-            errorText={description.touched && description.error && <FormattedMessage id="error.description" />}
             {...description}
           />
           <SelectField ref="payer"
-            floatingLabelText="Who paid?"
-            errorText={payer.touched && payer.error && <FormattedMessage id="error.payer" />}
             {...payer}
           >
             {userItems}
@@ -90,24 +85,18 @@ class BillForm extends Component {
             required={true}
             locale={this.props.lang}
             maxDate={today}
-            floatingLabelText="When was it?"
-            errorText={paid.touched && paid.error && <FormattedMessage id="error.paid" />}
             {...paid}
           />
           <MoneyField ref="amount"
-            floatingLabelText="Total amount"
-            errorText={amount.touched && amount.error && <FormattedMessage id="error.amount" />}
             currency={currency}
             {...amount}
           />
           <SelectField ref="method"
-            floatingLabelText="Sharing method"
-            errorText={method.touched && method.error && <FormattedMessage id="error.method" />}
             {...method}
             onChange={this.handleMethodChange}
           >
-            <MenuItem value="shares" primaryText="Shares" />
-            <MenuItem value="amounts" primaryText="Amounts" />
+            <MenuItem value="shares" primaryText={<FormattedMessage id={'method.shares'} />} />
+            <MenuItem value="amounts" primaryText={<FormattedMessage id={'method.amounts'} />} />
             {/* TODO: add items named "Category: _____" */}
           </SelectField>
           {
@@ -122,7 +111,7 @@ class BillForm extends Component {
           }
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label={this.props.bill ? 'Update bill' : 'Add bill'} type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id={'submit.tribe.' + (this.props.bill ? 'update' : 'create')} />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={'error.' + error} />}
           </p>

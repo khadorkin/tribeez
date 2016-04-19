@@ -48,20 +48,17 @@ class InviteForm extends Component {
           <TextField ref="email"
             type="email"
             required={true}
-            floatingLabelText="Email"
             errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
             {...email}
           />
           <SelectField ref="lang"
-            floatingLabelText="Language"
-            errorText={lang.touched && lang.error && <FormattedMessage id="error.lang" />}
             {...lang}
           >
             {langItems}
           </SelectField>
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label="Send invite" type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id="submit.invite" />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>

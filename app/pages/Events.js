@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators, compose} from 'redux'
-import {FormattedMessage, FormattedDate, injectIntl, intlShape} from 'react-intl'
+import {bindActionCreators} from 'redux'
+import {FormattedMessage, FormattedDate} from 'react-intl'
 import {Link} from 'react-router'
 
 import BigCalendar from 'react-big-calendar'
@@ -93,7 +93,7 @@ class Events extends Component {
   }
 
   render() {
-    const {events, intl: {formatMessage}} = this.props
+    const {events} = this.props
     const {event} = this.state
 
     const detailsActions = [
@@ -107,27 +107,27 @@ class Events extends Component {
 
     const deleteActions = [
       <FlatButton
-        label="Cancel"
+        label={<FormattedMessage id="cancel" />}
         secondary={true}
         keyboardFocused={true}
         onTouchTap={this.handleCloseDelete}
       />,
       <FlatButton
-        label="Delete"
+        label={<FormattedMessage id="delete" />}
         primary={true}
         onTouchTap={this.handleConfirmDelete}
       />,
     ]
 
     const messages = {
-      allDay: formatMessage({id: 'calendar.allDay'}),
-      previous: formatMessage({id: 'calendar.previous'}),
-      next: formatMessage({id: 'calendar.next'}),
-      today: formatMessage({id: 'calendar.today'}),
-      month: formatMessage({id: 'calendar.month'}),
-      week: formatMessage({id: 'calendar.week'}),
-      day: formatMessage({id: 'calendar.day'}),
-      agenda: formatMessage({id: 'calendar.agenda'}),
+      allDay: <FormattedMessage id="calendar.allDay" />,
+      previous: <FormattedMessage id="calendar.previous" />,
+      next: <FormattedMessage id="calendar.next" />,
+      today: <FormattedMessage id="calendar.today" />,
+      month: <FormattedMessage id="calendar.month" />,
+      week: <FormattedMessage id="calendar.week" />,
+      day: <FormattedMessage id="calendar.day" />,
+      agenda: <FormattedMessage id="calendar.agenda" />,
     }
 
     const views = ['month', 'week', 'agenda']
@@ -180,12 +180,12 @@ class Events extends Component {
           </List>
         </Dialog>
 
-        <Dialog title="Delete event"
+        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'event'}} />}
           actions={deleteActions}
           open={this.state.openDelete}
           onRequestClose={this.handleCloseDelete}
         >
-          Delete "{event.name}"?
+          <FormattedMessage id="delete_body" values={{type: 'event', name: event.name}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.EVENTS_NEW} />}>
@@ -198,7 +198,6 @@ class Events extends Component {
 }
 
 Events.propTypes = {
-  intl: intlShape.isRequired,
   // redux state:
   lang: PropTypes.string.isRequired,
   events: PropTypes.object,
@@ -217,7 +216,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteEvent,
 }, dispatch)
 
-export default compose(
-  injectIntl,
-  connect(mapStateToProps, mapDispatchToProps),
-)(Events)
+export default connect(mapStateToProps, mapDispatchToProps)(Events)

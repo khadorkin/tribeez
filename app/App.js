@@ -199,7 +199,7 @@ class App extends Component {
 
     const dialogActions = [
       <FlatButton
-        label="Close"
+        label={<FormattedMessage id="close" />}
         secondary={true}
         onTouchTap={this.handleDialogClose}
       />,
@@ -218,7 +218,7 @@ class App extends Component {
             {this.props.children}
           </div>
 
-          <Dialog title="Facebook Messenger Bot"
+          <Dialog title={<FormattedMessage id="messenger_bot" />}
             actions={dialogActions}
             open={this.state.messengerDialog}
             onRequestClose={this.handleDialogClose}

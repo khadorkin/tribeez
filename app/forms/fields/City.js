@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import AutoComplete from 'material-ui/AutoComplete'
 
@@ -96,6 +97,15 @@ class CityField extends Component {
   render() {
     const {value} = this.props
 
+    let searchText = ''
+    if (value) {
+      if (typeof value === 'string') {
+        searchText = value
+      } else if (value.name) {
+        searchText = value.name
+      }
+    }
+
     return (
       <AutoComplete
         ref={this.ref}
@@ -105,8 +115,10 @@ class CityField extends Component {
         onUpdateInput={this.handleChange}
         onNewRequest={this.handleSelect}
         filter={this.filter}
-        searchText={value && (value.name === undefined ? value : value.name)}
+        searchText={searchText}
         autoComplete="google suggestions typeahead"
+        floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
+        errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
         {...this.props}
       />
     )
@@ -115,6 +127,9 @@ class CityField extends Component {
 }
 
 CityField.propTypes = {
+  touched: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.any, // because redux-form sets it to a string instead of object
 }
