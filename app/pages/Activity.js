@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import {FormattedMessage} from 'react-intl'
 
 import AsyncContent from '../hoc/AsyncContent'
 
@@ -24,7 +25,7 @@ class Activity extends Component {
     return (
       <AsyncContent fetcher={this.props.getActivity} data={this.props.activity}>
         {
-          polls.length > 0 && <h3 style={h3style}>Open polls</h3>
+          polls.length > 0 && <h3 style={h3style}><FormattedMessage id="open_polls" /></h3>
         }
 
         {
@@ -34,7 +35,7 @@ class Activity extends Component {
         }
 
         {
-          events.length > 0 && <h3 style={h3style}>Upcoming events</h3>
+          events.length > 0 && <h3 style={h3style}><FormattedMessage id="upcoming_events" /></h3>
         }
 
         {
@@ -44,7 +45,7 @@ class Activity extends Component {
         }
 
         {
-          items.length > 0 && (polls.length > 0 || events.length > 0) && <h3 style={h3style}>Activity</h3>
+          items.length > 0 && (polls.length > 0 || events.length > 0) && <h3 style={h3style}><FormattedMessage id="activity" /></h3>
         }
 
         {

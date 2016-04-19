@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
+import {FormattedMessage, FormattedDate, FormattedRelative, FormattedNumber} from 'react-intl'
 
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
@@ -71,7 +71,7 @@ class Entry extends Component {
         break
       case 'event':
         values.name = entry.data.name
-        values.when = <FormattedRelative value={entry.data.start} />
+        values.when = <FormattedDate value={entry.data.start} />
         break
       default:
         return null

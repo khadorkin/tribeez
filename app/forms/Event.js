@@ -57,8 +57,6 @@ class EventForm extends Component {
             {...end}
           />
           <TextField ref="location"
-            floatingLabelText="Location (optional)"
-            errorText={location.touched && location.error && <FormattedMessage id="error.location" />}
             {...location}
           />
           <TextField ref="description"

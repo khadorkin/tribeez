@@ -32,6 +32,8 @@ export default {
   messenger_bot: 'Facebook Messenger Bot',
   not_found: 'Page not found',
   title: 'Title',
+  upcoming_events: 'Upcoming events',
+  open_polls: 'Open polls',
 
   // html:
   sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',
@@ -44,8 +46,8 @@ export default {
   send: 'Send',
   cancel: 'Cancel',
   close: 'Close',
-  delete_title: 'Delete {type, select, bill {bill} event {event} note {note} poll {poll}}',
-  delete_body: 'Delete the {type, select, bill {bill} event {event} note {note} poll {poll}} named "{name}"?',
+  delete_title: 'Delete {type}',
+  delete_body: 'Delete the {type} named "{name}"?',
   reinvite_title: 'Re-invite',
   reinvite_body: 'Resend invite to {email}?',
   vote_again: 'Vote again',
@@ -88,6 +90,7 @@ export default {
   password_lost: 'Lost your password?',
   no_account: 'No account yet?',
   register_now: 'Register now!',
+  gravatar: 'To change your profile picture, go to <a href="https://gravatar.com" target="_blank">gravatar.com</a>',
   // register/login/join/profile/tribe:
   'field.login_password': 'Password',
   'error.login_password': 'Wrong password',
@@ -106,9 +109,7 @@ export default {
   'field.lang': 'Language',
   'error.lang': 'Invalid language',
   'field.birthdate': 'Birthdate',
-  'error.birthdate': 'Invalid birthdate',
   'field.phone': 'Phone number',
-  'error.phone': 'Invalid phone number',
   'field.new_password': 'Password (leave blank for no change)',
   'error.new_password': 'Invalid password',
   'field.tribe_name': 'Tribe name',

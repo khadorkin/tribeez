@@ -111,7 +111,7 @@ class BillForm extends Component {
           }
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id={'submit.tribe.' + (this.props.bill ? 'update' : 'create')} />} type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id={'submit.bill.' + (this.props.bill ? 'update' : 'create')} />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id={'error.' + error} />}
           </p>

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {FormattedMessage} from 'react-intl'
+import {FormattedMessage, FormattedHTMLMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
 import {CardTitle, CardText, CardActions} from 'material-ui/Card'
@@ -41,7 +41,7 @@ class ProfileForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle={<span>To change your profile picture, go to <a href="https://gravatar.com" target="_blank">gravatar.com</a></span>} />
+        <CardTitle subtitle={<FormattedHTMLMessage id="gravatar" />} />
         <CardText>
           <TextField ref="name"
             required={true}
