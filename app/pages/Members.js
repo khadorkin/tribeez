@@ -108,12 +108,12 @@ class Members extends Component {
                 }
               </List>
 
-              <Dialog title={<FormattedMessage id="reinvite_title" />}
+              <Dialog title={this.state.invite.email}
                 actions={dialogActions}
                 open={this.state.openDialog}
                 onRequestClose={this.handleDialogClose}
               >
-                <FormattedMessage id="reinvite_body" values={{email: this.state.invite.email}} />
+                <FormattedMessage id="reinvite_dialog" />
               </Dialog>
             </Paper>
         }

@@ -88,12 +88,12 @@ class Bills extends Component {
           )
         }
 
-        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'bill'}} />}
+        <Dialog title={this.state.bill.name}
           actions={dialogActions}
           open={this.state.openDialog}
           onRequestClose={this.handleDialogClose}
         >
-          <FormattedMessage id="delete_body" values={{type: 'bill', name: this.state.bill.name}} />
+          <FormattedMessage id="delete_dialog" values={{type: 'bill'}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>

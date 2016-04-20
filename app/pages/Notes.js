@@ -137,12 +137,12 @@ class Notes extends Component {
           )
         }
 
-        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'note'}} />}
+        <Dialog title={this.state.note.title}
           actions={dialogActions}
           open={this.state.openDialog}
           onRequestClose={this.handleCloseDelete}
         >
-          <FormattedMessage id="delete_body" values={{type: 'note', name: this.state.note.title}} />
+          <FormattedMessage id="delete_dialog" values={{type: 'note'}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} onTouchTap={this.handleCreate}>

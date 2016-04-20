@@ -180,12 +180,12 @@ class Events extends Component {
           </List>
         </Dialog>
 
-        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'event'}} />}
+        <Dialog title={event.name}
           actions={deleteActions}
           open={this.state.openDelete}
           onRequestClose={this.handleCloseDelete}
         >
-          <FormattedMessage id="delete_body" values={{type: 'event', name: event.name}} />
+          <FormattedMessage id="delete_dialog" values={{type: 'event'}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.EVENTS_NEW} />}>

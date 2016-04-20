@@ -75,12 +75,12 @@ class Polls extends Component {
           )
         }
 
-        <Dialog title={<FormattedMessage id="delete_title" values={{type: 'poll'}} />}
+        <Dialog title={this.state.poll.name}
           actions={dialogActions}
           open={this.state.openDialog}
           onRequestClose={this.handleDialogClose}
         >
-          <FormattedMessage id="delete_body" values={{type: 'poll', name: this.state.poll.name}} />
+          <FormattedMessage id="delete_dialog" values={{type: 'poll'}} />
         </Dialog>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.POLLS_NEW} />}>
