@@ -35,7 +35,13 @@ BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
 )
 const startAccessor = (event) => new Date(event.start)
-const endAccessor = (event) => (event.end ? new Date(event.end) : new Date(event.start))
+const endAccessor = (event) => {
+  const end = event.end ? new Date(event.end) : new Date(event.start)
+  if (end.getHours() === 0) {
+    end.setHours(12) // hack for BigCalendar to include the last day
+  }
+  return end
+}
 
 const eventPropGetter = (/*event, start, end, isSelected*/) => ({style: {backgroundColor: colors.deepOrange300}})
 
