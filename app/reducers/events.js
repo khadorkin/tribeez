@@ -30,8 +30,8 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        items: [...state.items, ...action.data.items],
-        pages: state.pages + 1,
+        items: action.page ? [...state.items, ...action.data.items] : action.data.items,
+        pages: action.page + 1,
       }
     case GET_EVENTS_FAILURE:
       return {

@@ -6,7 +6,7 @@ import {
   GET_POLLS_FAILURE,
 } from '../constants/actions'
 
-export default (page) => {
+export default (page = 0) => {
   return function(dispatch) {
     dispatch({
       type: GET_POLLS_REQUEST,
@@ -22,6 +22,7 @@ export default (page) => {
           dispatch({
             type: GET_POLLS_SUCCESS,
             data: response,
+            page,
           })
         }
       })
