@@ -40,8 +40,11 @@ class AsyncContent extends Component {
   }
 
   handleScroll() {
+    if (!this.element) {
+      return
+    }
     const atBottom = (document.body.scrollTop > this.element.scrollHeight - window.innerHeight)
-    if (this.element && this.props.data.paging && atBottom) {
+    if (this.props.data.paging && atBottom) {
       this.handleLoad(true)
     }
   }

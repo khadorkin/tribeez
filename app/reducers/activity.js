@@ -79,6 +79,19 @@ export default (state = initialState, action = null) => {
         boxComments,
       }
 
+    case POST_VOTE_SUCCESS: {
+      const polls = state.polls.slice()
+      polls.forEach((poll) => {
+        if (poll.id === action.id) {
+          poll.answers[action.uid] = action.choices
+        }
+      })
+      return {
+        ...state,
+        polls,
+      }
+    }
+
     case NEW_BILL:
     case UPDATE_BILL:
     case DELETE_BILL:
@@ -89,7 +102,6 @@ export default (state = initialState, action = null) => {
     case UPDATE_POLL:
     case DELETE_POLL:
     case PUT_POLL_SUCCESS:
-    case POST_VOTE_SUCCESS:
       return {
         ...state,
         items: [],
