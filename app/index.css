@@ -67,3 +67,7 @@ input:-webkit-autofill {
 button:focus {
   outline: none;
 }
+
+.rbc-day-slot, .rbc-day-bg {
+  cursor: pointer;
+}

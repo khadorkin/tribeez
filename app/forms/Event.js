@@ -68,7 +68,7 @@ class EventForm extends Component {
           />
         </CardText>
         <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id={'submit.event.' + (this.props.event ? 'update' : 'create')} />} type="submit" disabled={submitting} />
+          <RaisedButton label={<FormattedMessage id={'submit.event.' + (this.props.event.id ? 'update' : 'create')} />} type="submit" disabled={submitting} />
           <p className="error">
             {error && <FormattedMessage id="error.other" />}
           </p>
@@ -96,10 +96,11 @@ EventForm.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const event = ownProps.current || state.events.current // either from routing state, or from ajax retrieval
-  let initialValues
-  if (event) {
-    initialValues = {
+  const event = ownProps.current || state.events.current || {} // either from routing state, or from ajax retrieval
+  return {
+    lang: state.app.lang,
+    event,
+    initialValues: {
       id: event.id,
       name: event.name,
       description: event.description,
@@ -107,14 +108,7 @@ const mapStateToProps = (state, ownProps) => {
       end: event.end,
       location: event.location,
       url: event.url,
-    }
-  } else {
-    initialValues = {}
-  }
-  return {
-    lang: state.app.lang,
-    initialValues,
-    event,
+    },
   }
 }
 

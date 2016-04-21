@@ -30,6 +30,7 @@ import routes from '../constants/routes'
 
 import getEvents from '../actions/getEvents'
 import deleteEvent from '../actions/deleteEvent'
+import newEvent from '../actions/newEvent'
 
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
@@ -66,6 +67,7 @@ class Events extends Component {
     this.handleDelete = this.handleDelete.bind(this)
     this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
     this.handleCloseDelete = this.handleCloseDelete.bind(this)
+    this.handleSelectSlot = this.handleSelectSlot.bind(this)
   }
 
   handleSelectEvent(event) {
@@ -96,6 +98,10 @@ class Events extends Component {
     this.setState({
       openDelete: false,
     })
+  }
+
+  handleSelectSlot(event) {
+    this.props.newEvent(event)
   }
 
   render() {
@@ -152,6 +158,8 @@ class Events extends Component {
           onSelectEvent={this.handleSelectEvent}
           messages={messages}
           eventPropGetter={eventPropGetter}
+          selectable={true}
+          onSelectSlot={this.handleSelectSlot}
         />
 
         <Dialog title={event.name}
@@ -210,6 +218,7 @@ Events.propTypes = {
   // action creators:
   getEvents: PropTypes.func.isRequired,
   deleteEvent: PropTypes.func.isRequired,
+  newEvent: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -220,6 +229,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getEvents,
   deleteEvent,
+  newEvent,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events)
