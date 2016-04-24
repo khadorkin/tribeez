@@ -58,7 +58,7 @@ export default (state = initialState, action = null) => {
     case UPDATE_BILL: {
       const items = state.items.map((bill) => {
         if (bill.id === action.data.id) {
-          return action.data
+          return {...bill, ...action.data}
         }
         return bill
       })

@@ -56,7 +56,7 @@ export default (state = initialState, action = null) => {
     case UPDATE_EVENT: {
       const items = state.items.map((event) => {
         if (event.id === action.data.id) {
-          return action.data
+          return {...event, ...action.data}
         }
         return event
       })

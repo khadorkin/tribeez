@@ -23,6 +23,7 @@ export default {
   EVENTS_EDIT: '/events/:id',
   TASKS: '/tasks',
   TASKS_NEW: '/tasks/new',
+  TASKS_EDIT: '/tasks/:id',
   NOTES: '/notes',
   NOTES_NEW: '/notes/new',
   POLLS: '/polls',

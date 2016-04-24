@@ -20,6 +20,16 @@ const validator = (required, optional = []) => {
             errors._error = 'no_parts'
           }
         }
+      } else if (field === 'wait') {
+        values.wait = Number(values.wait)
+        if (isNaN(values.wait) || values.wait < 0) {
+          errors.wait = 'invalid'
+        }
+      } else if (field === 'notice') {
+        values.notice = Number(values.notice)
+        if (isNaN(values.notice) || values.notice < 0) {
+          errors.notice = 'invalid'
+        }
       }
     })
     return errors
@@ -38,6 +48,7 @@ export default {
   bill: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
   event: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
   poll: validator(['name', 'options'], ['description', 'multiple']),
+  task: validator(['name', 'wait', 'notice'], ['description']),
 }
 
 export const focus = (errors, refs) => {

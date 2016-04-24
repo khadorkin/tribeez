@@ -20,6 +20,7 @@ const fr = {
   events_edit: 'Modifier l’évènement',
   tasks: 'Tâches',
   tasks_new: 'Nouvelle tâche',
+  tasks_edit: 'Modifier la tâche',
   notes: 'Notes',
   notes_new: 'Nouvelle note',
   polls: 'Sondages',
@@ -34,6 +35,7 @@ const fr = {
   title: 'Titre',
   upcoming_events: 'Évènements à venir',
   open_polls: 'Sondages ouverts',
+  tasks_todo: 'Tâches à faire',
 
   // html:
   sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail.<br>Cliquez dessus pour choisir un nouveau mot de passe.',
@@ -46,7 +48,7 @@ const fr = {
   send: 'Envoyer',
   cancel: 'Annuler',
   close: 'Fermer',
-  delete_dialog: 'Voulez-vous vraiment supprimer {type, select, bill {cette facture} event {cet évènement} note {cette note} poll {ce sondage}} ?',
+  delete_dialog: 'Voulez-vous vraiment supprimer {type, select, bill {cette facture} event {cet évènement} note {cette note} poll {ce sondage} task {cette tâche}} ?',
   reinvite_title: 'Réinviter',
   reinvite_body: 'Renvoyer une invitation à l’adresse {email} ?',
   vote_again: 'Re-voter',
@@ -67,14 +69,18 @@ const fr = {
   'snack.note_updated': 'Note sauvegardée',
   'snack.notes_reordered': 'Notes réordonnées',
   'snack.note_deleted': 'Note supprimée',
-  'snack.NEW_EVENT': '{author, select, _you_ {Évènement ajoutée} other {{author} a ajouté l’évènement "{name}"}}',
-  'snack.UPDATE_EVENT': '{author, select, _you_ {Évènement modifiée} other {{author} a modifié l’évènement "{name}"}}',
-  'snack.DELETE_EVENT': '{author, select, _you_ {Évènement supprimée} other {{author} a supprimé l’évènement "{name}"}}',
-  'snack.NEW_POLL': '{author, select, _you_ {Sondage ajoutée} other {{author} a ajouté le sondage "{name}"}}',
-  'snack.UPDATE_POLL': '{author, select, _you_ {Sondage modifiée} other {{author} a modifié le sondage "{name}"}}',
-  'snack.DELETE_POLL': '{author, select, _you_ {Sondage supprimée} other {{author} a supprimé le sondage "{name}"}}',
-  'snack.poll_updated': 'Sondage modifié',
+  'snack.NEW_EVENT': '{author, select, _you_ {Évènement ajouté} other {{author} a ajouté l’évènement "{name}"}}',
+  'snack.UPDATE_EVENT': '{author, select, _you_ {Évènement modifié} other {{author} a modifié l’évènement "{name}"}}',
+  'snack.DELETE_EVENT': '{author, select, _you_ {Évènement supprimé} other {{author} a supprimé l’évènement "{name}"}}',
+  'snack.NEW_POLL': '{author, select, _you_ {Sondage ajouté} other {{author} a ajouté le sondage "{name}"}}',
+  'snack.UPDATE_POLL': '{author, select, _you_ {Sondage modifié} other {{author} a modifié le sondage "{name}"}}',
+  'snack.DELETE_POLL': '{author, select, _you_ {Sondage supprimé} other {{author} a supprimé le sondage "{name}"}}',
+  'snack.poll_updated': 'Sondage modifié', // after on/off switch
+  'snack.NEW_TASK': '{author, select, _you_ {Tâche ajoutée} other {{author} a ajouté la tâche "{name}"}}',
+  'snack.UPDATE_TASK': '{author, select, _you_ {Tâche modifiée} other {{author} a modifié la tâche "{name}"}}',
+  'snack.DELETE_TASK': '{author, select, _you_ {Tâche supprimée} other {{author} a supprimé la tâche "{name}"}}',
   'snack.voted': 'Voté',
+  'snack.task_done': 'Tâche marquée comme effectuée',
   'snack.logout_success': 'Vous êtes déconnecté',
   'snack.error': 'Erreur: veuillez rééssayer',
 
@@ -152,6 +158,11 @@ const fr = {
   'field.time.end': 'Heure de fin (facultative)',
   'field.location': 'Lieu (facultatif)',
   'field.url': 'Lien (facultatif)',
+  // task:
+  'field.wait': 'Période de carence (jours)',
+  'error.wait': 'Période incorrecte',
+  'field.notice': 'Délai d’application (jours)',
+  'error.notice': 'Délai incorrect',
   // submit buttons:
   'submit.register': 'S’inscrire et créer cette tribu',
   'submit.join': 'S’inscrire et rejoindre cette tribu',
@@ -168,6 +179,8 @@ const fr = {
   'submit.poll.update': 'Modifier le sondage',
   'submit.event.create': 'Ajouter l’évènement',
   'submit.event.update': 'Modifier l’évènement',
+  'submit.task.create': 'Ajouter la tâche',
+  'submit.task.update': 'Modifier la tâche',
 
   // Members
   'add_member': 'Ajouter un membre',
@@ -192,6 +205,9 @@ const fr = {
   'entry.event.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté un évènement nommé "{name}" pour le {when}',
   'entry.event.edit': '{author, select, _you_ {Vous avez} other {{author} a}} modifié l’évènement "{name}" du {when}',
   'entry.event.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé l’évènement "{name}" du {when}',
+  'entry.task.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté une tâche nommé "{name}"',
+  'entry.task.edit': '{author, select, _you_ {Vous avez} other {{author} a}} modifié la tâche "{name}"',
+  'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}', // http://formatjs.io/guides/message-syntax/#plural-format
   comment: 'Votre commentaire...',
 
@@ -208,6 +224,11 @@ const fr = {
   'calendar.week': 'Semaine',
   'calendar.day': 'Jour',
   'calendar.agenda': 'Agenda',
+
+  // Tasks
+  task_counter: '{user} {count, plural, =0 {ne l’a jamais fait} other {l’a fait # fois}}',
+  last_done: 'Dernière fois {date}',
+  never_done: 'Jamais effectuée',
 }
 
 export default {...en, ...fr} // to have English as a fallback

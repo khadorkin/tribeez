@@ -8,6 +8,7 @@ import AsyncContent from '../hoc/AsyncContent'
 import Entry from '../components/Entry'
 import Event from '../components/Event'
 import Poll from '../components/Poll'
+import Task from '../components/Task'
 import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../actions/getActivity'
@@ -20,10 +21,20 @@ const h3style = {
 class Activity extends Component {
 
   render() {
-    const {activity: {items, polls, events}} = this.props
+    const {activity: {items, polls, events, tasks}} = this.props
 
     return (
       <AsyncContent fetcher={this.props.getActivity} data={this.props.activity}>
+        {
+          tasks.length > 0 && <h3 style={h3style}><FormattedMessage id="tasks_todo" /></h3>
+        }
+
+        {
+          tasks.map((task) =>
+            <Task task={task} key={task.id} />
+          )
+        }
+
         {
           polls.length > 0 && <h3 style={h3style}><FormattedMessage id="open_polls" /></h3>
         }

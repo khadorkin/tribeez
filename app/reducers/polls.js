@@ -60,7 +60,7 @@ export default (state = initialState, action = null) => {
     case UPDATE_POLL: {
       const items = state.items.map((poll) => {
         if (poll.id === action.data.id) {
-          return action.data
+          return {...poll, ...action.data}
         }
         return poll
       })

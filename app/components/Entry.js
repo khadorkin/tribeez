@@ -73,6 +73,9 @@ class Entry extends Component {
         values.name = entry.data.name
         values.when = <FormattedDate value={entry.data.start} />
         break
+      case 'task':
+        values.name = entry.data.name
+        break
       default:
         return null
     }

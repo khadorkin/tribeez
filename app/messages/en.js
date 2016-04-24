@@ -20,6 +20,7 @@ export default {
   events_edit: 'Edit event',
   tasks: 'Tasks',
   tasks_new: 'New task',
+  tasks_edit: 'Edit task',
   notes: 'Notes',
   notes_new: 'New note',
   polls: 'Polls',
@@ -34,6 +35,7 @@ export default {
   title: 'Title',
   upcoming_events: 'Upcoming events',
   open_polls: 'Open polls',
+  tasks_todo: 'Tasks to do',
 
   // html:
   sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',
@@ -73,7 +75,11 @@ export default {
   'snack.UPDATE_POLL': '{author, select, _you_ {Poll updated} other {{author} updated the "{name}" poll}}',
   'snack.DELETE_POLL': '{author, select, _you_ {Poll deleted} other {{author} deleted the "{name}" poll}}',
   'snack.poll_updated': 'Poll updated',
+  'snack.NEW_TASK': '{author, select, _you_ {Task created} other {{author} created the "{name}" task}}',
+  'snack.UPDATE_TASK': '{author, select, _you_ {Task updated} other {{author} updated the "{name}" task}}',
+  'snack.DELETE_TASK': '{author, select, _you_ {Task deleted} other {{author} deleted the "{name}" task}}',
   'snack.voted': 'Voted',
+  'snack.task_done': 'Task marked as done',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 
@@ -151,6 +157,11 @@ export default {
   'field.time.end': 'End time (optional)',
   'field.location': 'Location (optional)',
   'field.url': 'Link (optional)',
+  // task:
+  'field.wait': 'Waiting period (days)',
+  'error.wait': 'Invalid period',
+  'field.notice': 'Warning delay (days)',
+  'error.notice': 'Invalid delay',
   // submit buttons:
   'submit.register': 'Register & create this tribe',
   'submit.join': 'Register & join this tribe',
@@ -167,6 +178,8 @@ export default {
   'submit.poll.update': 'Update poll',
   'submit.event.create': 'Add event',
   'submit.event.update': 'Update event',
+  'submit.task.create': 'Add task',
+  'submit.task.update': 'Update task',
 
   // Members
   'add_member': 'Add a member',
@@ -191,6 +204,9 @@ export default {
   'entry.event.new': '{author, select, _you_ {You} other {{author}}} added an event named "{name}" starting {when}',
   'entry.event.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" event starting {when}',
   'entry.event.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" event starting {when}',
+  'entry.task.new': '{author, select, _you_ {You} other {{author}}} added a task named "{name}"',
+  'entry.task.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" task',
+  'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}', // http://formatjs.io/guides/message-syntax/#plural-format
   comment: 'Your comment...',
 
@@ -207,4 +223,9 @@ export default {
   'calendar.week': 'Week',
   'calendar.day': 'Day',
   'calendar.agenda': 'Agenda',
+
+  // Tasks
+  task_counter: '{user} {count, plural, =0 {never did it} one {did it once} other {did it # times}}',
+  last_done: 'Last done {date}',
+  never_done: 'Never done',
 }

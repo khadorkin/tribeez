@@ -12,9 +12,13 @@ import {
   DELETE_EVENT,
   NEW_POLL,
   UPDATE_POLL,
-  PUT_POLL_SUCCESS,
   DELETE_POLL,
+  PUT_POLL_SUCCESS,
   POST_VOTE_SUCCESS,
+  NEW_TASK,
+  UPDATE_TASK,
+  DELETE_TASK,
+  POST_DONE_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -27,6 +31,7 @@ const initialState = {
   // extras:
   events: [],
   polls: [],
+  tasks: [],
   boxComments: {},
 }
 
@@ -49,6 +54,7 @@ export default (state = initialState, action = null) => {
         paging: action.data.paging || state.paging,
         events: action.data.events || state.events,
         polls: action.data.polls || state.polls,
+        tasks: action.data.tasks || state.tasks,
       }
     case GET_ACTIVITY_FAILURE:
       return {
@@ -92,6 +98,13 @@ export default (state = initialState, action = null) => {
       }
     }
 
+    case POST_DONE_SUCCESS:
+      const tasks = state.tasks.filter((task) => task.id !== action.id)
+      return {
+        ...state,
+        tasks,
+      }
+
     case NEW_BILL:
     case UPDATE_BILL:
     case DELETE_BILL:
@@ -101,6 +114,9 @@ export default (state = initialState, action = null) => {
     case NEW_POLL:
     case UPDATE_POLL:
     case DELETE_POLL:
+    case NEW_TASK:
+    case UPDATE_TASK:
+    case DELETE_TASK:
     case PUT_POLL_SUCCESS:
       return {
         ...state,
@@ -108,6 +124,7 @@ export default (state = initialState, action = null) => {
         pages: 0,
         events: [],
         polls: [],
+        tasks: [],
       }
 
     case LOGOUT_SUCCESS:

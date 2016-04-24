@@ -1,11 +1,11 @@
 import {
-  GET_NOTES_REQUEST,
-  GET_NOTES_SUCCESS,
-  GET_NOTES_FAILURE,
-  NEW_NOTE_SUCCESS,
-  PUT_NOTE_SUCCESS,
-  DELETE_NOTE_SUCCESS,
-  MOVE_NOTE,
+  GET_TASKS_REQUEST,
+  GET_TASKS_SUCCESS,
+  GET_TASKS_FAILURE,
+  NEW_TASK,
+  UPDATE_TASK,
+  DELETE_TASK,
+  POST_DONE_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -18,13 +18,13 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case GET_NOTES_REQUEST:
+    case GET_TASKS_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       }
-    case GET_NOTES_SUCCESS:
+    case GET_TASKS_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -32,54 +32,59 @@ export default (state = initialState, action = null) => {
         items: action.page ? [...state.items, ...action.data.items] : action.data.items,
         pages: action.page + 1,
       }
-    case GET_NOTES_FAILURE:
+    case GET_TASKS_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.error,
       }
-    case NEW_NOTE_SUCCESS: {
-      const items = state.items.slice()
-      items.unshift(action.data)
+
+    // from socket.io:
+    case NEW_TASK: {
+      const items = [...state.items, action.data]
       return {
         ...state,
         items,
       }
     }
-    case PUT_NOTE_SUCCESS: {
-      const items = state.items.map((item) => {
-        if (item.id === action.data.id) {
-          return {...item, ...action.data, saved: true}
+    case UPDATE_TASK: {
+      const items = state.items.map((task) => {
+        if (task.id === action.data.id) {
+          return {...task, ...action.data}
         }
-        return item
+        return task
       })
       return {
         ...state,
         items,
       }
     }
-    case DELETE_NOTE_SUCCESS: {
-      const items = state.items.filter((note) => note.id !== action.id)
+    case DELETE_TASK: {
+      const items = state.items.filter((item) => item.id !== action.data.id)
       return {
         ...state,
         items,
       }
     }
-    case MOVE_NOTE: {
-      const items = state.items.map((note) => {
-        if (note.id === action.hoveredNote.id) {
-          return action.draggedNote
+
+    case POST_DONE_SUCCESS:
+      const items = state.items.map((task) => {
+        if (task.id === action.id) {
+          const counters = {...task.counters}
+          if (!counters[action.uid]) {
+            counters[action.uid] = 1
+          } else {
+            counters[action.uid]++
+          }
+          const done = Date.now()
+          return {...task, done, counters}
         }
-        if (note.id === action.draggedNote.id) {
-          return action.hoveredNote
-        }
-        return note
+        return task
       })
       return {
         ...state,
         items,
       }
-    }
 
     case LOGOUT_SUCCESS:
       return {...initialState}

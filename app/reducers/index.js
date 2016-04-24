@@ -12,6 +12,7 @@ import bills from './bills'
 import notes from './notes'
 import events from './events'
 import polls from './polls'
+import tasks from './tasks'
 
 export default {
   app,
@@ -28,4 +29,5 @@ export default {
   notes,
   events,
   polls,
+  tasks,
 }
