@@ -218,7 +218,7 @@ class App extends Component {
             {this.props.children}
           </div>
 
-          <Dialog title="Facebook Messenger Bot" // TODO: translate? after https://github.com/callemall/material-ui/pull/4033
+          <Dialog title={<h3><FormattedMessage id="messenger_bot" /></h3>}
             actions={dialogActions}
             open={this.state.messengerDialog}
             onRequestClose={this.handleDialogClose}

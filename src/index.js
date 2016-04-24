@@ -9,7 +9,7 @@ import {Provider} from 'react-redux'
 import {Router, Route, IndexRoute, browserHistory} from 'react-router'
 import {syncHistoryWithStore, routerMiddleware, routerReducer} from 'react-router-redux'
 import createLogger from 'redux-logger'
-import injectTapEventPlugin from 'react-tap-event-plugin' // TODO: remove when React is fixed
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import {addLocaleData} from 'react-intl'
 
 // react components
@@ -22,7 +22,7 @@ import Register from './pages/Register'
 import Join from './pages/Join'
 import Activity from './pages/Activity'
 import Profile from './pages/Profile'
-import Tribe from './pages/Tribe' //TODO
+import Tribe from './pages/Tribe'
 import NewTribe from './pages/NewTribe'
 import Members from './pages/Members'
 import NewMember from './pages/NewMember'

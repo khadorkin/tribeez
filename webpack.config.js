@@ -48,7 +48,7 @@ const config = configs[env]
 
 // common config:
 Object.assign(config, {
-  entry: './app/boot.js',
+  entry: './src/boot.js',
   output: {
     path: './dist',
     filename: env === 'development' ? 'app.js' : `${revision}.js`,
@@ -57,7 +57,7 @@ Object.assign(config, {
   },
   plugins: config.plugins.concat([
     new HtmlWebpackPlugin({
-      template: 'app/index.tpl.html',
+      template: 'src/index.tpl.html',
       title: user_config.title,
       description: user_config.description,
       url: user_config.url,
@@ -79,7 +79,7 @@ Object.assign(config, {
       __DEBUG__: (env === 'development'),
     }),
     new CopyWebpackPlugin([
-      {from: 'app/static'},
+      {from: 'src/static'},
     ]),
   ]),
   module: {

@@ -30,7 +30,7 @@ const fr = {
   tribe_new: 'Nouvelle tribu',
 
   // subtitles
-  messenger_bot: 'Robot Facebook Messenger',
+  messenger_bot: 'Robot pour Facebook Messenger',
   not_found: 'Page introuvable',
   title: 'Titre',
   upcoming_events: 'Évènements à venir',
