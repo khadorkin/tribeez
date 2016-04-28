@@ -11,7 +11,7 @@ import Checkbox from './fields/Checkbox'
 
 import styles from '../constants/styles'
 
-import validator, {focus} from '../utils/formValidator'
+import validator, {focus, modified} from '../utils/formValidator'
 
 import getPoll from '../actions/getPoll'
 import submitPoll from '../actions/submitPoll'
@@ -27,6 +27,10 @@ class PollForm extends Component {
     if (!this.props.poll && this.props.id) {
       this.props.getPoll(this.props.id)
     }
+  }
+
+  componentDidMount() {
+    this.props.setHook(() => modified(this.props.fields))
   }
 
   handleSubmit(poll) {
@@ -78,6 +82,7 @@ PollForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
   current: PropTypes.object,
+  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,

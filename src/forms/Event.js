@@ -11,7 +11,7 @@ import DatePicker from './fields/Date'
 
 import styles from '../constants/styles'
 
-import validator, {focus} from '../utils/formValidator'
+import validator, {focus, modified} from '../utils/formValidator'
 
 import getEvent from '../actions/getEvent'
 import submitEvent from '../actions/submitEvent'
@@ -27,6 +27,10 @@ class EventForm extends Component {
     if (!this.props.event && this.props.id) {
       this.props.getEvent(this.props.id)
     }
+  }
+
+  componentDidMount() {
+    this.props.setHook(() => modified(this.props.fields))
   }
 
   handleSubmit(event) {
@@ -82,6 +86,7 @@ EventForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
   current: PropTypes.object,
+  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,

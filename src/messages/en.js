@@ -180,6 +180,8 @@ export default {
   'submit.event.update': 'Update event',
   'submit.task.create': 'Add task',
   'submit.task.update': 'Update task',
+  // leave hook:
+  confirm_leave_form: 'The form has been modified. Do you want to leave without finishing?',
 
   // Members
   'add_member': 'Add a member',

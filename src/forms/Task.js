@@ -10,7 +10,7 @@ import TextField from './fields/Text'
 
 import styles from '../constants/styles'
 
-import validator, {focus} from '../utils/formValidator'
+import validator, {focus, modified} from '../utils/formValidator'
 
 import getTask from '../actions/getTask'
 import submitTask from '../actions/submitTask'
@@ -26,6 +26,10 @@ class TaskForm extends Component {
     if (!this.props.task && this.props.id) {
       this.props.getTask(this.props.id)
     }
+  }
+
+  componentDidMount() {
+    this.props.setHook(() => modified(this.props.fields))
   }
 
   handleSubmit(task) {
@@ -78,6 +82,7 @@ TaskForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
   current: PropTypes.object,
+  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,

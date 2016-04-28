@@ -14,7 +14,7 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
-import validator, {focus} from '../utils/formValidator'
+import validator, {focus, modified} from '../utils/formValidator'
 
 import submitProfile from '../actions/submitProfile'
 
@@ -29,6 +29,10 @@ class ProfileForm extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.setHook(() => modified(this.props.fields))
   }
 
   handleSubmit(event) {
@@ -89,6 +93,8 @@ class ProfileForm extends Component {
 }
 
 ProfileForm.propTypes = {
+  // from parent:
+  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,

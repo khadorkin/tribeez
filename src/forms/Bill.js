@@ -15,7 +15,7 @@ import Part from './deep/Part'
 
 import styles from '../constants/styles'
 
-import validator, {focus} from '../utils/formValidator'
+import validator, {focus, modified} from '../utils/formValidator'
 
 import getBill from '../actions/getBill'
 import submitBill from '../actions/submitBill'
@@ -34,6 +34,10 @@ class BillForm extends Component {
     if (!this.props.bill && this.props.id) {
       this.props.getBill(this.props.id)
     }
+  }
+
+  componentDidMount() {
+    this.props.setHook(() => modified(this.props.fields))
   }
 
   handleSubmit(event) {
@@ -125,6 +129,7 @@ BillForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
   current: PropTypes.object,
+  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,

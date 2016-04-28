@@ -181,6 +181,8 @@ const fr = {
   'submit.event.update': 'Modifier l’évènement',
   'submit.task.create': 'Ajouter la tâche',
   'submit.task.update': 'Modifier la tâche',
+  // leave hook:
+  confirm_leave_form: 'Le formulaire a été modifié : voulez-vous vraiment abandonner vos entrées ?',
 
   // Members
   'add_member': 'Ajouter un membre',

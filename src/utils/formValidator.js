@@ -65,3 +65,12 @@ export const focus = (errors, refs) => {
     window.scrollTo(0, document.body.scrollHeight)
   }
 }
+
+export const modified = (fields) => {
+  for (const field in fields) {
+    if ((fields[field].value || '') !== (fields[field].initialValue || '')) {
+      return true
+    }
+  }
+  return false
+}

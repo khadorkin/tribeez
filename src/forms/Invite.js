@@ -13,7 +13,7 @@ import langs from '../resources/langs'
 
 import styles from '../constants/styles'
 
-import validator, {focus} from '../utils/formValidator'
+import validator, {focus, modified} from '../utils/formValidator'
 
 import submitInvite from '../actions/submitInvite'
 
@@ -27,6 +27,10 @@ class InviteForm extends Component {
     super(props)
     this.handleSuggestion = this.handleSuggestion.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.setHook(() => modified(this.props.fields))
   }
 
   handleSuggestion(event) {
@@ -69,6 +73,8 @@ class InviteForm extends Component {
 }
 
 InviteForm.propTypes = {
+  // from parent:
+  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
   error: PropTypes.string,
