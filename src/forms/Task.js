@@ -29,7 +29,7 @@ class TaskForm extends Component {
   }
 
   componentDidMount() {
-    this.props.setHook(() => modified(this.props.fields))
+    this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
   }
 
   handleSubmit(task) {
@@ -57,6 +57,7 @@ class TaskForm extends Component {
             type="number"
             step="1"
             min="0"
+            max="255"
             {...wait}
           />
           <TextField ref="notice"
@@ -64,6 +65,7 @@ class TaskForm extends Component {
             type="number"
             step="1"
             min="1"
+            max="255"
             {...notice}
           />
         </CardText>

@@ -32,7 +32,7 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    this.props.setHook(() => modified(this.props.fields))
+    this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
   }
 
   handleSubmit(event) {

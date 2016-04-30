@@ -32,6 +32,7 @@ class MoneyFieldWrapper extends Component {
           type="number"
           step="0.01"
           min="0"
+          max="99999999"
           floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
           errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
           {...this.props}

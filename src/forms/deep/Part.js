@@ -69,6 +69,7 @@ export default class Part extends Component {
                 type="number"
                 step="0.01"
                 min="0"
+                max="99999999"
                 {...amount}
               />
               <div style={{position: 'absolute', top: 26, right: 4, color: colors.grey300}}>
