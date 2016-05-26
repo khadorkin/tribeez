@@ -1,1 +1,1 @@
-{ "presets": ["es2015", "stage-1", "react"] }
+{ "presets": ["react-native-stage-0"] }

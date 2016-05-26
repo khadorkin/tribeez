@@ -48,7 +48,7 @@ const config = configs[env]
 
 // common config:
 Object.assign(config, {
-  entry: './src/boot.js',
+  entry: './src/web/boot.js',
   output: {
     path: './dist',
     filename: env === 'development' ? 'app.js' : `${revision}.js`,
@@ -57,7 +57,7 @@ Object.assign(config, {
   },
   plugins: config.plugins.concat([
     new HtmlWebpackPlugin({
-      template: 'src/index.tpl.html',
+      template: 'src/web/index.tpl.html',
       title: user_config.title,
       description: user_config.description,
       url: user_config.url,
@@ -79,14 +79,14 @@ Object.assign(config, {
       __DEBUG__: (env === 'development'),
     }),
     new CopyWebpackPlugin([
-      {from: 'src/static'},
+      {from: 'src/web/static'},
     ]),
   ]),
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: /node_modules|mobile/,
         loaders: [
           'babel', // ES6
           'eslint-loader', // JS linter
@@ -121,6 +121,13 @@ Object.assign(config, {
         loaders: [
           'babel',
           'svg-react', // inline SVGs into React components
+        ],
+      },
+      {
+        test: /\.json$/,
+        exclude: /node_modules/,
+        loaders: [
+          'json-loader',
         ],
       },
     ],
