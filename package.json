@@ -52,6 +52,7 @@
     "redux-thunk": "^2.1.0",
     "rollbar": "^0.6.1",
     "socket.io-client": "^1.4.6",
+    "string.prototype.startswith": "^0.2.0",
     "webfontloader": "^1.6.24"
   },
   "devDependencies": {

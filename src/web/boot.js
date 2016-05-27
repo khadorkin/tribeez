@@ -2,7 +2,7 @@
 
 // dynamically load polyfills, and load the app when the required ones are loaded:
 
-const NUM_POLYFILLS = 5 // update this number if adding polyfills
+const NUM_POLYFILLS = 6 // update this number if adding polyfills
 
 let num = 0
 const loaded = () => {
@@ -59,6 +59,15 @@ if (Array.prototype.includes) {
 } else {
   require.ensure(['array-includes'], (require) => {
     require('array-includes').shim()
+    loaded()
+  })
+}
+
+if (!String.prototype.startsWith) {
+  loaded()
+} else {
+  require.ensure(['string.prototype.startswith'], (require) => {
+    require('string.prototype.startswith')
     loaded()
   })
 }
