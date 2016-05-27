@@ -78,6 +78,7 @@ Object.assign(config, {
       __FB_PAGE_ID__: JSON.stringify(user_config.facebook_page_id),
       __DEBUG__: (env === 'development'),
     }),
+    new webpack.IgnorePlugin(/\.(android|ios)\.js/),
     new CopyWebpackPlugin([
       {from: 'src/web/static'},
     ]),
@@ -86,7 +87,7 @@ Object.assign(config, {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules|mobile/,
+        exclude: /node_modules/,
         loaders: [
           'babel', // ES6
           'eslint-loader', // JS linter

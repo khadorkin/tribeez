@@ -1,15 +1,10 @@
 import React, {Component} from 'react'
-
-import {
-  StyleSheet,
-  View,
-  Image,
-} from 'react-native'
+import {StyleSheet, View, Image} from 'react-native'
 
 import Button from '../components/Button'
 
-import routes from '../routes'
-import router from '../router'
+import routes from '../../common/routes'
+import router from '../../common/router'
 
 export default class Welcome extends Component {
 

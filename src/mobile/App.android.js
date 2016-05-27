@@ -16,8 +16,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import Message from './components/Message'
 
-import routes from './routes'
-import router from './router'
+import routes from '../common/routes'
+import router from '../common/router'
 
 import DrawerContent from './components/DrawerContent'
 
