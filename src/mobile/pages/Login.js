@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native'
 import {reduxForm} from 'redux-form'
 
 import TextField from '../components/TextField'
-import Message from '../components/Message'
+import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 
 import submitLogin from '../../common/actions/submitLogin'
@@ -51,16 +51,16 @@ class Login extends Component {
           keyboardType="email-address"
           onSubmitEditing={this.handleNext}
         />
-        {email.touched && email.error && <Message id="error.email" style={{color: 'red'}} />}
+        {email.touched && email.error && <FormattedMessage id="error.email" style={{color: 'red'}} />}
         <TextField ref="password"
           {...password}
           name="login_password"
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
         />
-        {password.touched && password.error && <Message id="error.login_password" style={{color: 'red'}} />}
+        {password.touched && password.error && <FormattedMessage id="error.login_password" style={{color: 'red'}} />}
         <Button id="submit.login" onPress={this.handleSubmit} />
-        {error && <Message id={error} style={{color: 'red'}} />}
+        {error && <FormattedMessage id={error} style={{color: 'red'}} />}
       </View>
     )
   }

@@ -6,12 +6,14 @@ import {connect} from 'react-redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Message from './Message'
+import FormattedMessage from './FormattedMessage'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 
 import postLogout from '../../common/actions/postLogout'
+
+import gravatar from '../../common/utils/gravatar'
 
 const menuEntries = [
   {route: routes.ACTIVITY, icon: 'view-stream'},
@@ -53,7 +55,7 @@ class DrawerContent extends Component {
         borderRadius={0}
         color="rgb(117, 117, 117)"
       >
-        <Message style={styles.entry} id={entry.route.name} />
+        <FormattedMessage style={styles.entry} id={entry.route.name} />
       </Icon.Button>
     )
 
@@ -80,7 +82,7 @@ class DrawerContent extends Component {
           </View>
           <View style={styles.infos}>
             <Image
-              source={{uri: 'https://secure.gravatar.com/avatar/554b652815a763f41f9503b24dc7d3d8?d=retro&s=160'}}
+              source={{uri: gravatar(user, 160)}}
               style={styles.avatar}
             />
             <Text style={styles.username}>

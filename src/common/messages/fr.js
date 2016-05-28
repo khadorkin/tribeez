@@ -192,14 +192,14 @@ const fr = {
   // Activity
   'entry.user.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
   'entry.user.new.infos': 'Invité-e par {inviter}',
-  'entry.bill.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté une facture nommée "{name}" ({amount})',
-  'entry.bill.new.infos': 'Votre part est de {amount}',
+  'entry.bill.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté une facture nommée "{name}" ({amount, number, money})',
+  'entry.bill.new.infos': 'Votre part est de {amount, number, money}',
   'entry.bill.new.stranger': 'Vous n’êtes pas concerné-e',
-  'entry.bill.edit': '{author, select, _you_ {Vous avez} other {{author} a}} modifié la facture "{name}" ({amount})',
-  'entry.bill.edit.infos': 'Votre part est maintenant de {amount}',
+  'entry.bill.edit': '{author, select, _you_ {Vous avez} other {{author} a}} modifié la facture "{name}" ({amount, number, money})',
+  'entry.bill.edit.infos': 'Votre part est maintenant de {amount, number, money}',
   'entry.bill.edit.stranger': 'Vous n’êtes pas concerné-e',
-  'entry.bill.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la facture "{name}" ({amount})',
-  'entry.bill.delete.infos': 'Votre part était de {amount}',
+  'entry.bill.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la facture "{name}" ({amount, number, money})',
+  'entry.bill.delete.infos': 'Votre part était de {amount, number, money}',
   'entry.bill.delete.stranger': 'Vous n’étiez pas concerné-e',
   'entry.poll.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté un sondage nommé "{name}"',
   'entry.poll.edit': '{author, select, _you_ {Vous avez} other {{author} a}} modifié le sondage "{name}"',
@@ -214,7 +214,7 @@ const fr = {
   comment: 'Votre commentaire...',
 
   // Bills
-  'bill.mypart': 'Votre part est de {amount}',
+  'bill.mypart': 'Votre part est de {amount, number, money}',
   'bill.nopart': 'Vous n’êtes pas concerné-e',
 
   // Calendar

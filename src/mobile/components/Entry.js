@@ -3,8 +3,7 @@ import {StyleSheet, Text, View, Image} from 'react-native'
 
 import {connect} from 'react-redux'
 
-import Message from './Message'
-import FormattedNumber from './FormattedNumber'
+import FormattedMessage from './FormattedMessage'
 import FormattedDate from './FormattedDate'
 import FormattedRelative from './FormattedRelative'
 
@@ -21,7 +20,7 @@ class Entry extends Component {
   }
 
   render() {
-    const {entry, users, currency, uid} = this.props
+    const {entry, users, uid} = this.props
 
     const author = users.find((u) => u.id === entry.user_id)
     if (!author) {
@@ -41,7 +40,7 @@ class Entry extends Component {
         break
       case 'bill':
         values.name = entry.data.name
-        values.amount = <FormattedNumber value={entry.data.amount} style="currency" currency={currency} />
+        values.amount = entry.data.amount
         break
       case 'poll':
         values.name = entry.data.name
@@ -56,15 +55,15 @@ class Entry extends Component {
       default:
         return null
     }
-    const title = <Message id={`entry.${entry.type}.${entry.action}`} values={values} />
+    const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
 
     const date = <FormattedRelative value={entry.added} />
-    const comments = <Message id="entry.comments" values={{num: entry.comments.length}} />
+    const comments = <FormattedMessage id="entry.comments" values={{num: entry.comments.length}} />
 
     return (
       <View style={styles.entry}>
         <Image
-          source={{uri: gravatar(author)}}
+          source={{uri: gravatar(author, 80)}}
           style={styles.avatar}
         />
         <View style={styles.titles}>
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
-    margin: 5,
+    marginVertical: 5,
     padding: 10,
     elevation: 1,
   },

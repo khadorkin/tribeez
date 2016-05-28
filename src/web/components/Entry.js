@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedDate, FormattedRelative, FormattedNumber} from 'react-intl'
+import {FormattedMessage, FormattedDate, FormattedRelative} from 'react-intl'
 
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
@@ -29,7 +29,7 @@ class Entry extends Component {
   }
 
   render() {
-    const {entry, users, currency, uid} = this.props
+    const {entry, users, uid} = this.props
 
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
     const author = users.find((u) => u.id === entry.user_id)
@@ -57,11 +57,10 @@ class Entry extends Component {
         break
       case 'bill':
         values.name = entry.data.name
-        values.amount = <FormattedNumber value={entry.data.amount} style="currency" currency={currency} />
+        values.amount = entry.data.amount
         const user_part = entry.data.parts.find((part) => part.user_id === uid)
         if (user_part) {
-          const formatted_amount = <FormattedNumber value={user_part.amount} style="currency" currency={currency} />
-          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount: formatted_amount}} />
+          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount: user_part.amount}} />
         } else {
           infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} />
         }
@@ -130,7 +129,6 @@ Entry.propTypes = {
   entry: PropTypes.object.isRequired,
   boxComments: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired,
-  currency: PropTypes.string,
   uid: PropTypes.number,
   postComment: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
@@ -139,7 +137,6 @@ Entry.propTypes = {
 const mapStateToProps = (state) => ({
   boxComments: state.activity.boxComments,
   users: state.member.tribe.users,
-  currency: state.member.tribe.currency,
   uid: state.member.user.id,
 })
 

@@ -191,14 +191,14 @@ export default {
   // Activity
   'entry.user.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
   'entry.user.new.infos': 'Invited by {inviter}',
-  'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added a bill named "{name}" ({amount})',
-  'entry.bill.new.infos': 'Your share is {amount}',
+  'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added a bill named "{name}" ({amount, number, money})',
+  'entry.bill.new.infos': 'Your share is {amount, number, money}',
   'entry.bill.new.stranger': 'You are not concerned',
-  'entry.bill.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" bill ({amount})',
-  'entry.bill.edit.infos': 'Your share is now {amount}',
+  'entry.bill.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" bill ({amount, number, money})',
+  'entry.bill.edit.infos': 'Your share is now {amount, number, money}',
   'entry.bill.edit.stranger': 'You are not concerned',
-  'entry.bill.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" bill ({amount})',
-  'entry.bill.delete.infos': 'Your share was {amount}',
+  'entry.bill.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" bill ({amount, number, money})',
+  'entry.bill.delete.infos': 'Your share was {amount, number, money}',
   'entry.bill.delete.stranger': 'You were not concerned',
   'entry.poll.new': '{author, select, _you_ {You} other {{author}}} added a poll named "{name}"',
   'entry.poll.edit': '{author, select, _you_ {You} other {{author}}} modified the "{name}" poll',
@@ -213,7 +213,7 @@ export default {
   comment: 'Your comment...',
 
   // Bills
-  'bill.mypart': 'Your share is {amount}',
+  'bill.mypart': 'Your share is {amount, number, money}',
   'bill.nopart': 'You are not concerned',
 
   // Calendar

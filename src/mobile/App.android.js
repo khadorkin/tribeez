@@ -14,7 +14,7 @@ import {IntlProvider} from 'react-intl'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Message from './components/Message'
+import FormattedMessage from './components/FormattedMessage'
 
 import routes from '../common/routes'
 import router from '../common/router'
@@ -29,6 +29,7 @@ class App extends Component {
     uid: PropTypes.number,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
+    currency: PropTypes.string,
   }
 
   constructor(props) {
@@ -50,7 +51,7 @@ class App extends Component {
       },
       Title: (route/*, navigator, index, navState*/) => {
         return (
-          <Message style={styles.navTitle} id={route.name} />
+          <FormattedMessage style={styles.navTitle} id={route.name} />
         )
       },
       RightButton: (/*route, navigator, index, navState*/) => {
@@ -110,8 +111,17 @@ class App extends Component {
       />
     )
 
+    const formats = {
+      number: {
+        money: {
+          style: 'currency',
+          currency: this.props.currency,
+        },
+      },
+    }
+
     return (
-      <IntlProvider locale={this.props.lang} messages={this.props.messages}>
+      <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={formats}>
         <DrawerLayoutAndroid
           renderNavigationView={this.renderNavigation}
           statusBarBackgroundColor="rgb(0, 188, 212)"
@@ -149,6 +159,7 @@ const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
+  currency: state.member.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

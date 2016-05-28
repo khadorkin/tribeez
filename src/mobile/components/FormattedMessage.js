@@ -3,7 +3,7 @@ import {Text} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
-class Message extends Component {
+class FormattedMessage extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     id: PropTypes.string.isRequired,
@@ -17,4 +17,4 @@ class Message extends Component {
   }
 }
 
-export default injectIntl(Message)
+export default injectIntl(FormattedMessage)
