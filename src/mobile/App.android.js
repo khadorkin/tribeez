@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-
 import {
   DrawerLayoutAndroid,
   Navigator,
@@ -20,6 +19,7 @@ import routes from '../common/routes'
 import router from '../common/router'
 
 import DrawerContent from './components/DrawerContent'
+import Snackbar from './components/Snackbar'
 
 import getMember from '../common/actions/getMember'
 
@@ -134,6 +134,7 @@ class App extends Component {
             renderScene={this.renderScene}
             navigationBar={navigationBar}
           />
+          <Snackbar />
         </DrawerLayoutAndroid>
       </IntlProvider>
     )

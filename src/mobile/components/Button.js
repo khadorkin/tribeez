@@ -3,7 +3,7 @@ import {TouchableOpacity, StyleSheet, Text} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
-class Message extends Component {
+class Button extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     id: PropTypes.string.isRequired,
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default injectIntl(Message)
+export default injectIntl(Button)
