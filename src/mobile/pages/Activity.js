@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -7,6 +6,7 @@ import {bindActionCreators} from 'redux'
 import getActivity from '../../common/actions/getActivity'
 
 import Entry from '../components/Entry'
+import AsyncContent from '../hoc/AsyncContent'
 
 class Activity extends Component {
   static propTypes = {
@@ -16,21 +16,17 @@ class Activity extends Component {
     getActivity: PropTypes.func.isRequired,
   }
 
-  componentDidMount() {
-    this.props.getActivity(0) //TODO: load more on scroll
-  }
-
   render() {
-    const {activity: {items}} = this.props
+    const {activity, activity: {items}} = this.props
 
     return (
-      <View style={styles.container}>
+      <AsyncContent data={activity} fetcher={this.props.getActivity}>
         {
           items.map((entry) =>
             <Entry entry={entry} key={entry.id} />
           )
         }
-      </View>
+      </AsyncContent>
     )
   }
 
@@ -43,11 +39,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getActivity,
 }, dispatch)
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 60,
-  },
-})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity)

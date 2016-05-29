@@ -25,8 +25,12 @@ reducers.form = formReducer
 const rootReducer = combineReducers(reducers)
 
 const logger = createLogger({
+  //TODO: remove these transformers
   stateTransformer: () => {
     return 'xxxx' // avoid polluting the terminal
+  },
+  actionTransformer: (action) => {
+    return {type: action.type} // avoid polluting the terminal
   },
 })
 

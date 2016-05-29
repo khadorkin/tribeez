@@ -4,7 +4,6 @@ import {StyleSheet, Text, View, Image} from 'react-native'
 import {connect} from 'react-redux'
 
 import FormattedMessage from './FormattedMessage'
-import FormattedDate from './FormattedDate'
 import FormattedRelative from './FormattedRelative'
 
 import gravatar from '../../common/utils/gravatar'
@@ -47,7 +46,7 @@ class Entry extends Component {
         break
       case 'event':
         values.name = entry.data.name
-        values.when = <FormattedDate value={entry.data.start} />
+        values.when = entry.data.start
         break
       case 'task':
         values.name = entry.data.name
