@@ -11,6 +11,10 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
 
+import './userAgent'
+import config from '../../config.json'
+import io from 'socket.io-client'
+
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import FormattedMessage from './components/FormattedMessage'
@@ -22,10 +26,12 @@ import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
 
 import getMember from '../common/actions/getMember'
+import {message} from '../common/actions/app'
 
 class App extends Component {
   static propTypes = {
     getMember: PropTypes.func.isRequired,
+    message: PropTypes.func.isRequired,
     uid: PropTypes.number,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
@@ -75,6 +81,22 @@ class App extends Component {
 
     if (!this.props.uid) {
       this.props.getMember(routes.ACTIVITY, routes.ACTIVITY, routes.WELCOME)
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.uid && !this.socket) { // log in
+      this.socket = io(config.api_endpoint, {
+        jsonp: false,
+        transports: ['websocket'],
+      })
+      this.socket.on('message', (msg) => {
+        this.props.message(msg)
+      })
+    }
+    if (!props.uid && this.socket) { // log out
+      this.socket.disconnect(true)
+      this.socket = null
     }
   }
 
@@ -165,6 +187,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getMember,
+  message,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -35,6 +35,20 @@ const initialState = {
   boxComments: {},
 }
 
+const createActivity = (action) => {
+  const types = action.type.toLowerCase().split('_')
+  return {
+    type: types[1],
+    action: types[0],
+    added: Date.now(),
+    comments: [],
+    data: action.data,
+    id: action.data.activity_id,
+    item_id: action.data.id,
+    user_id: action.author,
+  }
+}
+
 export default (state = initialState, action = null) => {
   let boxComments
   switch (action.type) {
@@ -120,11 +134,7 @@ export default (state = initialState, action = null) => {
     case PUT_POLL_SUCCESS:
       return {
         ...state,
-        items: [],
-        pages: 0,
-        events: [],
-        polls: [],
-        tasks: [],
+        items: [createActivity(action), ...state.items],
       }
 
     case LOGOUT_SUCCESS:
