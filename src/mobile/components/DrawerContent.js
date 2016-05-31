@@ -32,10 +32,16 @@ class DrawerContent extends Component {
   constructor(props) {
     super(props)
     this.handleLogout = this.handleLogout.bind(this)
+    this.handleProfile = this.handleProfile.bind(this)
   }
 
   handleLogout() {
     this.props.postLogout()
+    this.props.drawer.closeDrawer()
+  }
+
+  handleProfile() {
+    router.push(routes.PROFILE)
     this.props.drawer.closeDrawer()
   }
 
@@ -75,7 +81,7 @@ class DrawerContent extends Component {
             <Icon.Button
               name="person"
               size={24}
-              onPress={this.handleProfile} // TODO
+              onPress={this.handleProfile}
               backgroundColor="rgb(0, 188, 212)"
               color="white"
             />

@@ -1,11 +1,14 @@
 import React, {Component, PropTypes} from 'react'
-import {TextInput, StyleSheet, View} from 'react-native'
+import {Picker, StyleSheet, View} from 'react-native'
 
 import FormattedMessage from './FormattedMessage'
 
-class TextField extends Component {
+class SelectField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    items: PropTypes.array.isRequired,
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
     style: PropTypes.object,
@@ -13,31 +16,28 @@ class TextField extends Component {
 
   constructor(props) {
     super(props)
-    this.ref = this.ref.bind(this)
-    this.focus = this.focus.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  ref(element) {
-    this.element = element
-  }
-
-  focus() {
-    this.element.focus()
+  handleChange(value/*, index*/) {
+    this.props.onChange(value)
   }
 
   render() {
-    const {name, style, touched, error, ...props} = this.props
+    const {name, value, items, style, touched, error/*, ...props*/} = this.props
 
     const mergedStyle = style ? {...styles.field, ...style} : styles.field
+
+    const children = items.map((item) =>
+      <Picker.Item label={item.name} value={item.code} key={item.code} />
+    )
 
     return (
       <View style={styles.container}>
         <FormattedMessage id={'field.' + name} style={styles.label} />
-        <TextInput
-          ref={this.ref}
-          style={mergedStyle}
-          {...props}
-        />
+        <Picker selectedValue={value} onValueChange={this.handleChange} style={mergedStyle}>
+          {children}
+        </Picker>
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
       </View>
     )
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default TextField
+export default SelectField

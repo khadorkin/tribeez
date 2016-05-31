@@ -17,10 +17,16 @@ addLocaleData(locale_fr)
 
 import App from './App'
 
+// redux-form normalizers and plugins
+import normalizers from '../common/utils/formNormalizers'
+import plugins from '../common/utils/formPlugins'
+
 // redux reducers
 import {reducer as formReducer} from 'redux-form'
 import reducers from '../common/reducers/index'
 reducers.form = formReducer
+  .normalize(normalizers)
+  .plugin(plugins)
 
 const rootReducer = combineReducers(reducers)
 

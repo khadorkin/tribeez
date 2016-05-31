@@ -6,14 +6,19 @@ import {injectIntl, intlShape} from 'react-intl'
 class FormattedMessage extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     defaultMessage: PropTypes.string,
     values: PropTypes.object,
   }
 
   render() {
     const {intl, id, defaultMessage, values, ...props} = this.props
-    return <Text {...props}>{intl.formatMessage({id, defaultMessage}, values)}</Text>
+
+    return (
+      <Text {...props}>
+        {id ? intl.formatMessage({id, defaultMessage}, values) : ' '}
+      </Text>
+    )
   }
 }
 

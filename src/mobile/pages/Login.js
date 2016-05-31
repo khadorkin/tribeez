@@ -7,6 +7,8 @@ import TextField from '../components/TextField'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 
+import validator from '../../common/utils/formValidator'
+
 import submitLogin from '../../common/actions/submitLogin'
 
 class Login extends Component {
@@ -29,18 +31,15 @@ class Login extends Component {
   }
 
   handleNext() {
-    this.refs.password.getWrappedInstance().focus()
+    this.refs.password.focus()
   }
 
   handleSubmit(event) {
     this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event)
-      // .catch((err) => {
-      //   console.error('form error:', err)
-      // })
   }
 
   render() {
-    const {fields: {email, password}, error/*, submitting*/} = this.props
+    const {fields: {email, password}, error, submitting} = this.props
 
     return (
       <View style={styles.container}>
@@ -51,15 +50,13 @@ class Login extends Component {
           keyboardType="email-address"
           onSubmitEditing={this.handleNext}
         />
-        {email.touched && email.error && <FormattedMessage id="error.email" style={{color: 'red'}} />}
         <TextField ref="password"
           {...password}
           name="login_password"
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
         />
-        {password.touched && password.error && <FormattedMessage id="error.login_password" style={{color: 'red'}} />}
-        <Button id="submit.login" onPress={this.handleSubmit} />
+        <Button id="submit.login" onPress={this.handleSubmit} disabled={submitting} />
         {error && <FormattedMessage id={error} style={{color: 'red'}} />}
       </View>
     )
@@ -87,7 +84,6 @@ const mapStateToProps = (state) => ({
 export default reduxForm({
   form: 'login',
   fields: ['email', 'password'],
-  //returnRejectedSubmitPromise: true,
-  //validate: validator.login,
+  validate: validator.login,
   touchOnBlur: false,
 }, mapStateToProps)(Login)
