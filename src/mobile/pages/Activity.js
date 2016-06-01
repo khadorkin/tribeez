@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 import getActivity from '../../common/actions/getActivity'
 
 import Entry from '../components/Entry'
+import Spinner from '../components/Spinner'
 import AsyncContent from '../hoc/AsyncContent'
 
 class Activity extends Component {
@@ -26,6 +27,7 @@ class Activity extends Component {
             <Entry entry={entry} key={entry.id} />
           )
         }
+        <Spinner visible={activity.loading} />
       </AsyncContent>
     )
   }
