@@ -11,7 +11,6 @@ class SelectField extends Component {
     items: PropTypes.array.isRequired,
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
-    style: PropTypes.object,
   }
 
   constructor(props) {
@@ -24,9 +23,7 @@ class SelectField extends Component {
   }
 
   render() {
-    const {name, value, items, style, touched, error/*, ...props*/} = this.props
-
-    const mergedStyle = style ? {...styles.field, ...style} : styles.field
+    const {name, value, items, touched, error/*, ...props*/} = this.props
 
     const children = items.map((item) =>
       <Picker.Item label={item.name} value={item.code} key={item.code} />
@@ -35,9 +32,10 @@ class SelectField extends Component {
     return (
       <View style={styles.container}>
         <FormattedMessage id={'field.' + name} style={styles.label} />
-        <Picker selectedValue={value} onValueChange={this.handleChange} style={mergedStyle}>
+        <Picker selectedValue={value} onValueChange={this.handleChange}>
           {children}
         </Picker>
+        <View style={styles.bottom} />
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
       </View>
     )
@@ -47,13 +45,14 @@ class SelectField extends Component {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 5,
-    //padding: 5,
   },
   label: {
-    //
+    marginHorizontal: 5,
   },
-  field: {
-    paddingTop: 0,
+  bottom: {
+    marginHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#777777',
   },
   error: {
     color: '#F44336',

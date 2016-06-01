@@ -8,7 +8,6 @@ class TextField extends Component {
     name: PropTypes.string.isRequired,
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
-    style: PropTypes.object,
   }
 
   constructor(props) {
@@ -26,16 +25,14 @@ class TextField extends Component {
   }
 
   render() {
-    const {name, style, touched, error, ...props} = this.props
-
-    const mergedStyle = style ? {...styles.field, ...style} : styles.field
+    const {name, touched, error, ...props} = this.props
 
     return (
       <View style={styles.container}>
         <FormattedMessage id={'field.' + name} style={styles.label} />
         <TextInput
           ref={this.ref}
-          style={mergedStyle}
+          style={styles.field}
           {...props}
         />
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
@@ -47,10 +44,9 @@ class TextField extends Component {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 5,
-    //padding: 5,
   },
   label: {
-    //
+    marginHorizontal: 5,
   },
   field: {
     paddingTop: 0,

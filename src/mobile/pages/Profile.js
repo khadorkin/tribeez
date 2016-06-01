@@ -5,6 +5,7 @@ import {reduxForm} from 'redux-form'
 
 import TextField from '../components/TextField'
 import SelectField from '../components/SelectField'
+import DatePicker from '../components/DatePicker'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 
@@ -13,6 +14,8 @@ import langs from '../../common/resources/langs'
 import validator from '../../common/utils/formValidator'
 
 import submitProfile from '../../common/actions/submitProfile'
+
+const today = new Date()
 
 class Profile extends Component {
   static propTypes = {
@@ -36,7 +39,7 @@ class Profile extends Component {
   }
 
   render() {
-    const {fields: {name, email, lang, phone, password, password2}, error, submitting} = this.props
+    const {fields: {name, email, lang, birthdate, phone, password, password2}, error, submitting} = this.props
 
     return (
       <ScrollView style={styles.container}>
@@ -55,6 +58,10 @@ class Profile extends Component {
         <SelectField ref="lang"
           {...lang}
           items={langs}
+        />
+        <DatePicker ref="birthdate"
+          max={today}
+          {...birthdate}
         />
         <TextField ref="phone"
           {...phone}
