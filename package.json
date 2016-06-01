@@ -41,6 +41,7 @@
     "react-dom": "15.0.2",
     "react-intl": "^2.1.2",
     "react-native": "^0.26.2",
+    "react-native-scrollable-tab-view": "^0.4.3",
     "react-native-vector-icons": "^2.0.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",

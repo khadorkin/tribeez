@@ -14,6 +14,7 @@ class AsyncContent extends Component {
     data: PropTypes.object.isRequired,
     fetcher: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
+    tabLabel: PropTypes.string,
   }
 
   constructor(props) {
@@ -81,7 +82,13 @@ class AsyncContent extends Component {
       )
     } else {
       return (
-        <ScrollView style={styles.container} onScroll={this.handleScroll} onLayout={this.handleLayout} onContentSizeChange={this.handleContentSize}>
+        <ScrollView
+          style={styles.container}
+          onScroll={this.handleScroll}
+          onLayout={this.handleLayout}
+          onContentSizeChange={this.handleContentSize}
+          tabLabel={this.props.tabLabel}
+        >
           {this.props.children}
         </ScrollView>
       )
@@ -96,7 +103,7 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: 4,
   },
   error: {
     flex: 1, // take all space

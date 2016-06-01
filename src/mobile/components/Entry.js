@@ -60,7 +60,7 @@ class Entry extends Component {
     const comments = <FormattedMessage id="entry.comments" values={{num: entry.comments.length}} />
 
     return (
-      <View style={styles.entry}>
+      <View style={styles.container}>
         <Image
           source={{uri: gravatar(author, 80)}}
           style={styles.avatar}
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  entry: {
+  container: {
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',

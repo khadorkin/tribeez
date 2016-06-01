@@ -92,7 +92,6 @@ class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    marginTop: 56,
   },
   actions: {
     alignItems: 'center',

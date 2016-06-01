@@ -5,6 +5,7 @@ import {
   BackAndroid,
   TouchableHighlight,
   StyleSheet,
+  View,
 } from 'react-native'
 
 import {connect} from 'react-redux'
@@ -122,7 +123,11 @@ class App extends Component {
 
   renderScene(route, navigator) {
     router.update(route, navigator)
-    return <route.component />
+    return (
+      <View style={styles.page}>
+        <route.component />
+      </View>
+    )
   }
 
   render() {
@@ -175,6 +180,11 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     fontWeight: '500',
     fontSize: 16,
+  },
+  page: {
+    marginTop: 56,
+    flex: 1,
+    backgroundColor: '#f2f2f2',
   },
 })
 

@@ -186,8 +186,8 @@ const fr = {
 
   // Members
   'add_member': 'Ajouter un membre',
-  'member_since': 'Membre depuis le {date}',
-  'invited_by': 'Invité par {user} le {date}',
+  'member_since': 'Membre depuis le {when, date}',
+  'invited_by': 'Invité par {user} le {when, date}',
 
   // Activity
   'entry.user.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',

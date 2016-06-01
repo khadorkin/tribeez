@@ -25,7 +25,7 @@ class Member extends Component {
   render() {
     const {user} = this.props
 
-    const date = <FormattedMessage id="member_since" values={{date: <FormattedDate value={user.registered} />}} />
+    const date = <FormattedMessage id="member_since" values={{when: user.registered}} />
 
     return (
       <Card className={css.container}>

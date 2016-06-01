@@ -17,6 +17,7 @@ import gravatar from '../../common/utils/gravatar'
 
 const menuEntries = [
   {route: routes.ACTIVITY, icon: 'view-stream'},
+  {route: routes.MEMBERS, icon: 'group'},
 ]
 
 class DrawerContent extends Component {
@@ -41,12 +42,12 @@ class DrawerContent extends Component {
   }
 
   handleProfile() {
-    router.push(routes.PROFILE)
+    router.resetTo(routes.PROFILE)
     this.props.drawer.closeDrawer()
   }
 
   handleLink(route) {
-    router.push(route)
+    router.resetTo(route)
     this.props.drawer.closeDrawer()
   }
 

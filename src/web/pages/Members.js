@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedDate} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
 import Paper from 'material-ui/Paper'
@@ -96,8 +96,7 @@ class Members extends Component {
                     if (!inviter) {
                       return null
                     }
-                    const date = <FormattedDate value={invite.invited} />
-                    const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, date: date}} /></div>
+                    const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, when: invite.invited}} /></div>
                     return (
                       <div key={invite.email}>
                         <ListItem disabled={true} rightIconButton={refreshButton} primaryText={invite.email} secondaryText={details} />
