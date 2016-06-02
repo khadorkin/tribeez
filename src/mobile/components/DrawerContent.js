@@ -17,6 +17,7 @@ import postLogout from '../../common/actions/postLogout'
 const menuEntries = [
   {route: routes.ACTIVITY, icon: 'view-stream'},
   {route: routes.MEMBERS, icon: 'group'},
+  {route: routes.EVENTS, icon: 'event'},
 ]
 
 class DrawerContent extends Component {

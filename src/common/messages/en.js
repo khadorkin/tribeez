@@ -41,7 +41,10 @@ export default {
   sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',
 
   // dates
+  date: 'Le {date, date, long}',
   datetime: 'On {date, date, long} at {date, time, short}',
+  interval: 'From {start, date, long} to {end, date, long}',
+  intervaltime: 'From {start, date, long} at {start, time, short} to {end, date, long} at {end, time, short}',
 
   // actions
   delete: 'Delete',

@@ -6,12 +6,12 @@ import {
   GET_EVENTS_FAILURE,
 } from '../constants/actions'
 
-export default () => {
+export default (upcoming) => {
   return function(dispatch) {
     dispatch({
       type: GET_EVENTS_REQUEST,
     })
-    api.get('events')
+    api.get('events', {upcoming})
       .then((response) => {
         if (response.error) {
           dispatch({

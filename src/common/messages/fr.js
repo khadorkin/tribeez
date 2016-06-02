@@ -41,7 +41,10 @@ const fr = {
   sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail.<br>Cliquez dessus pour choisir un nouveau mot de passe.',
 
   // dates
+  date: 'Le {date, date, long}',
   datetime: 'Le {date, date, long} à {date, time, short}',
+  interval: 'Du {start, date, long} au {end, date, long}',
+  intervaltime: 'Du {start, date, long} à {start, time, short} au {end, date, long} à {end, time, short}',
 
   // actions
   delete: 'Supprimer',

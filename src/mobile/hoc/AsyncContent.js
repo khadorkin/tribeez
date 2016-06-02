@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import {StyleSheet, ScrollView, View, Text} from 'react-native'
 
 import {connect} from 'react-redux'
+
+import Spinner from '../components/Spinner'
 import Button from '../components/Button'
 
 const INFINITE_TRIGGER = 200
@@ -90,6 +92,7 @@ class AsyncContent extends Component {
           tabLabel={this.props.tabLabel}
         >
           {this.props.children}
+          <Spinner visible={this.props.data.loading} />
         </ScrollView>
       )
     }
