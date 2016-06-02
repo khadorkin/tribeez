@@ -3,6 +3,7 @@ import {StyleSheet, View, Text, Image} from 'react-native'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import {IntlProvider} from 'react-intl'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -26,6 +27,8 @@ class DrawerContent extends Component {
     drawer: PropTypes.object,
     // from redux:
     user: PropTypes.object,
+    lang: PropTypes.string.isRequired,
+    messages: PropTypes.object.isRequired,
     // action creators:
     postLogout: PropTypes.func.isRequired,
   }
@@ -69,49 +72,50 @@ class DrawerContent extends Component {
     const {user} = this.props
 
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.actions}>
-            <Icon.Button
-              name="exit-to-app"
-              size={24}
-              onPress={this.handleLogout}
-              backgroundColor={colors.main}
-              color="white"
-            />
-            <Icon.Button
-              name="person"
-              size={24}
-              onPress={this.handleProfile}
-              backgroundColor={colors.main}
-              color="white"
-            />
+      <IntlProvider locale={this.props.lang} messages={this.props.messages}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <View style={styles.actions}>
+              <Icon.Button
+                name="exit-to-app"
+                size={24}
+                onPress={this.handleLogout}
+                backgroundColor={colors.main}
+                color="white"
+              />
+              <Icon.Button
+                name="person"
+                size={24}
+                onPress={this.handleProfile}
+                backgroundColor={colors.main}
+                color="white"
+              />
+            </View>
+            <View style={styles.infos}>
+              <Image
+                source={{uri: gravatar(user, 160)}}
+                style={styles.avatar}
+              />
+              <Text style={styles.username}>
+                {user.name}
+              </Text>
+            </View>
           </View>
-          <View style={styles.infos}>
-            <Image
-              source={{uri: gravatar(user, 160)}}
-              style={styles.avatar}
-            />
-            <Text style={styles.username}>
-              {user.name}
-            </Text>
-          </View>
-        </View>
 
-        <View style={styles.menu}>
-          {menuItems}
+          <View style={styles.menu}>
+            {menuItems}
+          </View>
         </View>
-      </View>
+      </IntlProvider>
     )
   }
 
 }
 
 const mapStateToProps = (state) => ({
-  menu_tribes: state.app.menu_tribes,
-  height: state.app.height,
-  tribe_name: state.member.tribe.name,
   user: state.member.user,
+  lang: state.app.lang, // here is the app language
+  messages: state.app.messages,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
