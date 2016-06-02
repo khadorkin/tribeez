@@ -9,8 +9,8 @@ class Button extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     id: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
     onPress: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
   }
 
   render() {
