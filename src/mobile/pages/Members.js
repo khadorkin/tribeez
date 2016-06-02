@@ -4,17 +4,17 @@ import {View, ScrollView, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import getInvites from '../../common/actions/getInvites'
-
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 import Member from '../components/Member'
 import Invite from '../components/Invite'
 import Fab from '../components/Fab'
-
 import AsyncContent from '../hoc/AsyncContent'
 
+import routes from '../../common/routes'
+import router from '../../common/router'
 import colors from '../../common/constants/colors'
+import getInvites from '../../common/actions/getInvites'
 
 class Members extends Component {
   static propTypes = {
@@ -31,7 +31,7 @@ class Members extends Component {
   }
 
   handleFab() {
-    //TODO: go to add member form
+    router.push(routes.MEMBERS_NEW)
   }
 
   render() {
@@ -50,6 +50,7 @@ class Members extends Component {
                 <Member user={user} key={user.id} />
               )
             }
+            <View style={styles.spacer} />
           </ScrollView>
           <AsyncContent data={invites} fetcher={this.props.getInvites} tabLabel="Invited">
             {
@@ -57,6 +58,7 @@ class Members extends Component {
                 <Invite invite={invite} key={invite.email} />
               )
             }
+            <View style={styles.spacer} />
           </AsyncContent>
         </ScrollableTabView>
         <View style={styles.fab}>
@@ -84,6 +86,9 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingTop: 4,
+  },
+  spacer: {
+    height: 80,
   },
   fab: {
     position: 'absolute',

@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Activity from './pages/Activity'
 import Members from './pages/Members'
+import NewMember from './pages/NewMember'
 import Events from './pages/Events'
 
 export default {
@@ -11,5 +12,6 @@ export default {
   PROFILE: {name: 'profile', index: 1, component: Profile},
   ACTIVITY: {name: 'activity', index: 1, component: Activity},
   MEMBERS: {name: 'members', index: 1, component: Members},
+  MEMBERS_NEW: {name: 'members_new', index: 2, component: NewMember},
   EVENTS: {name: 'events', index: 1, component: Events},
 }
