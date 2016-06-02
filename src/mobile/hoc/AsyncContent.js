@@ -106,7 +106,7 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 4,
+    paddingTop: 4,
   },
   error: {
     flex: 1, // take all space

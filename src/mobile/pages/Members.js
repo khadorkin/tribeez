@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView, StyleSheet} from 'react-native'
+import {View, ScrollView, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -10,6 +10,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 import Member from '../components/Member'
 import Invite from '../components/Invite'
+import Fab from '../components/Fab'
 
 import AsyncContent from '../hoc/AsyncContent'
 
@@ -24,31 +25,44 @@ class Members extends Component {
     getInvites: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.handleFab = this.handleFab.bind(this)
+  }
+
+  handleFab() {
+    //TODO: go to add member form
+  }
+
   render() {
     const {invites} = this.props
 
     return (
-      <ScrollableTabView
-        style={styles.container}
-        tabBarActiveTextColor={colors.main}
-        tabBarInactiveTextColor={colors.main}
-        tabBarUnderlineColor={colors.main}
-      >
-        <ScrollView tabLabel="Registered" style={styles.container}>
-          {
-            this.props.users.map((user) =>
-              <Member user={user} key={user.id} />
-            )
-          }
-        </ScrollView>
-        <AsyncContent data={invites} fetcher={this.props.getInvites} tabLabel="Invited">
-          {
-            invites.items.map((invite) =>
-              <Invite invite={invite} key={invite.email} />
-            )
-          }
-        </AsyncContent>
-      </ScrollableTabView>
+      <View style={styles.container}>
+        <ScrollableTabView
+          tabBarActiveTextColor={colors.main}
+          tabBarInactiveTextColor={colors.main}
+          tabBarUnderlineColor={colors.main}
+        >
+          <ScrollView tabLabel="Registered" style={styles.content}>
+            {
+              this.props.users.map((user) =>
+                <Member user={user} key={user.id} />
+              )
+            }
+          </ScrollView>
+          <AsyncContent data={invites} fetcher={this.props.getInvites} tabLabel="Invited">
+            {
+              invites.items.map((invite) =>
+                <Invite invite={invite} key={invite.email} />
+              )
+            }
+          </AsyncContent>
+        </ScrollableTabView>
+        <View style={styles.fab}>
+          <Fab onPress={this.handleFab} />
+        </View>
+      </View>
     )
   }
 
@@ -65,7 +79,16 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 4,
+    paddingTop: 4,
+    flex: 1,
+  },
+  content: {
+    paddingTop: 4,
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
 })
 

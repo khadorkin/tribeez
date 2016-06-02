@@ -32,7 +32,6 @@ class Member extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
     marginVertical: 5,

@@ -55,7 +55,6 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     backgroundColor: 'white',
     marginVertical: 5,
