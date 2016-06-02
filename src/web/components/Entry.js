@@ -18,13 +18,19 @@ import gravatar from '../../common/utils/gravatar'
 import css from './Entry.css'
 
 class Entry extends Component {
-
-  handleCommentChange(id, event) {
-    this.props.updateComment(id, event.target.value)
+  constructor(props) {
+    super(props)
+    this.handleCommentChange = this.handleCommentChange.bind(this)
+    this.handleSubmitComment = this.handleSubmitComment.bind(this)
   }
 
-  postComment(id, event) {
+  handleCommentChange(event) {
+    this.props.updateComment(this.props.entry.id, event.target.value)
+  }
+
+  handleSubmitComment(event) {
     event.preventDefault()
+    const id = this.props.entry.id
     this.props.postComment(id, this.props.boxComments[id])
   }
 
@@ -110,9 +116,9 @@ class Entry extends Component {
               <Comment comment={comment} key={comment.id} />
             )
           }
-          <form onSubmit={this.postComment.bind(this, entry.id)}>
+          <form onSubmit={this.handleSubmitComment}>
             <TextField value={this.props.boxComments[entry.id]}
-              onChange={this.handleCommentChange.bind(this, entry.id)}
+              onChange={this.handleCommentChange}
               hintText={<FormattedMessage id="comment" />}
               autoComplete="off"
             />

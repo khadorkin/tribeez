@@ -13,14 +13,14 @@ class Comment extends Component {
   render() {
     const {comment} = this.props
 
-    const user = this.props.users.find((u) => u.id === comment.author_id)
+    const author = this.props.users.find((u) => u.id === comment.author_id)
 
     return (
       <div className={css.container}>
-        <Avatar src={gravatar(user)} size={30} />
+        <Avatar src={gravatar(author)} size={30} className={css.avatar} />
         <div className={css.body}>
           <div>
-            <span className={css.author}>{user.name} </span>
+            <span className={css.author}>{author.name} </span>
             <span className={css.content}>{comment.content}</span>
           </div>
           <div className={css.time}>
