@@ -1,5 +1,3 @@
-/*global __DEBUG__:false*/
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
@@ -73,7 +71,7 @@ const rootReducer = combineReducers(reducers)
 const reduxRouterMiddleware = routerMiddleware(browserHistory)
 
 let store
-if (__DEBUG__) {
+if (__DEV__) {
   const logger = createLogger({
     errorTransformer: (error) => {
       /*eslint-disable no-console*/

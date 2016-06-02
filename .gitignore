@@ -1,7 +1,8 @@
 # MyTribe
 #
-config.json
+config*.json
 dist/
+*.keystore
 
 # OSX
 #

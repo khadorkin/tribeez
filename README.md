@@ -11,9 +11,10 @@ You need to install and start the API first: https://bitbucket.org/antoinerousse
 
 ## Config
 
-    cp config.dist.json config.json
+    cp config.dist.json config.development.json
+    cp config.dist.json config.production.json
 
-Then edit `config.json` with your infos
+Then edit `config.development.json` and `config.production.json` with your infos
 
 ## Web app
 

@@ -40,7 +40,7 @@ import routes from './routes'
 
 import scriptLoader from './utils/scriptLoader'
 
-/*global __TELEGRAM_BOT_NAME__:false __API_ENDPOINT__:false __FB_APP_ID__:false __FB_PAGE_ID__:false*/
+import config from '../common/config'
 
 class App extends Component {
 
@@ -68,7 +68,7 @@ class App extends Component {
 
   componentWillReceiveProps(props) {
     if (props.uid && !this.socket) { // log in
-      this.socket = io(__API_ENDPOINT__)
+      this.socket = io(config.api_endpoint)
       this.socket.on('message', (msg) => {
         this.props.message(msg)
       })
@@ -88,8 +88,8 @@ class App extends Component {
   messengerMounted(node) {
     if (node) {
       node.innerHTML = `<div class="fb-send-to-messenger"
-                          messenger_app_id="${__FB_APP_ID__}"
-                          page_id="${__FB_PAGE_ID__}"
+                          messenger_app_id="${config.facebook_app_id}"
+                          page_id="${config.facebook_page_id}"
                           data-ref="${this.props.messenger_token}"
                           color="blue"
                           size="xlarge"></div>`
@@ -98,7 +98,7 @@ class App extends Component {
       } else {
         window.fbAsyncInit = () => {
           FB.init({
-            appId: __FB_APP_ID__,
+            appId: config.facebook_app_id,
             version: 'v2.6',
           })
           FB.XFBML.parse(node)
@@ -160,7 +160,7 @@ class App extends Component {
           <IconButton onTouchTap={this.handleMessenger}>
             <MessengerIcon color="white" />
           </IconButton>
-          <IconButton containerElement={<a href={'https://telegram.me/' + __TELEGRAM_BOT_NAME__ + '?start=' + this.props.telegram_token} target="_blank" />}>
+          <IconButton containerElement={<a href={'https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.telegram_token} target="_blank" />}>
             <TelegramIcon color="white" />
           </IconButton>
         </div>

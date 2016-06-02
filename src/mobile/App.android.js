@@ -15,7 +15,7 @@ import {IntlProvider} from 'react-intl'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import './userAgent'
-import config from '../../config.json'
+import config from '../common/config'
 import io from 'socket.io-client'
 
 import FormattedMessage from './components/FormattedMessage'

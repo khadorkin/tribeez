@@ -2,20 +2,20 @@
 /*eslint-disable no-console*/
 'use strict'
 
+const env = process.env.NODE_ENV || 'development'
+console.log('Building for', env)
+
 let user_config
 try {
-  user_config = require('./config.json')
+  user_config = require('./config.' + env + '.json')
 } catch (err) {
   console.error(err.toString())
-  console.error('Could not load configuration file. You must copy `config.dist.json` into `config.json` and edit it with your settings.')
+  console.error('Could not load configuration file. You must copy `config.dist.json` into `config.development.json` and `config.production.json` and edit them with your settings.')
   process.exit()
 }
 
 const execSync = require('child_process').execSync
 const revision = execSync('git rev-parse HEAD', {cwd: __dirname}).toString().trim()
-
-const env = process.env.NODE_ENV || 'development'
-console.log('Building for', env)
 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -70,13 +70,7 @@ Object.assign(config, {
     }),
     new webpack.DefinePlugin({
       'process.env': {NODE_ENV: JSON.stringify(env)},
-      __API_ENDPOINT__: JSON.stringify(user_config.api_endpoint),
-      __RECAPTCHA_SITE_KEY__: JSON.stringify(user_config.recaptcha_site_key),
-      __GOOGLE_API_KEY__: JSON.stringify(user_config.google_api_key),
-      __TELEGRAM_BOT_NAME__: JSON.stringify(user_config.telegram_bot_name),
-      __FB_APP_ID__: JSON.stringify(user_config.facebook_app_id),
-      __FB_PAGE_ID__: JSON.stringify(user_config.facebook_page_id),
-      __DEBUG__: (env === 'development'),
+      __DEV__: (env === 'development'),
     }),
     new webpack.IgnorePlugin(/\.(android|ios)\.js/),
     new CopyWebpackPlugin([

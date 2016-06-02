@@ -7,7 +7,9 @@ import styles from '../../styles'
 
 import scriptLoader from '../../utils/scriptLoader'
 
-/*global google:false __GOOGLE_API_KEY__:false*/
+import config from '../../../common/config'
+
+/*global google:false*/
 
 class CityField extends Component {
 
@@ -34,7 +36,7 @@ class CityField extends Component {
     if (window.google) {
       window.onGooglePlaces()
     } else {
-      scriptLoader.load('https://maps.googleapis.com/maps/api/js?key=' + __GOOGLE_API_KEY__
+      scriptLoader.load('https://maps.googleapis.com/maps/api/js?key=' + config.google_api_key
                       + '&libraries=places&callback=onGooglePlaces&language=en') // TODO: localized cities?
     }
   }

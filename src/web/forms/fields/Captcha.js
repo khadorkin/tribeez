@@ -3,7 +3,9 @@ import {FormattedMessage} from 'react-intl'
 
 import scriptLoader from '../../utils/scriptLoader'
 
-/*global grecaptcha:false __RECAPTCHA_SITE_KEY__:false*/
+import config from '../../../common/config'
+
+/*global grecaptcha:false*/
 
 class Captcha extends Component {
 
@@ -17,7 +19,7 @@ class Captcha extends Component {
   componentDidMount() {
     window.onRecaptcha = () => {
       grecaptcha.render('captcha', {
-        sitekey: __RECAPTCHA_SITE_KEY__,
+        sitekey: config.recaptcha_site_key,
         callback: () => {
           this.props.onChange(grecaptcha.getResponse())
         },

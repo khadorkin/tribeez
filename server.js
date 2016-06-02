@@ -3,18 +3,18 @@
 /*eslint-disable no-console, no-unused-vars */
 'use strict'
 
+const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 3001
+const environment = process.env.NODE_ENV || 'development'
+
 // load server config, based on config.dist.json:
 let config
 try {
-  config = require('./config.json')
+  config = require('./config.' + environment + '.json')
 } catch (err) {
   console.error(err)
-  console.error('Cannot find configuration file. You must copy `config.dist.json` into `config.json` and edit it with your settings.')
+  console.error('Cannot find configuration file. You must copy `config.dist.json` into `config.development.json` and `config.production.json` and edit them with your settings.')
   process.exit()
 }
-
-const PORT = Number(process.argv[2]) || Number(process.env.PORT) || 3001
-const environment = process.env.NODE_ENV || 'development'
 
 const path = require('path')
 const express = require('express')

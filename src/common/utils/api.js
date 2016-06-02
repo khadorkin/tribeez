@@ -1,4 +1,4 @@
-import config from '../../../config.json'
+import config from '../config'
 
 // when the API is HTTPS but the App is HTTP, redirect to the HTTPS version of the App:
 if (config.api_endpoint.indexOf('https') === 0 && window.location && location.protocol !== 'https:') {
