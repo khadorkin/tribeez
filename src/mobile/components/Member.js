@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image} from 'react-native'
 
 import FormattedMessage from './FormattedMessage'
 
+import colors from '../../common/constants/colors'
 import gravatar from '../../common/utils/gravatar'
 
 class Member extends Component {
@@ -48,10 +49,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: 'rgba(0, 0, 0, 0.8)',
+    color: colors.primaryText,
   },
   subtitle: {
-    color: 'rgba(0, 0, 0, 0.5)',
+    color: colors.secondaryText,
   },
 })
 

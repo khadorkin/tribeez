@@ -3,6 +3,8 @@ import {TouchableOpacity, StyleSheet, Text} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
+import colors from '../../common/constants/colors'
+
 class Button extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginVertical: 20,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.background,
   },
 })
 

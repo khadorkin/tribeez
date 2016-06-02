@@ -5,6 +5,8 @@ import {connect} from 'react-redux'
 
 import FormattedMessage from './FormattedMessage'
 
+import colors from '../../common/constants/colors'
+
 class Invite extends Component {
   static propTypes = {
     // from parent:
@@ -42,10 +44,10 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   title: {
-    color: 'rgba(0, 0, 0, 0.8)',
+    color: colors.primaryText,
   },
   subtitle: {
-    color: 'rgba(0, 0, 0, 0.5)',
+    color: colors.secondaryText,
   },
 })
 

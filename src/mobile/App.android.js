@@ -12,20 +12,19 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
 
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
 import './userAgent'
 import config from '../../config.json'
 import io from 'socket.io-client'
 
-import Icon from 'react-native-vector-icons/MaterialIcons'
-
 import FormattedMessage from './components/FormattedMessage'
-
-import routes from '../common/routes'
-import router from '../common/router'
-
 import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
 
+import routes from '../common/routes'
+import router from '../common/router'
+import colors from '../common/constants/colors'
 import getMember from '../common/actions/getMember'
 import {message} from '../common/actions/app'
 
@@ -51,7 +50,7 @@ class App extends Component {
     this.routeMapper = {
       LeftButton: (/*route, navigator, index, navState*/) => {
         return this.props.uid && (
-          <TouchableHighlight onPress={this.handleOpenDrawer} style={styles.hamburger} underlayColor="rgb(0, 188, 212)">
+          <TouchableHighlight onPress={this.handleOpenDrawer} style={styles.hamburger} underlayColor={colors.main}>
             <Icon name="menu" size={24} color="white" />
           </TouchableHighlight>
         )
@@ -151,7 +150,7 @@ class App extends Component {
       <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={formats}>
         <DrawerLayoutAndroid
           renderNavigationView={this.renderNavigation}
-          statusBarBackgroundColor="rgb(0, 188, 212)"
+          statusBarBackgroundColor={colors.main}
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
@@ -173,7 +172,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   navBar: {
-    backgroundColor: 'rgb(0, 188, 212)',
+    backgroundColor: colors.main,
   },
   navTitle: {
     color: 'white',
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   page: {
     marginTop: 56,
     flex: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.background,
   },
 })
 

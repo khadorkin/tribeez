@@ -4,6 +4,8 @@ import {TouchableOpacity, StyleSheet, View, DatePickerAndroid} from 'react-nativ
 import FormattedDate from './FormattedDate'
 import FormattedMessage from './FormattedMessage'
 
+import colors from '../../common/constants/colors'
+
 class SelectField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -62,13 +64,13 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#777777',
+    borderBottomColor: colors.underline,
   },
   date: {
     color: 'black',
   },
   error: {
-    color: '#F44336',
+    color: colors.error,
   },
 })
 

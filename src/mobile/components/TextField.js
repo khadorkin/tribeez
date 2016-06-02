@@ -3,6 +3,8 @@ import {TextInput, StyleSheet, View} from 'react-native'
 
 import FormattedMessage from './FormattedMessage'
 
+import colors from '../../common/constants/colors'
+
 class TextField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   error: {
-    color: '#F44336',
+    color: colors.error,
   },
 })
 

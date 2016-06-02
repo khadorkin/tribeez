@@ -13,6 +13,8 @@ import Invite from '../components/Invite'
 
 import AsyncContent from '../hoc/AsyncContent'
 
+import colors from '../../common/constants/colors'
+
 class Members extends Component {
   static propTypes = {
     // redux state:
@@ -28,9 +30,9 @@ class Members extends Component {
     return (
       <ScrollableTabView
         style={styles.container}
-        tabBarActiveTextColor="rgb(0, 188, 212)"
-        tabBarInactiveTextColor="rgb(0, 188, 212)"
-        tabBarUnderlineColor="rgb(0, 188, 212)"
+        tabBarActiveTextColor={colors.main}
+        tabBarInactiveTextColor={colors.main}
+        tabBarUnderlineColor={colors.main}
       >
         <ScrollView tabLabel="Registered" style={styles.container}>
           {

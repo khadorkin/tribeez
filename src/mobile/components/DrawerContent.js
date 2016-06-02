@@ -10,10 +10,9 @@ import FormattedMessage from './FormattedMessage'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-
-import postLogout from '../../common/actions/postLogout'
-
+import colors from '../../common/constants/colors'
 import gravatar from '../../common/utils/gravatar'
+import postLogout from '../../common/actions/postLogout'
 
 const menuEntries = [
   {route: routes.ACTIVITY, icon: 'view-stream'},
@@ -60,7 +59,7 @@ class DrawerContent extends Component {
         onPress={this.handleLink.bind(this, entry.route)}
         backgroundColor="white"
         borderRadius={0}
-        color="rgb(117, 117, 117)"
+        color={colors.icon}
       >
         <FormattedMessage style={styles.entry} id={entry.route.name} />
       </Icon.Button>
@@ -76,14 +75,14 @@ class DrawerContent extends Component {
               name="exit-to-app"
               size={24}
               onPress={this.handleLogout}
-              backgroundColor="rgb(0, 188, 212)"
+              backgroundColor={colors.main}
               color="white"
             />
             <Icon.Button
               name="person"
               size={24}
               onPress={this.handleProfile}
-              backgroundColor="rgb(0, 188, 212)"
+              backgroundColor={colors.main}
               color="white"
             />
           </View>
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   header: {
-    backgroundColor: 'rgb(0, 188, 212)',
+    backgroundColor: colors.main,
     height: 200,
     width: 296,
     flexDirection: 'column',
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   entry: {
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: colors.primaryText,
     fontWeight: '400',
     paddingVertical: 1,
   },

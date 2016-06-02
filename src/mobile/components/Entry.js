@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
 
+import colors from '../../common/constants/colors'
 import gravatar from '../../common/utils/gravatar'
 
 class Entry extends Component {
@@ -99,10 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: 'rgba(0, 0, 0, 0.8)',
+    color: colors.primaryText,
   },
   subtitle: {
-    color: 'rgba(0, 0, 0, 0.5)',
+    color: colors.secondaryText,
   },
 })
 

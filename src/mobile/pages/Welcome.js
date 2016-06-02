@@ -6,6 +6,8 @@ import Button from '../components/Button'
 import routes from '../../common/routes'
 import router from '../../common/router'
 
+import colors from '../../common/constants/colors'
+
 export default class Welcome extends Component {
 
   handleLogin() {
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: colors.background,
   },
   logo: {
     width: 233,
