@@ -151,7 +151,7 @@ class Nav extends Component {
           leftIcon={<AddIcon />}
           containerElement={<Link to={routes.TRIBE_NEW} />}
         >
-          New tribe
+          <FormattedMessage id="tribe_new" />
         </MenuItem>
       </div>
     )

@@ -1,19 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {
-  DrawerLayoutAndroid,
-  Navigator,
-  BackAndroid,
-  TouchableHighlight,
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native'
+import {DrawerLayoutAndroid, Navigator, BackAndroid, StyleSheet, View, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
-
-import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import './userAgent'
 import config from '../common/config'
@@ -22,6 +12,7 @@ import io from 'socket.io-client'
 import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
+import IconButton from './components/IconButton'
 
 import routes from '../common/routes'
 import router from '../common/router'
@@ -51,9 +42,7 @@ class App extends Component {
     this.routeMapper = {
       LeftButton: (/*route, navigator, index, navState*/) => {
         return this.props.uid && (
-          <TouchableHighlight onPress={this.handleOpenDrawer} style={styles.hamburger} underlayColor={colors.main}>
-            <Icon name="menu" size={24} color="white" />
-          </TouchableHighlight>
+          <IconButton name="menu" color="white" onPress={this.handleOpenDrawer} style={styles.hamburger} />
         )
       },
       Title: (route/*, navigator, index, navState*/) => {
@@ -157,6 +146,7 @@ class App extends Component {
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
+          drawerWidth={250}
         >
           <Navigator
             initialRoute={routes.WELCOME}

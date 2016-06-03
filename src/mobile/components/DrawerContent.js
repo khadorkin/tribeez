@@ -1,13 +1,12 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Text, Image} from 'react-native'
+import {StyleSheet, View, ScrollView, Text, TouchableOpacity, Image} from 'react-native'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {IntlProvider} from 'react-intl'
 
-import Icon from 'react-native-vector-icons/MaterialIcons'
-
 import FormattedMessage from './FormattedMessage'
+import IconButton from './IconButton'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -27,6 +26,7 @@ class DrawerContent extends Component {
     drawer: PropTypes.object,
     // from redux:
     user: PropTypes.object,
+    currentTribe: PropTypes.object,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     // action creators:
@@ -35,8 +35,14 @@ class DrawerContent extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      showTribes: false,
+    }
     this.handleLogout = this.handleLogout.bind(this)
     this.handleProfile = this.handleProfile.bind(this)
+    this.handleToggle = this.handleToggle.bind(this)
+    this.handleNewTribe = this.handleNewTribe.bind(this)
+    this.handleTribeSettings = this.handleTribeSettings.bind(this)
   }
 
   handleLogout() {
@@ -49,47 +55,56 @@ class DrawerContent extends Component {
     this.props.drawer.closeDrawer()
   }
 
+  handleToggle() {
+    this.setState({
+      showTribes: !this.state.showTribes,
+    })
+  }
+
   handleLink(route) {
     router.resetTo(route)
     this.props.drawer.closeDrawer()
   }
 
+  handleNewTribe() {
+    //
+  }
+
+  handleTribeSettings() {
+    //
+  }
+
   render() {
+    const {user, currentTribe} = this.props
+
     const menuItems = menuEntries.map((entry) =>
-      <Icon.Button
+      <IconButton
         key={entry.route.name}
         name={entry.icon}
-        size={24}
         onPress={this.handleLink.bind(this, entry.route)}
-        backgroundColor="white"
-        borderRadius={0}
-        color={colors.icon}
       >
         <FormattedMessage style={styles.entry} id={entry.route.name} />
-      </Icon.Button>
+      </IconButton>
     )
 
-    const {user} = this.props
+    const tribeItems = user.tribes.map((tribe) =>
+      <TouchableOpacity key={tribe.id} style={styles.tribe}>
+        <Text style={styles.tribeText}>{tribe.name}</Text>
+        {
+          !!tribe.active && (
+            <IconButton name="settings" style={styles.tribeSettings} onPress={this.handleTribeSettings} />
+          )
+        }
+      </TouchableOpacity>
+    )
 
     return (
       <IntlProvider locale={this.props.lang} messages={this.props.messages}>
         <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.actions}>
-              <Icon.Button
-                name="exit-to-app"
-                size={24}
-                onPress={this.handleLogout}
-                backgroundColor={colors.main}
-                color="white"
-              />
-              <Icon.Button
-                name="person"
-                size={24}
-                onPress={this.handleProfile}
-                backgroundColor={colors.main}
-                color="white"
-              />
+              <IconButton name="exit-to-app" color="white" onPress={this.handleLogout} style={styles.action} />
+              <IconButton name="person" color="white" onPress={this.handleProfile} style={styles.action} />
             </View>
             <View style={styles.infos}>
               <Image
@@ -99,12 +114,28 @@ class DrawerContent extends Component {
               <Text style={styles.username}>
                 {user.name}
               </Text>
+              <Text style={styles.currentTribe}>
+                {currentTribe.name}
+              </Text>
+              <IconButton
+                name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
+                color="white"
+                onPress={this.handleToggle}
+                style={styles.toggle}
+              />
             </View>
           </View>
 
-          <View style={styles.menu}>
-            {menuItems}
-          </View>
+          <ScrollView style={styles.menu}>
+            {this.state.showTribes ? tribeItems : menuItems}
+          </ScrollView>
+          {
+            this.state.showTribes && (
+              <IconButton name="add" onPress={this.handleNewTribe}>
+                <FormattedMessage style={styles.tribeText} id="tribe_new" />
+              </IconButton>
+            )
+          }
         </View>
       </IntlProvider>
     )
@@ -114,6 +145,7 @@ class DrawerContent extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.member.user,
+  currentTribe: state.member.tribe,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
 })
@@ -124,43 +156,67 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flex: 1,
   },
   header: {
     backgroundColor: colors.main,
-    height: 200,
-    width: 296,
-    flexDirection: 'column',
-    marginBottom: 10,
     paddingTop: 24, // because DrawerLayoutAndroid has a statusBarBackgroundColor
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  action: {
+    paddingBottom: 0,
+  },
   infos: {
-    flex: 1,
     alignItems: 'center',
-    flexDirection: 'column',
   },
   avatar: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    marginBottom: 20,
   },
   username: {
     color: 'white',
     fontWeight: '400',
-    fontSize: 16,
+    fontSize: 18,
+    marginVertical: 5,
+  },
+  currentTribe: {
+    color: 'white',
+    fontWeight: '400',
+    fontSize: 14,
+    marginBottom: 10,
+  },
+  toggle: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    paddingBottom: 6,
   },
   menu: {
     flex: 1,
+    paddingTop: 6,
   },
   entry: {
     color: colors.primaryText,
     fontWeight: '400',
     paddingVertical: 1,
+  },
+  tribe: {
+    padding: 12,
+  },
+  tribeText: {
+    color: colors.primaryText,
+    fontWeight: '400',
+    paddingBottom: 1.5,
+    marginRight: 30,
+  },
+  tribeSettings: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
 })
 
