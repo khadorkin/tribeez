@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet,
   View,
+  Text,
 } from 'react-native'
 
 import {connect} from 'react-redux'
@@ -56,9 +57,11 @@ class App extends Component {
         )
       },
       Title: (route/*, navigator, index, navState*/) => {
-        return (
-          <FormattedMessage style={styles.navTitle} id={route.name} />
-        )
+        if (route.item) {
+          return <Text style={styles.navTitle}>{route.item.name}</Text>
+        } else {
+          return <FormattedMessage style={styles.navTitle} id={route.name} />
+        }
       },
       RightButton: (/*route, navigator, index, navState*/) => {
         return null // nothing for now
@@ -124,7 +127,7 @@ class App extends Component {
     router.update(route, navigator)
     return (
       <View style={styles.page}>
-        <route.component />
+        <route.component item={route.item} />
       </View>
     )
   }

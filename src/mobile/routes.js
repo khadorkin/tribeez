@@ -6,6 +6,7 @@ import Members from './pages/Members'
 import InviteForm from './pages/InviteForm'
 import Events from './pages/Events'
 import EventForm from './pages/EventForm'
+import Event from './pages/Event'
 
 export default {
   WELCOME: {name: 'welcome', index: 0, component: Welcome},
@@ -16,4 +17,5 @@ export default {
   MEMBERS_NEW: {name: 'members_new', index: 2, component: InviteForm},
   EVENTS: {name: 'events', index: 1, component: Events},
   EVENTS_NEW: {name: 'events_new', index: 2, component: EventForm},
+  EVENT: {name: 'event', index: 2, component: Event},
 }
