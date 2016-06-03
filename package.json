@@ -12,7 +12,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "PORT=3001 node server.js",
-    "mobile": "node node_modules/react-native/local-cli/cli.js start",
     "dev": "PATH=$(npm bin):$PATH webpack --progress --display-error-details",
     "deploy": "PATH=$(npm bin):$PATH NODE_ENV=production webpack"
   },

@@ -51,11 +51,24 @@ Serve with [PM2](http://pm2.keymetrics.io/):
 
 ## Mobile app
 
-Connect a device or start an emulator, then run:
+### Development
 
-    npm run mobile
-
-Or [manually](https://facebook.github.io/react-native/docs/getting-started.html):
+Install the React Native Cli:
 
     npm install -g react-native-cli
+
+Connect a device or start an emulator, then run:
+
     react-native run-android
+
+You can see the logs by launching:
+
+    adb logcat *:S ReactNative:V ReactNativeJS:V
+
+### Production
+
+Make sure you have a keystore and its infos in `~/.gradle/gradle.properties` as [described in the doc](https://facebook.github.io/react-native/docs/signed-apk-android.html), then run:
+
+    cd android && ./gradlew assembleRelease
+
+The generated package can be found at `android/app/build/outputs/apk/app-release.apk`
