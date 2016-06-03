@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableOpacity, StyleSheet} from 'react-native'
+import {View, TouchableOpacity, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -12,25 +12,28 @@ class Fab extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.props.onPress} style={styles.button}>
-        <Icon name="add" color="white" size={24} />
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={this.props.onPress} style={styles.button}>
+          <Icon name="add" color="white" size={24} />
+        </TouchableOpacity>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+  },
   button: {
     padding: 16,
     backgroundColor: colors.main,
     borderRadius: 44,
     // Android:
-    elevation: 2,
-    //iOS:
-    // shadowColor: 'red',
-    // shadowOffset: {width: 5, height: 5},
-    // shadowOpacity: 0.5,
-    // shadowRadius: 5,
+    elevation: 5,
+    //iOS: TODO
   },
 })
 

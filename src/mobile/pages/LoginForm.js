@@ -11,7 +11,7 @@ import validator from '../../common/utils/formValidator'
 
 import submitLogin from '../../common/actions/submitLogin'
 
-class Login extends Component {
+class LoginForm extends Component {
   static propTypes = {
     // from redux-form:
     fields: PropTypes.object,
@@ -86,4 +86,4 @@ export default reduxForm({
   fields: ['email', 'password'],
   validate: validator.login,
   touchOnBlur: false,
-}, mapStateToProps)(Login)
+}, mapStateToProps)(LoginForm)

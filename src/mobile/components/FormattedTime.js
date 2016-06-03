@@ -3,7 +3,7 @@ import {Text} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
-class FormattedDate extends Component {
+class FormattedTime extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
@@ -13,10 +13,10 @@ class FormattedDate extends Component {
     const {intl, value, ...props} = this.props
     return (
       <Text {...props}>
-        {value ? intl.formatDate(value) : ' '}
+        {value ? intl.formatTime(value) : ' '}
       </Text>
     )
   }
 }
 
-export default injectIntl(FormattedDate)
+export default injectIntl(FormattedTime)

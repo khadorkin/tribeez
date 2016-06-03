@@ -61,9 +61,7 @@ class Members extends Component {
             <View style={styles.spacer} />
           </AsyncContent>
         </ScrollableTabView>
-        <View style={styles.fab}>
-          <Fab onPress={this.handleFab} />
-        </View>
+        <Fab onPress={this.handleFab} />
       </View>
     )
   }
@@ -89,11 +87,6 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: 80,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
   },
 })
 
