@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
 import TextField from '../components/TextField'
-import DatePicker from '../components/DatePicker'
+import DateField from '../components/DateField'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 
@@ -47,11 +47,11 @@ class EventForm extends Component {
           {...name}
           name="title"
         />
-        <DatePicker ref="start"
+        <DateField ref="start"
           time={true}
           {...start}
         />
-        <DatePicker ref="end"
+        <DateField ref="end"
           time={true}
           {...end}
         />

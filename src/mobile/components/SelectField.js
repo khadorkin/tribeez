@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: colors.error,
+    marginHorizontal: 5,
   },
 })
 

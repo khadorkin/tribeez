@@ -47,7 +47,7 @@ export default (state = initialState, action = null) => {
 
     // from socket.io:
     case NEW_EVENT: {
-      const items = [action.data, ...state.items]
+      const items = [action.data, ...state.items] //TODO: calculate where to place the event in the array
       return {
         ...state,
         items,

@@ -10,12 +10,17 @@ class TextField extends Component {
     name: PropTypes.string.isRequired,
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
+    this.state = {
+      height: 0,
+    }
     this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   ref(element) {
@@ -26,6 +31,13 @@ class TextField extends Component {
     this.element.focus()
   }
 
+  handleChange(event) {
+    this.props.onChange(event)
+    this.setState({
+      height: event.nativeEvent.contentSize.height,
+    })
+  }
+
   render() {
     const {name, touched, error, ...props} = this.props
 
@@ -34,8 +46,9 @@ class TextField extends Component {
         <FormattedMessage id={'field.' + name} style={styles.label} />
         <TextInput
           ref={this.ref}
-          style={styles.field}
+          style={[styles.field, {height: Math.max(40, this.state.height + 20)}]}
           {...props}
+          onChange={this.handleChange}
         />
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
       </View>
@@ -55,6 +68,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: colors.error,
+    marginHorizontal: 5,
   },
 })
 

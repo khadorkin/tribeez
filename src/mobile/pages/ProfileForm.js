@@ -5,7 +5,7 @@ import {reduxForm} from 'redux-form'
 
 import TextField from '../components/TextField'
 import SelectField from '../components/SelectField'
-import DatePicker from '../components/DatePicker'
+import DateField from '../components/DateField'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 
@@ -59,7 +59,7 @@ class ProfileForm extends Component {
           {...lang}
           items={langs}
         />
-        <DatePicker ref="birthdate"
+        <DateField ref="birthdate"
           max={today}
           {...birthdate}
         />
