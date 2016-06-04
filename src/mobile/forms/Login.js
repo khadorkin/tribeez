@@ -1,11 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View} from 'react-native'
 
 import {reduxForm} from 'redux-form'
 
-import TextField from '../components/TextField'
-import FormattedMessage from '../components/FormattedMessage'
-import Button from '../components/Button'
+import Form from '../hoc/Form'
+import TextField from './fields/Text'
 
 import validator from '../../common/utils/formValidator'
 
@@ -15,12 +13,10 @@ class LoginForm extends Component {
   static propTypes = {
     // from redux-form:
     fields: PropTypes.object,
-    error: PropTypes.string,
     handleSubmit: PropTypes.func,
-    submitting: PropTypes.bool,
     // from redux:
     destination: PropTypes.object, // next route after login (when trying to directly access a page when anonymous)
-    invite: PropTypes.object.isRequired,
+    invite: PropTypes.object.isRequired, //TODO
     initialValues: PropTypes.object,
   }
 
@@ -35,14 +31,14 @@ class LoginForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event)
+    this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event) //TODO: prevent duplicate code
   }
 
   render() {
-    const {fields: {email, password}, error, submitting} = this.props
+    const {fields: {email, password}, ...props} = this.props
 
     return (
-      <View style={styles.container}>
+      <Form name="login" action={submitLogin.bind(null, this.props.destination)} {...props}>
         <TextField ref="email"
           {...email}
           autoFocus={true}
@@ -56,22 +52,10 @@ class LoginForm extends Component {
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
         />
-        <Button id="submit.login" onPress={this.handleSubmit} disabled={submitting} />
-        {error && <FormattedMessage id={error} style={{color: 'red'}} />}
-      </View>
+      </Form>
     )
   }
-
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-})
 
 const mapStateToProps = (state) => ({
   destination: state.login.destination,

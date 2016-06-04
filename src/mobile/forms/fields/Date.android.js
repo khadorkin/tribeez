@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react'
 import {TouchableOpacity, StyleSheet, View, DatePickerAndroid, TimePickerAndroid} from 'react-native'
 
-import FormattedDate from './FormattedDate'
-import FormattedTime from './FormattedTime'
-import FormattedMessage from './FormattedMessage'
+import FormattedDate from '../../components/FormattedDate'
+import FormattedTime from '../../components/FormattedTime'
+import FormattedMessage from '../../components/FormattedMessage'
 
-import colors from '../../common/constants/colors'
+import colors from '../../../common/constants/colors'
 
 class SelectField extends Component {
   static propTypes = {

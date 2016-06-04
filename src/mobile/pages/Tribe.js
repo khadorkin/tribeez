@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {ScrollView} from 'react-native'
 
-import EventForm from '../forms/Event'
+import TribeForm from '../forms/Tribe'
 
-class Event extends Component {
+class Tribe extends Component {
   render() {
     return (
       <ScrollView>
-        <EventForm />
+        <TribeForm type="update" />
       </ScrollView>
     )
   }
 
 }
 
-export default Event
+export default Tribe

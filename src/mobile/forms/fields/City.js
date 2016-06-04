@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native'
 
-import FormattedMessage from './FormattedMessage'
+import FormattedMessage from '../../components/FormattedMessage'
 
-import {buildQuery} from '../../common/utils/api'
+import {buildQuery} from '../../../common/utils/api'
 
-import config from '../../common/config'
-import colors from '../../common/constants/colors'
+import config from '../../../common/config'
+import colors from '../../../common/constants/colors'
 
 const requestPlace = (service, query) => {
   query.key = config.google_android_key

@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 import {TextInput, StyleSheet, View} from 'react-native'
 
-import FormattedMessage from './FormattedMessage'
+import FormattedMessage from '../../components/FormattedMessage'
 
-import colors from '../../common/constants/colors'
+import colors from '../../../common/constants/colors'
 
 class TextField extends Component {
   static propTypes = {

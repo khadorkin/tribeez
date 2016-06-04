@@ -67,16 +67,12 @@ class DrawerContent extends Component {
   }
 
   handleNewTribe() {
-    const route = routes.TRIBE
-    route.item = null
-    router.resetTo(route)
+    router.resetTo(routes.TRIBE_NEW)
     this.props.drawer.closeDrawer()
   }
 
   handleTribeSettings() {
-    const route = routes.TRIBE
-    route.item = this.props.currentTribe
-    router.resetTo(route)
+    router.resetTo(routes.TRIBE)
     this.props.drawer.closeDrawer()
   }
 

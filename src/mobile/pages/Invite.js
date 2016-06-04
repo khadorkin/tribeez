@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {ScrollView} from 'react-native'
 
-import EventForm from '../forms/Event'
+import InviteForm from '../forms/Invite'
 
-class Event extends Component {
+class Invite extends Component {
   render() {
     return (
       <ScrollView>
-        <EventForm />
+        <InviteForm />
       </ScrollView>
     )
   }
 
 }
 
-export default Event
+export default Invite

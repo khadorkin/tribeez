@@ -1,13 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, ScrollView, View} from 'react-native'
 
 import {reduxForm} from 'redux-form'
 
-import TextField from '../components/TextField'
-import SelectField from '../components/SelectField'
-import DateField from '../components/DateField'
-import FormattedMessage from '../components/FormattedMessage'
-import Button from '../components/Button'
+import Form from '../hoc/Form'
+import TextField from './fields/Text'
+import SelectField from './fields/Select'
+import DateField from './fields/Date'
 
 import langs from '../../common/resources/langs'
 
@@ -21,28 +19,16 @@ class ProfileForm extends Component {
   static propTypes = {
     // from redux-form:
     fields: PropTypes.object,
-    error: PropTypes.string,
-    handleSubmit: PropTypes.func,
-    submitting: PropTypes.bool,
     // from redux:
     initialValues: PropTypes.object,
     lang: PropTypes.string.isRequired,
   }
 
-  constructor(props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleSubmit(event) {
-    this.props.handleSubmit(submitProfile)(event)
-  }
-
   render() {
-    const {fields: {name, email, lang, birthdate, phone, password, password2}, error, submitting} = this.props
+    const {fields: {name, email, lang, birthdate, phone, password, password2}, ...props} = this.props
 
     return (
-      <ScrollView style={styles.container}>
+      <Form name="profile" action={submitProfile} {...props}>
         <TextField ref="name"
           {...name}
           autoCorrect={false}
@@ -79,24 +65,10 @@ class ProfileForm extends Component {
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
         />
-        <View style={styles.actions}>
-          <Button id="submit.profile" onPress={this.handleSubmit} disabled={submitting} />
-        </View>
-        {error && <FormattedMessage id={error} style={{color: 'red'}} />}
-      </ScrollView>
+      </Form>
     )
   }
-
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-  },
-  actions: {
-    alignItems: 'center',
-  },
-})
 
 const mapStateToProps = (state) => ({
   initialValues: {

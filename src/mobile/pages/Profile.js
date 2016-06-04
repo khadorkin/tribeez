@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {ScrollView} from 'react-native'
 
-import EventForm from '../forms/Event'
+import ProfileForm from '../forms/Profile'
 
-class Event extends Component {
+class Profile extends Component {
   render() {
     return (
       <ScrollView>
-        <EventForm />
+        <ProfileForm />
       </ScrollView>
     )
   }
 
 }
 
-export default Event
+export default Profile

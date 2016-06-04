@@ -1,23 +1,23 @@
 import Welcome from './pages/Welcome'
-import LoginForm from './pages/LoginForm'
-import ProfileForm from './pages/ProfileForm'
-import TribeForm from './pages/TribeForm'
+import Login from './pages/Login'
+import Profile from './pages/Profile'
+import Tribe from './pages/Tribe'
 import Activity from './pages/Activity'
 import Members from './pages/Members'
-import InviteForm from './pages/InviteForm'
+import Invite from './pages/Invite'
 import Events from './pages/Events'
-import EventForm from './pages/EventForm'
 import Event from './pages/Event'
+import EventDetails from './pages/EventDetails'
 
 export default {
   WELCOME: {name: 'welcome', component: Welcome},
-  LOGIN: {name: 'login', component: LoginForm},
-  PROFILE: {name: 'profile', component: ProfileForm},
-  TRIBE: {name: 'tribe', component: TribeForm},
+  LOGIN: {name: 'login', component: Login},
+  PROFILE: {name: 'profile', component: Profile},
+  TRIBE: {name: 'tribe', component: Tribe},
   ACTIVITY: {name: 'activity', component: Activity},
   MEMBERS: {name: 'members', component: Members},
-  MEMBERS_NEW: {name: 'members_new', component: InviteForm},
+  MEMBERS_NEW: {name: 'members_new', component: Invite},
   EVENTS: {name: 'events', component: Events},
-  EVENTS_NEW: {name: 'events_new', component: EventForm},
-  EVENT: {name: 'event', component: Event},
+  EVENTS_NEW: {name: 'events_new', component: Event},
+  EVENT: {name: 'event', component: EventDetails},
 }
