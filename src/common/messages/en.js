@@ -64,6 +64,7 @@ export default {
   'snack.tribe_updated': 'Tribe updated',
   'snack.invite_sent': 'Invite sent',
   'snack.invite_resent': 'Invite sent again',
+  'snack.switched': 'Tribe changed',
   'snack.NEW_BILL': '{author, select, _you_ {Bill created} other {{author} created the "{name}" bill}}',
   'snack.UPDATE_BILL': '{author, select, _you_ {Bill updated} other {{author} updated the "{name}" bill}}',
   'snack.DELETE_BILL': '{author, select, _you_ {Bill deleted} other {{author} deleted the "{name}" bill}}',

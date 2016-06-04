@@ -4,6 +4,7 @@ import {
   SWITCH_REQUEST,
   SWITCH_SUCCESS,
   SWITCH_FAILURE,
+  SNACK_MESSAGE,
 } from '../constants/actions'
 
 import routes from '../routes'
@@ -30,6 +31,10 @@ export default (id) => {
           // force redirect to home page:
           dispatch(getMember(null, routes.ACTIVITY))
           dispatch(getActivity())
+          dispatch({
+            type: SNACK_MESSAGE,
+            message: 'switched',
+          })
         }
       })
       .catch(() => {

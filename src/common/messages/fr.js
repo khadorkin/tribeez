@@ -65,6 +65,7 @@ const fr = {
   'snack.tribe_updated': 'Tribu modifiée',
   'snack.invite_sent': 'Invitation envoyée',
   'snack.invite_resent': 'Invitation renvoyée',
+  'snack.switched': 'Tribu changée',
   'snack.NEW_BILL': '{author, select, _you_ {Facture ajoutée} other {{author} a ajouté la facture "{name}"}}',
   'snack.UPDATE_BILL': '{author, select, _you_ {Facture modifiée} other {{author} a modifié la facture "{name}"}}',
   'snack.DELETE_BILL': '{author, select, _you_ {Facture supprimée} other {{author} a supprimé la facture "{name}"}}',

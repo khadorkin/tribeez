@@ -3,6 +3,9 @@ import {connect} from 'react-redux'
 import {FormattedMessage} from 'react-intl'
 
 import RaisedButton from 'material-ui/RaisedButton'
+import CircularProgress from 'material-ui/CircularProgress'
+
+import colors from '../../common/constants/colors'
 
 class AsyncContent extends Component {
 
@@ -57,12 +60,12 @@ class AsyncContent extends Component {
   }
 
   render() {
-    const {error} = this.props.data
+    const {error, loading} = this.props.data
 
     if (error) {
       return (
-        <div style={{textAlign: 'center', padding: '40px 0'}}>
-          <div style={{marginBottom: 20, color: 'red'}}>{error}</div>
+        <div style={styles.errorContainer}>
+          <div style={styles.errorText}>{error}</div>
           <RaisedButton label={<FormattedMessage id="retry" />} onTouchTap={this.handleLoad} />
         </div>
       )
@@ -70,11 +73,33 @@ class AsyncContent extends Component {
       return (
         <div style={this.props.style} ref={this.ref}>
           {this.props.children}
+          {
+            ( loading &&
+              <div style={styles.loading}>
+                <CircularProgress color={colors.main} size={0.5} style={{textAlign: 'center'}} />
+              </div>
+            )
+          }
         </div>
       )
     }
   }
 
+}
+
+const styles = {
+  errorContainer: {
+    textAlign: 'center',
+    padding: '40px 0',
+  },
+  errorText: {
+    marginBottom: 20,
+    color: 'red',
+  },
+  loading: {
+    textAlign: 'center',
+    padding: 20,
+  },
 }
 
 AsyncContent.propTypes = {
