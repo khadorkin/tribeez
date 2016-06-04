@@ -13,6 +13,7 @@ import router from '../../common/router'
 import colors from '../../common/constants/colors'
 import gravatar from '../../common/utils/gravatar'
 import postLogout from '../../common/actions/postLogout'
+import putSwitch from '../../common/actions/putSwitch'
 
 const menuEntries = [
   {route: routes.ACTIVITY, icon: 'view-stream'},
@@ -31,6 +32,7 @@ class DrawerContent extends Component {
     messages: PropTypes.object.isRequired,
     // action creators:
     postLogout: PropTypes.func.isRequired,
+    putSwitch: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -76,6 +78,11 @@ class DrawerContent extends Component {
     this.props.drawer.closeDrawer()
   }
 
+  selectTribe(id) {
+    this.props.putSwitch(id)
+    this.props.drawer.closeDrawer()
+  }
+
   render() {
     const {user, currentTribe} = this.props
 
@@ -90,7 +97,7 @@ class DrawerContent extends Component {
     )
 
     const tribeItems = user.tribes.map((tribe) =>
-      <TouchableOpacity key={tribe.id} style={styles.tribe}>
+      <TouchableOpacity key={tribe.id} onPress={this.selectTribe.bind(this, tribe.id)} style={styles.tribe}>
         <Text style={styles.tribeText}>{tribe.name}</Text>
         {
           !!tribe.active && (
@@ -154,6 +161,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   postLogout,
+  putSwitch,
 }, dispatch)
 
 const styles = StyleSheet.create({

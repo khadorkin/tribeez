@@ -2,6 +2,7 @@ import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import Tribe from './pages/Tribe'
+import NewTribe from './pages/NewTribe'
 import Activity from './pages/Activity'
 import Members from './pages/Members'
 import Invite from './pages/Invite'
@@ -14,6 +15,7 @@ export default {
   LOGIN: {name: 'login', component: Login},
   PROFILE: {name: 'profile', component: Profile},
   TRIBE: {name: 'tribe', component: Tribe},
+  TRIBE_NEW: {name: 'tribe', component: NewTribe},
   ACTIVITY: {name: 'activity', component: Activity},
   MEMBERS: {name: 'members', component: Members},
   MEMBERS_NEW: {name: 'members_new', component: Invite},

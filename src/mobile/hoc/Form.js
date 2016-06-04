@@ -4,6 +4,8 @@ import {StyleSheet, View} from 'react-native'
 import Button from '../components/Button'
 import FormattedMessage from '../components/FormattedMessage'
 
+import colors from '../../common/constants/colors'
+
 class Form extends Component {
   static propTypes = {
     // from parent:
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   error: {
-    color: 'red',
+    color: colors.error,
   },
 })
 
