@@ -2,12 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
-import {CardTitle, CardText, CardActions} from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
-
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
-
-import styles from '../styles'
 
 import validator, {focus} from '../../common/utils/formValidator'
 
@@ -26,25 +22,18 @@ class PasswordForm extends Component {
   }
 
   render() {
-    const {fields: {email}, error, submitting} = this.props
+    const {fields: {email}} = this.props
+
+    const subtitle = <FormattedMessage id="password_reset" />
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle={<FormattedMessage id="password_reset" />} />
-        <CardText>
-          <TextField ref="email"
-            type="email"
-            required={true}
-            {...email}
-          />
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id="submit.password" />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id="error.other" />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name="password" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
+        <TextField ref="email"
+          type="email"
+          required={true}
+          {...email}
+        />
+      </Form>
     )
   }
 }
@@ -52,9 +41,7 @@ class PasswordForm extends Component {
 PasswordForm.propTypes = {
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   initialValues: PropTypes.object,
 }

@@ -5,7 +5,7 @@ import {Card} from 'material-ui/Card'
 import withHook from '../hoc/withHook'
 import InviteForm from '../forms/Invite'
 
-class NewMember extends Component {
+class Invite extends Component {
 
   render() {
     return (
@@ -17,9 +17,9 @@ class NewMember extends Component {
 
 }
 
-NewMember.propTypes = {
+Invite.propTypes = {
   // from withHook:
   setHook: PropTypes.func.isRequired,
 }
 
-export default withHook(NewMember)
+export default withHook(Invite)

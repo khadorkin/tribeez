@@ -2,18 +2,15 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
-import {CardActions, CardText} from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
-import RaisedButton from 'material-ui/RaisedButton'
 
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
 import langs from '../../common/resources/langs'
 
-import styles from '../styles'
-
-import validator, {focus, modified} from '../../common/utils/formValidator'
+import validator, {focus} from '../../common/utils/formValidator'
 
 import submitInvite from '../../common/actions/submitInvite'
 
@@ -29,10 +26,6 @@ class InviteForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
-  }
-
   handleSuggestion(event) {
     event.preventDefault()
     this.props.fields.email.onChange(event.target.innerHTML)
@@ -44,30 +37,22 @@ class InviteForm extends Component {
   }
 
   render() {
-    const {fields: {email, lang}, error, submitting} = this.props
+    const {fields: {email, lang}} = this.props
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardText>
-          <TextField ref="email"
-            type="email"
-            required={true}
-            errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
-            {...email}
-          />
-          <SelectField ref="lang"
-            {...lang}
-          >
-            {langItems}
-          </SelectField>
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id="submit.invite" />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id="error.other" />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name="invite" onSubmit={this.handleSubmit} {...this.props}>
+        <TextField ref="email"
+          type="email"
+          required={true}
+          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
+          {...email}
+        />
+        <SelectField ref="lang"
+          {...lang}
+        >
+          {langItems}
+        </SelectField>
+      </Form>
     )
   }
 }
@@ -77,9 +62,7 @@ InviteForm.propTypes = {
   setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   initialValues: PropTypes.object,
 }

@@ -1,7 +1,8 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import {Card} from 'material-ui/Card'
 
+import withHook from '../hoc/withHook'
 import TribeForm from '../forms/Tribe'
 
 class NewTribe extends Component {
@@ -9,11 +10,16 @@ class NewTribe extends Component {
   render() {
     return (
       <Card>
-        <TribeForm type="create" />
+        <TribeForm type="create" setHook={this.props.setHook} />
       </Card>
     )
   }
 
 }
 
-export default NewTribe
+NewTribe.propTypes = {
+  // from withHook:
+  setHook: PropTypes.func.isRequired,
+}
+
+export default withHook(NewTribe)

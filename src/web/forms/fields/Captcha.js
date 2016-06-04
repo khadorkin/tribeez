@@ -51,8 +51,8 @@ class Captcha extends Component {
 
   render() {
     return (
-      <div ref={this.ref} style={{display: 'inline-block', marginBottom: '30px'}}>
-        <div id="captcha" style={{minHeight: '80px'}} ref="input"></div>
+      <div ref={this.ref} style={{textAlign: 'center', margin: '48px 0 32px'}}>
+        <div id="captcha" style={{display: 'inline-block', minHeight: '80px'}} ref="input"></div>
         <p className="error">{this.props.touched && this.props.error && <FormattedMessage id="error.captcha" />}</p>
       </div>
     )

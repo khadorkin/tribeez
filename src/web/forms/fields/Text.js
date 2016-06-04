@@ -37,7 +37,7 @@ class TextFieldWrapper extends Component {
 
 TextFieldWrapper.propTypes = {
   touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   name: PropTypes.string,
 }
 

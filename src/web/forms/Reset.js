@@ -2,12 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
-import {CardTitle, CardText, CardActions} from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
-
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
-
-import styles from '../styles'
 
 import validator, {focus} from '../../common/utils/formValidator'
 
@@ -32,30 +28,23 @@ class ResetForm extends Component {
   }
 
   render() {
-    const {fields: {password, password2}, error, submitting} = this.props
+    const {fields: {password, password2}} = this.props
+
+    const subtitle = this.props.username && <FormattedMessage id="password_change" values={{name: this.props.username}} />
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle={this.props.name && <FormattedMessage id="password_change" values={{name: this.props.name}} />} />
-        <CardText>
-          <TextField ref="password"
-            type="password"
-            required={true}
-            {...password}
-          />
-          <TextField ref="password2"
-            type="password"
-            required={true}
-            {...password2}
-          />
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id="submit.reset" />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id="error.other" />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name="reset" subtitle={subtitle} onSubmit={this.handleSubmit}>
+        <TextField ref="password"
+          type="password"
+          required={true}
+          {...password}
+        />
+        <TextField ref="password2"
+          type="password"
+          required={true}
+          {...password2}
+        />
+      </Form>
     )
   }
 }
@@ -65,18 +54,16 @@ ResetForm.propTypes = {
   token: PropTypes.string.isRequired,
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
-  name: PropTypes.string,
+  username: PropTypes.string,
 }
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
     token: ownProps.token,
   },
-  name: state.reset.name,
+  username: state.reset.name,
 })
 
 export default reduxForm({

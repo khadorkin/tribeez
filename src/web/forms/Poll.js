@@ -1,17 +1,12 @@
 import React, {Component, PropTypes} from 'react'
-import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
-import {CardText, CardActions} from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
-
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import Checkbox from './fields/Checkbox'
 
-import styles from '../styles'
-
-import validator, {focus, modified} from '../../common/utils/formValidator'
+import validator, {focus} from '../../common/utils/formValidator'
 
 import getPoll from '../../common/actions/getPoll'
 import submitPoll from '../../common/actions/submitPoll'
@@ -29,51 +24,39 @@ class PollForm extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
-  }
-
   handleSubmit(poll) {
     this.props.handleSubmit(submitPoll)(poll)
       .catch((errors) => focus(errors, this.refs))
   }
 
   render() {
-    const {fields: {name, description, multiple, options}, error, submitting} = this.props
+    const {fields: {name, description, multiple, options}} = this.props
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardText>
-          <TextField ref="name"
-            required={true}
-            {...name}
-            name="title"
-          />
-          <TextField ref="description"
-            multiLine={true}
-            {...description}
-          />
-          {
-            options.map((option, index) => {
-              return (
-                <TextField key={index}
-                  {...option}
-                  name="option"
-                />
-              )
-            })
-          }
-          <Checkbox ref="multiple"
-            {...multiple}
-          />
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id={'submit.poll.' + (this.props.poll ? 'update' : 'create')} />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id={'error.' + error} />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name={'poll.' + (this.props.poll ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+        <TextField ref="name"
+          required={true}
+          {...name}
+          name="title"
+        />
+        <TextField ref="description"
+          multiLine={true}
+          {...description}
+        />
+        {
+          options.map((option, index) => {
+            return (
+              <TextField key={index}
+                {...option}
+                name="option"
+              />
+            )
+          })
+        }
+        <Checkbox ref="multiple"
+          {...multiple}
+        />
+      </Form>
     )
   }
 }
@@ -82,12 +65,9 @@ PollForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
   current: PropTypes.object,
-  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   lang: PropTypes.string.isRequired,
   initialValues: PropTypes.object,

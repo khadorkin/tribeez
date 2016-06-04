@@ -3,12 +3,9 @@ import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 import {Link} from 'react-router'
 
-import {CardTitle, CardText, CardActions} from 'material-ui/Card'
-import RaisedButton from 'material-ui/RaisedButton'
-
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
 
-import styles from '../styles'
 import routes from '../routes'
 
 import validator, {focus} from '../../common/utils/formValidator'
@@ -28,13 +25,12 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {fields: {email, password}, error, submitting} = this.props
-    const subtitle = this.props.invite.email && <FormattedMessage id="login_to_join" values={{inviter: this.props.invite.inviter, tribe: this.props.invite.tribe}} />
+    const {fields: {email, password}, invite} = this.props
+    const subtitle = invite.email ? <FormattedMessage id="login_to_join" values={{inviter: invite.inviter, tribe: invite.tribe_name}} /> : ' '
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardTitle subtitle={subtitle} />
-        <CardText>
+      <div>
+        <Form name="login" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
           <TextField ref="email"
             type="email"
             required={true}
@@ -46,30 +42,28 @@ class LoginForm extends Component {
             {...password}
             name="login_password"
           />
-          <p style={{textAlign: 'right', marginBottom: 0}}>
+          <p style={styles.password}>
             <Link to={routes.PASSWORD}><FormattedMessage id="password_lost" /></Link>
           </p>
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id="submit.login" />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id="error.other" />}
-          </p>
-          <p style={{marginTop: '2em'}}>
-            <FormattedMessage id="no_account" /> <Link to={routes.REGISTER}><FormattedMessage id="register_now" /></Link>
-          </p>
-        </CardActions>
-      </form>
+        </Form>
+        <p style={styles.register}>
+          <FormattedMessage id="no_account" />{' '}
+          <Link to={routes.REGISTER}><FormattedMessage id="register_now" /></Link>
+        </p>
+      </div>
     )
   }
+}
+
+const styles = {
+  password: {textAlign: 'right', marginBottom: 0},
+  register: {marginTop: '1em', textAlign: 'center'},
 }
 
 LoginForm.propTypes = {
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
   invite: PropTypes.object.isRequired,

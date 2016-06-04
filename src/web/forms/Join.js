@@ -2,16 +2,13 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
-import {CardTitle, CardText, CardActions} from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
-import RaisedButton from 'material-ui/RaisedButton'
 
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
 import langs from '../../common/resources/langs'
-
-import styles from '../styles'
 
 import validator, {focus} from '../../common/utils/formValidator'
 
@@ -40,41 +37,34 @@ class RegisterForm extends Component {
   }
 
   render() {
-    const {fields: {name, email, password, lang}, error, submitting} = this.props
+    const {fields: {name, email, password, lang}} = this.props
+
+    const subtitle = <FormattedMessage id="invited_you" values={{name: this.props.inviter}} />
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardTitle title={this.props.tribe} subtitle={<FormattedMessage id="invited_you" values={{name: this.props.inviter}} />} />
-        <CardText>
-          <TextField ref="name"
-            required={true}
-            {...name}
-            name="username"
-          />
-          <TextField ref="email"
-            type="email"
-            required={true}
-            errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
-            {...email}
-          />
-          <TextField ref="password"
-            type="password"
-            required={true}
-            {...password}
-          />
-          <SelectField ref="lang"
-            {...lang}
-          >
-            {langItems}
-          </SelectField>
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id="submit.join" />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id="error.other" />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name="join" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
+        <TextField ref="name"
+          required={true}
+          {...name}
+          name="username"
+        />
+        <TextField ref="email"
+          type="email"
+          required={true}
+          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
+          {...email}
+        />
+        <TextField ref="password"
+          type="password"
+          required={true}
+          {...password}
+        />
+        <SelectField ref="lang"
+          {...lang}
+        >
+          {langItems}
+        </SelectField>
+      </Form>
     )
   }
 }
@@ -84,9 +74,7 @@ RegisterForm.propTypes = {
   token: PropTypes.string.isRequired,
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   initialValues: PropTypes.object,
   inviter: PropTypes.string,
@@ -99,7 +87,7 @@ const mapStateToProps = (state, ownProps) => ({
     token: ownProps.token,
   },
   inviter: state.join.data.inviter,
-  tribe: state.join.data.tribe,
+  title: state.join.data.tribe_name,
 })
 
 export default reduxForm({

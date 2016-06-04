@@ -23,7 +23,7 @@ import Profile from './pages/Profile'
 import Tribe from './pages/Tribe'
 import NewTribe from './pages/NewTribe'
 import Members from './pages/Members'
-import NewMember from './pages/NewMember'
+import Invite from './pages/Invite'
 import Bills from './pages/Bills'
 import Bill from './pages/Bill'
 import Events from './pages/Events'
@@ -134,7 +134,7 @@ ReactDOM.render((
         <Route path={routes.TRIBE} component={Tribe} />
         <Route path={routes.TRIBE_NEW} component={NewTribe} />
         <Route path={routes.MEMBERS} component={Members} />
-        <Route path={routes.MEMBERS_NEW} component={NewMember} />
+        <Route path={routes.MEMBERS_NEW} component={Invite} />
         <Route path={routes.BILLS} component={Bills} />
         <Route path={routes.BILLS_NEW} component={Bill} />
         <Route path={routes.BILLS_EDIT} component={Bill} />

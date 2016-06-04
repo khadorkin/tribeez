@@ -157,7 +157,7 @@ DatePickerWrapper.propTypes = {
   error: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number, //TODO: allow form init to send empty string
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   intl: intlShape.isRequired,
   time: PropTypes.bool,
 }

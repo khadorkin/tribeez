@@ -1,11 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {FormattedMessage} from 'react-intl'
 import {reduxForm} from 'redux-form'
 
-import {CardText, CardActions} from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
-import RaisedButton from 'material-ui/RaisedButton'
 
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import CityField from './fields/City'
@@ -13,9 +11,7 @@ import CityField from './fields/City'
 import currencies from '../../common/resources/currencies'
 import {TRIBE_TYPES} from '../../common/constants/product'
 
-import styles from '../styles'
-
-import validator, {focus, modified} from '../../common/utils/formValidator'
+import validator, {focus} from '../../common/utils/formValidator'
 
 import submitTribe from '../../common/actions/submitTribe'
 
@@ -33,47 +29,35 @@ class TribeForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
-  }
-
   handleSubmit(event) {
     this.props.handleSubmit(submitTribe)(event)
       .catch((errors) => focus(errors, this.refs))
   }
 
   render() {
-    const {fields: {tribe_name, tribe_type, city, currency}, error, submitting} = this.props
+    const {fields: {tribe_name, tribe_type, city, currency}} = this.props
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardText>
-          <TextField ref="tribe_name"
-            required={true}
-            {...tribe_name}
-          />
-          <SelectField ref="tribe_type"
-            {...tribe_type}
-          >
-            {typeItems}
-          </SelectField>
-          <CityField ref="city"
-            required={true}
-            {...city}
-          />
-          <SelectField ref="currency"
-            {...currency}
-          >
-            {currencyItems}
-          </SelectField>
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id={'submit.tribe.' + this.props.type} />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id="error.other" />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name={'tribe.' + this.props.type} onSubmit={this.handleSubmit} {...this.props}>
+        <TextField ref="tribe_name"
+          required={true}
+          {...tribe_name}
+        />
+        <SelectField ref="tribe_type"
+          {...tribe_type}
+        >
+          {typeItems}
+        </SelectField>
+        <CityField ref="city"
+          required={true}
+          {...city}
+        />
+        <SelectField ref="currency"
+          {...currency}
+        >
+          {currencyItems}
+        </SelectField>
+      </Form>
     )
   }
 }
@@ -81,12 +65,9 @@ class TribeForm extends Component {
 TribeForm.propTypes = {
   // from parent component:
   type: PropTypes.string.isRequired,
-  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   initialValues: PropTypes.object,
 }

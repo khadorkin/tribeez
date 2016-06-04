@@ -3,19 +3,16 @@ import {FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 
-import {CardActions, CardText} from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
-import RaisedButton from 'material-ui/RaisedButton'
 
+import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import MoneyField from './fields/Money'
 import SelectField from './fields/Select'
 import DatePicker from './fields/Date'
 import Part from './deep/Part'
 
-import styles from '../styles'
-
-import validator, {focus, modified} from '../../common/utils/formValidator'
+import validator, {focus} from '../../common/utils/formValidator'
 
 import getBill from '../../common/actions/getBill'
 import submitBill from '../../common/actions/submitBill'
@@ -34,10 +31,6 @@ class BillForm extends Component {
     if (!this.props.bill && this.props.id) {
       this.props.getBill(this.props.id)
     }
-  }
-
-  componentDidMount() {
-    this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
   }
 
   handleSubmit(event) {
@@ -62,65 +55,57 @@ class BillForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, payer, paid, amount, method, parts}, error, submitting, users, currency} = this.props
+    const {fields: {name, description, payer, paid, amount, method, parts}, users, currency} = this.props
 
     const userItems = users.map((user) =>
       <MenuItem value={user.id} key={user.id} primaryText={user.name} />
     )
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <CardText>
-          <TextField ref="name"
-            required={true}
-            {...name}
-            name="title"
-          />
-          <TextField ref="description"
-            multiLine={true}
-            {...description}
-          />
-          <SelectField ref="payer"
-            {...payer}
-          >
-            {userItems}
-          </SelectField>
-          <DatePicker ref="paid"
-            required={true}
-            locale={this.props.lang}
-            maxDate={today}
-            {...paid}
-          />
-          <MoneyField ref="amount"
-            currency={currency}
-            {...amount}
-          />
-          <SelectField ref="method"
-            {...method}
-            onChange={this.handleMethodChange}
-          >
-            <MenuItem value="shares" primaryText={<FormattedMessage id={'method.shares'} />} />
-            <MenuItem value="amounts" primaryText={<FormattedMessage id={'method.amounts'} />} />
-            {/* TODO: add items named "Category: _____" */}
-          </SelectField>
-          {
-            parts.map((part, index) =>
-              <Part key={index}
-                method={method.value}
-                amount={part.amount}
-                currency={currency}
-                user={users.find((u) => (u.id === part.user_id.value))}
-              />
-            )
-          }
-        </CardText>
-        <CardActions style={styles.actions}>
-          <RaisedButton label={<FormattedMessage id={'submit.bill.' + (this.props.bill ? 'update' : 'create')} />} type="submit" disabled={submitting} />
-          <p className="error">
-            {error && <FormattedMessage id={'error.' + error} />}
-          </p>
-        </CardActions>
-      </form>
+      <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+        <TextField ref="name"
+          required={true}
+          {...name}
+          name="title"
+        />
+        <TextField ref="description"
+          multiLine={true}
+          {...description}
+        />
+        <SelectField ref="payer"
+          {...payer}
+        >
+          {userItems}
+        </SelectField>
+        <DatePicker ref="paid"
+          required={true}
+          locale={this.props.lang}
+          maxDate={today}
+          {...paid}
+        />
+        <MoneyField ref="amount"
+          currency={currency}
+          {...amount}
+        />
+        <SelectField ref="method"
+          {...method}
+          onChange={this.handleMethodChange}
+        >
+          <MenuItem value="shares" primaryText={<FormattedMessage id={'method.shares'} />} />
+          <MenuItem value="amounts" primaryText={<FormattedMessage id={'method.amounts'} />} />
+          {/* TODO: add items named "Category: _____" */}
+        </SelectField>
+        {
+          parts.map((part, index) =>
+            <Part key={index}
+              method={method.value}
+              amount={part.amount}
+              currency={currency}
+              user={users.find((u) => (u.id === part.user_id.value))}
+            />
+          )
+        }
+      </Form>
     )
   }
 }
@@ -129,12 +114,9 @@ BillForm.propTypes = {
   // from parent component:
   id: PropTypes.number,
   current: PropTypes.object,
-  setHook: PropTypes.func.isRequired,
   // from redux-form:
   fields: PropTypes.object,
-  error: PropTypes.string,
   handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
   // from redux:
   users: PropTypes.array.isRequired,
   currency: PropTypes.string,
