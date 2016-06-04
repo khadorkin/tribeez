@@ -36,7 +36,7 @@ class CityField extends Component {
     if (window.google) {
       window.onGooglePlaces()
     } else {
-      scriptLoader.load('https://maps.googleapis.com/maps/api/js?key=' + config.google_api_key
+      scriptLoader.load('https://maps.googleapis.com/maps/api/js?key=' + config.google_web_key
                       + '&libraries=places&callback=onGooglePlaces&language=en') // TODO: localized cities?
     }
   }
@@ -133,7 +133,7 @@ CityField.propTypes = {
   error: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.any, // because redux-form sets it to a string instead of object
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), // because redux-form sets it to a string instead of object
 }
 
 export default CityField

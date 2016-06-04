@@ -5,7 +5,7 @@ if (config.api_endpoint.indexOf('https') === 0 && window.location && location.pr
   location.protocol = 'https:' // changing the protocol acts as a redirect
 }
 
-const buildQuery = (params) => {
+export const buildQuery = (params) => {
   const arr = []
   for (const key in params) {
     if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {

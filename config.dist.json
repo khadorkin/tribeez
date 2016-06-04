@@ -7,7 +7,9 @@
   "rollbar_token": "xxxxxxxx",
   "ga_id": "UA-XXXXXXXX-X",
   "recaptcha_site_key": "xxxxxxxx",
-  "google_api_key": "xxxxxxxx",
+  "google_web_key": "xxxxxxxx",
+  "google_android_key": "xxxxxxxx",
+  "google_ios_key": "xxxxxxxx",
   "telegram_bot_name": "xxxxxBot",
   "facebook_app_id": "xxxxxxxx",
   "facebook_page_id": "xxxxxxxx"
