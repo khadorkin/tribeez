@@ -3,8 +3,12 @@ import {View, Text, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 
+import Fab from '../components/Fab'
 import FormattedNumber from '../components/FormattedNumber'
 import FormattedDate from '../components/FormattedDate'
+
+import routes from '../../common/routes'
+import router from '../../common/router'
 
 class EventDetails extends Component {
   static propTypes = {
@@ -13,6 +17,17 @@ class EventDetails extends Component {
     // from redux:
     users: PropTypes.array.isRequired,
     currency: PropTypes.string.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+    this.handleFab = this.handleFab.bind(this)
+  }
+
+  handleFab() {
+    const route = routes.BILLS_EDIT
+    route.edit = this.props.item
+    router.push(routes.BILLS_EDIT)
   }
 
   render() {
@@ -39,6 +54,7 @@ class EventDetails extends Component {
             )
           })
         }
+        <Fab name="edit" onPress={this.handleFab} />
       </View>
     )
   }

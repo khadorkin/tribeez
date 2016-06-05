@@ -7,6 +7,7 @@ import Activity from './pages/Activity'
 import Members from './pages/Members'
 import Invite from './pages/Invite'
 import Bills from './pages/Bills'
+import Bill from './pages/Bill'
 import BillDetails from './pages/BillDetails'
 import Events from './pages/Events'
 import Event from './pages/Event'
@@ -23,6 +24,8 @@ export default {
   MEMBERS_NEW: {name: 'members_new', component: Invite},
   BILLS: {name: 'bills', component: Bills},
   BILL: {name: 'bill', component: BillDetails},
+  BILLS_NEW: {name: 'bills_new', component: Bill},
+  BILLS_EDIT: {name: 'bills_edit', component: Bill},
   EVENTS: {name: 'events', component: Events},
   EVENT: {name: 'event', component: EventDetails},
   EVENTS_NEW: {name: 'events_new', component: Event},

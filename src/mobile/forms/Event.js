@@ -12,6 +12,8 @@ import submitEvent from '../../common/actions/submitEvent'
 
 class EventForm extends Component {
   static propTypes = {
+    // from parent:
+    current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
     // from redux:

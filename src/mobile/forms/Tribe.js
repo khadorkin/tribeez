@@ -9,7 +9,7 @@ import CityField from './fields/City'
 
 import currencies from '../../common/resources/currencies'
 import {TRIBE_TYPES} from '../../common/constants/product'
-const types = TRIBE_TYPES.map((type) => ({name: type, code: type}))
+const types = TRIBE_TYPES.map((type) => ({name: type, code: type})) //TODO: translate
 
 import validator from '../../common/utils/formValidator'
 

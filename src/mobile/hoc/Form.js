@@ -35,7 +35,7 @@ class Form extends Component {
         <View style={styles.actions}>
           <Button id={'submit.' + name} onPress={this.handleSubmit} disabled={submitting} />
         </View>
-        {error && <FormattedMessage id={error} style={styles.error} />}
+        <FormattedMessage id={error && 'error.' + error} style={styles.error} />
       </View>
     )
   }
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   },
   error: {
     color: colors.error,
+    textAlign: 'center',
   },
 })
 

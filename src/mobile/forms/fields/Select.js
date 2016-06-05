@@ -8,7 +8,7 @@ import colors from '../../../common/constants/colors'
 class SelectField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
     touched: PropTypes.bool.isRequired,

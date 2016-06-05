@@ -44,7 +44,7 @@ class Members extends Component {
           tabBarInactiveTextColor={colors.main}
           tabBarUnderlineColor={colors.main}
         >
-          <ScrollView tabLabel="Registered" style={styles.content}>
+          <ScrollView tabLabel="Registered" /*TODO: translate*/ style={styles.content}>
             {
               this.props.users.map((user) =>
                 <Member user={user} key={user.id} />
@@ -52,7 +52,7 @@ class Members extends Component {
             }
             <View style={styles.spacer} />
           </ScrollView>
-          <AsyncContent data={invites} fetcher={this.props.getInvites} tabLabel="Invited">
+          <AsyncContent data={invites} fetcher={this.props.getInvites} tabLabel="Invited" /*TODO: translate*/>
             {
               invites.items.map((invite) =>
                 <Invite invite={invite} key={invite.email} />

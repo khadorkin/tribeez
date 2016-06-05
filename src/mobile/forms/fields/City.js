@@ -101,6 +101,7 @@ class CityField extends Component {
         <TextInput
           {...props}
           value={(value && value.name) ? value.name : ''}
+          onChange={null}
           onChangeText={this.handleChange}
         />
         <View style={styles.suggestions}>
