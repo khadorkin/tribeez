@@ -11,8 +11,6 @@ import EditButton from 'material-ui/svg-icons/image/edit'
 import DeleteButton from 'material-ui/svg-icons/action/delete'
 import * as colors from 'material-ui/styles/colors'
 
-import Entry from '../components/Entry'
-
 import gravatar from '../../common/utils/gravatar'
 
 import routes from '../routes'
@@ -31,22 +29,21 @@ class Bill extends Component {
   }
 
   render() {
-    const {bill} = this.props
+    const {bill, users, currency} = this.props
 
     // to render a bill, the users must be loaded for the current tribe bills
-    const user = this.props.users.find((u) => u.id === bill.payer_id)
+    const user = users.find((u) => u.id === bill.payer_id)
     if (!user) {
       return null
     }
 
     const user_part = bill.parts.find((p) => p.user_id === this.props.uid)
 
-    const total = <FormattedNumber value={bill.amount} style="currency" currency={this.props.currency} />
+    const total = <FormattedNumber value={bill.amount} style="currency" currency={currency} />
 
     let formatted_part
     if (user_part) {
-      const amount = <FormattedNumber value={user_part.amount} style="currency" currency={this.props.currency} />
-      formatted_part = <FormattedMessage id="bill.mypart" values={{amount}} />
+      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part.amount}} />
     } else {
       formatted_part = <FormattedMessage id="bill.nopart" />
     }
@@ -66,8 +63,8 @@ class Bill extends Component {
           <List>
             {
               bill.parts.map((part) => {
-                const part_user = this.props.users.find((u) => u.id === part.user_id)
-                const part_amount = <FormattedNumber value={part.amount} style="currency" currency={this.props.currency} />
+                const part_user = users.find((u) => u.id === part.user_id)
+                const part_amount = <FormattedNumber value={part.amount} style="currency" currency={currency} />
 
                 return (
                   <ListItem key={part.user_id} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
@@ -86,13 +83,6 @@ class Bill extends Component {
             <DeleteButton color={colors.red400} />
           </IconButton>
         </CardActions>
-        <CardText expandable={true}>
-          {
-            bill.entries && bill.entries.map((entry) =>
-              <Entry entry={entry} key={entry.id} />
-            )
-          }
-        </CardText>
       </Card>
     )
   }
