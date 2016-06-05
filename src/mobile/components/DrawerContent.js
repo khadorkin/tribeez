@@ -18,6 +18,7 @@ import putSwitch from '../../common/actions/putSwitch'
 const menuEntries = [
   {route: routes.ACTIVITY, icon: 'view-stream'},
   {route: routes.MEMBERS, icon: 'group'},
+  {route: routes.BILLS, icon: 'shopping-cart'},
   {route: routes.EVENTS, icon: 'event'},
 ]
 

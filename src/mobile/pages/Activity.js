@@ -3,10 +3,10 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import getActivity from '../../common/actions/getActivity'
-
-import Entry from '../components/Entry'
 import AsyncContent from '../hoc/AsyncContent'
+import Entry from '../components/Entry'
+
+import getActivity from '../../common/actions/getActivity'
 
 class Activity extends Component {
   static propTypes = {

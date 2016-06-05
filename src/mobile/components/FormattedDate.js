@@ -7,13 +7,15 @@ class FormattedDate extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    options: PropTypes.object,
   }
 
   render() {
-    const {intl, value, ...props} = this.props
+    const {intl, value, options, ...props} = this.props
+
     return (
       <Text {...props}>
-        {value ? intl.formatDate(value) : ' '}
+        {value ? intl.formatDate(value, options) : ' '}
       </Text>
     )
   }

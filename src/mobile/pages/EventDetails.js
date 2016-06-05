@@ -37,10 +37,10 @@ class EventDetails extends Component {
     const {item, users} = this.props
 
     const host = users.find((u) => u.id === item.host_id)
-    if (!host) {
-      return null
-    }
+
     item.host = host.name
+
+    //TODO: UI
 
     return (
       <View style={styles.container}>

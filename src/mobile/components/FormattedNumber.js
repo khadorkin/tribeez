@@ -7,11 +7,17 @@ class FormattedNumber extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.number.isRequired,
+    options: PropTypes.object,
   }
 
   render() {
-    const {intl, value, ...props} = this.props
-    return <Text {...props}>{intl.formatNumber(value)}</Text>
+    const {intl, value, options, ...props} = this.props
+
+    return (
+      <Text {...props}>
+        {isNaN(value) ? ' ' : intl.formatNumber(value, options)}
+      </Text>
+    )
   }
 }
 

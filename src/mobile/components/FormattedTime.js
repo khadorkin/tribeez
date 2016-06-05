@@ -7,13 +7,15 @@ class FormattedTime extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    options: PropTypes.object,
   }
 
   render() {
-    const {intl, value, ...props} = this.props
+    const {intl, value, options, ...props} = this.props
+
     return (
       <Text {...props}>
-        {value ? intl.formatTime(value) : ' '}
+        {value ? intl.formatTime(value, options) : ' '}
       </Text>
     )
   }

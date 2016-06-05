@@ -6,6 +6,8 @@ import NewTribe from './pages/NewTribe'
 import Activity from './pages/Activity'
 import Members from './pages/Members'
 import Invite from './pages/Invite'
+import Bills from './pages/Bills'
+import BillDetails from './pages/BillDetails'
 import Events from './pages/Events'
 import Event from './pages/Event'
 import EventDetails from './pages/EventDetails'
@@ -19,6 +21,8 @@ export default {
   ACTIVITY: {name: 'activity', component: Activity},
   MEMBERS: {name: 'members', component: Members},
   MEMBERS_NEW: {name: 'members_new', component: Invite},
+  BILLS: {name: 'bills', component: Bills},
+  BILL: {name: 'bill', component: BillDetails},
   EVENTS: {name: 'events', component: Events},
   EVENTS_NEW: {name: 'events_new', component: Event},
   EVENT: {name: 'event', component: EventDetails},

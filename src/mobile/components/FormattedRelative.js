@@ -6,12 +6,18 @@ import {injectIntl, intlShape} from 'react-intl'
 class FormattedRelative extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    options: PropTypes.object,
   }
 
   render() {
-    const {intl, value, ...props} = this.props
-    return <Text {...props}>{intl.formatRelative(value)}</Text>
+    const {intl, value, options, ...props} = this.props
+
+    return (
+      <Text {...props}>
+        {value ? intl.formatRelative(value, options) : ' '}
+      </Text>
+    )
   }
 }
 
