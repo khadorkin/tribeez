@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {ActivityIndicatorIOS} from 'react-native'
 
-export default class Spinner extends Component {
+class Spinner extends Component {
   static propTypes = {
     visible: PropTypes.bool.isRequired,
   }
@@ -12,3 +12,5 @@ export default class Spinner extends Component {
     return <ActivityIndicatorIOS animating={true} size="small" />
   }
 }
+
+export default Spinner

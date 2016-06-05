@@ -9,7 +9,7 @@ import Logo from '../../common/images/logo.svg'
 
 import routes from '../routes'
 
-export default class Welcome extends Component {
+class Welcome extends Component {
 
   render() {
     return (
@@ -23,3 +23,5 @@ export default class Welcome extends Component {
   }
 
 }
+
+export default Welcome

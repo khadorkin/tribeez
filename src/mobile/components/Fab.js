@@ -7,6 +7,7 @@ import colors from '../../common/constants/colors'
 
 class Fab extends Component {
   static propTypes = {
+    name: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
   }
 
@@ -14,7 +15,7 @@ class Fab extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this.props.onPress} style={styles.button}>
-          <Icon name="add" color="white" size={24} />
+          <Icon name={this.props.name} color="white" size={24} />
         </TouchableOpacity>
       </View>
     )

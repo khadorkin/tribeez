@@ -116,7 +116,7 @@ class App extends Component {
     router.update(route, navigator)
     return (
       <View style={styles.page}>
-        <route.component item={route.item} />
+        <route.component item={route.item} edit={route.edit} />
       </View>
     )
   }

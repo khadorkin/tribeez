@@ -61,7 +61,7 @@ class Members extends Component {
             <View style={styles.spacer} />
           </AsyncContent>
         </ScrollableTabView>
-        <Fab onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} />
       </View>
     )
   }

@@ -6,7 +6,7 @@ import AddIcon from 'material-ui/svg-icons/content/add'
 import RemoveIcon from 'material-ui/svg-icons/content/remove'
 import * as colors from 'material-ui/styles/colors'
 
-export default class Part extends Component {
+class Part extends Component {
 
   //TODO: pure rendering?
 
@@ -90,3 +90,5 @@ Part.propTypes = {
   currency: PropTypes.string,
   method: PropTypes.string.isRequired,
 }
+
+export default Part

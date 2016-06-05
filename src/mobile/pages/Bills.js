@@ -41,7 +41,7 @@ class Bills extends Component {
             )
           }
         </AsyncContent>
-        <Fab onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} />
       </View>
     )
   }

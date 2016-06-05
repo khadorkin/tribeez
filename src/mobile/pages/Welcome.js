@@ -8,7 +8,7 @@ import router from '../../common/router'
 
 import colors from '../../common/constants/colors'
 
-export default class Welcome extends Component {
+class Welcome extends Component {
 
   handleLogin() {
     router.push(routes.LOGIN)
@@ -37,3 +37,5 @@ const styles = StyleSheet.create({
     height: 205,
   },
 })
+
+export default Welcome

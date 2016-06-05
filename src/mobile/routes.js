@@ -24,6 +24,7 @@ export default {
   BILLS: {name: 'bills', component: Bills},
   BILL: {name: 'bill', component: BillDetails},
   EVENTS: {name: 'events', component: Events},
-  EVENTS_NEW: {name: 'events_new', component: Event},
   EVENT: {name: 'event', component: EventDetails},
+  EVENTS_NEW: {name: 'events_new', component: Event},
+  EVENTS_EDIT: {name: 'events_edit', component: Event},
 }

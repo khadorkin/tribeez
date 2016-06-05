@@ -5,9 +5,12 @@ import {connect} from 'react-redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import Fab from '../components/Fab'
 import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 
+import routes from '../../common/routes'
+import router from '../../common/router'
 import colors from '../../common/constants/colors'
 
 const infos = [
@@ -27,10 +30,21 @@ class EventDetails extends Component {
     users: PropTypes.array.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.handleFab = this.handleFab.bind(this)
+  }
+
   handlePress(url) {
     if (url) {
       Linking.openURL(url)
     }
+  }
+
+  handleFab() {
+    const route = routes.EVENTS_EDIT
+    route.edit = this.props.item
+    router.push(routes.EVENTS_EDIT)
   }
 
   render() {
@@ -76,6 +90,7 @@ class EventDetails extends Component {
               )
             })
         }
+        <Fab name="edit" onPress={this.handleFab} />
       </View>
     )
   }

@@ -46,7 +46,7 @@ class Events extends Component {
           }
           <Spinner visible={events.loading} />
         </ScrollView>
-        <Fab onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} />
       </View>
     )
   }
