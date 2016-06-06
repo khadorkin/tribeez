@@ -82,7 +82,7 @@ class CityField extends Component {
     this.places.getDetails({
       placeId: prediction.place_id,
     }, this.handleDetails)
-    // MUI sets this.props.value here?
+    // MUI sets this.props.value here as a string? //TODO: PR?
   }
 
   handleDetails(place) {
@@ -133,7 +133,7 @@ CityField.propTypes = {
   error: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), // because redux-form sets it to a string instead of object
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), // because MUI sets it to a string instead of object
 }
 
 export default CityField

@@ -53,6 +53,7 @@ class TribeForm extends Component {
 const mapStateToProps = (state, ownProps) => {
   const initialValues = {
     currency: state.member.tribe.currency,
+    city: {},
   }
   if (ownProps.type === 'update') {
     initialValues.tribe_name = state.member.tribe.name

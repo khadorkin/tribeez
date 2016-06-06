@@ -56,7 +56,7 @@ class Activity extends Component {
         }
 
         {
-          items.length > 0 && (polls.length > 0 || events.length > 0 || tasks.length > 0) && <h3 style={h3style}><FormattedMessage id="activity" /></h3>
+          items.length > 0 && (polls.length > 0 || events.length > 0 || tasks.length > 0) && <h3 style={h3style}><FormattedMessage id="history" /></h3>
         }
 
         {

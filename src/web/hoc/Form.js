@@ -43,8 +43,8 @@ class Form extends Component {
 Form.propTypes = {
   // from parent component:
   setHook: PropTypes.func,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
+  title: PropTypes.node,
+  subtitle: PropTypes.node,
   name: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   fields: PropTypes.object.isRequired,

@@ -32,7 +32,7 @@ const requestPlace = (service, query) => {
 class CityField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+    value: PropTypes.object,
     onChange: PropTypes.func.isRequired,
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,

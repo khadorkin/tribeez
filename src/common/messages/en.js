@@ -36,6 +36,7 @@ export default {
   upcoming_events: 'Upcoming events',
   open_polls: 'Open polls',
   tasks_todo: 'Tasks to do',
+  history: 'Log',
 
   // html:
   sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',

@@ -46,7 +46,7 @@ class CheckboxWrapper extends Component {
 CheckboxWrapper.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.any, // because redux-form sets it to a string instead of boolean
+  value: PropTypes.bool,
 }
 
 export default CheckboxWrapper

@@ -138,7 +138,7 @@ const mapStateToProps = (state, ownProps) => {
       paid: bill.paid,
       amount: bill.amount,
       method: 'amounts',
-      description: bill.description,
+      description: bill.description || '',
       parts: bill.parts,
     }
   } else {

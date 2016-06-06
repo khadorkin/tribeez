@@ -86,7 +86,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       id: task.id,
       name: task.name,
-      description: task.description,
+      description: task.description || '',
       wait: task.wait,
       notice: task.notice,
     },

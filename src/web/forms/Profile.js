@@ -39,7 +39,7 @@ class ProfileForm extends Component {
     const subtitle = <FormattedHTMLMessage id="gravatar" />
 
     return (
-      <Form name="profile" subtitle={subtitle} onSubmit={this.handleSubmit}>
+      <Form name="profile" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}

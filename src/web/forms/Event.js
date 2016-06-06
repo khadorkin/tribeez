@@ -88,7 +88,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues: {
       id: event.id,
       name: event.name,
-      description: event.description,
+      description: event.description || '',
       start: event.start,
       end: event.end,
       location: event.location,

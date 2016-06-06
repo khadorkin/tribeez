@@ -85,7 +85,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues = {
       id: poll.id,
       name: poll.name,
-      description: poll.description,
+      description: poll.description || '',
       multiple: Boolean(poll.multiple),
       options,
     }
