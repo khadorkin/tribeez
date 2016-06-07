@@ -49,7 +49,7 @@ Serve with [PM2](http://pm2.keymetrics.io/):
 
     PORT=3011 NODE_ENV=production pm2 start server.js --name "mytribe-app" -- --color
 
-## Mobile app
+## Android app
 
 ### Development
 

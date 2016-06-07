@@ -99,10 +99,12 @@ class CityField extends Component {
       <View style={styles.container}>
         <FormattedMessage id={'field.' + name} style={styles.label} />
         <TextInput
+          underlineColorAndroid={colors.underline}
           {...props}
           value={(value && value.name) ? value.name : ''}
           onChange={null}
           onChangeText={this.handleChange}
+          style={styles.field}
         />
         <View style={styles.suggestions}>
           {
@@ -125,6 +127,9 @@ const styles = StyleSheet.create({
   },
   label: {
     marginHorizontal: 5,
+  },
+  field: {
+    height: 39,
   },
   suggestions: {
     marginHorizontal: 5,

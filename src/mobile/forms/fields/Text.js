@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {TextInput, StyleSheet, View} from 'react-native'
 
 import FormattedMessage from '../../components/FormattedMessage'
+import TextArea from '../../components/TextArea'
 
 import colors from '../../../common/constants/colors'
 
@@ -11,6 +12,7 @@ class TextField extends Component {
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
     onChange: PropTypes.func.isRequired,
+    multiline: PropTypes.bool,
   }
 
   constructor(props) {
@@ -39,16 +41,18 @@ class TextField extends Component {
   }
 
   render() {
-    const {name, touched, error, ...props} = this.props
+    const {name, touched, error, multiline, ...props} = this.props
+
+    const Comp = multiline ? TextArea : TextInput
 
     return (
       <View style={styles.container}>
         <FormattedMessage id={'field.' + name} style={styles.label} />
-        <TextInput
+        <Comp
           ref={this.ref}
-          style={[styles.field, {height: Math.max(40, this.state.height + 20)}]}
+          style={styles.field}
+          underlineColorAndroid={colors.underline}
           {...props}
-          onChange={this.handleChange}
         />
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
       </View>
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   field: {
-    paddingTop: 0,
+    height: 39,
   },
   error: {
     color: colors.error,

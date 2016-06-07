@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   },
   field: {
     marginHorizontal: 5,
-    paddingTop: 5,
-    paddingBottom: 8,
+    paddingTop: 9,
+    paddingBottom: 2,
     borderBottomWidth: 1,
     borderBottomColor: colors.underline,
   },

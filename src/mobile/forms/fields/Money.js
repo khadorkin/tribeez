@@ -38,6 +38,7 @@ class MoneyField extends Component {
           ref={this.ref}
           style={styles.field}
           keyboardType="numeric"
+          underlineColorAndroid={colors.underline}
           {...props}
           value={typeof value === 'number' ? String(value) : value}
         />
@@ -56,12 +57,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   field: {
-    paddingTop: 0,
-    paddingRight: 40,
+    height: 39,
   },
   currency: {
     position: 'absolute',
-    top: 24,
+    top: 28,
     right: 5,
   },
   error: {

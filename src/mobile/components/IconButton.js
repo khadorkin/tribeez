@@ -7,7 +7,7 @@ import colors from '../../common/constants/colors'
 
 class IconButton extends Component {
   static propTypes = {
-    onPress: PropTypes.func.isRequired,
+    onPress: PropTypes.func,
     style: View.propTypes.style,
     iconStyle: View.propTypes.style,
     children: PropTypes.node,

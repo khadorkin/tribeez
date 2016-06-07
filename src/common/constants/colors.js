@@ -4,6 +4,6 @@ export default {
   primaryText: 'rgba(0, 0, 0, 0.8)',
   secondaryText: 'rgba(0, 0, 0, 0.5)',
   icon: 'rgb(117, 117, 117)',
-  underline: '#777777',
+  underline: 'rgb(224, 224, 224)',
   error: '#F44336',
 }

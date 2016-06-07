@@ -20,6 +20,7 @@ const menuEntries = [
   {route: routes.MEMBERS, icon: 'group'},
   {route: routes.BILLS, icon: 'shopping-cart'},
   {route: routes.EVENTS, icon: 'event'},
+  {route: routes.NOTES, icon: 'content-paste'},
 ]
 
 class DrawerContent extends Component {

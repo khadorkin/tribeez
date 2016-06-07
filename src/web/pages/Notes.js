@@ -69,7 +69,10 @@ class Notes extends Component {
   }
 
   handleMoving(draggedNote, hoveredNote) {
-    this.props.moveNote(draggedNote, hoveredNote)
+    this.props.moveNote({
+      draggedNote,
+      hoveredNote,
+    })
   }
 
   handleMoved() {

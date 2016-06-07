@@ -12,6 +12,7 @@ import BillDetails from './pages/BillDetails'
 import Events from './pages/Events'
 import Event from './pages/Event'
 import EventDetails from './pages/EventDetails'
+import Notes from './pages/Notes'
 
 export default {
   WELCOME: {name: 'welcome', component: Welcome},
@@ -30,4 +31,5 @@ export default {
   EVENT: {name: 'event', component: EventDetails},
   EVENTS_NEW: {name: 'events_new', component: Event},
   EVENTS_EDIT: {name: 'events_edit', component: Event},
+  NOTES: {name: 'notes', component: Notes},
 }

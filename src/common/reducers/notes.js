@@ -66,15 +66,19 @@ export default (state = initialState, action = null) => {
       }
     }
     case MOVE_NOTE: {
-      const items = state.items.map((note) => {
-        if (note.id === action.hoveredNote.id) {
-          return action.draggedNote
-        }
-        if (note.id === action.draggedNote.id) {
-          return action.hoveredNote
-        }
-        return note
-      })
+      if (action.hoveredNote) { // web
+        state.items.forEach((note, index) => {
+          if (note.id === action.draggedNote.id) {
+            action.from = index
+          }
+          if (note.id === action.hoveredNote.id) {
+            action.to = index
+          }
+        })
+      }
+      const items = state.items.slice()
+      items.splice(action.from, 1) // remove from here
+      items.splice(action.to, 0, action.draggedNote) // add here
       return {
         ...state,
         items,
