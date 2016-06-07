@@ -27,6 +27,7 @@ class InviteForm extends Component {
       <Form name="invite" action={submitInvite} {...props}>
         <TextField ref="email"
           {...email}
+          errorIsObject={true}
           autoCorrect={false}
           keyboardType="email-address"
           onSubmitEditing={this.handleSubmit}

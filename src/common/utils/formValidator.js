@@ -38,6 +38,7 @@ const validator = (required, optional = []) => {
 
 export default {
   register: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha']),
+  registerMobile: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency']),
   join: validator(['name', 'email', 'password', 'lang']),
   login: validator(['email', 'password']),
   password: validator(['email', 'lang']),

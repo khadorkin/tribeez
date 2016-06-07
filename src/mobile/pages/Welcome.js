@@ -14,11 +14,16 @@ class Welcome extends Component {
     router.push(routes.LOGIN)
   }
 
+  handleRegister() {
+    router.push(routes.REGISTER)
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Image source={require('../../common/images/logo.png')} style={styles.logo} />
         <Button id="login" onPress={this.handleLogin} />
+        <Button id="register" onPress={this.handleRegister} />
       </View>
     )
   }

@@ -37,6 +37,7 @@ class ProfileForm extends Component {
         />
         <TextField ref="email"
           {...email}
+          errorIsObject={true}
           autoCorrect={false}
           keyboardType="email-address"
           onSubmitEditing={this.handleSubmit}
