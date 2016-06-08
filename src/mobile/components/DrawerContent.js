@@ -27,6 +27,7 @@ class DrawerContent extends Component {
   static propTypes = {
     // from parent component:
     drawer: PropTypes.object,
+    opened: PropTypes.bool.isRequired,
     // from redux:
     user: PropTypes.object,
     currentTribe: PropTypes.object,
@@ -47,6 +48,14 @@ class DrawerContent extends Component {
     this.handleToggle = this.handleToggle.bind(this)
     this.handleNewTribe = this.handleNewTribe.bind(this)
     this.handleTribeSettings = this.handleTribeSettings.bind(this)
+  }
+
+  componentWillReceiveProps(props) {
+    if (!props.opened) {
+      this.setState({
+        showTribes: false,
+      })
+    }
   }
 
   handleLogout() {
@@ -80,9 +89,11 @@ class DrawerContent extends Component {
     this.props.drawer.closeDrawer()
   }
 
-  selectTribe(id) {
-    this.props.putSwitch(id)
-    this.props.drawer.closeDrawer()
+  handleSwitchTribe(id) {
+    if (id !== this.props.currentTribe.id) {
+      this.props.putSwitch(id)
+      this.props.drawer.closeDrawer()
+    }
   }
 
   render() {
@@ -99,7 +110,7 @@ class DrawerContent extends Component {
     )
 
     const tribeItems = user.tribes.map((tribe) =>
-      <TouchableOpacity key={tribe.id} onPress={this.selectTribe.bind(this, tribe.id)} style={styles.tribe}>
+      <TouchableOpacity key={tribe.id} onPress={this.handleSwitchTribe.bind(this, tribe.id)} style={styles.tribe}>
         <Text style={styles.tribeText}>{tribe.name}</Text>
         {
           !!tribe.active && (

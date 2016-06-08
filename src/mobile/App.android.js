@@ -32,6 +32,9 @@ class App extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      drawerOpened: false,
+    }
     this.ref = this.ref.bind(this)
     this.handleOpenDrawer = this.handleOpenDrawer.bind(this)
     this.renderNavigation = this.renderNavigation.bind(this)
@@ -60,7 +63,7 @@ class App extends Component {
 
   componentDidMount() {
     BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.drawerOpened) {
+      if (this.state.drawerOpened) {
         this.drawer.closeDrawer()
         return true
       }
@@ -117,15 +120,19 @@ class App extends Component {
   }
 
   handleDrawerOpened() {
-    this.drawerOpened = true
+    this.setState({
+      drawerOpened: true,
+    })
   }
 
   handleDrawerClosed() {
-    this.drawerOpened = false
+    this.setState({
+      drawerOpened: false,
+    })
   }
 
   renderNavigation() {
-    return <DrawerContent drawer={this.drawer} />
+    return <DrawerContent drawer={this.drawer} opened={this.state.drawerOpened} />
   }
 
   renderScene(route, navigator) {
