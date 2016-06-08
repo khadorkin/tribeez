@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react'
+import {StyleSheet} from 'react-native'
 
 import {reduxForm} from 'redux-form'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
+import FormattedMessage from '../components/FormattedMessage'
 
 import validator from '../../common/utils/formValidator'
 
@@ -16,7 +18,7 @@ class LoginForm extends Component {
     handleSubmit: PropTypes.func,
     // from redux:
     destination: PropTypes.object, // next route after login (when trying to directly access a page when anonymous)
-    invite: PropTypes.object.isRequired, //TODO
+    invite: PropTypes.object.isRequired,
     initialValues: PropTypes.object,
   }
 
@@ -35,10 +37,15 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {fields: {email, password}, ...props} = this.props
+    const {fields: {email, password}, invite, ...props} = this.props
+
+    const subtitle = invite.email && (
+      <FormattedMessage id="login_to_join" values={invite} style={styles.subtitle} />
+    )
 
     return (
       <Form name="login" action={submitLogin.bind(null, this.props.destination)} {...props}>
+        {subtitle}
         <TextField ref="email"
           {...email}
           autoFocus={true}
@@ -57,17 +64,25 @@ class LoginForm extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  subtitle: {
+    marginBottom: 50,
+    textAlign: 'center',
+  },
+})
+
 const mapStateToProps = (state) => ({
   destination: state.login.destination,
   invite: state.join.data,
   initialValues: {
     email: state.join.data.email, // email is null when not coming from /join
+    invite_token: state.join.data.token,
   },
 })
 
 export default reduxForm({
   form: 'login',
-  fields: ['email', 'password'],
+  fields: ['email', 'password', 'invite_token'],
   validate: validator.login,
   touchOnBlur: false,
 }, mapStateToProps)(LoginForm)

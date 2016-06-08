@@ -26,7 +26,7 @@ class LoginForm extends Component {
 
   render() {
     const {fields: {email, password}, invite} = this.props
-    const subtitle = invite.email ? <FormattedMessage id="login_to_join" values={{inviter: invite.inviter, tribe: invite.tribe_name}} /> : ' '
+    const subtitle = invite.email ? <FormattedMessage id="login_to_join" values={invite} /> : ' '
 
     return (
       <div>
@@ -75,12 +75,13 @@ const mapStateToProps = (state) => ({
   invite: state.join.data,
   initialValues: {
     email: state.join.data.email, // email is null when not coming from /join
+    invite_token: state.join.data.token,
   },
 })
 
 export default reduxForm({
   form: 'login',
-  fields: ['email', 'password'],
+  fields: ['email', 'password', 'invite_token'],
   returnRejectedSubmitPromise: true,
   validate: validator.login,
   touchOnBlur: false,

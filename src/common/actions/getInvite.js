@@ -26,8 +26,10 @@ export default (token) => {
             type: GET_INVITE_SUCCESS,
             data: response,
           })
-          if (response.redirect) {
-            router.resetTo(`/${response.redirect}`, dispatch) //TODO: mobile version
+          if (response.redirect === 'login') {
+            router.resetTo(routes.LOGIN, dispatch)
+          } else if (response.redirect === 'home') {
+            router.resetTo(routes.ACTIVITY, dispatch)
           }
         }
       })

@@ -93,7 +93,7 @@ export default {
   password_reset: 'Fill this form to receive a reset link via email',
   password_change: '{name}, please choose a new password',
   invited_you: '{name} invited you',
-  login_to_join: '{inviter} invited you to join {tribe}',
+  login_to_join: '{inviter} invited you to join "{tribe_name}"',
   you: 'You',
   your_tribe: 'Your tribe',
   password_lost: 'Lost your password?',

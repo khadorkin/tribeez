@@ -94,7 +94,7 @@ const fr = {
   password_reset: 'Renplissez ce formulaire pour recevoir un lien de réinitialisation de mot de passe par e-mail',
   password_change: '{name}, choisissez votre nouveau mot de passe',
   invited_you: '{name} vous a invité',
-  login_to_join: '{inviter} vous a invité à rejoindre la tribu "{tribe}"',
+  login_to_join: '{inviter} vous a invité à rejoindre la tribu "{tribe_name}"',
   you: 'Vous',
   your_tribe: 'Votre tribu',
   password_lost: 'Mot de passe perdu ?',
