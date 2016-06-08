@@ -145,6 +145,8 @@ class App extends Component {
       />
     )
 
+    const drawerLockMode = this.props.uid ? 'unlocked' : 'locked-closed'
+
     const formats = {
       number: {
         money: {
@@ -163,6 +165,7 @@ class App extends Component {
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
           drawerWidth={250}
+          drawerLockMode={drawerLockMode}
         >
           <Navigator
             initialRoute={routes.WELCOME}
