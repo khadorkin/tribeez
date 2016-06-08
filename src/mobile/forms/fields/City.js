@@ -20,12 +20,15 @@ const requestPlace = (service, query) => {
     })
     .then((response) => {
       if (response.status === 'OK') {
+        response.query = query
         return response
       }
       throw new Error('Google API error:' + (response.error_message || response.status))
     })
-    .catch((/*err*/) => {
-      //console.error(err.toString()) //TODO: handle
+    .catch(() => {
+      return {
+        query,
+      }
     })
 }
 
@@ -48,13 +51,17 @@ class CityField extends Component {
   }
 
   handleChange(value) {
+    this.currentRequest = value
     this.props.onChange({
       name: value,
     })
     if (value) {
-      requestPlace('autocomplete', {input: value})
+      requestPlace('autocomplete', {input: value, types: '(cities)'})
         .then((response) => {
-          const predictions = response.predictions
+          if (this.currentRequest !== response.query.input) {
+            return
+          }
+          const predictions = response.predictions || []
           this.setState({
             textPredictions: predictions.map((prediction) => prediction.description),
             predictions,
@@ -70,24 +77,23 @@ class CityField extends Component {
 
   handleSelect(index) {
     const prediction = this.state.predictions[index]
-    this.setState({
-      textPredictions: [],
-      predictions: [],
-    })
-    this.props.onChange({
-      name: prediction.description,
-      place_id: prediction.place_id,
-    })
     requestPlace('details', {placeid: prediction.place_id})
       .then((response) => {
         const place = response.result
+        if (!place) {
+          return //TODO: show an error?
+        }
         const country = place.address_components.find((component) => {
           return (component.types.includes('country') && component.short_name && component.short_name.length === 2)
         })
         this.props.onChange({
-          name: this.props.value.name, // could be also place.formatted_address, but place.name does not contain country
+          name: prediction.description, // could be also place.formatted_address, but place.name does not contain country
           country_code: country.short_name,
           place_id: place.place_id,
+        })
+        this.setState({
+          textPredictions: [],
+          predictions: [],
         })
       })
   }

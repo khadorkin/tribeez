@@ -7,7 +7,7 @@ import createLogger from 'redux-logger'
 import {addLocaleData} from 'react-intl'
 import 'intl'
 
-require('array-includes').shim()
+require('array-includes').shim() //TODO: remove when updating RN to 0.28+
 
 // app locales (keep list in sync with resources/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'
