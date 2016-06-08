@@ -78,7 +78,7 @@ RegisterForm.propTypes = {
   // from redux:
   initialValues: PropTypes.object,
   inviter: PropTypes.string,
-  tribe: PropTypes.string,
+  title: PropTypes.string,
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -87,7 +87,7 @@ const mapStateToProps = (state, ownProps) => ({
     token: ownProps.token,
   },
   inviter: state.join.data.inviter,
-  title: state.join.data.tribe_name,
+  title: state.join.data.tribe_name, // automatically sent to <Form> thanks to the spread operator ;)
 })
 
 export default reduxForm({

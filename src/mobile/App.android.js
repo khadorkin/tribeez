@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {DrawerLayoutAndroid, Navigator, BackAndroid, StyleSheet, View, Text} from 'react-native'
+import {DrawerLayoutAndroid, Navigator, BackAndroid, Linking, StyleSheet, View, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -46,7 +46,7 @@ class App extends Component {
         )
       },
       Title: (route/*, navigator, index, navState*/) => {
-        if (route.item) {
+        if (route.item && route.item.name) {
           return <Text style={styles.navTitle}>{route.item.name}</Text>
         } else {
           return <FormattedMessage style={styles.navTitle} id={route.name} />
@@ -71,9 +71,25 @@ class App extends Component {
       return true
     })
 
-    if (!this.props.uid) {
-      this.props.getMember(routes.ACTIVITY, routes.ACTIVITY, routes.WELCOME)
-    }
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        const join = url.match(/\/join\/(\w+)/)
+        if (join) {
+          const route = routes.JOIN
+          route.item = join[1]
+          router.push(route)
+          return
+        }
+      }
+
+      // default action: check for already authenticated user (HttpOnly cookie)
+      if (!this.props.uid) {
+        this.props.getMember(routes.ACTIVITY, routes.ACTIVITY, routes.WELCOME)
+      }
+    })
+    .catch(() => {
+      //TODO: handle this?
+    })
   }
 
   componentWillReceiveProps(props) {

@@ -1,6 +1,7 @@
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Join from './pages/Join'
 import Profile from './pages/Profile'
 import Tribe from './pages/Tribe'
 import NewTribe from './pages/NewTribe'
@@ -19,6 +20,7 @@ export default {
   WELCOME: {name: 'welcome', component: Welcome},
   LOGIN: {name: 'login', component: Login},
   REGISTER: {name: 'register', component: Register},
+  JOIN: {name: 'join', component: Join},
   PROFILE: {name: 'profile', component: Profile},
   TRIBE: {name: 'tribe', component: Tribe},
   TRIBE_NEW: {name: 'tribe', component: NewTribe},

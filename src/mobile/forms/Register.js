@@ -46,7 +46,6 @@ class RegisterForm extends Component {
         />
         <TextField ref="password"
           {...password}
-          name="new_password"
           secureTextEntry={true}
         />
         <SelectField ref="lang"
