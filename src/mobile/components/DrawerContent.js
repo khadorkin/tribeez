@@ -21,6 +21,7 @@ const menuEntries = [
   {route: routes.BILLS, icon: 'shopping-cart'},
   {route: routes.EVENTS, icon: 'event'},
   {route: routes.NOTES, icon: 'content-paste'},
+  {route: routes.POLLS, icon: 'poll'},
 ]
 
 class DrawerContent extends Component {

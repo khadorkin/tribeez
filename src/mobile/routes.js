@@ -15,6 +15,9 @@ import Events from './pages/Events'
 import Event from './pages/Event'
 import EventDetails from './pages/EventDetails'
 import Notes from './pages/Notes'
+import Polls from './pages/Polls'
+import PollDetails from './pages/PollDetails'
+import Poll from './pages/Poll'
 
 export default {
   WELCOME: {name: 'welcome', component: Welcome},
@@ -36,4 +39,8 @@ export default {
   EVENTS_NEW: {name: 'events_new', component: Event},
   EVENTS_EDIT: {name: 'events_edit', component: Event},
   NOTES: {name: 'notes', component: Notes},
+  POLLS: {name: 'polls', component: Polls},
+  POLL: {name: 'poll', component: PollDetails},
+  POLLS_NEW: {name: 'polls_new', component: Poll},
+  POLLS_EDIT: {name: 'polls_edit', component: Poll},
 }

@@ -236,6 +236,9 @@ const fr = {
   task_counter: '{user} {count, plural, =0 {ne l’a jamais fait} other {l’a fait # fois}}',
   last_done: 'Dernière fois {date}',
   never_done: 'Jamais effectuée',
+
+  //Polls
+  poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
 }
 
 export default {...en, ...fr} // to have English as a fallback

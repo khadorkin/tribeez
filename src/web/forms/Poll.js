@@ -69,7 +69,6 @@ PollForm.propTypes = {
   fields: PropTypes.object,
   handleSubmit: PropTypes.func,
   // from redux:
-  lang: PropTypes.string.isRequired,
   initialValues: PropTypes.object,
   poll: PropTypes.object,
   // action creators:
@@ -96,7 +95,6 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
-    lang: state.app.lang,
     initialValues,
     poll,
   }

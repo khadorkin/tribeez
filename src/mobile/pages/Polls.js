@@ -5,19 +5,19 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import AsyncContent from '../hoc/AsyncContent'
-import Bill from '../components/Bill'
+import Poll from '../components/Poll'
 import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import getBills from '../../common/actions/getBills'
+import getPolls from '../../common/actions/getPolls'
 
-class Bills extends Component {
+class Polls extends Component {
   static propTypes = {
     // redux state:
-    bills: PropTypes.object.isRequired,
+    polls: PropTypes.object.isRequired,
     // action creators:
-    getBills: PropTypes.func.isRequired,
+    getPolls: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -26,18 +26,18 @@ class Bills extends Component {
   }
 
   handleFab() {
-    router.push(routes.BILLS_NEW)
+    router.push(routes.POLLS_NEW)
   }
 
   render() {
-    const {bills} = this.props
+    const {polls} = this.props
 
     return (
       <View style={styles.container}>
-        <AsyncContent data={bills} fetcher={this.props.getBills}>
+        <AsyncContent data={polls} fetcher={this.props.getPolls}>
           {
-            bills.items.map((bill) =>
-              <Bill bill={bill} key={bill.id} />
+            polls.items.map((poll) =>
+              <Poll poll={poll} key={poll.id} />
             )
           }
         </AsyncContent>
@@ -45,15 +45,8 @@ class Bills extends Component {
       </View>
     )
   }
+
 }
-
-const mapStateToProps = (state) => ({
-  bills: state.bills,
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getBills,
-}, dispatch)
 
 const styles = StyleSheet.create({
   container: {
@@ -61,4 +54,12 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Bills)
+const mapStateToProps = (state) => ({
+  polls: state.polls,
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getPolls,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Polls)

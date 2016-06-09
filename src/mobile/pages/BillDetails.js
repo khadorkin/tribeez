@@ -10,7 +10,7 @@ import FormattedDate from '../components/FormattedDate'
 import routes from '../../common/routes'
 import router from '../../common/router'
 
-class EventDetails extends Component {
+class BillDetails extends Component {
   static propTypes = {
     // from parent:
     item: PropTypes.object.isRequired,
@@ -77,4 +77,4 @@ const mapStateToProps = (state) => ({
   currency: state.member.tribe.currency,
 })
 
-export default connect(mapStateToProps)(EventDetails)
+export default connect(mapStateToProps)(BillDetails)
