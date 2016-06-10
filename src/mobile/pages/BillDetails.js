@@ -13,8 +13,9 @@ import router from '../../common/router'
 class BillDetails extends Component {
   static propTypes = {
     // from parent:
-    item: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
     // from redux:
+    bill: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
     currency: PropTypes.string.isRequired,
   }
@@ -26,24 +27,24 @@ class BillDetails extends Component {
 
   handleFab() {
     const route = routes.BILLS_EDIT
-    route.edit = this.props.item
+    route.edit = this.props.bill
     router.push(routes.BILLS_EDIT)
   }
 
   render() {
-    const {item, users, currency} = this.props
+    const {bill, users, currency} = this.props
 
-    const payer = users.find((u) => u.id === item.payer_id)
+    const payer = users.find((u) => u.id === bill.payer_id)
 
     //TODO: UI
 
     return (
       <View style={styles.container}>
-        <FormattedNumber value={item.amount} style={styles.info} options={{style: 'currency', currency}} />
-        <FormattedDate value={item.paid} style={styles.info} />
+        <FormattedNumber value={bill.amount} style={styles.info} options={{style: 'currency', currency}} />
+        <FormattedDate value={bill.paid} style={styles.info} />
         <Text style={styles.info}>Paid by {payer.name}</Text>
         {
-          item.parts.map((part) => {
+          bill.parts.map((part) => {
             const part_user = users.find((u) => u.id === part.user_id)
             const part_amount = <FormattedNumber value={part.amount} options={{style: 'currency', currency}} />
 
@@ -72,7 +73,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+  bill: state.bills.items.find((i) => i.id === ownProps.id),
   users: state.member.tribe.users,
   currency: state.member.tribe.currency,
 })

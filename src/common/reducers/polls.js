@@ -93,11 +93,13 @@ export default (state = initialState, action = null) => {
 
     // vote:
     case POST_VOTE_SUCCESS: {
-      const items = state.items.slice()
-      items.forEach((poll) => {
-        if (poll.id === action.id) {
-          poll.answers[action.uid] = action.choices
+      const items = state.items.map((item) => {
+        if (item.id === action.id) {
+          const answers = {...item.answers}
+          answers[action.uid] = action.choices
+          return {...item, answers}
         }
+        return item
       })
       return {
         ...state,

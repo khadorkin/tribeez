@@ -25,8 +25,9 @@ const infos = [
 class EventDetails extends Component {
   static propTypes = {
     // from parent:
-    item: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
     // from redux:
+    event: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
   }
 
@@ -43,16 +44,16 @@ class EventDetails extends Component {
 
   handleFab() {
     const route = routes.EVENTS_EDIT
-    route.edit = this.props.item
+    route.edit = this.props.event
     router.push(routes.EVENTS_EDIT)
   }
 
   render() {
-    const {item, users} = this.props
+    const {event, users} = this.props
 
-    const host = users.find((u) => u.id === item.host_id)
+    const host = users.find((u) => u.id === event.host_id)
 
-    item.host = host.name
+    event.host = host.name
 
     //TODO: UI
 
@@ -60,9 +61,9 @@ class EventDetails extends Component {
       <View style={styles.container}>
         {
           infos
-            .filter((info) => item[info.id])
+            .filter((info) => event[info.id])
             .map((info) => {
-              let value = item[info.id]
+              let value = event[info.id]
               if (info.date) {
                 const date = new Date(value)
                 if (date.getHours() !== 0 || date.getMinutes() !== 0) {
@@ -112,7 +113,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+  event: state.events.items.find((i) => i.id === ownProps.id),
   users: state.member.tribe.users,
 })
 

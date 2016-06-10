@@ -137,9 +137,16 @@ class App extends Component {
 
   renderScene(route, navigator) {
     router.update(route, navigator)
+    const props = {}
+    if (route.item) {
+      props.id = route.item.id
+    }
+    if (route.edit) {
+      props.edit = route.edit
+    }
     return (
       <View style={styles.page}>
-        <route.component item={route.item} edit={route.edit} />
+        <route.component {...props} />
       </View>
     )
   }

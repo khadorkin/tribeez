@@ -8,7 +8,7 @@ if (config.api_endpoint.indexOf('https') === 0 && window.location && location.pr
 export const buildQuery = (params) => {
   const arr = []
   for (const key in params) {
-    if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
+    if (params[key] !== undefined && params[key] !== null) {
       arr.push(`${key}=${encodeURIComponent(params[key])}`)
     }
   }

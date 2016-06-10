@@ -13,9 +13,11 @@ import IconButton from 'material-ui/IconButton'
 import EditButton from 'material-ui/svg-icons/image/edit'
 import DeleteButton from 'material-ui/svg-icons/action/delete'
 import Toggle from 'material-ui/Toggle'
+import Paper from 'material-ui/Paper'
 import * as colors from 'material-ui/styles/colors'
 
 import gravatar from '../../common/utils/gravatar'
+import pollAnswers from '../../common/utils/pollAnswers'
 
 import routes from '../routes'
 
@@ -85,41 +87,31 @@ class Poll extends Component {
   }
 
   render() {
-    const {poll} = this.props
+    const {poll, users} = this.props
+
+    const {author, total, results} = pollAnswers(poll, users)
 
     // to render a poll, the users must be loaded for the current tribe polls
-    const author = this.props.users.find((u) => u.id === poll.author_id)
     if (!author) {
       return null
     }
 
-    const user_answer = poll.answers[this.props.uid]
-
-    const title = <span>{poll.name}</span>
-    const date = <FormattedRelative value={poll.created} />
-
-    const show_results = (user_answer && !this.state.again)
+    const show_results = (poll.answers[this.props.uid] && !this.state.again)
 
     let body
     if (show_results) {
-      const answered_users = Object.keys(poll.answers)
-      const counters = {}
-      answered_users.forEach((uid) => {
-        const user_answers = poll.answers[uid]
-        user_answers.forEach((cid) => {
-          if (!counters[cid]) {
-            counters[cid] = 0
-          }
-          counters[cid]++
-        })
-      })
       body = (
         <List>
           {
-            poll.options.map((option) => {
-              const percent = Math.round((100 * counters[option.id] / answered_users.length) || 0)
+            results.map((result) => {
               return (
-                <ListItem key={option.id} primaryText={option.name + ': ' + percent + '%'} disabled={true} />
+                <ListItem key={result.id} disabled={true}>
+                  <div>{result.name}</div>
+                  <Paper style={{height: 24, margin: '8px 0'}}>
+                    <div style={{height: '100%', width: result.percent + '%', backgroundColor: colors.cyan500}}></div>
+                  </Paper>
+                  <div>{result.percent + '%'} {result.users.length ? '(' + result.users.join(', ') + ')' : ''}</div>
+                </ListItem>
               )
             })
           }
@@ -143,6 +135,9 @@ class Poll extends Component {
         )
       }
     }
+
+    const title = <span>{poll.name}</span>
+    const date = <FormattedRelative value={poll.created} />
 
     return (
       <Card className={css.container} initiallyExpanded={poll.active}>
@@ -171,9 +166,13 @@ class Poll extends Component {
           this.props.onDelete && (
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20}}>
               <Toggle toggled={poll.active} onToggle={this.handleToggle} style={{display: 'inline-block', width: 'auto', padding: '14px 12px 10px', verticalAlign: 'top'}} />
-              <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
-                <EditButton color={colors.grey600} />
-              </IconButton>
+              {
+                total === 0 && (
+                  <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
+                    <EditButton color={colors.grey600} />
+                  </IconButton>
+                )
+              }
               <IconButton onTouchTap={this.handleDelete}>
                 <DeleteButton color={colors.red400} />
               </IconButton>
