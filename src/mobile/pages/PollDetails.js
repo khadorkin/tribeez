@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity, StyleSheet} from 'react-native'
 import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -132,9 +132,13 @@ class PollDetails extends Component {
 
     return (
       <View style={styles.container}>
-        <FormattedDate value={poll.created} style={styles.info} />
-        <Text style={styles.info}>Added by {author.name}</Text>
-        {body}
+        <ScrollView>
+          <FormattedDate value={poll.created} style={styles.info} />
+          <Text style={styles.info}>Added by {author.name}</Text>
+          <Text style={styles.info}>{poll.description}</Text>
+          {body}
+          <View style={styles.spacer} />
+        </ScrollView>
         {
           //TODO: allow modifying answered polls? (backend)
           total === 0 && (
@@ -183,6 +187,9 @@ const styles = StyleSheet.create({
   },
   actions: {
     alignItems: 'center',
+  },
+  spacer: {
+    height: 80,
   },
 })
 

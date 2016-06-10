@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, ScrollView, Text, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 
@@ -40,21 +40,25 @@ class BillDetails extends Component {
 
     return (
       <View style={styles.container}>
-        <FormattedNumber value={bill.amount} style={styles.info} options={{style: 'currency', currency}} />
-        <FormattedDate value={bill.paid} style={styles.info} />
-        <Text style={styles.info}>Paid by {payer.name}</Text>
-        {
-          bill.parts.map((part) => {
-            const part_user = users.find((u) => u.id === part.user_id)
-            const part_amount = <FormattedNumber value={part.amount} options={{style: 'currency', currency}} />
+        <ScrollView>
+          <FormattedNumber value={bill.amount} style={styles.info} options={{style: 'currency', currency}} />
+          <FormattedDate value={bill.paid} style={styles.info} />
+          <Text style={styles.info}>Paid by {payer.name}</Text>
+          <Text style={styles.info}>{bill.description}</Text>
+          {
+            bill.parts.map((part) => {
+              const part_user = users.find((u) => u.id === part.user_id)
+              const part_amount = <FormattedNumber value={part.amount} options={{style: 'currency', currency}} />
 
-            return (
-              <Text style={styles.info} key={part.user_id}>
-                {part_user.name}: {part_amount}
-              </Text>
-            )
-          })
-        }
+              return (
+                <Text style={styles.info} key={part.user_id}>
+                  {part_user.name}: {part_amount}
+                </Text>
+              )
+            })
+          }
+          <View style={styles.spacer} />
+        </ScrollView>
         <Fab name="edit" onPress={this.handleFab} />
       </View>
     )
@@ -70,6 +74,9 @@ const styles = StyleSheet.create({
   },
   info: {
     margin: 10,
+  },
+  spacer: {
+    height: 80,
   },
 })
 

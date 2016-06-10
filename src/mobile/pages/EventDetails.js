@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 
@@ -59,38 +59,41 @@ class EventDetails extends Component {
 
     return (
       <View style={styles.container}>
-        {
-          infos
-            .filter((info) => event[info.id])
-            .map((info) => {
-              let value = event[info.id]
-              if (info.date) {
-                const date = new Date(value)
-                if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                  value = <FormattedMessage id="datetime" values={{date}} />
-                } else {
-                  value = <FormattedDate value={value} day="numeric" month="long" />
+        <ScrollView>
+          {
+            infos
+              .filter((info) => event[info.id])
+              .map((info) => {
+                let value = event[info.id]
+                if (info.date) {
+                  const date = new Date(value)
+                  if (date.getHours() !== 0 || date.getMinutes() !== 0) {
+                    value = <FormattedMessage id="datetime" values={{date}} />
+                  } else {
+                    value = <FormattedDate value={value} day="numeric" month="long" />
+                  }
                 }
-              }
-              let href = null
-              if (info.link) {
-                href = value
-                value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
-              }
-              if (info.map) {
-                href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
-              }
-              if (typeof value === 'string') {
-                value = <Text>{value}</Text>
-              }
-              return (
-                <TouchableOpacity onPress={this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
-                  <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
-                  {value}
-                </TouchableOpacity>
-              )
-            })
-        }
+                let href = null
+                if (info.link) {
+                  href = value
+                  value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
+                }
+                if (info.map) {
+                  href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
+                }
+                if (typeof value === 'string') {
+                  value = <Text>{value}</Text>
+                }
+                return (
+                  <TouchableOpacity onPress={this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
+                    <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
+                    {value}
+                  </TouchableOpacity>
+                )
+              })
+          }
+          <View style={styles.spacer} />
+        </ScrollView>
         <Fab name="edit" onPress={this.handleFab} />
       </View>
     )
@@ -110,6 +113,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+  },
+  spacer: {
+    height: 80,
   },
 })
 
