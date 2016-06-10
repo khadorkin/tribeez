@@ -133,7 +133,7 @@ CityField.propTypes = {
   error: PropTypes.string,
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), // because MUI sets it to a string instead of object
+  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), //TODO: because MUI sets it to a string instead of object
 }
 
 export default CityField

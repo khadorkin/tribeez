@@ -6,13 +6,26 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import styles from '../styles'
 
-import {modified} from '../../common/utils/formValidator'
-
 class Form extends Component {
+  constructor(props) {
+    super(props)
+    this.modified = this.modified.bind(this)
+  }
+
   componentDidMount() {
     if (this.props.setHook) {
-      this.props.setHook(() => !this.props.submitting && modified(this.props.fields))
+      this.props.setHook(() => !this.props.submitting && this.modified())
     }
+  }
+
+  modified() {
+    const {fields} = this.props
+    for (const field in fields) {
+      if ((fields[field].value || '') !== (fields[field].initialValue || '')) {
+        return true
+      }
+    }
+    return false
   }
 
   render() {

@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 import {Link} from 'react-router'
 
 import Form from '../hoc/Form'
@@ -8,8 +7,8 @@ import TextField from './fields/Text'
 
 import routes from '../routes'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/login'
+import focus from '../../common/utils/formFocus'
 import submitLogin from '../../common/actions/submitLogin'
 
 class LoginForm extends Component {
@@ -70,19 +69,4 @@ LoginForm.propTypes = {
   initialValues: PropTypes.object,
 }
 
-const mapStateToProps = (state) => ({
-  destination: state.login.destination,
-  invite: state.join.data,
-  initialValues: {
-    email: state.join.data.email, // email is null when not coming from /join
-    invite_token: state.join.data.token,
-  },
-})
-
-export default reduxForm({
-  form: 'login',
-  fields: ['email', 'password', 'invite_token'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.login,
-  touchOnBlur: false,
-}, mapStateToProps)(LoginForm)
+export default form(LoginForm)

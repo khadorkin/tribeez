@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {bindActionCreators} from 'redux'
-import {reduxForm} from 'redux-form'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -12,8 +10,8 @@ import SelectField from './fields/Select'
 import DatePicker from './fields/Date'
 import Part from './deep/Part'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/bill'
+import focus from '../../common/utils/formFocus'
 import getBill from '../../common/actions/getBill'
 import submitBill from '../../common/actions/submitBill'
 
@@ -28,6 +26,7 @@ class BillForm extends Component {
   }
 
   componentWillMount() {
+    // when accessing directly to /bill/:id
     if (!this.props.bill && this.props.id) {
       this.props.getBill(this.props.id)
     }
@@ -127,44 +126,4 @@ BillForm.propTypes = {
   getBill: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const bill = ownProps.current || state.bills.current // either from routing state, or from ajax retrieval
-  let initialValues
-  if (bill) {
-    initialValues = {
-      id: bill.id,
-      name: bill.name,
-      payer: bill.payer_id,
-      paid: bill.paid,
-      amount: bill.amount,
-      method: 'amounts',
-      description: bill.description || '',
-      parts: bill.parts,
-    }
-  } else {
-    initialValues = {
-      payer: state.member.user.id,
-      paid: today.getTime(),
-      method: 'shares',
-      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),
-    }
-  }
-  return {
-    users: state.member.tribe.users,
-    currency: state.member.tribe.currency,
-    lang: state.app.lang,
-    initialValues,
-    bill,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getBill,
-}, dispatch)
-
-export default reduxForm({
-  form: 'bill',
-  fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.bill,
-}, mapStateToProps, mapDispatchToProps)(BillForm)
+export default form(BillForm, {getBill})

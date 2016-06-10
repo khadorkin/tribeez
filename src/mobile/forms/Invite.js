@@ -1,16 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 
-import {reduxForm} from 'redux-form'
-
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
-import langs from '../../common/resources/langs'
-
-import validator from '../../common/utils/formValidator'
-
+import form from '../../common/forms/invite'
 import submitInvite from '../../common/actions/submitInvite'
+import langs from '../../common/resources/langs'
 
 class InviteForm extends Component {
   static propTypes = {
@@ -41,15 +37,4 @@ class InviteForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {
-    lang: state.member.user.lang,
-  },
-})
-
-export default reduxForm({
-  form: 'invite',
-  fields: ['email', 'lang'],
-  validate: validator.invite,
-  touchOnBlur: false,
-}, mapStateToProps)(InviteForm)
+export default form(InviteForm)

@@ -1,17 +1,13 @@
 import React, {Component, PropTypes} from 'react'
 
-import {reduxForm} from 'redux-form'
-
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DateField from './fields/Date'
 
-import langs from '../../common/resources/langs'
-
-import validator from '../../common/utils/formValidator'
-
+import form from '../../common/forms/profile'
 import submitProfile from '../../common/actions/submitProfile'
+import langs from '../../common/resources/langs'
 
 const today = new Date()
 
@@ -21,7 +17,6 @@ class ProfileForm extends Component {
     fields: PropTypes.object,
     // from redux:
     initialValues: PropTypes.object,
-    lang: PropTypes.string.isRequired,
   }
 
   render() {
@@ -71,20 +66,4 @@ class ProfileForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {
-    name: state.member.user.name,
-    email: state.member.user.email,
-    lang: state.member.user.lang,
-    phone: state.member.user.phone,
-    birthdate: state.member.user.birthdate,
-  },
-  lang: state.app.lang,
-})
-
-export default reduxForm({
-  form: 'profile',
-  fields: ['name', 'email', 'lang', 'phone', 'birthdate', 'password', 'password2'],
-  validate: validator.profile,
-  touchOnBlur: false,
-}, mapStateToProps)(ProfileForm)
+export default form(ProfileForm)

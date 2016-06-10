@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage, FormattedHTMLMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -9,11 +8,10 @@ import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DatePicker from './fields/Date'
 
-import langs from '../../common/resources/langs'
-
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/profile'
+import focus from '../../common/utils/formFocus'
 import submitProfile from '../../common/actions/submitProfile'
+import langs from '../../common/resources/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
@@ -89,20 +87,4 @@ ProfileForm.propTypes = {
   lang: PropTypes.string.isRequired,
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {
-    name: state.member.user.name,
-    email: state.member.user.email,
-    lang: state.member.user.lang,
-    phone: state.member.user.phone,
-    birthdate: state.member.user.birthdate,
-  },
-  lang: state.app.lang,
-})
-
-export default reduxForm({
-  form: 'profile',
-  fields: ['name', 'email', 'lang', 'phone', 'birthdate', 'password', 'password2'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.profile,
-}, mapStateToProps)(ProfileForm)
+export default form(ProfileForm)

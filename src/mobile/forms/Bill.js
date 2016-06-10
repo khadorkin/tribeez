@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 
-import {reduxForm} from 'redux-form'
-
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
@@ -9,8 +7,7 @@ import DateField from './fields/Date'
 import MoneyField from './fields/Money'
 import Part from './deep/Part'
 
-import validator from '../../common/utils/formValidator'
-
+import form from '../../common/forms/bill'
 import submitBill from '../../common/actions/submitBill'
 
 const today = new Date()
@@ -28,7 +25,6 @@ class BillForm extends Component {
     // from redux:
     users: PropTypes.array.isRequired,
     currency: PropTypes.string,
-    lang: PropTypes.string,
     initialValues: PropTypes.object,
     bill: PropTypes.object,
   }
@@ -57,7 +53,7 @@ class BillForm extends Component {
     const userItems = users.map((user) => ({name: user.name, code: user.id}))
 
     return (
-      <Form name={'bill.' + (this.props.bill.id ? 'update' : 'create')} action={submitBill} {...props}>
+      <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} action={submitBill} {...props}>
         <TextField
           {...name}
           name="title"
@@ -98,40 +94,4 @@ class BillForm extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const bill = ownProps.current || state.bills.current || {} // either from routing state, or from ajax retrieval
-  let initialValues
-  if (bill.id) {
-    initialValues = {
-      id: bill.id,
-      name: bill.name,
-      payer: bill.payer_id,
-      paid: bill.paid,
-      amount: bill.amount,
-      method: 'amounts',
-      description: bill.description,
-      parts: bill.parts,
-    }
-  } else {
-    initialValues = {
-      payer: state.member.user.id,
-      paid: today.getTime(),
-      method: 'shares',
-      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),
-    }
-  }
-  return {
-    users: state.member.tribe.users,
-    currency: state.member.tribe.currency,
-    lang: state.app.lang,
-    initialValues,
-    bill,
-  }
-}
-
-export default reduxForm({
-  form: 'bill',
-  fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
-  validate: validator.bill,
-  touchOnBlur: false,
-}, mapStateToProps)(BillForm)
+export default form(BillForm)

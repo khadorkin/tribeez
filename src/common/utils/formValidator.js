@@ -1,4 +1,4 @@
-const validator = (required, optional = []) => {
+export default (required, optional = []) => {
   return (values) => {
     const errors = {}
     const fields = [...required, ...optional]
@@ -36,42 +36,7 @@ const validator = (required, optional = []) => {
   }
 }
 
-export default {
-  register: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha']),
-  registerMobile: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency']),
-  join: validator(['name', 'email', 'password', 'lang']),
-  login: validator(['email', 'password'], ['invite_token']),
-  password: validator(['email', 'lang']),
-  profile: validator(['name', 'email', 'lang'], ['birthdate', 'phone', 'password', 'password2']),
-  tribe: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
-  invite: validator(['email', 'lang']),
-  reset: validator(['password', 'password2']),
-  bill: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
-  event: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
-  poll: validator(['name', 'options'], ['description', 'multiple']),
-  task: validator(['name', 'wait', 'notice'], ['description']),
-}
-
-export const focus = (errors, refs) => {
-  const field = Object.keys(errors)[0]
-  if (field !== '_error') {
-    const component = refs[field]
-    if (component.getWrappedInstance) {
-      component.getWrappedInstance().focus()
-    } else {
-      component.focus()
-    }
-  } else {
-    // go to bottom, where the form error is
-    window.scrollTo(0, document.body.scrollHeight)
-  }
-}
-
-export const modified = (fields) => {
-  for (const field in fields) {
-    if ((fields[field].value || '') !== (fields[field].initialValue || '')) {
-      return true
-    }
-  }
-  return false
-}
+//TODO: remove
+// export default {
+//   registerMobile: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency']),
+// }

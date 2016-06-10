@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -8,17 +7,16 @@ import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
-import langs from '../../common/resources/langs'
-
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/join'
+import focus from '../../common/utils/formFocus'
 import submitJoin from '../../common/actions/submitJoin'
+import langs from '../../common/resources/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-class RegisterForm extends Component {
+class JoinForm extends Component {
 
   constructor(props) {
     super(props)
@@ -69,7 +67,7 @@ class RegisterForm extends Component {
   }
 }
 
-RegisterForm.propTypes = {
+JoinForm.propTypes = {
   // from parent component:
   token: PropTypes.string.isRequired,
   // from redux-form:
@@ -81,18 +79,4 @@ RegisterForm.propTypes = {
   title: PropTypes.string,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: {
-    email: state.join.data.email,
-    token: ownProps.token,
-  },
-  inviter: state.join.data.inviter,
-  title: state.join.data.tribe_name, // automatically sent to <Form> thanks to the spread operator ;)
-})
-
-export default reduxForm({
-  form: 'join',
-  fields: ['name', 'email', 'password', 'lang', 'token'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.join,
-}, mapStateToProps)(RegisterForm)
+export default form(JoinForm)

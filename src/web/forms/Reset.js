@@ -1,12 +1,11 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/reset'
+import focus from '../../common/utils/formFocus'
 import submitReset from '../../common/actions/submitReset'
 
 class ResetForm extends Component {
@@ -59,16 +58,4 @@ ResetForm.propTypes = {
   username: PropTypes.string,
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: {
-    token: ownProps.token,
-  },
-  username: state.reset.name,
-})
-
-export default reduxForm({
-  form: 'reset',
-  fields: ['password', 'password2', 'token'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.reset,
-}, mapStateToProps)(ResetForm)
+export default form(ResetForm)

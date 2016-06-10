@@ -1,13 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {bindActionCreators} from 'redux'
-import {reduxForm} from 'redux-form'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import Checkbox from './fields/Checkbox'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/poll'
+import focus from '../../common/utils/formFocus'
 import getPoll from '../../common/actions/getPoll'
 import submitPoll from '../../common/actions/submitPoll'
 
@@ -19,6 +17,7 @@ class PollForm extends Component {
   }
 
   componentWillMount() {
+    // when accessing directly to /poll/:id
     if (!this.props.poll && this.props.id) {
       this.props.getPoll(this.props.id)
     }
@@ -75,38 +74,4 @@ PollForm.propTypes = {
   getPoll: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const poll = ownProps.current || state.polls.current // either from routing state, or from ajax retrieval
-  let initialValues
-  if (poll) {
-    const options = poll.options.map((option) => option.name)
-    options.push('') // update poll => add an empty option to be able to add options
-    initialValues = {
-      id: poll.id,
-      name: poll.name,
-      description: poll.description || '',
-      multiple: Boolean(poll.multiple),
-      options,
-    }
-  } else {
-    initialValues = {
-      multiple: false,
-      options: ['', ''], // new poll => two empty options
-    }
-  }
-  return {
-    initialValues,
-    poll,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPoll,
-}, dispatch)
-
-export default reduxForm({
-  form: 'poll',
-  fields: ['id', 'name', 'description', 'multiple', 'options[]'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.poll,
-}, mapStateToProps, mapDispatchToProps)(PollForm)
+export default form(PollForm, {getPoll})

@@ -1,12 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {bindActionCreators} from 'redux'
-import {reduxForm} from 'redux-form'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/task'
+import focus from '../../common/utils/formFocus'
 import getTask from '../../common/actions/getTask'
 import submitTask from '../../common/actions/submitTask'
 
@@ -18,6 +16,7 @@ class TaskForm extends Component {
   }
 
   componentWillMount() {
+    // when accessing directly to /task/:id
     if (!this.props.task && this.props.id) {
       this.props.getTask(this.props.id)
     }
@@ -32,7 +31,7 @@ class TaskForm extends Component {
     const {fields: {name, description, wait, notice}} = this.props
 
     return (
-      <Form name={'task.' + (this.props.task.id ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+      <Form name={'task.' + (this.props.task ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
@@ -78,28 +77,4 @@ TaskForm.propTypes = {
   getTask: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const task = ownProps.current || state.tasks.current || {} // either from routing state, or from ajax retrieval
-  return {
-    lang: state.app.lang,
-    task,
-    initialValues: {
-      id: task.id,
-      name: task.name,
-      description: task.description || '',
-      wait: task.wait,
-      notice: task.notice,
-    },
-  }
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getTask,
-}, dispatch)
-
-export default reduxForm({
-  form: 'task',
-  fields: ['id', 'name', 'description', 'wait', 'notice'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.task,
-}, mapStateToProps, mapDispatchToProps)(TaskForm)
+export default form(TaskForm, {getTask})

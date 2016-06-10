@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet} from 'react-native'
 
-import {reduxForm} from 'redux-form'
-
 import Form from '../hoc/Form'
 import FormattedMessage from '../components/FormattedMessage'
 import TextField from './fields/Text'
@@ -11,14 +9,12 @@ import CityField from './fields/City'
 
 import colors from '../../common/constants/colors'
 
+import form from '../../common/forms/register'
+import submitRegister from '../../common/actions/submitRegister'
 import langs from '../../common/resources/langs'
 import currencies from '../../common/resources/currencies'
 import {TRIBE_TYPES} from '../../common/constants/product'
 const types = TRIBE_TYPES.map((type) => ({name: type, code: type})) //TODO: translate
-
-import validator from '../../common/utils/formValidator'
-
-import submitRegister from '../../common/actions/submitRegister'
 
 class RegisterForm extends Component {
   static propTypes = {
@@ -83,15 +79,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = () => ({
-  initialValues: {
-    city: {},
-  },
-})
-
-export default reduxForm({
-  form: 'register',
-  fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency'],
-  validate: validator.registerMobile,
-  touchOnBlur: false,
-}, mapStateToProps)(RegisterForm)
+export default form(RegisterForm)

@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 
 import {CardTitle} from 'material-ui/Card'
 import MenuItem from 'material-ui/MenuItem'
@@ -11,13 +10,12 @@ import SelectField from './fields/Select'
 import CityField from './fields/City'
 import Captcha from './fields/Captcha'
 
+import form from '../../common/forms/register'
+import focus from '../../common/utils/formFocus'
+import submitRegister from '../../common/actions/submitRegister'
 import currencies from '../../common/resources/currencies'
 import langs from '../../common/resources/langs'
 import {TRIBE_TYPES} from '../../common/constants/product'
-
-import validator, {focus} from '../../common/utils/formValidator'
-
-import submitRegister from '../../common/actions/submitRegister'
 
 const currencyItems = currencies.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
@@ -114,9 +112,4 @@ RegisterForm.propTypes = {
   handleSubmit: PropTypes.func,
 }
 
-export default reduxForm({
-  form: 'register',
-  fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.register,
-})(RegisterForm)
+export default form(RegisterForm)

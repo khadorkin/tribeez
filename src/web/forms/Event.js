@@ -1,13 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {bindActionCreators} from 'redux'
-import {reduxForm} from 'redux-form'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import DatePicker from './fields/Date'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/event'
+import focus from '../../common/utils/formFocus'
 import getEvent from '../../common/actions/getEvent'
 import submitEvent from '../../common/actions/submitEvent'
 
@@ -19,6 +17,7 @@ class EventForm extends Component {
   }
 
   componentWillMount() {
+    // when accessing directly to /event/:id
     if (!this.props.event && this.props.id) {
       this.props.getEvent(this.props.id)
     }
@@ -33,7 +32,7 @@ class EventForm extends Component {
     const {fields: {name, description, start, end, location, url}} = this.props
 
     return (
-      <Form name={'event.' + (this.props.event.id ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+      <Form name={'event.' + (this.props.event ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
@@ -80,30 +79,4 @@ EventForm.propTypes = {
   getEvent: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const event = ownProps.current || state.events.current || {} // either from routing state, or from ajax retrieval
-  return {
-    lang: state.app.lang,
-    event,
-    initialValues: {
-      id: event.id,
-      name: event.name,
-      description: event.description || '',
-      start: event.start,
-      end: event.end,
-      location: event.location,
-      url: event.url,
-    },
-  }
-}
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getEvent,
-}, dispatch)
-
-export default reduxForm({
-  form: 'event',
-  fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.event,
-}, mapStateToProps, mapDispatchToProps)(EventForm)
+export default form(EventForm, {getEvent})

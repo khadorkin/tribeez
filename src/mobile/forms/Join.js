@@ -1,8 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {Text, StyleSheet} from 'react-native'
 
-import {reduxForm} from 'redux-form'
-
 import Form from '../hoc/Form'
 import FormattedMessage from '../components/FormattedMessage'
 import TextField from './fields/Text'
@@ -10,11 +8,9 @@ import SelectField from './fields/Select'
 
 import colors from '../../common/constants/colors'
 
-import langs from '../../common/resources/langs'
-
-import validator from '../../common/utils/formValidator'
-
+import form from '../../common/forms/join'
 import submitJoin from '../../common/actions/submitJoin'
+import langs from '../../common/resources/langs'
 
 class JoinForm extends Component {
   static propTypes = {
@@ -25,7 +21,7 @@ class JoinForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     inviter: PropTypes.string,
-    tribe: PropTypes.string,
+    title: PropTypes.string, // tribe_name
   }
 
   render() {
@@ -33,7 +29,7 @@ class JoinForm extends Component {
 
     return (
       <Form name="join" action={submitJoin} {...props}>
-        <Text style={styles.title}>{this.props.tribe}</Text>
+        <Text style={styles.title}>{this.props.title}</Text>
         <FormattedMessage id="invited_you" values={{name: this.props.inviter}} style={styles.subtitle} />
         <TextField ref="name"
           {...name}
@@ -71,18 +67,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, ownProps) => ({
-  initialValues: {
-    email: state.join.data.email,
-    token: ownProps.token,
-  },
-  inviter: state.join.data.inviter,
-  tribe: state.join.data.tribe_name,
-})
-
-export default reduxForm({
-  form: 'join',
-  fields: ['name', 'email', 'password', 'lang', 'token'],
-  validate: validator.join,
-  touchOnBlur: false,
-}, mapStateToProps)(JoinForm)
+export default form(JoinForm)

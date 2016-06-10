@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {reduxForm} from 'redux-form'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -8,12 +7,11 @@ import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import CityField from './fields/City'
 
+import form from '../../common/forms/tribe'
+import focus from '../../common/utils/formFocus'
+import submitTribe from '../../common/actions/submitTribe'
 import currencies from '../../common/resources/currencies'
 import {TRIBE_TYPES} from '../../common/constants/product'
-
-import validator, {focus} from '../../common/utils/formValidator'
-
-import submitTribe from '../../common/actions/submitTribe'
 
 const currencyItems = currencies.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
@@ -72,28 +70,4 @@ TribeForm.propTypes = {
   initialValues: PropTypes.object,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const initialValues = {
-    currency: state.member.tribe.currency,
-  }
-  if (ownProps.type === 'update') {
-    initialValues.tribe_name = state.member.tribe.name
-    initialValues.tribe_type = state.member.tribe.type
-    initialValues.city = {
-      name: state.member.tribe.city,
-      country_code: state.member.tribe.country_code,
-      place_id: state.member.tribe.place_id,
-    }
-    initialValues.id = state.member.tribe.id
-  }
-  return {
-    initialValues,
-  }
-}
-
-export default reduxForm({
-  form: 'tribe',
-  fields: ['id', 'tribe_name', 'tribe_type', 'city', 'currency'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.tribe,
-}, mapStateToProps)(TribeForm)
+export default form(TribeForm)

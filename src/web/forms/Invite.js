@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -8,11 +7,10 @@ import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
-import langs from '../../common/resources/langs'
-
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/invite'
+import focus from '../../common/utils/formFocus'
 import submitInvite from '../../common/actions/submitInvite'
+import langs from '../../common/resources/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
@@ -67,15 +65,4 @@ InviteForm.propTypes = {
   initialValues: PropTypes.object,
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {
-    lang: state.member.user.lang,
-  },
-})
-
-export default reduxForm({
-  form: 'invite',
-  fields: ['email', 'lang'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.invite,
-}, mapStateToProps)(InviteForm)
+export default form(InviteForm)

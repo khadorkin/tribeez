@@ -1,12 +1,11 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {reduxForm} from 'redux-form'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 
-import validator, {focus} from '../../common/utils/formValidator'
-
+import form from '../../common/forms/password'
+import focus from '../../common/utils/formFocus'
 import submitPassword from '../../common/actions/submitPassword'
 
 class PasswordForm extends Component {
@@ -46,16 +45,4 @@ PasswordForm.propTypes = {
   initialValues: PropTypes.object,
 }
 
-const mapStateToProps = (state) => ({
-  initialValues: {
-    lang: state.app.lang,
-  },
-})
-
-export default reduxForm({
-  form: 'login',
-  fields: ['email', 'lang'],
-  returnRejectedSubmitPromise: true,
-  validate: validator.password,
-  touchOnBlur: false,
-}, mapStateToProps)(PasswordForm)
+export default form(PasswordForm)
