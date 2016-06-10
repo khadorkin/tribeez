@@ -57,7 +57,7 @@ class Bill extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handlePress} style={styles.main}>
           <Image
-            source={{uri: gravatar(payer, 80)}}
+            source={{uri: gravatar(payer)}}
             style={styles.avatar}
           />
           <View style={styles.titles}>

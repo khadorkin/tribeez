@@ -1,6 +1,6 @@
 import md5 from 'md5'
 
-export default (user, size = 40) => {
+export default (user, size = 80) => {
   if (!user) {
     return null
   }

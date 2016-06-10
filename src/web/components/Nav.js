@@ -165,7 +165,7 @@ class Nav extends Component {
           <IconButton style={style.profile} containerElement={<Link to={routes.PROFILE} />}>
             <PersonIcon color="white" />
           </IconButton>
-          <Avatar style={style.avatar} src={gravatar(user, 80)} size={80} />
+          <Avatar style={style.avatar} src={gravatar(user, 160)} size={80} />
           <div style={style.name}>{user.name}</div>
           <div style={style.tribe}>
             {this.props.tribe_name}

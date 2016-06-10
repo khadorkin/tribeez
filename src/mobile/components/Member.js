@@ -18,7 +18,7 @@ class Member extends Component {
     return (
       <View style={styles.container}>
         <Image
-          source={{uri: gravatar(user, 80)}}
+          source={{uri: gravatar(user)}}
           style={styles.avatar}
         />
         <View style={styles.titles}>

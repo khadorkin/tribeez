@@ -51,7 +51,7 @@ class Event extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handlePress} style={styles.main}>
           <Image
-            source={{uri: gravatar(host, 80)}}
+            source={{uri: gravatar(host)}}
             style={styles.avatar}
           />
           <View style={styles.titles}>

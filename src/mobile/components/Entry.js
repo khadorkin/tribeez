@@ -111,7 +111,7 @@ class Entry extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handleToggle} style={styles.main}>
           <Image
-            source={{uri: gravatar(author, 80)}}
+            source={{uri: gravatar(author)}}
             style={styles.avatar}
           />
           <View style={styles.titles}>
