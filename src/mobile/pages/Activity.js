@@ -29,7 +29,6 @@ class Activity extends Component {
       </AsyncContent>
     )
   }
-
 }
 
 const mapStateToProps = (state) => ({

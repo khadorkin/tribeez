@@ -54,8 +54,8 @@ class Task extends Component {
 
     let subtitle
     if (task.done) {
-      const date = <FormattedRelative value={task.done} />
-      subtitle = <FormattedMessage id="last_done" values={{date}} />
+      const ago = <FormattedRelative value={task.done} />
+      subtitle = <FormattedMessage id="last_done" values={{ago}} />
     } else {
       subtitle = <FormattedMessage id="never_done" />
     }
@@ -91,7 +91,7 @@ class Task extends Component {
                 const user = usersById[uid]
                 return (
                   <ListItem key={user.id} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
-                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id] || 0)}} />
+                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
                   </ListItem>
                 )
               })

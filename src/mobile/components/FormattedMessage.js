@@ -14,6 +14,10 @@ class FormattedMessage extends Component {
   render() {
     const {intl, id, defaultMessage, values, ...props} = this.props
 
+    if (values && values.ago) {
+      values.ago = intl.formatRelative(values.ago)
+    }
+
     return (
       <Text {...props}>
         {id ? intl.formatMessage({id, defaultMessage}, values) : ' '}

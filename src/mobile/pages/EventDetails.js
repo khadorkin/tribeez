@@ -98,7 +98,6 @@ class EventDetails extends Component {
       </View>
     )
   }
-
 }
 
 const styles = StyleSheet.create({

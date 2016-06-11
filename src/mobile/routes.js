@@ -18,6 +18,9 @@ import Notes from './pages/Notes'
 import Polls from './pages/Polls'
 import PollDetails from './pages/PollDetails'
 import Poll from './pages/Poll'
+import Tasks from './pages/Tasks'
+import TaskDetails from './pages/TaskDetails'
+import Task from './pages/Task'
 
 export default {
   WELCOME: {name: 'welcome', component: Welcome},
@@ -43,4 +46,8 @@ export default {
   POLL: {name: 'poll', component: PollDetails},
   POLLS_NEW: {name: 'polls_new', component: Poll},
   POLLS_EDIT: {name: 'polls_edit', component: Poll},
+  TASKS: {name: 'tasks', component: Tasks},
+  TASK: {name: 'task', component: TaskDetails},
+  TASKS_NEW: {name: 'tasks_new', component: Task},
+  TASKS_EDIT: {name: 'tasks_edit', component: Task},
 }

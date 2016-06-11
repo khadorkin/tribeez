@@ -15,7 +15,6 @@ class Poll extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default Poll

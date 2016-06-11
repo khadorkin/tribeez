@@ -11,7 +11,6 @@ class Tribe extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default Tribe

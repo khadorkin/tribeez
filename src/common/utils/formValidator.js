@@ -27,12 +27,12 @@ export default (required, optional = []) => {
         }
       } else if (field === 'wait') {
         values.wait = Number(values.wait)
-        if (isNaN(values.wait) || values.wait < 0) {
+        if (isNaN(values.wait) || values.wait < 0 || values.wait > 255 || !Number.isInteger(values.wait)) {
           errors.wait = 'invalid'
         }
       } else if (field === 'notice') {
         values.notice = Number(values.notice)
-        if (isNaN(values.notice) || values.notice < 0) {
+        if (isNaN(values.notice) || values.notice < 1 || values.notice > 255 || !Number.isInteger(values.notice)) {
           errors.notice = 'invalid'
         }
       }

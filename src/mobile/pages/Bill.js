@@ -15,7 +15,6 @@ class Bill extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default Bill

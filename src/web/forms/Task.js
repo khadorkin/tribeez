@@ -89,7 +89,6 @@ TaskForm.propTypes = {
   fields: PropTypes.object,
   handleSubmit: PropTypes.func,
   // from redux:
-  lang: PropTypes.string.isRequired,
   initialValues: PropTypes.object,
   task: PropTypes.object,
   users: PropTypes.array.isRequired,

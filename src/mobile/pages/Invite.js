@@ -11,7 +11,6 @@ class Invite extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default Invite

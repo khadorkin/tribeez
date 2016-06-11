@@ -236,8 +236,9 @@ const fr = {
 
   // Tasks
   task_counter: '{user} {count, plural, =0 {ne l’a jamais fait} other {l’a fait # fois}}',
-  last_done: 'Dernière fois {date}',
+  last_done: 'Dernière fois {ago}',
   never_done: 'Jamais effectuée',
+  mark_done: 'Je viens de le faire',
 
   //Polls
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',

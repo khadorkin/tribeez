@@ -20,6 +20,7 @@ const menuEntries = [
   {route: routes.MEMBERS, icon: 'group'},
   {route: routes.BILLS, icon: 'shopping-cart'},
   {route: routes.EVENTS, icon: 'event'},
+  {route: routes.TASKS, icon: 'assignment-turned-in'},
   {route: routes.NOTES, icon: 'content-paste'},
   {route: routes.POLLS, icon: 'poll'},
 ]

@@ -26,7 +26,6 @@ class Join extends Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

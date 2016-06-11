@@ -21,7 +21,6 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
-    lang: state.app.lang,
     task,
     initialValues,
     users: state.member.tribe.users,

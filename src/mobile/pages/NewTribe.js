@@ -11,7 +11,6 @@ class NewTribe extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default NewTribe

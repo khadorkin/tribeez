@@ -65,7 +65,6 @@ class Members extends Component {
       </View>
     )
   }
-
 }
 
 const mapStateToProps = (state) => ({

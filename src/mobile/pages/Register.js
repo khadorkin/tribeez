@@ -11,7 +11,6 @@ class Register extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default Register

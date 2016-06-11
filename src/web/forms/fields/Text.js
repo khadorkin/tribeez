@@ -39,6 +39,7 @@ TextFieldWrapper.propTypes = {
   touched: PropTypes.bool.isRequired,
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   name: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default TextFieldWrapper

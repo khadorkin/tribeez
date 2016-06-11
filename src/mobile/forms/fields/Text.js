@@ -9,6 +9,7 @@ import colors from '../../../common/constants/colors'
 class TextField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     touched: PropTypes.bool.isRequired,
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     onChange: PropTypes.func.isRequired,
@@ -42,7 +43,7 @@ class TextField extends Component {
   }
 
   render() {
-    const {name, touched, error, errorIsObject, multiline, ...props} = this.props
+    const {name, value, touched, error, errorIsObject, multiline, ...props} = this.props
 
     const Comp = multiline ? TextArea : TextInput
 
@@ -66,6 +67,7 @@ class TextField extends Component {
           ref={this.ref}
           style={styles.field}
           underlineColorAndroid={colors.underline}
+          value={String(value)}
           {...props}
         />
         <FormattedMessage id={touched && errorId} values={values} style={styles.error} />

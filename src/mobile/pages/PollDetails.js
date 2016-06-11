@@ -72,7 +72,7 @@ class PollDetails extends Component {
   handleFab() {
     const route = routes.POLLS_EDIT
     route.edit = this.props.poll
-    router.push(routes.POLLS_EDIT)
+    router.push(route)
   }
 
   render() {
@@ -148,7 +148,6 @@ class PollDetails extends Component {
       </View>
     )
   }
-
 }
 
 const styles = StyleSheet.create({

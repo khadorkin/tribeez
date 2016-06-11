@@ -11,7 +11,6 @@ class Profile extends Component {
       </ScrollView>
     )
   }
-
 }
 
 export default Profile

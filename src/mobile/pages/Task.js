@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 import {ScrollView} from 'react-native'
 
-import EventForm from '../forms/Event'
+import TaskForm from '../forms/Task'
 
-class Event extends Component {
+class Task extends Component {
   static propTypes = {
     edit: PropTypes.object,
   }
@@ -11,10 +11,10 @@ class Event extends Component {
   render() {
     return (
       <ScrollView>
-        <EventForm current={this.props.edit} />
+        <TaskForm current={this.props.edit} />
       </ScrollView>
     )
   }
 }
 
-export default Event
+export default Task

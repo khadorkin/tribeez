@@ -1,13 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
 import Checkbox from 'material-ui/Checkbox'
-/*
-import TextField from 'material-ui/TextField'
-import IconButton from 'material-ui/IconButton'
-import AddIcon from 'material-ui/svg-icons/content/add'
-import RemoveIcon from 'material-ui/svg-icons/content/remove'
-import * as colors from 'material-ui/styles/colors'
-*/
 
 import styles from '../../styles'
 

@@ -235,8 +235,9 @@ export default {
 
   // Tasks
   task_counter: '{user} {count, plural, =0 {never did it} one {did it once} other {did it # times}}',
-  last_done: 'Last done {date}',
+  last_done: 'Last done {ago}',
   never_done: 'Never done',
+  mark_done: 'I just did it',
 
   //Polls
   poll_answers: '{num, plural, =0 {No answers} one {1 answer} other {# answers}}',

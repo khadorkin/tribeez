@@ -45,7 +45,6 @@ class Polls extends Component {
       </View>
     )
   }
-
 }
 
 const styles = StyleSheet.create({
