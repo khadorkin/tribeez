@@ -31,8 +31,8 @@ export default (values, dispatch) => {
           router.resetTo(routes.ACTIVITY, dispatch)
         }
       })
-      .catch((error) => {
-        reject({_error: error.toString()})
+      .catch(() => {
+        reject({_error: 'other'})
       })
   })
 }

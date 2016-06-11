@@ -3,7 +3,7 @@ export default (required, optional = []) => {
     const errors = {}
     const fields = [...required, ...optional]
     fields.forEach((field) => {
-      if (!values[field] && !optional.includes(field)) {
+      if ((values[field] == null || values[field] === '') && !optional.includes(field)) {
         errors[field] = 'empty'
       } else if (field === 'city' && !values.city.place_id) {
         errors.city = 'invalid'
@@ -20,6 +20,11 @@ export default (required, optional = []) => {
             errors._error = 'no_parts'
           }
         }
+      } else if (field === 'users') {
+        const notEmpty = values.users.some((task_user) => task_user.checked)
+        if (!notEmpty) {
+          errors._error = 'no_users'
+        }
       } else if (field === 'wait') {
         values.wait = Number(values.wait)
         if (isNaN(values.wait) || values.wait < 0) {
@@ -35,8 +40,3 @@ export default (required, optional = []) => {
     return errors
   }
 }
-
-//TODO: remove
-// export default {
-//   registerMobile: validator(['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency']),
-// }

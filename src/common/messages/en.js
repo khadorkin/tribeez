@@ -167,6 +167,8 @@ export default {
   'error.wait': 'Invalid period',
   'field.notice': 'Warning delay (days)',
   'error.notice': 'Invalid delay',
+  'field.task_users': 'Concerned members:',
+  'error.no_users': 'You must choose at lease one concerned member',
   // submit buttons:
   'submit.register': 'Register & create this tribe',
   'submit.join': 'Register & join this tribe',

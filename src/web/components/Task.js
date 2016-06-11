@@ -39,10 +39,15 @@ class Task extends Component {
   }
 
   render() {
-    const {task, users} = this.props
+    const {task} = this.props
+
+    const usersById = {}
+    this.props.users.forEach((user) => {
+      usersById[user.id] = user
+    })
 
     // to render a task, the users must be loaded for the current tribe tasks
-    const author = users.find((u) => u.id === task.author_id)
+    const author = usersById[task.author_id]
     if (!author) {
       return null
     }
@@ -66,6 +71,8 @@ class Task extends Component {
       )
     }
 
+    const uids = Object.keys(task.counters)
+
     return (
       <Card className={css.container}>
         <CardHeader title={task.name} subtitle={subtitle}
@@ -80,7 +87,8 @@ class Task extends Component {
           {task.description}
           <List>
             {
-              users.map((user) => {
+              uids.map((uid) => {
+                const user = usersById[uid]
                 return (
                   <ListItem key={user.id} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
                     <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id] || 0)}} />

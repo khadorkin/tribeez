@@ -45,7 +45,7 @@ class Form extends Component {
         <CardActions style={styles.actions}>
           <RaisedButton label={<FormattedMessage id={'submit.' + name} />} type="submit" disabled={submitting} />
           <p className="error">
-            {error && <FormattedMessage id="error.other" />}
+            {error && <FormattedMessage id={'error.' + error} />}
           </p>
         </CardActions>
       </form>

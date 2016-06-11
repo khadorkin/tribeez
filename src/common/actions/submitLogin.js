@@ -24,8 +24,8 @@ export default (destination, values, dispatch) => {
           router.resetTo(destination || routes.ACTIVITY, dispatch)
         }
       })
-      .catch((error) => {
-        reject({_error: error.toString()})
+      .catch(() => {
+        reject({_error: 'other'})
       })
   })
 }

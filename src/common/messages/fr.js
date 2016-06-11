@@ -168,6 +168,8 @@ const fr = {
   'error.wait': 'Période incorrecte',
   'field.notice': 'Délai d’application (jours)',
   'error.notice': 'Délai incorrect',
+  'field.task_users': 'Membres concernés :',
+  'error.no_users': 'Vous devez choisir au moins un membre concerné',
   // submit buttons:
   'submit.register': 'S’inscrire et créer cette tribu',
   'submit.join': 'S’inscrire et rejoindre cette tribu',

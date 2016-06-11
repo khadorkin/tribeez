@@ -10,6 +10,7 @@ export default (values, dispatch) => {
       reject({_error: 'no_options'})
       return
     }
+
     api[values.id ? 'put' : 'post']('poll', values)
       .then((response) => {
         if (response.error) {

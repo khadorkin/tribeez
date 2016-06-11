@@ -34,7 +34,7 @@ class CheckboxWrapper extends Component {
         label={<FormattedMessage id={'field.' + this.props.name} />}
         {...this.props}
         onCheck={this.handleCheck}
-        checked={Boolean(this.props.value)}
+        checked={this.props.value}
         onChange={null}
         value={''}
       />
@@ -46,7 +46,7 @@ class CheckboxWrapper extends Component {
 CheckboxWrapper.propTypes = {
   name: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.bool,
+  value: PropTypes.bool.isRequired,
 }
 
 export default CheckboxWrapper

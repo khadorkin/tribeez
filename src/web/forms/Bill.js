@@ -56,9 +56,12 @@ class BillForm extends Component {
   render() {
     const {fields: {name, description, payer, paid, amount, method, parts}, users, currency} = this.props
 
-    const userItems = users.map((user) =>
-      <MenuItem value={user.id} key={user.id} primaryText={user.name} />
-    )
+    const usersById = {}
+
+    const userItems = users.map((user) => {
+      usersById[user.id] = user
+      return <MenuItem value={user.id} key={user.id} primaryText={user.name} />
+    })
 
     return (
       <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
@@ -100,7 +103,7 @@ class BillForm extends Component {
               method={method.value}
               amount={part.amount}
               currency={currency}
-              user={users.find((u) => (u.id === part.user_id.value))}
+              user={usersById[part.user_id.value]}
             />
           )
         }

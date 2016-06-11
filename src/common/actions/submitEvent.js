@@ -17,8 +17,8 @@ export default (values, dispatch) => {
           router.resetTo(routes.EVENTS, dispatch)
         }
       })
-      .catch((error) => {
-        reject({_error: error.toString()})
+      .catch(() => {
+        reject({_error: 'other'})
       })
   })
 }
