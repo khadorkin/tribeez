@@ -5,6 +5,7 @@
   "twitter": "TribeezApp",
   "api_endpoint": "https://api.tribeez.net",
   "rollbar_token": "xxxxxxxx",
+  "sentry_dsn": "https://<key>@app.getsentry.com/<project>",
   "ga_id": "UA-XXXXXXXX-X",
   "recaptcha_site_key": "xxxxxxxx",
   "google_web_key": "xxxxxxxx",
