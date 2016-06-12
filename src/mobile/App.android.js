@@ -28,6 +28,7 @@ class App extends Component {
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     currency: PropTypes.string,
+    telegram_token: PropTypes.string,
   }
 
   constructor(props) {
@@ -41,6 +42,7 @@ class App extends Component {
     this.renderScene = this.renderScene.bind(this)
     this.handleDrawerOpened = this.handleDrawerOpened.bind(this)
     this.handleDrawerClosed = this.handleDrawerClosed.bind(this)
+    this.handleTelegram = this.handleTelegram.bind(this)
 
     this.routeMapper = {
       LeftButton: (/*route, navigator, index, navState*/) => {
@@ -56,7 +58,9 @@ class App extends Component {
         }
       },
       RightButton: (/*route, navigator, index, navState*/) => {
-        return null // nothing for now
+        return this.props.telegram_token && (
+          <IconButton family="evil" name="sc-telegram" color="white" onPress={this.handleTelegram} style={styles.telegram} />
+        )
       },
     }
   }
@@ -131,6 +135,14 @@ class App extends Component {
     })
   }
 
+  handleTelegram() {
+    Linking
+      .openURL('tg://resolve?domain=' + config.telegram_bot_name + '&start=' + this.props.telegram_token)
+      .catch(() => {
+        Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.telegram_token)
+      })
+  }
+
   renderNavigation() {
     return <DrawerContent drawer={this.drawer} opened={this.state.drawerOpened} />
   }
@@ -197,6 +209,9 @@ const styles = StyleSheet.create({
   hamburger: {
     padding: 15,
   },
+  telegram: {
+    padding: 17,
+  },
   navBar: {
     backgroundColor: colors.main,
   },
@@ -218,6 +233,7 @@ const mapStateToProps = (state) => ({
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
   currency: state.member.tribe.currency,
+  telegram_token: state.member.user.telegram_token,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
