@@ -104,8 +104,8 @@ const fr = {
   // register/login/join/profile/tribe:
   'field.login_password': 'Mot de passe',
   'error.login_password': 'Mot de passe invalide',
-  'field.username': 'Votre nom',
-  'error.username': 'Nom incorrect',
+  'field.username': 'Votre prénom',
+  'error.username': 'Prénom incorrect',
   'field.email': 'Adresse e-mail',
   'error.email': 'Adresse e-mail inconnue',
   'error.email_empty': 'Une adresse e-mail est nécessaire',
