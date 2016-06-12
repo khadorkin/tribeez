@@ -9,6 +9,14 @@ const mapStateToProps = (state, ownProps) => {
   const bill = ownProps.current || state.bills.current // either from routing state, or from ajax retrieval
   let initialValues
   if (bill) {
+    const partsByUid = {}
+    bill.parts.forEach((part) => {
+      partsByUid[part.user_id] = part.amount
+    })
+    const parts = state.member.tribe.users
+      .map((user) => ({user_id: user.id, amount: partsByUid[user.id] || ''}))
+      .sort((a, b) => (a.amount > b.amount ? -1 : 1))
+
     initialValues = {
       id: bill.id,
       name: bill.name,
@@ -17,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
       amount: bill.amount,
       method: 'amounts',
       description: bill.description || '',
-      parts: bill.parts,
+      parts,
     }
   } else {
     initialValues = {
