@@ -37,9 +37,7 @@ class EventDetails extends Component {
   }
 
   handlePress(url) {
-    if (url) {
-      Linking.openURL(url)
-    }
+    Linking.openURL(url)
   }
 
   handleFab() {
@@ -70,7 +68,7 @@ class EventDetails extends Component {
                   if (date.getHours() !== 0 || date.getMinutes() !== 0) {
                     value = <FormattedMessage id="datetime" values={{date}} />
                   } else {
-                    value = <FormattedDate value={value} day="numeric" month="long" />
+                    value = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} />
                   }
                 }
                 let href = null
@@ -85,7 +83,7 @@ class EventDetails extends Component {
                   value = <Text>{value}</Text>
                 }
                 return (
-                  <TouchableOpacity onPress={this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
+                  <TouchableOpacity onPress={href && this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
                     <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
                     {value}
                   </TouchableOpacity>

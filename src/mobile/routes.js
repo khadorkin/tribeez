@@ -7,6 +7,7 @@ import Tribe from './pages/Tribe'
 import NewTribe from './pages/NewTribe'
 import Activity from './pages/Activity'
 import Members from './pages/Members'
+import MemberDetails from './pages/MemberDetails'
 import Invite from './pages/Invite'
 import Bills from './pages/Bills'
 import Bill from './pages/Bill'
@@ -32,6 +33,7 @@ export default {
   TRIBE_NEW: {name: 'tribe', component: NewTribe},
   ACTIVITY: {name: 'activity', component: Activity},
   MEMBERS: {name: 'members', component: Members},
+  MEMBER: {name: 'member', component: MemberDetails},
   MEMBERS_NEW: {name: 'members_new', component: Invite},
   BILLS: {name: 'bills', component: Bills},
   BILL: {name: 'bill', component: BillDetails},
