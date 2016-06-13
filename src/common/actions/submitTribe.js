@@ -8,6 +8,7 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
+import router from '../router'
 import routes from '../routes'
 
 export default (values, dispatch) => {
@@ -31,8 +32,9 @@ export default (values, dispatch) => {
               message: 'tribe_updated',
             })
           } else {
-            // user and tribe have changed, get them from the API and go to home:
-            dispatch(getMember(null, routes.ACTIVITY))
+            router.resetTo(routes.ACTIVITY, dispatch)
+            // user and tribe have changed, get them from the API:
+            dispatch(getMember())
             dispatch(getActivity())
             dispatch({
               type: SNACK_MESSAGE,
