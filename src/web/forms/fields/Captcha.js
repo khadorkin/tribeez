@@ -36,6 +36,10 @@ class Captcha extends Component {
     }
   }
 
+  componentWillUnmount() {
+    window.onRecaptcha = null
+  }
+
   ref(element) {
     this.element = element
   }

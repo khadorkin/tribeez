@@ -9,8 +9,8 @@ class Loader {
       if (callback) callback()
       return
     }
-    if (this.scripts[url] === 'loading') { // TODO
-      throw new Error('script is already loading')
+    if (this.scripts[url] === 'loading') {
+      return
     }
     this.scripts[url] = 'loading'
     const tag = document.createElement('script')
