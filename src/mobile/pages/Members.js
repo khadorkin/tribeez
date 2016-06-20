@@ -35,8 +35,6 @@ class Members extends Component {
   }
 
   render() {
-    const {invites} = this.props
-
     return (
       <View style={styles.container}>
         <ScrollableTabView
@@ -52,14 +50,12 @@ class Members extends Component {
             }
             <View style={styles.spacer} />
           </ScrollView>
-          <AsyncContent data={invites} fetcher={this.props.getInvites} tabLabel="Invited" /*TODO: translate*/>
-            {
-              invites.items.map((invite) =>
-                <Invite invite={invite} key={invite.email} />
-              )
-            }
-            <View style={styles.spacer} />
-          </AsyncContent>
+          <AsyncContent
+            data={this.props.invites}
+            fetcher={this.props.getInvites}
+            rowComponent={Invite}
+            tabLabel="Invited" /*TODO: translate*/
+          />
         </ScrollableTabView>
         <Fab name="add" onPress={this.handleFab} />
       </View>

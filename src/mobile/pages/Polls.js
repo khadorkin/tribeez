@@ -30,17 +30,13 @@ class Polls extends Component {
   }
 
   render() {
-    const {polls} = this.props
-
     return (
       <View style={styles.container}>
-        <AsyncContent data={polls} fetcher={this.props.getPolls}>
-          {
-            polls.items.map((poll) =>
-              <Poll poll={poll} key={poll.id} />
-            )
-          }
-        </AsyncContent>
+        <AsyncContent
+          data={this.props.polls}
+          fetcher={this.props.getPolls}
+          rowComponent={Poll}
+        />
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

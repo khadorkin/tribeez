@@ -30,17 +30,13 @@ class Tasks extends Component {
   }
 
   render() {
-    const {tasks} = this.props
-
     return (
       <View style={styles.container}>
-        <AsyncContent data={tasks} fetcher={this.props.getTasks}>
-          {
-            tasks.items.map((task) =>
-              <Task task={task} key={task.id} />
-            )
-          }
-        </AsyncContent>
+        <AsyncContent
+          data={this.props.tasks}
+          fetcher={this.props.getTasks}
+          rowComponent={Task}
+        />
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

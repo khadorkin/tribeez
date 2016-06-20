@@ -18,7 +18,7 @@ class Poll extends Component {
     users: PropTypes.array.isRequired,
     currency: PropTypes.string,
     // from parent:
-    poll: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -28,24 +28,24 @@ class Poll extends Component {
 
   handlePress() {
     const route = routes.POLL
-    route.item = this.props.poll
+    route.item = this.props.item
     router.push(route)
   }
 
   render() {
-    const {poll} = this.props
+    const {item} = this.props
 
     // to render a poll, the users must be loaded for the current tribe polls
-    const author = this.props.users.find((u) => u.id === poll.author_id)
+    const author = this.props.users.find((u) => u.id === item.author_id)
     if (!author) {
       return null
     }
 
-    //const user_answer = poll.answers[this.props.uid]
+    //const user_answer = item.answers[this.props.uid]
 
-    const num_answers = Object.keys(poll.answers).length
+    const num_answers = Object.keys(item.answers).length
 
-    const date = <FormattedRelative value={poll.created} />
+    const date = <FormattedRelative value={item.created} />
     const subtitle = <FormattedMessage id="poll_answers" values={{num: num_answers}} />
 
     return (
@@ -56,7 +56,7 @@ class Poll extends Component {
             style={styles.avatar}
           />
           <View style={styles.titles}>
-            <Text style={styles.title}>{poll.name}</Text>
+            <Text style={styles.title}>{item.name}</Text>
             <Text style={styles.subtitle}>{date} — {subtitle}</Text>
           </View>
         </TouchableOpacity>

@@ -17,7 +17,7 @@ import gravatar from '../../common/utils/gravatar'
 class Entry extends Component {
   static propTypes = {
     // from parent:
-    entry: PropTypes.object,
+    item: PropTypes.object,
     // from redux:
     boxComments: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
@@ -45,18 +45,18 @@ class Entry extends Component {
   }
 
   handleCommentChange(text) {
-    this.props.updateComment(this.props.entry.id, text)
+    this.props.updateComment(this.props.item.id, text)
   }
 
   handleSubmitComment() {
-    const id = this.props.entry.id
+    const id = this.props.item.id
     this.props.postComment(id, this.props.boxComments[id])
   }
 
   render() {
-    const {entry, users, uid} = this.props
+    const {item, users, uid} = this.props
 
-    const author = users.find((u) => u.id === entry.user_id)
+    const author = users.find((u) => u.id === item.user_id)
     if (!author) {
       return null
     }
@@ -70,42 +70,42 @@ class Entry extends Component {
       values.author = author.name
     }
 
-    switch (entry.type) {
+    switch (item.type) {
       case 'user':
-        if (entry.item_id) {
-          const inviter = users.find((u) => u.id === entry.item_id)
+        if (item.item_id) {
+          const inviter = users.find((u) => u.id === item.item_id)
           if (inviter) {
-            infos = <FormattedMessage id={`entry.user.${entry.action}.infos`} values={{inviter: inviter.name}} />
+            infos = <FormattedMessage id={`entry.user.${item.action}.infos`} values={{inviter: inviter.name}} />
           }
         }
         break
       case 'bill':
-        values.name = entry.data.name
-        values.amount = entry.data.amount
-        const user_part = entry.data.parts.find((part) => part.user_id === uid)
+        values.name = item.data.name
+        values.amount = item.data.amount
+        const user_part = item.data.parts.find((part) => part.user_id === uid)
         if (user_part) {
-          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount: user_part.amount}} />
+          infos = <FormattedMessage id={`entry.bill.${item.action}.infos`} values={{amount: user_part.amount}} />
         } else {
-          infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} />
+          infos = <FormattedMessage id={`entry.bill.${item.action}.stranger`} />
         }
         break
       case 'poll':
-        values.name = entry.data.name
+        values.name = item.data.name
         break
       case 'event':
-        values.name = entry.data.name
-        values.when = entry.data.start
+        values.name = item.data.name
+        values.when = item.data.start
         break
       case 'task':
-        values.name = entry.data.name
+        values.name = item.data.name
         break
       default:
         return null
     }
-    const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
+    const title = <FormattedMessage id={`entry.${item.type}.${item.action}`} values={values} />
 
-    const date = <FormattedRelative value={entry.added} />
-    const comments = <FormattedMessage id="entry.comments" values={{num: entry.comments.length}} />
+    const date = <FormattedRelative value={item.added} />
+    const comments = <FormattedMessage id="entry.comments" values={{num: item.comments.length}} />
 
     return (
       <View style={styles.container}>
@@ -126,13 +126,13 @@ class Entry extends Component {
                 infos && <View style={styles.infos}>{infos}</View>
               }
               {
-                entry.comments.map((comment) =>
+                item.comments.map((comment) =>
                   <Comment comment={comment} key={comment.id} />
                 )
               }
               <View style={styles.form}>
                 <TextInput
-                  value={this.props.boxComments[entry.id]}
+                  value={this.props.boxComments[item.id]}
                   onChangeText={this.handleCommentChange}
                   style={styles.input}
                   onSubmitEditing={this.handleSubmitComment}

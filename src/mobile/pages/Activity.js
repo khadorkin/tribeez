@@ -17,16 +17,12 @@ class Activity extends Component {
   }
 
   render() {
-    const {activity, activity: {items}} = this.props
-
     return (
-      <AsyncContent data={activity} fetcher={this.props.getActivity}>
-        {
-          items.map((entry) =>
-            <Entry entry={entry} key={entry.id} />
-          )
-        }
-      </AsyncContent>
+      <AsyncContent
+        data={this.props.activity}
+        fetcher={this.props.getActivity}
+        rowComponent={Entry}
+      />
     )
   }
 }

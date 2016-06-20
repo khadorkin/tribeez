@@ -30,17 +30,13 @@ class Bills extends Component {
   }
 
   render() {
-    const {bills} = this.props
-
     return (
       <View style={styles.container}>
-        <AsyncContent data={bills} fetcher={this.props.getBills}>
-          {
-            bills.items.map((bill) =>
-              <Bill bill={bill} key={bill.id} />
-            )
-          }
-        </AsyncContent>
+        <AsyncContent
+          data={this.props.bills}
+          fetcher={this.props.getBills}
+          rowComponent={Bill}
+        />
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

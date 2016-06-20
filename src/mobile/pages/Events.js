@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import AsyncContent from '../hoc/AsyncContent'
 import Event from '../components/Event'
-import Spinner from '../components/Spinner'
 import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
@@ -25,27 +25,18 @@ class Events extends Component {
     this.handleFab = this.handleFab.bind(this)
   }
 
-  componentDidMount() {
-    this.props.getEvents(15)
-  }
-
   handleFab() {
     router.push(routes.EVENTS_NEW)
   }
 
   render() {
-    const {events} = this.props
-
     return (
       <View style={styles.container}>
-        <ScrollView>
-          {
-            events.items.map((event) =>
-              <Event event={event} key={event.id} />
-            )
-          }
-          <Spinner visible={events.loading} />
-        </ScrollView>
+        <AsyncContent
+          data={this.props.events}
+          fetcher={this.props.getEvents}
+          rowComponent={Event}
+        />
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

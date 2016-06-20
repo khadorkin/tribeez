@@ -10,22 +10,22 @@ import colors from '../../common/constants/colors'
 class Invite extends Component {
   static propTypes = {
     // from parent:
-    invite: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
   }
 
   render() {
-    const {users, invite} = this.props
+    const {users, item} = this.props
 
-    const inviter = users.find((user) => user.id === invite.inviter_id)
+    const inviter = users.find((user) => user.id === item.inviter_id)
     if (!inviter) {
       return null
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{invite.email}</Text>
-        <FormattedMessage id="invited_by" values={{user: inviter.name, when: invite.invited}} style={styles.subtitle} />
+        <Text style={styles.title}>{item.email}</Text>
+        <FormattedMessage id="invited_by" values={{user: inviter.name, when: item.invited}} style={styles.subtitle} />
       </View>
     )
   }

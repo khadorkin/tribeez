@@ -15,7 +15,7 @@ class Event extends Component {
     // from redux:
     users: PropTypes.array.isRequired,
     // from parent:
-    event: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -25,26 +25,26 @@ class Event extends Component {
 
   handlePress() {
     const route = routes.EVENT
-    route.item = this.props.event
+    route.item = this.props.item
     router.push(route)
   }
 
   render() {
-    const {event, users} = this.props
+    const {item, users} = this.props
 
-    const host = users.find((u) => u.id === event.host_id)
+    const host = users.find((u) => u.id === item.host_id)
     if (!host) {
       return null
     }
 
-    const start = new Date(event.start)
+    const start = new Date(item.start)
     const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
 
     let date
-    if (event.end) {
-      date = <FormattedMessage id={'interval' + suffix} values={{start: event.start, end: event.end}} />
+    if (item.end) {
+      date = <FormattedMessage id={'interval' + suffix} values={{start: item.start, end: item.end}} />
     } else {
-      date = <FormattedMessage id={'date' + suffix} values={{date: event.start}} />
+      date = <FormattedMessage id={'date' + suffix} values={{date: item.start}} />
     }
 
     return (
@@ -55,7 +55,7 @@ class Event extends Component {
             style={styles.avatar}
           />
           <View style={styles.titles}>
-            <Text style={styles.title}>{event.name}</Text>
+            <Text style={styles.title}>{item.name}</Text>
             <Text style={styles.subtitle}>{date}</Text>
           </View>
         </TouchableOpacity>

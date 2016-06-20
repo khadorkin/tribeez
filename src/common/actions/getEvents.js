@@ -6,12 +6,12 @@ import {
   GET_EVENTS_FAILURE,
 } from '../constants/actions'
 
-export default (upcoming) => {
+export default (page = 0) => {
   return function(dispatch) {
     dispatch({
       type: GET_EVENTS_REQUEST,
     })
-    api.get('events', {upcoming})
+    api.get('events', {page})
       .then((response) => {
         if (response.error) {
           dispatch({
@@ -22,6 +22,7 @@ export default (upcoming) => {
           dispatch({
             type: GET_EVENTS_SUCCESS,
             data: response,
+            page,
           })
         }
       })

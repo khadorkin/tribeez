@@ -58,7 +58,7 @@ class Notes extends Component {
   }
 
   renderRow(row) {
-    return <Note note={row} />
+    return <Note item={row} />
   }
 
   render() {

@@ -1,12 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, ScrollView, View, Text} from 'react-native'
+import {StyleSheet, ListView, View, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
 import Spinner from '../components/Spinner'
 import Button from '../components/Button'
-
-const INFINITE_TRIGGER = 200
 
 class AsyncContent extends Component {
   static propTypes = {
@@ -15,21 +13,32 @@ class AsyncContent extends Component {
     // from parent component
     data: PropTypes.object.isRequired,
     fetcher: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
-    tabLabel: PropTypes.string,
+    rowComponent: PropTypes.any.isRequired,
+    tabLabel: PropTypes.string, // for pages using scrollable tabs
   }
 
   constructor(props) {
     super(props)
-    this.handleLayout = this.handleLayout.bind(this)
-    this.handleContentSize = this.handleContentSize.bind(this)
-    this.handleScroll = this.handleScroll.bind(this)
+    this.handleEndReached = this.handleEndReached.bind(this)
     this.handleLoad = this.handleLoad.bind(this)
+    this.renderRow = this.renderRow.bind(this)
+    this.renderFooter = this.renderFooter.bind(this)
+
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+      }),
+    }
   }
 
   componentWillMount() {
     if (this.props.uid) {
       this.uid = this.props.uid
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(this.props.data.items),
+      })
+
       this.handleLoad()
     }
   }
@@ -39,28 +48,14 @@ class AsyncContent extends Component {
       this.uid = props.uid
       this.handleLoad()
     }
+
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(props.data.items),
+    })
   }
 
-  componentWillUpdate() {
-    this.contentSizeUpdated = false
-  }
-
-  handleLayout(event) {
-    this.containerHeight = event.nativeEvent.layout.height
-  }
-
-  handleContentSize(width, height) {
-    this.contentHeight = height
-    this.contentSizeUpdated = true
-  }
-
-  handleScroll(event) {
-    if (!this.contentSizeUpdated) {
-      return
-    }
-    const offset = event.nativeEvent.contentOffset.y
-    const atBottom = (offset + INFINITE_TRIGGER > this.contentHeight - this.containerHeight)
-    if (this.props.data.paging && atBottom) {
+  handleEndReached() {
+    if (this.props.data.paging) {
       this.handleLoad(true)
     }
   }
@@ -70,6 +65,18 @@ class AsyncContent extends Component {
     if (!data.loading && (data.pages === 0 || (more && data.items.length / data.paging === data.pages))) {
       this.props.fetcher(data.pages) // last page is N => N+1 pages => next page is N+1
     }
+  }
+
+  renderRow(row) {
+    return <this.props.rowComponent item={row} />
+  }
+
+  renderFooter() {
+    return (
+      <View style={styles.footer}>
+        <Spinner visible={this.props.data.loading} />
+      </View>
+    )
   }
 
   render() {
@@ -82,18 +89,23 @@ class AsyncContent extends Component {
           <Button id="retry" onPress={this.handleLoad} />
         </View>
       )
+    } else if (!this.props.data.items.length) {
+      return (
+        <View style={styles.empty}>
+          <Text>Nothing to show!</Text>
+        </View>
+      )
     } else {
       return (
-        <ScrollView
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          renderFooter={this.renderFooter}
+          enableEmptySections={true}
           style={styles.container}
-          onScroll={this.handleScroll}
-          onLayout={this.handleLayout}
-          onContentSizeChange={this.handleContentSize}
+          onEndReached={this.handleEndReached}
           tabLabel={this.props.tabLabel}
-        >
-          {this.props.children}
-          <Spinner visible={this.props.data.loading} />
-        </ScrollView>
+        />
       )
     }
   }
@@ -108,6 +120,10 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 4,
   },
+  footer: {
+    height: 80,
+    justifyContent: 'center', // vertically center
+  },
   error: {
     flex: 1, // take all space
     justifyContent: 'center', // vertically center
@@ -115,6 +131,11 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+  },
+  empty: {
+    flex: 1, // take all space
+    justifyContent: 'center', // vertically center
+    alignItems: 'center', // horizontally center
   },
 })
 

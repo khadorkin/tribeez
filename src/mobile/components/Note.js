@@ -15,7 +15,7 @@ import colors from '../../common/constants/colors'
 class Note extends Component {
   static propTypes = {
     // from parent:
-    note: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired,
     onLongPress: PropTypes.func,
     onPressOut: PropTypes.func,
     // action creators:
@@ -26,8 +26,8 @@ class Note extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: props.note.title,
-      content: props.note.content,
+      title: props.item.title,
+      content: props.item.content,
       unsaved: false,
     }
     this.handleTitleChange = this.handleTitleChange.bind(this)
@@ -38,8 +38,8 @@ class Note extends Component {
 
   componentWillReceiveProps(props) {
     this.setState({
-      title: props.note.title,
-      content: props.note.content,
+      title: props.item.title,
+      content: props.item.content,
     })
   }
 
@@ -62,12 +62,12 @@ class Note extends Component {
   }
 
   handleDelete() {
-    this.props.deleteNote(this.props.note.id)
+    this.props.deleteNote(this.props.item.id)
   }
 
   save() {
     this.props.putNote({
-      ...this.props.note,
+      ...this.props.item,
       title: this.state.title.trim(),
       content: this.state.content.trim(),
     })
@@ -87,14 +87,14 @@ class Note extends Component {
             style={styles.title}
             minHeight={47}
             onChangeText={this.handleTitleChange}
-            id={this.props.note.id} // to refresh TextArea height when drag&dropping
+            id={this.props.item.id} // to refresh TextArea height when drag&dropping
           />
           <TextArea
             underlineColorAndroid="transparent"
             value={this.state.content}
             style={styles.content}
             onChangeText={this.handleContentChange}
-            id={this.props.note.id} // to refresh TextArea height when drag&dropping
+            id={this.props.item.id} // to refresh TextArea height when drag&dropping
           />
           <View style={styles.icons}>
             <IconButton name={this.state.unsaved ? 'cloud-queue' : 'cloud-done'} />
