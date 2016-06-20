@@ -2,7 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import {bindActionCreators, compose} from 'redux'
+import {injectIntl, intlShape} from 'react-intl'
 
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
@@ -18,6 +19,7 @@ import getInvites from '../../common/actions/getInvites'
 
 class Members extends Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     // redux state:
     users: PropTypes.array.isRequired,
     invites: PropTypes.object.isRequired,
@@ -38,11 +40,12 @@ class Members extends Component {
     return (
       <View style={styles.container}>
         <ScrollableTabView
-          tabBarActiveTextColor={colors.main}
-          tabBarInactiveTextColor={colors.main}
-          tabBarUnderlineColor={colors.main}
+          tabBarActiveTextColor="white"
+          tabBarInactiveTextColor="white"
+          tabBarUnderlineColor="white"
+          tabBarBackgroundColor={colors.main}
         >
-          <ScrollView tabLabel="Registered" /*TODO: translate*/ style={styles.content}>
+          <ScrollView tabLabel={this.props.intl.formatMessage({id: 'registered'})} style={styles.content}>
             {
               this.props.users.map((user) =>
                 <Member user={user} key={user.id} />
@@ -54,7 +57,7 @@ class Members extends Component {
             data={this.props.invites}
             fetcher={this.props.getInvites}
             rowComponent={Invite}
-            tabLabel="Invited" /*TODO: translate*/
+            tabLabel={this.props.intl.formatMessage({id: 'invited'})}
           />
         </ScrollableTabView>
         <Fab name="add" onPress={this.handleFab} />
@@ -74,7 +77,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 4,
     flex: 1,
   },
   content: {
@@ -85,4 +87,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Members)
+export default compose(
+  injectIntl,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Members)

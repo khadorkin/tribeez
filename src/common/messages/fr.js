@@ -37,6 +37,8 @@ const fr = {
   open_polls: 'Sondages ouverts',
   tasks_todo: 'Tâches à faire',
   history: 'Historique',
+  registered: 'INSCRITS',
+  invited: 'INVITÉS',
 
   // html:
   sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail.<br>Cliquez dessus pour choisir un nouveau mot de passe.',

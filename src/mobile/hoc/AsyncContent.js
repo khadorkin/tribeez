@@ -14,7 +14,6 @@ class AsyncContent extends Component {
     data: PropTypes.object.isRequired,
     fetcher: PropTypes.func.isRequired,
     rowComponent: PropTypes.any.isRequired,
-    tabLabel: PropTypes.string, // for pages using scrollable tabs
   }
 
   constructor(props) {
@@ -104,7 +103,6 @@ class AsyncContent extends Component {
           enableEmptySections={true}
           style={styles.container}
           onEndReached={this.handleEndReached}
-          tabLabel={this.props.tabLabel}
         />
       )
     }
