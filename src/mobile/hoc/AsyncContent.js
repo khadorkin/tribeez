@@ -79,7 +79,7 @@ class AsyncContent extends Component {
   }
 
   render() {
-    const {error} = this.props.data
+    const {error, loading, items} = this.props.data
 
     if (error) {
       return (
@@ -88,7 +88,7 @@ class AsyncContent extends Component {
           <Button id="retry" onPress={this.handleLoad} />
         </View>
       )
-    } else if (!this.props.data.items.length) {
+    } else if (!loading && !items.length) {
       return (
         <View style={styles.empty}>
           <Text>Nothing to show!</Text>
