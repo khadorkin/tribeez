@@ -71,8 +71,13 @@ class App extends Component {
         this.drawer.closeDrawer()
         return true
       }
-      if (router.getCurrentRoutes().length === 1) {
-        return false
+      const currentRoutes = router.getCurrentRoutes()
+      if (currentRoutes.length === 1) {
+        if (currentRoutes[0].name === 'activity') {
+          return false
+        }
+        router.resetTo(routes.ACTIVITY)
+        return true
       }
       router.pop()
       return true
