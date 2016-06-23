@@ -45,7 +45,7 @@ class Members extends Component {
           tabBarUnderlineColor="white"
           tabBarBackgroundColor={colors.main}
         >
-          <ScrollView tabLabel={this.props.intl.formatMessage({id: 'registered'})} style={styles.content}>
+          <ScrollView tabLabel={this.props.intl.formatMessage({id: 'tab.registered'})} style={styles.content}>
             {
               this.props.users.map((user) =>
                 <Member user={user} key={user.id} />
@@ -57,7 +57,7 @@ class Members extends Component {
             data={this.props.invites}
             fetcher={this.props.getInvites}
             rowComponent={Invite}
-            tabLabel={this.props.intl.formatMessage({id: 'invited'})}
+            tabLabel={this.props.intl.formatMessage({id: 'tab.invited'})}
           />
         </ScrollableTabView>
         <Fab name="add" onPress={this.handleFab} />

@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
+import {Tabs, Tab} from 'material-ui/Tabs'
 import Paper from 'material-ui/Paper'
 import {List, ListItem} from 'material-ui/List'
 import Subheader from 'material-ui/Subheader'
@@ -77,50 +78,57 @@ class Members extends Component {
     ]
 
     return (
-      <AsyncContent style={{padding: '10px'}} fetcher={this.props.getInvites} data={invites}>
-        {
-          users.map((user) =>
-            <Member user={user} key={user.id} />
-          )
-        }
+      <div>
+        <Tabs>
+          <Tab label={<FormattedMessage id="tab.registered" />}>
+            {
+              users.map((user) =>
+                <Member user={user} key={user.id} />
+              )
+            }
+          </Tab>
+          <Tab label={<FormattedMessage id="tab.invited" />}>
+            <AsyncContent fetcher={this.props.getInvites} data={invites}>
+              {
+                invites.items.length > 0 &&
+                  <Paper style={{margin: '15px 10px'}}>
+                    <List>
+                      <Subheader>Invites send</Subheader>
+                      {
+                        invites.items.map((invite, index, arr) => {
+                          const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
+                          const inviter = users.find((user) => user.id === invite.inviter_id)
+                          if (!inviter) {
+                            return null
+                          }
+                          const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, when: invite.invited}} /></div>
+                          return (
+                            <div key={invite.email}>
+                              <ListItem disabled={true} rightIconButton={refreshButton} primaryText={invite.email} secondaryText={details} />
+                              {index < arr.length - 1 && <Divider />}
+                            </div>
+                          )
+                        })
+                      }
+                    </List>
 
-        {
-          invites.items.length > 0 &&
-            <Paper>
-              <List>
-                <Subheader>Invites send</Subheader>
-                {
-                  invites.items.map((invite, index, arr) => {
-                    const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
-                    const inviter = users.find((user) => user.id === invite.inviter_id)
-                    if (!inviter) {
-                      return null
-                    }
-                    const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, when: invite.invited}} /></div>
-                    return (
-                      <div key={invite.email}>
-                        <ListItem disabled={true} rightIconButton={refreshButton} primaryText={invite.email} secondaryText={details} />
-                        {index < arr.length - 1 && <Divider />}
-                      </div>
-                    )
-                  })
-                }
-              </List>
-
-              <Dialog title={this.state.invite.email}
-                actions={dialogActions}
-                open={this.state.openDialog}
-                onRequestClose={this.handleDialogClose}
-              >
-                <FormattedMessage id="reinvite_dialog" />
-              </Dialog>
-            </Paper>
-        }
+                    <Dialog title={this.state.invite.email}
+                      actions={dialogActions}
+                      open={this.state.openDialog}
+                      onRequestClose={this.handleDialogClose}
+                    >
+                      <FormattedMessage id="reinvite_dialog" />
+                    </Dialog>
+                  </Paper>
+              }
+            </AsyncContent>
+          </Tab>
+        </Tabs>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.MEMBERS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </AsyncContent>
+      </div>
     )
   }
 

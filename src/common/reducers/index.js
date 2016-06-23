@@ -5,6 +5,7 @@ import member from './member'
 import invite from './invite'
 import join from './join'
 import activity from './activity'
+import history from './history'
 import invites from './invites'
 import password from './password'
 import reset from './reset'
@@ -22,6 +23,7 @@ export default {
   invite,
   join,
   activity,
+  history,
   invites,
   password,
   reset,

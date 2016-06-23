@@ -33,12 +33,12 @@ export default {
   messenger_bot: 'Facebook Messenger Bot',
   not_found: 'Page not found',
   title: 'Title',
-  upcoming_events: 'Upcoming events',
-  open_polls: 'Open polls',
-  tasks_todo: 'Tasks to do',
-  history: 'Log',
-  registered: 'REGISTERED',
-  invited: 'INVITED',
+
+  // tabs
+  'tab.activity': 'WHAT\'S UP',
+  'tab.history': 'HISTORY',
+  'tab.registered': 'REGISTERED',
+  'tab.invited': 'INVITED',
 
   // html:
   sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',

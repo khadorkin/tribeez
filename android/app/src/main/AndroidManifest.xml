@@ -30,6 +30,9 @@
             <data android:scheme="https"
               android:host="tribeez.net"
               android:pathPrefix="/join" />
+            <data android:scheme="https"
+              android:host="beta.tribeez.net"
+              android:pathPrefix="/join" />
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />

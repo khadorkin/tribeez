@@ -4,11 +4,6 @@ import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative} from 'react-intl'
 
 import {Card, CardHeader, CardText} from 'material-ui/Card'
-import TextField from 'material-ui/TextField'
-import IconButton from 'material-ui/IconButton'
-import SendIcon from 'material-ui/svg-icons/content/send'
-
-import Comment from './Comment'
 
 import postComment from '../../common/actions/postComment'
 import updateComment from '../../common/actions/updateComment'
@@ -52,7 +47,7 @@ class Entry extends Component {
       values.author = author.name
     }
 
-    switch (entry.type) {
+    switch (entry.item_type) {
       case 'user':
         if (entry.item_id) {
           const inviter = users.find((u) => u.id === entry.item_id)
@@ -84,18 +79,13 @@ class Entry extends Component {
       default:
         return null
     }
-    const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
+    const title = <FormattedMessage id={`entry.${entry.item_type}.${entry.action}`} values={values} />
 
     const date = <FormattedRelative value={entry.added} />
-    const comments = (
-      <span style={{fontWeight: entry.comments.length ? 'bold' : 'normal'}}>
-        <FormattedMessage id="entry.comments" values={{num: entry.comments.length}} />
-      </span>
-    )
 
     if (infos) {
       infos = (
-        <CardText expandable={true}>
+        <CardText>
           {infos}
         </CardText>
       )
@@ -103,28 +93,12 @@ class Entry extends Component {
 
     return (
       <Card className={css.container}>
-        <CardHeader title={title} subtitle={<span>{date} — {comments}</span>}
+        <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
           avatar={gravatar(author)}
-          actAsExpander={true} showExpandableButton={true}
         />
         {infos}
-        <CardText expandable={true} className={css.comments}>
-          {
-            entry.comments.map((comment) =>
-              <Comment comment={comment} key={comment.id} />
-            )
-          }
-          <form onSubmit={this.handleSubmitComment}>
-            <TextField value={this.props.boxComments[entry.id]}
-              onChange={this.handleCommentChange}
-              hintText={<FormattedMessage id="comment" />}
-              autoComplete="off"
-            />
-            <IconButton type="submit" className={css.button}><SendIcon /></IconButton>
-          </form>
-        </CardText>
       </Card>
     )
   }

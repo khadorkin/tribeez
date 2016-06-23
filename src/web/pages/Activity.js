@@ -3,88 +3,68 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 
+import {Tabs, Tab} from 'material-ui/Tabs'
+
 import AsyncContent from '../hoc/AsyncContent'
 
 import Entry from '../components/Entry'
-import Event from '../components/Event'
-import Poll from '../components/Poll'
-import Task from '../components/Task'
 import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../../common/actions/getActivity'
-
-const h3style = {
-  margin: '20px 10px 0',
-  fontWeight: 300,
-}
+import getHistory from '../../common/actions/getHistory'
 
 class Activity extends Component {
 
-  render() {
-    const {activity: {items, polls, events, tasks}} = this.props
-
-    return (
-      <AsyncContent fetcher={this.props.getActivity} data={this.props.activity}>
-        {
-          tasks.length > 0 && <h3 style={h3style}><FormattedMessage id="tasks_todo" /></h3>
-        }
-
-        {
-          tasks.map((task) =>
-            <Task task={task} key={task.id} />
-          )
-        }
-
-        {
-          polls.length > 0 && <h3 style={h3style}><FormattedMessage id="open_polls" /></h3>
-        }
-
-        {
-          polls.map((poll) =>
-            <Poll poll={poll} key={poll.id} />
-          )
-        }
-
-        {
-          events.length > 0 && <h3 style={h3style}><FormattedMessage id="upcoming_events" /></h3>
-        }
-
-        {
-          events.map((event) =>
-            <Event event={event} key={event.id} />
-          )
-        }
-
-        {
-          items.length > 0 && (polls.length > 0 || events.length > 0 || tasks.length > 0) && <h3 style={h3style}><FormattedMessage id="history" /></h3>
-        }
-
-        {
-          items.map((entry) =>
-            <Entry entry={entry} key={entry.id} />
-          )
-        }
-
-        <SpeedDial />
-      </AsyncContent>
-    )
+  componentWillMount() {
+    this.props.getActivity()
   }
 
+  render() {
+    const {activity, history} = this.props
+
+    return (
+      <div>
+        <Tabs>
+          <Tab label={<FormattedMessage id="tab.activity" />}>
+            {
+              activity.items.map((item, index) =>
+                <div style={{margin: '15px 10px 0', TODO: true}} key={index}>{item.type}</div>
+              )
+            }
+          </Tab>
+          <Tab label={<FormattedMessage id="tab.history" />}>
+            <AsyncContent fetcher={this.props.getHistory} data={this.props.history}>
+              {
+                history.items.map((entry) =>
+                  <Entry entry={entry} key={entry.id} />
+                )
+              }
+            </AsyncContent>
+          </Tab>
+        </Tabs>
+        <SpeedDial />
+      </div>
+    )
+  }
 }
 
 Activity.propTypes = {
   // redux state:
   activity: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   // action creators:
   getActivity: PropTypes.func.isRequired,
+  getHistory: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   activity: state.activity,
+  history: state.history,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getActivity,
+  getHistory,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity)

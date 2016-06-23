@@ -3,6 +3,7 @@ import {Switch, View, Text, StyleSheet} from 'react-native'
 
 class TaskUser extends Component {
   static propTypes = {
+    // from parent form:
     user: PropTypes.object.isRequired,
     checked: PropTypes.object.isRequired,
   }
@@ -33,11 +34,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 })
-
-TaskUser.propTypes = {
-  // from parent form:
-  user: PropTypes.object,
-  checked: PropTypes.object.isRequired,
-}
 
 export default TaskUser

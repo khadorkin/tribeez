@@ -1,33 +1,34 @@
 import api from '../utils/api'
 
 import {
-  GET_ACTIVITY_REQUEST,
-  GET_ACTIVITY_SUCCESS,
-  GET_ACTIVITY_FAILURE,
+  GET_HISTORY_REQUEST,
+  GET_HISTORY_SUCCESS,
+  GET_HISTORY_FAILURE,
 } from '../constants/actions'
 
-export default () => {
+export default (page = 0) => {
   return function(dispatch) {
     dispatch({
-      type: GET_ACTIVITY_REQUEST,
+      type: GET_HISTORY_REQUEST,
     })
-    api.get('activity')
+    api.get('history', {page})
       .then((response) => {
         if (response.error) {
           dispatch({
-            type: GET_ACTIVITY_FAILURE,
+            type: GET_HISTORY_FAILURE,
             error: response.error,
           })
         } else {
           dispatch({
-            type: GET_ACTIVITY_SUCCESS,
+            type: GET_HISTORY_SUCCESS,
             data: response,
+            page,
           })
         }
       })
       .catch((err) => {
         dispatch({
-          type: GET_ACTIVITY_FAILURE,
+          type: GET_HISTORY_FAILURE,
           error: err.message,
         })
       })
