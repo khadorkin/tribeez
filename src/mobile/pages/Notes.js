@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet, Platform, UIManager} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -13,6 +13,10 @@ import Fab from '../components/Fab'
 import getNotes from '../../common/actions/getNotes'
 import postNote from '../../common/actions/postNote'
 import moveNote from '../../common/actions/moveNote'
+
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+}
 
 class Notes extends Component {
   static propTypes = {
@@ -72,6 +76,7 @@ class Notes extends Component {
           data={notes.items}
           renderRow={this.renderRow}
           onRowMoved={this.handleMove}
+          keyboardShouldPersistTaps={true}
         />
         <Fab name="add" onPress={this.handleFab} />
       </View>

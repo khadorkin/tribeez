@@ -37,16 +37,17 @@ project.xcworkspace
 
 # Android/IJ
 #
+*.iml
 .idea
 .gradle
 local.properties
 
-# Node.js
+# node.js
 #
 node_modules/
 npm-debug.log
 
-# Buck
+# BUCK
 buck-out/
 \.buckd/
 android/app/libs

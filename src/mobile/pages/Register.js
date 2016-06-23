@@ -6,7 +6,7 @@ import RegisterForm from '../forms/Register'
 class Register extends Component {
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <RegisterForm />
       </ScrollView>
     )

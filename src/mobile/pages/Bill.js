@@ -10,7 +10,7 @@ class Bill extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <BillForm current={this.props.edit} />
       </ScrollView>
     )

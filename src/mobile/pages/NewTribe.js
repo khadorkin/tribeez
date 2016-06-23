@@ -6,7 +6,7 @@ import TribeForm from '../forms/Tribe'
 class NewTribe extends Component {
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <TribeForm type="create" />
       </ScrollView>
     )

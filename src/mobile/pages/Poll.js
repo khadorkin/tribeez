@@ -10,7 +10,7 @@ class Poll extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <PollForm current={this.props.edit} />
       </ScrollView>
     )

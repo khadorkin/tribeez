@@ -10,7 +10,7 @@ class Event extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <EventForm current={this.props.edit} />
       </ScrollView>
     )

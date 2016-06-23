@@ -6,7 +6,7 @@ import ProfileForm from '../forms/Profile'
 class Profile extends Component {
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <ProfileForm />
       </ScrollView>
     )

@@ -6,7 +6,7 @@ import InviteForm from '../forms/Invite'
 class Invite extends Component {
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <InviteForm />
       </ScrollView>
     )

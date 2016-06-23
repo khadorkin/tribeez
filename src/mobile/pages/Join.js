@@ -21,7 +21,7 @@ class Join extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <JoinForm token={this.props.item} />
       </ScrollView>
     )

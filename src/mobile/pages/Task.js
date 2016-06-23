@@ -10,7 +10,7 @@ class Task extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <TaskForm current={this.props.edit} />
       </ScrollView>
     )
