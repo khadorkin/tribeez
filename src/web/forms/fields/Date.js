@@ -92,7 +92,7 @@ class DatePickerWrapper extends Component {
 
     const containerStyle = {display: 'flex', flexWrap: 'wrap', marginRight: -16}
     const itemStyle = {flexBasis: 250, flexGrow: 1, marginRight: 16}
-    const clearStyle = {float: 'right', marginTop: '-57px', marginRight: '-9px'}
+    const clearStyle = {float: 'right', marginTop: '-67px', marginRight: '-9px'}
 
     return (
       <div style={containerStyle}>

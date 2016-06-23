@@ -6,6 +6,21 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import styles from '../styles'
 
+const isFieldModified = (field) => {
+  if (field.name) {
+    if ((field.value || '') !== (field.initialValue || '')) {
+      return true
+    }
+  } else { // => deep field (array or map) => recurse on each key
+    for (const subfield in field) {
+      if (isFieldModified(field[subfield])) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 class Form extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +36,7 @@ class Form extends Component {
   modified() {
     const {fields} = this.props
     for (const field in fields) {
-      if ((fields[field].value || '') !== (fields[field].initialValue || '')) {
+      if (isFieldModified(fields[field])) {
         return true
       }
     }

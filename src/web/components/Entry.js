@@ -1,33 +1,14 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative} from 'react-intl'
 
 import {Card, CardHeader, CardText} from 'material-ui/Card'
-
-import postComment from '../../common/actions/postComment'
-import updateComment from '../../common/actions/updateComment'
 
 import gravatar from '../../common/utils/gravatar'
 
 import css from './Entry.css'
 
 class Entry extends Component {
-  constructor(props) {
-    super(props)
-    this.handleCommentChange = this.handleCommentChange.bind(this)
-    this.handleSubmitComment = this.handleSubmitComment.bind(this)
-  }
-
-  handleCommentChange(event) {
-    this.props.updateComment(this.props.entry.id, event.target.value)
-  }
-
-  handleSubmitComment(event) {
-    event.preventDefault()
-    const id = this.props.entry.id
-    this.props.postComment(id, this.props.boxComments[id])
-  }
 
   render() {
     const {entry, users, uid} = this.props
@@ -107,22 +88,13 @@ class Entry extends Component {
 
 Entry.propTypes = {
   entry: PropTypes.object.isRequired,
-  boxComments: PropTypes.object.isRequired,
   users: PropTypes.array.isRequired,
   uid: PropTypes.number,
-  postComment: PropTypes.func.isRequired,
-  updateComment: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  boxComments: state.activity.boxComments,
   users: state.member.tribe.users,
   uid: state.member.user.id,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  postComment,
-  updateComment,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Entry)
+export default connect(mapStateToProps)(Entry)
