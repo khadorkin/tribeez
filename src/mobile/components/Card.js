@@ -21,7 +21,7 @@ class Card extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>{item.type}</Text>
+        <Text>{item[item.type].length || 'a'} {item.type}</Text>
       </View>
     )
   }

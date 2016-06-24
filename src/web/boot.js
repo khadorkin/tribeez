@@ -63,7 +63,7 @@ if (Array.prototype.includes) {
   })
 }
 
-if (!String.prototype.startsWith) {
+if (String.prototype.startsWith) {
   loaded()
 } else {
   require.ensure(['string.prototype.startswith'], (require) => {
