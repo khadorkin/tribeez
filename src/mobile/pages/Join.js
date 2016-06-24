@@ -10,19 +10,19 @@ import getInvite from '../../common/actions/getInvite'
 class Join extends Component {
   static propTypes = {
     // from parent:
-    item: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
     // action creators:
     getInvite: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
-    this.props.getInvite(this.props.item)
+    this.props.getInvite(this.props.token)
   }
 
   render() {
     return (
       <ScrollView keyboardShouldPersistTaps={true}>
-        <JoinForm token={this.props.item} />
+        <JoinForm token={this.props.token} />
       </ScrollView>
     )
   }

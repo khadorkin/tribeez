@@ -88,7 +88,7 @@ class App extends Component {
         const join = url.match(/\/join\/(\w+)/)
         if (join) {
           const route = routes.JOIN
-          route.item = join[1]
+          route.token = join[1]
           router.push(route)
           return
         }
@@ -155,6 +155,9 @@ class App extends Component {
   renderScene(route, navigator) {
     router.update(route, navigator)
     const props = {}
+    if (route.token) {
+      props.token = route.token
+    }
     if (route.item) {
       props.id = route.item.id
     }
