@@ -15,7 +15,7 @@ import getHistory from '../../common/actions/getHistory'
 
 class Activity extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getActivity()
   }
 

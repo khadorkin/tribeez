@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import Fab from '../components/Fab'
 import FormattedNumber from '../components/FormattedNumber'
 import FormattedDate from '../components/FormattedDate'
+import Log from '../components/Log'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -57,7 +58,7 @@ class BillDetails extends Component {
               )
             })
           }
-          <View style={styles.spacer} />
+          <Log type="bill" id={bill.id} />
         </ScrollView>
         <Fab name="edit" onPress={this.handleFab} />
       </View>
@@ -73,9 +74,6 @@ const styles = StyleSheet.create({
   },
   info: {
     margin: 10,
-  },
-  spacer: {
-    height: 80,
   },
 })
 

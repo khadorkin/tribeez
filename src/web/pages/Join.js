@@ -10,7 +10,7 @@ import JoinForm from '../forms/Join'
 
 class Join extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getInvite(this.props.params.token)
   }
 

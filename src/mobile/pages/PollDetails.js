@@ -9,6 +9,7 @@ import {connect} from 'react-redux'
 import Fab from '../components/Fab'
 import FormattedDate from '../components/FormattedDate'
 import Button from '../components/Button'
+import Log from '../components/Log'
 
 import postVote from '../../common/actions/postVote'
 import routes from '../../common/routes'
@@ -137,7 +138,7 @@ class PollDetails extends Component {
           <Text style={styles.info}>Added by {author.name}</Text>
           <Text style={styles.info}>{poll.description}</Text>
           {body}
-          <View style={styles.spacer} />
+          <Log type="poll" id={poll.id} />
         </ScrollView>
         {
           //TODO: allow modifying answered polls? (backend)
@@ -186,9 +187,6 @@ const styles = StyleSheet.create({
   },
   actions: {
     alignItems: 'center',
-  },
-  spacer: {
-    height: 80,
   },
 })
 

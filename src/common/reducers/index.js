@@ -16,6 +16,7 @@ import upcomingevents from './upcomingevents'
 import pastevents from './pastevents'
 import polls from './polls'
 import tasks from './tasks'
+import log from './log'
 
 export default {
   app,
@@ -36,4 +37,5 @@ export default {
   pastevents,
   polls,
   tasks,
+  log,
 }

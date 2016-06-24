@@ -16,7 +16,7 @@ class PollForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // when accessing directly to /poll/:id
     if (!this.props.poll && this.props.id) {
       this.props.getPoll(this.props.id)

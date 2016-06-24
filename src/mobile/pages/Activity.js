@@ -26,7 +26,7 @@ class Activity extends Component {
     getHistory: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getActivity()
   }
 

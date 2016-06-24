@@ -16,7 +16,7 @@ class EventForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // when accessing directly to /event/:id
     if (!this.props.event && this.props.id) {
       this.props.getEvent(this.props.id)

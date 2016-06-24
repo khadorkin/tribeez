@@ -1,34 +1,34 @@
 import api from '../utils/api'
 
 import {
-  COMMENT_REQUEST,
-  COMMENT_SUCCESS,
-  COMMENT_FAILURE,
+  GET_LOG_REQUEST,
+  GET_LOG_SUCCESS,
+  GET_LOG_FAILURE,
 } from '../constants/actions'
 
-export default (type, id, content) => {
+export default (type, id) => {
   return function(dispatch) {
     dispatch({
-      type: COMMENT_REQUEST,
+      type: GET_LOG_REQUEST,
     })
-    api.post('comment', {type, id, content})
+    api.get('log', {type, id})
       .then((response) => {
         if (response.error) {
           dispatch({
-            type: COMMENT_FAILURE,
+            type: GET_LOG_FAILURE,
             error: response.error,
           })
         } else {
           dispatch({
-            type: COMMENT_SUCCESS,
+            type: GET_LOG_SUCCESS,
             data: response,
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
-          type: COMMENT_FAILURE,
-          error: 'other',
+          type: GET_LOG_FAILURE,
+          error: err.message,
         })
       })
   }

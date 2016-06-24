@@ -192,6 +192,8 @@ const fr = {
   'submit.task.update': 'Modifier la tâche',
   // leave hook:
   confirm_leave_form: 'Le formulaire a été modifié : voulez-vous vraiment abandonner vos entrées ?',
+  // Comment box:
+  comment: 'Votre commentaire...',
 
   // Members
   'add_member': 'Ajouter un membre',
@@ -220,7 +222,6 @@ const fr = {
   'entry.task.update': '{author, select, _you_ {Vous avez} other {{author} a}} modifié la tâche "{name}"',
   'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
-  comment: 'Votre commentaire...',
 
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',

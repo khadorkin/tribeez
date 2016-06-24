@@ -15,7 +15,7 @@ class Join extends Component {
     getInvite: PropTypes.func.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getInvite(this.props.token)
   }
 

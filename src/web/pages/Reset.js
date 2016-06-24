@@ -10,7 +10,7 @@ import ResetForm from '../forms/Reset'
 
 class Reset extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getReset(this.props.params.token)
   }
 

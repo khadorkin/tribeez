@@ -30,7 +30,7 @@ class AsyncContent extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.uid) {
       this.uid = this.props.uid
 

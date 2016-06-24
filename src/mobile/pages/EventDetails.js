@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Fab from '../components/Fab'
 import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
+import Log from '../components/Log'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -90,7 +91,7 @@ class EventDetails extends Component {
                 )
               })
           }
-          <View style={styles.spacer} />
+          <Log type="event" id={event.id} />
         </ScrollView>
         <Fab name="edit" onPress={this.handleFab} />
       </View>
@@ -111,13 +112,10 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
-  spacer: {
-    height: 80,
-  },
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  event: state.events.items.find((i) => i.id === ownProps.id),
+  event: state.upcomingevents.items.find((i) => i.id === ownProps.id) || state.pastevents.items.find((i) => i.id === ownProps.id),
   users: state.member.tribe.users,
 })
 

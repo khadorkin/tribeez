@@ -191,6 +191,8 @@ export default {
   'submit.task.update': 'Update task',
   // leave hook:
   confirm_leave_form: 'The form has been modified. Do you want to leave without finishing?',
+  // Comment box:
+  comment: 'Your comment...',
 
   // Members
   'add_member': 'Add a member',
@@ -219,7 +221,6 @@ export default {
   'entry.task.update': '{author, select, _you_ {You} other {{author}}} modified the "{name}" task',
   'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
-  comment: 'Your comment...',
 
   // Bills
   'bill.mypart': 'Your share is {amount, number, money}',

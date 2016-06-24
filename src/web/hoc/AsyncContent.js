@@ -16,14 +16,11 @@ class AsyncContent extends Component {
     this.handleLoad = this.handleLoad.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.uid) {
       this.uid = this.props.uid
       this.handleLoad()
     }
-  }
-
-  componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
   }
 

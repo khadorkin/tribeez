@@ -8,6 +8,7 @@ import Fab from '../components/Fab'
 import FormattedDate from '../components/FormattedDate'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
+import Log from '../components/Log'
 
 import postDone from '../../common/actions/postDone'
 import routes from '../../common/routes'
@@ -82,7 +83,7 @@ class TaskDetails extends Component {
               </View>
             )
           }
-          <View style={styles.spacer} />
+          <Log type="task" id={task.id} />
         </ScrollView>
         <Fab name="edit" onPress={this.handleFab} />
       </View>
@@ -101,9 +102,6 @@ const styles = StyleSheet.create({
   },
   actions: {
     alignItems: 'center',
-  },
-  spacer: {
-    height: 80,
   },
 })
 

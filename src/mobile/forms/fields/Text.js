@@ -12,19 +12,14 @@ class TextField extends Component {
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     touched: PropTypes.bool.isRequired,
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    onChange: PropTypes.func.isRequired,
     multiline: PropTypes.bool,
     errorIsObject: PropTypes.bool,
   }
 
   constructor(props) {
     super(props)
-    this.state = {
-      height: 0,
-    }
     this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   ref(element) {
@@ -33,13 +28,6 @@ class TextField extends Component {
 
   focus() {
     this.element.focus()
-  }
-
-  handleChange(event) {
-    this.props.onChange(event)
-    this.setState({
-      height: event.nativeEvent.contentSize.height,
-    })
   }
 
   render() {

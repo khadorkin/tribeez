@@ -18,7 +18,7 @@ class TaskForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // when accessing directly to /task/:id
     if (!this.props.task && this.props.id) {
       this.props.getTask(this.props.id)

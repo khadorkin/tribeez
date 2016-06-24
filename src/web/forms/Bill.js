@@ -25,7 +25,7 @@ class BillForm extends Component {
     this.handleMethodChange = this.handleMethodChange.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // when accessing directly to /bill/:id
     if (!this.props.bill && this.props.id) {
       this.props.getBill(this.props.id)
