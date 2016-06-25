@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {DrawerLayoutAndroid, Navigator, BackAndroid, Linking, StyleSheet, View, Text} from 'react-native'
+import {DrawerLayoutAndroid, Navigator, BackAndroid, Linking, StyleSheet, View, Text, Alert} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -19,16 +19,25 @@ import router from '../common/router'
 import colors from '../common/constants/colors'
 import getMember from '../common/actions/getMember'
 import {message} from '../common/actions/app'
+import deleteBill from '../common/actions/deleteBill'
+import deleteEvent from '../common/actions/deleteEvent'
+import deletePoll from '../common/actions/deletePoll'
+import deleteTask from '../common/actions/deleteTask'
 
 class App extends Component {
   static propTypes = {
-    getMember: PropTypes.func.isRequired,
-    message: PropTypes.func.isRequired,
+    // from redux store:
     uid: PropTypes.number,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     currency: PropTypes.string,
-    telegram_token: PropTypes.string,
+    // action creators:
+    getMember: PropTypes.func.isRequired,
+    message: PropTypes.func.isRequired,
+    deleteBill: PropTypes.func.isRequired,
+    deleteEvent: PropTypes.func.isRequired,
+    deletePoll: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -42,7 +51,6 @@ class App extends Component {
     this.renderScene = this.renderScene.bind(this)
     this.handleDrawerOpened = this.handleDrawerOpened.bind(this)
     this.handleDrawerClosed = this.handleDrawerClosed.bind(this)
-    this.handleTelegram = this.handleTelegram.bind(this)
 
     this.routeMapper = {
       LeftButton: (/*route, navigator, index, navState*/) => {
@@ -57,10 +65,11 @@ class App extends Component {
           return <FormattedMessage style={styles.navTitle} id={route.name} />
         }
       },
-      RightButton: (/*route, navigator, index, navState*/) => {
-        return this.props.telegram_token && (
-          <IconButton family="evil" name="sc-telegram" color="white" onPress={this.handleTelegram} style={styles.telegram} />
-        )
+      RightButton: (route/*, navigator, index, navState*/) => {
+        if (route.type === 'details') {
+          return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+        }
+        return null
       },
     }
   }
@@ -140,12 +149,30 @@ class App extends Component {
     })
   }
 
-  handleTelegram() {
-    Linking
-      .openURL('tg://resolve?domain=' + config.telegram_bot_name + '&start=' + this.props.telegram_token)
-      .catch(() => {
-        Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.telegram_token)
-      })
+  handleDelete(route) {
+    const {messages} = this.props
+    Alert.alert(route.item.name, messages.delete_confirm, [
+      {text: messages.cancel},
+      {text: messages.delete, onPress: this.handleConfirmDelete.bind(this, route)},
+    ])
+  }
+
+  handleConfirmDelete(route) {
+    switch (route.name) {
+      case 'bill':
+        this.props.deleteBill(route.item.id)
+        break
+      case 'event':
+        this.props.deleteEvent(route.item.id)
+        break
+      case 'poll':
+        this.props.deletePoll(route.item.id)
+        break
+      case 'task':
+        this.props.deleteTask(route.item.id)
+        break
+    }
+    router.pop()
   }
 
   renderNavigation() {
@@ -217,9 +244,6 @@ const styles = StyleSheet.create({
   hamburger: {
     padding: 15,
   },
-  telegram: {
-    padding: 17,
-  },
   navBar: {
     backgroundColor: colors.main,
   },
@@ -228,11 +252,15 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     fontWeight: '500',
     fontSize: 16,
+    marginRight: 56, // to not overlap the right icon
   },
   page: {
     marginTop: 56,
     flex: 1,
     backgroundColor: colors.background,
+  },
+  rightIcon: {
+    padding: 15,
   },
 })
 
@@ -241,12 +269,15 @@ const mapStateToProps = (state) => ({
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
   currency: state.member.tribe.currency,
-  telegram_token: state.member.user.telegram_token,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getMember,
   message,
+  deleteBill,
+  deleteEvent,
+  deletePoll,
+  deleteTask,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

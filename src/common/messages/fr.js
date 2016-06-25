@@ -55,6 +55,7 @@ const fr = {
   cancel: 'Annuler',
   close: 'Fermer',
   delete_dialog: 'Voulez-vous vraiment supprimer {type, select, bill {cette dépense} event {cet évènement} note {cette note} poll {ce sondage} task {cette tâche}} ?',
+  delete_confirm: 'Voulez-vous vraiment supprimer ceci ?',
   reinvite_title: 'Réinviter',
   reinvite_body: 'Renvoyer une invitation à l’adresse {email} ?',
   vote_again: 'Re-voter',
@@ -226,6 +227,7 @@ const fr = {
   'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.task.comment': '{author, select, _you_ {Vous avez} other {{author} a}} commenté la tâche "{name}" :',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
+  telegram: 'Vous utilisez Telegram ? Discutez avec le TribeezBot !',
 
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',
@@ -251,4 +253,4 @@ const fr = {
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
 }
 
-export default {...en, ...fr} // to have English as a fallback
+export default {...en, ...fr} // to have English as a fallback //TODO: avoid
