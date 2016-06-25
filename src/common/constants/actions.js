@@ -117,10 +117,6 @@ export const GET_POLL_FAILURE = 'GET_POLL_FAILURE'
 export const NEW_POLL = 'NEW_POLL' // form
 export const UPDATE_POLL = 'UPDATE_POLL' // form
 
-export const PUT_POLL_REQUEST = 'PUT_POLL_REQUEST'
-export const PUT_POLL_SUCCESS = 'PUT_POLL_SUCCESS' // toggle active/inactive
-export const PUT_POLL_FAILURE = 'PUT_POLL_FAILURE'
-
 export const DELETE_POLL_REQUEST = 'DELETE_POLL_REQUEST'
 export const DELETE_POLL = 'DELETE_POLL'
 export const DELETE_POLL_FAILURE = 'DELETE_POLL_FAILURE'

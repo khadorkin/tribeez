@@ -5,7 +5,6 @@ import {
   GET_POLL_SUCCESS,
   NEW_POLL,
   UPDATE_POLL,
-  PUT_POLL_SUCCESS,
   DELETE_POLL,
   POST_VOTE_SUCCESS,
   LOGOUT_SUCCESS,
@@ -71,20 +70,6 @@ export default (state = initialState, action = null) => {
     }
     case DELETE_POLL: {
       const items = state.items.filter((poll) => poll.id !== action.data.id)
-      return {
-        ...state,
-        items,
-      }
-    }
-
-    // toggle active:
-    case PUT_POLL_SUCCESS: {
-      const items = state.items.map((poll) => {
-        if (poll.id === action.data.id) {
-          return {...poll, active: action.data.active}
-        }
-        return poll
-      })
       return {
         ...state,
         items,

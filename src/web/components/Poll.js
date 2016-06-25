@@ -12,7 +12,6 @@ import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import EditButton from 'material-ui/svg-icons/image/edit'
 import DeleteButton from 'material-ui/svg-icons/action/delete'
-import Toggle from 'material-ui/Toggle'
 import Paper from 'material-ui/Paper'
 import * as colors from 'material-ui/styles/colors'
 
@@ -22,7 +21,6 @@ import pollAnswers from '../../common/utils/pollAnswers'
 import routes from '../routes'
 
 import postVote from '../../common/actions/postVote'
-import putPoll from '../../common/actions/putPoll'
 
 import css from './Entry.css'
 
@@ -36,7 +34,6 @@ class Poll extends Component {
     }
     this.handleReset = this.handleReset.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleToggle = this.handleToggle.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -75,13 +72,6 @@ class Poll extends Component {
     }
   }
 
-  handleToggle(event, active) {
-    this.props.putPoll({
-      id: this.props.poll.id,
-      active,
-    })
-  }
-
   handleDelete() {
     this.props.onDelete(this.props.poll)
   }
@@ -96,7 +86,8 @@ class Poll extends Component {
       return null
     }
 
-    const show_results = (poll.answers[this.props.uid] && !this.state.again)
+    const user_answer = poll.answers[this.props.uid]
+    const show_results = (user_answer && !this.state.again)
 
     let body
     if (show_results) {
@@ -140,7 +131,7 @@ class Poll extends Component {
     const date = <FormattedRelative value={poll.created} />
 
     return (
-      <Card className={css.container} initiallyExpanded={poll.active}>
+      <Card className={css.container} initiallyExpanded={!user_answer}>
         <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -165,7 +156,6 @@ class Poll extends Component {
         {
           this.props.onDelete && (
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20}}>
-              <Toggle toggled={poll.active} onToggle={this.handleToggle} style={{display: 'inline-block', width: 'auto', padding: '14px 12px 10px', verticalAlign: 'top'}} />
               {
                 total === 0 && (
                   <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
@@ -195,7 +185,6 @@ Poll.propTypes = {
   currency: PropTypes.string,
   // action creators:
   postVote: PropTypes.func.isRequired,
-  putPoll: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -206,7 +195,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   postVote,
-  putPoll,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Poll)

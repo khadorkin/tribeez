@@ -11,7 +11,6 @@ import {
   NEW_POLL,
   UPDATE_POLL,
   DELETE_POLL,
-  PUT_POLL_SUCCESS,
   NEW_TASK,
   UPDATE_TASK,
   DELETE_TASK,
@@ -76,7 +75,6 @@ export default (state = initialState, action = null) => {
     case NEW_TASK:
     case UPDATE_TASK:
     case DELETE_TASK:
-    case PUT_POLL_SUCCESS:
       return {
         ...state,
         items: [createEntry(action), ...state.items],

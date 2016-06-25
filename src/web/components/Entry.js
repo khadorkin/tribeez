@@ -60,8 +60,12 @@ class Entry extends Component {
       default:
         return null
     }
-    const title = <FormattedMessage id={`entry.${entry.item_type}.${entry.action}`} values={values} />
 
+    if (entry.action === 'comment') {
+      infos = <span>{entry.data.text}</span>
+    }
+
+    const title = <FormattedMessage id={`entry.${entry.item_type}.${entry.action}`} values={values} />
     const date = <FormattedRelative value={entry.added} />
 
     if (infos) {
