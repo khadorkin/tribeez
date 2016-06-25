@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -10,6 +11,7 @@ import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
+import getEvent from '../../common/actions/getEvent'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
@@ -28,13 +30,21 @@ class EventDetails extends Component {
     // from parent:
     id: PropTypes.number.isRequired,
     // from redux:
-    event: PropTypes.object.isRequired,
+    event: PropTypes.object,
     users: PropTypes.array.isRequired,
+    // action creators:
+    getEvent: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
     this.handleFab = this.handleFab.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.event || this.props.event.id !== this.props.id) {
+      this.props.getEvent(this.props.id)
+    }
   }
 
   handlePress(url) {
@@ -49,6 +59,10 @@ class EventDetails extends Component {
 
   render() {
     const {event, users} = this.props
+
+    if (!event) {
+      return null // loading
+    }
 
     const host = users.find((u) => u.id === event.host_id)
 
@@ -115,8 +129,14 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  event: state.upcomingevents.items.find((i) => i.id === ownProps.id) || state.pastevents.items.find((i) => i.id === ownProps.id),
+  event: state.upcomingevents.items.find((i) => i.id === ownProps.id)
+      || state.pastevents.items.find((i) => i.id === ownProps.id)
+      || state.events.current,
   users: state.member.tribe.users,
 })
 
-export default connect(mapStateToProps)(EventDetails)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getEvent,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventDetails)

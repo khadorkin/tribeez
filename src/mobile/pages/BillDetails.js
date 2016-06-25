@@ -2,12 +2,14 @@ import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, Text, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Fab from '../components/Fab'
 import FormattedNumber from '../components/FormattedNumber'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
+import getBill from '../../common/actions/getBill'
 import routes from '../../common/routes'
 import router from '../../common/router'
 
@@ -16,14 +18,22 @@ class BillDetails extends Component {
     // from parent:
     id: PropTypes.number.isRequired,
     // from redux:
-    bill: PropTypes.object.isRequired,
+    bill: PropTypes.object,
     users: PropTypes.array.isRequired,
     currency: PropTypes.string.isRequired,
+    // action creators:
+    getBill: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
     this.handleFab = this.handleFab.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.bill || this.props.bill.id !== this.props.id) {
+      this.props.getBill(this.props.id)
+    }
   }
 
   handleFab() {
@@ -34,6 +44,10 @@ class BillDetails extends Component {
 
   render() {
     const {bill, users, currency} = this.props
+
+    if (!bill) {
+      return null // loading
+    }
 
     const payer = users.find((u) => u.id === bill.payer_id)
 
@@ -78,9 +92,14 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  bill: state.bills.items.find((i) => i.id === ownProps.id),
+  bill: state.bills.items.find((i) => i.id === ownProps.id)
+     || state.bills.current,
   users: state.member.tribe.users,
   currency: state.member.tribe.currency,
 })
 
-export default connect(mapStateToProps)(BillDetails)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getBill,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(BillDetails)

@@ -78,7 +78,7 @@ class Log extends Component {
           items.map((item) => {
             const author = usersById[item.user_id]
             if (item.action === 'comment') {
-              return <Text key={item.action + item.id}>Comment by {author.name}: {item.data}</Text>
+              return <Text key={item.action + item.id}>Comment by {author.name}: {item.data.text}</Text>
             } else {
               return <Text key={item.action + item.id}>Entry by {author.name}: {item.action}</Text>
             }

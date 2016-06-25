@@ -6,6 +6,8 @@ import {connect} from 'react-redux'
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
 
+import routes from '../../common/routes'
+import router from '../../common/router'
 import colors from '../../common/constants/colors'
 import gravatar from '../../common/utils/gravatar'
 
@@ -19,8 +21,22 @@ class Entry extends Component {
     uid: PropTypes.number,
   }
 
+  constructor(props) {
+    super(props)
+    this.handleTouch = this.handleTouch.bind(this)
+  }
+
   handleTouch() {
-    //TODO: navigate to item details
+    const {item} = this.props
+    const route = routes[item.item_type.toUpperCase()]
+    if (!route) {
+      return
+    }
+    route.item = {
+      id: item.item_id,
+      name: item.data.name,
+    }
+    router.push(route)
   }
 
   render() {
@@ -38,19 +54,26 @@ class Entry extends Component {
       values.author = author.name
     }
 
+    let infos
+
     switch (item.item_type) {
       case 'user':
         if (item.item_id) {
-          //TODO: show inviter somewhere
-          // const inviter = users.find((u) => u.id === item.item_id)
-          // if (inviter) {
-          //   infos = <FormattedMessage id={`entry.user.${item.action}.infos`} values={{inviter: inviter.name}} />
-          // }
+          const inviter = users.find((u) => u.id === item.item_id)
+          if (inviter) {
+            infos = <FormattedMessage id={`entry.user.${item.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
+          }
         }
         break
       case 'bill':
         values.name = item.data.name
         values.amount = item.data.amount
+        const user_part = item.data.parts.find((part) => part.user_id === uid)
+        if (user_part) {
+          infos = <FormattedMessage id={`entry.bill.${item.action}.infos`} values={{amount: user_part.amount}} style={styles.infos} />
+        } else {
+          infos = <FormattedMessage id={`entry.bill.${item.action}.stranger`} style={styles.infos} />
+        }
         break
       case 'poll':
         values.name = item.data.name
@@ -66,6 +89,10 @@ class Entry extends Component {
         return null
     }
 
+    if (item.action === 'comment') {
+      infos = <Text style={styles.infos}>{item.data.text}</Text>
+    }
+
     const title = <FormattedMessage id={`entry.${item.item_type}.${item.action}`} values={values} />
     const date = <FormattedRelative value={item.added} />
 
@@ -78,7 +105,8 @@ class Entry extends Component {
           />
           <View style={styles.titles}>
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subtitle}>{date}</Text>
+            {infos}
+            <Text style={styles.date}>{date}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -114,23 +142,12 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primaryText,
   },
-  subtitle: {
-    color: colors.secondaryText,
-  },
-  extra: {
-    padding: 10,
-  },
   infos: {
-    marginBottom: 10,
+    color: colors.primaryText,
+    fontStyle: 'italic',
   },
-  form: {
-    flexDirection: 'row',
-  },
-  input: {
-    flex: 1,
-  },
-  submit: {
-    flex: 1,
+  date: {
+    color: colors.secondaryText,
   },
 })
 

@@ -2,6 +2,7 @@ import {
   GET_TASKS_REQUEST,
   GET_TASKS_SUCCESS,
   GET_TASKS_FAILURE,
+  GET_TASK_SUCCESS,
   NEW_TASK,
   UPDATE_TASK,
   DELETE_TASK,
@@ -14,6 +15,7 @@ const initialState = {
   error: null,
   items: [],
   pages: 0,
+  current: null, // current task being viewed or edited
 }
 
 export default (state = initialState, action = null) => {
@@ -37,6 +39,11 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: action.error,
+      }
+    case GET_TASK_SUCCESS:
+      return {
+        ...state,
+        current: action.data,
       }
 
     // from socket.io:

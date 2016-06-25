@@ -1,16 +1,17 @@
 import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Fab from '../components/Fab'
 import FormattedDate from '../components/FormattedDate'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
+import getPoll from '../../common/actions/getPoll'
 import postVote from '../../common/actions/postVote'
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -23,11 +24,13 @@ class PollDetails extends Component {
     // from parent:
     id: PropTypes.number.isRequired,
     // from redux:
-    poll: PropTypes.object.isRequired,
+    poll: PropTypes.object,
     uid: PropTypes.number.isRequired,
     users: PropTypes.array.isRequired,
     // action creators:
     postVote: PropTypes.func.isRequired,
+    // action creators:
+    getPoll: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -40,6 +43,12 @@ class PollDetails extends Component {
     this.handleVote = this.handleVote.bind(this)
     this.handleReset = this.handleReset.bind(this)
     this.handleFab = this.handleFab.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.poll || this.props.poll.id !== this.props.id) {
+      this.props.getPoll(this.props.id)
+    }
   }
 
   handleChoice(id) {
@@ -78,6 +87,10 @@ class PollDetails extends Component {
 
   render() {
     const {poll, users} = this.props
+
+    if (!poll) {
+      return null // loading
+    }
 
     const {author, total, results} = pollAnswers(poll, users)
 
@@ -191,12 +204,14 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  poll: state.polls.items.find((i) => i.id === ownProps.id),
+  poll: state.polls.items.find((i) => i.id === ownProps.id)
+     || state.polls.current,
   uid: state.member.user.id,
   users: state.member.tribe.users,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getPoll,
   postVote,
 }, dispatch)
 

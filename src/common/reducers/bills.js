@@ -15,7 +15,7 @@ const initialState = {
   items: [],
   pages: 0,
   paging: null,
-  current: null, // current bill being edited
+  current: null, // current bill being viewed or edited
 }
 
 export default (state = initialState, action = null) => {

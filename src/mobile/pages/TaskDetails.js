@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, Text, StyleSheet} from 'react-native'
-import {bindActionCreators} from 'redux'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Fab from '../components/Fab'
 import FormattedDate from '../components/FormattedDate'
@@ -10,20 +10,21 @@ import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
+import getTask from '../../common/actions/getTask'
 import postDone from '../../common/actions/postDone'
 import routes from '../../common/routes'
 import router from '../../common/router'
-//import colors from '../../common/constants/colors'
 
 class TaskDetails extends Component {
   static propTypes = {
     // from parent:
     id: PropTypes.number.isRequired,
     // from redux:
-    task: PropTypes.object.isRequired,
+    task: PropTypes.object,
     uid: PropTypes.number.isRequired,
     users: PropTypes.array.isRequired,
     // action creators:
+    getTask: PropTypes.func.isRequired,
     postDone: PropTypes.func.isRequired,
   }
 
@@ -31,6 +32,12 @@ class TaskDetails extends Component {
     super(props)
     this.handleFab = this.handleFab.bind(this)
     this.handleDone = this.handleDone.bind(this)
+  }
+
+  componentDidMount() {
+    if (!this.props.task || this.props.task.id !== this.props.id) {
+      this.props.getTask(this.props.id)
+    }
   }
 
   handleDone() {
@@ -45,6 +52,10 @@ class TaskDetails extends Component {
 
   render() {
     const {task} = this.props
+
+    if (!task) {
+      return null // loading
+    }
 
     const usersById = {}
     this.props.users.forEach((user) => {
@@ -106,12 +117,14 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  task: state.tasks.items.find((i) => i.id === ownProps.id),
+  task: state.tasks.items.find((i) => i.id === ownProps.id)
+     || state.tasks.current,
   uid: state.member.user.id,
   users: state.member.tribe.users,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getTask,
   postDone,
 }, dispatch)
 

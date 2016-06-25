@@ -14,7 +14,7 @@ const initialState = {
   error: null,
   items: [],
   pages: 0,
-  current: null, // current event being edited
+  current: null, // current event being viewed or edited
 }
 
 export default (state = initialState, action = null) => {

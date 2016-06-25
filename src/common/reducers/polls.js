@@ -17,7 +17,7 @@ const initialState = {
   items: [],
   pages: 0,
   paging: null,
-  current: null, // current poll being edited
+  current: null, // current poll being viewed or edited
 }
 
 export default (state = initialState, action = null) => {
