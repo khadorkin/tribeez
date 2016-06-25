@@ -14,6 +14,7 @@ class AsyncContent extends Component {
     data: PropTypes.object.isRequired,
     fetcher: PropTypes.func.isRequired,
     rowComponent: PropTypes.any.isRequired,
+    splitter: PropTypes.func,
   }
 
   constructor(props) {
@@ -22,22 +23,24 @@ class AsyncContent extends Component {
     this.handleLoad = this.handleLoad.bind(this)
     this.renderRow = this.renderRow.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
+    this.renderSectionHeader = this.renderSectionHeader.bind(this)
+    this.updateData = this.updateData.bind(this)
 
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
+        sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
       }),
     }
+  }
+
+  componentWillMount() {
+    this.updateData(this.props)
   }
 
   componentDidMount() {
     if (this.props.uid) {
       this.uid = this.props.uid
-
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.props.data.items),
-      })
-
       this.handleLoad()
     }
   }
@@ -48,9 +51,33 @@ class AsyncContent extends Component {
       this.handleLoad()
     }
 
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(props.data.items),
-    })
+    this.updateData(props)
+  }
+
+  updateData(props) {
+    if (!props.data.items.length) {
+      return
+    }
+
+    if (props.splitter) {
+      const blob = {}
+      const sections = []
+      props.data.items.forEach((item) => {
+        const sectionId = props.splitter(item)
+        if (!blob[sectionId]) {
+          blob[sectionId] = []
+          sections.push(sectionId)
+        }
+        blob[sectionId].push(item)
+      })
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRowsAndSections(blob, sections),
+      })
+    } else {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(props.data.items),
+      })
+    }
   }
 
   handleEndReached() {
@@ -78,6 +105,13 @@ class AsyncContent extends Component {
     )
   }
 
+  renderSectionHeader(sectionData, sectionId) {
+    if (this.props.splitter) {
+      return <Text style={styles.section}>{sectionId}</Text>
+    }
+    return null
+  }
+
   render() {
     const {error, loading, items} = this.props.data
 
@@ -100,7 +134,7 @@ class AsyncContent extends Component {
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
           renderFooter={this.renderFooter}
-          enableEmptySections={true}
+          renderSectionHeader={this.renderSectionHeader}
           style={styles.container}
           onEndReached={this.handleEndReached}
         />
@@ -117,6 +151,10 @@ const mapStateToProps = (state) => ({
 const styles = StyleSheet.create({
   container: {
     paddingTop: 4,
+  },
+  section: {
+    margin: 8,
+    alignSelf: 'center',
   },
   footer: {
     height: 80,

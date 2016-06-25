@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedDate} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
 import BigCalendar from 'react-big-calendar'
@@ -174,11 +174,11 @@ class Events extends Component {
                      let value = event[info.id]
                      if (info.date) {
                        const date = new Date(value)
+                       let suffix = ''
                        if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                         value = <FormattedMessage id="datetime" values={{date}} />
-                       } else {
-                         value = <FormattedDate value={date} day="numeric" month="long" />
+                         suffix = 'time'
                        }
+                       value = <FormattedMessage id={'date' + suffix} values={{date}} />
                      }
                      let href = null
                      if (info.link) {

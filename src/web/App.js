@@ -205,17 +205,8 @@ class App extends Component {
       />,
     ]
 
-    const formats = {
-      number: {
-        money: {
-          style: 'currency',
-          currency: this.props.currency,
-        },
-      },
-    }
-
     return (
-      <IntlProvider locale={lang} messages={this.props.messages} formats={formats}>
+      <IntlProvider locale={lang} messages={this.props.messages} formats={this.props.formats}>
         <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
           {nav}
           <AppBar title={title} zDepth={0}
@@ -260,7 +251,7 @@ App.propTypes = {
   telegram_token: PropTypes.string,
   messenger_token: PropTypes.string,
   users: PropTypes.array.isRequired,
-  currency: PropTypes.string,
+  formats: PropTypes.object,
   lang: PropTypes.string.isRequired,
   desktop: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
@@ -283,7 +274,7 @@ const mapStateToProps = (state) => ({
   telegram_token: state.member.user.telegram_token,
   messenger_token: state.member.user.messenger_token,
   users: state.member.tribe.users,
-  currency: state.member.tribe.currency,
+  formats: state.member.formats,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   height: state.app.height,

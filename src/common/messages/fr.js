@@ -44,10 +44,10 @@ const fr = {
   sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail.<br>Cliquez dessus pour choisir un nouveau mot de passe.',
 
   // dates
-  date: 'Le {date, date, long}',
-  datetime: 'Le {date, date, long} à {date, time, short}',
-  interval: 'Du {start, date, long} au {end, date, long}',
-  intervaltime: 'Du {start, date, long} à {start, time, short} au {end, date, long} à {end, time, short}',
+  date: 'Le {date, date, event}',
+  datetime: 'Le {date, date, event} à {date, time, short}',
+  interval: 'Du {start, date, event} au {end, date, event}',
+  intervaltime: 'Du {start, date, event} à {start, time, short} au {end, date, event} à {end, time, short}',
 
   // actions
   delete: 'Supprimer',
@@ -227,7 +227,7 @@ const fr = {
   'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.task.comment': '{author, select, _you_ {Vous avez} other {{author} a}} commenté la tâche "{name}" :',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
-  telegram: 'Vous utilisez Telegram ? Discutez avec le TribeezBot !',
+  telegram: 'Vous utilisez Telegram ? Discutez avec le TribeezBot !   ',
 
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',

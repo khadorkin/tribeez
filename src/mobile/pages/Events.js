@@ -3,6 +3,7 @@ import {View, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import moment from 'moment'
 
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
@@ -15,6 +16,10 @@ import router from '../../common/router'
 import colors from '../../common/constants/colors'
 import getUpcomingEvents from '../../common/actions/getUpcomingEvents'
 import getPastEvents from '../../common/actions/getPastEvents'
+
+const sectionSplitter = (event) => {
+  return moment(event.start).format('MMMM YYYY')
+}
 
 class Events extends Component {
   static propTypes = {
@@ -48,11 +53,13 @@ class Events extends Component {
             data={this.props.upcomingevents}
             fetcher={this.props.getUpcomingEvents}
             rowComponent={Event}
+            splitter={sectionSplitter}
             tabLabel="UPCOMING"
           />
           <AsyncContent
             data={this.props.pastevents}
             fetcher={this.props.getPastEvents}
+            splitter={sectionSplitter}
             rowComponent={Event}
             tabLabel="PAST"
           />

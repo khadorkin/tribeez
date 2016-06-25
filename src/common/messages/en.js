@@ -44,10 +44,10 @@ export default {
   sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',
 
   // dates
-  date: 'Le {date, date, long}',
-  datetime: 'On {date, date, long} at {date, time, short}',
-  interval: 'From {start, date, long} to {end, date, long}',
-  intervaltime: 'From {start, date, long} at {start, time, short} to {end, date, long} at {end, time, short}',
+  date: 'On {date, date, event}',
+  datetime: 'On {date, date, event} at {date, time, short}',
+  interval: 'From {start, date, event} to {end, date, event}',
+  intervaltime: 'From {start, date, event} at {start, time, short} to {end, date, event} at {end, time, short}',
 
   // actions
   delete: 'Delete',
@@ -226,7 +226,7 @@ export default {
   'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.task.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" task:',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
-  telegram: 'Using Telegram? Chat with TribeezBot!',
+  telegram: 'Using Telegram? Chat with TribeezBot!   ',
 
   // Bills
   'bill.mypart': 'Your share is {amount, number, money}',

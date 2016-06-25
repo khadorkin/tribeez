@@ -9,6 +9,21 @@ import {
   UPDATE_TRIBE_SUCCESS,
 } from '../constants/actions'
 
+const getFormats = (currency) => ({
+  number: {
+    money: {
+      style: 'currency',
+      currency,
+    },
+  },
+  date: {
+    event: {
+      month: 'long',
+      day: 'numeric',
+    },
+  },
+})
+
 const initialState = {
   loading: false,
   user: {
@@ -18,6 +33,7 @@ const initialState = {
     users: [], // todo: immutability
   },
   error: false,
+  formats: getFormats('USD'),
 }
 
 export default (state = initialState, action = null) => {
@@ -38,6 +54,7 @@ export default (state = initialState, action = null) => {
         error: false,
         user: action.user,
         tribe: action.tribe,
+        formats: getFormats(action.tribe.currency),
       }
     case GET_MEMBER_FAILURE:
       return {
@@ -95,6 +112,7 @@ export default (state = initialState, action = null) => {
         ...state,
         user,
         tribe,
+        formats: getFormats(tribe.currency),
       }
     }
 

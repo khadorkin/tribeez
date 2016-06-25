@@ -30,7 +30,7 @@ class App extends Component {
     uid: PropTypes.number,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
-    currency: PropTypes.string,
+    formats: PropTypes.object,
     // action creators:
     getMember: PropTypes.func.isRequired,
     message: PropTypes.func.isRequired,
@@ -208,17 +208,8 @@ class App extends Component {
 
     const drawerLockMode = this.props.uid ? 'unlocked' : 'locked-closed'
 
-    const formats = {
-      number: {
-        money: {
-          style: 'currency',
-          currency: this.props.currency,
-        },
-      },
-    }
-
     return (
-      <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={formats}>
+      <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={this.props.formats}>
         <DrawerLayoutAndroid
           renderNavigationView={this.renderNavigation}
           statusBarBackgroundColor={colors.main}
@@ -268,7 +259,7 @@ const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
-  currency: state.member.tribe.currency,
+  formats: state.member.formats,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
