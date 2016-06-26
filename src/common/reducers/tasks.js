@@ -17,7 +17,6 @@ const initialState = {
   loading: false,
   error: null,
   items: [],
-  pages: 0,
   current: null, // current task being viewed or edited
 }
 
@@ -35,8 +34,7 @@ export default (state = initialState, action = null) => {
         ...state,
         loading: false,
         error: null,
-        items: action.page ? [...state.items, ...action.data.items] : action.data.items,
-        pages: action.page + 1,
+        items: action.data.items,
       }
     case GET_TASK_SUCCESS:
       return {

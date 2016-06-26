@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, Linking, StyleSheet} from 'react-native'
+import {View, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -31,10 +31,7 @@ class Activity extends Component {
   constructor(props) {
     super(props)
     this.handleTelegram = this.handleTelegram.bind(this)
-  }
-
-  componentDidMount() {
-    this.props.getActivity()
+    this.renderFooter = this.renderFooter.bind(this)
   }
 
   handleTelegram() {
@@ -43,6 +40,20 @@ class Activity extends Component {
       .catch(() => {
         Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.telegram_token)
       })
+  }
+
+  renderFooter() {
+    return (
+      <IconButton
+        family="evil"
+        name="sc-telegram"
+        color="gray"
+        onPress={this.handleTelegram}
+        style={styles.telegram}
+      >
+        <FormattedMessage id="telegram" />
+      </IconButton>
+    )
   }
 
   render() {
@@ -56,22 +67,13 @@ class Activity extends Component {
           tabBarUnderlineColor="white"
           tabBarBackgroundColor={colors.main}
         >
-          <ScrollView tabLabel="WHAT'S UP" style={styles.content}>
-            {
-              activity.items.map((item, index) => (
-                <Card key={index} item={item} />
-              ))
-            }
-            <IconButton
-              family="evil"
-              name="sc-telegram"
-              color="gray"
-              onPress={this.handleTelegram}
-              style={styles.telegram}
-            >
-              <FormattedMessage id="telegram" />
-            </IconButton>
-          </ScrollView>
+          <AsyncContent
+            data={activity}
+            fetcher={this.props.getActivity}
+            rowComponent={Card}
+            tabLabel="WHAT'S UP"
+            footer={this.renderFooter()}
+          />
           <AsyncContent
             data={history}
             fetcher={this.props.getHistory}

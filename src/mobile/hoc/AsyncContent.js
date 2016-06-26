@@ -17,6 +17,7 @@ class AsyncContent extends Component {
     fetcher: PropTypes.func.isRequired,
     rowComponent: PropTypes.any.isRequired,
     splitter: PropTypes.func,
+    footer: PropTypes.node,
   }
 
   constructor(props) {
@@ -90,7 +91,10 @@ class AsyncContent extends Component {
 
   handleLoad(more) {
     const data = this.props.data
-    if (!data.loading && (data.pages === 0 || (more && data.items.length / data.paging === data.pages))) {
+    if (data.loading) {
+      return
+    }
+    if (!data.pages || (more && data.items.length / data.paging === data.pages)) {
       this.props.fetcher(data.pages) // last page is N => N+1 pages => next page is N+1
     }
   }
@@ -103,6 +107,7 @@ class AsyncContent extends Component {
     return (
       <View style={styles.footer}>
         <Spinner visible={this.props.data.loading} />
+        {this.props.data.items.length > 0 && this.props.footer}
       </View>
     )
   }

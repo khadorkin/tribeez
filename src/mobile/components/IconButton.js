@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   children: {
     marginLeft: 10,
     paddingVertical: 1,
+    flex: 1, // to wrap
   },
 })
 
