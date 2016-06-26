@@ -7,6 +7,7 @@ import {
   UPDATE_TASK,
   DELETE_TASK,
   POST_DONE_SUCCESS,
+  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -93,6 +94,7 @@ export default (state = initialState, action = null) => {
         items,
       }
 
+    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

@@ -47,10 +47,7 @@ class Members extends Component {
   }
 
   handleResend() {
-    this.props.postInvite({
-      email: this.state.invite.email,
-      lang: this.state.invite.lang,
-    })
+    this.props.postInvite(this.state.invite.email, this.state.invite.lang, this.props.uid)
     this.handleDialogClose()
   }
 
@@ -132,11 +129,11 @@ class Members extends Component {
       </div>
     )
   }
-
 }
 
 Members.propTypes = {
   // redux state:
+  uid: PropTypes.number,
   users: PropTypes.array.isRequired,
   invites: PropTypes.object.isRequired,
   // action creators:
@@ -145,6 +142,7 @@ Members.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+  uid: state.member.user.id,
   users: state.member.tribe.users,
   invites: state.invites,
 })

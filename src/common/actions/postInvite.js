@@ -7,12 +7,12 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-export default (values) => {
+export default (email, lang, inviter) => {
   return function(dispatch) {
     dispatch({
       type: INVITE_REQUEST,
     })
-    api.post('invite', values)
+    api.post('invite', {email, lang})
       .then((response) => {
         if (response.error) {
           dispatch({
@@ -22,7 +22,8 @@ export default (values) => {
         } else {
           dispatch({
             type: INVITE_SUCCESS,
-            email: values.email,
+            email,
+            inviter,
           })
           dispatch({
             type: SNACK_MESSAGE,

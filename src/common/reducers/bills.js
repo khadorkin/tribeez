@@ -6,6 +6,7 @@ import {
   UPDATE_BILL,
   GET_BILL_SUCCESS,
   DELETE_BILL,
+  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -75,6 +76,7 @@ export default (state = initialState, action = null) => {
       }
     }
 
+    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

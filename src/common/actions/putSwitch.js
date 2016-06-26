@@ -11,6 +11,7 @@ import routes from '../routes'
 
 import getMember from './getMember'
 import getActivity from './getActivity'
+import getHistory from './getHistory'
 
 export default (id) => {
   return function(dispatch) {
@@ -31,6 +32,7 @@ export default (id) => {
           // force redirect to home page:
           dispatch(getMember(null, routes.ACTIVITY))
           dispatch(getActivity())
+          dispatch(getHistory())
           dispatch({
             type: SNACK_MESSAGE,
             message: 'switched',

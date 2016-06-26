@@ -6,6 +6,7 @@ import {
   NEW_EVENT,
   UPDATE_EVENT,
   DELETE_EVENT,
+  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -73,6 +74,7 @@ export default (state = initialState, action = null) => {
       }
     }
 
+    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

@@ -3,6 +3,7 @@ import {
   GET_INVITES_SUCCESS,
   GET_INVITES_FAILURE,
   INVITE_SUCCESS,
+  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -42,7 +43,11 @@ export default (state = initialState, action = null) => {
     case INVITE_SUCCESS: {
       const items = state.items.map((invite) => {
         if (invite.email === action.email) {
-          return {...invite, invited: Date.now()}
+          return {
+            ...invite,
+            invited: Date.now(),
+            inviter_id: action.inviter,
+          }
         }
         return invite
       })
@@ -52,6 +57,7 @@ export default (state = initialState, action = null) => {
       }
     }
 
+    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

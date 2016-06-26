@@ -2,6 +2,7 @@ import {
   GET_ACTIVITY_REQUEST,
   GET_ACTIVITY_SUCCESS,
   GET_ACTIVITY_FAILURE,
+  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -33,6 +34,7 @@ export default (state = initialState, action = null) => {
         error: action.error,
       }
 
+    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:
