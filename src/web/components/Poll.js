@@ -77,14 +77,18 @@ class Poll extends Component {
   }
 
   render() {
-    const {poll, users} = this.props
+    const {poll, userMap} = this.props
 
-    const {author, total, results} = pollAnswers(poll, users)
+    const author = userMap[poll.author_id]
 
     // to render a poll, the users must be loaded for the current tribe polls
     if (!author) {
       return null
     }
+
+    const hasAnswers = Object.keys(poll.answers).length > 0
+
+    const results = pollAnswers(poll, userMap)
 
     const user_answer = poll.answers[this.props.uid]
     const show_results = (user_answer && !this.state.again)
@@ -157,7 +161,7 @@ class Poll extends Component {
           this.props.onDelete && (
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20}}>
               {
-                total === 0 && (
+                hasAnswers && (
                   <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
                     <EditButton color={colors.grey600} />
                   </IconButton>
@@ -181,7 +185,7 @@ Poll.propTypes = {
   onDelete: PropTypes.func,
   // from redux:
   uid: PropTypes.number,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   currency: PropTypes.string,
   // action creators:
   postVote: PropTypes.func.isRequired,
@@ -189,7 +193,7 @@ Poll.propTypes = {
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
 })
 

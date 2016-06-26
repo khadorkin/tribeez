@@ -16,7 +16,7 @@ class Invite extends Component {
     item: PropTypes.object.isRequired,
     // from redux:
     uid: PropTypes.number,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     // action creators:
     postInvite: PropTypes.func.isRequired,
@@ -41,9 +41,9 @@ class Invite extends Component {
   }
 
   render() {
-    const {users, item} = this.props
+    const {userMap, item} = this.props
 
-    const inviter = users.find((user) => user.id === item.inviter_id)
+    const inviter = userMap[item.inviter_id]
     if (!inviter) {
       return null
     }
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   messages: state.app.messages, //TODO
 })
 

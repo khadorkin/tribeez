@@ -58,7 +58,7 @@ class Members extends Component {
   }
 
   render() {
-    const {invites, users} = this.props
+    const {invites, users, userMap} = this.props
 
     const dialogActions = [
       <FlatButton
@@ -94,7 +94,7 @@ class Members extends Component {
                       {
                         invites.items.map((invite, index, arr) => {
                           const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
-                          const inviter = users.find((user) => user.id === invite.inviter_id)
+                          const inviter = userMap[invite.inviter_id]
                           if (!inviter) {
                             return null
                           }
@@ -135,6 +135,7 @@ Members.propTypes = {
   // redux state:
   uid: PropTypes.number,
   users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   invites: PropTypes.object.isRequired,
   // action creators:
   getInvites: PropTypes.func.isRequired,
@@ -144,6 +145,7 @@ Members.propTypes = {
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   invites: state.invites,
 })
 

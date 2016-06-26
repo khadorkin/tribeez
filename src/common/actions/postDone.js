@@ -31,10 +31,11 @@ export default (id, uid) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: POST_DONE_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

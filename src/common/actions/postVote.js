@@ -32,10 +32,11 @@ export default (id, choices, uid) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: POST_VOTE_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

@@ -9,11 +9,11 @@ import colors from '../../common/constants/colors'
 class Form extends Component {
   static propTypes = {
     // from parent:
-    children: PropTypes.node,
-    name: PropTypes.string,
-    action: PropTypes.func,
-    handleSubmit: PropTypes.func,
-    submitting: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    name: PropTypes.string.isRequired,
+    action: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired,
     error: PropTypes.string,
   }
 

@@ -39,6 +39,10 @@ const fr = {
   'tab.history': 'HISTORIQUE',
   'tab.registered': 'INSCRITS',
   'tab.invited': 'INVITÉS',
+  'tab.upcoming': 'A VENIR',
+  'tab.past': 'PASSÉS',
+  'tab.bills': 'LISTE',
+  'tab.balances': 'BALANCES',
 
   // html:
   sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail',
@@ -141,7 +145,6 @@ const fr = {
   'field.title': 'Titre',
   'error.title': 'Titre incorrect',
   'field.description': 'Description (facultative)',
-  'error.other': 'Erreur: veuillez rééssayer plus tard',
   // bill:
   'field.payer': 'Qui a payé ?',
   'error.payer': 'Veuillez indiquer la personne qui a payé',
@@ -203,8 +206,8 @@ const fr = {
   'invited_by': 'Invité par {user} {when}',
 
   // Activity
-  'entry.user.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
-  'entry.user.new.infos': 'Invité-e par {inviter}',
+  'entry.member.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
+  'entry.member.new.infos': 'Invité-e par {inviter}',
   'entry.bill.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté une dépense nommée "{name}" ({amount, number, money})',
   'entry.bill.new.infos': 'Votre part est de {amount, number, money}',
   'entry.bill.new.stranger': 'Vous n’êtes pas concerné-e',
@@ -250,8 +253,12 @@ const fr = {
   never_done: 'Jamais effectuée',
   mark_done: 'Je viens de le faire',
 
-  //Polls
+  // Polls
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
+
+  // Common error handling
+  'error.request': 'Erreur: veuillez rééssayer plus tard',
+  'error.not_found': 'Cet élément n’existe plus',
 }
 
 export default {...en, ...fr} // to have English as a fallback //TODO: avoid

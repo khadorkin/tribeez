@@ -16,6 +16,7 @@ export default (id) => {
         if (response.error) {
           dispatch({
             type: GET_TASK_FAILURE,
+            error: response.error,
           })
         } else {
           dispatch({
@@ -24,9 +25,11 @@ export default (id) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: GET_TASK_FAILURE,
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

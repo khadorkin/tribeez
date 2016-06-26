@@ -14,7 +14,7 @@ class Task extends Component {
   static propTypes = {
     // from redux:
     uid: PropTypes.number,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:
     item: PropTypes.object.isRequired,
@@ -35,7 +35,7 @@ class Task extends Component {
     const {item} = this.props
 
     // to render a task, the users must be loaded for the current tribe tasks
-    const author = this.props.users.find((u) => u.id === item.author_id)
+    const author = this.props.userMap[item.author_id]
     if (!author) {
       return null
     }
@@ -66,7 +66,7 @@ class Task extends Component {
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
 })
 

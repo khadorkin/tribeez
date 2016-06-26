@@ -34,12 +34,12 @@ export default () => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: LOGOUT_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
-        //TODO: show error
       })
   }
 }

@@ -24,10 +24,11 @@ export default (id) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: DELETE_TASK_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
         dispatch({
           type: SNACK_MESSAGE,

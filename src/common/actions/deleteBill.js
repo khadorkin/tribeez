@@ -28,10 +28,11 @@ export default (id) => {
           dispatch(getMember()) // update balance
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: DELETE_BILL_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
         dispatch({
           type: SNACK_MESSAGE,

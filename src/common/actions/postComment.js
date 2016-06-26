@@ -25,10 +25,11 @@ export default (type, id, content) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: COMMENT_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

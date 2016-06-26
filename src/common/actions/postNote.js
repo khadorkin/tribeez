@@ -30,10 +30,11 @@ export default (values) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: NEW_NOTE_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

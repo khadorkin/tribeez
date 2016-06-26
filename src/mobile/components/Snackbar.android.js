@@ -10,7 +10,7 @@ import {closeSnack} from '../../common/actions/app'
 class Snackbar extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     uid: PropTypes.number,
     snack: PropTypes.object.isRequired,
     closeSnack: PropTypes.func.isRequired,
@@ -23,7 +23,7 @@ class Snackbar extends Component {
       return
     }
 
-    const snack_author = props.users.find((u) => u.id === snack.author)
+    const snack_author = props.userMap[snack.author]
     const snack_author_name = snack_author && (snack_author.id === props.uid ? '_you_' : snack_author.name)
 
     const id = 'snack.' + snack.message
@@ -40,7 +40,7 @@ class Snackbar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   uid: state.member.user.id,
   snack: state.app.snack,
 })

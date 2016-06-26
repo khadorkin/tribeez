@@ -29,15 +29,15 @@ class Bill extends Component {
   }
 
   render() {
-    const {bill, users, currency} = this.props
+    const {bill, userMap, currency} = this.props
 
-    // to render a bill, the users must be loaded for the current tribe bills
-    const user = users.find((u) => u.id === bill.payer_id)
+    // to render a bill, the userMap must be loaded for the current tribe bills
+    const user = userMap[bill.payer_id]
     if (!user) {
       return null
     }
 
-    const user_part = bill.parts.find((p) => p.user_id === this.props.uid)
+    const user_part = bill.parts[this.props.uid]
 
     const total = <FormattedNumber value={bill.amount} style="currency" currency={currency} />
 
@@ -63,7 +63,7 @@ class Bill extends Component {
           <List>
             {
               bill.parts.map((part) => {
-                const part_user = users.find((u) => u.id === part.user_id)
+                const part_user = userMap[part.user_id]
                 const part_amount = <FormattedNumber value={part.amount} style="currency" currency={currency} />
 
                 return (
@@ -95,13 +95,13 @@ Bill.propTypes = {
   onDelete: PropTypes.func.isRequired,
   // from redux:
   uid: PropTypes.number,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   currency: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
 })
 

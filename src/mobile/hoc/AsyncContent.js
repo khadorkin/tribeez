@@ -6,6 +6,8 @@ import {connect} from 'react-redux'
 import Spinner from '../components/Spinner'
 import Button from '../components/Button'
 
+import colors from '../../common/constants/colors'
+
 class AsyncContent extends Component {
   static propTypes = {
     // redux state
@@ -117,8 +119,8 @@ class AsyncContent extends Component {
 
     if (error) {
       return (
-        <View style={styles.error}>
-          <Text style={styles.errorText}>{error}</Text>
+        <View style={styles.empty}>
+          <Text style={styles.error}>{error}</Text>
           <Button id="retry" onPress={this.handleLoad} />
         </View>
       )
@@ -160,18 +162,13 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center', // vertically center
   },
-  error: {
-    flex: 1, // take all space
-    justifyContent: 'center', // vertically center
-    alignItems: 'center', // horizontally center
-  },
-  errorText: {
-    color: 'red',
-  },
   empty: {
     flex: 1, // take all space
     justifyContent: 'center', // vertically center
     alignItems: 'center', // horizontally center
+  },
+  error: {
+    color: colors.error,
   },
 })
 

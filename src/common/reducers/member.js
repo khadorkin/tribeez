@@ -31,6 +31,7 @@ const initialState = {
   },
   tribe: {
     users: [], // todo: immutability
+    userMap: {},
   },
   error: false,
   formats: getFormats('USD'),
@@ -48,6 +49,10 @@ export default (state = initialState, action = null) => {
       if (window.ga) {
         ga('set', 'userId', action.user.id)
       }
+      action.tribe.userMap = {}
+      action.tribe.users.forEach((user) => {
+        action.tribe.userMap[user.id] = user
+      })
       return {
         ...state,
         loading: false,
@@ -98,11 +103,12 @@ export default (state = initialState, action = null) => {
         city: action.values.city.name,
         country_code: action.values.city.country_code,
         place_id: action.values.city.place_id,
-        users: state.tribe.users.slice(),
+        users: state.tribe.users,
+        userMap: state.tribe.userMap,
       }
       const user = {...state.user}
-      user.tribes = state.user.tribes.map((t) => {
-        const copy = {...t}
+      user.tribes = state.user.tribes.map((item) => {
+        const copy = {...item}
         if (copy.id === tribe.id) {
           copy.name = tribe.name
         }

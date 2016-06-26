@@ -31,10 +31,11 @@ export default (email, lang, inviter) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: INVITE_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

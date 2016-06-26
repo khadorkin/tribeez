@@ -18,7 +18,7 @@ export default (values, dispatch) => {
         }
       })
       .catch(() => {
-        reject({_error: 'other'})
+        reject({_error: 'request'})
       })
   })
 }

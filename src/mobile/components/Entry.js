@@ -16,7 +16,7 @@ class Entry extends Component {
     // from parent:
     item: PropTypes.object,
     // from redux:
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     uid: PropTypes.number,
   }
@@ -28,21 +28,31 @@ class Entry extends Component {
 
   handleTouch() {
     const {item} = this.props
+
+    if (item.action === 'delete') {
+      return // no details page since it got deleted
+    }
+
     const route = routes[item.item_type.toUpperCase()]
-    if (!route) {
-      return
+    if (route.name === 'member') {
+      route.item = {
+        id: item.user_id,
+        name: this.props.userMap[item.user_id].name,
+      }
+    } else {
+      route.item = {
+        id: item.item_id,
+        name: item.data.name,
+      }
     }
-    route.item = {
-      id: item.item_id,
-      name: item.data.name,
-    }
+
     router.push(route)
   }
 
   render() {
-    const {item, users, uid} = this.props
+    const {item, userMap, uid} = this.props
 
-    const author = users.find((u) => u.id === item.user_id)
+    const author = userMap[item.user_id]
     if (!author) {
       return null
     }
@@ -57,11 +67,11 @@ class Entry extends Component {
     let infos
 
     switch (item.item_type) {
-      case 'user':
+      case 'member':
         if (item.item_id) {
-          const inviter = users.find((u) => u.id === item.item_id)
+          const inviter = userMap[item.item_id]
           if (inviter) {
-            infos = <FormattedMessage id={`entry.user.${item.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
+            infos = <FormattedMessage id={`entry.member.${item.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
           }
         }
         break
@@ -115,7 +125,7 @@ class Entry extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
   uid: state.member.user.id,
 })

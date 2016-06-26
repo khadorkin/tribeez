@@ -54,12 +54,9 @@ class BillForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, payer, paid, amount, method, parts}, users, currency} = this.props
-
-    const usersById = {}
+    const {fields: {name, description, payer, paid, amount, method, parts}, users, userMap, currency} = this.props
 
     const userItems = users.map((user) => {
-      usersById[user.id] = user
       return <MenuItem value={user.id} key={user.id} primaryText={user.name} />
     })
 
@@ -103,7 +100,7 @@ class BillForm extends Component {
               method={method.value}
               amount={part.amount}
               currency={currency}
-              user={usersById[part.user_id.value]}
+              user={userMap[part.user_id.value]}
             />
           )
         }
@@ -121,6 +118,7 @@ BillForm.propTypes = {
   handleSubmit: PropTypes.func,
   // from redux:
   users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   currency: PropTypes.string,
   lang: PropTypes.string,
   initialValues: PropTypes.object,

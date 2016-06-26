@@ -28,7 +28,8 @@ export default () => {
       .catch((err) => {
         dispatch({
           type: GET_TASKS_FAILURE,
-          error: err.message,
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

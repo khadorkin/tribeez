@@ -16,7 +16,7 @@ class Bill extends Component {
   static propTypes = {
     // from redux:
     uid: PropTypes.number,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:
     item: PropTypes.object.isRequired,
@@ -34,9 +34,9 @@ class Bill extends Component {
   }
 
   render() {
-    const {item, users, currency} = this.props
+    const {item, userMap, currency} = this.props
 
-    const payer = users.find((u) => u.id === item.payer_id)
+    const payer = userMap[item.payer_id]
     if (!payer) {
       return null
     }
@@ -72,7 +72,7 @@ class Bill extends Component {
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
 })
 

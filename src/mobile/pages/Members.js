@@ -2,8 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators, compose} from 'redux'
-import {injectIntl, intlShape} from 'react-intl'
+import {bindActionCreators} from 'redux'
 
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
@@ -19,7 +18,6 @@ import getInvites from '../../common/actions/getInvites'
 
 class Members extends Component {
   static propTypes = {
-    intl: intlShape.isRequired,
     // redux state:
     users: PropTypes.array.isRequired,
     invites: PropTypes.object.isRequired,
@@ -45,7 +43,7 @@ class Members extends Component {
           tabBarUnderlineColor="white"
           tabBarBackgroundColor={colors.main}
         >
-          <ScrollView tabLabel={this.props.intl.formatMessage({id: 'tab.registered'})} style={styles.content}>
+          <ScrollView tabLabel="REGISTERED" style={styles.content}>
             {
               this.props.users.map((user) =>
                 <Member user={user} key={user.id} />
@@ -57,7 +55,7 @@ class Members extends Component {
             data={this.props.invites}
             fetcher={this.props.getInvites}
             rowComponent={Invite}
-            tabLabel={this.props.intl.formatMessage({id: 'tab.invited'})}
+            tabLabel="INVITED"
           />
         </ScrollableTabView>
         <Fab name="add" onPress={this.handleFab} />
@@ -87,7 +85,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default compose(
-  injectIntl,
-  connect(mapStateToProps, mapDispatchToProps)
-)(Members)
+export default connect(mapStateToProps, mapDispatchToProps)(Members)

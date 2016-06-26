@@ -39,10 +39,11 @@ export default (id) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: SWITCH_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

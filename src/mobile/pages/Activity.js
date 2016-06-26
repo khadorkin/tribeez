@@ -2,8 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators, compose} from 'redux'
-import {injectIntl, intlShape} from 'react-intl'
+import {bindActionCreators} from 'redux'
 
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
@@ -20,7 +19,6 @@ import getHistory from '../../common/actions/getHistory'
 
 class Activity extends Component {
   static propTypes = {
-    intl: intlShape.isRequired,
     // from redux:
     activity: PropTypes.object,
     history: PropTypes.object,
@@ -48,7 +46,7 @@ class Activity extends Component {
   }
 
   render() {
-    const {activity, history, intl} = this.props
+    const {activity, history} = this.props
 
     return (
       <View style={styles.container}>
@@ -58,7 +56,7 @@ class Activity extends Component {
           tabBarUnderlineColor="white"
           tabBarBackgroundColor={colors.main}
         >
-          <ScrollView tabLabel={intl.formatMessage({id: 'tab.activity'})} style={styles.content}>
+          <ScrollView tabLabel="WHAT'S UP" style={styles.content}>
             {
               activity.items.map((item, index) => (
                 <Card key={index} item={item} />
@@ -78,7 +76,7 @@ class Activity extends Component {
             data={history}
             fetcher={this.props.getHistory}
             rowComponent={Entry}
-            tabLabel={intl.formatMessage({id: 'tab.history'})}
+            tabLabel="HISTORY"
           />
         </ScrollableTabView>
       </View>
@@ -110,7 +108,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   getHistory,
 }, dispatch)
 
-export default compose(
-  injectIntl,
-  connect(mapStateToProps, mapDispatchToProps)
-)(Activity)
+export default connect(mapStateToProps, mapDispatchToProps)(Activity)

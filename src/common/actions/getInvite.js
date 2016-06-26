@@ -33,9 +33,11 @@ export default (token) => {
           }
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: GET_INVITE_FAILURE,
+          error: 'request',
+          fetchError: err.message,
         })
         router.resetTo(routes.LOGIN, dispatch)
       })

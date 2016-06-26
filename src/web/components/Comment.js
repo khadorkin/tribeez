@@ -13,7 +13,7 @@ class Comment extends Component {
   render() {
     const {comment} = this.props
 
-    const author = this.props.users.find((u) => u.id === comment.author_id)
+    const author = this.props.userMap[comment.author_id]
 
     return (
       <div className={css.container}>
@@ -35,11 +35,11 @@ class Comment extends Component {
 
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
 })
 
 export default connect(mapStateToProps)(Comment)

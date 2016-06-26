@@ -2,9 +2,11 @@ import {
   GET_BILLS_REQUEST,
   GET_BILLS_SUCCESS,
   GET_BILLS_FAILURE,
+  GET_BILL_REQUEST,
+  GET_BILL_SUCCESS,
+  GET_BILL_FAILURE,
   NEW_BILL,
   UPDATE_BILL,
-  GET_BILL_SUCCESS,
   DELETE_BILL,
   SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
@@ -22,6 +24,7 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_BILLS_REQUEST:
+    case GET_BILL_REQUEST:
       return {
         ...state,
         loading: true,
@@ -36,16 +39,19 @@ export default (state = initialState, action = null) => {
         pages: action.page + 1,
         paging: action.data.paging || state.paging,
       }
+    case GET_BILL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        current: action.data,
+      }
     case GET_BILLS_FAILURE:
+    case GET_BILL_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.error,
-      }
-    case GET_BILL_SUCCESS:
-      return {
-        ...state,
-        current: action.data,
       }
 
     // from socket.io:

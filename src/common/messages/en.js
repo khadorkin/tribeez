@@ -39,6 +39,10 @@ export default {
   'tab.history': 'HISTORY',
   'tab.registered': 'REGISTERED',
   'tab.invited': 'INVITED',
+  'tab.upcoming': 'UPCOMING',
+  'tab.past': 'PAST',
+  'tab.bills': 'LIST',
+  'tab.balances': 'BALANCES',
 
   // html:
   sent_reset: 'A reset link has been sent to your email address',
@@ -140,7 +144,6 @@ export default {
   'field.title': 'Title',
   'error.title': 'Invalid title',
   'field.description': 'Description (optional)',
-  'error.other': 'Request error: please try again later',
   // bill:
   'field.payer': 'Who paid?',
   'error.payer': 'Please indicate who paid this',
@@ -202,8 +205,8 @@ export default {
   'invited_by': 'Invited by {user} {when}',
 
   // Activity
-  'entry.user.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
-  'entry.user.new.infos': 'Invited by {inviter}',
+  'entry.member.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
+  'entry.member.new.infos': 'Invited by {inviter}',
   'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added a expense named "{name}" ({amount, number, money})',
   'entry.bill.new.infos': 'Your share is {amount, number, money}',
   'entry.bill.new.stranger': 'You are not concerned',
@@ -249,6 +252,10 @@ export default {
   never_done: 'Never done',
   mark_done: 'I just did it',
 
-  //Polls
+  // Polls
   poll_answers: '{num, plural, =0 {No answers} one {1 answer} other {# answers}}',
+
+  // Common error handling
+  'error.request': 'Request error: please try again later',
+  'error.not_found': 'This item does not exist anymore',
 }

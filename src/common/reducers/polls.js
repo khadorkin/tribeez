@@ -2,7 +2,9 @@ import {
   GET_POLLS_REQUEST,
   GET_POLLS_SUCCESS,
   GET_POLLS_FAILURE,
+  GET_POLL_REQUEST,
   GET_POLL_SUCCESS,
+  GET_POLL_FAILURE,
   NEW_POLL,
   UPDATE_POLL,
   DELETE_POLL,
@@ -22,6 +24,7 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
+    case GET_POLL_REQUEST:
     case GET_POLLS_REQUEST:
       return {
         ...state,
@@ -37,16 +40,19 @@ export default (state = initialState, action = null) => {
         pages: action.page + 1,
         paging: action.data.paging || state.paging,
       }
+    case GET_POLL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        current: action.data,
+      }
     case GET_POLLS_FAILURE:
+    case GET_POLL_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.error,
-      }
-    case GET_POLL_SUCCESS:
-      return {
-        ...state,
-        current: action.data,
       }
 
     // from socket.io:

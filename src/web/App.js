@@ -194,7 +194,7 @@ class App extends Component {
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
-    const snack_author = this.props.users.find((u) => u.id === snack.author)
+    const snack_author = this.props.userMap[snack.author]
     const snack_author_name = snack_author && (snack_author.id === uid ? '_you_' : snack_author.name)
 
     const dialogActions = [
@@ -250,7 +250,7 @@ App.propTypes = {
   uid: PropTypes.number,
   telegram_token: PropTypes.string,
   messenger_token: PropTypes.string,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   formats: PropTypes.object,
   lang: PropTypes.string.isRequired,
   desktop: PropTypes.bool.isRequired,
@@ -273,7 +273,7 @@ const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   telegram_token: state.member.user.telegram_token,
   messenger_token: state.member.user.messenger_token,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   formats: state.member.formats,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,

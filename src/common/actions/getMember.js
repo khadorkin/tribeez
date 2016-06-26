@@ -39,9 +39,11 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
           }
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: GET_MEMBER_FAILURE,
+          error: 'request',
+          fetchError: err.message,
         })
         //TODO: show an error
         if (redirectOnAnonymous) {

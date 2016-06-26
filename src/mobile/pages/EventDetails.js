@@ -1,19 +1,18 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
+import {ScrollView, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Fab from '../components/Fab'
+import Details from '../hoc/Details'
 import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
-import getEvent from '../../common/actions/getEvent'
+import getItem from '../../common/actions/getEvent'
 import routes from '../../common/routes'
-import router from '../../common/router'
 import colors from '../../common/constants/colors'
 
 const infos = [
@@ -30,95 +29,77 @@ class EventDetails extends Component {
     // from parent:
     id: PropTypes.number.isRequired,
     // from redux:
-    event: PropTypes.object,
-    users: PropTypes.array.isRequired,
-    // action creators:
-    getEvent: PropTypes.func.isRequired,
+    item: PropTypes.object,
+    userMap: PropTypes.object.isRequired,
   }
 
   constructor(props) {
     super(props)
-    this.handleFab = this.handleFab.bind(this)
-  }
-
-  componentDidMount() {
-    if (!this.props.event || this.props.event.id !== this.props.id) {
-      this.props.getEvent(this.props.id)
-    }
+    this.renderItem = this.renderItem.bind(this)
   }
 
   handlePress(url) {
     Linking.openURL(url)
   }
 
-  handleFab() {
-    const route = routes.EVENTS_EDIT
-    route.edit = this.props.event
-    router.push(routes.EVENTS_EDIT)
-  }
-
-  render() {
-    const {event, users} = this.props
-
-    if (!event) {
-      return null // loading
-    }
-
-    const host = users.find((u) => u.id === event.host_id)
+  renderItem(event) {
+    const host = this.props.userMap[event.host_id]
 
     event.host = host.name
 
     //TODO: UI
 
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          {
-            infos
-              .filter((info) => event[info.id])
-              .map((info) => {
-                let value = event[info.id]
-                if (info.date) {
-                  const date = new Date(value)
-                  if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                    value = <FormattedMessage id="datetime" values={{date}} />
-                  } else {
-                    value = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} />
-                  }
+      <ScrollView>
+        {
+          infos
+            .filter((info) => event[info.id])
+            .map((info) => {
+              let value = event[info.id]
+              if (info.date) {
+                const date = new Date(value)
+                if (date.getHours() !== 0 || date.getMinutes() !== 0) {
+                  value = <FormattedMessage id="datetime" values={{date}} />
+                } else {
+                  value = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} />
                 }
-                let href = null
-                if (info.link) {
-                  href = value
-                  value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
-                }
-                if (info.map) {
-                  href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
-                }
-                if (typeof value === 'string') {
-                  value = <Text>{value}</Text>
-                }
-                return (
-                  <TouchableOpacity onPress={href && this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
-                    <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
-                    {value}
-                  </TouchableOpacity>
-                )
-              })
-          }
-          <Log type="event" id={event.id} />
-        </ScrollView>
-        <Fab name="edit" onPress={this.handleFab} />
-      </View>
+              }
+              let href = null
+              if (info.link) {
+                href = value
+                value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
+              }
+              if (info.map) {
+                href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
+              }
+              if (typeof value === 'string') {
+                value = <Text>{value}</Text>
+              }
+              return (
+                <TouchableOpacity onPress={href && this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
+                  <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
+                  {value}
+                </TouchableOpacity>
+              )
+            })
+        }
+        <Log type="event" id={event.id} />
+      </ScrollView>
+    )
+  }
+
+  render() {
+    return (
+      <Details
+        {...this.props}
+        render={this.renderItem}
+        editRoute={routes.EVENTS_EDIT}
+      />
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 4,
-    backgroundColor: 'white',
-    flex: 1,
-  },
   info: {
     flexDirection: 'row',
     padding: 10,
@@ -129,14 +110,18 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  event: state.upcomingevents.items.find((i) => i.id === ownProps.id)
+  // for <Details> HoC:
+  item: state.upcomingevents.items.find((i) => i.id === ownProps.id)
       || state.pastevents.items.find((i) => i.id === ownProps.id)
       || state.events.current,
-  users: state.member.tribe.users,
+  loading: state.events.loading,
+  error: state.events.error,
+  // for this component:
+  userMap: state.member.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getEvent,
+  getItem,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventDetails)

@@ -13,7 +13,7 @@ import gravatar from '../../common/utils/gravatar'
 class Event extends Component {
   static propTypes = {
     // from redux:
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     // from parent:
     item: PropTypes.object.isRequired,
   }
@@ -30,9 +30,9 @@ class Event extends Component {
   }
 
   render() {
-    const {item, users} = this.props
+    const {item, userMap} = this.props
 
-    const host = users.find((u) => u.id === item.host_id)
+    const host = userMap[item.host_id]
     if (!host) {
       return null
     }
@@ -65,7 +65,7 @@ class Event extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
 })
 
 const styles = StyleSheet.create({

@@ -29,7 +29,8 @@ export default (page = 0) => {
       .catch((err) => {
         dispatch({
           type: GET_PAST_EVENTS_FAILURE,
-          error: err.message,
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  user: state.member.tribe.users.find((i) => i.id === ownProps.id),
+  user: state.member.tribe.userMap[ownProps.id],
 })
 
 export default connect(mapStateToProps)(MemberDetails)

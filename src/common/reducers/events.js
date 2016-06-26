@@ -2,7 +2,9 @@ import {
   GET_EVENTS_REQUEST,
   GET_EVENTS_SUCCESS,
   GET_EVENTS_FAILURE,
+  GET_EVENT_REQUEST,
   GET_EVENT_SUCCESS,
+  GET_EVENT_FAILURE,
   NEW_EVENT,
   UPDATE_EVENT,
   DELETE_EVENT,
@@ -21,6 +23,7 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_EVENTS_REQUEST:
+    case GET_EVENT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -34,16 +37,19 @@ export default (state = initialState, action = null) => {
         items: action.page ? [...state.items, ...action.data.items] : action.data.items,
         pages: action.page + 1,
       }
+    case GET_EVENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        current: action.data,
+      }
     case GET_EVENTS_FAILURE:
+    case GET_EVENT_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.error,
-      }
-    case GET_EVENT_SUCCESS:
-      return {
-        ...state,
-        current: action.data,
       }
 
     // from socket.io:

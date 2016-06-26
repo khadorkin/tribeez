@@ -24,6 +24,7 @@ class BillForm extends Component {
     fields: PropTypes.object,
     // from redux:
     users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     initialValues: PropTypes.object,
     bill: PropTypes.object,
@@ -48,7 +49,7 @@ class BillForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, payer, paid, amount, method, parts}, users, currency, ...props} = this.props
+    const {fields: {name, description, payer, paid, amount, method, parts}, users, userMap, currency, ...props} = this.props
 
     const userItems = users.map((user) => ({name: user.name, code: user.id}))
 
@@ -85,7 +86,7 @@ class BillForm extends Component {
               method={method.value}
               amount={part.amount}
               currency={currency}
-              user={users.find((u) => (u.id === part.user_id.value))}
+              user={userMap[part.user_id.value]}
             />
           )
         }

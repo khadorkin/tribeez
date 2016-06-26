@@ -32,7 +32,7 @@ class Log extends Component {
   }
 
   componentDidMount() {
-    this.props.getLog(this.props.type, this.props.id)
+    this.props.getLog(this.props.type, this.props.id) //TODO: merge with get[Item]
   }
 
   handleChange(text) {

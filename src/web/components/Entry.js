@@ -11,10 +11,10 @@ import css from './Entry.css'
 class Entry extends Component {
 
   render() {
-    const {entry, users, uid} = this.props
+    const {entry, userMap, uid} = this.props
 
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
-    const author = users.find((u) => u.id === entry.user_id)
+    const author = userMap[entry.user_id]
     if (!author) {
       return null
     }
@@ -29,11 +29,11 @@ class Entry extends Component {
     }
 
     switch (entry.item_type) {
-      case 'user':
+      case 'member':
         if (entry.item_id) {
-          const inviter = users.find((u) => u.id === entry.item_id)
+          const inviter = userMap[entry.item_id]
           if (inviter) {
-            infos = <FormattedMessage id={`entry.user.${entry.action}.infos`} values={{inviter: inviter.name}} />
+            infos = <FormattedMessage id={`entry.member.${entry.action}.infos`} values={{inviter: inviter.name}} />
           }
         }
         break
@@ -92,12 +92,12 @@ class Entry extends Component {
 
 Entry.propTypes = {
   entry: PropTypes.object.isRequired,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   uid: PropTypes.number,
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   uid: state.member.user.id,
 })
 

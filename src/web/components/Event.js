@@ -28,7 +28,7 @@ class Event extends Component {
     const {event} = this.props
 
     // to render an event, the users must be loaded for the current tribe events
-    const host = this.props.users.find((u) => u.id === event.host_id)
+    const host = this.props.userMap[event.host_id]
     if (!host) {
       return null
     }
@@ -81,12 +81,12 @@ Event.propTypes = {
   event: PropTypes.object.isRequired,
   // from redux:
   uid: PropTypes.number,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
 })
 
 export default connect(mapStateToProps)(Event)

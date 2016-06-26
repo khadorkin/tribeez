@@ -6,15 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import Fab from '../components/Fab'
+import Details from '../hoc/Details'
 import FormattedDate from '../components/FormattedDate'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
-import getPoll from '../../common/actions/getPoll'
+import getItem from '../../common/actions/getPoll'
 import postVote from '../../common/actions/postVote'
 import routes from '../../common/routes'
-import router from '../../common/router'
 import colors from '../../common/constants/colors'
 
 import pollAnswers from '../../common/utils/pollAnswers'
@@ -24,13 +23,11 @@ class PollDetails extends Component {
     // from parent:
     id: PropTypes.number.isRequired,
     // from redux:
-    poll: PropTypes.object,
+    item: PropTypes.object,
     uid: PropTypes.number.isRequired,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     // action creators:
     postVote: PropTypes.func.isRequired,
-    // action creators:
-    getPoll: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -39,26 +36,20 @@ class PollDetails extends Component {
       choices: [],
       again: false,
     }
+    this.renderItem = this.renderItem.bind(this)
     this.handleChoice = this.handleChoice.bind(this)
     this.handleVote = this.handleVote.bind(this)
     this.handleReset = this.handleReset.bind(this)
-    this.handleFab = this.handleFab.bind(this)
-  }
-
-  componentDidMount() {
-    if (!this.props.poll || this.props.poll.id !== this.props.id) {
-      this.props.getPoll(this.props.id)
-    }
   }
 
   handleChoice(id) {
     if (this.state.choices.includes(id)) {
       this.setState({
-        choices: this.props.poll.multiple ? this.state.choices.filter((i) => i !== id) : [],
+        choices: this.props.item.multiple ? this.state.choices.filter((i) => i !== id) : [],
       })
     } else {
       this.setState({
-        choices: this.props.poll.multiple ? [...this.state.choices, id] : [id],
+        choices: this.props.item.multiple ? [...this.state.choices, id] : [id],
       })
     }
   }
@@ -66,7 +57,7 @@ class PollDetails extends Component {
   handleVote() {
     const choices = this.state.choices
     if (choices.length) {
-      this.props.postVote(this.props.poll.id, choices, this.props.uid)
+      this.props.postVote(this.props.item.id, choices, this.props.uid)
       this.setState({
         again: false,
       })
@@ -79,20 +70,12 @@ class PollDetails extends Component {
     })
   }
 
-  handleFab() {
-    const route = routes.POLLS_EDIT
-    route.edit = this.props.poll
-    router.push(route)
-  }
+  renderItem(poll) {
+    const {userMap} = this.props
 
-  render() {
-    const {poll, users} = this.props
+    const author = userMap[poll.author_id]
 
-    if (!poll) {
-      return null // loading
-    }
-
-    const {author, total, results} = pollAnswers(poll, users)
+    const results = pollAnswers(poll, userMap)
 
     const show_results = (poll.answers[this.props.uid] && !this.state.again)
 
@@ -145,31 +128,30 @@ class PollDetails extends Component {
     //TODO: UI
 
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          <FormattedDate value={poll.created} style={styles.info} />
-          <Text style={styles.info}>Added by {author.name}</Text>
-          <Text style={styles.info}>{poll.description}</Text>
-          {body}
-          <Log type="poll" id={poll.id} />
-        </ScrollView>
-        {
-          //TODO: allow modifying answered polls? (backend)
-          total === 0 && (
-            <Fab name="edit" onPress={this.handleFab} />
-          )
-        }
-      </View>
+      <ScrollView>
+        <FormattedDate value={poll.created} style={styles.info} />
+        <Text style={styles.info}>Added by {author.name}</Text>
+        <Text style={styles.info}>{poll.description}</Text>
+        {body}
+        <Log type="poll" id={poll.id} />
+      </ScrollView>
+    )
+  }
+
+  render() {
+    const hasAnswers = this.props.item && Object.keys(this.props.item.answers).length > 0
+
+    return (
+      <Details
+        {...this.props}
+        render={this.renderItem}
+        editRoute={hasAnswers ? routes.POLLS_EDIT : null}
+      />
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 4,
-    backgroundColor: 'white',
-    flex: 1,
-  },
   info: {
     margin: 10,
   },
@@ -204,14 +186,18 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state, ownProps) => ({
-  poll: state.polls.items.find((i) => i.id === ownProps.id)
+  // for <Details> HoC:
+  item: state.polls.items.find((i) => i.id === ownProps.id)
      || state.polls.current,
+  loading: state.polls.loading,
+  error: state.polls.error,
+  // for this component:
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPoll,
+  getItem,
   postVote,
 }, dispatch)
 

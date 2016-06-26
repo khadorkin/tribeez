@@ -28,9 +28,11 @@ export default (token) => {
           })
         }
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: GET_RESET_FAILURE,
+          error: 'request',
+          fetchError: err.message,
         })
         router.resetTo(routes.LOGIN, dispatch)
       })

@@ -2,7 +2,9 @@ import {
   GET_TASKS_REQUEST,
   GET_TASKS_SUCCESS,
   GET_TASKS_FAILURE,
+  GET_TASK_REQUEST,
   GET_TASK_SUCCESS,
+  GET_TASK_FAILURE,
   NEW_TASK,
   UPDATE_TASK,
   DELETE_TASK,
@@ -22,6 +24,7 @@ const initialState = {
 export default (state = initialState, action = null) => {
   switch (action.type) {
     case GET_TASKS_REQUEST:
+    case GET_TASK_REQUEST:
       return {
         ...state,
         loading: true,
@@ -35,16 +38,19 @@ export default (state = initialState, action = null) => {
         items: action.page ? [...state.items, ...action.data.items] : action.data.items,
         pages: action.page + 1,
       }
+    case GET_TASK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        current: action.data,
+      }
+    case GET_TASK_FAILURE:
     case GET_TASKS_FAILURE:
       return {
         ...state,
         loading: false,
         error: action.error,
-      }
-    case GET_TASK_SUCCESS:
-      return {
-        ...state,
-        current: action.data,
       }
 
     // from socket.io:

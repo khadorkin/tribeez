@@ -25,10 +25,11 @@ export default (ids) => {
           })
         }*/
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch({
           type: PUT_NOTE_FAILURE,
-          error: 'other',
+          error: 'request',
+          fetchError: err.message,
         })
       })
   }
