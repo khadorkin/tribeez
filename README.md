@@ -63,12 +63,16 @@ Connect a device or start an emulator, then run:
 
 You can see the logs by launching:
 
-    adb logcat *:S ReactNative:V ReactNativeJS:V
+```
+adb logcat *:S ReactNative:V ReactNativeJS:V
+```
 
 ### Production
 
 Make sure you have a keystore and its infos in `~/.gradle/gradle.properties` as [described in the doc](https://facebook.github.io/react-native/docs/signed-apk-android.html), then run:
 
-    cd android && ./gradlew assembleRelease
+    npm run android
 
 The generated package can be found at `android/app/build/outputs/apk/app-release.apk`
+
+To generate an update, bump `versionCode` and `versionName` in `android/app/build.gradle`
