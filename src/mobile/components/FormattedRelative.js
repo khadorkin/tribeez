@@ -7,15 +7,16 @@ class FormattedRelative extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    format: PropTypes.string,
     options: PropTypes.object,
   }
 
   render() {
-    const {intl, value, options, ...props} = this.props
+    const {intl, value, format, options, ...props} = this.props
 
     return (
       <Text {...props}>
-        {value ? intl.formatRelative(value, options) : ' '}
+        {value ? intl.formatRelative(value, {format, ...options}) : ' '}
       </Text>
     )
   }

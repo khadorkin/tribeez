@@ -7,11 +7,12 @@ class FormattedDate extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+    format: PropTypes.string,
     options: PropTypes.object,
   }
 
   render() {
-    const {intl, value, options, ...props} = this.props
+    const {intl, value, format, options, ...props} = this.props
 
     //TODO: remove this when https://github.com/andyearnshaw/Intl.js/issues/179 is closed and used by react-intl:
     if (options && options.month === 'long') {
@@ -20,7 +21,7 @@ class FormattedDate extends Component {
 
     return (
       <Text {...props}>
-        {value ? intl.formatDate(value, options) : ' '}
+        {value ? intl.formatDate(value, {format, ...options}) : ' '}
       </Text>
     )
   }

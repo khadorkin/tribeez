@@ -5,5 +5,6 @@ export default {
   secondaryText: 'rgba(0, 0, 0, 0.5)',
   icon: 'rgb(117, 117, 117)',
   underline: 'rgb(224, 224, 224)',
-  error: '#F44336',
+  positive: '#4CAF50', // green500
+  error: '#F44336', // red500
 }

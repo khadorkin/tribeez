@@ -7,15 +7,19 @@ class FormattedNumber extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     value: PropTypes.number.isRequired,
+    format: PropTypes.string,
     options: PropTypes.object,
+    sign: PropTypes.bool,
   }
 
   render() {
-    const {intl, value, options, ...props} = this.props
+    const {intl, value, format, options, sign, ...props} = this.props
+
+    const prefix = sign && value > 0 ? '+' : ''
 
     return (
       <Text {...props}>
-        {isNaN(value) ? ' ' : intl.formatNumber(value, options)}
+        {isNaN(value) ? ' ' : (prefix + intl.formatNumber(value, {format, ...options}))}
       </Text>
     )
   }
