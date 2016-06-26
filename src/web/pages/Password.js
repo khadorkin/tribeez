@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
-import {FormattedHTMLMessage} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 
 import {Card} from 'material-ui/Card'
 import Dialog from 'material-ui/Dialog'
@@ -21,7 +21,8 @@ class Password extends Component {
           actions={[<FlatButton label="OK" primary={true} containerElement={<Link to={routes.WELCOME} />} style={{textAlign: 'center'}} />]}
           open={this.props.sent}
         >
-          <FormattedHTMLMessage id="sent_reset" />
+          <FormattedMessage id="sent_reset" /><br />
+          <FormattedMessage id="sent_reset_more" />
         </Dialog>
       </Card>
     )

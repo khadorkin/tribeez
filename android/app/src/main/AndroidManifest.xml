@@ -28,11 +28,9 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https"
-              android:host="tribeez.net"
-              android:pathPrefix="/join" />
+              android:host="tribeez.net" />
             <data android:scheme="https"
-              android:host="beta.tribeez.net"
-              android:pathPrefix="/join" />
+              android:host="beta.tribeez.net" />
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />

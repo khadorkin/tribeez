@@ -101,6 +101,13 @@ class App extends Component {
           router.push(route)
           return
         }
+        const reset = url.match(/\/reset\/(\w+)/)
+        if (reset) {
+          const route = routes.RESET
+          route.token = reset[1]
+          router.push(route)
+          return
+        }
       }
 
       // default action: check for already authenticated user (HttpOnly cookie)
@@ -108,9 +115,7 @@ class App extends Component {
         this.props.getMember(routes.ACTIVITY, routes.ACTIVITY, routes.WELCOME)
       }
     })
-    .catch(() => {
-      //TODO: handle this?
-    })
+    //TODO: catch
   }
 
   componentWillReceiveProps(props) {

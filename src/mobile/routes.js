@@ -1,5 +1,7 @@
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
+import Password from './pages/Password'
+import Reset from './pages/Reset'
 import Register from './pages/Register'
 import Join from './pages/Join'
 import Profile from './pages/Profile'
@@ -26,6 +28,8 @@ import Task from './pages/Task'
 export default {
   WELCOME: {name: 'welcome', component: Welcome},
   LOGIN: {name: 'login', component: Login},
+  PASSWORD: {name: 'password', component: Password},
+  RESET: {name: 'reset', component: Reset},
   REGISTER: {name: 'register', component: Register},
   JOIN: {name: 'join', component: Join},
   PROFILE: {name: 'profile', component: Profile, type: 'edit'},

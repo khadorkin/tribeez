@@ -1,10 +1,12 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet} from 'react-native'
+import {TouchableOpacity, Text, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import FormattedMessage from '../components/FormattedMessage'
 
+import routes from '../../common/routes'
+import router from '../../common/router'
 import form from '../../common/forms/login'
 import submitLogin from '../../common/actions/submitLogin'
 
@@ -23,6 +25,7 @@ class LoginForm extends Component {
     super(props)
     this.handleNext = this.handleNext.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    //this.handleLostPassword = this.handleLostPassword.bind(this)
   }
 
   handleNext() {
@@ -31,6 +34,10 @@ class LoginForm extends Component {
 
   handleSubmit(event) {
     this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event) //TODO: prevent duplicate code
+  }
+
+  handleLostPassword() {
+    router.push(routes.PASSWORD)
   }
 
   render() {
@@ -56,6 +63,9 @@ class LoginForm extends Component {
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
         />
+        <TouchableOpacity style={styles.lostPassword} onPress={this.handleLostPassword}>
+          <Text style={styles.lostText}>Lost password?</Text>
+        </TouchableOpacity>
       </Form>
     )
   }
@@ -65,6 +75,13 @@ const styles = StyleSheet.create({
   subtitle: {
     marginBottom: 50,
     textAlign: 'center',
+  },
+  lostPassword: {
+    alignSelf: 'flex-end',
+    padding: 8,
+  },
+  lostText: {
+    //
   },
 })
 

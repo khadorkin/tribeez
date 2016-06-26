@@ -41,7 +41,8 @@ export default {
   'tab.invited': 'INVITED',
 
   // html:
-  sent_reset: 'A reset link has been sent to your email address.<br>Click on that link to reset your password.',
+  sent_reset: 'A reset link has been sent to your email address',
+  sent_reset_more: 'Click on that link to reset your password',
 
   // dates
   date: 'On {date, date, event}',

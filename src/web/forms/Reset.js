@@ -27,12 +27,14 @@ class ResetForm extends Component {
   }
 
   render() {
-    const {fields: {password, password2}} = this.props
+    const {fields: {password, password2}, username} = this.props
 
-    const subtitle = this.props.username && <FormattedMessage id="password_change" values={{name: this.props.username}} />
+    const subtitle = username && (
+      <FormattedMessage id="password_change" values={{name: username}} />
+    )
 
     return (
-      <Form name="reset" subtitle={subtitle} onSubmit={this.handleSubmit}>
+      <Form name="reset" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="password"
           type="password"
           required={true}

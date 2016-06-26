@@ -41,7 +41,8 @@ const fr = {
   'tab.invited': 'INVITÉS',
 
   // html:
-  sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail.<br>Cliquez dessus pour choisir un nouveau mot de passe.',
+  sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail',
+  sent_reset_more: 'Cliquez dessus pour choisir un nouveau mot de passe',
 
   // dates
   date: 'Le {date, date, event}',

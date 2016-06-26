@@ -1,5 +1,3 @@
-import {Alert} from 'react-native'
-
 let _route
 let _navigator
 
@@ -12,11 +10,7 @@ const push = (route) => {
   if (route.name === _route.name) {
     return
   }
-  try {
-    _navigator.push(route)
-  } catch (error) {
-    Alert.alert('Navigator error: ' + route.name, error.toString())
-  }
+  _navigator.push(route)
 }
 
 const pop = () => _navigator.pop()
