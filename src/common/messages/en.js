@@ -199,7 +199,7 @@ export default {
   // Members
   'add_member': 'Add a member',
   'member_since': 'Member since {when, date}',
-  'invited_by': 'Invited by {user} on {when, date}',
+  'invited_by': 'Invited by {user} {when}',
 
   // Activity
   'entry.user.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',

@@ -2,6 +2,7 @@ import {
   GET_INVITES_REQUEST,
   GET_INVITES_SUCCESS,
   GET_INVITES_FAILURE,
+  INVITE_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -36,6 +37,20 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       }
+
+    // update invite date when re-inviting:
+    case INVITE_SUCCESS: {
+      const items = state.items.map((invite) => {
+        if (invite.email === action.email) {
+          return {...invite, invited: Date.now()}
+        }
+        return invite
+      })
+      return {
+        ...state,
+        items,
+      }
+    }
 
     case LOGOUT_SUCCESS:
       return {...initialState}

@@ -22,6 +22,7 @@ export default (values) => {
         } else {
           dispatch({
             type: INVITE_SUCCESS,
+            email: values.email,
           })
           dispatch({
             type: SNACK_MESSAGE,

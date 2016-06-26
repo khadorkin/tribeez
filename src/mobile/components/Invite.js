@@ -1,17 +1,42 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View} from 'react-native'
+import {StyleSheet, Text, View, Alert} from 'react-native'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import FormattedMessage from './FormattedMessage'
+import IconButton from './IconButton'
 
 import colors from '../../common/constants/colors'
+import postInvite from '../../common/actions/postInvite'
 
 class Invite extends Component {
   static propTypes = {
     // from parent:
     item: PropTypes.object.isRequired,
+    // from redux:
     users: PropTypes.array.isRequired,
+    messages: PropTypes.object.isRequired,
+    // action creators:
+    postInvite: PropTypes.func.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+    this.handleResend = this.handleResend.bind(this)
+    this.handleConfirm = this.handleConfirm.bind(this)
+  }
+
+  handleResend() {
+    Alert.alert(this.props.messages.reinvite_dialog, this.props.item.email, [
+      {text: this.props.messages.cancel},
+      {text: this.props.messages.send, onPress: this.handleConfirm},
+    ])
+  }
+
+  handleConfirm() {
+    const {email, lang} = this.props.item
+    this.props.postInvite({email, lang}) //TODO: show loader
   }
 
   render() {
@@ -24,24 +49,28 @@ class Invite extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{item.email}</Text>
-        <FormattedMessage id="invited_by" values={{user: inviter.name, when: item.invited}} style={styles.subtitle} />
+        <View style={styles.titles}>
+          <Text style={styles.title}>{item.email}</Text>
+          <Text style={styles.subtitle}>
+            <FormattedMessage id="invited_by" values={{user: inviter.name}} relative={{when: item.invited}} />
+          </Text>
+        </View>
+        <IconButton name="refresh" onPress={this.handleResend} style={styles.icon} />
       </View>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
-})
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: 'white',
     marginVertical: 5,
-    padding: 10,
     elevation: 1,
+    padding: 10,
+    flexDirection: 'row',
+  },
+  titles: {
+    flex: 1,
   },
   title: {
     color: colors.primaryText,
@@ -49,6 +78,18 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.secondaryText,
   },
+  icon: {
+    paddingVertical: 6,
+  },
 })
 
-export default connect(mapStateToProps)(Invite)
+const mapStateToProps = (state) => ({
+  users: state.member.tribe.users,
+  messages: state.app.messages, //TODO
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  postInvite,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Invite)
