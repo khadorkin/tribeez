@@ -51,7 +51,10 @@ class AsyncContent extends Component {
 
   handleLoad(more) {
     const data = this.props.data
-    if (!data.loading && (data.pages === 0 || (more && data.items.length / data.paging === data.pages))) {
+    if (data.loading) {
+      return
+    }
+    if (!data.pages || (more && data.items.length / data.paging === data.pages)) {
       this.props.fetcher(data.pages) // last page is N => N+1 pages => next page is N+1
     }
   }

@@ -21,7 +21,7 @@ class TaskDetails extends Component {
     // from redux:
     item: PropTypes.object,
     uid: PropTypes.number.isRequired,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     // action creators:
     postDone: PropTypes.func.isRequired,
   }
@@ -37,14 +37,9 @@ class TaskDetails extends Component {
   }
 
   renderItem(task) {
-    const {users, uid} = this.props
+    const {uid, userMap} = this.props
 
-    const usersById = {}
-    users.forEach((user) => {
-      usersById[user.id] = user
-    })
-
-    const author = usersById[task.author_id]
+    const author = userMap[task.author_id]
 
     const uids = Object.keys(task.counters)
 
@@ -60,7 +55,7 @@ class TaskDetails extends Component {
         <Text style={styles.info}>{task.description}</Text>
         {
           uids.map((id) => {
-            const user = usersById[id]
+            const user = userMap[id]
             return (
               <View key={id} style={styles.info}>
                 <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
@@ -108,7 +103,7 @@ const mapStateToProps = (state, ownProps) => ({
   error: state.tasks.error,
   // for this component:
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -39,15 +39,10 @@ class Task extends Component {
   }
 
   render() {
-    const {task} = this.props
-
-    const usersById = {}
-    this.props.users.forEach((user) => {
-      usersById[user.id] = user
-    })
+    const {task, userMap} = this.props
 
     // to render a task, the users must be loaded for the current tribe tasks
-    const author = usersById[task.author_id]
+    const author = userMap[task.author_id]
     if (!author) {
       return null
     }
@@ -88,7 +83,7 @@ class Task extends Component {
           <List>
             {
               uids.map((uid) => {
-                const user = usersById[uid]
+                const user = userMap[uid]
                 return (
                   <ListItem key={user.id} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
                     <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
@@ -113,7 +108,6 @@ class Task extends Component {
       </Card>
     )
   }
-
 }
 
 Task.propTypes = {
@@ -122,7 +116,7 @@ Task.propTypes = {
   onDelete: PropTypes.func,
   // from redux:
   uid: PropTypes.number,
-  users: PropTypes.array.isRequired,
+  userMap: PropTypes.object.isRequired,
   currency: PropTypes.string,
   // action creators:
   postDone: PropTypes.func.isRequired,
@@ -130,7 +124,7 @@ Task.propTypes = {
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
 })
 

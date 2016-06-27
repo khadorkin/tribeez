@@ -17,15 +17,11 @@ class TaskForm extends Component {
     initialValues: PropTypes.object,
     task: PropTypes.object,
     users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
   }
 
   render() {
-    const {fields: {name, description, wait, notice, users}, ...props} = this.props
-
-    const usersById = {}
-    this.props.users.forEach((user) => {
-      usersById[user.id] = user
-    })
+    const {fields: {name, description, wait, notice, users}, userMap, ...props} = this.props
 
     return (
       <Form name={'task.' + (this.props.task ? 'update' : 'create')} action={submitTask} {...props}>
@@ -49,7 +45,7 @@ class TaskForm extends Component {
           users.map((task_user, index) =>
             <TaskUser key={index}
               checked={task_user.checked}
-              user={usersById[task_user.user_id.value]}
+              user={userMap[task_user.user_id.value]}
             />
           )
         }

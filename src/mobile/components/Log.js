@@ -18,7 +18,7 @@ class Log extends Component {
     id: PropTypes.number.isRequired,
     // from redux:
     log: PropTypes.object.isRequired,
-    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
     // action creators:
     getLog: PropTypes.func.isRequired,
     updateComment: PropTypes.func.isRequired,
@@ -47,12 +47,7 @@ class Log extends Component {
   }
 
   render() {
-    const {log: {loading, error, items, comment}} = this.props
-
-    const usersById = {}
-    this.props.users.forEach((user) => {
-      usersById[user.id] = user
-    })
+    const {log: {loading, error, items, comment}, userMap} = this.props
 
     if (error) {
       return (
@@ -76,7 +71,7 @@ class Log extends Component {
       <View style={styles.container}>
         {
           items.map((item) => {
-            const author = usersById[item.user_id]
+            const author = userMap[item.user_id]
             if (item.action === 'comment') {
               return <Text key={item.action + item.id}>Comment by {author.name}: {item.data.text}</Text>
             } else {
@@ -110,7 +105,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   log: state.log,
-  users: state.member.tribe.users,
+  userMap: state.member.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
