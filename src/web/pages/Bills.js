@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedNumber, FormattedMessage} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
+import {Tabs, Tab} from 'material-ui/Tabs'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import Dialog from 'material-ui/Dialog'
@@ -12,6 +13,7 @@ import FlatButton from 'material-ui/FlatButton'
 import AsyncContent from '../hoc/AsyncContent'
 
 import Bill from '../components/Bill'
+import Balance from '../components/Balance'
 
 import styles from '../styles'
 import routes from '../routes'
@@ -19,14 +21,11 @@ import routes from '../routes'
 import getBills from '../../common/actions/getBills'
 import deleteBill from '../../common/actions/deleteBill'
 
-import * as colors from 'material-ui/styles/colors'
-
 class Bills extends Component {
   static propTypes = {
     // redux state:
-    balance: PropTypes.number,
-    currency: PropTypes.string,
     bills: PropTypes.object.isRequired,
+    users: PropTypes.array.isRequired,
     // action creators:
     getBills: PropTypes.func.isRequired,
     deleteBill: PropTypes.func.isRequired,
@@ -62,7 +61,7 @@ class Bills extends Component {
   }
 
   render() {
-    const {bills, balance, currency} = this.props
+    const {bills, users} = this.props
 
     const dialogActions = [
       <FlatButton
@@ -78,45 +77,44 @@ class Bills extends Component {
       />,
     ]
 
-    const prefix = balance > 0 ? '+' : ''
-
     return (
-      <AsyncContent fetcher={this.props.getBills} data={bills}>
-        {
-          balance !== undefined &&
-            <div style={{backgroundColor: colors.cyan500, padding: '5px', textAlign: 'center'}}>
-              <h2 style={{fontWeight: 400, color: 'white', fontSize: '2em'}}>
-                {prefix}<FormattedNumber value={balance} style="currency" currency={currency} />
-              </h2>
-            </div>
-        }
+      <Tabs>
+        <Tab label={<FormattedMessage id="tab.bills" />}>
+          <AsyncContent fetcher={this.props.getBills} data={bills}>
+            {
+              bills.items.map((bill) =>
+                <Bill bill={bill} key={bill.id} onDelete={this.handleDialogOpen} />
+              )
+            }
 
-        {
-          bills.items.map((bill) =>
-            <Bill bill={bill} key={bill.id} onDelete={this.handleDialogOpen} />
-          )
-        }
+            <Dialog title={this.state.bill.name}
+              actions={dialogActions}
+              open={this.state.openDialog}
+              onRequestClose={this.handleDialogClose}
+            >
+              <FormattedMessage id="delete_dialog" values={{type: 'bill'}} />
+            </Dialog>
 
-        <Dialog title={this.state.bill.name}
-          actions={dialogActions}
-          open={this.state.openDialog}
-          onRequestClose={this.handleDialogClose}
-        >
-          <FormattedMessage id="delete_dialog" values={{type: 'bill'}} />
-        </Dialog>
-
-        <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
-          <ContentAdd />
-        </FloatingActionButton>
-      </AsyncContent>
+            <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
+              <ContentAdd />
+            </FloatingActionButton>
+          </AsyncContent>
+        </Tab>
+        <Tab label={<FormattedMessage id="tab.balances" />}>
+          {
+            users.map((user) =>
+              <Balance user={user} key={user.id} />
+            )
+          }
+        </Tab>
+      </Tabs>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  balance: state.member.user.balance,
-  currency: state.member.tribe.currency,
   bills: state.bills,
+  users: state.member.tribe.users,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

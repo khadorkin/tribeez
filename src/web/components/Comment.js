@@ -6,8 +6,6 @@ import Avatar from 'material-ui/Avatar'
 
 import gravatar from '../../common/utils/gravatar'
 
-import css from './Comment.css'
-
 class Comment extends Component {
   static propTypes = {
     comment: PropTypes.object.isRequired,
@@ -20,20 +18,39 @@ class Comment extends Component {
     const author = this.props.userMap[comment.author_id]
 
     return (
-      <div className={css.container}>
-        <Avatar src={gravatar(author)} size={30} className={css.avatar} />
-        <div className={css.body}>
+      <div style={styles.container}>
+        <Avatar src={gravatar(author)} size={30} style={styles.avatar} />
+        <div style={styles.body}>
           <div>
-            <span className={css.author}>{author.name} </span>
-            <span className={css.content}>{comment.content}</span>
+            <span style={styles.author}>{author.name} </span>
+            <span style={styles.content}>{comment.content}</span>
           </div>
-          <div className={css.time}>
+          <div style={styles.time}>
             <FormattedRelative value={comment.added} />
           </div>
         </div>
       </div>
     )
   }
+}
+
+const styles = {
+  container: {
+    padding: '10px 0',
+  },
+  avatar: {
+    marginRight: '16px',
+  },
+  body: {
+    display: 'inline-block',
+    verticalAlign: 'top',
+  },
+  author: {
+    color: '#aaaaaa',
+  },
+  time: {
+    color: '#aaaaaa',
+  },
 }
 
 const mapStateToProps = (state) => ({

@@ -31,10 +31,7 @@ const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-const fbLocales = {
-  fr: 'fr_FR',
-  en: 'en_US',
-}
+import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
 
 import routes from './routes'
 
@@ -128,7 +125,7 @@ class App extends Component {
           })
           FB.XFBML.parse(node)
         }
-        scriptLoader.load('//connect.facebook.net/' + fbLocales[this.props.lang] + '/sdk.js')
+        scriptLoader.load('//connect.facebook.net/' + FB_LOCALES[this.props.lang] + '/sdk.js')
       }
     }
   }
@@ -202,6 +199,7 @@ class App extends Component {
         onRequestChange={this.handleNavToggle}
         style={{overflow: 'hidden'}}
         overlayStyle={{cursor: 'w-resize'}}
+        width={MENU_WIDTH}
       >
         <Nav module={pathname.split('/')[1]} />
       </Drawer>
@@ -232,7 +230,7 @@ class App extends Component {
 
     return (
       <IntlProvider locale={lang} messages={this.props.messages} formats={this.props.formats}>
-        <div className="app" style={{marginLeft: dockedUserMenu ? 256 : 0}}>
+        <div className="app" style={{marginLeft: dockedUserMenu ? MENU_WIDTH : 0}}>
           {nav}
           <AppBar title={title} zDepth={0}
             iconElementLeft={iconLeft} iconElementRight={iconRight}

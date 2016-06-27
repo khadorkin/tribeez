@@ -22,6 +22,8 @@ import moveNote from '../../common/actions/moveNote'
 import putNotes from '../../common/actions/putNotes'
 import deleteNote from '../../common/actions/deleteNote'
 
+import {MENU_WIDTH} from '../../common/constants/product'
+
 class Notes extends Component {
   static propTypes = {
     // from react-router:
@@ -172,7 +174,7 @@ class Notes extends Component {
 
 const mapStateToProps = (state) => ({
   notes: state.notes,
-  containerWidth: (state.app.width > 800 ? state.app.width - 256 : state.app.width),
+  containerWidth: (state.app.width > 800 ? state.app.width - MENU_WIDTH : state.app.width),
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

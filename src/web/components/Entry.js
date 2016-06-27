@@ -6,8 +6,6 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 
 import gravatar from '../../common/utils/gravatar'
 
-import css from './Entry.css'
-
 class Entry extends Component {
   static propTypes = {
     entry: PropTypes.object.isRequired,
@@ -82,7 +80,7 @@ class Entry extends Component {
     }
 
     return (
-      <Card className={css.container}>
+      <Card style={styles.container}>
         <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -92,6 +90,12 @@ class Entry extends Component {
       </Card>
     )
   }
+}
+
+const styles = {
+  container: {
+    margin: '15px 10px 0',
+  },
 }
 
 const mapStateToProps = (state) => ({

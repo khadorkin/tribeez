@@ -30,13 +30,15 @@ import {toggleTribes} from '../../common/actions/app'
 
 import routes from '../routes'
 
+import Money from './Money'
+
 import gravatar from '../../common/utils/gravatar'
 
 //TODO: choose between CSS and style!
 
 import css from './Nav.css'
 
-const style = {
+const styles = {
   container: {
     overflowY: 'auto',
     paddingBottom: '20px',
@@ -46,6 +48,14 @@ const style = {
   },
   current: {
     borderLeft: '5px solid rgb(31, 188, 210)',
+  },
+  badge: {
+    position: 'absolute',
+    top: 0,
+    right: 10,
+    fontSize: '0.8em',
+    color: colors.green500,
+    padding: '1px 5px',
   },
   new: {
     borderLeft: '5px solid transparent',
@@ -130,16 +140,22 @@ class Nav extends Component {
 
     const menuItems = menuEntries.map((entry) =>
       <MenuItem key={entry.route}
-        style={this.props.module === entry.route.substr(1) ? style.current : style.default}
+        style={this.props.module === entry.route.substr(1) ? styles.current : styles.default}
         leftIcon={entry.icon}
         containerElement={<Link to={entry.route} />}
+        innerDivStyle={{paddingLeft: 60}}
       >
         <FormattedMessage id={entry.route.substr(1)} />
+        {
+          entry.route === routes.BILLS && (
+            <Money value={user.balance} style={styles.badge} />
+          )
+        }
       </MenuItem>
     )
 
     const menuContainer = (
-      <div style={{...style.container, height: (this.props.height - 240 /* header=200+20, footer=20 */) + 'px'}}>
+      <div style={{...styles.container, height: (this.props.height - 240 /* header=200+20, footer=20 */) + 'px'}}>
         {menuItems}
       </div>
     )
@@ -147,7 +163,7 @@ class Nav extends Component {
     const tribeItems = user.tribes.map((tribe) =>
       <MenuItem key={tribe.id}
         onTouchTap={this.selectTribe.bind(this, tribe.id)}
-        style={tribe.active ? style.current : style.default}
+        style={tribe.active ? styles.current : styles.default}
         rightIconButton={tribe.active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
       >
         {tribe.name}
@@ -156,11 +172,11 @@ class Nav extends Component {
 
     const tribesContainer = (
       <div>
-        <div style={{...style.container, height: (this.props.height - 288 /* header=200+20, footer=48+20 */) + 'px'}}>
+        <div style={{...styles.container, height: (this.props.height - 288 /* header=200+20, footer=48+20 */) + 'px'}}>
           {tribeItems}
         </div>
         <MenuItem key="new"
-          style={style.new}
+          style={styles.new}
           leftIcon={<AddIcon />}
           containerElement={<Link to={routes.TRIBE_NEW} />}
         >
@@ -172,17 +188,17 @@ class Nav extends Component {
     return (
       <div>
         <div className={css.header}>
-          <IconButton style={style.logout} onTouchTap={this.handleLogout}>
+          <IconButton style={styles.logout} onTouchTap={this.handleLogout}>
             <ExitIcon color="white" />
           </IconButton>
-          <IconButton style={style.profile} containerElement={<Link to={routes.PROFILE} />}>
+          <IconButton style={styles.profile} containerElement={<Link to={routes.PROFILE} />}>
             <PersonIcon color="white" />
           </IconButton>
-          <Avatar style={style.avatar} src={gravatar(user, 160)} size={80} />
-          <div style={style.name}>{user.name}</div>
-          <div style={style.tribe}>
+          <Avatar style={styles.avatar} src={gravatar(user, 160)} size={80} />
+          <div style={styles.name}>{user.name}</div>
+          <div style={styles.tribe}>
             {this.props.tribe_name}
-            <IconButton style={style.switch} onTouchTap={this.handleTribeListToggle}>
+            <IconButton style={styles.switch} onTouchTap={this.handleTribeListToggle}>
               {this.props.menu_tribes ? <DropUpIcon color="white" /> : <DropDownIcon color="white" />}
             </IconButton>
           </div>

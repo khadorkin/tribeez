@@ -25,7 +25,6 @@ class Bill extends Component {
     // from redux:
     uid: PropTypes.number,
     userMap: PropTypes.object.isRequired,
-    currency: PropTypes.string,
   }
 
   constructor(props) {
@@ -38,7 +37,7 @@ class Bill extends Component {
   }
 
   render() {
-    const {bill, userMap, currency} = this.props
+    const {bill, userMap} = this.props
 
     // to render a bill, the userMap must be loaded for the current tribe bills
     const user = userMap[bill.payer_id]
@@ -48,7 +47,7 @@ class Bill extends Component {
 
     const user_part = bill.parts[this.props.uid]
 
-    const total = <FormattedNumber value={bill.amount} style="currency" currency={currency} />
+    const total = <FormattedNumber value={bill.amount} format="money" />
 
     let formatted_part
     if (user_part) {
@@ -73,7 +72,7 @@ class Bill extends Component {
             {
               bill.parts.map((part) => {
                 const part_user = userMap[part.user_id]
-                const part_amount = <FormattedNumber value={part.amount} style="currency" currency={currency} />
+                const part_amount = <FormattedNumber value={part.amount} format="money" />
 
                 return (
                   <ListItem key={part.user_id} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
@@ -100,7 +99,6 @@ class Bill extends Component {
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
 })
 
 export default connect(mapStateToProps)(Bill)
