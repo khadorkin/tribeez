@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {DrawerLayoutAndroid, Navigator, BackAndroid, Linking, StyleSheet, View, Text, Alert} from 'react-native'
 
+import {Crashlytics, Answers} from 'react-native-fabric'
+
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
@@ -28,6 +30,7 @@ class App extends Component {
   static propTypes = {
     // from redux store:
     uid: PropTypes.number,
+    user: PropTypes.object.isRequired,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
@@ -127,6 +130,12 @@ class App extends Component {
       this.socket.on('message', (msg) => {
         this.props.message(msg)
       })
+      // Set Fabric infos:
+      Crashlytics.setUserIdentifier(String(props.uid))
+      Crashlytics.setUserEmail(props.user.email)
+      Crashlytics.setUserName(props.user.name)
+      Crashlytics.setString('lang', props.user.lang)
+      Answers.logLogin('Email', true)
     }
     if (!props.uid && this.socket) { // log out
       this.socket.disconnect(true)
@@ -262,6 +271,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
+  user: state.member.user,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
   formats: state.member.formats,
