@@ -5,6 +5,7 @@ import {
   SNACK_MESSAGE,
   CLOSE_SNACK,
   UPDATE_LANG,
+  SOCKET_STATUS,
 } from '../constants/actions'
 
 export const toggleMenu = (open) => {
@@ -47,6 +48,15 @@ export const updateLang = (lang) => {
     dispatch({
       type: UPDATE_LANG,
       lang,
+    })
+  }
+}
+
+export const setSocketStatus = (status) => {
+  return (dispatch) => {
+    dispatch({
+      type: SOCKET_STATUS,
+      status,
     })
   }
 }

@@ -12,6 +12,7 @@ class AsyncContent extends Component {
   static propTypes = {
     // redux state
     uid: PropTypes.number,
+    socketStatus: PropTypes.string,
     // from parent component
     data: PropTypes.object.isRequired,
     fetcher: PropTypes.func.isRequired,
@@ -55,6 +56,13 @@ class AsyncContent extends Component {
     }
 
     this.updateData(props)
+
+    // reconnected => re-fetch in case content changed
+    if (props.socketStatus === 'connected' && this.props.socketStatus !== props.socketStatus) {
+      if (!props.data.loading) {
+        this.props.fetcher(0) //TODO: handle case when more than one page is already loaded
+      }
+    }
   }
 
   updateData(props) {
@@ -105,8 +113,10 @@ class AsyncContent extends Component {
 
   renderFooter() {
     return (
-      <View style={styles.footer}>
-        <Spinner visible={this.props.data.loading} />
+      <View>
+        <View style={styles.spinner}>
+          <Spinner visible={this.props.data.loading} />
+        </View>
         {this.props.data.items.length > 0 && this.props.footer}
       </View>
     )
@@ -153,6 +163,7 @@ class AsyncContent extends Component {
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
+  socketStatus: state.app.socketStatus,
 })
 
 const styles = StyleSheet.create({
@@ -163,8 +174,8 @@ const styles = StyleSheet.create({
     margin: 8,
     alignSelf: 'center',
   },
-  footer: {
-    height: 80,
+  spinner: {
+    paddingTop: 8,
     justifyContent: 'center', // vertically center
   },
   empty: {

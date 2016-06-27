@@ -10,6 +10,7 @@ import {
   UPDATE_LANG,
   SNACK_MESSAGE,
   CLOSE_SNACK,
+  SOCKET_STATUS,
 } from '../constants/actions'
 
 import lang from '../utils/lang'
@@ -31,6 +32,7 @@ const initialState = {
     name: null,
   },
   submitting: false,
+  socketStatus: 'disconnected',
 }
 
 export default (state = initialState, action = null) => {
@@ -103,6 +105,11 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         submitting: false,
+      }
+    case SOCKET_STATUS:
+      return {
+        ...state,
+        socketStatus: action.status,
       }
     default:
       return state

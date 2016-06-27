@@ -20,7 +20,7 @@ import routes from '../common/routes'
 import router from '../common/router'
 import colors from '../common/constants/colors'
 import getMember from '../common/actions/getMember'
-import {message} from '../common/actions/app'
+import {message, setSocketStatus} from '../common/actions/app'
 import deleteBill from '../common/actions/deleteBill'
 import deleteEvent from '../common/actions/deleteEvent'
 import deletePoll from '../common/actions/deletePoll'
@@ -37,6 +37,7 @@ class App extends Component {
     // action creators:
     getMember: PropTypes.func.isRequired,
     message: PropTypes.func.isRequired,
+    setSocketStatus: PropTypes.func.isRequired,
     deleteBill: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired,
     deletePoll: PropTypes.func.isRequired,
@@ -123,12 +124,34 @@ class App extends Component {
 
   componentWillReceiveProps(props) {
     if (props.uid && !this.socket) { // log in
+      // Connect to WebSocket:
       this.socket = io(config.api_endpoint, {
         jsonp: false,
         transports: ['websocket'],
       })
       this.socket.on('message', (msg) => {
         this.props.message(msg)
+      })
+      this.socket.on('connect', () => {
+        this.props.setSocketStatus('connected')
+      })
+      this.socket.on('error', (/*num*/) => {
+        this.props.setSocketStatus('error')
+      })
+      this.socket.on('disconnect', () => {
+        this.props.setSocketStatus('disconnected')
+      })
+      this.socket.on('reconnecting', (/*num*/) => {
+        this.props.setSocketStatus('reconnecting')
+      })
+      this.socket.on('reconnect', (/*num*/) => {
+        this.props.setSocketStatus('connected')
+      })
+      this.socket.on('reconnect_error', (/*num*/) => {
+        this.props.setSocketStatus('error')
+      })
+      this.socket.on('reconnect_failed', () => {
+        this.props.setSocketStatus('error')
       })
       // Set Fabric infos:
       Crashlytics.setUserIdentifier(String(props.uid))
@@ -138,8 +161,15 @@ class App extends Component {
       Answers.logLogin('Email', true)
     }
     if (!props.uid && this.socket) { // log out
+      // Disconnect WebSocket:
       this.socket.disconnect(true)
       this.socket = null
+
+      // Clear Fabric infos
+      Crashlytics.setUserIdentifier(null)
+      Crashlytics.setUserEmail(null)
+      Crashlytics.setUserName(null)
+      Crashlytics.setString('lang', null)
     }
   }
 
@@ -280,6 +310,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getMember,
   message,
+  setSocketStatus,
   deleteBill,
   deleteEvent,
   deletePoll,

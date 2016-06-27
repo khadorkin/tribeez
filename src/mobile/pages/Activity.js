@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
   telegram: {
-    paddingVertical: 24,
     alignSelf: 'center',
   },
 })
