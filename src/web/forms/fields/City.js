@@ -12,6 +12,13 @@ import config from '../../../common/config'
 /*global google:false*/
 
 class CityField extends Component {
+  static propTypes = {
+    touched: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    name: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), //TODO: because MUI sets it to a string instead of object
+  }
 
   constructor(props) {
     super(props)
@@ -125,15 +132,6 @@ class CityField extends Component {
       />
     )
   }
-
-}
-
-CityField.propTypes = {
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  name: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), //TODO: because MUI sets it to a string instead of object
 }
 
 export default CityField

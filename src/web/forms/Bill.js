@@ -18,6 +18,23 @@ import submitBill from '../../common/actions/submitBill'
 const today = new Date()
 
 class BillForm extends Component {
+  static propTypes = {
+    // from parent component:
+    id: PropTypes.number,
+    current: PropTypes.object,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
+    currency: PropTypes.string,
+    lang: PropTypes.string,
+    initialValues: PropTypes.object,
+    bill: PropTypes.object,
+    // action creators:
+    getBill: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -107,24 +124,6 @@ class BillForm extends Component {
       </Form>
     )
   }
-}
-
-BillForm.propTypes = {
-  // from parent component:
-  id: PropTypes.number,
-  current: PropTypes.object,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  users: PropTypes.array.isRequired,
-  userMap: PropTypes.object.isRequired,
-  currency: PropTypes.string,
-  lang: PropTypes.string,
-  initialValues: PropTypes.object,
-  bill: PropTypes.object,
-  // action creators:
-  getBill: PropTypes.func.isRequired,
 }
 
 export default form(BillForm, {getBill})

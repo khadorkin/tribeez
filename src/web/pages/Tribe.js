@@ -6,6 +6,10 @@ import withHook from '../hoc/withHook'
 import TribeForm from '../forms/Tribe'
 
 class Tribe extends Component {
+  static propTypes = {
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,12 +18,6 @@ class Tribe extends Component {
       </Card>
     )
   }
-
-}
-
-Tribe.propTypes = {
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Tribe)

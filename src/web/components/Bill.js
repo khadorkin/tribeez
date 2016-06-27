@@ -18,6 +18,15 @@ import routes from '../routes'
 import css from './Entry.css'
 
 class Bill extends Component {
+  static propTypes = {
+    // from parent component:
+    bill: PropTypes.object.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    // from redux:
+    uid: PropTypes.number,
+    userMap: PropTypes.object.isRequired,
+    currency: PropTypes.string,
+  }
 
   constructor(props) {
     super(props)
@@ -86,17 +95,6 @@ class Bill extends Component {
       </Card>
     )
   }
-
-}
-
-Bill.propTypes = {
-  // from parent component:
-  bill: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  // from redux:
-  uid: PropTypes.number,
-  userMap: PropTypes.object.isRequired,
-  currency: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({

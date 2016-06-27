@@ -27,6 +27,16 @@ import getInvites from '../../common/actions/getInvites'
 import postInvite from '../../common/actions/postInvite'
 
 class Members extends Component {
+  static propTypes = {
+    // redux state:
+    uid: PropTypes.number,
+    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
+    invites: PropTypes.object.isRequired,
+    // action creators:
+    getInvites: PropTypes.func.isRequired,
+    postInvite: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -129,17 +139,6 @@ class Members extends Component {
       </div>
     )
   }
-}
-
-Members.propTypes = {
-  // redux state:
-  uid: PropTypes.number,
-  users: PropTypes.array.isRequired,
-  userMap: PropTypes.object.isRequired,
-  invites: PropTypes.object.isRequired,
-  // action creators:
-  getInvites: PropTypes.func.isRequired,
-  postInvite: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

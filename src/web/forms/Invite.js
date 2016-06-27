@@ -17,6 +17,15 @@ const langItems = langs.map((item) =>
 )
 
 class InviteForm extends Component {
+  static propTypes = {
+    // from parent:
+    setHook: PropTypes.func.isRequired,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+  }
 
   constructor(props) {
     super(props)
@@ -53,16 +62,6 @@ class InviteForm extends Component {
       </Form>
     )
   }
-}
-
-InviteForm.propTypes = {
-  // from parent:
-  setHook: PropTypes.func.isRequired,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
 }
 
 export default form(InviteForm)

@@ -21,6 +21,15 @@ const typeItems = TRIBE_TYPES.map((type) =>
 )
 
 class TribeForm extends Component {
+  static propTypes = {
+    // from parent component:
+    type: PropTypes.string.isRequired,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+  }
 
   constructor(props) {
     super(props)
@@ -58,16 +67,6 @@ class TribeForm extends Component {
       </Form>
     )
   }
-}
-
-TribeForm.propTypes = {
-  // from parent component:
-  type: PropTypes.string.isRequired,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
 }
 
 export default form(TribeForm)

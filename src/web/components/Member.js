@@ -21,6 +21,10 @@ const infos = [
 ]
 
 class Member extends Component {
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+    currency: PropTypes.string.isRequired,
+  }
 
   render() {
     const {user} = this.props
@@ -57,12 +61,6 @@ class Member extends Component {
       </Card>
     )
   }
-
-}
-
-Member.propTypes = {
-  user: PropTypes.object.isRequired,
-  currency: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = (state) => ({

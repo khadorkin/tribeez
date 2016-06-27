@@ -9,6 +9,13 @@ import focus from '../../common/utils/formFocus'
 import submitPassword from '../../common/actions/submitPassword'
 
 class PasswordForm extends Component {
+  static propTypes = {
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+  }
 
   constructor(props) {
     super(props)
@@ -35,14 +42,6 @@ class PasswordForm extends Component {
       </Form>
     )
   }
-}
-
-PasswordForm.propTypes = {
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
 }
 
 export default form(PasswordForm)

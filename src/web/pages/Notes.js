@@ -23,6 +23,20 @@ import putNotes from '../../common/actions/putNotes'
 import deleteNote from '../../common/actions/deleteNote'
 
 class Notes extends Component {
+  static propTypes = {
+    // from react-router:
+    location: PropTypes.object.isRequired,
+    // redux state:
+    notes: PropTypes.object.isRequired,
+    route: PropTypes.object.isRequired,
+    containerWidth: PropTypes.number.isRequired,
+    // action creators:
+    getNotes: PropTypes.func.isRequired,
+    postNote: PropTypes.func.isRequired,
+    moveNote: PropTypes.func.isRequired,
+    putNotes: PropTypes.func.isRequired,
+    deleteNote: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -154,22 +168,6 @@ class Notes extends Component {
       </AsyncContent>
     )
   }
-
-}
-
-Notes.propTypes = {
-  // from react-router:
-  location: PropTypes.object.isRequired,
-  // redux state:
-  notes: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired,
-  containerWidth: PropTypes.number.isRequired,
-  // action creators:
-  getNotes: PropTypes.func.isRequired,
-  postNote: PropTypes.func.isRequired,
-  moveNote: PropTypes.func.isRequired,
-  putNotes: PropTypes.func.isRequired,
-  deleteNote: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

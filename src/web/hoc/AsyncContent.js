@@ -8,6 +8,15 @@ import CircularProgress from 'material-ui/CircularProgress'
 import colors from '../../common/constants/colors'
 
 class AsyncContent extends Component {
+  static propTypes = {
+    // redux state
+    uid: PropTypes.number,
+    // from parent component
+    data: PropTypes.object.isRequired,
+    fetcher: PropTypes.func.isRequired,
+    style: PropTypes.object,
+    children: PropTypes.node.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -84,7 +93,6 @@ class AsyncContent extends Component {
       )
     }
   }
-
 }
 
 const styles = {
@@ -100,16 +108,6 @@ const styles = {
     textAlign: 'center',
     padding: 20,
   },
-}
-
-AsyncContent.propTypes = {
-  // redux state
-  uid: PropTypes.number,
-  // from parent component
-  data: PropTypes.object.isRequired,
-  fetcher: PropTypes.func.isRequired,
-  style: PropTypes.object,
-  children: PropTypes.node.isRequired,
 }
 
 const mapStateToProps = (state) => ({

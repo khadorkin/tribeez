@@ -7,8 +7,13 @@ import RemoveIcon from 'material-ui/svg-icons/content/remove'
 import * as colors from 'material-ui/styles/colors'
 
 class Part extends Component {
-
-  //TODO: pure rendering?
+  static propTypes = {
+    // from parent form:
+    user: PropTypes.object,
+    amount: PropTypes.object.isRequired,
+    currency: PropTypes.string,
+    method: PropTypes.string.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -81,14 +86,6 @@ class Part extends Component {
       </div>
     )
   }
-}
-
-Part.propTypes = {
-  // from parent form:
-  user: PropTypes.object,
-  amount: PropTypes.object.isRequired,
-  currency: PropTypes.string,
-  method: PropTypes.string.isRequired,
 }
 
 export default Part

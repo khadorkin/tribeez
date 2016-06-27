@@ -12,6 +12,15 @@ import focus from '../../common/utils/formFocus'
 import submitLogin from '../../common/actions/submitLogin'
 
 class LoginForm extends Component {
+  static propTypes = {
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
+    invite: PropTypes.object.isRequired,
+    initialValues: PropTypes.object,
+  }
 
   constructor(props) {
     super(props)
@@ -57,16 +66,6 @@ class LoginForm extends Component {
 const styles = {
   password: {textAlign: 'right', marginBottom: 0},
   register: {marginTop: '1em', textAlign: 'center'},
-}
-
-LoginForm.propTypes = {
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  destination: PropTypes.string, // next route after login (when trying to directly access a page when anonymous)
-  invite: PropTypes.object.isRequired,
-  initialValues: PropTypes.object,
 }
 
 export default form(LoginForm)

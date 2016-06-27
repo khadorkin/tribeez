@@ -9,6 +9,11 @@ import gravatar from '../../common/utils/gravatar'
 import css from './Entry.css'
 
 class Entry extends Component {
+  static propTypes = {
+    entry: PropTypes.object.isRequired,
+    userMap: PropTypes.object.isRequired,
+    uid: PropTypes.number,
+  }
 
   render() {
     const {entry, userMap, uid} = this.props
@@ -87,13 +92,6 @@ class Entry extends Component {
       </Card>
     )
   }
-
-}
-
-Entry.propTypes = {
-  entry: PropTypes.object.isRequired,
-  userMap: PropTypes.object.isRequired,
-  uid: PropTypes.number,
 }
 
 const mapStateToProps = (state) => ({

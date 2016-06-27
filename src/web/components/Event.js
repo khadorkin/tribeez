@@ -23,6 +23,13 @@ const infos = [
 ]
 
 class Event extends Component {
+  static propTypes = {
+    // from parent component:
+    event: PropTypes.object.isRequired,
+    // from redux:
+    uid: PropTypes.number,
+    userMap: PropTypes.object.isRequired,
+  }
 
   render() {
     const {event} = this.props
@@ -73,15 +80,6 @@ class Event extends Component {
       </Card>
     )
   }
-
-}
-
-Event.propTypes = {
-  // from parent component:
-  event: PropTypes.object.isRequired,
-  // from redux:
-  uid: PropTypes.number,
-  userMap: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({

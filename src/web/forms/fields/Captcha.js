@@ -8,6 +8,11 @@ import config from '../../../common/config'
 /*global grecaptcha:false*/
 
 class Captcha extends Component {
+  static propTypes = {
+    touched: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -61,13 +66,6 @@ class Captcha extends Component {
       </div>
     )
   }
-
-}
-
-Captcha.propTypes = {
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
 }
 
 export default Captcha

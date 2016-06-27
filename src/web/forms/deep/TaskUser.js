@@ -5,8 +5,11 @@ import Checkbox from 'material-ui/Checkbox'
 import styles from '../../styles'
 
 class TaskUser extends Component {
-
-  //TODO: pure rendering?
+  static propTypes = {
+    // from parent form:
+    user: PropTypes.object,
+    checked: PropTypes.object.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -28,12 +31,6 @@ class TaskUser extends Component {
       <Checkbox label={user.name} checked={checked.value} onCheck={this.handleCheck} style={styles.field} />
     )
   }
-}
-
-TaskUser.propTypes = {
-  // from parent form:
-  user: PropTypes.object,
-  checked: PropTypes.object.isRequired,
 }
 
 export default TaskUser

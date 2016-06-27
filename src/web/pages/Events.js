@@ -55,6 +55,15 @@ const infos = [
 ]
 
 class Events extends Component {
+  static propTypes = {
+    // redux state:
+    lang: PropTypes.string.isRequired,
+    events: PropTypes.object,
+    // action creators:
+    getEvents: PropTypes.func.isRequired,
+    deleteEvent: PropTypes.func.isRequired,
+    newEvent: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -208,17 +217,6 @@ class Events extends Component {
       </AsyncContent>
     )
   }
-
-}
-
-Events.propTypes = {
-  // redux state:
-  lang: PropTypes.string.isRequired,
-  events: PropTypes.object,
-  // action creators:
-  getEvents: PropTypes.func.isRequired,
-  deleteEvent: PropTypes.func.isRequired,
-  newEvent: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

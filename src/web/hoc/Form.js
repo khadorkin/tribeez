@@ -22,6 +22,19 @@ const isFieldModified = (field) => {
 }
 
 class Form extends Component {
+  static propTypes = {
+    // from parent component:
+    setHook: PropTypes.func,
+    title: PropTypes.node,
+    subtitle: PropTypes.node,
+    name: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
+    fields: PropTypes.object.isRequired,
+    error: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
+    submitting: PropTypes.bool.isRequired,
+  }
+
   constructor(props) {
     super(props)
     this.modified = this.modified.bind(this)
@@ -66,19 +79,6 @@ class Form extends Component {
       </form>
     )
   }
-}
-
-Form.propTypes = {
-  // from parent component:
-  setHook: PropTypes.func,
-  title: PropTypes.node,
-  subtitle: PropTypes.node,
-  name: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  fields: PropTypes.object.isRequired,
-  error: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
 }
 
 export default Form

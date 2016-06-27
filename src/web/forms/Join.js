@@ -17,6 +17,17 @@ const langItems = langs.map((item) =>
 )
 
 class JoinForm extends Component {
+  static propTypes = {
+    // from parent component:
+    token: PropTypes.string.isRequired,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+    inviter: PropTypes.string,
+    title: PropTypes.string,
+  }
 
   constructor(props) {
     super(props)
@@ -65,18 +76,6 @@ class JoinForm extends Component {
       </Form>
     )
   }
-}
-
-JoinForm.propTypes = {
-  // from parent component:
-  token: PropTypes.string.isRequired,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
-  inviter: PropTypes.string,
-  title: PropTypes.string,
 }
 
 export default form(JoinForm)

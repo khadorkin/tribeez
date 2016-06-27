@@ -9,6 +9,15 @@ import focus from '../../common/utils/formFocus'
 import submitReset from '../../common/actions/submitReset'
 
 class ResetForm extends Component {
+  static propTypes = {
+    // from parent component:
+    token: PropTypes.string.isRequired,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    username: PropTypes.string,
+  }
 
   constructor(props) {
     super(props)
@@ -48,16 +57,6 @@ class ResetForm extends Component {
       </Form>
     )
   }
-}
-
-ResetForm.propTypes = {
-  // from parent component:
-  token: PropTypes.string.isRequired,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  username: PropTypes.string,
 }
 
 export default form(ResetForm)

@@ -6,6 +6,13 @@ import withHook from '../hoc/withHook'
 import PollForm from '../forms/Poll'
 
 class Poll extends Component {
+  static propTypes = {
+    // from react-router:
+    params: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,15 +21,6 @@ class Poll extends Component {
       </Card>
     )
   }
-
-}
-
-Poll.propTypes = {
-  // from react-router:
-  params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Poll)

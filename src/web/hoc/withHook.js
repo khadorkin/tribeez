@@ -5,6 +5,13 @@ import {injectIntl, intlShape} from 'react-intl'
 
 export default function withHook(WrappedComponent) {
   class Container extends Component {
+    static propTypes = {
+      // from react-intl:
+      intl: intlShape.isRequired,
+      // from react-router:
+      route: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
+    }
 
     constructor(props) {
       super(props)
@@ -29,14 +36,6 @@ export default function withHook(WrappedComponent) {
     render() {
       return <WrappedComponent {...this.props} setHook={this.setHook} />
     }
-  }
-
-  Container.propTypes = {
-    // from react-intl:
-    intl: intlShape.isRequired,
-    // from react-router:
-    route: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired,
   }
 
   return compose(

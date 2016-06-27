@@ -6,6 +6,10 @@ import withHook from '../hoc/withHook'
 import ProfileForm from '../forms/Profile'
 
 class Profile extends Component {
+  static propTypes = {
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,12 +18,6 @@ class Profile extends Component {
       </Card>
     )
   }
-
-}
-
-Profile.propTypes = {
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Profile)

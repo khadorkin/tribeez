@@ -20,6 +20,13 @@ import getTasks from '../../common/actions/getTasks'
 import deleteTask from '../../common/actions/deleteTask'
 
 class Tasks extends Component {
+  static propTypes = {
+    // redux state:
+    tasks: PropTypes.object.isRequired,
+    // action creators:
+    getTasks: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -89,15 +96,6 @@ class Tasks extends Component {
       </AsyncContent>
     )
   }
-
-}
-
-Tasks.propTypes = {
-  // redux state:
-  tasks: PropTypes.object.isRequired,
-  // action creators:
-  getTasks: PropTypes.func.isRequired,
-  deleteTask: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

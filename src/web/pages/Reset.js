@@ -9,6 +9,12 @@ import getReset from '../../common/actions/getReset'
 import ResetForm from '../forms/Reset'
 
 class Reset extends Component {
+  static propTypes = {
+    // action creators:
+    getReset: PropTypes.func.isRequired,
+    // from react-router:
+    params: PropTypes.object.isRequired,
+  }
 
   componentDidMount() {
     this.props.getReset(this.props.params.token)
@@ -21,14 +27,6 @@ class Reset extends Component {
       </Card>
     )
   }
-
-}
-
-Reset.propTypes = {
-  // action creators:
-  getReset: PropTypes.func.isRequired,
-  // from react-router:
-  params: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

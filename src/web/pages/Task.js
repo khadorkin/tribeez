@@ -6,6 +6,13 @@ import withHook from '../hoc/withHook'
 import TaskForm from '../forms/Task'
 
 class Task extends Component {
+  static propTypes = {
+    // from react-router:
+    params: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,15 +21,6 @@ class Task extends Component {
       </Card>
     )
   }
-
-}
-
-Task.propTypes = {
-  // from react-router:
-  params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Task)

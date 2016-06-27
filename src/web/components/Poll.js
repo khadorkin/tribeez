@@ -25,6 +25,17 @@ import postVote from '../../common/actions/postVote'
 import css from './Entry.css'
 
 class Poll extends Component {
+  static propTypes = {
+    // from parent component:
+    poll: PropTypes.object.isRequired,
+    onDelete: PropTypes.func,
+    // from redux:
+    uid: PropTypes.number,
+    userMap: PropTypes.object.isRequired,
+    currency: PropTypes.string,
+    // action creators:
+    postVote: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -176,19 +187,6 @@ class Poll extends Component {
       </Card>
     )
   }
-
-}
-
-Poll.propTypes = {
-  // from parent component:
-  poll: PropTypes.object.isRequired,
-  onDelete: PropTypes.func,
-  // from redux:
-  uid: PropTypes.number,
-  userMap: PropTypes.object.isRequired,
-  currency: PropTypes.string,
-  // action creators:
-  postVote: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -11,6 +11,15 @@ import * as colors from 'material-ui/styles/colors'
 import styles from '../../styles'
 
 class DatePickerWrapper extends Component {
+  static propTypes = {
+    touched: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    name: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    intl: intlShape.isRequired,
+    time: PropTypes.bool,
+  }
 
   constructor(props) {
     super(props)
@@ -149,17 +158,6 @@ class DatePickerWrapper extends Component {
       </div>
     )
   }
-
-}
-
-DatePickerWrapper.propTypes = {
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  name: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  intl: intlShape.isRequired,
-  time: PropTypes.bool,
 }
 
 export default injectIntl(DatePickerWrapper, {withRef: true})

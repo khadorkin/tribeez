@@ -10,6 +10,19 @@ import getPoll from '../../common/actions/getPoll'
 import submitPoll from '../../common/actions/submitPoll'
 
 class PollForm extends Component {
+  static propTypes = {
+    // from parent component:
+    id: PropTypes.number,
+    current: PropTypes.object,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+    poll: PropTypes.object,
+    // action creators:
+    getPoll: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -58,20 +71,6 @@ class PollForm extends Component {
       </Form>
     )
   }
-}
-
-PollForm.propTypes = {
-  // from parent component:
-  id: PropTypes.number,
-  current: PropTypes.object,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
-  poll: PropTypes.object,
-  // action creators:
-  getPoll: PropTypes.func.isRequired,
 }
 
 export default form(PollForm, {getPoll})

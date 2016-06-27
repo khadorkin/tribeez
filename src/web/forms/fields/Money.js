@@ -7,6 +7,12 @@ import * as colors from 'material-ui/styles/colors'
 import styles from '../../styles'
 
 class MoneyFieldWrapper extends Component {
+  static propTypes = {
+    touched: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    name: PropTypes.string,
+    currency: PropTypes.string,
+  }
 
   constructor(props) {
     super(props)
@@ -43,14 +49,6 @@ class MoneyFieldWrapper extends Component {
       </div>
     )
   }
-
-}
-
-MoneyFieldWrapper.propTypes = {
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  name: PropTypes.string,
-  currency: PropTypes.string,
 }
 
 export default MoneyFieldWrapper

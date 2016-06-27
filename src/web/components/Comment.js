@@ -9,6 +9,10 @@ import gravatar from '../../common/utils/gravatar'
 import css from './Comment.css'
 
 class Comment extends Component {
+  static propTypes = {
+    comment: PropTypes.object.isRequired,
+    userMap: PropTypes.object.isRequired,
+  }
 
   render() {
     const {comment} = this.props
@@ -30,12 +34,6 @@ class Comment extends Component {
       </div>
     )
   }
-
-}
-
-Comment.propTypes = {
-  comment: PropTypes.object.isRequired,
-  userMap: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({

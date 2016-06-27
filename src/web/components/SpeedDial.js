@@ -26,6 +26,10 @@ const actions = [
 ]
 
 class SpeedDial extends Component {
+  static propTypes = {
+    // from redux:
+    height: PropTypes.number.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -81,12 +85,6 @@ class SpeedDial extends Component {
       </div>
     )
   }
-
-}
-
-SpeedDial.propTypes = {
-  // from redux:
-  height: PropTypes.number.isRequired,
 }
 
 const mapStateToProps = (state) => ({

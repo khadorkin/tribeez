@@ -93,6 +93,19 @@ const menuEntries = [
 ]
 
 class Nav extends Component {
+  static propTypes = {
+    // from parent component:
+    module: PropTypes.string.isRequired,
+    // from redux:
+    menu_tribes: PropTypes.bool.isRequired,
+    height: PropTypes.number.isRequired,
+    tribe_name: PropTypes.string,
+    user: PropTypes.object,
+    // action creators:
+    putSwitch: PropTypes.func.isRequired,
+    toggleTribes: PropTypes.func.isRequired,
+    postLogout: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -178,21 +191,6 @@ class Nav extends Component {
       </div>
     )
   }
-
-}
-
-Nav.propTypes = {
-  // from parent component:
-  module: PropTypes.string.isRequired,
-  // from redux:
-  menu_tribes: PropTypes.bool.isRequired,
-  height: PropTypes.number.isRequired,
-  tribe_name: PropTypes.string,
-  user: PropTypes.object,
-  // action creators:
-  putSwitch: PropTypes.func.isRequired,
-  toggleTribes: PropTypes.func.isRequired,
-  postLogout: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

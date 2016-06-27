@@ -12,6 +12,21 @@ import getTask from '../../common/actions/getTask'
 import submitTask from '../../common/actions/submitTask'
 
 class TaskForm extends Component {
+  static propTypes = {
+    // from parent component:
+    id: PropTypes.number,
+    current: PropTypes.object,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+    task: PropTypes.object,
+    users: PropTypes.array.isRequired,
+    userMap: PropTypes.object.isRequired,
+    // action creators:
+    getTask: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -74,22 +89,6 @@ class TaskForm extends Component {
       </Form>
     )
   }
-}
-
-TaskForm.propTypes = {
-  // from parent component:
-  id: PropTypes.number,
-  current: PropTypes.object,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
-  task: PropTypes.object,
-  users: PropTypes.array.isRequired,
-  userMap: PropTypes.object.isRequired,
-  // action creators:
-  getTask: PropTypes.func.isRequired,
 }
 
 export default form(TaskForm, {getTask})

@@ -6,6 +6,13 @@ import SelectField from 'material-ui/SelectField'
 import styles from '../../styles'
 
 class SelectFieldWrapper extends Component {
+  static propTypes = {
+    touched: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    name: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -41,14 +48,6 @@ class SelectFieldWrapper extends Component {
     )
   }
 
-}
-
-SelectFieldWrapper.propTypes = {
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  name: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
 }
 
 export default SelectFieldWrapper

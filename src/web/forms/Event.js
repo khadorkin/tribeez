@@ -10,6 +10,20 @@ import getEvent from '../../common/actions/getEvent'
 import submitEvent from '../../common/actions/submitEvent'
 
 class EventForm extends Component {
+  static propTypes = {
+    // from parent component:
+    id: PropTypes.number,
+    current: PropTypes.object,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    lang: PropTypes.string.isRequired,
+    initialValues: PropTypes.object,
+    event: PropTypes.object,
+    // action creators:
+    getEvent: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -62,21 +76,6 @@ class EventForm extends Component {
       </Form>
     )
   }
-}
-
-EventForm.propTypes = {
-  // from parent component:
-  id: PropTypes.number,
-  current: PropTypes.object,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  lang: PropTypes.string.isRequired,
-  initialValues: PropTypes.object,
-  event: PropTypes.object,
-  // action creators:
-  getEvent: PropTypes.func.isRequired,
 }
 
 export default form(EventForm, {getEvent})

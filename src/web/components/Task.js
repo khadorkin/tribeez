@@ -22,6 +22,17 @@ import postDone from '../../common/actions/postDone'
 import css from './Entry.css'
 
 class Task extends Component {
+  static propTypes = {
+    // from parent component:
+    task: PropTypes.object.isRequired,
+    onDelete: PropTypes.func,
+    // from redux:
+    uid: PropTypes.number,
+    userMap: PropTypes.object.isRequired,
+    currency: PropTypes.string,
+    // action creators:
+    postDone: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -108,18 +119,6 @@ class Task extends Component {
       </Card>
     )
   }
-}
-
-Task.propTypes = {
-  // from parent component:
-  task: PropTypes.object.isRequired,
-  onDelete: PropTypes.func,
-  // from redux:
-  uid: PropTypes.number,
-  userMap: PropTypes.object.isRequired,
-  currency: PropTypes.string,
-  // action creators:
-  postDone: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

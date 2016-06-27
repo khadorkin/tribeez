@@ -20,6 +20,16 @@ const langItems = langs.map((item) =>
 const today = new Date()
 
 class ProfileForm extends Component {
+  static propTypes = {
+    // from parent:
+    setHook: PropTypes.func.isRequired,
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+    // from redux:
+    initialValues: PropTypes.object,
+    lang: PropTypes.string.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -74,17 +84,6 @@ class ProfileForm extends Component {
       </Form>
     )
   }
-}
-
-ProfileForm.propTypes = {
-  // from parent:
-  setHook: PropTypes.func.isRequired,
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  // from redux:
-  initialValues: PropTypes.object,
-  lang: PropTypes.string.isRequired,
 }
 
 export default form(ProfileForm)

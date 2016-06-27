@@ -6,6 +6,13 @@ import withHook from '../hoc/withHook'
 import EventForm from '../forms/Event'
 
 class Event extends Component {
+  static propTypes = {
+    // from react-router:
+    params: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,15 +21,6 @@ class Event extends Component {
       </Card>
     )
   }
-
-}
-
-Event.propTypes = {
-  // from react-router:
-  params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Event)

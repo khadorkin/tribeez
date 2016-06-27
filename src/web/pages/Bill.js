@@ -6,6 +6,13 @@ import withHook from '../hoc/withHook'
 import BillForm from '../forms/Bill'
 
 class Bill extends Component {
+  static propTypes = {
+    // from react-router:
+    params: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,15 +21,6 @@ class Bill extends Component {
       </Card>
     )
   }
-
-}
-
-Bill.propTypes = {
-  // from react-router:
-  params: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Bill)

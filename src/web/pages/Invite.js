@@ -6,6 +6,10 @@ import withHook from '../hoc/withHook'
 import InviteForm from '../forms/Invite'
 
 class Invite extends Component {
+  static propTypes = {
+    // from withHook:
+    setHook: PropTypes.func.isRequired,
+  }
 
   render() {
     return (
@@ -14,12 +18,6 @@ class Invite extends Component {
       </Card>
     )
   }
-
-}
-
-Invite.propTypes = {
-  // from withHook:
-  setHook: PropTypes.func.isRequired,
 }
 
 export default withHook(Invite)

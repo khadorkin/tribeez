@@ -6,6 +6,11 @@ import Checkbox from 'material-ui/Checkbox'
 import styles from '../../styles'
 
 class CheckboxWrapper extends Component {
+  static propTypes = {
+    name: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.bool.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -40,13 +45,6 @@ class CheckboxWrapper extends Component {
       />
     )
   }
-
-}
-
-CheckboxWrapper.propTypes = {
-  name: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.bool.isRequired,
 }
 
 export default CheckboxWrapper

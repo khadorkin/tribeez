@@ -14,6 +14,14 @@ import getActivity from '../../common/actions/getActivity'
 import getHistory from '../../common/actions/getHistory'
 
 class Activity extends Component {
+  static propTypes = {
+    // redux state:
+    activity: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    // action creators:
+    getActivity: PropTypes.func.isRequired,
+    getHistory: PropTypes.func.isRequired,
+  }
 
   componentDidMount() {
     this.props.getActivity()
@@ -46,15 +54,6 @@ class Activity extends Component {
       </div>
     )
   }
-}
-
-Activity.propTypes = {
-  // redux state:
-  activity: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  // action creators:
-  getActivity: PropTypes.func.isRequired,
-  getHistory: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -6,6 +6,12 @@ import TextField from 'material-ui/TextField'
 import styles from '../../styles'
 
 class TextFieldWrapper extends Component {
+  static propTypes = {
+    touched: PropTypes.bool.isRequired,
+    error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    name: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  }
 
   constructor(props) {
     super(props)
@@ -32,14 +38,6 @@ class TextFieldWrapper extends Component {
       />
     )
   }
-
-}
-
-TextFieldWrapper.propTypes = {
-  touched: PropTypes.bool.isRequired,
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default TextFieldWrapper

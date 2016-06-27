@@ -20,6 +20,13 @@ import getPolls from '../../common/actions/getPolls'
 import deletePoll from '../../common/actions/deletePoll'
 
 class Polls extends Component {
+  static propTypes = {
+    // redux state:
+    polls: PropTypes.object.isRequired,
+    // action creators:
+    getPolls: PropTypes.func.isRequired,
+    deletePoll: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -89,15 +96,6 @@ class Polls extends Component {
       </AsyncContent>
     )
   }
-
-}
-
-Polls.propTypes = {
-  // redux state:
-  polls: PropTypes.object.isRequired,
-  // action creators:
-  getPolls: PropTypes.func.isRequired,
-  deletePoll: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

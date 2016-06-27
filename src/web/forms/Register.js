@@ -28,6 +28,11 @@ const typeItems = TRIBE_TYPES.map((type) =>
 )
 
 class RegisterForm extends Component {
+  static propTypes = {
+    // from redux-form:
+    fields: PropTypes.object,
+    handleSubmit: PropTypes.func,
+  }
 
   constructor(props) {
     super(props)
@@ -104,12 +109,6 @@ class RegisterForm extends Component {
       </Form>
     )
   }
-}
-
-RegisterForm.propTypes = {
-  // from redux-form:
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
 }
 
 export default form(RegisterForm)

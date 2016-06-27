@@ -9,6 +9,12 @@ import getInvite from '../../common/actions/getInvite'
 import JoinForm from '../forms/Join'
 
 class Join extends Component {
+  static propTypes = {
+    // action creators:
+    getInvite: PropTypes.func.isRequired,
+    // from react-router:
+    params: PropTypes.object.isRequired,
+  }
 
   componentDidMount() {
     this.props.getInvite(this.props.params.token)
@@ -21,14 +27,6 @@ class Join extends Component {
       </Card>
     )
   }
-
-}
-
-Join.propTypes = {
-  // action creators:
-  getInvite: PropTypes.func.isRequired,
-  // from react-router:
-  params: PropTypes.object.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

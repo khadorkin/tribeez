@@ -15,6 +15,19 @@ import * as colors from 'material-ui/styles/colors'
 import putNote from '../../common/actions/putNote'
 
 class Note extends Component {
+  static propTypes = {
+    // from parent component:
+    note: PropTypes.object.isRequired,
+    onMoving: PropTypes.func.isRequired,
+    onMoved: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    // action creators:
+    putNote: PropTypes.func.isRequired,
+    // Injected by React DnD:
+    isDragging: PropTypes.bool.isRequired,
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -140,21 +153,6 @@ class Note extends Component {
       </div>
     ))
   }
-
-}
-
-Note.propTypes = {
-  // from parent component:
-  note: PropTypes.object.isRequired,
-  onMoving: PropTypes.func.isRequired,
-  onMoved: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  // action creators:
-  putNote: PropTypes.func.isRequired,
-  // Injected by React DnD:
-  isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  connectDropTarget: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

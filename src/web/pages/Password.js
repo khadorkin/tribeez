@@ -12,6 +12,9 @@ import PasswordForm from '../forms/Password'
 import routes from '../routes'
 
 class Password extends Component {
+  static propTypes = {
+    sent: PropTypes.bool.isRequired,
+  }
 
   render() {
     return (
@@ -27,11 +30,6 @@ class Password extends Component {
       </Card>
     )
   }
-
-}
-
-Password.propTypes = {
-  sent: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = (state) => ({

@@ -22,6 +22,15 @@ import deleteBill from '../../common/actions/deleteBill'
 import * as colors from 'material-ui/styles/colors'
 
 class Bills extends Component {
+  static propTypes = {
+    // redux state:
+    balance: PropTypes.number,
+    currency: PropTypes.string,
+    bills: PropTypes.object.isRequired,
+    // action creators:
+    getBills: PropTypes.func.isRequired,
+    deleteBill: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -102,17 +111,6 @@ class Bills extends Component {
       </AsyncContent>
     )
   }
-
-}
-
-Bills.propTypes = {
-  // redux state:
-  balance: PropTypes.number,
-  currency: PropTypes.string,
-  bills: PropTypes.object.isRequired,
-  // action creators:
-  getBills: PropTypes.func.isRequired,
-  deleteBill: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

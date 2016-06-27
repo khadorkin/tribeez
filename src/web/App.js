@@ -43,6 +43,31 @@ import scriptLoader from './utils/scriptLoader'
 import config from '../common/config'
 
 class App extends Component {
+  static propTypes = {
+    // from router:
+    location: PropTypes.object.isRequired,
+    // from redux:
+    uid: PropTypes.number,
+    telegram_token: PropTypes.string,
+    messenger_token: PropTypes.string,
+    userMap: PropTypes.object.isRequired,
+    formats: PropTypes.object,
+    lang: PropTypes.string.isRequired,
+    desktop: PropTypes.bool.isRequired,
+    height: PropTypes.number.isRequired,
+    messages: PropTypes.object.isRequired,
+    menu_visible: PropTypes.bool.isRequired,
+    snack: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
+      // action creators:
+    toggleMenu: PropTypes.func.isRequired,
+    closeSnack: PropTypes.func.isRequired,
+    updateLang: PropTypes.func.isRequired,
+    message: PropTypes.func.isRequired,
+    // from react-router:
+    children: PropTypes.node.isRequired,
+    params: PropTypes.object.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -241,32 +266,6 @@ class App extends Component {
 
 App.childContextTypes = {
   muiTheme: PropTypes.object,
-}
-
-App.propTypes = {
-  // from router:
-  location: PropTypes.object.isRequired,
-  // from redux:
-  uid: PropTypes.number,
-  telegram_token: PropTypes.string,
-  messenger_token: PropTypes.string,
-  userMap: PropTypes.object.isRequired,
-  formats: PropTypes.object,
-  lang: PropTypes.string.isRequired,
-  desktop: PropTypes.bool.isRequired,
-  height: PropTypes.number.isRequired,
-  messages: PropTypes.object.isRequired,
-  menu_visible: PropTypes.bool.isRequired,
-  snack: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
-    // action creators:
-  toggleMenu: PropTypes.func.isRequired,
-  closeSnack: PropTypes.func.isRequired,
-  updateLang: PropTypes.func.isRequired,
-  message: PropTypes.func.isRequired,
-  // from react-router:
-  children: PropTypes.node.isRequired,
-  params: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
