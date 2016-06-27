@@ -21,8 +21,8 @@ class Password extends Component {
           actions={[<FlatButton label="OK" primary={true} containerElement={<Link to={routes.WELCOME} />} style={{textAlign: 'center'}} />]}
           open={this.props.sent}
         >
-          <FormattedMessage id="sent_reset" /><br />
-          <FormattedMessage id="sent_reset_more" />
+          <FormattedMessage id="dialog_reset_title" /><br />
+          <FormattedMessage id="dialog_reset_text" />
         </Dialog>
       </Card>
     )

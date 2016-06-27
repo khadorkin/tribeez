@@ -115,7 +115,7 @@ class Members extends Component {
                       open={this.state.openDialog}
                       onRequestClose={this.handleDialogClose}
                     >
-                      <FormattedMessage id="reinvite_dialog" />
+                      <FormattedMessage id="dialog_reinvite" />
                     </Dialog>
                   </Paper>
               }

@@ -29,7 +29,7 @@ class Invite extends Component {
   }
 
   handleResend() {
-    Alert.alert(this.props.messages.reinvite_dialog, this.props.item.email, [
+    Alert.alert(this.props.messages.dialog_reinvite, this.props.item.email, [
       {text: this.props.messages.cancel},
       {text: this.props.messages.send, onPress: this.handleConfirm},
     ])

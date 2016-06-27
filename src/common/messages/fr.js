@@ -44,10 +44,6 @@ const fr = {
   'tab.bills': 'LISTE',
   'tab.balances': 'BALANCES',
 
-  // html:
-  sent_reset: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail',
-  sent_reset_more: 'Cliquez dessus pour choisir un nouveau mot de passe',
-
   // dates
   date: 'Le {date, date, event}',
   datetime: 'Le {date, date, event} à {date, time, short}',
@@ -60,12 +56,17 @@ const fr = {
   cancel: 'Annuler',
   close: 'Fermer',
   delete_dialog: 'Voulez-vous vraiment supprimer {type, select, bill {cette dépense} event {cet évènement} note {cette note} poll {ce sondage} task {cette tâche}} ?',
-  delete_confirm: 'Voulez-vous vraiment supprimer ceci ?',
-  reinvite_title: 'Réinviter',
-  reinvite_body: 'Renvoyer une invitation à l’adresse {email} ?',
   vote_again: 'Re-voter',
   submit_vote: 'Voter',
   return_home: 'Revenir à l’Activité',
+
+  // Dialogs
+  dialog_delete: 'Voulez-vous vraiment supprimer ceci ?',
+  dialog_reinvite: 'Renvoyer une invitation à cette adresse?',
+  dialog_update_title: 'Your app is outdated',
+  dialog_update_text: 'Please update it to continue using it',
+  dialog_reset_title: 'Un lien de réinitialisation a été envoyé à votre adresse e-mail',
+  dialog_reset_text: 'Cliquez dessus pour choisir un nouveau mot de passe',
 
   // snack messages
   'snack.password_changed': 'Mot de passe modifié',

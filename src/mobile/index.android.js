@@ -28,6 +28,7 @@ reducers.form = formReducer
 
 const rootReducer = combineReducers(reducers)
 
+//TODO: remove from prod
 const logger = createLogger({
   //TODO: remove these transformers
   stateTransformer: () => {

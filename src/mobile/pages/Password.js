@@ -17,7 +17,7 @@ class Password extends Component {
 
   componentWillReceiveProps(props) {
     if (props.sent) {
-      Alert.alert(props.messages.sent_reset, props.messages.sent_reset_more, [
+      Alert.alert(props.messages.dialog_reset_title, props.messages.dialog_reset_text, [
         {text: 'OK', onPress: this.handleClose},
       ])
     }

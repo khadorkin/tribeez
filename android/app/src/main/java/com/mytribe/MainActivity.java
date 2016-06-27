@@ -49,8 +49,8 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage(),
             new FabricPackage(this),
+            new MainReactPackage(),
             new VectorIconsPackage()
         );
     }

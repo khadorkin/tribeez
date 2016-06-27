@@ -44,10 +44,6 @@ export default {
   'tab.bills': 'LIST',
   'tab.balances': 'BALANCES',
 
-  // html:
-  sent_reset: 'A reset link has been sent to your email address',
-  sent_reset_more: 'Click on that link to reset your password',
-
   // dates
   date: 'On {date, date, event}',
   datetime: 'On {date, date, event} at {date, time, short}',
@@ -60,11 +56,17 @@ export default {
   cancel: 'Cancel',
   close: 'Close',
   delete_dialog: 'Do you really want to delete this {type}?',
-  delete_confirm: 'Are you sure you want to delete this?',
-  reinvite_dialog: 'Do you want to send an invite again to this address?',
   vote_again: 'Vote again',
   submit_vote: 'Submit vote',
   return_home: 'Return to Activity',
+
+  // Dialogs
+  dialog_delete: 'Are you sure you want to delete this?',
+  dialog_reinvite: 'Do you want to send an invite again to this address?',
+  dialog_update_title: 'Your app is outdated',
+  dialog_update_text: 'Please update it to continue using it',
+  dialog_reset_title: 'A reset link has been sent to your email address',
+  dialog_reset_text: 'Click on that link to reset your password',
 
   // snack messages
   'snack.password_changed': 'Password changed',

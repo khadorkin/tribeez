@@ -33,7 +33,7 @@ const initialState = {
     users: [], // todo: immutability
     userMap: {},
   },
-  error: false,
+  error: null,
   formats: getFormats('USD'),
 }
 
@@ -43,7 +43,7 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         loading: true,
-        error: false,
+        error: null,
       }
     case GET_MEMBER_SUCCESS:
       if (window.ga) {
@@ -56,7 +56,7 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         loading: false,
-        error: false,
+        error: null,
         user: action.user,
         tribe: action.tribe,
         formats: getFormats(action.tribe.currency),
@@ -65,7 +65,7 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         loading: false,
-        error: true,
+        error: action.error,
       }
 
     case UPDATE_PROFILE_SUCCESS: {

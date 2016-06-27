@@ -31,6 +31,7 @@ class App extends Component {
     // from redux store:
     uid: PropTypes.number,
     user: PropTypes.object.isRequired,
+    error: PropTypes.string,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
@@ -123,6 +124,12 @@ class App extends Component {
   }
 
   componentWillReceiveProps(props) {
+    if (props.error === 'version') {
+      Alert.alert(props.messages.dialog_update_title, props.messages.dialog_update_text, [
+        {text: 'OK', onPress: this.handleOpenStore},
+      ])
+      return
+    }
     if (props.uid && !this.socket) { // log in
       // Connect to WebSocket:
       this.socket = io(config.api_endpoint, {
@@ -195,7 +202,7 @@ class App extends Component {
 
   handleDelete(route) {
     const {messages} = this.props
-    Alert.alert(route.item.name, messages.delete_confirm, [
+    Alert.alert(route.item.name, messages.dialog_delete, [
       {text: messages.cancel},
       {text: messages.delete, onPress: this.handleConfirmDelete.bind(this, route)},
     ])
@@ -217,6 +224,12 @@ class App extends Component {
         break
     }
     router.pop()
+  }
+
+  handleOpenStore() {
+    Linking.openURL('market://details?id=' + config.android_package).catch(() => {
+      Linking.openURL('https://play.google.com/store/apps/details?id=' + config.android_package)
+    })
   }
 
   renderNavigation() {
@@ -302,6 +315,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
   user: state.member.user,
+  error: state.member.error,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
   formats: state.member.formats,

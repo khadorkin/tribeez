@@ -1,4 +1,5 @@
 import router from '../router'
+import config from '../config'
 
 import api from '../utils/api'
 
@@ -14,7 +15,7 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
     dispatch({
       type: GET_MEMBER_REQUEST,
     })
-    api.get('member')
+    api.get('member', {version: config.version})
       .then((response) => {
         if (response.error) {
           dispatch({

@@ -1,5 +1,11 @@
+let config
 if (__DEV__) {
-  module.exports = require('../../config.development.json')
+  config = require('../../config.development.json')
 } else {
-  module.exports = require('../../config.production.json')
+  config = require('../../config.production.json')
 }
+
+config.android_package = 'com.mytribe'
+config.version = 4 // keep in sync with versionCode /android/app/build.gradle
+
+module.exports = config
