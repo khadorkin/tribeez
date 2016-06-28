@@ -11,6 +11,7 @@ class AsyncContent extends Component {
   static propTypes = {
     // redux state
     uid: PropTypes.number,
+    socketStatus: PropTypes.string,
     // from parent component
     data: PropTypes.object.isRequired,
     fetcher: PropTypes.func.isRequired,
@@ -38,6 +39,13 @@ class AsyncContent extends Component {
       this.uid = props.uid
       this.handleLoad()
     }
+
+    // reconnected => re-fetch in case content changed
+    if (props.socketStatus === 'connected' && this.props.socketStatus !== props.socketStatus) {
+      if (!props.data.loading) {
+        this.props.fetcher(0) //TODO: handle case when more than one page is already loaded
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -61,6 +69,10 @@ class AsyncContent extends Component {
   handleLoad(more) {
     const data = this.props.data
     if (data.loading) {
+      return
+    }
+    if (data.paging === undefined && data.items.length > 0) {
+      // pages without paging: already loaded it
       return
     }
     if (!data.pages || (more && data.items.length / data.paging === data.pages)) {
@@ -112,6 +124,7 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   uid: state.member.user.id,
+  socketStatus: state.app.socketStatus,
 })
 
 export default connect(mapStateToProps)(AsyncContent)

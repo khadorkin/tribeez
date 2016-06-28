@@ -14,6 +14,7 @@ import {
   NEW_TASK,
   UPDATE_TASK,
   DELETE_TASK,
+  SOCKET_STATUS,
   SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -80,6 +81,12 @@ export default (state = initialState, action = null) => {
         ...state,
         items: [createEntry(action), ...state.items],
       }
+
+    case SOCKET_STATUS:
+      if (action.status !== 'connected' && action.path !== 'activity') {
+        return {...initialState}
+      }
+      return state
 
     case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:

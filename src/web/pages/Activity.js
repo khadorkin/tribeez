@@ -33,10 +33,6 @@ class Activity extends Component {
     this.handleTabs = this.handleTabs.bind(this)
   }
 
-  componentDidMount() {
-    this.props.getActivity(this.props.history.last_id)
-  }
-
   handleTabs(tab) {
     this.setState({
       tab,
@@ -63,11 +59,13 @@ class Activity extends Component {
       <div>
         <Tabs onChange={this.handleTabs}>
           <Tab label={<FormattedMessage id="tab.activity" />} value="activity">
-            {
-              activity.items.map((item, index) =>
-                <div style={{margin: '15px 10px 0', TODO: true}} key={index}>{item.type}</div>
-              )
-            }
+            <AsyncContent fetcher={this.props.getActivity} data={this.props.activity}>
+              {
+                activity.items.map((item, index) =>
+                  <div style={{margin: '15px 10px 0', TODO: true}} key={index}>{item.type}</div>
+                )
+              }
+            </AsyncContent>
           </Tab>
           <Tab label={historyLabel} value="history">
             {

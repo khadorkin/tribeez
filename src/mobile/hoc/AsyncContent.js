@@ -102,6 +102,10 @@ class AsyncContent extends Component {
     if (data.loading) {
       return
     }
+    if (data.paging === undefined && data.items.length > 0) {
+      // pages without paging: already loaded it
+      return
+    }
     if (!data.pages || (more && data.items.length / data.paging === data.pages)) {
       this.props.fetcher(data.pages) // last page is N => N+1 pages => next page is N+1
     }

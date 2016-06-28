@@ -52,11 +52,12 @@ export const updateLang = (lang) => {
   }
 }
 
-export const setSocketStatus = (status) => {
+export const setSocketStatus = (status, path) => {
   return (dispatch) => {
     dispatch({
       type: SOCKET_STATUS,
       status,
+      path,
     })
   }
 }

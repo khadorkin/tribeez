@@ -6,6 +6,7 @@ import {
   PUT_NOTE_SUCCESS,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
+  SOCKET_STATUS,
   SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -85,6 +86,12 @@ export default (state = initialState, action = null) => {
         items,
       }
     }
+
+    case SOCKET_STATUS:
+      if (action.status !== 'connected' && action.path !== 'notes') {
+        return {...initialState}
+      }
+      return state
 
     case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:

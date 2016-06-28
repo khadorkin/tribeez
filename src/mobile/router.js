@@ -13,17 +13,12 @@ const push = (route) => {
   _navigator.push(route)
 }
 
-const pop = () => _navigator.pop()
-const replace = (route) => _navigator.replace(route)
-const resetTo = (route) => _navigator.resetTo(route)
-
-const getCurrentRoutes = () => _navigator.getCurrentRoutes()
-
 export default {
   update,
   push,
-  pop,
-  replace,
-  resetTo,
-  getCurrentRoutes,
+  pop: () => _navigator.pop(),
+  replace: (route) => _navigator.replace(route),
+  resetTo: (route) => _navigator.resetTo(route),
+  getCurrentRoutes: () => _navigator.getCurrentRoutes(),
+  getCurrentName: () => _route.name,
 }

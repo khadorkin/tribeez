@@ -140,25 +140,25 @@ class App extends Component {
         this.props.message(msg)
       })
       this.socket.on('connect', () => {
-        this.props.setSocketStatus('connected')
+        this.props.setSocketStatus('connected', router.getCurrentName())
       })
       this.socket.on('error', (/*num*/) => {
-        this.props.setSocketStatus('error')
+        this.props.setSocketStatus('error', router.getCurrentName())
       })
       this.socket.on('disconnect', () => {
-        this.props.setSocketStatus('disconnected')
+        this.props.setSocketStatus('disconnected', router.getCurrentName())
       })
       this.socket.on('reconnecting', (/*num*/) => {
-        this.props.setSocketStatus('reconnecting')
+        this.props.setSocketStatus('reconnecting', router.getCurrentName())
       })
       this.socket.on('reconnect', (/*num*/) => {
-        this.props.setSocketStatus('connected')
+        this.props.setSocketStatus('connected', router.getCurrentName())
       })
       this.socket.on('reconnect_error', (/*num*/) => {
-        this.props.setSocketStatus('error')
+        this.props.setSocketStatus('error', router.getCurrentName())
       })
       this.socket.on('reconnect_failed', () => {
-        this.props.setSocketStatus('error')
+        this.props.setSocketStatus('error', router.getCurrentName())
       })
       // Set Fabric infos:
       Crashlytics.setUserIdentifier(String(props.uid))

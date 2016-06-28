@@ -3,6 +3,7 @@ import {
   GET_INVITES_SUCCESS,
   GET_INVITES_FAILURE,
   INVITE_SUCCESS,
+  SOCKET_STATUS,
   SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -56,6 +57,12 @@ export default (state = initialState, action = null) => {
         items,
       }
     }
+
+    case SOCKET_STATUS:
+      if (action.status !== 'connected' && action.path !== 'members') {
+        return {...initialState}
+      }
+      return state
 
     case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:

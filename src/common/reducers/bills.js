@@ -8,6 +8,7 @@ import {
   NEW_BILL,
   UPDATE_BILL,
   DELETE_BILL,
+  SOCKET_STATUS,
   SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -81,6 +82,12 @@ export default (state = initialState, action = null) => {
         items,
       }
     }
+
+    case SOCKET_STATUS:
+      if (action.status !== 'connected' && action.path !== 'bills') {
+        return {...initialState}
+      }
+      return state
 
     case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:

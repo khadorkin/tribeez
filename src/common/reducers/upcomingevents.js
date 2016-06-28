@@ -5,6 +5,7 @@ import {
   NEW_EVENT,
   UPDATE_EVENT,
   DELETE_EVENT,
+  SOCKET_STATUS,
   SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
@@ -68,6 +69,12 @@ export default (state = initialState, action = null) => {
         items,
       }
     }
+
+    case SOCKET_STATUS:
+      if (action.status !== 'connected' && action.path !== 'events') {
+        return {...initialState}
+      }
+      return state
 
     case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:

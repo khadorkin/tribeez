@@ -68,6 +68,7 @@ class Notes extends Component {
   render() {
     const {notes} = this.props
 
+    //TODO: use <AsyncContent> mechanic to avoid re-fetching when not necessary
     return (
       <View style={styles.container}>
         <SortableListView

@@ -23,7 +23,7 @@ import Dialog from 'material-ui/Dialog'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, closeSnack, updateLang, message} from '../common/actions/app'
+import {toggleMenu, closeSnack, updateLang, message, setSocketStatus} from '../common/actions/app'
 
 import langs from '../common/resources/langs'
 
@@ -53,10 +53,11 @@ class App extends Component {
     desktop: PropTypes.bool.isRequired,
     height: PropTypes.number.isRequired,
     messages: PropTypes.object.isRequired,
+    setSocketStatus: PropTypes.func.isRequired,
     menu_visible: PropTypes.bool.isRequired,
     snack: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
-      // action creators:
+    // action creators:
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
@@ -90,12 +91,35 @@ class App extends Component {
 
   componentWillReceiveProps(props) {
     if (props.uid && !this.socket) { // log in
+      // Connect to WebSocket:
       this.socket = io(config.api_endpoint)
       this.socket.on('message', (msg) => {
         this.props.message(msg)
       })
+      this.socket.on('connect', () => {
+        this.props.setSocketStatus('connected', this.props.location.pathname.substr(1))
+      })
+      this.socket.on('error', (/*num*/) => {
+        this.props.setSocketStatus('error', this.props.location.pathname.substr(1))
+      })
+      this.socket.on('disconnect', () => {
+        this.props.setSocketStatus('disconnected', this.props.location.pathname.substr(1))
+      })
+      this.socket.on('reconnecting', (/*num*/) => {
+        this.props.setSocketStatus('reconnecting', this.props.location.pathname.substr(1))
+      })
+      this.socket.on('reconnect', (/*num*/) => {
+        this.props.setSocketStatus('connected', this.props.location.pathname.substr(1))
+      })
+      this.socket.on('reconnect_error', (/*num*/) => {
+        this.props.setSocketStatus('error', this.props.location.pathname.substr(1))
+      })
+      this.socket.on('reconnect_failed', () => {
+        this.props.setSocketStatus('error', this.props.location.pathname.substr(1))
+      })
     }
     if (!props.uid && this.socket) { // log out
+      // Disconnect WebSocket:
       this.socket.disconnect(true)
       this.socket = null
     }
@@ -297,6 +321,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   closeSnack,
   updateLang,
   message,
+  setSocketStatus,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
