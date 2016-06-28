@@ -15,6 +15,7 @@ class TabBar extends Component {
     tabs: PropTypes.array,
     containerWidth: PropTypes.number.isRequired,
     scrollValue: PropTypes.object,
+    badges: PropTypes.array.isRequired,
   }
 
   constructor(props) {
@@ -27,6 +28,15 @@ class TabBar extends Component {
     const color = isTabActive ? 'white' : 'white'
     const fontWeight = isTabActive ? 'bold' : 'normal'
     const name = this.props.intl.formatMessage({id})
+    const badge = this.props.badges[index]
+
+    const badgeNode = badge && (
+      <View style={styles.badge}>
+        <Text style={styles.badgeText}>
+          {badge}
+        </Text>
+      </View>
+    )
 
     return (
       <TabButton
@@ -41,6 +51,7 @@ class TabBar extends Component {
           <Text style={{color, fontWeight}}>
             {name}
           </Text>
+          {badgeNode}
         </View>
       </TabButton>
     )
@@ -72,12 +83,6 @@ class TabBar extends Component {
 }
 
 const styles = StyleSheet.create({
-  tab: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 10,
-  },
   tabs: {
     height: 50,
     flexDirection: 'row',
@@ -88,6 +93,23 @@ const styles = StyleSheet.create({
     borderRightWidth: 0,
     borderBottomColor: '#ccc',
     backgroundColor: colors.main,
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: 10,
+    flexDirection: 'row',
+  },
+  badge: {
+    backgroundColor: colors.error,
+    borderRadius: 10,
+    paddingHorizontal: 5,
+    marginLeft: 10,
+  },
+  badgeText: {
+    color: 'white',
+    fontSize: 12,
   },
 })
 

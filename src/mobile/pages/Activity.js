@@ -21,6 +21,7 @@ class Activity extends Component {
     activity: PropTypes.object,
     history: PropTypes.object,
     telegram_token: PropTypes.string,
+    unread: PropTypes.number,
     // action creators:
     getActivity: PropTypes.func.isRequired,
     getHistory: PropTypes.func.isRequired,
@@ -55,7 +56,7 @@ class Activity extends Component {
   }
 
   render() {
-    const {activity, history} = this.props
+    const {activity, history, unread} = this.props
 
     return (
       <View style={styles.container}>
@@ -72,6 +73,7 @@ class Activity extends Component {
             fetcher={this.props.getHistory}
             rowComponent={Entry}
             tabLabel="tab.history"
+            badge={unread > 0 && unread}
           />
         </TabView>
       </View>
@@ -95,6 +97,7 @@ const mapStateToProps = (state) => ({
   activity: state.activity,
   history: state.history,
   telegram_token: state.member.user.telegram_token,
+  unread: state.member.user.unread,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

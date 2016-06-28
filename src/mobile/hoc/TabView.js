@@ -9,8 +9,14 @@ class TabView extends Component {
     children: PropTypes.node.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.renderTabBar = this.renderTabBar.bind(this)
+  }
+
   renderTabBar(props) {
-    return <TabBar {...props} />
+    const badges = this.props.children.map((child) => child.props.badge)
+    return <TabBar {...props} badges={badges} />
   }
 
   render() {

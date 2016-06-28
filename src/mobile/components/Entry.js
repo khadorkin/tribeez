@@ -107,7 +107,7 @@ class Entry extends Component {
     const date = <FormattedRelative value={item.added} />
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: item.new ? '#FFFFDD' : 'white'}]}>
         <TouchableOpacity onPress={this.handleTouch} style={styles.main}>
           <Image
             source={{uri: gravatar(author)}}
@@ -132,7 +132,6 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     marginVertical: 5,
     elevation: 1,
   },

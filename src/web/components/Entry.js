@@ -81,7 +81,7 @@ class Entry extends Component {
 
     const style = {...styles.container}
     if (entry.new) {
-      style.backgroundColor = 'yellow'
+      style.backgroundColor = '#FFFFDD'
     }
 
     return (
