@@ -7,14 +7,14 @@ export const getLocal = (key) => {
     dispatch({
       type: LOCAL_STORAGE,
       key,
-      value: localStorage.getItem('mytribe.' + key),
+      value: localStorage.getItem('tribeez.' + key),
     })
   }
 }
 
 export const setLocal = (key, value) => {
   return function(dispatch) {
-    localStorage.setItem('mytribe.' + key, value)
+    localStorage.setItem('tribeez.' + key, value)
     dispatch({
       type: LOCAL_STORAGE,
       key,
@@ -25,7 +25,7 @@ export const setLocal = (key, value) => {
 
 export const removeLocal = (key) => {
   return function(dispatch) {
-    localStorage.removeItem('mytribe.' + key)
+    localStorage.removeItem('tribeez.' + key)
     dispatch({
       type: LOCAL_STORAGE,
       key,

@@ -5,7 +5,7 @@ if (__DEV__) {
   config = require('../../config.production.json')
 }
 
-config.android_package = 'com.mytribe'
-config.version = 5 // keep in sync with versionCode /android/app/build.gradle
+config.android_package = 'net.tribeez'
+config.version = 1
 
 module.exports = config

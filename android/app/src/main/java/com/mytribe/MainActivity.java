@@ -1,4 +1,4 @@
-package com.mytribe;
+package net.tribeez;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
@@ -24,7 +24,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "mytribe";
+        return "tribeez";
     }
 
     /**

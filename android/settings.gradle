@@ -1,4 +1,4 @@
-rootProject.name = 'mytribe'
+rootProject.name = 'tribeez'
 
 include ':app'
 include ':react-native-fabric'

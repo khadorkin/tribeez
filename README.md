@@ -1,13 +1,15 @@
-[![Dependencies](https://img.shields.io/david/antoinerousseau/mytribe.svg)](https://david-dm.org/antoinerousseau/mytribe#info=dependencies&view=list)
-[![DevDependencies](https://img.shields.io/david/dev/antoinerousseau/mytribe.svg)](https://david-dm.org/antoinerousseau/mytribe#info=devDependencies&view=list)
+[![Dependencies](https://img.shields.io/david/antoinerousseau/tribeez.svg)](https://david-dm.org/antoinerousseau/tribeez#info=dependencies&view=list)
+[![DevDependencies](https://img.shields.io/david/dev/antoinerousseau/tribeez.svg)](https://david-dm.org/antoinerousseau/tribeez#info=devDependencies&view=list)
 
-# MyTribe app
+# Tribeez
+
+## Prerequisite
+
+You need to install and start the API first: https://bitbucket.org/antoinerousseau/tribeez-api
+
+## Dependencies
 
     npm install
-
-## API
-
-You need to install and start the API first: https://bitbucket.org/antoinerousseau/mytribe-api
 
 ## Config
 
@@ -36,7 +38,7 @@ Serve with [nginx](http://nginx.org/):
 ```
 server {
     server_name tribeez.net;
-    root /home/antoine/apps/mytribe-app;
+    root /home/<user>/apps/tribeez;
     #access_log off;
 
     location / {
@@ -47,18 +49,9 @@ server {
 
 Serve with [PM2](http://pm2.keymetrics.io/):
 
-    PORT=3011 NODE_ENV=production pm2 start server.js --name "mytribe-app" -- --color
+    PORT=3011 NODE_ENV=production pm2 start server.js --name "tribeez" -- --color
 
 ## Android app
-
-Create `android/app/fabric.properties` like this to configure Crashlytics & Answers:
-
-```
-apiSecret=xxxxxxxx
-apiKey=xxxxxxxx
-```
-
-These values can be found in your [Organization settings](https://fabric.io/settings/organizations)
 
 ### Development
 
@@ -86,15 +79,15 @@ Generate a key:
 Edit `~/.gradle/gradle.properties`:
 
 ```
-MYTRIBE_RELEASE_STORE_FILE=android.keystore
-MYTRIBE_RELEASE_KEY_ALIAS=android
-MYTRIBE_RELEASE_STORE_PASSWORD=xxxxxxxx
-MYTRIBE_RELEASE_KEY_PASSWORD=xxxxxxxx
+TRIBEEZ_RELEASE_STORE_FILE=android.keystore
+TRIBEEZ_RELEASE_KEY_ALIAS=android
+TRIBEEZ_RELEASE_STORE_PASSWORD=xxxxxxxx
+TRIBEEZ_RELEASE_KEY_PASSWORD=xxxxxxxx
 ```
 
 Bump version:
 
-* Edit `versionCode` and `versionName` in `android/app/build.gradle`
+* Edit `versionCode` and `versionName` in `android/app/build.gradle` and in `src/common/config.js`
 
 Generate production builds:
 

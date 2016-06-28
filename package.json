@@ -1,13 +1,13 @@
 {
-  "name": "mytribe",
+  "name": "tribeez",
   "author": "Antoine Rousseau <antoine@rousseau.im>",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "An ES6 ReactJS Web and mobile app built with Webpack",
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antoinerousseau/mytribe.git"
+    "url": "https://github.com/antoinerousseau/tribeez.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +18,7 @@
   },
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/antoinerousseau/mytribe/issues"
+    "url": "https://github.com/antoinerousseau/tribeez/issues"
   },
   "homepage": "https://tribeez.net",
   "dependencies": {
