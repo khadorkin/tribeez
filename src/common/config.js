@@ -5,7 +5,10 @@ if (__DEV__) {
   config = require('../../config.production.json')
 }
 
-config.android_package = 'net.tribeez'
-config.version = 1
+config.android = {
+  package: 'net.tribeez',
+  versionCode: 1,
+  versionName: '0.1',
+}
 
 module.exports = config

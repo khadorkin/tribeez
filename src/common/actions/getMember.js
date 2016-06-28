@@ -15,7 +15,7 @@ export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
     dispatch({
       type: GET_MEMBER_REQUEST,
     })
-    api.get('member', {version: config.version})
+    api.get('member', {version: config.android.versionCode})
       .then((response) => {
         if (response.error) {
           dispatch({

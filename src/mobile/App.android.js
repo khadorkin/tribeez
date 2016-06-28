@@ -227,8 +227,8 @@ class App extends Component {
   }
 
   handleOpenStore() {
-    Linking.openURL('market://details?id=' + config.android_package).catch(() => {
-      Linking.openURL('https://play.google.com/store/apps/details?id=' + config.android_package)
+    Linking.openURL('market://details?id=' + config.android.package).catch(() => {
+      Linking.openURL('https://play.google.com/store/apps/details?id=' + config.android.package)
     })
   }
 

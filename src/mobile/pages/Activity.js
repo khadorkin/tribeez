@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Linking, StyleSheet} from 'react-native'
+import {View, Text, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -43,15 +43,20 @@ class Activity extends Component {
 
   renderFooter() {
     return (
-      <IconButton
-        family="evil"
-        name="sc-telegram"
-        color="gray"
-        onPress={this.handleTelegram}
-        style={styles.telegram}
-      >
-        <FormattedMessage id="telegram" />
-      </IconButton>
+      <View>
+        <IconButton
+          family="evil"
+          name="sc-telegram"
+          color="gray"
+          onPress={this.handleTelegram}
+          style={styles.telegram}
+        >
+          <FormattedMessage id="telegram" />
+        </IconButton>
+        <Text style={styles.version}>
+          App version: beta {config.android.versionName} ({config.android.versionCode})
+        </Text>
+      </View>
     )
   }
 
@@ -90,6 +95,13 @@ const styles = StyleSheet.create({
   },
   telegram: {
     alignSelf: 'center',
+  },
+  //TODO: remove (or move):
+  version: {
+    marginTop: 20,
+    alignSelf: 'center',
+    fontSize: 10,
+    height: 20,
   },
 })
 
