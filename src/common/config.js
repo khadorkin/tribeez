@@ -6,6 +6,6 @@ if (__DEV__) {
 }
 
 config.android_package = 'com.mytribe'
-config.version = 4 // keep in sync with versionCode /android/app/build.gradle
+config.version = 5 // keep in sync with versionCode /android/app/build.gradle
 
 module.exports = config
