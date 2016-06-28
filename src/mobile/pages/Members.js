@@ -4,8 +4,7 @@ import {View, ScrollView, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import ScrollableTabView from 'react-native-scrollable-tab-view'
-
+import TabView from '../hoc/TabView'
 import Member from '../components/Member'
 import Invite from '../components/Invite'
 import Fab from '../components/Fab'
@@ -13,7 +12,6 @@ import AsyncContent from '../hoc/AsyncContent'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import colors from '../../common/constants/colors'
 import getInvites from '../../common/actions/getInvites'
 
 class Members extends Component {
@@ -37,13 +35,8 @@ class Members extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollableTabView
-          tabBarActiveTextColor="white"
-          tabBarInactiveTextColor="white"
-          tabBarUnderlineColor="white"
-          tabBarBackgroundColor={colors.main}
-        >
-          <ScrollView tabLabel="REGISTERED" style={styles.content}>
+        <TabView>
+          <ScrollView tabLabel="tab.registered" style={styles.content}>
             {
               this.props.users.map((user) =>
                 <Member user={user} key={user.id} />
@@ -55,9 +48,9 @@ class Members extends Component {
             data={this.props.invites}
             fetcher={this.props.getInvites}
             rowComponent={Invite}
-            tabLabel="INVITED"
+            tabLabel="tab.invited"
           />
-        </ScrollableTabView>
+        </TabView>
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

@@ -4,8 +4,7 @@ import {View, ScrollView, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import ScrollableTabView from 'react-native-scrollable-tab-view'
-
+import TabView from '../hoc/TabView'
 import AsyncContent from '../hoc/AsyncContent'
 import Bill from '../components/Bill'
 import Balance from '../components/Balance'
@@ -13,7 +12,6 @@ import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import colors from '../../common/constants/colors'
 import getBills from '../../common/actions/getBills'
 
 class Bills extends Component {
@@ -37,19 +35,14 @@ class Bills extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollableTabView
-          tabBarActiveTextColor="white"
-          tabBarInactiveTextColor="white"
-          tabBarUnderlineColor="white"
-          tabBarBackgroundColor={colors.main}
-        >
+        <TabView>
           <AsyncContent
             data={this.props.bills}
             fetcher={this.props.getBills}
             rowComponent={Bill}
-            tabLabel="LIST"
+            tabLabel="tab.bills"
           />
-          <ScrollView tabLabel="BALANCES" style={styles.content}>
+          <ScrollView tabLabel="tab.balances" style={styles.content}>
             {
               this.props.users.map((user) =>
                 <Balance user={user} key={user.id} />
@@ -57,7 +50,7 @@ class Bills extends Component {
             }
             <View style={styles.spacer} />
           </ScrollView>
-        </ScrollableTabView>
+        </TabView>
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

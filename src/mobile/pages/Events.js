@@ -5,15 +5,13 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import moment from 'moment'
 
-import ScrollableTabView from 'react-native-scrollable-tab-view'
-
+import TabView from '../hoc/TabView'
 import AsyncContent from '../hoc/AsyncContent'
 import Event from '../components/Event'
 import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import colors from '../../common/constants/colors'
 import getUpcomingEvents from '../../common/actions/getUpcomingEvents'
 import getPastEvents from '../../common/actions/getPastEvents'
 
@@ -43,27 +41,22 @@ class Events extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollableTabView
-          tabBarActiveTextColor="white"
-          tabBarInactiveTextColor="white"
-          tabBarUnderlineColor="white"
-          tabBarBackgroundColor={colors.main}
-        >
+        <TabView>
           <AsyncContent
             data={this.props.upcomingevents}
             fetcher={this.props.getUpcomingEvents}
             rowComponent={Event}
             splitter={sectionSplitter}
-            tabLabel="UPCOMING"
+            tabLabel="tab.upcoming"
           />
           <AsyncContent
             data={this.props.pastevents}
             fetcher={this.props.getPastEvents}
             splitter={sectionSplitter}
             rowComponent={Event}
-            tabLabel="PAST"
+            tabLabel="tab.past"
           />
-        </ScrollableTabView>
+        </TabView>
         <Fab name="add" onPress={this.handleFab} />
       </View>
     )

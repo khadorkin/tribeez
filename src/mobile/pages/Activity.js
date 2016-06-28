@@ -4,8 +4,7 @@ import {View, Linking, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import ScrollableTabView from 'react-native-scrollable-tab-view'
-
+import TabView from '../hoc/TabView'
 import AsyncContent from '../hoc/AsyncContent'
 import Card from '../components/Card'
 import Entry from '../components/Entry'
@@ -13,7 +12,6 @@ import IconButton from '../components/IconButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import config from '../../common/config'
-import colors from '../../common/constants/colors'
 import getActivity from '../../common/actions/getActivity'
 import getHistory from '../../common/actions/getHistory'
 
@@ -61,26 +59,21 @@ class Activity extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollableTabView
-          tabBarActiveTextColor="white"
-          tabBarInactiveTextColor="white"
-          tabBarUnderlineColor="white"
-          tabBarBackgroundColor={colors.main}
-        >
+        <TabView>
           <AsyncContent
             data={activity}
             fetcher={this.props.getActivity}
             rowComponent={Card}
-            tabLabel="WHAT'S UP"
+            tabLabel="tab.activity"
             footer={this.renderFooter()}
           />
           <AsyncContent
             data={history}
             fetcher={this.props.getHistory}
             rowComponent={Entry}
-            tabLabel="HISTORY"
+            tabLabel="tab.history"
           />
-        </ScrollableTabView>
+        </TabView>
       </View>
     )
   }
