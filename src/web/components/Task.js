@@ -19,8 +19,6 @@ import routes from '../routes'
 
 import postDone from '../../common/actions/postDone'
 
-import css from './Entry.css'
-
 class Task extends Component {
   static propTypes = {
     // from parent component:
@@ -80,7 +78,7 @@ class Task extends Component {
     const uids = Object.keys(task.counters)
 
     return (
-      <Card className={css.container}>
+      <Card style={styles.container}>
         <CardHeader title={task.name} subtitle={subtitle}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -119,6 +117,12 @@ class Task extends Component {
       </Card>
     )
   }
+}
+
+const styles = {
+  container: {
+    margin: '15px 10px 0',
+  },
 }
 
 const mapStateToProps = (state) => ({

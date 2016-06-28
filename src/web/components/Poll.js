@@ -22,8 +22,6 @@ import routes from '../routes'
 
 import postVote from '../../common/actions/postVote'
 
-import css from './Entry.css'
-
 class Poll extends Component {
   static propTypes = {
     // from parent component:
@@ -146,7 +144,7 @@ class Poll extends Component {
     const date = <FormattedRelative value={poll.created} />
 
     return (
-      <Card className={css.container} initiallyExpanded={!user_answer}>
+      <Card style={styles.container} initiallyExpanded={!user_answer}>
         <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -187,6 +185,12 @@ class Poll extends Component {
       </Card>
     )
   }
+}
+
+const styles = {
+  container: {
+    margin: '15px 10px 0',
+  },
 }
 
 const mapStateToProps = (state) => ({

@@ -7,6 +7,7 @@ import {
   LOGOUT_SUCCESS,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_TRIBE_SUCCESS,
+  GET_HISTORY_SUCCESS,
 } from '../constants/actions'
 
 const getFormats = (currency) => ({
@@ -121,6 +122,15 @@ export default (state = initialState, action = null) => {
         formats: getFormats(tribe.currency),
       }
     }
+
+    case GET_HISTORY_SUCCESS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          unread: 0,
+        },
+      }
 
     case LOGOUT_SUCCESS:
       return {...initialState}

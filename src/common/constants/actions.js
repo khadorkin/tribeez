@@ -4,6 +4,7 @@ export const RESIZE = 'RESIZE'
 export const SNACK_MESSAGE = 'SNACK_MESSAGE'
 export const CLOSE_SNACK = 'CLOSE_SNACK'
 export const SOCKET_STATUS = 'SOCKET_STATUS'
+export const LOCAL_STORAGE = 'LOCAL_STORAGE'
 
 export const UPDATE_JOIN_DATA = 'UPDATE_JOIN_DATA'
 export const UPDATE_LANG = 'UPDATE_LANG'

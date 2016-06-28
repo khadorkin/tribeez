@@ -12,8 +12,6 @@ import UrlIcon from 'material-ui/svg-icons/content/link'
 
 import gravatar from '../../common/utils/gravatar'
 
-import css from './Entry.css'
-
 const infos = [
   {id: 'description', icon: <DescIcon />},
   {id: 'start', icon: <StartIcon />, date: true},
@@ -43,7 +41,7 @@ class Event extends Component {
     const subtitle = <FormattedRelative value={event.start} />
 
     return (
-      <Card className={css.container}>
+      <Card style={styles.container}>
         <CardHeader title={event.name} subtitle={<span>{subtitle}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -80,6 +78,12 @@ class Event extends Component {
       </Card>
     )
   }
+}
+
+const styles = {
+  container: {
+    margin: '15px 10px 0',
+  },
 }
 
 const mapStateToProps = (state) => ({

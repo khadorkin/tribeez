@@ -15,8 +15,6 @@ import gravatar from '../../common/utils/gravatar'
 
 import routes from '../routes'
 
-import css from './Entry.css'
-
 class Bill extends Component {
   static propTypes = {
     // from parent component:
@@ -59,7 +57,7 @@ class Bill extends Component {
     const date = <FormattedRelative value={bill.added} />
 
     return (
-      <Card className={css.container}>
+      <Card style={styles.container}>
         <CardHeader title={title} subtitle={<span>{date} — {formatted_part}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
@@ -94,6 +92,12 @@ class Bill extends Component {
       </Card>
     )
   }
+}
+
+const styles = {
+  container: {
+    margin: '15px 10px 0',
+  },
 }
 
 const mapStateToProps = (state) => ({

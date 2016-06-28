@@ -79,8 +79,13 @@ class Entry extends Component {
       )
     }
 
+    const style = {...styles.container}
+    if (entry.new) {
+      style.backgroundColor = 'yellow'
+    }
+
     return (
-      <Card style={styles.container}>
+      <Card style={style}>
         <CardHeader title={title} subtitle={<span>{date}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
