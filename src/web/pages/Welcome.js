@@ -5,8 +5,6 @@ import {FormattedMessage} from 'react-intl'
 import RaisedButton from 'material-ui/RaisedButton'
 import * as colors from 'material-ui/styles/colors'
 
-import Logo from '../../common/images/logo.svg'
-
 import routes from '../routes'
 
 class Welcome extends Component {
@@ -15,7 +13,7 @@ class Welcome extends Component {
     return (
       <div>
         <div style={{backgroundColor: colors.cyan500, padding: '100px 0 60px', textAlign: 'center'}}>
-          <Logo style={{width: '200px', marginBottom: '60px'}} /><br />
+          <img src="logo.png" style={{marginBottom: '60px', width: 128}} /><br />
           <RaisedButton label={<FormattedMessage id="register" />} containerElement={<Link to={routes.REGISTER} />} />
         </div>
       </div>
