@@ -14,7 +14,7 @@ import gravatar from '../../common/utils/gravatar'
 class Poll extends Component {
   static propTypes = {
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:

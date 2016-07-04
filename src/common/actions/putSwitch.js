@@ -7,12 +7,6 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import routes from '../routes'
-
-import getMember from './getMember'
-import getActivity from './getActivity'
-import getHistory from './getHistory'
-
 export default (id) => {
   return function(dispatch) {
     dispatch({
@@ -30,9 +24,9 @@ export default (id) => {
             type: SWITCH_SUCCESS,
           })
           // force redirect to home page:
-          dispatch(getMember(null, routes.ACTIVITY))
-          dispatch(getActivity())
-          dispatch(getHistory())
+          // dispatch(getMember(null, routes.ACTIVITY))
+          // dispatch(getActivity())
+          // dispatch(getHistory())
           dispatch({
             type: SNACK_MESSAGE,
             message: 'switched',

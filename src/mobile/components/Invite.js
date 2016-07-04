@@ -15,7 +15,7 @@ class Invite extends Component {
     // from parent:
     item: PropTypes.object.isRequired,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     // action creators:

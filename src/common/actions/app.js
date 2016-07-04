@@ -6,7 +6,26 @@ import {
   CLOSE_SNACK,
   UPDATE_LANG,
   SOCKET_STATUS,
+  LOGIN,
+  LOGOUT,
 } from '../constants/actions'
+
+export const login = (user) => {
+  return function(dispatch) {
+    dispatch({
+      type: LOGIN,
+      user,
+    })
+  }
+}
+
+export const logout = () => {
+  return function(dispatch) {
+    dispatch({
+      type: LOGOUT,
+    })
+  }
+}
 
 export const toggleMenu = (open) => {
   return function(dispatch) {

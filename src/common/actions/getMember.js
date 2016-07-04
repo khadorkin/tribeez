@@ -1,59 +1,83 @@
-import router from '../router'
-import config from '../config'
-
-import api from '../utils/api'
+import {db} from '../firebase'
 
 import {
-  GET_MEMBER_REQUEST,
-  GET_MEMBER_SUCCESS,
-  GET_MEMBER_FAILURE,
-  LOGIN_DESTINATION,
+  SYNC_TRIBE_REQUEST,
+  SYNC_TRIBE_FAILURE,
+  USER_UPDATED,
+  TRIBE_UPDATED,
+  MEMBER_ADDED,
 } from '../constants/actions'
 
-export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
-  return function(dispatch) {
+export default (uid) => {
+  return (dispatch) => {
     dispatch({
-      type: GET_MEMBER_REQUEST,
+      type: SYNC_TRIBE_REQUEST,
     })
-    api.get('member', {version: config.android.versionCode})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_MEMBER_FAILURE,
-            error: response.error,
-          })
-          if (redirectOnAnonymous) {
-            router.resetTo(redirectOnAnonymous, dispatch)
-            dispatch({
-              type: LOGIN_DESTINATION,
-              destination,
-            })
-          }
-        } else {
-          dispatch({
-            type: GET_MEMBER_SUCCESS,
-            user: response.user,
-            tribe: response.tribe,
-          })
-          if (redirectOnLoggedIn) {
-            router.resetTo(redirectOnLoggedIn, dispatch)
-          }
-        }
+
+    const private_user_path = 'users_private/' + uid
+
+    db.ref(private_user_path).on('value', (snapshot) => {
+      const user = snapshot.val()
+
+      dispatch({
+        type: USER_UPDATED,
+        user,
       })
-      .catch((err) => {
+    }, (error) => {
+      dispatch({
+        type: SYNC_TRIBE_FAILURE,
+        error: error.code,
+        path: private_user_path,
+      })
+    })
+
+    const user_path = 'users/' + uid
+    db.ref(user_path).on('value', (snapshot) => {
+      const user = snapshot.val()
+
+      dispatch({
+        type: USER_UPDATED,
+        user,
+      })
+
+      const tribe_path = 'tribes/' + user.current_tribe + '/infos'
+      db.ref(tribe_path).on('value', (sub_snapshot) => {
+        const tribe = sub_snapshot.val()
+        tribe.key = user.current_tribe
+
         dispatch({
-          type: GET_MEMBER_FAILURE,
-          error: 'request',
-          fetchError: err.message,
+          type: TRIBE_UPDATED,
+          tribe,
         })
-        //TODO: show an error
-        if (redirectOnAnonymous) {
-          router.resetTo(redirectOnAnonymous, dispatch)
-          dispatch({
-            type: LOGIN_DESTINATION,
-            destination,
-          })
-        }
+      }, (error) => {
+        dispatch({
+          type: SYNC_TRIBE_FAILURE,
+          error: error.code,
+          path: tribe_path,
+        })
       })
+
+      const members_path = 'tribes/' + user.current_tribe + '/members'
+      db.ref(members_path).on('child_added', (sub_snapshot) => {
+        const member = sub_snapshot.val()
+        member.uid = sub_snapshot.key
+        dispatch({
+          type: MEMBER_ADDED,
+          member,
+        })
+      }, (error) => {
+        dispatch({
+          type: SYNC_TRIBE_FAILURE,
+          error: error.code,
+          path: members_path,
+        })
+      })
+    }, (error) => {
+      dispatch({
+        type: SYNC_TRIBE_FAILURE,
+        error: error.code,
+        path: user_path,
+      })
+    })
   }
 }

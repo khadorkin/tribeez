@@ -160,15 +160,20 @@ class Nav extends Component {
       </div>
     )
 
-    const tribeItems = user.tribes.map((tribe) =>
-      <MenuItem key={tribe.id}
-        onTouchTap={this.selectTribe.bind(this, tribe.id)}
-        style={tribe.active ? styles.current : styles.default}
-        rightIconButton={tribe.active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
-      >
-        {tribe.name}
-      </MenuItem>
-    )
+    const tribe_keys = Object.keys(user.tribes)
+    const tribeItems = tribe_keys.map((key) => {
+      const name = user.tribes[key]
+      const active = (key === user.current_tribe)
+      return (
+        <MenuItem key={key}
+          onTouchTap={this.selectTribe.bind(this, key)}
+          style={active ? styles.current : styles.default}
+          rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
+        >
+          {name}
+        </MenuItem>
+      )
+    })
 
     const tribesContainer = (
       <div>
@@ -212,8 +217,8 @@ class Nav extends Component {
 const mapStateToProps = (state) => ({
   menu_tribes: state.app.menu_tribes,
   height: state.app.height,
-  tribe_name: state.member.tribe.name,
-  user: state.member.user,
+  tribe_name: state.tribe.name,
+  user: state.user,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

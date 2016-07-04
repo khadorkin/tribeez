@@ -1,8 +1,5 @@
 import api from '../utils/api'
 
-import getMember from './getMember'
-import getActivity from './getActivity'
-
 import {
   UPDATE_TRIBE_SUCCESS,
   SNACK_MESSAGE,
@@ -34,8 +31,8 @@ export default (values, dispatch) => {
           } else {
             router.resetTo(routes.ACTIVITY, dispatch)
             // user and tribe have changed, get them from the API:
-            dispatch(getMember())
-            dispatch(getActivity())
+            // dispatch(getMember())
+            // dispatch(getActivity())
             dispatch({
               type: SNACK_MESSAGE,
               message: 'tribe_created',

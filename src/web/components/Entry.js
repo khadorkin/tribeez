@@ -10,14 +10,14 @@ class Entry extends Component {
   static propTypes = {
     entry: PropTypes.object.isRequired,
     userMap: PropTypes.object.isRequired,
-    uid: PropTypes.number,
+    uid: PropTypes.string,
   }
 
   render() {
     const {entry, userMap, uid} = this.props
 
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
-    const author = userMap[entry.user_id]
+    const author = userMap[entry.user]
     if (!author) {
       return null
     }
@@ -31,10 +31,10 @@ class Entry extends Component {
       values.author = author.name
     }
 
-    switch (entry.item_type) {
+    switch (entry.type) {
       case 'member':
-        if (entry.item_id) {
-          const inviter = userMap[entry.item_id]
+        if (entry.inviter) {
+          const inviter = userMap[entry.inviter]
           if (inviter) {
             infos = <FormattedMessage id={`entry.member.${entry.action}.infos`} values={{inviter: inviter.name}} />
           }
@@ -68,7 +68,7 @@ class Entry extends Component {
       infos = <span>{entry.data.text}</span>
     }
 
-    const title = <FormattedMessage id={`entry.${entry.item_type}.${entry.action}`} values={values} />
+    const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
     const date = <FormattedRelative value={entry.added} />
 
     if (infos) {
@@ -104,8 +104,8 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  userMap: state.member.tribe.userMap,
-  uid: state.member.user.id,
+  userMap: state.tribe.userMap,
+  uid: state.user.uid,
 })
 
 export default connect(mapStateToProps)(Entry)

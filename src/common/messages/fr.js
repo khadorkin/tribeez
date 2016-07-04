@@ -59,6 +59,7 @@ const fr = {
   vote_again: 'Re-voter',
   submit_vote: 'Voter',
   return_home: 'Revenir à l’Activité',
+  retry: 'Réessayer',
 
   // Dialogs
   dialog_delete: 'Voulez-vous vraiment supprimer ceci ?',

@@ -1,11 +1,10 @@
 import app from './app'
 import login from './login'
 import logout from './logout'
-import member from './member'
+import user from './user'
+import tribe from './tribe'
 import invite from './invite'
 import join from './join'
-import activity from './activity'
-import history from './history'
 import invites from './invites'
 import password from './password'
 import reset from './reset'
@@ -22,11 +21,10 @@ export default {
   app,
   login,
   logout,
-  member,
+  user,
+  tribe,
   invite,
   join,
-  activity,
-  history,
   invites,
   password,
   reset,

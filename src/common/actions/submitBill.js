@@ -3,8 +3,6 @@ import routes from '../routes'
 
 import api from '../utils/api'
 
-import getMember from './getMember'
-
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
     api[values.id ? 'put' : 'post']('bill', values)
@@ -20,7 +18,7 @@ export default (values, dispatch) => {
           }
         } else {
           resolve()
-          dispatch(getMember()) // to update balance
+          // dispatch(getMember()) // to update balance
           router.resetTo(routes.BILLS, dispatch)
         }
       })

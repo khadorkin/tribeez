@@ -16,7 +16,6 @@ import Poll from '../components/Poll'
 import styles from '../styles'
 import routes from '../routes'
 
-import getPolls from '../../common/actions/getPolls'
 import deletePoll from '../../common/actions/deletePoll'
 
 class Polls extends Component {
@@ -24,7 +23,6 @@ class Polls extends Component {
     // redux state:
     polls: PropTypes.object.isRequired,
     // action creators:
-    getPolls: PropTypes.func.isRequired,
     deletePoll: PropTypes.func.isRequired,
   }
 
@@ -57,9 +55,11 @@ class Polls extends Component {
     })
   }
 
-  render() {
-    const {polls} = this.props
+  renderRow(row) {
+    return <Poll poll={row} key={row.key} onDelete={this.handleDialogOpen} />
+  }
 
+  render() {
     const dialogActions = [
       <FlatButton
         label={<FormattedMessage id="cancel" />}
@@ -75,25 +75,21 @@ class Polls extends Component {
     ]
 
     return (
-      <AsyncContent fetcher={this.props.getPolls} data={polls}>
-        {
-          polls.items.map((poll) =>
-            <Poll poll={poll} key={poll.id} onDelete={this.handleDialogOpen} />
-          )
-        }
-
-        <Dialog title={this.state.poll.name}
-          actions={dialogActions}
-          open={this.state.openDialog}
-          onRequestClose={this.handleDialogClose}
-        >
-          <FormattedMessage id="delete_dialog" values={{type: 'poll'}} />
-        </Dialog>
+      <div>
+        <AsyncContent name="polls" paging={true} renderRow={this.renderRow}>
+          <Dialog title={this.state.poll.name}
+            actions={dialogActions}
+            open={this.state.openDialog}
+            onRequestClose={this.handleDialogClose}
+          >
+            <FormattedMessage id="delete_dialog" values={{type: 'poll'}} />
+          </Dialog>
+        </AsyncContent>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.POLLS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </AsyncContent>
+      </div>
     )
   }
 }
@@ -103,7 +99,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPolls,
   deletePoll,
 }, dispatch)
 

@@ -25,7 +25,7 @@ class Event extends Component {
     // from parent component:
     event: PropTypes.object.isRequired,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
   }
 

@@ -29,7 +29,7 @@ import postInvite from '../../common/actions/postInvite'
 class Members extends Component {
   static propTypes = {
     // redux state:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     invites: PropTypes.object.isRequired,

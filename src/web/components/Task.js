@@ -25,7 +25,7 @@ class Task extends Component {
     task: PropTypes.object.isRequired,
     onDelete: PropTypes.func,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // action creators:

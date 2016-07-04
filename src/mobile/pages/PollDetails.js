@@ -24,7 +24,7 @@ class PollDetails extends Component {
     id: PropTypes.number.isRequired,
     // from redux:
     item: PropTypes.object,
-    uid: PropTypes.number.isRequired,
+    uid: PropTypes.string.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
     postVote: PropTypes.func.isRequired,

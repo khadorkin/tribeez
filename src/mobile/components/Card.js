@@ -11,7 +11,7 @@ class Card extends Component {
     // from redux:
     users: PropTypes.array.isRequired,
     currency: PropTypes.string,
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     // action creators:
     //TODO
   }

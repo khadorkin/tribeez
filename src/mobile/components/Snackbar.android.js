@@ -11,7 +11,7 @@ class Snackbar extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     userMap: PropTypes.object.isRequired,
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     snack: PropTypes.object.isRequired,
     closeSnack: PropTypes.func.isRequired,
   }

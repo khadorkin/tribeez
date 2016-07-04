@@ -18,7 +18,7 @@ class Entry extends Component {
     // from redux:
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
-    uid: PropTypes.number,
+    uid: PropTypes.string,
   }
 
   constructor(props) {

@@ -21,7 +21,7 @@ class Bill extends Component {
     bill: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
   }
 

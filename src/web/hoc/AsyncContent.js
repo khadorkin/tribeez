@@ -7,48 +7,58 @@ import CircularProgress from 'material-ui/CircularProgress'
 
 import colors from '../../common/constants/colors'
 
+import {db} from '../../common/firebase'
+
+const PAGING = 20
+
 class AsyncContent extends Component {
   static propTypes = {
     // redux state
-    uid: PropTypes.number,
-    socketStatus: PropTypes.string,
+    tid: PropTypes.string,
     // from parent component
-    data: PropTypes.object.isRequired,
-    fetcher: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    renderRow: PropTypes.func.isRequired,
     style: PropTypes.object,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
   }
 
   constructor(props) {
     super(props)
+    this.state = {
+      items: [],
+      loading: false,
+      empty: false,
+    }
     this.ref = this.ref.bind(this)
     this.handleScroll = this.handleScroll.bind(this)
     this.handleLoad = this.handleLoad.bind(this)
+    this.childAdded = this.childAdded.bind(this)
+    this.batchUpdate = this.batchUpdate.bind(this)
+    this.handleError = this.handleError.bind(this)
+    this.query = null
+    this.last = null
+    this.buffer = []
   }
 
   componentDidMount() {
-    if (this.props.uid) {
-      this.uid = this.props.uid
+    if (this.props.tid) {
+      this.tid = this.props.tid
       this.handleLoad()
     }
     window.addEventListener('scroll', this.handleScroll)
   }
 
   componentWillReceiveProps(props) {
-    if (props.uid && !this.uid) {
-      this.uid = props.uid
+    if (props.tid && !this.tid) {
+      this.tid = props.tid
       this.handleLoad()
-    }
-
-    // reconnected => re-fetch in case content changed
-    if (props.socketStatus === 'connected' && this.props.socketStatus !== props.socketStatus) {
-      if (!props.data.loading) {
-        this.props.fetcher(0) //TODO: handle case when more than one page is already loaded
-      }
     }
   }
 
   componentWillUnmount() {
+    if (this.query) {
+      this.query.off()
+    }
     window.removeEventListener('scroll', this.handleScroll)
   }
 
@@ -61,49 +71,98 @@ class AsyncContent extends Component {
       return
     }
     const atBottom = (document.body.scrollTop > this.element.scrollHeight - window.innerHeight)
-    if (this.props.data.paging && atBottom) {
+    if (atBottom) {
       this.handleLoad(true)
     }
   }
 
-  handleLoad(more) {
-    const data = this.props.data
-    if (data.loading) {
-      return
+  handleLoad() {
+    if (!this.query) {
+      this.query = db.ref('tribes/' + this.tid + '/' + this.props.name).orderByKey()
+
+      this.query.limitToLast(1).on('value', (snapshot) => {
+        this.setState({
+          empty: !snapshot.numChildren(),
+        })
+      }, this.handleError)
     }
-    if (data.paging === undefined && data.items.length > 0) {
-      // pages without paging: already loaded it
-      return
+    if (this.state.loading) {
+      return // e.g. multiple scrollings
     }
-    if (!data.pages || (more && data.items.length / data.paging === data.pages)) {
-      this.props.fetcher(data.pages) // last page is N => N+1 pages => next page is N+1
+    if (this.first && this.last === this.first) {
+      return // already listening down to this index
     }
+    this.setState({
+      loading: true,
+    })
+
+    const query = this.last ? this.query.endAt(this.last) : this.query
+    this.first = this.last // see below
+    query.limitToLast(PAGING).on('child_added', this.childAdded, this.handleError)
+  }
+
+  childAdded(snapshot) {
+    this.setState({
+      loading: false,
+    })
+    if (snapshot.key === this.first) {
+      return // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
+    }
+    clearTimeout(this.timeout)
+    const item = snapshot.val()
+    item.key = snapshot.key
+    this.buffer.push(item)
+    if (!this.last || snapshot.key < this.last) {
+      this.last = snapshot.key // i.e. the next query will include the last item of the current one (which is )
+    }
+    this.timeout = setTimeout(this.batchUpdate, 20) // the "child_added" events normally arrive in 1 to 5 ms
+  }
+
+  batchUpdate() {
+    this.setState({
+      items: this.buffer.sort((a, b) => (a.key < b.key ? 1 : -1)),
+    })
+  }
+
+  handleError(error) {
+    this.setState({
+      error: 'firebase.error.' + error.code,
+    })
   }
 
   render() {
-    const {error, loading} = this.props.data
-
-    if (error) {
+    if (this.state.error) {
       return (
         <div style={styles.errorContainer}>
-          <div style={styles.errorText}>{error}</div>
+          <div style={styles.errorText}>
+            <FormattedMessage id={this.state.error} />
+          </div>
           <RaisedButton label={<FormattedMessage id="retry" />} onTouchTap={this.handleLoad} />
         </div>
       )
-    } else {
+    }
+
+    if (this.state.empty) {
       return (
-        <div style={this.props.style} ref={this.ref}>
-          {this.props.children}
-          {
-            ( loading &&
-              <div style={styles.loading}>
-                <CircularProgress color={colors.main} size={0.5} style={{textAlign: 'center'}} />
-              </div>
-            )
-          }
-        </div>
+        <div style={styles.errorContainer}>empty.</div>
       )
     }
+
+    return (
+      <div style={this.props.style} ref={this.ref}>
+        {
+          this.state.items.map(this.props.renderRow)
+        }
+        {
+          this.state.loading && (
+            <div style={styles.loading}>
+              <CircularProgress color={colors.main} size={0.5} style={{textAlign: 'center'}} />
+            </div>
+          )
+        }
+        {this.props.children}
+      </div>
+    )
   }
 }
 
@@ -123,8 +182,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  socketStatus: state.app.socketStatus,
+  tid: state.tribe.key,
 })
 
 export default connect(mapStateToProps)(AsyncContent)

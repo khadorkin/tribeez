@@ -6,8 +6,6 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import getMember from './getMember'
-
 export default (id) => {
   return function(dispatch) {
     dispatch({
@@ -25,7 +23,7 @@ export default (id) => {
             message: 'error',
           })
         } else {
-          dispatch(getMember()) // update balance
+          // dispatch(getMember()) // update balance
         }
       })
       .catch((err) => {
