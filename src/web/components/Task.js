@@ -126,7 +126,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
+  uid: state.user.uid,
   userMap: state.member.tribe.userMap,
   currency: state.member.tribe.currency,
 })

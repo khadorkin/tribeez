@@ -6,26 +6,10 @@ import {
   LOGOUT,
 } from '../constants/actions'
 
-const getFormats = (currency) => ({
-  number: {
-    money: {
-      style: 'currency',
-      currency,
-    },
-  },
-  date: {
-    event: {
-      month: 'long',
-      day: 'numeric',
-    },
-  },
-})
-
 const initialState = {
   loading: true,
   error: null,
   tribes: [],
-  formats: getFormats('USD'),
 }
 
 export default (state = initialState, action = null) => {

@@ -5,8 +5,6 @@ import api from '../utils/api'
 
 import {SNACK_MESSAGE} from '../constants/actions'
 
-import getInvites from './getInvites'
-
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
     api.post('invite', values)
@@ -25,7 +23,7 @@ export default (values, dispatch) => {
           reject(response.error)
         } else {
           resolve()
-          dispatch(getInvites()) //TODO: replace by a dispatch
+          // dispatch(getInvites()) //TODO: replace by a dispatch
           router.resetTo(routes.MEMBERS, dispatch)
           dispatch({
             type: SNACK_MESSAGE,

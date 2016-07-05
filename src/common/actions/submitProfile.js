@@ -1,7 +1,6 @@
 import api from '../utils/api'
 
 import {
-  UPDATE_PROFILE_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -16,10 +15,6 @@ export default (values, dispatch) => {
           reject(response.error)
         } else {
           resolve()
-          dispatch({
-            type: UPDATE_PROFILE_SUCCESS,
-            values,
-          })
           dispatch({
             type: SNACK_MESSAGE,
             message: 'profile_updated',

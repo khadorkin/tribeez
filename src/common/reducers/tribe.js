@@ -6,11 +6,27 @@ import {
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
+const getFormats = (currency) => ({
+  number: {
+    money: {
+      style: 'currency',
+      currency,
+    },
+  },
+  date: {
+    event: {
+      month: 'long',
+      day: 'numeric',
+    },
+  },
+})
+
 const initialState = {
   loading: false,
   error: null,
   users: [],
   userMap: {},
+  formats: getFormats('USD'),
 }
 
 export default (state = initialState, action = null) => {
@@ -27,6 +43,7 @@ export default (state = initialState, action = null) => {
         ...action.tribe,
         loading: false,
         error: null,
+        formats: getFormats(action.tribe.currency),
       }
     case SYNC_TRIBE_FAILURE:
       return {

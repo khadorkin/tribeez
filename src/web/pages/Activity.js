@@ -13,8 +13,6 @@ import SpeedDial from '../components/SpeedDial'
 class Activity extends Component {
   static propTypes = {
     // redux state:
-    activity: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
     unread: PropTypes.number,
   }
 
@@ -85,8 +83,6 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  activity: state.activity,
-  history: state.history,
   unread: state.member.user.unread,
 })
 

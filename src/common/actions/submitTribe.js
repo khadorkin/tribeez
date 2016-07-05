@@ -1,7 +1,6 @@
 import api from '../utils/api'
 
 import {
-  UPDATE_TRIBE_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -20,10 +19,6 @@ export default (values, dispatch) => {
         } else {
           resolve()
           if (values.id) {
-            dispatch({
-              type: UPDATE_TRIBE_SUCCESS,
-              values,
-            })
             dispatch({
               type: SNACK_MESSAGE,
               message: 'tribe_updated',

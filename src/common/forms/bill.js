@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
     }
   } else {
     initialValues = {
-      payer: state.member.user.id,
+      payer: state.user.uid,
       paid: now,
       method: 'shares',
       parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),

@@ -262,7 +262,7 @@ const mapStateToProps = (state) => ({
   uid: state.user.uid,
   bot_token: state.user.bot_token,
   userMap: state.tribe.userMap,
-  formats: state.user.formats,
+  formats: state.tribe.formats,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   height: state.app.height,
@@ -270,17 +270,11 @@ const mapStateToProps = (state) => ({
   menu_visible: state.app.menu_visible,
   snack: state.app.snack,
   loading: state.app.submitting
-        || state.bills.loading
-        || state.events.loading
-        || state.notes.loading
-        || state.polls.loading
         || state.invite.loading
-        || state.logout.loading
         || state.user.loading
         || state.tribe.loading
         || state.join.loading
-        || state.reset.loading
-        || state.invites.loading,
+        || state.reset.loading,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

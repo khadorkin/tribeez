@@ -18,16 +18,13 @@ import Balance from '../components/Balance'
 import styles from '../styles'
 import routes from '../routes'
 
-import getBills from '../../common/actions/getBills'
 import deleteBill from '../../common/actions/deleteBill'
 
 class Bills extends Component {
   static propTypes = {
     // redux state:
-    bills: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
     // action creators:
-    getBills: PropTypes.func.isRequired,
     deleteBill: PropTypes.func.isRequired,
   }
 
@@ -60,9 +57,11 @@ class Bills extends Component {
     })
   }
 
-  render() {
-    const {bills, users} = this.props
+  renderBill(row) {
+    return <Bill bill={row} key={row.key} onDelete={this.handleDialogOpen} />
+  }
 
+  render() {
     const dialogActions = [
       <FlatButton
         label={<FormattedMessage id="cancel" />}
@@ -80,13 +79,7 @@ class Bills extends Component {
     return (
       <Tabs>
         <Tab label={<FormattedMessage id="tab.bills" />}>
-          <AsyncContent fetcher={this.props.getBills} data={bills}>
-            {
-              bills.items.map((bill) =>
-                <Bill bill={bill} key={bill.id} onDelete={this.handleDialogOpen} />
-              )
-            }
-
+          <AsyncContent name="bills" renderRow={this.renderBill}>
             <Dialog title={this.state.bill.name}
               actions={dialogActions}
               open={this.state.openDialog}
@@ -94,15 +87,15 @@ class Bills extends Component {
             >
               <FormattedMessage id="delete_dialog" values={{type: 'bill'}} />
             </Dialog>
-
-            <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
-              <ContentAdd />
-            </FloatingActionButton>
           </AsyncContent>
+
+          <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.BILLS_NEW} />}>
+            <ContentAdd />
+          </FloatingActionButton>
         </Tab>
         <Tab label={<FormattedMessage id="tab.balances" />}>
           {
-            users.map((user) =>
+            this.props.users.map((user) =>
               <Balance user={user} key={user.id} />
             )
           }
@@ -113,12 +106,10 @@ class Bills extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  bills: state.bills,
-  users: state.member.tribe.users,
+  users: state.tribe.users,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getBills,
   deleteBill,
 }, dispatch)
 

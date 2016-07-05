@@ -55,7 +55,7 @@ class Polls extends Component {
     })
   }
 
-  renderRow(row) {
+  renderPoll(row) {
     return <Poll poll={row} key={row.key} onDelete={this.handleDialogOpen} />
   }
 
@@ -76,7 +76,7 @@ class Polls extends Component {
 
     return (
       <div>
-        <AsyncContent name="polls" paging={true} renderRow={this.renderRow}>
+        <AsyncContent name="polls" renderRow={this.renderPoll}>
           <Dialog title={this.state.poll.name}
             actions={dialogActions}
             open={this.state.openDialog}

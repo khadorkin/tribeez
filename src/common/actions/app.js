@@ -2,10 +2,8 @@ import {
   TOGGLE_MENU,
   TOGGLE_TRIBES,
   RESIZE,
-  SNACK_MESSAGE,
   CLOSE_SNACK,
   UPDATE_LANG,
-  SOCKET_STATUS,
   LOGIN,
   LOGOUT,
 } from '../constants/actions'
@@ -68,29 +66,5 @@ export const updateLang = (lang) => {
       type: UPDATE_LANG,
       lang,
     })
-  }
-}
-
-export const setSocketStatus = (status, path) => {
-  return (dispatch) => {
-    dispatch({
-      type: SOCKET_STATUS,
-      status,
-      path,
-    })
-  }
-}
-
-export const message = (msg) => {
-  return function(dispatch) {
-    if (msg.type) {
-      dispatch(msg)
-      dispatch({
-        type: SNACK_MESSAGE,
-        message: msg.type,
-        author: msg.author,
-        name: msg.data.name,
-      })
-    }
   }
 }

@@ -111,6 +111,7 @@ class Nav extends Component {
     height: PropTypes.number.isRequired,
     tribe_name: PropTypes.string,
     user: PropTypes.object,
+    balance: PropTypes.number,
     // action creators:
     putSwitch: PropTypes.func.isRequired,
     toggleTribes: PropTypes.func.isRequired,
@@ -136,7 +137,7 @@ class Nav extends Component {
   }
 
   render() {
-    const {user} = this.props
+    const {user, balance} = this.props
 
     const menuItems = menuEntries.map((entry) =>
       <MenuItem key={entry.route}
@@ -147,8 +148,8 @@ class Nav extends Component {
       >
         <FormattedMessage id={entry.route.substr(1)} />
         {
-          entry.route === routes.BILLS && (
-            <Money value={user.balance} style={styles.badge} />
+          entry.route === routes.BILLS && balance && (
+            <Money value={balance} style={styles.badge} />
           )
         }
       </MenuItem>
@@ -214,12 +215,16 @@ class Nav extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  menu_tribes: state.app.menu_tribes,
-  height: state.app.height,
-  tribe_name: state.tribe.name,
-  user: state.user,
-})
+const mapStateToProps = (state) => {
+  const member = state.user.uid && state.tribe.userMap[state.user.uid]
+  return {
+    menu_tribes: state.app.menu_tribes,
+    height: state.app.height,
+    tribe_name: state.tribe.name,
+    balance: member && member.balance,
+    user: state.user,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putSwitch,

@@ -60,6 +60,7 @@ class AsyncContent extends Component {
       this.query.off()
     }
     window.removeEventListener('scroll', this.handleScroll)
+    clearTimeout(this.timeout)
   }
 
   ref(element) {
