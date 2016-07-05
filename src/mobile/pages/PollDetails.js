@@ -192,8 +192,8 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.polls.loading,
   error: state.polls.error,
   // for this component:
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

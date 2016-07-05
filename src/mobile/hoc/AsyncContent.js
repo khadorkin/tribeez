@@ -166,7 +166,7 @@ class AsyncContent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
+  uid: state.user.uid,
   socketStatus: state.app.socketStatus,
 })
 

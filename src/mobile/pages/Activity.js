@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   activity: state.activity,
   history: state.history,
-  telegram_token: state.member.user.telegram_token,
-  unread: state.member.user.unread,
+  telegram_token: state.user.telegram_token,
+  unread: state.user.unread,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

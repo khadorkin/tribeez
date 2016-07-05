@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   log: state.log,
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

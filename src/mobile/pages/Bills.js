@@ -45,7 +45,7 @@ class Bills extends Component {
           <ScrollView tabLabel="tab.balances" style={styles.content}>
             {
               this.props.users.map((user) =>
-                <Balance user={user} key={user.id} />
+                <Balance user={user} key={user.uid} />
               )
             }
             <View style={styles.spacer} />
@@ -59,7 +59,7 @@ class Bills extends Component {
 
 const mapStateToProps = (state) => ({
   bills: state.bills,
-  users: state.member.tribe.users,
+  users: state.tribe.users,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

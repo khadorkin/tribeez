@@ -13,8 +13,8 @@ const mapStateToProps = (state, ownProps) => {
     bill.parts.forEach((part) => {
       partsByUid[part.user_id] = part.amount
     })
-    const parts = state.member.tribe.users
-      .map((user) => ({user_id: user.id, amount: partsByUid[user.id] || ''}))
+    const parts = state.tribe.users
+      .map((user) => ({user_id: user.uid, amount: partsByUid[user.uid] || ''}))
       .sort((a, b) => (a.amount > b.amount ? -1 : 1))
 
     initialValues = {
@@ -32,13 +32,13 @@ const mapStateToProps = (state, ownProps) => {
       payer: state.user.uid,
       paid: now,
       method: 'shares',
-      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),
+      parts: state.tribe.users.map((user) => ({user_id: user.uid, amount: 1})),
     }
   }
   return {
-    users: state.member.tribe.users,
-    userMap: state.member.tribe.userMap,
-    currency: state.member.tribe.currency, //TODO: be able to remove
+    users: state.tribe.users,
+    userMap: state.tribe.userMap,
+    currency: state.tribe.currency, //TODO: be able to remove
     lang: state.app.lang, //TODO: be able to remove
     initialValues,
     bill,

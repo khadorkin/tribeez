@@ -65,7 +65,7 @@ class Event extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 const styles = StyleSheet.create({

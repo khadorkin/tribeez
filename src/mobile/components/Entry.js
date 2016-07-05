@@ -125,9 +125,9 @@ class Entry extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
-  uid: state.member.user.id,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
+  uid: state.user.uid,
 })
 
 const styles = StyleSheet.create({

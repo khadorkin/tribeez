@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
   messages: state.app.messages, //TODO
 })
 

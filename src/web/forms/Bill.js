@@ -74,7 +74,7 @@ class BillForm extends Component {
     const {fields: {name, description, payer, paid, amount, method, parts}, users, userMap, currency} = this.props
 
     const userItems = users.map((user) => {
-      return <MenuItem value={user.id} key={user.id} primaryText={user.name} />
+      return <MenuItem value={user.uid} key={user.uid} primaryText={user.name} />
     })
 
     return (

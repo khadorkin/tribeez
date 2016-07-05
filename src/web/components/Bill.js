@@ -38,7 +38,7 @@ class Bill extends Component {
     const {bill, userMap} = this.props
 
     // to render a bill, the userMap must be loaded for the current tribe bills
-    const user = userMap[bill.payer_id]
+    const user = userMap[bill.payer]
     if (!user) {
       return null
     }
@@ -49,7 +49,7 @@ class Bill extends Component {
 
     let formatted_part
     if (user_part) {
-      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part.amount}} />
+      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part}} />
     } else {
       formatted_part = <FormattedMessage id="bill.nopart" />
     }
@@ -68,13 +68,13 @@ class Bill extends Component {
           {bill.description}
           <List>
             {
-              bill.parts.map((part) => {
-                const part_user = userMap[part.user_id]
-                const part_amount = <FormattedNumber value={part.amount} format="money" />
+              Object.keys(bill.parts).map((part_uid) => {
+                const part_amount = bill.parts[part_uid]
+                const part_user = userMap[part_uid]
 
                 return (
-                  <ListItem key={part.user_id} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
-                    {part_amount}
+                  <ListItem key={part_uid} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
+                    <FormattedNumber value={part_amount} format="money" />
                   </ListItem>
                 )
               })
@@ -102,7 +102,7 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 export default connect(mapStateToProps)(Bill)

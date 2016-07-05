@@ -94,8 +94,8 @@ class Task extends Component {
               uids.map((uid) => {
                 const user = userMap[uid]
                 return (
-                  <ListItem key={user.id} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
-                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
+                  <ListItem key={user.uid} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
+                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.uid])}} />
                   </ListItem>
                 )
               })
@@ -127,8 +127,8 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

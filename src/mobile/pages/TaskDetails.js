@@ -58,7 +58,7 @@ class TaskDetails extends Component {
             const user = userMap[id]
             return (
               <View key={id} style={styles.info}>
-                <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
+                <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.uid])}} />
               </View>
             )
           })
@@ -102,8 +102,8 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.tasks.loading,
   error: state.tasks.error,
   // for this component:
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -37,6 +37,7 @@ class Bills extends Component {
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.renderBill = this.renderBill.bind(this)
   }
 
   handleDialogOpen(bill) {
@@ -76,6 +77,7 @@ class Bills extends Component {
       />,
     ]
 
+    //TODO: order by paid DESC
     return (
       <Tabs>
         <Tab label={<FormattedMessage id="tab.bills" />}>
@@ -96,7 +98,7 @@ class Bills extends Component {
         <Tab label={<FormattedMessage id="tab.balances" />}>
           {
             this.props.users.map((user) =>
-              <Balance user={user} key={user.id} />
+              <Balance user={user} key={user.uid} />
             )
           }
         </Tab>

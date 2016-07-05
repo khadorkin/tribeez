@@ -4,18 +4,18 @@ import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => {
   const initialValues = {
-    currency: state.member.tribe.currency,
+    currency: state.tribe.currency,
     city: {},
   }
   if (ownProps.type === 'update') {
-    initialValues.tribe_name = state.member.tribe.name
-    initialValues.tribe_type = state.member.tribe.type
+    initialValues.tribe_name = state.tribe.name
+    initialValues.tribe_type = state.tribe.type
     initialValues.city = {
-      name: state.member.tribe.city,
-      country_code: state.member.tribe.country_code,
-      place_id: state.member.tribe.place_id,
+      name: state.tribe.city,
+      country_code: state.tribe.country_code,
+      place_id: state.tribe.place_id,
     }
-    initialValues.id = state.member.tribe.id
+    initialValues.id = state.tribe.id
   }
   return {
     initialValues,

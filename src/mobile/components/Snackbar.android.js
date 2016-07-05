@@ -40,8 +40,8 @@ class Snackbar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userMap: state.member.tribe.userMap,
-  uid: state.member.user.id,
+  userMap: state.tribe.userMap,
+  uid: state.user.uid,
   snack: state.app.snack,
 })
 

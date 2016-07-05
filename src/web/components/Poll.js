@@ -195,8 +195,8 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

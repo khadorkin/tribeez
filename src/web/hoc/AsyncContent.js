@@ -33,11 +33,13 @@ class AsyncContent extends Component {
     this.handleScroll = this.handleScroll.bind(this)
     this.handleLoad = this.handleLoad.bind(this)
     this.childAdded = this.childAdded.bind(this)
+    this.childChanged = this.childChanged.bind(this)
+    //this.childMoved = this.childMoved.bind(this)
+    this.childRemoved = this.childRemoved.bind(this)
     this.batchUpdate = this.batchUpdate.bind(this)
     this.handleError = this.handleError.bind(this)
     this.query = null
     this.last = null
-    this.buffer = []
   }
 
   componentDidMount() {
@@ -59,8 +61,8 @@ class AsyncContent extends Component {
     if (this.query) {
       this.query.off()
     }
-    window.removeEventListener('scroll', this.handleScroll)
     clearTimeout(this.timeout)
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
   ref(element) {
@@ -79,9 +81,9 @@ class AsyncContent extends Component {
 
   handleLoad() {
     if (!this.query) {
-      this.query = db.ref('tribes/' + this.tid + '/' + this.props.name).orderByKey()
+      this.query = db.ref('tribes/' + this.tid + '/' + this.props.name)
 
-      this.query.limitToLast(1).on('value', (snapshot) => {
+      this.query.orderByKey().limitToLast(1).on('value', (snapshot) => {
         this.setState({
           empty: !snapshot.numChildren(),
         })
@@ -97,9 +99,12 @@ class AsyncContent extends Component {
       loading: true,
     })
 
-    const query = this.last ? this.query.endAt(this.last) : this.query
+    const query = this.last ? this.query.orderByKey().endAt(this.last) : this.query.orderByKey()
     this.first = this.last // see below
     query.limitToLast(PAGING).on('child_added', this.childAdded, this.handleError)
+    query.limitToLast(PAGING).on('child_changed', this.childChanged, this.handleError)
+    //query.limitToLast(PAGING).on('child_moved', this.childMoved, this.handleError)
+    query.limitToLast(PAGING).on('child_removed', this.childRemoved, this.handleError)
   }
 
   childAdded(snapshot) {
@@ -112,7 +117,7 @@ class AsyncContent extends Component {
     clearTimeout(this.timeout)
     const item = snapshot.val()
     item.key = snapshot.key
-    this.buffer.push(item)
+    this.state.items.push(item) // add to state but without re-rendering (see batching below)
     if (!this.last || snapshot.key < this.last) {
       this.last = snapshot.key // i.e. the next query will include the last item of the current one (which is )
     }
@@ -121,7 +126,19 @@ class AsyncContent extends Component {
 
   batchUpdate() {
     this.setState({
-      items: this.buffer.sort((a, b) => (a.key < b.key ? 1 : -1)),
+      items: this.state.items.sort((a, b) => (a.key < b.key ? 1 : -1)),
+    })
+  }
+
+  childChanged(snapshot) {
+    this.setState({
+      items: this.state.items.map((item) => (item.key === snapshot.key ? snapshot.val() : item)),
+    })
+  }
+
+  childRemoved(snapshot) {
+    this.setState({
+      items: this.state.items.filter((item) => item.key !== snapshot.key),
     })
   }
 

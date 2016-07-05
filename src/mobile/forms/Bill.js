@@ -51,7 +51,7 @@ class BillForm extends Component {
   render() {
     const {fields: {name, description, payer, paid, amount, method, parts}, users, userMap, currency, ...props} = this.props
 
-    const userItems = users.map((user) => ({name: user.name, code: user.id}))
+    const userItems = users.map((user) => ({name: user.name, code: user.uid}))
 
     return (
       <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} action={submitBill} {...props}>

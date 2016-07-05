@@ -82,7 +82,7 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.bills.loading,
   error: state.bills.error,
   // for this component:
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

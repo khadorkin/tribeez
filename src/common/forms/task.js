@@ -13,18 +13,18 @@ const mapStateToProps = (state, ownProps) => {
       description: task.description || '',
       wait: task.wait,
       notice: task.notice,
-      users: state.member.tribe.users.map((user) => ({user_id: user.id, checked: (task.counters[user.id] !== undefined)})),
+      users: state.tribe.users.map((user) => ({user_id: user.uid, checked: (task.counters[user.uid] !== undefined)})),
     }
   } else {
     initialValues = {
-      users: state.member.tribe.users.map((user) => ({user_id: user.id, checked: true})),
+      users: state.tribe.users.map((user) => ({user_id: user.uid, checked: true})),
     }
   }
   return {
     task,
     initialValues,
-    users: state.member.tribe.users,
-    userMap: state.member.tribe.userMap,
+    users: state.tribe.users,
+    userMap: state.tribe.userMap,
   }
 }
 

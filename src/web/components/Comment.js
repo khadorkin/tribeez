@@ -54,7 +54,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 export default connect(mapStateToProps)(Comment)

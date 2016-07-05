@@ -71,9 +71,9 @@ class Bill extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
 })
 
 const styles = StyleSheet.create({

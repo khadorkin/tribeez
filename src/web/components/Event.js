@@ -88,7 +88,7 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 export default connect(mapStateToProps)(Event)
