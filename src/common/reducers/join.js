@@ -2,7 +2,7 @@ import {
   GET_INVITE_REQUEST,
   GET_INVITE_SUCCESS,
   GET_INVITE_FAILURE,
-  GET_MEMBER_SUCCESS,
+  LOGIN,
 } from '../constants/actions'
 
 const initialState = {
@@ -32,7 +32,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: action.error,
       }
-    case GET_MEMBER_SUCCESS:
+    case LOGIN:
       return {
         ...state,
         data: {},

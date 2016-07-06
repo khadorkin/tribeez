@@ -16,9 +16,8 @@ export default (tribe, token) => {
     })
 
     db.ref('tribes/' + tribe + '/invites/' + token).once('value').then((snapshot) => {
-      if (snapshot) {
-        const invite = snapshot.val()
-
+      const invite = snapshot.val()
+      if (invite) {
         Promise.all([
           db.ref('tribes/' + tribe + '/infos/name').once('value'),
           db.ref('tribes/' + tribe + '/members/' + invite.inviter + '/name').once('value'),

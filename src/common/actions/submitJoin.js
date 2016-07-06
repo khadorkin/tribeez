@@ -34,6 +34,7 @@ export default (tribe, values/*, dispatch*/) => {
         balance: 0,
         gravatar,
         name: values.name,
+        invite: values.token,
       }
 
       // private user infos
@@ -57,8 +58,8 @@ export default (tribe, values/*, dispatch*/) => {
       })
       .then(resolve)
       .catch(() => {
+        //TODO: prevent logging in
         reject({_error: 'request'})
-        // console.error('error adding member', error)
       })
     })
     .catch((error) => {
