@@ -6,6 +6,7 @@ import {
   USER_UPDATED,
   TRIBE_UPDATED,
   MEMBER_ADDED,
+  MEMBER_UPDATED,
 } from '../constants/actions'
 
 export default (uid) => {
@@ -63,6 +64,21 @@ export default (uid) => {
         member.uid = sub_snapshot.key
         dispatch({
           type: MEMBER_ADDED,
+          member,
+        })
+      }, (error) => {
+        dispatch({
+          type: SYNC_TRIBE_FAILURE,
+          error: error.code,
+          path: members_path,
+        })
+      })
+
+      db.ref(members_path).on('child_changed', (sub_snapshot) => {
+        const member = sub_snapshot.val()
+        member.uid = sub_snapshot.key
+        dispatch({
+          type: MEMBER_UPDATED,
           member,
         })
       }, (error) => {

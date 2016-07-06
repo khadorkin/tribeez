@@ -3,6 +3,7 @@ import {
   TRIBE_UPDATED,
   SYNC_TRIBE_FAILURE,
   MEMBER_ADDED,
+  MEMBER_UPDATED,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -51,7 +52,7 @@ export default (state = initialState, action = null) => {
         loading: false,
         error: 'firebase.error.' + action.error,
       }
-    case MEMBER_ADDED:
+    case MEMBER_ADDED: {
       const users = [...state.users, action.member]
       const userMap = {...state.userMap, [action.member.uid]: action.member}
       return {
@@ -59,6 +60,16 @@ export default (state = initialState, action = null) => {
         users,
         userMap,
       }
+    }
+    case MEMBER_UPDATED: {
+      const users = state.users.map((user) => (user.uid === action.member.uid ? action.member : user))
+      const userMap = {...state.userMap, [action.member.uid]: action.member}
+      return {
+        ...state,
+        users,
+        userMap,
+      }
+    }
 
     case LOGOUT_SUCCESS:
       return {...initialState}
