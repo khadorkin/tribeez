@@ -107,7 +107,9 @@ auth.onAuthStateChanged((user) => {
     router.resetTo(routes.ACTIVITY, store.dispatch) //TODO: go to initial destination if any
   } else {
     store.dispatch(logout())
-    router.resetTo(routes.WELCOME, store.dispatch) //TODO: no redirect if we are on /reset or /join
+    if (!/^\/(join|reset)\//.test(location.pathname)) {
+      router.resetTo(routes.WELCOME, store.dispatch)
+    }
   }
 })
 

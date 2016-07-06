@@ -36,7 +36,7 @@ class AsyncContent extends Component {
     this.childChanged = this.childChanged.bind(this)
     //this.childMoved = this.childMoved.bind(this)
     this.childRemoved = this.childRemoved.bind(this)
-    this.batchUpdate = this.batchUpdate.bind(this)
+    this.flush = this.flush.bind(this)
     this.handleError = this.handleError.bind(this)
     this.query = null
     this.last = null
@@ -119,14 +119,18 @@ class AsyncContent extends Component {
     item.key = snapshot.key
     this.state.items.push(item) // add to state but without re-rendering (see batching below)
     if (!this.last || snapshot.key < this.last) {
-      this.last = snapshot.key // i.e. the next query will include the last item of the current one (which is )
+      this.last = snapshot.key // i.e. the next query will include the last item of the current one
+      // or:
+      // const key = snapshot.key
+      // this.last = key.substr(0, key.length - 1) + String.fromCharCode(key.substr(-1).charCodeAt() - 1) // replace last char with previous unicode one to not include the last item
     }
-    this.timeout = setTimeout(this.batchUpdate, 20) // the "child_added" events normally arrive in 1 to 5 ms
+    this.timeout = setTimeout(this.flush, 20) // the "child_added" events normally arrive in 1 to 5 ms
   }
 
-  batchUpdate() {
+  flush() {
+    const items = this.state.items.sort((a, b) => (a.key < b.key ? 1 : -1))
     this.setState({
-      items: this.state.items.sort((a, b) => (a.key < b.key ? 1 : -1)),
+      items,
     })
   }
 

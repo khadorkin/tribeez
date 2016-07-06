@@ -1,14 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedRelative} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
 import {Tabs, Tab} from 'material-ui/Tabs'
-import {ListItem} from 'material-ui/List'
-import Divider from 'material-ui/Divider'
-import IconButton from 'material-ui/IconButton'
-import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -17,6 +13,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import AsyncContent from '../hoc/AsyncContent'
 
 import Member from '../components/Member'
+import Invite from '../components/Invite'
 
 import styles from '../styles'
 import routes from '../routes'
@@ -39,7 +36,7 @@ class Members extends Component {
       openDialog: false,
       invite: {},
     }
-    this.openDialog = this.openDialog.bind(this)
+    //this.openDialog = this.openDialog.bind(this)
     this.handleResend = this.handleResend.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.renderInvite = this.renderInvite.bind(this)
@@ -64,20 +61,8 @@ class Members extends Component {
   }
 
   renderInvite(row) {
-    //TODO: make Invite component
-    const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, row)}><RefreshIcon /></IconButton>
-    const inviter = this.props.userMap[row.inviter_id]
-    if (!inviter) {
-      return null
-    }
-    const when = <FormattedRelative value={row.invited} />
-    const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, when}} /></div>
-    return (
-      <div key={row.key}>
-        <ListItem disabled={true} rightIconButton={refreshButton} primaryText={row.email} secondaryText={details} />
-        <Divider />
-      </div>
-    )
+    // const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, row)}><RefreshIcon /></IconButton>
+    return <Invite invite={row} key={row.key} onResent={this.openDialog.bind(this, row)} />
   }
 
   render() {

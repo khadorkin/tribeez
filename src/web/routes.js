@@ -5,7 +5,7 @@ export default {
   PASSWORD: '/password',
   RESET: '/reset/:token',
   REGISTER: '/register',
-  JOIN: '/join/:token',
+  JOIN: '/join/:tribe/:token',
 
   // private routes
   ACTIVITY: '/activity',
