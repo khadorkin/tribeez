@@ -9,18 +9,14 @@ const mapStateToProps = (state, ownProps) => {
   const bill = ownProps.current || state.bills.current // either from routing state, or from ajax retrieval
   let initialValues
   if (bill) {
-    const partsByUid = {}
-    bill.parts.forEach((part) => {
-      partsByUid[part.user_id] = part.amount
-    })
     const parts = state.tribe.users
-      .map((user) => ({user_id: user.uid, amount: partsByUid[user.uid] || ''}))
+      .map((user) => ({uid: user.uid, amount: bill.parts[user.uid] || ''}))
       .sort((a, b) => (a.amount > b.amount ? -1 : 1))
 
     initialValues = {
-      id: bill.id,
+      key: bill.key,
       name: bill.name,
-      payer: bill.payer_id,
+      payer: bill.payer,
       paid: bill.paid,
       amount: bill.amount,
       method: 'amounts',
@@ -32,7 +28,7 @@ const mapStateToProps = (state, ownProps) => {
       payer: state.user.uid,
       paid: now,
       method: 'shares',
-      parts: state.tribe.users.map((user) => ({user_id: user.uid, amount: 1})),
+      parts: state.tribe.users.map((user) => ({uid: user.uid, amount: 1})),
     }
   }
   return {
@@ -52,7 +48,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'bill',
-    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
+    fields: ['key', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount'],
     validate: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

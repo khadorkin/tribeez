@@ -3,6 +3,9 @@ export default (required, optional = []) => {
     const errors = {}
     const fields = [...required, ...optional]
     fields.forEach((field) => {
+      if (values[field] === undefined) {
+        values[field] = null // for Firebase
+      }
       if ((values[field] == null || values[field] === '') && !optional.includes(field)) {
         errors[field] = 'empty'
       } else if (field === 'city' && !values.city.place_id) {

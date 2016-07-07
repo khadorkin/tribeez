@@ -48,6 +48,7 @@ webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
 // redux actions
 import {resize, login, logout} from '../common/actions/app'
+import getMember from '../common/actions/getMember'
 
 // app locales (keep list in sync with resources/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'
@@ -103,8 +104,11 @@ injectTapEventPlugin()
 
 auth.onAuthStateChanged((user) => {
   if (user) {
-    store.dispatch(login(user))
-    router.resetTo(routes.ACTIVITY, store.dispatch) //TODO: go to initial destination if any
+    if (!store.getState().user.uid) {
+      store.dispatch(login(user))
+      store.dispatch(getMember(user.uid))
+      router.resetTo(routes.ACTIVITY, store.dispatch) //TODO: go to initial destination if any
+    }
   } else {
     store.dispatch(logout())
     if (!/^\/(join|reset)\//.test(location.pathname)) {

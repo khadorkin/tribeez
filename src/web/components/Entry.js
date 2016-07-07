@@ -41,31 +41,31 @@ class Entry extends Component {
         }
         break
       case 'bill':
-        values.name = entry.data.name
-        values.amount = entry.data.amount
-        const user_part = entry.data.parts.find((part) => part.user_id === uid)
-        if (user_part) {
-          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount: user_part.amount}} />
+        values.name = entry.item.name
+        values.amount = entry.item.amount
+        const amount = entry.item.parts[uid]
+        if (amount) {
+          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount}} />
         } else {
           infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} />
         }
         break
       case 'poll':
-        values.name = entry.data.name
+        values.name = entry.item.name
         break
       case 'event':
-        values.name = entry.data.name
-        values.when = entry.data.start
+        values.name = entry.item.name
+        values.when = entry.item.start
         break
       case 'task':
-        values.name = entry.data.name
+        values.name = entry.item.name
         break
       default:
         return null
     }
 
     if (entry.action === 'comment') {
-      infos = <span>{entry.data.text}</span>
+      infos = <span>{entry.item.text}</span>
     }
 
     const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />

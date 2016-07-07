@@ -34,7 +34,7 @@ class TaskForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /task/:id
+    // when accessing directly to /task/:key
     if (!this.props.task && this.props.id) {
       this.props.getTask(this.props.id)
     }

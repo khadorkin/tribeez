@@ -43,7 +43,7 @@ class BillForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /bill/:id
+    // when accessing directly to /bill/:key
     if (!this.props.bill && this.props.id) {
       this.props.getBill(this.props.id)
     }
@@ -117,7 +117,7 @@ class BillForm extends Component {
               method={method.value}
               amount={part.amount}
               currency={currency}
-              user={userMap[part.user_id.value]}
+              user={userMap[part.uid.value]}
             />
           )
         }

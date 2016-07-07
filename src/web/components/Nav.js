@@ -148,7 +148,7 @@ class Nav extends Component {
       >
         <FormattedMessage id={entry.route.substr(1)} />
         {
-          entry.route === routes.BILLS/* && balance !== 0*/ && (
+          entry.route === routes.BILLS && balance != null && (
             <Money value={balance} style={styles.badge} />
           )
         }

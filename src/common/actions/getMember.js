@@ -1,4 +1,4 @@
-import {db} from '../firebase'
+import {db, auth} from '../firebase'
 
 import {
   SYNC_TRIBE_REQUEST,
@@ -35,6 +35,8 @@ export default (uid) => {
     const user_path = 'users/' + uid
     db.ref(user_path).on('value', (snapshot) => {
       const user = snapshot.val()
+
+      auth.currentUser.tid = user.current_tribe
 
       dispatch({
         type: USER_UPDATED,

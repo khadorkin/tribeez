@@ -30,7 +30,7 @@ class PollForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /poll/:id
+    // when accessing directly to /poll/:key
     if (!this.props.poll && this.props.id) {
       this.props.getPoll(this.props.id)
     }

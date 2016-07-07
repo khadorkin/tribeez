@@ -31,7 +31,7 @@ class EventForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /event/:id
+    // when accessing directly to /event/:key
     if (!this.props.event && this.props.id) {
       this.props.getEvent(this.props.id)
     }

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
-import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
+import {FormattedMessage, FormattedDate, FormattedNumber} from 'react-intl'
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import {List, ListItem} from 'material-ui/List'
@@ -54,7 +54,7 @@ class Bill extends Component {
       formatted_part = <FormattedMessage id="bill.nopart" />
     }
     const title = <span>{total} — {bill.name}</span>
-    const date = <FormattedRelative value={bill.added} />
+    const date = <FormattedDate value={bill.paid} day="numeric" month="long" year="numeric" />
 
     return (
       <Card style={styles.container}>
@@ -82,7 +82,7 @@ class Bill extends Component {
           </List>
         </CardText>
         <CardActions expandable={true} style={{textAlign: 'right', marginTop: '-50px'}}>
-          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':id', bill.id), state: bill}} />}>
+          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':key', bill.key), state: bill}} />}>
             <EditButton color={colors.grey600} />
           </IconButton>
           <IconButton onTouchTap={this.handleDelete}>

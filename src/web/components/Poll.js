@@ -171,7 +171,7 @@ class Poll extends Component {
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20}}>
               {
                 hasAnswers && (
-                  <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
+                  <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':key', poll.id), state: poll}} />}>
                     <EditButton color={colors.grey600} />
                   </IconButton>
                 )

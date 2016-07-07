@@ -23,7 +23,6 @@ import Dialog from 'material-ui/Dialog'
 import Nav from './components/Nav'
 
 import {toggleMenu, closeSnack, updateLang} from '../common/actions/app'
-import getMember from '../common/actions/getMember'
 
 import langs from '../common/resources/langs'
 
@@ -59,7 +58,6 @@ class App extends Component {
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
-    getMember: PropTypes.func.isRequired,
     // from react-router:
     children: PropTypes.node.isRequired,
     params: PropTypes.object.isRequired,
@@ -84,12 +82,6 @@ class App extends Component {
     const theme = getMuiTheme(/* baseTheme */)
     return {
       muiTheme: theme,
-    }
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.uid && !this.props.uid) {
-      this.props.getMember(props.uid)
     }
   }
 
@@ -199,13 +191,7 @@ class App extends Component {
 
     const dockedUserMenu = uid && desktop
 
-    const path_parts = pathname.substr(1).split('/')
-    if (this.props.params.token) {
-      path_parts.pop()
-    }
-    if (this.props.params.id) {
-      path_parts[1] = 'edit'
-    }
+    const path_parts = pathname.split('/').slice(1, -Object.keys(this.props.params).length || undefined) // remove params
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
@@ -281,7 +267,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
   closeSnack,
   updateLang,
-  getMember,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
