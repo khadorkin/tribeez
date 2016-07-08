@@ -10,7 +10,9 @@ import {
   UPDATE_LANG,
   SNACK_MESSAGE,
   CLOSE_SNACK,
-  SOCKET_STATUS,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
 import lang from '../utils/lang'
@@ -31,8 +33,8 @@ const initialState = {
     author: null,
     name: null,
   },
+  loading: false,
   submitting: false,
-  socketStatus: 'disconnected',
 }
 
 export default (state = initialState, action = null) => {
@@ -86,6 +88,27 @@ export default (state = initialState, action = null) => {
         ...state,
         snack: {...initialState.snack},
       }
+    case FIREBASE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case FIREBASE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      }
+    case FIREBASE_FAILURE:
+      if (__DEV__) {
+        /*eslint-disable no-console*/
+        console.error('Firebase error from ' + action.origin + ':', action.error)
+        /*eslint-enable no-console*/
+      }
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      }
     case formActions.CHANGE:
       if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {
         lang.set(action.value)
@@ -105,11 +128,6 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         submitting: false,
-      }
-    case SOCKET_STATUS:
-      return {
-        ...state,
-        socketStatus: action.status,
       }
     default:
       return state

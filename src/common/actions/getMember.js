@@ -1,8 +1,9 @@
 import {db, auth} from '../firebase'
 
 import {
-  SYNC_TRIBE_REQUEST,
-  SYNC_TRIBE_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   USER_UPDATED,
   TRIBE_UPDATED,
   MEMBER_ADDED,
@@ -12,7 +13,7 @@ import {
 export default (uid) => {
   return (dispatch) => {
     dispatch({
-      type: SYNC_TRIBE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
 
     const private_user_path = 'users_private/' + uid
@@ -26,7 +27,8 @@ export default (uid) => {
       })
     }, (error) => {
       dispatch({
-        type: SYNC_TRIBE_FAILURE,
+        type: FIREBASE_FAILURE,
+        origin: 'getMember',
         error: error.code,
         path: private_user_path,
       })
@@ -52,9 +54,13 @@ export default (uid) => {
           type: TRIBE_UPDATED,
           tribe,
         })
+        dispatch({
+          type: FIREBASE_SUCCESS,
+        })
       }, (error) => {
         dispatch({
-          type: SYNC_TRIBE_FAILURE,
+          type: FIREBASE_FAILURE,
+          origin: 'getMember',
           error: error.code,
           path: tribe_path,
         })
@@ -70,7 +76,8 @@ export default (uid) => {
         })
       }, (error) => {
         dispatch({
-          type: SYNC_TRIBE_FAILURE,
+          type: FIREBASE_FAILURE,
+          origin: 'getMember',
           error: error.code,
           path: members_path,
         })
@@ -85,14 +92,16 @@ export default (uid) => {
         })
       }, (error) => {
         dispatch({
-          type: SYNC_TRIBE_FAILURE,
+          type: FIREBASE_FAILURE,
+          origin: 'getMember',
           error: error.code,
           path: members_path,
         })
       })
     }, (error) => {
       dispatch({
-        type: SYNC_TRIBE_FAILURE,
+        type: FIREBASE_FAILURE,
+        origin: 'getMember',
         error: error.code,
         path: user_path,
       })

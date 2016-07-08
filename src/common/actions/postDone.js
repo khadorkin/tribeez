@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 export default (id, uid) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: POST_DONE_REQUEST,
     })

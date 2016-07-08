@@ -3,7 +3,9 @@ import md5 from 'md5'
 import {auth, db} from '../firebase'
 import {rand} from '../utils/utils'
 
-export default (tribe, values/*, dispatch*/) => {
+import {FIREBASE_FAILURE} from '../constants/actions'
+
+export default (tribe, values, dispatch) => {
   return new Promise((resolve, reject) => {
     auth.createUserWithEmailAndPassword(values.email, values.password)
     .then((user) => {
@@ -48,7 +50,7 @@ export default (tribe, values/*, dispatch*/) => {
         return db.ref('tribes/' + values.tribe + '/history').push({
           action: 'new',
           type: 'member',
-          added: Date.now(),
+          added: db.timestamp,
           user: auth.currentUser.uid,
         })
       })
@@ -75,7 +77,11 @@ export default (tribe, values/*, dispatch*/) => {
           break
         default:
           reject({_error: 'request'})
-          // console.error('register error:', error.code)
+          dispatch({
+            type: FIREBASE_FAILURE,
+            origin: 'submitJoin',
+            error,
+          })
       }
     })
   })

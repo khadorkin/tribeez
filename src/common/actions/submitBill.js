@@ -1,9 +1,10 @@
 import router from '../router'
 import routes from '../routes'
 
-import {db, auth} from '../firebase'
-
+import {db, auth, timestamp} from '../firebase'
 import {decimal} from '../utils/utils'
+
+import {FIREBASE_FAILURE} from '../constants/actions'
 
 const calculateParts = (bill) => {
   // remove empty shares
@@ -74,9 +75,8 @@ export default (values, dispatch) => {
       return db.ref('tribes/' + tid + '/history').push({
         type: 'bill',
         action: current ? 'update' : 'new',
-        added: Date.now(),
+        added: timestamp,
         user: auth.currentUser.uid,
-        key: values.key,
         item: values,
       })
     })
@@ -84,7 +84,12 @@ export default (values, dispatch) => {
       resolve()
       router.resetTo(routes.BILLS, dispatch)
     })
-    .catch(() => {
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'submitBill',
+        error,
+      })
       reject({_error: 'request'})
     })
   })

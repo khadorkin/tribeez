@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 export default (email, lang, inviter) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: INVITE_REQUEST,
     })

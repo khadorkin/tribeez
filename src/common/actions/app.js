@@ -1,3 +1,5 @@
+import router from '../router'
+
 import {
   TOGGLE_MENU,
   TOGGLE_TRIBES,
@@ -8,25 +10,32 @@ import {
   LOGOUT,
 } from '../constants/actions'
 
-export const login = (user) => {
-  return function(dispatch) {
+import getMember from './getMember'
+
+export const login = (user, destination) => {
+  return (dispatch) => {
     dispatch({
       type: LOGIN,
       user,
     })
+    dispatch(getMember(user.uid))
+    router.resetTo(destination, dispatch)
   }
 }
 
-export const logout = () => {
-  return function(dispatch) {
+export const logout = (destination) => {
+  return (dispatch) => {
     dispatch({
       type: LOGOUT,
     })
+    if (destination) {
+      router.resetTo(destination, dispatch)
+    }
   }
 }
 
 export const toggleMenu = (open) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: TOGGLE_MENU,
       open,
@@ -34,7 +43,7 @@ export const toggleMenu = (open) => {
   }
 }
 export const toggleTribes = (open) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: TOGGLE_TRIBES,
       open,
@@ -43,7 +52,7 @@ export const toggleTribes = (open) => {
 }
 
 export const resize = () => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: RESIZE,
       width: window.innerWidth,
@@ -53,7 +62,7 @@ export const resize = () => {
 }
 
 export const closeSnack = () => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: CLOSE_SNACK,
     })
@@ -61,7 +70,7 @@ export const closeSnack = () => {
 }
 
 export const updateLang = (lang) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: UPDATE_LANG,
       lang,

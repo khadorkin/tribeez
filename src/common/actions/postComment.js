@@ -7,7 +7,7 @@ import {
 } from '../constants/actions'
 
 export default (type, id, content) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: COMMENT_REQUEST,
     })

@@ -48,7 +48,7 @@ class Bills extends Component {
   }
 
   handleDelete() {
-    this.props.deleteBill(this.state.bill.id)
+    this.props.deleteBill(this.state.bill.key)
     this.handleDialogClose()
   }
 

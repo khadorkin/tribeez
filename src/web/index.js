@@ -36,7 +36,6 @@ import Poll from './pages/Poll'
 import NotFound from './pages/NotFound'
 
 // react-router routes
-import router from './router'
 import routes from './routes'
 
 // global injected style:
@@ -46,17 +45,11 @@ import './index.css'
 import webfont from 'webfontloader'
 webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
-// redux actions
-import {resize, login, logout} from '../common/actions/app'
-import getMember from '../common/actions/getMember'
-
 // app locales (keep list in sync with resources/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'
 import locale_fr from 'react-intl/locale-data/fr'
 addLocaleData(locale_en)
 addLocaleData(locale_fr)
-
-import {auth} from '../common/firebase'
 
 // redux-form normalizers and plugins
 import normalizers from '../common/utils/formNormalizers'
@@ -90,36 +83,22 @@ if (__DEV__) {
 }
 
 const history = syncHistoryWithStore(browserHistory, store)
-
 history.listen((location) => {
   ga('send', 'pageview', location.pathname)
 })
 
-// update app size
-window.onresize = store.dispatch.bind(store.dispatch, resize())
-window.onresize()
-
-// Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
+// Needed for onTouchTap events:
 injectTapEventPlugin()
-
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    if (!store.getState().user.uid) {
-      store.dispatch(login(user))
-      store.dispatch(getMember(user.uid))
-      router.resetTo(routes.ACTIVITY, store.dispatch) //TODO: go to initial destination if any
-    }
-  } else {
-    store.dispatch(logout())
-    if (!/^\/(join|reset)\//.test(location.pathname)) {
-      router.resetTo(routes.WELCOME, store.dispatch)
-    }
-  }
-})
 
 const authenticate = (nextState, replace) => {
   if (!store.getState().user.uid) {
     replace(routes.LOGIN)
+  }
+}
+
+const redirectToHome = (nextState, replace) => {
+  if (store.getState().user.uid) {
+    replace(routes.ACTIVITY)
   }
 }
 
@@ -128,11 +107,11 @@ ReactDOM.render((
     <Router history={history}>
       <Route path={routes.WELCOME} component={App}>
         <IndexRoute component={Welcome} />
-        <Route path={routes.LOGIN} component={Login} />
-        <Route path={routes.PASSWORD} component={Password} />
-        <Route path={routes.RESET} component={Reset} />
-        <Route path={routes.REGISTER} component={Register} />
-        <Route path={routes.JOIN} component={Join} />
+        <Route path={routes.LOGIN} component={Login} onEnter={redirectToHome} />
+        <Route path={routes.PASSWORD} component={Password} onEnter={redirectToHome} />
+        <Route path={routes.RESET} component={Reset} onEnter={redirectToHome} />
+        <Route path={routes.REGISTER} component={Register} onEnter={redirectToHome} />
+        <Route path={routes.JOIN} component={Join} onEnter={redirectToHome} />
         <Route path={routes.ACTIVITY} component={Activity} onEnter={authenticate} />
         <Route path={routes.PROFILE} component={Profile} onEnter={authenticate} />
         <Route path={routes.TRIBE} component={Tribe} onEnter={authenticate} />

@@ -7,7 +7,7 @@ import {
 } from '../constants/actions'
 
 export default (id) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: GET_EVENT_REQUEST,
     })

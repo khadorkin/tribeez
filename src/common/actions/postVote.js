@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 export default (id, choices, uid) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: POST_VOTE_REQUEST,
     })

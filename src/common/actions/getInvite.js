@@ -4,15 +4,15 @@ import routes from '../routes'
 import {db} from '../firebase'
 
 import {
-  GET_INVITE_REQUEST,
+  FIREBASE_REQUEST,
   GET_INVITE_SUCCESS,
-  GET_INVITE_FAILURE,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
 export default (tribe, token) => {
   return (dispatch) => {
     dispatch({
-      type: GET_INVITE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
 
     db.ref('tribes/' + tribe + '/invites/' + token).once('value').then((snapshot) => {
@@ -37,14 +37,18 @@ export default (tribe, token) => {
             // }
           } else {
             dispatch({
-              type: GET_INVITE_FAILURE,
+              type: FIREBASE_FAILURE,
+              origin: 'getInvite',
+              error: 'not_found',
             })
             router.resetTo(routes.LOGIN, dispatch)
           }
         })
       } else {
         dispatch({
-          type: GET_INVITE_FAILURE,
+          type: FIREBASE_FAILURE,
+          origin: 'getInvite',
+          error: 'not_found',
         })
         router.resetTo(routes.LOGIN, dispatch)
       }

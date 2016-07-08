@@ -1,16 +1,24 @@
 import firebase from 'firebase'
 
 import {
+  FIREBASE_REQUEST,
   LOGOUT,
-  LOGOUT_FAILURE,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default () => {
-  return function(dispatch) {
+  return (dispatch) => {
+    dispatch({
+      type: FIREBASE_REQUEST,
+    })
     firebase.auth().signOut().then(() => {
       dispatch({
         type: LOGOUT,
+      })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
       dispatch({
         type: SNACK_MESSAGE,
@@ -18,7 +26,8 @@ export default () => {
       })
     }, (error) => {
       dispatch({
-        type: LOGOUT_FAILURE,
+        type: FIREBASE_FAILURE,
+        origin: 'postLogout',
         error,
       })
     })

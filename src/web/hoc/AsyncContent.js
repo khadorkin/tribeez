@@ -32,13 +32,14 @@ class AsyncContent extends Component {
     this.ref = this.ref.bind(this)
     this.handleScroll = this.handleScroll.bind(this)
     this.handleLoad = this.handleLoad.bind(this)
+    this.lastEntry = this.lastEntry.bind(this)
     this.childAdded = this.childAdded.bind(this)
     this.childChanged = this.childChanged.bind(this)
     //this.childMoved = this.childMoved.bind(this)
     this.childRemoved = this.childRemoved.bind(this)
     this.flush = this.flush.bind(this)
     this.handleError = this.handleError.bind(this)
-    this.query = null
+    this.queryRef = null
     this.last = null
   }
 
@@ -58,8 +59,12 @@ class AsyncContent extends Component {
   }
 
   componentWillUnmount() {
-    if (this.query) {
-      this.query.off()
+    if (this.queryRef) {
+      this.queryRef.off('value', this.lastEntry)
+      //TODO: call multiple times if paging???
+      this.queryRef.off('child_added', this.childAdded)
+      this.queryRef.off('child_changed', this.childChanged)
+      this.queryRef.off('child_removed', this.childRemoved)
     }
     clearTimeout(this.timeout)
     window.removeEventListener('scroll', this.handleScroll)
@@ -80,14 +85,10 @@ class AsyncContent extends Component {
   }
 
   handleLoad() {
-    if (!this.query) {
-      this.query = db.ref('tribes/' + this.tid + '/' + this.props.name)
+    if (!this.queryRef) {
+      this.queryRef = db.ref('tribes/' + this.tid + '/' + this.props.name)
 
-      this.query.orderByKey().limitToLast(1).on('value', (snapshot) => {
-        this.setState({
-          empty: !snapshot.numChildren(),
-        })
-      }, this.handleError)
+      this.queryRef.orderByKey().limitToLast(2).on('value', this.lastEntry, this.handleError)
     }
     if (this.state.loading) {
       return // e.g. multiple scrollings
@@ -99,12 +100,18 @@ class AsyncContent extends Component {
       loading: true,
     })
 
-    const query = this.last ? this.query.orderByKey().endAt(this.last) : this.query.orderByKey()
+    const query = this.last ? this.queryRef.orderByKey().endAt(this.last) : this.queryRef.orderByKey()
     this.first = this.last // see below
     query.limitToLast(PAGING).on('child_added', this.childAdded, this.handleError)
     query.limitToLast(PAGING).on('child_changed', this.childChanged, this.handleError)
     //query.limitToLast(PAGING).on('child_moved', this.childMoved, this.handleError)
     query.limitToLast(PAGING).on('child_removed', this.childRemoved, this.handleError)
+  }
+
+  lastEntry(snapshot) {
+    this.setState({
+      empty: !snapshot.numChildren(),
+    })
   }
 
   childAdded(snapshot) {

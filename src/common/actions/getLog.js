@@ -7,7 +7,7 @@ import {
 } from '../constants/actions'
 
 export default (type, id) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: GET_LOG_REQUEST,
     })

@@ -1,7 +1,5 @@
 import {
-  SYNC_TRIBE_REQUEST,
   TRIBE_UPDATED,
-  SYNC_TRIBE_FAILURE,
   MEMBER_ADDED,
   MEMBER_UPDATED,
   LOGOUT_SUCCESS,
@@ -23,8 +21,6 @@ const getFormats = (currency) => ({
 })
 
 const initialState = {
-  loading: false,
-  error: null,
   users: [],
   userMap: {},
   formats: getFormats('USD'),
@@ -32,25 +28,11 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case SYNC_TRIBE_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
-      }
     case TRIBE_UPDATED:
       return {
         ...state,
         ...action.tribe,
-        loading: false,
-        error: null,
         formats: getFormats(action.tribe.currency),
-      }
-    case SYNC_TRIBE_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: 'firebase.error.' + action.error,
       }
     case MEMBER_ADDED: {
       const users = [...state.users, action.member]

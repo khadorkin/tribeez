@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 export default (id) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: SWITCH_REQUEST,
     })

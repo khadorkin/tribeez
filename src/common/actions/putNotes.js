@@ -7,7 +7,7 @@ import {
 } from '../constants/actions'
 
 export default (ids) => {
-  return function(dispatch) {
+  return (dispatch) => {
     /*dispatch({
       type: PUT_NOTE_REQUEST,
     })*/

@@ -22,21 +22,20 @@ import Dialog from 'material-ui/Dialog'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, closeSnack, updateLang} from '../common/actions/app'
-
+import config from '../common/config'
+import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
+import {auth} from '../common/firebase'
+import routes from './routes'
+import scriptLoader from './utils/scriptLoader'
 import langs from '../common/resources/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
-
-import routes from './routes'
-
-import scriptLoader from './utils/scriptLoader'
-
-import config from '../common/config'
+import {login, logout, toggleMenu, closeSnack, updateLang, resize} from '../common/actions/app'
+import getMember from '../common/actions/getMember'
+import subscribe from '../common/actions/subscribe'
 
 class App extends Component {
   static propTypes = {
@@ -44,6 +43,7 @@ class App extends Component {
     location: PropTypes.object.isRequired,
     // from redux:
     uid: PropTypes.string,
+    tid: PropTypes.string,
     bot_token: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     formats: PropTypes.object,
@@ -55,9 +55,14 @@ class App extends Component {
     snack: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     // action creators:
+    login: PropTypes.func.isRequired,
+    getMember: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
+    resize: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
     // from react-router:
     children: PropTypes.node.isRequired,
     params: PropTypes.object.isRequired,
@@ -83,6 +88,29 @@ class App extends Component {
     return {
       muiTheme: theme,
     }
+  }
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        if (!this.props.uid) {
+          this.props.login(user, routes.ACTIVITY) //TODO: go to initial destination if any
+        }
+      } else {
+        const redirect = /^\/(join|reset)\//.test(location.pathname) ? null : routes.WELCOME
+        this.props.logout(redirect)
+      }
+    })
+
+    window.onresize = this.props.resize
+  }
+
+  componentWillReceiveProps(props) {
+    if (!props.tid || this.subscribed) {
+      return
+    }
+    this.props.subscribe(props.tid)
+    this.subscribed = true
   }
 
   handleMessenger() {
@@ -196,7 +224,7 @@ class App extends Component {
     const title = page_id && <FormattedMessage id={page_id} />
 
     const snack_author = this.props.userMap[snack.author]
-    const snack_author_name = snack_author && (snack_author.id === uid ? '_you_' : snack_author.name)
+    const snack_author_name = snack_author && (snack_author.uid === uid ? '_you_' : snack_author.name)
 
     const dialogActions = [
       <FlatButton
@@ -246,6 +274,7 @@ App.childContextTypes = {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
+  tid: state.tribe.key,
   bot_token: state.user.bot_token,
   userMap: state.tribe.userMap,
   formats: state.tribe.formats,
@@ -255,18 +284,18 @@ const mapStateToProps = (state) => ({
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   snack: state.app.snack,
-  loading: state.app.submitting
-        || state.invite.loading
-        || state.user.loading
-        || state.tribe.loading
-        || state.join.loading
-        || state.reset.loading,
+  loading: state.app.loading || state.app.submitting,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  login,
+  getMember,
+  logout,
   toggleMenu,
   closeSnack,
   updateLang,
+  resize,
+  subscribe,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

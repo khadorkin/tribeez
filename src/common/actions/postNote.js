@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 export default (values) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: NEW_NOTE_REQUEST,
     })

@@ -1,41 +1,61 @@
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
 
 import {
-  DELETE_BILL_REQUEST,
-  DELETE_BILL_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-export default (id) => {
-  return function(dispatch) {
+export default (key) => {
+  return (dispatch) => {
+    const tid = auth.currentUser.tid
     dispatch({
-      type: DELETE_BILL_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.delete('bill', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: DELETE_BILL_FAILURE,
-            error: response.error,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'error',
-          })
-        } else {
-          // dispatch(getMember()) // update balance
+    let item
+    const ref = db.ref('tribes/' + tid + '/bills/' + key)
+    ref.once('value')
+    .then((snapshot) => {
+      item = snapshot.val()
+      if (!item) {
+        throw 'not_found'
+      }
+      ref.remove()
+    })
+    .then(() => {
+      return db.ref('tribes/' + tid + '/members').transaction((members) => {
+        for (const uid in item.parts) {
+          members[uid].balance += item.parts[uid]
         }
+        members[item.payer].balance -= item.amount
+        return members
       })
-      .catch((err) => {
-        dispatch({
-          type: DELETE_BILL_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
-        dispatch({
-          type: SNACK_MESSAGE,
-          message: 'error',
-        })
+    })
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
+    })
+    .then(() => {
+      return db.ref('tribes/' + tid + '/history').push({
+        type: 'bill',
+        action: 'delete',
+        added: timestamp,
+        user: auth.currentUser.uid,
+        item,
+      })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'deleteBill',
+        error,
+      })
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
+    })
   }
 }

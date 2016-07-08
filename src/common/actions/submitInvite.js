@@ -3,14 +3,14 @@ import routes from '../routes'
 
 import {db, auth} from '../firebase'
 
-import {SNACK_MESSAGE} from '../constants/actions'
+import {FIREBASE_FAILURE, SNACK_MESSAGE} from '../constants/actions'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
     const invite = {
       email: values.email,
       lang: values.lang,
-      invited: Date.now(),
+      invited: db.timestamp,
       inviter: auth.currentUser.uid,
     }
     //TODO: send email
@@ -23,8 +23,12 @@ export default (values, dispatch) => {
         message: 'invite_sent',
       })
     })
-    .catch(() => {
-      // console.error('error adding invite', error)
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'submitInvite',
+        error,
+      })
       reject({_error: 'request'})
     })
   })
