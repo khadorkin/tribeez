@@ -18,7 +18,7 @@ export const login = (user, destination) => {
       type: LOGIN,
       user,
     })
-    dispatch(getMember(user.uid))
+    dispatch(getMember.on(user.uid))
     router.resetTo(destination, dispatch)
   }
 }
@@ -28,6 +28,7 @@ export const logout = (destination) => {
     dispatch({
       type: LOGOUT,
     })
+    dispatch(getMember.off())
     if (destination) {
       router.resetTo(destination, dispatch)
     }

@@ -21,6 +21,7 @@ import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
 
 import Nav from './components/Nav'
+import MemberListeners from './components/MemberListeners'
 
 import config from '../common/config'
 import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
@@ -34,8 +35,6 @@ const langItems = langs.map((item) =>
 )
 
 import {login, logout, toggleMenu, closeSnack, updateLang, resize} from '../common/actions/app'
-import getMember from '../common/actions/getMember'
-import subscribe from '../common/actions/subscribe'
 
 class App extends Component {
   static propTypes = {
@@ -43,7 +42,6 @@ class App extends Component {
     location: PropTypes.object.isRequired,
     // from redux:
     uid: PropTypes.string,
-    tid: PropTypes.string,
     bot_token: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     formats: PropTypes.object,
@@ -56,13 +54,11 @@ class App extends Component {
     loading: PropTypes.bool.isRequired,
     // action creators:
     login: PropTypes.func.isRequired,
-    getMember: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
     resize: PropTypes.func.isRequired,
-    subscribe: PropTypes.func.isRequired,
     // from react-router:
     children: PropTypes.node.isRequired,
     params: PropTypes.object.isRequired,
@@ -103,14 +99,6 @@ class App extends Component {
     })
 
     window.onresize = this.props.resize
-  }
-
-  componentWillReceiveProps(props) {
-    if (!props.tid || this.subscribed) {
-      return
-    }
-    this.props.subscribe(props.tid)
-    this.subscribed = true
   }
 
   handleMessenger() {
@@ -214,6 +202,7 @@ class App extends Component {
         width={MENU_WIDTH}
       >
         <Nav module={pathname.split('/')[1]} />
+        <MemberListeners />
       </Drawer>
     ) // do not load left nav if not logged in
 
@@ -274,7 +263,6 @@ App.childContextTypes = {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
-  tid: state.tribe.key,
   bot_token: state.user.bot_token,
   userMap: state.tribe.userMap,
   formats: state.tribe.formats,
@@ -289,13 +277,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   login,
-  getMember,
   logout,
   toggleMenu,
   closeSnack,
   updateLang,
   resize,
-  subscribe,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -58,10 +58,18 @@ class Activity extends Component {
       <div>
         <Tabs onChange={this.handleTabs}>
           <Tab label={<FormattedMessage id="tab.activity" />} value="activity">
-            <AsyncContent name="activity" renderRow={this.renderActivity} />
+            {
+              this.state.tab === 'activity' && (
+                <AsyncContent name="activity" renderRow={this.renderActivity} />
+              )
+            }
           </Tab>
           <Tab label={historyLabel} value="history">
-            <AsyncContent name="history" renderRow={this.renderHistoryEntry} />
+            {
+              this.state.tab === 'history' && (
+                <AsyncContent name="history" renderRow={this.renderHistoryEntry} />
+              )
+            }
           </Tab>
         </Tabs>
         <SpeedDial />

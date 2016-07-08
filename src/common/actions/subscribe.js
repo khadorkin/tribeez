@@ -5,10 +5,11 @@ import {
   FIREBASE_FAILURE,
 } from '../constants/actions'
 
-export default (tid) => {
+let ref
+
+const on = (tid) => {
   return (dispatch) => {
-    const route = 'tribes/' + tid + '/history'
-    const firstRef = db.ref(route)
+    ref = db.ref('tribes/' + tid + '/history')
     let isNew = false
 
     const onError = (error) => {
@@ -33,10 +34,18 @@ export default (tid) => {
     }
 
     const onLastEntry = (snapshot) => {
-      firstRef.off('child_added', onLastEntry)
-      db.ref(route).orderByKey().startAt(snapshot.key).on('child_added', onNewEntry, onError)
+      ref.off('child_added', onLastEntry)
+      ref.orderByKey().startAt(snapshot.key).on('child_added', onNewEntry, onError)
     }
 
-    firstRef.orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
+    ref.orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
   }
 }
+
+const off = () => {
+  return () => {
+    ref.off()
+  }
+}
+
+export default {on, off}

@@ -10,15 +10,21 @@ import {
   MEMBER_UPDATED,
 } from '../constants/actions'
 
-export default (uid) => {
+const origin = 'getMember'
+let privateRef
+let userRef
+let memberRef
+let tribeRef
+
+const on = (uid) => {
   return (dispatch) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
 
-    const private_user_path = 'users_private/' + uid
+    privateRef = db.ref('users_private/' + uid)
 
-    db.ref(private_user_path).on('value', (snapshot) => {
+    privateRef.on('value', (snapshot) => {
       const user = snapshot.val()
 
       dispatch({
@@ -28,14 +34,14 @@ export default (uid) => {
     }, (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'getMember',
+        origin,
         error: error.code,
-        path: private_user_path,
       })
     })
 
-    const user_path = 'users/' + uid
-    db.ref(user_path).on('value', (snapshot) => {
+    userRef = db.ref('users/' + uid)
+
+    userRef.on('value', (snapshot) => {
       const user = snapshot.val()
 
       auth.currentUser.tid = user.current_tribe
@@ -45,8 +51,9 @@ export default (uid) => {
         user,
       })
 
-      const tribe_path = 'tribes/' + user.current_tribe + '/infos'
-      db.ref(tribe_path).on('value', (sub_snapshot) => {
+      tribeRef = db.ref('tribes/' + user.current_tribe + '/infos')
+
+      tribeRef.on('value', (sub_snapshot) => {
         const tribe = sub_snapshot.val()
         tribe.key = user.current_tribe
 
@@ -60,14 +67,14 @@ export default (uid) => {
       }, (error) => {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin: 'getMember',
+          origin,
           error: error.code,
-          path: tribe_path,
         })
       })
 
-      const members_path = 'tribes/' + user.current_tribe + '/members'
-      db.ref(members_path).on('child_added', (sub_snapshot) => {
+      memberRef = db.ref('tribes/' + user.current_tribe + '/members')
+
+      memberRef.on('child_added', (sub_snapshot) => {
         const member = sub_snapshot.val()
         member.uid = sub_snapshot.key
         dispatch({
@@ -77,13 +84,12 @@ export default (uid) => {
       }, (error) => {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin: 'getMember',
+          origin,
           error: error.code,
-          path: members_path,
         })
       })
 
-      db.ref(members_path).on('child_changed', (sub_snapshot) => {
+      memberRef.on('child_changed', (sub_snapshot) => {
         const member = sub_snapshot.val()
         member.uid = sub_snapshot.key
         dispatch({
@@ -93,18 +99,27 @@ export default (uid) => {
       }, (error) => {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin: 'getMember',
+          origin,
           error: error.code,
-          path: members_path,
         })
       })
     }, (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'getMember',
+        origin,
         error: error.code,
-        path: user_path,
       })
     })
   }
 }
+
+const off = () => {
+  return () => {
+    privateRef.off()
+    userRef.off()
+    memberRef.off()
+    tribeRef.off()
+  }
+}
+
+export default {on, off}
