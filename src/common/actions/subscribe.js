@@ -30,6 +30,7 @@ const on = (tid) => {
           message: entry.action + '_' + entry.type,
           author: entry.user,
           name: entry.item.name,
+          key: snapshot.key,
         })
       }
       isNew = true

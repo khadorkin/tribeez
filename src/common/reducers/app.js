@@ -32,9 +32,6 @@ const initialState = {
   height: window.innerHeight,
   snack: {
     open: false,
-    message: null,
-    author: null,
-    name: null,
   },
   unread: 0,
   loading: 0,
@@ -86,6 +83,7 @@ export default (state = initialState, action = null) => {
         message: action.message,
         author: action.author,
         name: action.name,
+        key: action.key,
       }
       return {...state, snack}
     case CLOSE_SNACK:
