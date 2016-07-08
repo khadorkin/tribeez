@@ -1,9 +1,9 @@
 import md5 from 'md5'
 
 import {
-  LOGIN,
+  LOGGED_IN,
   USER_UPDATED,
-  LOGOUT,
+  LOGGED_OUT,
 } from '../constants/actions'
 
 const initialState = {
@@ -14,7 +14,7 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case LOGIN:
+    case LOGGED_IN:
       if (window.ga) {
         ga('set', 'userId', action.user.uid)
       }
@@ -33,7 +33,7 @@ export default (state = initialState, action = null) => {
         ...action.user,
       }
 
-    case LOGOUT:
+    case LOGGED_OUT:
       return {
         ...initialState,
         loading: false,

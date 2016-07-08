@@ -1,8 +1,7 @@
-import firebase from 'firebase'
+import {auth} from '../firebase'
 
 import {
   FIREBASE_REQUEST,
-  LOGOUT,
   FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
   SNACK_MESSAGE,
@@ -13,10 +12,7 @@ export default () => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
-    firebase.auth().signOut().then(() => {
-      dispatch({
-        type: LOGOUT,
-      })
+    auth.signOut().then(() => {
       dispatch({
         type: FIREBASE_SUCCESS,
       })

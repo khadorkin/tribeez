@@ -5,6 +5,7 @@ import {db} from '../firebase'
 
 import {
   FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
   GET_INVITE_SUCCESS,
   FIREBASE_FAILURE,
 } from '../constants/actions'
@@ -28,6 +29,9 @@ export default (tribe, token) => {
             dispatch({
               type: GET_INVITE_SUCCESS,
               data: invite,
+            })
+            dispatch({
+              type: FIREBASE_SUCCESS,
             })
             //TODO:
             // if (response.redirect === 'login') {

@@ -1,7 +1,7 @@
 import router from '../router'
 import routes from '../routes'
 
-import {db, auth} from '../firebase'
+import {db, auth, timestamp} from '../firebase'
 
 import {FIREBASE_FAILURE, SNACK_MESSAGE} from '../constants/actions'
 
@@ -10,7 +10,7 @@ export default (values, dispatch) => {
     const invite = {
       email: values.email,
       lang: values.lang,
-      invited: db.timestamp,
+      invited: timestamp,
       inviter: auth.currentUser.uid,
     }
     //TODO: send email

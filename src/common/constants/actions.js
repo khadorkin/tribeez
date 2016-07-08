@@ -8,8 +8,8 @@ export const LOCAL_STORAGE = 'LOCAL_STORAGE'
 export const UPDATE_LANG = 'UPDATE_LANG'
 
 // Firebase events:
-export const LOGIN = 'LOGIN'
-export const LOGOUT = 'LOGOUT'
+export const LOGGED_IN = 'LOGGED_IN'
+export const LOGGED_OUT = 'LOGGED_OUT'
 
 export const FIREBASE_REQUEST = 'FIREBASE_REQUEST'
 export const FIREBASE_SUCCESS = 'FIREBASE_SUCCESS'
@@ -19,6 +19,8 @@ export const TRIBE_UPDATED = 'TRIBE_UPDATED'
 export const USER_UPDATED = 'USER_UPDATED'
 export const MEMBER_ADDED = 'MEMBER_ADDED'
 export const MEMBER_UPDATED = 'MEMBER_UPDATED'
+
+export const UNREAD = 'UNREAD'
 
 
 // other events:

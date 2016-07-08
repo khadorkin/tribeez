@@ -1,10 +1,10 @@
 import {
   GET_INVITE_SUCCESS,
-  LOGIN,
+  LOGGED_IN,
 } from '../constants/actions'
 
 const initialState = {
-  data: {},
+  invite: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -12,12 +12,12 @@ export default (state = initialState, action = null) => {
     case GET_INVITE_SUCCESS:
       return {
         ...state,
-        data: action.data,
+        invite: action.data,
       }
-    case LOGIN:
+    case LOGGED_IN:
       return {
         ...state,
-        data: {},
+        invite: null,
       }
     default:
       return state

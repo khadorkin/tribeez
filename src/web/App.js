@@ -15,6 +15,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import LangIcon from 'material-ui/svg-icons/action/language'
 import CircularProgress from 'material-ui/CircularProgress'
+import WarnIcon from 'material-ui/svg-icons/alert/warning'
 import Snackbar from 'material-ui/Snackbar'
 import TelegramIcon from './resources/telegram-icon'
 import MessengerIcon from './resources/messenger-icon'
@@ -52,6 +53,7 @@ class App extends Component {
     menu_visible: PropTypes.bool.isRequired,
     snack: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
     // action creators:
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
@@ -188,6 +190,13 @@ class App extends Component {
         </div>
       )
     }
+    if (this.props.error) {
+      iconRight = (
+        <IconButton onTouchTap={() => alert(this.props.error)}>
+          <WarnIcon color="white" />
+        </IconButton>
+      )
+    }
     if (this.props.loading) {
       iconRight = <CircularProgress color="white" size={0.5} />
     }
@@ -272,7 +281,8 @@ const mapStateToProps = (state) => ({
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   snack: state.app.snack,
-  loading: state.app.loading || state.app.submitting,
+  loading: state.app.loading > 0 || state.app.submitting,
+  error: state.app.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

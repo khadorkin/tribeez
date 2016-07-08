@@ -91,7 +91,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  unread: state.member.user.unread,
+  unread: state.app.unread,
 })
 
 export default connect(mapStateToProps)(Activity)

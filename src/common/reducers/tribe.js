@@ -2,7 +2,7 @@ import {
   TRIBE_UPDATED,
   MEMBER_ADDED,
   MEMBER_UPDATED,
-  LOGOUT,
+  LOGGED_OUT,
 } from '../constants/actions'
 
 const getFormats = (currency) => ({
@@ -53,7 +53,7 @@ export default (state = initialState, action = null) => {
       }
     }
 
-    case LOGOUT:
+    case LOGGED_OUT:
       return {...initialState}
     default:
       return state

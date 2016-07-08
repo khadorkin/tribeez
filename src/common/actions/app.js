@@ -1,13 +1,18 @@
 import router from '../router'
 
+import {db, auth} from '../firebase'
+
 import {
   TOGGLE_MENU,
   TOGGLE_TRIBES,
   RESIZE,
   CLOSE_SNACK,
   UPDATE_LANG,
-  LOGIN,
-  LOGOUT,
+  LOGGED_IN,
+  LOGGED_OUT,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
 import getMember from './getMember'
@@ -15,7 +20,7 @@ import getMember from './getMember'
 export const login = (user, destination) => {
   return (dispatch) => {
     dispatch({
-      type: LOGIN,
+      type: LOGGED_IN,
       user,
     })
     dispatch(getMember.on(user.uid))
@@ -26,7 +31,7 @@ export const login = (user, destination) => {
 export const logout = (destination) => {
   return (dispatch) => {
     dispatch({
-      type: LOGOUT,
+      type: LOGGED_OUT,
     })
     dispatch(getMember.off())
     if (destination) {
@@ -75,6 +80,27 @@ export const updateLang = (lang) => {
     dispatch({
       type: UPDATE_LANG,
       lang,
+    })
+  }
+}
+
+export const setLastViewedHistoryKey = (key) => {
+  return (dispatch) => {
+    dispatch({
+      type: FIREBASE_REQUEST,
+    })
+    db.ref('tribes/' + auth.currentUser.tid + '/members/' + auth.currentUser.uid + '/last_viewed_history_key').set(key)
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
+      })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'setLastViewedHistoryKey',
+        error,
+      })
     })
   }
 }

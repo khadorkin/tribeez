@@ -1,6 +1,6 @@
 import md5 from 'md5'
 
-import {auth, db} from '../firebase'
+import {auth, db, timestamp} from '../firebase'
 import {rand} from '../utils/utils'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
@@ -12,6 +12,7 @@ export default (tribe, values, dispatch) => {
       const uid = user.uid
       const gravatar = md5(uid)
       const updates = {}
+      let historyKey
 
       const user_record = {
         current_tribe: values.tribe,
@@ -47,21 +48,31 @@ export default (tribe, values, dispatch) => {
       db.ref().update(updates)
       .then(() => {
         // add history entry
-        return db.ref('tribes/' + values.tribe + '/history').push({
+        historyKey = db.ref('tribes/' + values.tribe + '/history').push().key
+        return db.ref('tribes/' + values.tribe + '/history/' + historyKey).set({
           action: 'new',
           type: 'member',
-          added: db.timestamp,
-          user: auth.currentUser.uid,
+          added: timestamp,
+          user: uid,
         })
+      })
+      .then(() => {
+        // add history key as member's "last_viewed_history_key"
+        return db.ref('tribes/' + values.tribe + '/members/' + uid + '/last_viewed_history_key').set(historyKey)
       })
       .then(() => {
         // remove invitation
         return db.ref('tribes/' + values.tribe + '/invites/' + values.token).remove()
       })
       .then(resolve)
-      .catch(() => {
-        //TODO: prevent logging in
+      .catch((error) => {
         reject({_error: 'request'})
+        dispatch({
+          type: FIREBASE_FAILURE,
+          origin: 'submitJoin',
+          error,
+        })
+        auth.signOut()
       })
     })
     .catch((error) => {

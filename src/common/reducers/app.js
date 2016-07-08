@@ -1,5 +1,7 @@
 import {LOCATION_CHANGE} from 'react-router-redux'
 
+import {auth} from '../firebase'
+
 import {actionTypes as formActions} from 'redux-form'
 
 import {
@@ -13,6 +15,7 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
+  UNREAD,
 } from '../constants/actions'
 
 import lang from '../utils/lang'
@@ -33,8 +36,10 @@ const initialState = {
     author: null,
     name: null,
   },
-  loading: false,
+  unread: 0,
+  loading: 0,
   submitting: false,
+  error: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -88,26 +93,44 @@ export default (state = initialState, action = null) => {
         ...state,
         snack: {...initialState.snack},
       }
+    case UNREAD:
+      return {
+        ...state,
+        unread: action.count,
+      }
     case FIREBASE_REQUEST:
       return {
         ...state,
-        loading: true,
+        loading: state.loading + 1,
       }
     case FIREBASE_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loading: state.loading - 1,
+        error: null,
       }
-    case FIREBASE_FAILURE:
+    case FIREBASE_FAILURE: //TODO: move impure calls out of this reducer
+      const err = action.error
       if (__DEV__) {
         /*eslint-disable no-console*/
-        console.error('Firebase error from ' + action.origin + ':', action.error)
+        console.error('Firebase error from ' + action.origin + ':', err)
         /*eslint-enable no-console*/
+      }
+      const error = (err.code || err.message || err.toString()) //TODO: improve
+      if (window.Rollbar) {
+        const extra = {
+          origin: action.origin,
+        }
+        if (auth.currentUser) {
+          extra.user = auth.currentUser.uid
+          extra.tribe = auth.currentUser.tid
+        }
+        Rollbar.error('Firebase error: ' + error, extra)
       }
       return {
         ...state,
-        loading: false,
-        error: action.error,
+        loading: state.loading - 1,
+        error,
       }
     case formActions.CHANGE:
       if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {

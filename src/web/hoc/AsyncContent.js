@@ -1,11 +1,13 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import colors from '../../common/constants/colors'
+import {setLastViewedHistoryKey} from '../../common/actions/app'
 
 import {db} from '../../common/firebase'
 
@@ -15,11 +17,14 @@ class AsyncContent extends Component {
   static propTypes = {
     // redux state
     tid: PropTypes.string,
+    uid: PropTypes.string,
     // from parent component
     name: PropTypes.string.isRequired,
     renderRow: PropTypes.func.isRequired,
     style: PropTypes.object,
     children: PropTypes.node,
+    // action creators:
+    setLastViewedHistoryKey: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -41,6 +46,7 @@ class AsyncContent extends Component {
     this.handleError = this.handleError.bind(this)
     this.queryRef = null
     this.last = null
+    this.buffer = []
   }
 
   componentDidMount() {
@@ -115,41 +121,44 @@ class AsyncContent extends Component {
   }
 
   childAdded(snapshot) {
-    this.setState({
-      loading: false,
-    })
-    if (snapshot.key === this.first) {
-      return // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
-    }
     clearTimeout(this.timeout)
-    const item = snapshot.val()
-    item.key = snapshot.key
-    this.state.items.push(item) // add to state but without re-rendering (see batching below)
-    if (!this.last || snapshot.key < this.last) {
-      this.last = snapshot.key // i.e. the next query will include the last item of the current one
-      // or:
-      // const key = snapshot.key
-      // this.last = key.substr(0, key.length - 1) + String.fromCharCode(key.substr(-1).charCodeAt() - 1) // replace last char with previous unicode one to not include the last item
+    if (snapshot.key !== this.first) { // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
+      const item = snapshot.val()
+      item.key = snapshot.key
+      this.buffer.push(item) // add to state but without re-rendering (see batching below)
+      if (!this.last || snapshot.key < this.last) {
+        this.last = snapshot.key // i.e. the next query will include the last item of the current one
+        // or:
+        // const key = snapshot.key
+        // this.last = key.substr(0, key.length - 1) + String.fromCharCode(key.substr(-1).charCodeAt() - 1) // replace last char with previous unicode one to not include the last item
+      }
     }
     this.timeout = setTimeout(this.flush, 20) // the "child_added" events normally arrive in 1 to 5 ms
   }
 
   flush() {
-    const items = this.state.items.sort((a, b) => (a.key < b.key ? 1 : -1))
+    const items = this.buffer.sort((a, b) => (a.key < b.key ? 1 : -1))
+    if (this.props.name === 'history') {
+      if (!this.lastKey || items[0].key > this.lastKey) {
+        this.lastKey = items[0].key
+        this.props.setLastViewedHistoryKey(this.lastKey)
+      }
+    }
     this.setState({
       items,
+      loading: false,
     })
   }
 
   childChanged(snapshot) {
     this.setState({
-      items: this.state.items.map((item) => (item.key === snapshot.key ? snapshot.val() : item)),
+      items: this.buffer.map((item) => (item.key === snapshot.key ? snapshot.val() : item)),
     })
   }
 
   childRemoved(snapshot) {
     this.setState({
-      items: this.state.items.filter((item) => item.key !== snapshot.key),
+      items: this.buffer.filter((item) => item.key !== snapshot.key),
     })
   }
 
@@ -212,6 +221,11 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   tid: state.tribe.key,
+  uid: state.user.uid,
 })
 
-export default connect(mapStateToProps)(AsyncContent)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  setLastViewedHistoryKey,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncContent)

@@ -1,15 +1,17 @@
-import {db} from '../firebase'
+import {db, auth} from '../firebase'
 
 import {
   SNACK_MESSAGE,
   FIREBASE_FAILURE,
+  UNREAD,
 } from '../constants/actions'
 
-let ref
+let historyRef
+let lastKeyRef
 
 const on = (tid) => {
   return (dispatch) => {
-    ref = db.ref('tribes/' + tid + '/history')
+    historyRef = db.ref('tribes/' + tid + '/history')
     let isNew = false
 
     const onError = (error) => {
@@ -34,17 +36,42 @@ const on = (tid) => {
     }
 
     const onLastEntry = (snapshot) => {
-      ref.off('child_added', onLastEntry)
-      ref.orderByKey().startAt(snapshot.key).on('child_added', onNewEntry, onError)
+      historyRef.off('child_added', onLastEntry)
+      historyRef.orderByKey().startAt(snapshot.key).on('child_added', onNewEntry, onError)
     }
 
-    ref.orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
+    historyRef.orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
+
+    const onCount = (snapshot) => {
+      dispatch({
+        type: UNREAD,
+        count: snapshot.numChildren() - 1, // exclude the last seen one
+      })
+    }
+
+    const onLastKey = (snapshot) => {
+      const lastKey = snapshot.val()
+      historyRef.off('value')
+      if (lastKey) {
+        historyRef.orderByKey().startAt(lastKey).on('value', onCount)
+      } else {
+        historyRef.orderByKey().on('value', onCount) //TODO: start at registration date
+      }
+    }
+
+    lastKeyRef = db.ref('tribes/' + tid + '/members/' + auth.currentUser.uid + '/last_viewed_history_key')
+    lastKeyRef.on('value', onLastKey)
   }
 }
 
 const off = () => {
   return () => {
-    ref.off()
+    if (historyRef) {
+      historyRef.off()
+    }
+    if (lastKeyRef) {
+      lastKeyRef.off()
+    }
   }
 }
 

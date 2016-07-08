@@ -4,11 +4,11 @@ import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    email: state.join.data.email,
+    email: state.join.invite ? state.join.invite.email : '',
     tribe: ownProps.tribe,
     token: ownProps.token,
   },
-  invite: state.join.data,
+  invite: state.join.invite,
 })
 
 export default (component) => {

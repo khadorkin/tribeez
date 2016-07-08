@@ -4,10 +4,10 @@ import platform from '../platform'
 
 const mapStateToProps = (state) => ({
   destination: state.login.destination,
-  invite: state.join.data,
+  invite: state.join.invite,
   initialValues: {
-    email: state.join.data.email, // email is null when not coming from /join
-    invite_token: state.join.data.token,
+    email: state.join.invite ? state.join.invite.email : '',
+    invite_token: state.join.invite ? state.join.invite.token : '',
   },
 })
 

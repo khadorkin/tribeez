@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 
 import MenuItem from 'material-ui/MenuItem'
+import CircularProgress from 'material-ui/CircularProgress'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -11,6 +12,7 @@ import form from '../../common/forms/join'
 import focus from '../../common/utils/formFocus'
 import submitJoin from '../../common/actions/submitJoin'
 import langs from '../../common/resources/langs'
+import colors from '../../common/constants/colors'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
@@ -40,12 +42,20 @@ class JoinForm extends Component {
   }
 
   render() {
-    const {fields: {name, email, password, lang}} = this.props
+    const {fields: {name, email, password, lang}, invite} = this.props
 
-    const subtitle = <FormattedMessage id="invited_you" values={{name: this.props.invite.inviter}} />
+    if (!invite) {
+      return (
+        <div style={{textAlign: 'center', margin: '150px 0'}}>
+          <CircularProgress color={colors.main} size={0.5} />
+        </div>
+      )
+    }
+
+    const subtitle = <FormattedMessage id="invited_you" values={{name: invite.inviter}} />
 
     return (
-      <Form name="join" title={this.props.invite.tribe} subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
+      <Form name="join" title={invite.tribe} subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
