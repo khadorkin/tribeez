@@ -117,7 +117,7 @@ class DatePickerWrapper extends Component {
             floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
             errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
             {...this.props}
-            value={value && new Date(value)}
+            value={value ? new Date(value) : null}
             onChange={this.handleDateChange}
             onBlur={null}
             onFocus={null}

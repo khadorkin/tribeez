@@ -74,6 +74,7 @@ class ProfileForm extends Component {
         />
         <TextField ref="password"
           type="password"
+          errorText={password.touched && password.error && <FormattedMessage id={'error.password_' + password.error} />}
           {...password}
           name="new_password"
         />
