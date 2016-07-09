@@ -5,7 +5,7 @@ import {rand} from '../utils/utils'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
-export default (tribe, values, dispatch) => {
+export default (tribe_name, values, dispatch) => {
   return new Promise((resolve, reject) => {
     auth.createUserWithEmailAndPassword(values.email, values.password)
     .then((user) => {
@@ -16,12 +16,12 @@ export default (tribe, values, dispatch) => {
 
       const user_record = {
         current_tribe: values.tribe,
-        email: values.email,
+        email: user.email,
         gravatar,
         lang: values.lang,
         name: values.name,
         tribes: {
-          [values.tribe]: tribe,
+          [values.tribe]: tribe_name,
         },
       }
       if (values.birthdate) {
@@ -54,6 +54,7 @@ export default (tribe, values, dispatch) => {
           type: 'member',
           added: timestamp,
           user: uid,
+          // TODO: inviter
         })
       })
       .then(() => {
