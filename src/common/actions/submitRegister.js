@@ -29,7 +29,7 @@ export default (values, dispatch) => {
               name: values.tribe_name,
               type: values.tribe_type,
               currency: values.currency,
-              city_id: values.city.place_id,
+              city: values.city,
             },
             members: {
               [uid]: {
@@ -78,13 +78,11 @@ export default (values, dispatch) => {
             // city
             return db.ref('cities/' + values.city.place_id).transaction((city) => {
               if (!city) {
-                city = {
-                  country_code: values.city.country_code,
-                  name: values.city.name,
-                  lat: values.city.lat,
-                  lng: values.city.lng,
-                  tribes: {},
-                }
+                city = values.city
+                delete city.place_id
+              }
+              if (!city.tribes) {
+                city.tribes = {}
               }
               city.tribes[tid] = true
               return city

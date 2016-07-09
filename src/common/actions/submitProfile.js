@@ -22,6 +22,7 @@ export default (values, dispatch) => {
       })
     })
     .then(() => {
+      auth.currentUser.name = values.name
       return db.ref('tribes/' + auth.currentUser.tid + '/members/' + auth.currentUser.uid).transaction((member) => {
         member.name = values.name
         member.gravatar = gravatar

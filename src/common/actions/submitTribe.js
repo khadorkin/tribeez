@@ -1,7 +1,8 @@
-import api from '../utils/api'
+import {auth, db} from '../firebase'
 
 import {
   SNACK_MESSAGE,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
 import router from '../router'
@@ -9,34 +10,52 @@ import routes from '../routes'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    api[values.id ? 'put' : 'post']('tribe', values)
-      .then((response) => {
-        if (response.error) {
-          if (typeof response.error === 'string') {
-            response.error = {_error: response.error}
-          }
-          reject(response.error)
-        } else {
-          resolve()
-          if (values.id) {
-            dispatch({
-              type: SNACK_MESSAGE,
-              message: 'tribe_updated',
-            })
-          } else {
-            router.resetTo(routes.ACTIVITY, dispatch)
-            // user and tribe have changed, get them from the API:
-            // dispatch(getMember())
-            // dispatch(getActivity())
-            dispatch({
-              type: SNACK_MESSAGE,
-              message: 'tribe_created',
-            })
-          }
+    db.ref('tribes/' + auth.currentUser.tid + '/infos').transaction((infos) => {
+      infos.name = values.tribe_name
+      infos.type = values.tribe_type
+      infos.currency = values.currency
+      infos.city = values.city
+      return infos
+    })
+    .then(() => {
+      // remove from current city
+      db.ref('cities/' + values.current_city + '/tribes/' + auth.currentUser.tid).remove()
+    })
+    .then(() => {
+      // add to new city
+      db.ref('cities/' + values.city.place_id).transaction((city) => {
+        if (!city) {
+          city = values.city
+          delete city.place_id // it's already the key
         }
+        if (!city.tribes) {
+          city.tribes = {}
+        }
+        city.tribes[auth.currentUser.tid] = true
+        return city
       })
-      .catch(() => {
-        reject({_error: 'request'})
+    })
+    .then(() => {
+      auth.currentUser.tribe = values.tribe_name
+      resolve()
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'tribe_updated',
       })
+    })
+    .catch((error) => {
+      reject({_error: 'request'})
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'submitTribe',
+        error,
+      })
+    })
+
+    // router.resetTo(routes.ACTIVITY, dispatch)
+    // dispatch({
+    //   type: SNACK_MESSAGE,
+    //   message: 'tribe_created',
+    // })
   })
 }
