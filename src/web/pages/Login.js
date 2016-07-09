@@ -4,7 +4,7 @@ import {Card} from 'material-ui/Card'
 
 import LoginForm from '../forms/Login'
 
-import AutoLogin from '../components/AutoLogin'
+import AutoLogin from '../../common/components/AutoLogin'
 
 class Login extends Component {
 

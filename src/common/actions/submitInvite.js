@@ -24,8 +24,8 @@ export default (values, dispatch) => {
         email: values.email,
         lang: values.lang,
         tribe: auth.currentUser.tid,
-        tribe_name: values.tribe_name,
-        inviter_name: values.inviter_name,
+        tribe_name: auth.currentUser.tribe,
+        inviter_name: auth.currentUser.name,
       })
       .then((response) => {
         if (response.error) {

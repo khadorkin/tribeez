@@ -36,13 +36,13 @@ class Members extends Component {
       openDialog: false,
       invite: {},
     }
-    //this.openDialog = this.openDialog.bind(this)
+    this.handleResendDialog = this.handleResendDialog.bind(this)
     this.handleResend = this.handleResend.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
     this.renderInvite = this.renderInvite.bind(this)
   }
 
-  openDialog(invite) {
+  handleResendDialog(invite) {
     this.setState({
       openDialog: true,
       invite,
@@ -50,7 +50,7 @@ class Members extends Component {
   }
 
   handleResend() {
-    this.props.postInvite(this.state.invite.email, this.state.invite.lang, this.props.uid)
+    this.props.postInvite(this.state.invite)
     this.handleDialogClose()
   }
 
@@ -61,8 +61,7 @@ class Members extends Component {
   }
 
   renderInvite(row) {
-    // const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, row)}><RefreshIcon /></IconButton>
-    return <Invite invite={row} key={row.key} onResent={this.openDialog.bind(this, row)} />
+    return <Invite invite={row} key={row.key} onResent={this.handleResendDialog} />
   }
 
   render() {

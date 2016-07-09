@@ -2,8 +2,8 @@ import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import {auth} from '../../common/firebase'
-import {login} from '../../common/actions/app'
+import {auth} from '../firebase'
+import {login} from '../actions/app'
 
 class AutoLogin extends Component {
   static propTypes = {
