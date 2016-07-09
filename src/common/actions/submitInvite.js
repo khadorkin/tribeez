@@ -2,11 +2,14 @@ import router from '../router'
 import routes from '../routes'
 
 import {db, auth, timestamp} from '../firebase'
+import api from '../utils/api'
 
-import {FIREBASE_FAILURE, SNACK_MESSAGE} from '../constants/actions'
+import {FIREBASE_FAILURE, API_FAILURE, SNACK_MESSAGE} from '../constants/actions'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
+    const ref = db.ref('tribes/' + auth.currentUser.tid + '/invites')
+    const token = ref.push().key
     const invite = {
       email: values.email,
       lang: values.lang,
@@ -14,13 +17,34 @@ export default (values, dispatch) => {
       inviter: auth.currentUser.uid,
     }
     //TODO: send email
-    return db.ref('tribes/' + values.tribe + '/invites').push(invite)
+    return ref.child(token).set(invite)
     .then(() => {
-      resolve()
-      router.resetTo(routes.MEMBERS, dispatch)
-      dispatch({
-        type: SNACK_MESSAGE,
-        message: 'invite_sent',
+      api.post('invite', {
+        token,
+        email: values.email,
+        lang: values.lang,
+        tribe: auth.currentUser.tid,
+        tribe_name: values.tribe_name,
+        inviter_name: values.inviter_name,
+      })
+      .then((response) => {
+        if (response.error) {
+          throw response.error
+        }
+        resolve()
+        router.resetTo(routes.MEMBERS, dispatch)
+        dispatch({
+          type: SNACK_MESSAGE,
+          message: 'invite_sent',
+        })
+      })
+      .catch((error) => {
+        dispatch({
+          type: API_FAILURE,
+          origin: 'submitInvite',
+          error,
+        })
+        reject({_error: 'request'})
       })
     })
     .catch((error) => {

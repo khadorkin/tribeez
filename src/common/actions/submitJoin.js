@@ -13,7 +13,7 @@ export default (invite, values, dispatch) => {
     auth.createUserWithEmailAndPassword(values.email, values.password)
     .then((user) => {
       const uid = user.uid
-      const gravatar = md5(uid)
+      const gravatar = md5(user.email)
       const updates = {}
       let historyKey
 

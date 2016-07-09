@@ -15,6 +15,7 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
+  API_FAILURE,
   UNREAD,
 } from '../constants/actions'
 
@@ -104,14 +105,15 @@ export default (state = initialState, action = null) => {
     case FIREBASE_SUCCESS:
       return {
         ...state,
-        loading: state.loading - 1,
+        loading: Math.max(0, state.loading - 1),
         error: null,
       }
     case FIREBASE_FAILURE: //TODO: move impure calls out of this reducer
+    case API_FAILURE:
       const err = action.error
       if (__DEV__) {
         /*eslint-disable no-console*/
-        console.error('Firebase error from ' + action.origin + ':', err)
+        console.error(action.type, 'from', action.origin + ':', err)
         /*eslint-enable no-console*/
       }
       const error = (err.code || err.message || err.toString()) //TODO: improve
@@ -123,11 +125,11 @@ export default (state = initialState, action = null) => {
           extra.user = auth.currentUser.uid
           extra.tribe = auth.currentUser.tid
         }
-        Rollbar.error('Firebase error: ' + error, extra)
+        Rollbar.error(action.type + ': ' + error, extra)
       }
       return {
         ...state,
-        loading: state.loading - 1,
+        loading: Math.max(0, state.loading - 1),
         error,
       }
     case formActions.CHANGE:

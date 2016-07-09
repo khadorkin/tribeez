@@ -19,7 +19,7 @@ export default (values, dispatch) => {
         auth.createUserWithEmailAndPassword(values.email, values.password)
         .then((user) => {
           const uid = user.uid
-          const gravatar = md5(uid)
+          const gravatar = md5(user.email)
           let historyKey
 
           const tid = db.ref('tribes').push().key
