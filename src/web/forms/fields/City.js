@@ -86,6 +86,11 @@ class CityField extends Component {
 
   handleSelect(value, index) {
     const prediction = this.state.predictions[index]
+    this.props.onChange({
+      name: value, // could be also place.formatted_address, but place.name does not contain country
+      place_id: prediction.place_id,
+      // call getDetails to get the country code
+    })
     this.places.getDetails({
       placeId: prediction.place_id,
     }, this.handleDetails)
@@ -96,10 +101,17 @@ class CityField extends Component {
     const country = place.address_components.find((component) => {
       return (component.types.includes('country') && component.short_name && component.short_name.length === 2)
     })
+    const location = place.geometry.location
+    // choices for city name:
+    // short: place.name (city name only)
+    // medium: this.props.value
+    // long: place.formatted_address
     this.props.onChange({
-      name: this.props.value, // could be also place.formatted_address, but place.name does not contain country
+      name: this.props.value, // unchanged
+      place_id: place.place_id, // unchanged
       country_code: country.short_name,
-      place_id: place.place_id,
+      lat: location.lat(),
+      lng: location.lng(),
     })
   }
 

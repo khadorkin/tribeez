@@ -85,7 +85,7 @@ class AsyncContent extends Component {
       return
     }
     const atBottom = (document.body.scrollTop > this.element.scrollHeight - window.innerHeight)
-    if (atBottom) {
+    if (atBottom && this.tid) {
       this.handleLoad(true)
     }
   }
@@ -164,7 +164,7 @@ class AsyncContent extends Component {
 
   handleError(error) {
     this.setState({
-      error: 'firebase.error.' + error.code,
+      error: 'firebase.error.' + error.code, //TODO
     })
   }
 

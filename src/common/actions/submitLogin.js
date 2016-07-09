@@ -2,7 +2,6 @@ import {auth} from '../firebase'
 import platform from '../platform'
 import asyncStorage from '../utils/asyncStorage'
 import {login} from './app'
-import routes from '../routes'
 
 export default (destination, values, dispatch) => {
   return new Promise((resolve, reject) => {

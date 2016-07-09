@@ -6,7 +6,6 @@ import platform from '../platform'
 import asyncStorage from '../utils/asyncStorage'
 import {rand} from '../utils/utils'
 import {login} from './app'
-import routes from '../routes'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
@@ -82,6 +81,8 @@ export default (values, dispatch) => {
                 city = {
                   country_code: values.city.country_code,
                   name: values.city.name,
+                  lat: values.city.lat,
+                  lng: values.city.lng,
                   tribes: {},
                 }
               }
