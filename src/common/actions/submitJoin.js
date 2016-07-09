@@ -8,7 +8,7 @@ import {login} from './app'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
-export default (tribe_name, values, dispatch) => {
+export default (invite, values, dispatch) => {
   return new Promise((resolve, reject) => {
     auth.createUserWithEmailAndPassword(values.email, values.password)
     .then((user) => {
@@ -18,13 +18,13 @@ export default (tribe_name, values, dispatch) => {
       let historyKey
 
       const user_record = {
-        current_tribe: values.tribe,
+        current_tribe: invite.tribe,
         email: user.email,
         gravatar,
         lang: values.lang,
         name: values.name,
         tribes: {
-          [values.tribe]: tribe_name,
+          [invite.tribe]: invite.tribe_name,
         },
       }
       if (values.birthdate) {
@@ -36,11 +36,11 @@ export default (tribe_name, values, dispatch) => {
       updates['users/' + uid] = user_record
 
       // membership
-      updates['tribes/' + values.tribe + '/members/' + uid] = {
+      updates['tribes/' + invite.tribe + '/members/' + uid] = {
         balance: 0,
         gravatar,
         name: values.name,
-        invite: values.token,
+        invite: values.token, // for security rules
       }
 
       // private user infos
@@ -51,22 +51,22 @@ export default (tribe_name, values, dispatch) => {
       db.ref().update(updates)
       .then(() => {
         // add history entry
-        historyKey = db.ref('tribes/' + values.tribe + '/history').push().key
-        return db.ref('tribes/' + values.tribe + '/history/' + historyKey).set({
+        historyKey = db.ref('tribes/' + invite.tribe + '/history').push().key
+        return db.ref('tribes/' + invite.tribe + '/history/' + historyKey).set({
           action: 'new',
           type: 'member',
           added: timestamp,
           user: uid,
-          // TODO: inviter
+          inviter: invite.inviter,
         })
       })
       .then(() => {
         // add history key as member's "last_viewed_history_key"
-        return db.ref('tribes/' + values.tribe + '/members/' + uid + '/last_viewed_history_key').set(historyKey)
+        return db.ref('tribes/' + invite.tribe + '/members/' + uid + '/last_viewed_history_key').set(historyKey)
       })
       .then(() => {
         // remove invitation
-        return db.ref('tribes/' + values.tribe + '/invites/' + values.token).remove()
+        return db.ref('tribes/' + invite.tribe + '/invites/' + values.token).remove()
       })
       .then(() => {
         if (platform !== 'web') {

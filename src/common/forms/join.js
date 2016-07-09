@@ -5,7 +5,6 @@ import platform from '../platform'
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
     email: state.join.invite ? state.join.invite.email : '',
-    tribe: ownProps.tribe,
     token: ownProps.token,
   },
   invite: state.join.invite,
@@ -14,7 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
 export default (component) => {
   return reduxForm({
     form: 'join',
-    fields: ['name', 'email', 'password', 'lang', 'tribe', 'token'],
+    fields: ['name', 'email', 'password', 'lang', 'token'],
     validate: validator(['name', 'email', 'password', 'lang']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

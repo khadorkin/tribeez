@@ -24,8 +24,9 @@ export default (tribe, token) => {
           db.ref('tribes/' + tribe + '/members/' + invite.inviter + '/name').once('value'),
         ]).then((snapshots) => {
           if (snapshots[0] && snapshots[1]) {
-            invite.tribe = snapshots[0].val()
-            invite.inviter = snapshots[1].val()
+            invite.tribe = tribe
+            invite.tribe_name = snapshots[0].val()
+            invite.inviter_name = snapshots[1].val()
             dispatch({
               type: GET_INVITE_SUCCESS,
               data: invite,

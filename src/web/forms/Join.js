@@ -37,7 +37,7 @@ class JoinForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(submitJoin.bind(null, this.props.invite.tribe))(event)
+    this.props.handleSubmit(submitJoin.bind(null, this.props.invite))(event)
       .catch((errors) => focus(errors, this.refs))
   }
 
@@ -52,10 +52,10 @@ class JoinForm extends Component {
       )
     }
 
-    const subtitle = <FormattedMessage id="invited_you" values={{name: invite.inviter}} />
+    const subtitle = <FormattedMessage id="invited_you" values={{name: invite.inviter_name}} />
 
     return (
-      <Form name="join" title={invite.tribe} subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
+      <Form name="join" title={invite.tribe_name} subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
