@@ -90,8 +90,11 @@ history.listen((location) => {
 // Needed for onTouchTap events:
 injectTapEventPlugin()
 
+import {setDestination} from '../common/actions/app'
+
 const authenticate = (nextState, replace) => {
   if (!store.getState().user.uid) {
+    store.dispatch(setDestination(nextState.location.pathname))
     replace(routes.LOGIN)
   }
 }

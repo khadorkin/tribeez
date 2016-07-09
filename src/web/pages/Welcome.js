@@ -7,6 +7,8 @@ import * as colors from 'material-ui/styles/colors'
 
 import routes from '../routes'
 
+import AutoLogin from '../components/AutoLogin'
+
 class Welcome extends Component {
 
   render() {
@@ -16,6 +18,7 @@ class Welcome extends Component {
           <img src="logo.png" style={{marginBottom: '60px', width: 128}} /><br />
           <RaisedButton label={<FormattedMessage id="register" />} containerElement={<Link to={routes.REGISTER} />} />
         </div>
+        <AutoLogin />
       </div>
     )
   }

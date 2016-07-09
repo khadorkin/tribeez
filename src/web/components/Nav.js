@@ -28,6 +28,8 @@ import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 import {toggleTribes} from '../../common/actions/app'
 
+import MemberListeners from './MemberListeners'
+
 import routes from '../routes'
 
 import Money from './Money'
@@ -210,6 +212,7 @@ class Nav extends Component {
           </div>
         </div>
         {this.props.menu_tribes ? tribesContainer : menuContainer}
+        <MemberListeners />
       </div>
     )
   }

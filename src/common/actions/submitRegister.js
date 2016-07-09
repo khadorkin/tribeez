@@ -2,7 +2,11 @@ import md5 from 'md5'
 
 import api from '../utils/api'
 import {auth, db, timestamp} from '../firebase'
+import platform from '../platform'
+import asyncStorage from '../utils/asyncStorage'
 import {rand} from '../utils/utils'
+import {login} from './app'
+import routes from '../routes'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
@@ -73,7 +77,7 @@ export default (values, dispatch) => {
           })
           .then(() => {
             // city
-            db.ref('cities/' + values.city.place_id).transaction((city) => {
+            return db.ref('cities/' + values.city.place_id).transaction((city) => {
               if (!city) {
                 city = {
                   country_code: values.city.country_code,
@@ -95,7 +99,16 @@ export default (values, dispatch) => {
               user: uid,
             })
           })
-          .then(resolve)
+          .then(() => {
+            if (platform !== 'web') {
+              asyncStorage.setItem('credentials', JSON.stringify({email: values.email, password: values.password}))
+              .catch(() => {
+                // console.error('LOCAL STORAGE SET ERROR', error)
+              })
+            }
+            resolve()
+            dispatch(login(user))
+          })
           .catch((error) => {
             reject({_error: 'request'})
             dispatch({

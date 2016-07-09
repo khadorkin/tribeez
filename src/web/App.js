@@ -22,11 +22,9 @@ import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
 
 import Nav from './components/Nav'
-import MemberListeners from './components/MemberListeners'
 
 import config from '../common/config'
 import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
-import {auth} from '../common/firebase'
 import routes from './routes'
 import scriptLoader from './utils/scriptLoader'
 import langs from '../common/resources/langs'
@@ -35,7 +33,7 @@ const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-import {login, logout, toggleMenu, closeSnack, updateLang, resize} from '../common/actions/app'
+import {toggleMenu, closeSnack, updateLang, resize} from '../common/actions/app'
 
 class App extends Component {
   static propTypes = {
@@ -55,8 +53,6 @@ class App extends Component {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.string,
     // action creators:
-    login: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
@@ -89,17 +85,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        if (!this.props.uid) {
-          this.props.login(user, routes.ACTIVITY) //TODO: go to initial destination if any
-        }
-      } else {
-        const redirect = /^\/(join|reset)\//.test(location.pathname) ? null : routes.WELCOME
-        this.props.logout(redirect)
-      }
-    })
-
     window.onresize = this.props.resize
   }
 
@@ -211,7 +196,6 @@ class App extends Component {
         width={MENU_WIDTH}
       >
         <Nav module={pathname.split('/')[1]} />
-        <MemberListeners />
       </Drawer>
     ) // do not load left nav if not logged in
 
@@ -286,8 +270,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  login,
-  logout,
   toggleMenu,
   closeSnack,
   updateLang,

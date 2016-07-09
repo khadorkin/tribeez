@@ -1,22 +1,21 @@
-import platform from '../platform'
-
-import asyncStorage from '../utils/asyncStorage'
-
 import {auth} from '../firebase'
+import platform from '../platform'
+import asyncStorage from '../utils/asyncStorage'
+import {login} from './app'
+import routes from '../routes'
 
-export default (destination, values/*, dispatch*/) => {
+export default (destination, values, dispatch) => {
   return new Promise((resolve, reject) => {
     auth.signInWithEmailAndPassword(values.email, values.password)
-    .then(() => {
+    .then((user) => {
       if (platform !== 'web') {
         asyncStorage.setItem('credentials', JSON.stringify(values))
-        .then(resolve)
         .catch(() => {
           // console.error('LOCAL STORAGE SET ERROR', error)
         })
-      } else {
-        resolve()
       }
+      resolve()
+      dispatch(login(user))
     })
     .catch((error) => {
       switch (error.code) {

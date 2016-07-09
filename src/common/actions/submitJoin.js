@@ -1,7 +1,11 @@
 import md5 from 'md5'
 
 import {auth, db, timestamp} from '../firebase'
+import platform from '../platform'
+import asyncStorage from '../utils/asyncStorage'
 import {rand} from '../utils/utils'
+import {login} from './app'
+import routes from '../routes'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
@@ -65,7 +69,16 @@ export default (tribe_name, values, dispatch) => {
         // remove invitation
         return db.ref('tribes/' + values.tribe + '/invites/' + values.token).remove()
       })
-      .then(resolve)
+      .then(() => {
+        if (platform !== 'web') {
+          asyncStorage.setItem('credentials', JSON.stringify({email: values.email, password: values.password}))
+          .catch(() => {
+            // console.error('LOCAL STORAGE SET ERROR', error)
+          })
+        }
+        resolve()
+        dispatch(login(user))
+      })
       .catch((error) => {
         reject({_error: 'request'})
         dispatch({

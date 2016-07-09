@@ -1,4 +1,5 @@
 import router from '../router'
+import routes from '../routes'
 
 import {db, auth} from '../firebase'
 
@@ -10,6 +11,7 @@ import {
   UPDATE_LANG,
   LOGGED_IN,
   LOGGED_OUT,
+  LOGIN_DESTINATION,
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
@@ -17,26 +19,34 @@ import {
 
 import getMember from './getMember'
 
-export const login = (user, destination) => {
-  return (dispatch) => {
+export const login = (user) => {
+  return (dispatch, getState) => {
     dispatch({
       type: LOGGED_IN,
       user,
     })
     dispatch(getMember.on(user.uid))
+    const destination = getState().login.destination || routes.ACTIVITY
     router.resetTo(destination, dispatch)
   }
 }
 
-export const logout = (destination) => {
+export const logout = () => {
   return (dispatch) => {
     dispatch({
       type: LOGGED_OUT,
     })
     dispatch(getMember.off())
-    if (destination) {
-      router.resetTo(destination, dispatch)
-    }
+    router.resetTo(routes.WELCOME, dispatch)
+  }
+}
+
+export const setDestination = (destination) => {
+  return (dispatch) => {
+    dispatch({
+      type: LOGIN_DESTINATION,
+      destination,
+    })
   }
 }
 
