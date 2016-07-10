@@ -20,6 +20,7 @@ export const TRIBE_UPDATED = 'TRIBE_UPDATED'
 export const USER_UPDATED = 'USER_UPDATED'
 export const MEMBER_ADDED = 'MEMBER_ADDED'
 export const MEMBER_UPDATED = 'MEMBER_UPDATED'
+export const MEMBERS_REMOVED = 'MEMBERS_REMOVED'
 
 export const UNREAD = 'UNREAD'
 

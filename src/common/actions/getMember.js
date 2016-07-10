@@ -8,6 +8,7 @@ import {
   TRIBE_UPDATED,
   MEMBER_ADDED,
   MEMBER_UPDATED,
+  MEMBERS_REMOVED,
 } from '../constants/actions'
 
 const origin = 'getMember'
@@ -44,6 +45,7 @@ const on = (uid) => {
     userRef.on('value', (snapshot) => {
       const user = snapshot.val()
       auth.currentUser.name = user.name
+      auth.currentUser.gravatar = user.gravatar
       auth.currentUser.tid = user.current_tribe
 
       dispatch({
@@ -115,11 +117,14 @@ const on = (uid) => {
 }
 
 const off = () => {
-  return () => {
+  return (dispatch) => {
     privateRef.off()
     userRef.off()
     memberRef.off()
     tribeRef.off()
+    dispatch({
+      type: MEMBERS_REMOVED,
+    })
   }
 }
 

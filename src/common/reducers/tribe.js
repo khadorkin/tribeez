@@ -2,6 +2,7 @@ import {
   TRIBE_UPDATED,
   MEMBER_ADDED,
   MEMBER_UPDATED,
+  MEMBERS_REMOVED,
   LOGGED_OUT,
 } from '../constants/actions'
 
@@ -52,6 +53,12 @@ export default (state = initialState, action = null) => {
         userMap,
       }
     }
+    case MEMBERS_REMOVED:
+      return {
+        ...state,
+        users: [],
+        userMap: {},
+      }
 
     case LOGGED_OUT:
       return {...initialState}
