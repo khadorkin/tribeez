@@ -2,6 +2,7 @@ import {auth} from '../firebase'
 import platform from '../platform'
 import asyncStorage from '../utils/asyncStorage'
 import {login} from './app'
+import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (destination, values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -28,7 +29,11 @@ export default (destination, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          // console.error('auth error:', error.code)
+          dispatch({
+            type: FIREBASE_FAILURE,
+            origin: 'submitLogin',
+            error,
+          })
       }
     })
   })
