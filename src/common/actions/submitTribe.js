@@ -54,7 +54,7 @@ export default (values, dispatch) => {
         reject({_error: 'request'})
         dispatch({
           type: FIREBASE_FAILURE,
-          origin: 'submitTribe',
+          origin: 'submitTribe/edit',
           error,
         })
       })
@@ -124,7 +124,7 @@ export default (values, dispatch) => {
         reject({_error: 'request'})
         dispatch({
           type: FIREBASE_FAILURE,
-          origin: 'submitTribe',
+          origin: 'submitTribe/new',
           error,
         })
       })
