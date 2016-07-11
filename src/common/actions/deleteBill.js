@@ -44,6 +44,7 @@ export default (id) => {
         added: timestamp,
         user: auth.currentUser.uid,
         item,
+        id,
       })
     })
     .catch((error) => {

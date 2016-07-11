@@ -12,4 +12,12 @@ export default {
     right: 20,
     zIndex: 500,
   },
+  errorContainer: {
+    textAlign: 'center',
+    padding: '40px 0',
+  },
+  errorText: {
+    marginBottom: 20,
+    color: 'red',
+  },
 }

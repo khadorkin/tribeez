@@ -1,39 +1,53 @@
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
 
 import {
-  DELETE_EVENT_REQUEST,
-  DELETE_EVENT_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default (id) => {
   return (dispatch) => {
+    const tid = auth.currentUser.tid
     dispatch({
-      type: DELETE_EVENT_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.delete('event', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: DELETE_EVENT_FAILURE,
-            error: response.error,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'error',
-          })
-        }
+    let item
+    const ref = db.ref('tribes/' + tid + '/events/' + id)
+    ref.once('value')
+    .then((snapshot) => {
+      item = snapshot.val()
+      if (!item) {
+        throw 'not_found'
+      }
+      ref.remove()
+    })
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: DELETE_EVENT_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
-        dispatch({
-          type: SNACK_MESSAGE,
-          message: 'error',
-        })
+    })
+    .then(() => {
+      return db.ref('tribes/' + tid + '/history').push({
+        type: 'event',
+        action: 'delete',
+        added: timestamp,
+        user: auth.currentUser.uid,
+        item,
+        id,
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'deleteEvent',
+        error,
+      })
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
+    })
   }
 }

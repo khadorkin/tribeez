@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 
-import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import colors from '../../common/constants/colors'
@@ -175,7 +174,6 @@ class AsyncContent extends Component {
           <div style={styles.errorText}>
             <FormattedMessage id={this.state.error} />
           </div>
-          <RaisedButton label={<FormattedMessage id="retry" />} onTouchTap={this.handleLoad} />
         </div>
       )
     }

@@ -3,6 +3,10 @@
 
 # Tribeez
 
+## Prerequisite
+
+You need to install and start the API first: https://bitbucket.org/antoinerousseau/tribeez-api
+
 ## Dependencies
 
     npm install

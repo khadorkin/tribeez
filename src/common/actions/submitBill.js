@@ -39,18 +39,22 @@ export default (values, dispatch) => {
   const tid = auth.currentUser.tid
   return new Promise((resolve, reject) => {
     values.parts = calculateParts(values)
-
+    let id = values.id
+    delete values.id
+    let action
     let promise
     let current
-    if (values.id) { // existing bill
-      promise = db.ref('tribes/' + tid + '/bills/' + values.id).once('value')
+    if (id) {
+      action = 'update'
+      promise = db.ref('tribes/' + tid + '/bills/' + id).once('value')
       .then((snapshot) => {
         current = snapshot.val()
-        return db.ref('tribes/' + tid + '/bills/' + values.id).set(values)
+        return db.ref('tribes/' + tid + '/bills/' + id).set(values)
       })
-    } else { // new bill
-      values.id = db.ref('tribes/' + tid + '/bills').push().key
-      promise = db.ref('tribes/' + tid + '/bills/' + values.id).set(values)
+    } else {
+      action = 'new'
+      id = db.ref('tribes/' + tid + '/bills').push().key
+      promise = db.ref('tribes/' + tid + '/bills/' + id).set(values)
     }
 
     promise
@@ -74,10 +78,11 @@ export default (values, dispatch) => {
     .then(() => {
       return db.ref('tribes/' + tid + '/history').push({
         type: 'bill',
-        action: current ? 'update' : 'new',
+        action,
         added: timestamp,
         user: auth.currentUser.uid,
         item: values,
+        id,
       })
     })
     .then(() => {
