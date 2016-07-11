@@ -12,7 +12,7 @@ import submitPoll from '../../common/actions/submitPoll'
 class PollForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
@@ -30,7 +30,7 @@ class PollForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /poll/:key
+    // when accessing directly to /poll/:id
     if (!this.props.poll && this.props.id) {
       this.props.getPoll(this.props.id)
     }

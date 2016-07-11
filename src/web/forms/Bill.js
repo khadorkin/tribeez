@@ -20,7 +20,7 @@ const today = new Date()
 class BillForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
@@ -42,7 +42,7 @@ class BillForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /bill/:key
+    // when accessing directly to /bill/:id
     if (!this.props.bill && this.props.id) {
       this.props.getBill(this.props.id)
     }

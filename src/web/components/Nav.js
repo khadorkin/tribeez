@@ -163,13 +163,13 @@ class Nav extends Component {
       </div>
     )
 
-    const tribe_keys = Object.keys(user.tribes)
-    const tribeItems = tribe_keys.map((key) => {
-      const name = user.tribes[key]
-      const active = (key === user.current_tribe)
+    const tribe_ids = Object.keys(user.tribes)
+    const tribeItems = tribe_ids.map((tid) => {
+      const name = user.tribes[tid]
+      const active = (tid === user.current_tribe)
       return (
-        <MenuItem key={key}
-          onTouchTap={this.selectTribe.bind(this, key)}
+        <MenuItem key={tid}
+          onTouchTap={this.selectTribe.bind(this, tid)}
           style={active ? styles.current : styles.default}
           rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
         >

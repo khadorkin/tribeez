@@ -42,15 +42,15 @@ export default (values, dispatch) => {
 
     let promise
     let current
-    if (values.key) { // existing bill
-      promise = db.ref('tribes/' + tid + '/bills/' + values.key).once('value')
+    if (values.id) { // existing bill
+      promise = db.ref('tribes/' + tid + '/bills/' + values.id).once('value')
       .then((snapshot) => {
         current = snapshot.val()
-        return db.ref('tribes/' + tid + '/bills/' + values.key).set(values)
+        return db.ref('tribes/' + tid + '/bills/' + values.id).set(values)
       })
     } else { // new bill
-      values.key = db.ref('tribes/' + tid + '/bills').push().key
-      promise = db.ref('tribes/' + tid + '/bills/' + values.key).set(values)
+      values.id = db.ref('tribes/' + tid + '/bills').push().key
+      promise = db.ref('tribes/' + tid + '/bills/' + values.id).set(values)
     }
 
     promise

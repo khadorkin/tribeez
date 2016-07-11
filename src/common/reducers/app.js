@@ -84,7 +84,7 @@ export default (state = initialState, action = null) => {
         message: action.message,
         author: action.author,
         name: action.name,
-        key: action.key,
+        id: action.id,
       }
       return {...state, snack}
     case CLOSE_SNACK:

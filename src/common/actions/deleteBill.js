@@ -7,14 +7,14 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-export default (key) => {
+export default (id) => {
   return (dispatch) => {
     const tid = auth.currentUser.tid
     dispatch({
       type: FIREBASE_REQUEST,
     })
     let item
-    const ref = db.ref('tribes/' + tid + '/bills/' + key)
+    const ref = db.ref('tribes/' + tid + '/bills/' + id)
     ref.once('value')
     .then((snapshot) => {
       item = snapshot.val()

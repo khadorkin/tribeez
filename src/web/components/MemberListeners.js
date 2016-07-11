@@ -41,7 +41,7 @@ class MemberListeners extends Component {
     }
 
     const snack = props.snack
-    if (snack.open && snack.key !== this.props.snack.key && snack.author !== this.props.uid && window.Notification && Notification.permission === 'granted') {
+    if (snack.open && snack.id !== this.props.snack.id && snack.author !== this.props.uid && window.Notification && Notification.permission === 'granted') {
       const author = this.props.userMap[snack.author]
       const title = this.props.intl.formatMessage({id: 'snack.' + snack.message}, {author: author.name, name: snack.name})
       const notification = new Notification(title, {icon: gravatar(author, 160)})
@@ -62,7 +62,7 @@ class MemberListeners extends Component {
 
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
-  tid: state.tribe.key,
+  tid: state.tribe.id,
   snack: state.app.snack,
   userMap: state.tribe.userMap,
 })

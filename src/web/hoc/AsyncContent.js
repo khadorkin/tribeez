@@ -124,7 +124,7 @@ class AsyncContent extends Component {
     clearTimeout(this.timeout)
     if (snapshot.key !== this.first) { // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
       const item = snapshot.val()
-      item.key = snapshot.key
+      item.id = snapshot.key
       this.buffer.push(item) // add to state but without re-rendering (see batching below)
       if (!this.last || snapshot.key < this.last) {
         this.last = snapshot.key // i.e. the next query will include the last item of the current one
@@ -137,10 +137,10 @@ class AsyncContent extends Component {
   }
 
   flush() {
-    const items = this.buffer.sort((a, b) => (a.key < b.key ? 1 : -1))
+    const items = this.buffer.sort((a, b) => (a.id < b.id ? 1 : -1))
     if (this.props.name === 'history') {
-      if (!this.lastKey || items[0].key > this.lastKey) {
-        this.lastKey = items[0].key
+      if (!this.lastKey || items[0].id > this.lastKey) {
+        this.lastKey = items[0].id
         this.props.setLastViewedHistoryKey(this.lastKey)
       }
     }
@@ -152,13 +152,13 @@ class AsyncContent extends Component {
 
   childChanged(snapshot) {
     this.setState({
-      items: this.buffer.map((item) => (item.key === snapshot.key ? snapshot.val() : item)),
+      items: this.buffer.map((item) => (item.id === snapshot.key ? snapshot.val() : item)),
     })
   }
 
   childRemoved(snapshot) {
     this.setState({
-      items: this.buffer.filter((item) => item.key !== snapshot.key),
+      items: this.buffer.filter((item) => item.id !== snapshot.key),
     })
   }
 
@@ -220,7 +220,7 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  tid: state.tribe.key,
+  tid: state.tribe.id,
   uid: state.user.uid,
 })
 

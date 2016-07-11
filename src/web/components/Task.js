@@ -105,7 +105,7 @@ class Task extends Component {
         {
           this.props.onDelete && (
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: '-50px'}}>
-              <IconButton containerElement={<Link to={{pathname: routes.TASKS_EDIT.replace(':key', task.id), state: task}} />}>
+              <IconButton containerElement={<Link to={{pathname: routes.TASKS_EDIT.replace(':id', task.id), state: task}} />}>
                 <EditButton color={colors.grey600} />
               </IconButton>
               <IconButton onTouchTap={this.handleDelete}>

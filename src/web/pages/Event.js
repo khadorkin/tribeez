@@ -17,7 +17,7 @@ class Event extends Component {
   render() {
     return (
       <Card>
-        <EventForm id={this.props.params.id ? Number(this.props.params.id) : null} current={this.props.location.state} setHook={this.props.setHook} />
+        <EventForm id={this.props.params.id} current={this.props.location.state} setHook={this.props.setHook} />
       </Card>
     )
   }

@@ -56,7 +56,7 @@ class Polls extends Component {
   }
 
   renderPoll(row) {
-    return <Poll poll={row} key={row.key} onDelete={this.handleDialogOpen} />
+    return <Poll poll={row} key={row.id} onDelete={this.handleDialogOpen} />
   }
 
   render() {

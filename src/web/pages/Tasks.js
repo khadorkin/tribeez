@@ -54,7 +54,7 @@ class Tasks extends Component {
   }
 
   renderTask(row) {
-    return <Task task={row} key={row.key} onDelete={this.handleDialogOpen} />
+    return <Task task={row} key={row.id} onDelete={this.handleDialogOpen} />
   }
 
   render() {

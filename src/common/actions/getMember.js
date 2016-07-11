@@ -57,7 +57,7 @@ const on = (uid) => {
 
       tribeRef.on('value', (sub_snapshot) => {
         const tribe = sub_snapshot.val()
-        tribe.key = user.current_tribe
+        tribe.id = user.current_tribe
         auth.currentUser.tribe = tribe.name
 
         dispatch({

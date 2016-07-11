@@ -14,7 +14,7 @@ import submitTask from '../../common/actions/submitTask'
 class TaskForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
@@ -34,7 +34,7 @@ class TaskForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /task/:key
+    // when accessing directly to /task/:id
     if (!this.props.task && this.props.id) {
       this.props.getTask(this.props.id)
     }

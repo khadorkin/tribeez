@@ -14,7 +14,7 @@ export default (invite) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
-    db.ref('tribes/' + auth.currentUser.tid + '/invites/' + invite.key).transaction((current) => {
+    db.ref('tribes/' + auth.currentUser.tid + '/invites/' + invite.id).transaction((current) => {
       if (current) {
         current.invited = timestamp
         current.inviter = auth.currentUser.uid
@@ -23,7 +23,7 @@ export default (invite) => {
     })
     .then(() => {
       api.post('invite', {
-        token: invite.key,
+        token: invite.id,
         email: invite.email,
         lang: invite.lang,
         tribe: auth.currentUser.tid,

@@ -12,7 +12,7 @@ import submitEvent from '../../common/actions/submitEvent'
 class EventForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
@@ -30,7 +30,7 @@ class EventForm extends Component {
   }
 
   componentDidMount() {
-    // when accessing directly to /event/:key
+    // when accessing directly to /event/:id
     if (!this.props.event && this.props.id) {
       this.props.getEvent(this.props.id)
     }

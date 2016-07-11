@@ -31,11 +31,11 @@ class Activity extends Component {
   }
 
   renderActivity(row) {
-    return <div style={{margin: '15px 10px 0', TODO: true}} key={row.key}>{JSON.stringify(row)}</div>
+    return <div style={{margin: '15px 10px 0', TODO: true}} key={row.id}>{JSON.stringify(row)}</div>
   }
 
   renderHistoryEntry(row) {
-    return <Entry entry={row} key={row.key} />
+    return <Entry entry={row} key={row.id} />
   }
 
   render() {

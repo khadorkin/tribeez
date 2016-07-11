@@ -82,7 +82,7 @@ class Bill extends Component {
           </List>
         </CardText>
         <CardActions expandable={true} style={{textAlign: 'right', marginTop: '-50px'}}>
-          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':key', bill.key), state: bill}} />}>
+          <IconButton containerElement={<Link to={{pathname: routes.BILLS_EDIT.replace(':id', bill.id), state: bill}} />}>
             <EditButton color={colors.grey600} />
           </IconButton>
           <IconButton onTouchTap={this.handleDelete}>

@@ -61,7 +61,7 @@ class Members extends Component {
   }
 
   renderInvite(row) {
-    return <Invite invite={row} key={row.key} onResent={this.handleResendDialog} />
+    return <Invite invite={row} key={row.id} onResent={this.handleResendDialog} />
   }
 
   render() {

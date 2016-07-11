@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
       .sort((a, b) => (a.amount > b.amount ? -1 : 1))
 
     initialValues = {
-      key: bill.key,
+      id: bill.id,
       name: bill.name,
       payer: bill.payer,
       paid: bill.paid,
@@ -47,7 +47,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'bill',
-    fields: ['key', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount'],
+    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount'],
     validate: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),
