@@ -29,7 +29,6 @@ class BillForm extends Component {
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
-    lang: PropTypes.string,
     initialValues: PropTypes.object,
     bill: PropTypes.object,
     // action creators:
@@ -95,7 +94,6 @@ class BillForm extends Component {
         </SelectField>
         <DatePicker ref="paid"
           required={true}
-          locale={this.props.lang}
           maxDate={today}
           {...paid}
         />

@@ -4,7 +4,7 @@ import platform from '../platform'
 
 const mapStateToProps = (state) => ({
   initialValues: {
-    lang: state.user.lang,
+    lang: state.app.lang,
     tribe: state.tribe.key,
   },
 })

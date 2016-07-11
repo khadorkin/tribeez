@@ -116,6 +116,7 @@ class DatePickerWrapper extends Component {
             formatDate={this.formatDate}
             floatingLabelText={<FormattedMessage id={'field.' + this.props.name} />}
             errorText={this.props.touched && this.props.error && <FormattedMessage id={'error.' + this.props.name} />}
+            locale={this.props.intl.locale}
             {...this.props}
             value={value ? new Date(value) : null}
             onChange={this.handleDateChange}

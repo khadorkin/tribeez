@@ -8,10 +8,10 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-let reauth_prompt
+let prompt_text
 const checkReAuth = (error) => {
   if (error.code === 'auth/requires-recent-login') {
-    const password = prompt(reauth_prompt)
+    const password = prompt(prompt_text)
     const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, password)
     return auth.currentUser.reauthenticate(credential)
   } else {
@@ -19,8 +19,8 @@ const checkReAuth = (error) => {
   }
 }
 
-export default (values, dispatch) => {
-  reauth_prompt = values.reauth_prompt
+export default (reauth_prompt, values, dispatch) => {
+  prompt_text = reauth_prompt
   return new Promise((resolve, reject) => {
     const gravatar = md5(values.email)
     auth.currentUser.updateEmail(values.email)

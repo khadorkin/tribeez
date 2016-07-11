@@ -18,7 +18,6 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
-    lang: state.app.lang,
     event,
     initialValues,
   }

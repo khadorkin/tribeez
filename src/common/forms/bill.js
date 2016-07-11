@@ -35,7 +35,6 @@ const mapStateToProps = (state, ownProps) => {
     users: state.tribe.users,
     userMap: state.tribe.userMap,
     currency: state.tribe.currency, //TODO: be able to remove
-    lang: state.app.lang, //TODO: be able to remove
     initialValues,
     bill,
   }

@@ -18,7 +18,6 @@ class EventForm extends Component {
     fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     // from redux:
-    lang: PropTypes.string.isRequired,
     initialValues: PropTypes.object,
     event: PropTypes.object,
     // action creators:
@@ -54,12 +53,10 @@ class EventForm extends Component {
         />
         <DatePicker ref="start"
           required={true}
-          locale={this.props.lang}
           time={true}
           {...start}
         />
         <DatePicker ref="end"
-          locale={this.props.lang}
           time={true}
           {...end}
         />
