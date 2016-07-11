@@ -142,6 +142,7 @@ const fr = {
   'field.tribe_type': 'Type',
   'error.tribe_type': 'Type incorrect',
   'error.captcha': 'Captcha invalide',
+  'reauth_prompt': 'Tapez votre mot de passe actuel pour confirmer cette opération',
   // common for entities:
   'field.name': 'Nom',
   'error.name': 'Nom incorrect',
@@ -262,6 +263,7 @@ const fr = {
   // Common error handling
   'error.request': 'Erreur: veuillez rééssayer plus tard',
   'error.not_found': 'Cet élément n’existe plus',
+  'error.reauth': 'Mot de passe actuel incorrect',
 }
 
 export default {...en, ...fr} // to have English as a fallback //TODO: avoid

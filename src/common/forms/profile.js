@@ -9,6 +9,7 @@ const mapStateToProps = (state) => ({
     lang: state.user.lang,
     phone: state.user.phone,
     birthdate: state.user.birthdate,
+    reauth_prompt: state.app.messages.reauth_prompt,
   },
   lang: state.app.lang,
 })
@@ -16,7 +17,7 @@ const mapStateToProps = (state) => ({
 export default (component) => {
   return reduxForm({
     form: 'profile',
-    fields: ['name', 'email', 'lang', 'phone', 'birthdate', 'password', 'password2'],
+    fields: ['name', 'email', 'lang', 'phone', 'birthdate', 'password', 'password2', 'reauth_prompt'],
     validate: validator(['name', 'email', 'lang'], ['birthdate', 'phone', 'password', 'password2']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

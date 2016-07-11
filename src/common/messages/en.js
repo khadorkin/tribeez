@@ -142,6 +142,7 @@ export default {
   'field.tribe_type': 'Type',
   'error.tribe_type': 'Please choose a tribe type',
   'error.captcha': 'Invalid captcha',
+  'reauth_prompt': 'Type your current password to confirm this operation',
   // common for entities:
   'field.name': 'Name',
   'error.name': 'Invalid name',
@@ -262,4 +263,5 @@ export default {
   // Common error handling
   'error.request': 'Request error: please try again later',
   'error.not_found': 'This item does not exist anymore',
+  'error.reauth': 'Wrong current password',
 }

@@ -1,4 +1,5 @@
 import md5 from 'md5'
+import firebase from 'firebase'
 
 import {auth, db} from '../firebase'
 
@@ -7,10 +8,24 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
+let reauth_prompt
+const checkReAuth = (error) => {
+  if (error.code === 'auth/requires-recent-login') {
+    const password = prompt(reauth_prompt)
+    const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, password)
+    return auth.currentUser.reauthenticate(credential)
+  } else {
+    throw error
+  }
+}
+
 export default (values, dispatch) => {
+  reauth_prompt = values.reauth_prompt
   return new Promise((resolve, reject) => {
     const gravatar = md5(values.email)
-    auth.currentUser.updateEmail(values.email).then(() => {
+    auth.currentUser.updateEmail(values.email)
+    .catch(checkReAuth)
+    .then(() => {
       return db.ref('users/' + auth.currentUser.uid).transaction((user) => {
         user.name = values.name
         user.lang = values.lang
@@ -31,6 +46,7 @@ export default (values, dispatch) => {
     .then(() => {
       if (values.password) {
         return auth.currentUser.updatePassword(values.password)
+        .catch(checkReAuth)
       }
       return true
     })
@@ -51,6 +67,11 @@ export default (values, dispatch) => {
           break
         case 'auth/weak-password':
           reject({password: 'weak'})
+          break
+        // from reauthenticate:
+        case 'auth/wrong-password':
+        case 'auth/argument-error':
+          reject({_error: 'reauth'})
           break
         default:
           reject({_error: 'request'})
