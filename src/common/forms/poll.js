@@ -14,6 +14,7 @@ const mapStateToProps = (state, ownProps) => {
       description: poll.description || '',
       multiple: Boolean(poll.multiple),
       options: poll.options,
+      added: poll.added,
       author: poll.author,
     }
   } else {
@@ -37,7 +38,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'poll',
-    fields: ['id', 'name', 'description', 'multiple', 'options[]', 'author'],
+    fields: ['id', 'name', 'description', 'multiple', 'options[]', 'added', 'author'],
     validate: validator(['name', 'options'], ['description', 'multiple']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

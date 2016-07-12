@@ -14,10 +14,13 @@ const mapStateToProps = (state, ownProps) => {
       wait: task.wait,
       notice: task.notice,
       users: state.tribe.users.map((user) => ({user_id: user.uid, checked: (task.counters[user.uid] !== undefined)})),
+      added: task.added,
+      author: task.author,
     }
   } else {
     initialValues = {
       users: state.tribe.users.map((user) => ({user_id: user.uid, checked: true})),
+      author: state.user.uid,
     }
   }
   return {
@@ -36,7 +39,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'task',
-    fields: ['id', 'name', 'description', 'wait', 'notice', 'users[].user_id', 'users[].checked'],
+    fields: ['id', 'name', 'description', 'wait', 'notice', 'users[].user_id', 'users[].checked', 'added', 'author'],
     validate: validator(['name', 'wait', 'notice', 'users'], ['description']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

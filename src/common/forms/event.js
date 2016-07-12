@@ -15,11 +15,12 @@ const mapStateToProps = (state, ownProps) => {
       end: event.end,
       location: event.location || '',
       url: event.url || '',
-      host: event.host,
+      added: event.added,
+      author: event.author,
     }
   } else {
     initialValues = {
-      host: state.user.uid,
+      author: state.user.uid,
     }
   }
   return {
@@ -36,7 +37,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'event',
-    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'host'],
+    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'added', 'author'],
     validate: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

@@ -20,8 +20,6 @@ import deleteItem from '../../common/actions/deleteItem'
 
 class Polls extends Component {
   static propTypes = {
-    // redux state:
-    polls: PropTypes.object.isRequired,
     // action creators:
     deleteItem: PropTypes.func.isRequired,
   }
@@ -95,12 +93,8 @@ class Polls extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  polls: state.polls,
-})
-
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   deleteItem,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Polls)
+export default connect(null, mapDispatchToProps)(Polls)

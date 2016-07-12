@@ -1,5 +1,3 @@
-
-
 import router from '../router'
 import routes from '../routes'
 
@@ -14,7 +12,6 @@ export default (values, dispatch) => {
       reject({_error: 'no_options'})
       return
     }
-    values.added = timestamp
 
     const tid = auth.currentUser.tid
     let id = values.id
@@ -25,6 +22,7 @@ export default (values, dispatch) => {
     } else {
       action = 'new'
       id = db.ref('tribes/' + tid + '/polls').push().key
+      values.added = timestamp
     }
 
     db.ref('tribes/' + tid + '/polls/' + id).set(values)

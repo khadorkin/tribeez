@@ -33,8 +33,8 @@ class Event extends Component {
     const {event} = this.props
 
     // to render an event, the users must be loaded for the current tribe events
-    const host = this.props.userMap[event.host_id]
-    if (!host) {
+    const author = this.props.userMap[event.author]
+    if (!author) {
       return null
     }
 
@@ -45,7 +45,7 @@ class Event extends Component {
         <CardHeader title={event.name} subtitle={<span>{subtitle}</span>}
           style={{height: 'auto', whiteSpace: 'nowrap'}}
           textStyle={{whiteSpace: 'normal', paddingRight: '90px'}}
-          avatar={gravatar(host)}
+          avatar={gravatar(author)}
           actAsExpander={true} showExpandableButton={true}
         />
         <CardText expandable={true} style={{paddingTop: 8}}>

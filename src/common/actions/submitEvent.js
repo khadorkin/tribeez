@@ -7,8 +7,6 @@ import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    values.added = timestamp
-
     const tid = auth.currentUser.tid
     let id = values.id
     delete values.id
@@ -18,6 +16,7 @@ export default (values, dispatch) => {
     } else {
       action = 'new'
       id = db.ref('tribes/' + tid + '/events').push().key
+      values.added = timestamp
     }
     // this key is used to separate past/upcoming events:
     values.index = values.end || values.start

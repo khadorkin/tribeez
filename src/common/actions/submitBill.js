@@ -38,8 +38,6 @@ const calculateParts = (bill) => {
 export default (values, dispatch) => {
   const tid = auth.currentUser.tid
   return new Promise((resolve, reject) => {
-    values.added = timestamp
-
     values.parts = calculateParts(values)
     let id = values.id
     delete values.id
@@ -57,6 +55,7 @@ export default (values, dispatch) => {
       action = 'new'
       id = db.ref('tribes/' + tid + '/bills').push().key
       promise = db.ref('tribes/' + tid + '/bills/' + id).set(values)
+      values.added = timestamp
     }
 
     promise

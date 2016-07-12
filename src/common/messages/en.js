@@ -112,6 +112,7 @@ export default {
   register_now: 'Register now!',
   gravatar: 'To change your profile picture, go to <a href="https://gravatar.com" target="_blank">gravatar.com</a>',
   poll_edit_warning: 'Warning: modifying this poll will delete its answers',
+  task_edit_warning: 'Warning: modifying this task will reset its counters',
   // register/login/join/profile/tribe:
   'field.login_password': 'Password',
   'error.login_password': 'Wrong password',

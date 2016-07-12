@@ -40,7 +40,7 @@ class Task extends Component {
 
   handleDoneTask(event) {
     event.stopPropagation()
-    this.props.postDone(this.props.task.id, this.props.uid)
+    this.props.postDone(this.props.task.id)
   }
 
   handleDelete() {
@@ -51,7 +51,7 @@ class Task extends Component {
     const {task, userMap} = this.props
 
     // to render a task, the users must be loaded for the current tribe tasks
-    const author = userMap[task.author_id]
+    const author = userMap[task.author]
     if (!author) {
       return null
     }
@@ -64,10 +64,8 @@ class Task extends Component {
       subtitle = <FormattedMessage id="never_done" />
     }
 
-    const elapsed = (Date.now() - task.done) / 86400000 // days
-
     let icon
-    if (elapsed > task.wait) {
+    if (!task.done || task.wait < ((Date.now() - task.done) / 86400000 /* days */)) {
       icon = (
         <IconButton onTouchTap={this.handleDoneTask} style={{position: 'absolute', right: 53, top: 13}}>
           <DoneIcon />

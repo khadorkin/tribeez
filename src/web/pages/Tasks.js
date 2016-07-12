@@ -33,6 +33,7 @@ class Tasks extends Component {
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.renderTask = this.renderTask.bind(this)
   }
 
   handleDialogOpen(task) {

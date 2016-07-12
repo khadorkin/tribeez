@@ -1,5 +1,8 @@
 import React, {Component, PropTypes} from 'react'
+
 import {FormattedMessage} from 'react-intl'
+
+import {orange700} from 'material-ui/styles/colors'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -46,7 +49,7 @@ class PollForm extends Component {
   render() {
     const {fields: {name, description, multiple, options}, poll} = this.props
 
-    const subtitle = ((poll && poll.answers) ? <FormattedMessage id="poll_edit_warning" /> : null)
+    const subtitle = ((poll && poll.answers) ? <span style={{color: orange700}}><FormattedMessage id="poll_edit_warning" /></span> : null)
 
     return (
       <Form subtitle={subtitle} name={'poll.' + (poll ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>

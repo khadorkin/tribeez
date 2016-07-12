@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react'
 
 import {FormattedMessage} from 'react-intl'
 
+import {orange700} from 'material-ui/styles/colors'
+
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import TaskUser from './deep/TaskUser'
@@ -49,8 +51,19 @@ class TaskForm extends Component {
   render() {
     const {fields: {name, description, wait, notice, users}, userMap, task} = this.props
 
+    let done = false
+    if (task) {
+      for (const key in task.counters) {
+        if (task.counters[key] > 0) {
+          done = true
+          break
+        }
+      }
+    }
+    const subtitle = (done ? <span style={{color: orange700}}><FormattedMessage id="task_edit_warning" /></span> : null)
+
     return (
-      <Form name={'task.' + (task ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+      <Form subtitle={subtitle} name={'task.' + (task ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}

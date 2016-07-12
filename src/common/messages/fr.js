@@ -112,6 +112,7 @@ const fr = {
   register_now: 'Inscrivez-vous !',
   gravatar: 'Pour modifier votre photo de profil, allez sur <a href="https://gravatar.com" target="_blank">gravatar.com</a>',
   poll_edit_warning: 'Attention : modifier ce sondage effacera ses réponses',
+  task_edit_warning: 'Attention : modifier cette tâche réinitialisera ses compteurs',
   // register/login/join/profile/tribe:
   'field.login_password': 'Mot de passe',
   'error.login_password': 'Mot de passe invalide',

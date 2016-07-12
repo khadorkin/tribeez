@@ -22,6 +22,8 @@ const mapStateToProps = (state, ownProps) => {
       method: 'amounts',
       description: bill.description || '',
       parts,
+      added: bill.added,
+      author: bill.author,
     }
   } else {
     initialValues = {
@@ -29,6 +31,7 @@ const mapStateToProps = (state, ownProps) => {
       paid: now,
       method: 'shares',
       parts: state.tribe.users.map((user) => ({uid: user.uid, amount: 1})),
+      author: state.user.uid,
     }
   }
   return {
@@ -48,7 +51,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'bill',
-    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount'],
+    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount', 'added', 'author'],
     validate: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),
