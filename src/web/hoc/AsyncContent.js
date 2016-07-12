@@ -69,7 +69,7 @@ class AsyncContent extends Component {
       //TODO: call multiple times if paging???
       this.queryRef.off('child_added', this.childAdded)
       this.queryRef.off('child_changed', this.childChanged)
-      this.queryRef.off('child_moved', this.childMoved)
+      //this.queryRef.off('child_moved', this.childMoved)
       this.queryRef.off('child_removed', this.childRemoved)
     }
     clearTimeout(this.timeout)

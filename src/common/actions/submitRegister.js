@@ -99,6 +99,10 @@ export default (values, dispatch) => {
             })
           })
           .then(() => {
+            // add history key as member's "last_viewed_history_key"
+            return db.ref('tribes/' + tid + '/members/' + uid + '/last_viewed_history_key').set(historyKey)
+          })
+          .then(() => {
             if (platform !== 'web') {
               asyncStorage.setItem('credentials', JSON.stringify({email: values.email, password: values.password}))
               .catch(() => {

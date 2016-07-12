@@ -13,12 +13,34 @@ const on = (tid) => {
   return (dispatch) => {
     historyRef = db.ref('tribes/' + tid + '/history')
     let isNew = false
+    let lastKey
 
     const onError = (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
         origin: 'subscribe',
         error,
+      })
+    }
+
+    const countUnread = () => {
+      db.ref('tribes/' + tid + '/history').orderByKey().startAt(lastKey).once('value').then((snapshot) => {
+        const entries = snapshot.val()
+        let count = 0
+        let first = true
+        for (const key in entries) {
+          if (first) {
+            first = false
+            continue // exclude the last seen one
+          }
+          if (entries[key].user !== auth.currentUser.uid) {
+            count++
+          }
+        }
+        dispatch({
+          type: UNREAD,
+          count,
+        })
       })
     }
 
@@ -32,29 +54,23 @@ const on = (tid) => {
           name: entry.item.name,
           id: snapshot.key,
         })
+        countUnread()
       }
       isNew = true
     }
 
     const onLastEntry = (snapshot) => {
       historyRef.off('child_added', onLastEntry)
-      historyRef.orderByKey().startAt(snapshot.key).on('child_added', onNewEntry, onError)
+      db.ref('tribes/' + tid + '/history').orderByKey().startAt(snapshot.key).on('child_added', onNewEntry, onError)
     }
 
-    historyRef.orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
-
-    const onLastKey = (snapshot) => {
-      const lastKey = snapshot.val()
-      historyRef.orderByKey().startAt(lastKey).once('value').then((sub_snapshot) => {
-        dispatch({
-          type: UNREAD,
-          count: sub_snapshot.numChildren() - 1, // exclude the last seen one
-        })
-      })
-    }
+    db.ref('tribes/' + tid + '/history').orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
 
     lastKeyRef = db.ref('tribes/' + tid + '/members/' + auth.currentUser.uid + '/last_viewed_history_key')
-    lastKeyRef.on('value', onLastKey)
+    lastKeyRef.on('value', (snapshot) => {
+      lastKey = snapshot.val()
+      countUnread()
+    })
   }
 }
 
