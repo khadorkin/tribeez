@@ -6,7 +6,7 @@ import DatePicker from './fields/Date'
 
 import form from '../../common/forms/event'
 import focus from '../../common/utils/formFocus'
-import getEvent from '../../common/actions/getEvent'
+import getItem from '../../common/actions/getItem'
 import submitEvent from '../../common/actions/submitEvent'
 
 class EventForm extends Component {
@@ -22,7 +22,7 @@ class EventForm extends Component {
     event: PropTypes.object,
     tid: PropTypes.string,
     // action creators:
-    getEvent: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -33,7 +33,7 @@ class EventForm extends Component {
   componentWillReceiveProps(props) {
     // when accessing directly to /events/edit/:id
     if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getEvent(props.id)
+      this.props.getItem('event', props.id)
     }
   }
 
@@ -76,4 +76,4 @@ class EventForm extends Component {
   }
 }
 
-export default form(EventForm, {getEvent})
+export default form(EventForm, {getItem})

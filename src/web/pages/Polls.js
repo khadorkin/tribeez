@@ -16,14 +16,14 @@ import Poll from '../components/Poll'
 import styles from '../styles'
 import routes from '../routes'
 
-import deletePoll from '../../common/actions/deletePoll'
+import deleteItem from '../../common/actions/deleteItem'
 
 class Polls extends Component {
   static propTypes = {
     // redux state:
     polls: PropTypes.object.isRequired,
     // action creators:
-    deletePoll: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -46,7 +46,7 @@ class Polls extends Component {
   }
 
   handleDelete() {
-    this.props.deletePoll(this.state.poll.id)
+    this.props.deleteItem('poll', this.state.poll.id)
     this.handleDialogClose()
   }
 
@@ -100,7 +100,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deletePoll,
+  deleteItem,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Polls)

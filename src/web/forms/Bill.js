@@ -12,7 +12,7 @@ import Part from './deep/Part'
 
 import form from '../../common/forms/bill'
 import focus from '../../common/utils/formFocus'
-import getBill from '../../common/actions/getBill'
+import getItem from '../../common/actions/getItem'
 import submitBill from '../../common/actions/submitBill'
 
 const today = new Date()
@@ -33,7 +33,7 @@ class BillForm extends Component {
     bill: PropTypes.object,
     tid: PropTypes.string,
     // action creators:
-    getBill: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -45,7 +45,7 @@ class BillForm extends Component {
   componentWillReceiveProps(props) {
     // when accessing directly to /bills/edit/:id
     if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getBill(props.id)
+      this.props.getItem('bill', props.id)
     }
   }
 
@@ -125,4 +125,4 @@ class BillForm extends Component {
   }
 }
 
-export default form(BillForm, {getBill})
+export default form(BillForm, {getItem})

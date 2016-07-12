@@ -7,14 +7,14 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-export default (id) => {
+export default (type, id) => {
   return (dispatch) => {
     const tid = auth.currentUser.tid
     dispatch({
       type: FIREBASE_REQUEST,
     })
     let item
-    const ref = db.ref('tribes/' + tid + '/polls/' + id)
+    const ref = db.ref('tribes/' + tid + '/' + type + 's/' + id)
     ref.once('value')
     .then((snapshot) => {
       item = snapshot.val()
@@ -30,7 +30,7 @@ export default (id) => {
     })
     .then(() => {
       return db.ref('tribes/' + tid + '/history').push({
-        type: 'poll',
+        type,
         action: 'delete',
         added: timestamp,
         user: auth.currentUser.uid,
@@ -41,7 +41,7 @@ export default (id) => {
     .catch((error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'deletePoll',
+        origin: 'deleteItem/' + type,
         error,
       })
       dispatch({

@@ -8,7 +8,7 @@ import TaskUser from './deep/TaskUser'
 
 import form from '../../common/forms/task'
 import focus from '../../common/utils/formFocus'
-import getTask from '../../common/actions/getTask'
+import getItem from '../../common/actions/getItem'
 import submitTask from '../../common/actions/submitTask'
 
 class TaskForm extends Component {
@@ -26,7 +26,7 @@ class TaskForm extends Component {
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
-    getTask: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -37,7 +37,7 @@ class TaskForm extends Component {
   componentWillReceiveProps(props) {
     // when accessing directly to /task/edit/:id
     if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getTask(props.id)
+      this.props.getItem('task', props.id)
     }
   }
 
@@ -92,4 +92,4 @@ class TaskForm extends Component {
   }
 }
 
-export default form(TaskForm, {getTask})
+export default form(TaskForm, {getItem})

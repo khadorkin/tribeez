@@ -28,7 +28,7 @@ import routes from '../routes'
 
 import {db} from '../../common/firebase'
 
-import deleteEvent from '../../common/actions/deleteEvent'
+import deleteItem from '../../common/actions/deleteItem'
 import newEvent from '../../common/actions/newEvent'
 
 BigCalendar.setLocalizer(
@@ -59,7 +59,7 @@ class Events extends Component {
     tid: PropTypes.string,
     lang: PropTypes.string.isRequired,
     // action creators:
-    deleteEvent: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
     newEvent: PropTypes.func.isRequired,
   }
 
@@ -146,7 +146,7 @@ class Events extends Component {
   }
 
   handleConfirmDelete() {
-    this.props.deleteEvent(this.state.event.id)
+    this.props.deleteItem('event', this.state.event.id)
     this.handleCloseDelete()
     this.handleCloseDetails()
   }
@@ -282,7 +282,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteEvent,
+  deleteItem,
   newEvent,
 }, dispatch)
 

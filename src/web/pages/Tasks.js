@@ -16,12 +16,12 @@ import Task from '../components/Task'
 import styles from '../styles'
 import routes from '../routes'
 
-import deleteTask from '../../common/actions/deleteTask'
+import deleteItem from '../../common/actions/deleteItem'
 
 class Tasks extends Component {
   static propTypes = {
     // action creators:
-    deleteTask: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -43,7 +43,7 @@ class Tasks extends Component {
   }
 
   handleDelete() {
-    this.props.deleteTask(this.state.task.id)
+    this.props.deleteItem('task', this.state.task.id)
     this.handleDialogClose()
   }
 
@@ -93,7 +93,7 @@ class Tasks extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteTask,
+  deleteItem,
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(Tasks)

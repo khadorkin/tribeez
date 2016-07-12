@@ -7,7 +7,7 @@ import Checkbox from './fields/Checkbox'
 
 import form from '../../common/forms/poll'
 import focus from '../../common/utils/formFocus'
-import getPoll from '../../common/actions/getPoll'
+import getItem from '../../common/actions/getItem'
 import submitPoll from '../../common/actions/submitPoll'
 
 class PollForm extends Component {
@@ -23,7 +23,7 @@ class PollForm extends Component {
     poll: PropTypes.object,
     tid: PropTypes.string,
     // action creators:
-    getPoll: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -34,7 +34,7 @@ class PollForm extends Component {
   componentWillReceiveProps(props) {
     // when accessing directly to /polls/edit/:id
     if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getPoll(props.id)
+      this.props.getItem('poll', props.id)
     }
   }
 
@@ -77,4 +77,4 @@ class PollForm extends Component {
   }
 }
 
-export default form(PollForm, {getPoll})
+export default form(PollForm, {getItem})

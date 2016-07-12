@@ -4,19 +4,20 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
-  GET_TASK_SUCCESS,
+  ITEM,
 } from '../constants/actions'
 
-export default (id) => {
+export default (itemType, id) => {
   return (dispatch) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
 
-    db.ref('tribes/' + auth.currentUser.tid + '/tasks/' + id).once('value')
+    db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id).once('value')
     .then((snapshot) => {
       dispatch({
-        type: GET_TASK_SUCCESS,
+        type: ITEM,
+        itemType,
         data: snapshot.val(),
       })
       dispatch({
@@ -26,7 +27,7 @@ export default (id) => {
     .catch((error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'getTask',
+        origin: 'getItem/' + itemType,
         error,
       })
     })

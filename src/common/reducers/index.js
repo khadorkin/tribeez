@@ -6,11 +6,8 @@ import invite from './invite'
 import join from './join'
 import password from './password'
 import reset from './reset'
-import bills from './bills'
 import notes from './notes'
-import events from './events'
-import polls from './polls'
-import tasks from './tasks'
+import item from './item'
 import log from './log'
 
 export default {
@@ -22,10 +19,7 @@ export default {
   join,
   password,
   reset,
-  bills,
   notes,
-  events,
-  polls,
-  tasks,
+  item,
   log,
 }

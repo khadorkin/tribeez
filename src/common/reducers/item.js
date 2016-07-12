@@ -1,18 +1,21 @@
 import {
-  GET_EVENT_SUCCESS,
+  ITEM,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
 const initialState = {
-  current: null, // current event being viewed or edited
+  bill: null, // current bill being viewed or edited
+  event: null, // current event being viewed or edited
+  poll: null, // current poll being viewed or edited
+  task: null, // current task being viewed or edited
 }
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case GET_EVENT_SUCCESS:
+    case ITEM:
       return {
         ...state,
-        current: action.data,
+        [action.itemType]: action.data,
       }
 
     case LOGOUT_SUCCESS:

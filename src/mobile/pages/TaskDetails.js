@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => ({
   // for <Details> HoC:
   item: state.tasks.items.find((i) => i.id === ownProps.id)
-     || state.tasks.current,
+     || state.item.task,
   loading: state.tasks.loading,
   error: state.tasks.error,
   // for this component:

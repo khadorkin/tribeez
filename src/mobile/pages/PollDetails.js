@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => ({
   // for <Details> HoC:
   item: state.polls.items.find((i) => i.id === ownProps.id)
-     || state.polls.current,
+     || state.item.poll,
   loading: state.polls.loading,
   error: state.polls.error,
   // for this component:

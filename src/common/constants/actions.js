@@ -38,11 +38,7 @@ export const GET_NOTES_SUCCESS = 'GET_NOTES_SUCCESS'
 export const PUT_NOTE_SUCCESS = 'PUT_NOTE_SUCCESS'
 export const MOVE_NOTE = 'MOVE_NOTE'
 
-export const GET_BILL_SUCCESS = 'GET_BILL_SUCCESS'
-export const GET_EVENT_SUCCESS = 'GET_EVENT_SUCCESS'
-export const GET_POLL_SUCCESS = 'GET_POLL_SUCCESS'
-export const GET_TASK_SUCCESS = 'GET_TASK_SUCCESS'
-
+export const ITEM = 'ITEM'
 
 
 //TODO: refacto:

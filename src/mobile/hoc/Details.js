@@ -59,7 +59,7 @@ class Details extends Component {
       )
     }
 
-    if (loading || !item) { // TODO: separate cases or remove loading check?
+    if (loading || !item) { //TODO: separate cases or remove loading check?
       return (
         <View style={styles.empty}>
           <Spinner visible={true} />
