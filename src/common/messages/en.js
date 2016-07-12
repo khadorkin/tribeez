@@ -111,6 +111,7 @@ export default {
   no_account: 'No account yet?',
   register_now: 'Register now!',
   gravatar: 'To change your profile picture, go to <a href="https://gravatar.com" target="_blank">gravatar.com</a>',
+  poll_edit_warning: 'Warning: modifying this poll will delete its answers',
   // register/login/join/profile/tribe:
   'field.login_password': 'Password',
   'error.login_password': 'Wrong password',

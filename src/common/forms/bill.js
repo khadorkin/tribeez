@@ -37,6 +37,7 @@ const mapStateToProps = (state, ownProps) => {
     currency: state.tribe.currency, //TODO: be able to remove
     initialValues,
     bill,
+    tid: state.tribe.id,
   }
 }
 

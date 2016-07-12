@@ -1,36 +1,34 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  GET_POLL_REQUEST,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   GET_POLL_SUCCESS,
-  GET_POLL_FAILURE,
 } from '../constants/actions'
 
 export default (id) => {
   return (dispatch) => {
     dispatch({
-      type: GET_POLL_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.get('poll', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_POLL_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: GET_POLL_SUCCESS,
-            data: response,
-          })
-        }
+
+    db.ref('tribes/' + auth.currentUser.tid + '/polls/' + id).once('value')
+    .then((snapshot) => {
+      dispatch({
+        type: GET_POLL_SUCCESS,
+        data: snapshot.val(),
       })
-      .catch((err) => {
-        dispatch({
-          type: GET_POLL_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'getPoll',
+        error,
+      })
+    })
   }
 }

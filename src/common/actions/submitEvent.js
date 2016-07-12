@@ -6,8 +6,10 @@ import {db, auth, timestamp} from '../firebase'
 import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (values, dispatch) => {
-  const tid = auth.currentUser.tid
   return new Promise((resolve, reject) => {
+    values.added = timestamp
+
+    const tid = auth.currentUser.tid
     let id = values.id
     delete values.id
     let action

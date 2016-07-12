@@ -22,6 +22,7 @@ class TaskForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     task: PropTypes.object,
+    tid: PropTypes.string,
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
@@ -33,10 +34,10 @@ class TaskForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // when accessing directly to /task/:id
-    if (!this.props.task && this.props.id) {
-      this.props.getTask(this.props.id)
+  componentWillReceiveProps(props) {
+    // when accessing directly to /task/edit/:id
+    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
+      this.props.getTask(props.id)
     }
   }
 

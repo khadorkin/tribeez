@@ -1,36 +1,34 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  GET_BILL_REQUEST,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   GET_BILL_SUCCESS,
-  GET_BILL_FAILURE,
 } from '../constants/actions'
 
 export default (id) => {
   return (dispatch) => {
     dispatch({
-      type: GET_BILL_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.get('bill', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_BILL_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: GET_BILL_SUCCESS,
-            data: response,
-          })
-        }
+
+    db.ref('tribes/' + auth.currentUser.tid + '/bills/' + id).once('value')
+    .then((snapshot) => {
+      dispatch({
+        type: GET_BILL_SUCCESS,
+        data: snapshot.val(),
       })
-      .catch((err) => {
-        dispatch({
-          type: GET_BILL_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'getBill',
+        error,
+      })
+    })
   }
 }

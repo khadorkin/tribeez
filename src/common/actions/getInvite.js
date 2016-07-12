@@ -16,7 +16,8 @@ export default (tribe, token) => {
       type: FIREBASE_REQUEST,
     })
 
-    db.ref('tribes/' + tribe + '/invites/' + token).once('value').then((snapshot) => {
+    db.ref('tribes/' + tribe + '/invites/' + token).once('value')
+    .then((snapshot) => {
       const invite = snapshot.val()
       if (invite) {
         Promise.all([
@@ -57,6 +58,13 @@ export default (tribe, token) => {
         })
         router.resetTo(routes.LOGIN, dispatch)
       }
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'getInvite',
+        error,
+      })
     })
   }
 }

@@ -29,7 +29,7 @@ export default (data) => {
     .catch((error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'putNotes',
+        origin: 'putNote',
         error: error.code,
       })
     })

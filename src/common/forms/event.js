@@ -15,11 +15,17 @@ const mapStateToProps = (state, ownProps) => {
       end: event.end,
       location: event.location || '',
       url: event.url || '',
+      host: event.host,
+    }
+  } else {
+    initialValues = {
+      host: state.user.uid,
     }
   }
   return {
-    event,
     initialValues,
+    event,
+    tid: state.tribe.id,
   }
 }
 
@@ -30,7 +36,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'event',
-    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url'],
+    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'host'],
     validate: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

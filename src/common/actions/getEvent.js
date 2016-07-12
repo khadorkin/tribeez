@@ -1,36 +1,34 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  GET_EVENT_REQUEST,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   GET_EVENT_SUCCESS,
-  GET_EVENT_FAILURE,
 } from '../constants/actions'
 
 export default (id) => {
   return (dispatch) => {
     dispatch({
-      type: GET_EVENT_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.get('event', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_EVENT_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: GET_EVENT_SUCCESS,
-            data: response,
-          })
-        }
+
+    db.ref('tribes/' + auth.currentUser.tid + '/events/' + id).once('value')
+    .then((snapshot) => {
+      dispatch({
+        type: GET_EVENT_SUCCESS,
+        data: snapshot.val(),
       })
-      .catch((err) => {
-        dispatch({
-          type: GET_EVENT_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'getEvent',
+        error,
+      })
+    })
   }
 }

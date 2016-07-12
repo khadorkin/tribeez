@@ -1,39 +1,53 @@
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
 
 import {
-  DELETE_POLL_REQUEST,
-  DELETE_POLL_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default (id) => {
   return (dispatch) => {
+    const tid = auth.currentUser.tid
     dispatch({
-      type: DELETE_POLL_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.delete('poll', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: DELETE_POLL_FAILURE,
-            error: response.error,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'error',
-          })
-        }
+    let item
+    const ref = db.ref('tribes/' + tid + '/polls/' + id)
+    ref.once('value')
+    .then((snapshot) => {
+      item = snapshot.val()
+      if (!item) {
+        throw 'not_found'
+      }
+      ref.remove()
+    })
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: DELETE_POLL_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
-        dispatch({
-          type: SNACK_MESSAGE,
-          message: 'error',
-        })
+    })
+    .then(() => {
+      return db.ref('tribes/' + tid + '/history').push({
+        type: 'poll',
+        action: 'delete',
+        added: timestamp,
+        user: auth.currentUser.uid,
+        item,
+        id,
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'deletePoll',
+        error,
+      })
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
+    })
   }
 }

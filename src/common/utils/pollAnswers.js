@@ -12,11 +12,11 @@ export default (poll, userMap) => {
     total_users_answered++
   }
 
-  const results = poll.options.map((option) => {
-    const names = namesByOption[option.id] || []
+  const results = poll.options.map((name, id) => {
+    const names = namesByOption[id] || []
     return {
-      id: option.id,
-      name: option.name,
+      id,
+      name,
       users: names,
       percent: Math.round((100 * names.length / total_users_answered) || 0),
     }
@@ -25,8 +25,8 @@ export default (poll, userMap) => {
     if (a.percent === b.percent) {
       return 0
     }
-    return a.percent > b.percent ? -1 : 1 // from bigger to smaller
-  })
+    return a.percent > b.percent ? -1 : 1
+  })// from bigger to smaller
 
   return results
 }

@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -20,6 +21,7 @@ class PollForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     poll: PropTypes.object,
+    tid: PropTypes.string,
     // action creators:
     getPoll: PropTypes.func.isRequired,
   }
@@ -29,10 +31,10 @@ class PollForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // when accessing directly to /poll/:id
-    if (!this.props.poll && this.props.id) {
-      this.props.getPoll(this.props.id)
+  componentWillReceiveProps(props) {
+    // when accessing directly to /polls/edit/:id
+    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
+      this.props.getPoll(props.id)
     }
   }
 
@@ -42,10 +44,12 @@ class PollForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, multiple, options}} = this.props
+    const {fields: {name, description, multiple, options}, poll} = this.props
+
+    const subtitle = ((poll && poll.answers) ? <FormattedMessage id="poll_edit_warning" /> : null)
 
     return (
-      <Form name={'poll.' + (this.props.poll ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+      <Form subtitle={subtitle} name={'poll.' + (poll ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}

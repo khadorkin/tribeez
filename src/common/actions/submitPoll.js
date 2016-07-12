@@ -1,7 +1,11 @@
+
+
 import router from '../router'
 import routes from '../routes'
 
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
+
+import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -10,21 +14,41 @@ export default (values, dispatch) => {
       reject({_error: 'no_options'})
       return
     }
+    values.added = timestamp
 
-    api[values.id ? 'put' : 'post']('poll', values)
-      .then((response) => {
-        if (response.error) {
-          if (typeof response.error === 'string') {
-            response.error = {_error: response.error}
-          }
-          reject(response.error)
-        } else {
-          resolve()
-          router.resetTo(routes.POLLS, dispatch)
-        }
+    const tid = auth.currentUser.tid
+    let id = values.id
+    delete values.id
+    let action
+    if (id) {
+      action = 'update'
+    } else {
+      action = 'new'
+      id = db.ref('tribes/' + tid + '/polls').push().key
+    }
+
+    db.ref('tribes/' + tid + '/polls/' + id).set(values)
+    .then(() => {
+      return db.ref('tribes/' + tid + '/history').push({
+        type: 'poll',
+        action,
+        added: timestamp,
+        user: auth.currentUser.uid,
+        item: values,
+        id,
       })
-      .catch(() => {
-        reject({_error: 'request'})
+    })
+    .then(() => {
+      resolve()
+      router.resetTo(routes.POLLS, dispatch)
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'submitPoll',
+        error,
       })
+      reject({_error: 'request'})
+    })
   })
 }

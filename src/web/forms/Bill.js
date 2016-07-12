@@ -31,6 +31,7 @@ class BillForm extends Component {
     currency: PropTypes.string,
     initialValues: PropTypes.object,
     bill: PropTypes.object,
+    tid: PropTypes.string,
     // action creators:
     getBill: PropTypes.func.isRequired,
   }
@@ -41,10 +42,10 @@ class BillForm extends Component {
     this.handleMethodChange = this.handleMethodChange.bind(this)
   }
 
-  componentDidMount() {
-    // when accessing directly to /bill/:id
-    if (!this.props.bill && this.props.id) {
-      this.props.getBill(this.props.id)
+  componentWillReceiveProps(props) {
+    // when accessing directly to /bills/edit/:id
+    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
+      this.props.getBill(props.id)
     }
   }
 

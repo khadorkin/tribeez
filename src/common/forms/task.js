@@ -21,8 +21,9 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
   return {
-    task,
     initialValues,
+    task,
+    tid: state.tribe.id,
     users: state.tribe.users,
     userMap: state.tribe.userMap,
   }

@@ -7,24 +7,26 @@ const mapStateToProps = (state, ownProps) => {
   const poll = ownProps.current || state.polls.current // either from routing state, or from ajax retrieval
   let initialValues
   if (poll) {
-    const options = poll.options.map((option) => option.name)
-    options.push('') // update poll => add an empty option to be able to add options
+    poll.options.push('') // update poll => add an empty option to be able to add options
     initialValues = {
       id: poll.id,
       name: poll.name,
       description: poll.description || '',
       multiple: Boolean(poll.multiple),
-      options,
+      options: poll.options,
+      author: poll.author,
     }
   } else {
     initialValues = {
       multiple: false,
       options: ['', ''], // new poll => two empty options
+      author: state.user.uid,
     }
   }
   return {
     initialValues,
     poll,
+    tid: state.tribe.id,
   }
 }
 
@@ -35,7 +37,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'poll',
-    fields: ['id', 'name', 'description', 'multiple', 'options[]'],
+    fields: ['id', 'name', 'description', 'multiple', 'options[]', 'author'],
     validate: validator(['name', 'options'], ['description', 'multiple']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),
