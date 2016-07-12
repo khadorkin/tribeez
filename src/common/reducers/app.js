@@ -8,7 +8,7 @@ import {
   TOGGLE_MENU,
   TOGGLE_TRIBES,
   RESIZE,
-  GET_MEMBER_SUCCESS,
+  USER_UPDATED,
   UPDATE_LANG,
   SNACK_MESSAGE,
   CLOSE_SNACK,
@@ -19,10 +19,10 @@ import {
   UNREAD,
 } from '../constants/actions'
 
-import lang from '../utils/lang'
+import {getLang, setLang} from '../utils/locale'
 import messages from '../messages' //TODO
 
-const defaultLang = lang.get()
+const defaultLang = getLang()
 
 const initialState = {
   menu_visible: false,
@@ -64,20 +64,27 @@ export default (state = initialState, action = null) => {
         width: action.width,
         height: action.height,
       }
-    case GET_MEMBER_SUCCESS:
-      lang.set(action.user.lang)
+    case USER_UPDATED: {
+      const lang = action.user.lang
+      if (lang) {
+        setLang(lang)
+        return {
+          ...state,
+          lang,
+          messages: messages[lang],
+        }
+      }
+      return state
+    }
+    case UPDATE_LANG: {
+      const lang = action.lang
+      setLang(lang)
       return {
         ...state,
-        lang: action.user.lang,
-        messages: messages[action.user.lang],
+        lang,
+        messages: messages[lang],
       }
-    case UPDATE_LANG:
-      lang.set(action.lang)
-      return {
-        ...state,
-        lang: action.lang,
-        messages: messages[action.lang],
-      }
+    }
     case SNACK_MESSAGE:
       const snack = {
         open: true,
@@ -132,16 +139,18 @@ export default (state = initialState, action = null) => {
         loading: Math.max(0, state.loading - 1),
         error,
       }
-    case formActions.CHANGE:
+    case formActions.CHANGE: {
       if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {
-        lang.set(action.value)
+        const lang = action.value
+        setLang(lang)
         return {
           ...state,
-          lang: action.value,
-          messages: messages[action.value],
+          lang,
+          messages: messages[lang],
         }
       }
       return state
+    }
     case formActions.START_SUBMIT:
       return {
         ...state,
