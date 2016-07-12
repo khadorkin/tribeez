@@ -43,21 +43,14 @@ const on = (tid) => {
 
     historyRef.orderByKey().limitToLast(1).on('child_added', onLastEntry, onError)
 
-    const onCount = (snapshot) => {
-      dispatch({
-        type: UNREAD,
-        count: snapshot.numChildren() - 1, // exclude the last seen one
-      })
-    }
-
     const onLastKey = (snapshot) => {
       const lastKey = snapshot.val()
-      historyRef.off('value')
-      if (lastKey) {
-        historyRef.orderByKey().startAt(lastKey).on('value', onCount)
-      } else {
-        historyRef.orderByKey().on('value', onCount) //TODO: start at registration date
-      }
+      historyRef.orderByKey().startAt(lastKey).once('value').then((sub_snapshot) => {
+        dispatch({
+          type: UNREAD,
+          count: sub_snapshot.numChildren() - 1, // exclude the last seen one
+        })
+      })
     }
 
     lastKeyRef = db.ref('tribes/' + tid + '/members/' + auth.currentUser.uid + '/last_viewed_history_key')

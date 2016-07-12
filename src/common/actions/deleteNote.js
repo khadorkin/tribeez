@@ -1,49 +1,33 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  DELETE_NOTE_REQUEST,
-  DELETE_NOTE_SUCCESS,
-  DELETE_NOTE_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default (id) => {
   return (dispatch) => {
     dispatch({
-      type: DELETE_NOTE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.delete('note', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: DELETE_NOTE_FAILURE,
-            error: response.error,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'error',
-          })
-        } else {
-          dispatch({
-            type: DELETE_NOTE_SUCCESS,
-            id,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'note_deleted',
-          })
-        }
+    db.ref('tribes/' + auth.currentUser.tid + '/notes/' + id).remove()
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: DELETE_NOTE_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
-        dispatch({
-          type: SNACK_MESSAGE,
-          message: 'error',
-        })
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'note_deleted',
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'deleteNote',
+        error: error.code,
+      })
+    })
   }
 }

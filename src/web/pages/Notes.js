@@ -10,8 +10,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
-import AsyncContent from '../hoc/AsyncContent'
-
 import Note from '../components/Note'
 
 import styles from '../styles'
@@ -29,11 +27,12 @@ class Notes extends Component {
     // from react-router:
     location: PropTypes.object.isRequired,
     // redux state:
-    notes: PropTypes.object.isRequired,
-    route: PropTypes.object.isRequired,
+    tid: PropTypes.string,
+    notes: PropTypes.array.isRequired,
     containerWidth: PropTypes.number.isRequired,
     // action creators:
-    getNotes: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
     postNote: PropTypes.func.isRequired,
     moveNote: PropTypes.func.isRequired,
     putNotes: PropTypes.func.isRequired,
@@ -46,6 +45,7 @@ class Notes extends Component {
       openDialog: false,
       note: {},
     }
+    this.load = this.load.bind(this)
     this.handleCreate = this.handleCreate.bind(this)
     this.handleMoving = this.handleMoving.bind(this)
     this.handleMoved = this.handleMoved.bind(this)
@@ -55,17 +55,30 @@ class Notes extends Component {
   }
 
   componentDidMount() {
+    this.load(this.props.tid)
     this.autoCreate(this.props)
   }
 
   componentWillReceiveProps(props) {
+    this.load(props.tid)
     this.autoCreate(props)
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe()
+  }
+
+  load(tid) {
+    if (tid && this.tid !== tid) {
+      this.tid = tid
+      this.props.subscribe()
+    }
   }
 
   autoCreate(props) {
     const locationState = this.props.location.state
-    if (locationState && locationState.do === 'new' && !this.autoCreated && props.notes.pages > 0) {
-      const lastNote = props.notes.items[0]
+    if (locationState && locationState.do === 'new' && !this.autoCreated) {
+      const lastNote = props.notes[0]
       if (!lastNote || lastNote.title || lastNote.content) {
         // no note, or the last one is not empty
         this.props.postNote({
@@ -81,6 +94,7 @@ class Notes extends Component {
     this.props.postNote({
       title: '',
       content: '',
+      position: this.props.notes.length ? this.props.notes[0].position - 1 : 0,
     })
   }
 
@@ -92,7 +106,7 @@ class Notes extends Component {
   }
 
   handleMoved() {
-    this.props.putNotes(this.props.notes.items.map((note) => note.id))
+    this.props.putNotes(this.props.notes.map((note) => note.id))
   }
 
   handleDelete(note, unsaved) {
@@ -118,6 +132,17 @@ class Notes extends Component {
     })
   }
 
+  renderNote(row) {
+    return (
+      <Note key={row.id}
+        note={row}
+        onMoving={this.handleMoving}
+        onMoved={this.handleMoved}
+        onDelete={this.handleDelete}
+      />
+    )
+  }
+
   render() {
     const {notes} = this.props
 
@@ -135,7 +160,7 @@ class Notes extends Component {
       />,
     ]
 
-    const columns = Math.min(notes.items.length, Math.floor(this.props.containerWidth / 250))
+    const columns = Math.min(notes.length, Math.floor(this.props.containerWidth / 250))
 
     const style = {
       columnCount: columns, WebkitColumnCount: columns, MozColumnCount: columns,
@@ -144,9 +169,9 @@ class Notes extends Component {
     }
 
     return (
-      <AsyncContent style={style} fetcher={this.props.getNotes} data={notes}>
+      <div style={style}>
         {
-          notes.items.map((note) =>
+          notes.map((note) =>
             <Note key={note.id}
               note={note}
               onMoving={this.handleMoving}
@@ -167,18 +192,20 @@ class Notes extends Component {
         <FloatingActionButton style={styles.fab} onTouchTap={this.handleCreate}>
           <ContentAdd />
         </FloatingActionButton>
-      </AsyncContent>
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  notes: state.notes,
+  tid: state.tribe.id,
+  notes: state.notes.items,
   containerWidth: (state.app.width > 800 ? state.app.width - MENU_WIDTH : state.app.width),
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getNotes,
+  subscribe: getNotes.on,
+  unsubscribe: getNotes.off,
   postNote,
   moveNote,
   putNotes,

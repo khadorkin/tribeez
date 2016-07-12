@@ -21,15 +21,15 @@ export default (tid) => {
     })
     db.ref('users/' + uid + '/current_tribe').set(tid)
     .then(() => {
-      dispatch({
-        type: FIREBASE_SUCCESS,
-      })
       dispatch(getMember.off())
-      dispatch(getMember.on(uid))
       router.resetTo(routes.ACTIVITY, dispatch)
+      dispatch(getMember.on(uid))
       dispatch({
         type: SNACK_MESSAGE,
         message: 'switched',
+      })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
     })
     .catch((error) => {

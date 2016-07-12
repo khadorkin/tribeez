@@ -21,6 +21,7 @@ class AsyncContent extends Component {
     name: PropTypes.string.isRequired,
     renderRow: PropTypes.func.isRequired,
     style: PropTypes.object,
+    orderBy: PropTypes.string,
     children: PropTypes.node,
     // action creators:
     setLastViewedHistoryKey: PropTypes.func.isRequired,
@@ -45,7 +46,6 @@ class AsyncContent extends Component {
     this.handleError = this.handleError.bind(this)
     this.queryRef = null
     this.last = null
-    this.buffer = []
   }
 
   componentDidMount() {
@@ -69,6 +69,7 @@ class AsyncContent extends Component {
       //TODO: call multiple times if paging???
       this.queryRef.off('child_added', this.childAdded)
       this.queryRef.off('child_changed', this.childChanged)
+      this.queryRef.off('child_moved', this.childMoved)
       this.queryRef.off('child_removed', this.childRemoved)
     }
     clearTimeout(this.timeout)
@@ -92,9 +93,20 @@ class AsyncContent extends Component {
   handleLoad() {
     if (!this.queryRef) {
       this.queryRef = db.ref('tribes/' + this.tid + '/' + this.props.name)
-
-      this.queryRef.orderByKey().limitToLast(2).on('value', this.lastEntry, this.handleError)
     }
+
+    let query
+    if (this.props.orderBy) {
+      query = this.queryRef.orderByChild(this.props.orderBy)
+    } else {
+      query = this.queryRef.orderByKey()
+    }
+
+    if (!this.listeningToLast) {
+      query.limitToLast(2).on('value', this.lastEntry, this.handleError)
+      this.listeningToLast = true
+    }
+
     if (this.state.loading) {
       return // e.g. multiple scrollings
     }
@@ -105,7 +117,9 @@ class AsyncContent extends Component {
       loading: true,
     })
 
-    const query = this.last ? this.queryRef.orderByKey().endAt(this.last) : this.queryRef.orderByKey()
+    if (this.last) {
+      query = query.endAt(this.last)
+    }
     this.first = this.last // see below
     query.limitToLast(PAGING).on('child_added', this.childAdded, this.handleError)
     query.limitToLast(PAGING).on('child_changed', this.childChanged, this.handleError)
@@ -124,7 +138,7 @@ class AsyncContent extends Component {
     if (snapshot.key !== this.first) { // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
       const item = snapshot.val()
       item.id = snapshot.key
-      this.buffer.push(item) // add to state but without re-rendering (see batching below)
+      this.state.items.push(item) // add to state but without re-rendering (see batching below)
       if (!this.last || snapshot.key < this.last) {
         this.last = snapshot.key // i.e. the next query will include the last item of the current one
         // or:
@@ -136,7 +150,8 @@ class AsyncContent extends Component {
   }
 
   flush() {
-    const items = this.buffer.sort((a, b) => (a.id < b.id ? 1 : -1))
+    const sorter = this.props.orderBy || 'id'
+    const items = this.state.items.sort((a, b) => (a[sorter] < b[sorter] ? 1 : -1))
     if (this.props.name === 'history') {
       if (!this.lastKey || items[0].id > this.lastKey) {
         this.lastKey = items[0].id
@@ -150,14 +165,20 @@ class AsyncContent extends Component {
   }
 
   childChanged(snapshot) {
+    const newItem = snapshot.val()
+    newItem.id = snapshot.key
     this.setState({
-      items: this.buffer.map((item) => (item.id === snapshot.key ? snapshot.val() : item)),
+      items: this.state.items.map((item) => (item.id === snapshot.key ? newItem : item)),
     })
   }
 
+  // childMoved() {
+  //
+  // }
+
   childRemoved(snapshot) {
     this.setState({
-      items: this.buffer.filter((item) => item.id !== snapshot.key),
+      items: this.state.items.filter((item) => item.id !== snapshot.key),
     })
   }
 

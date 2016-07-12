@@ -2,7 +2,6 @@ import {
   GET_BILL_REQUEST,
   GET_BILL_SUCCESS,
   GET_BILL_FAILURE,
-  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -34,7 +33,6 @@ export default (state = initialState, action = null) => {
         error: action.error,
       }
 
-    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

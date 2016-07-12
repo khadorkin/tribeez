@@ -20,7 +20,7 @@ import {
 } from '../constants/actions'
 
 import lang from '../utils/lang'
-import messages from '../messages' // TODO
+import messages from '../messages' //TODO
 
 const defaultLang = lang.get()
 

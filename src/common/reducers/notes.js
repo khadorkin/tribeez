@@ -1,8 +1,8 @@
 import {
+  GET_NOTES_SUCCESS,
   PUT_NOTE_SUCCESS,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
-  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -10,11 +10,23 @@ const initialState = {
   loading: false,
   error: null,
   items: [],
-  pages: 0,
 }
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
+    case GET_NOTES_SUCCESS: {
+      const items = []
+      for (const key in action.notes) {
+        const item = action.notes[key]
+        item.id = key
+        items.push(item)
+      }
+      return {
+        ...state,
+        items: items.sort((a, b) => (a.position < b.position ? -1 : 1)),
+      }
+    }
+
     case PUT_NOTE_SUCCESS: {
       const items = state.items.map((item) => {
         if (item.id === action.data.id) {
@@ -54,7 +66,6 @@ export default (state = initialState, action = null) => {
       }
     }
 
-    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

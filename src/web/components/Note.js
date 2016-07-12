@@ -14,6 +14,11 @@ import * as colors from 'material-ui/styles/colors'
 
 import putNote from '../../common/actions/putNote'
 
+const createEditor = (text) => {
+  const contentState = ContentState.createFromText(text)
+  return EditorState.createWithContent(contentState)
+}
+
 class Note extends Component {
   static propTypes = {
     // from parent component:
@@ -31,11 +36,9 @@ class Note extends Component {
 
   constructor(props) {
     super(props)
-    const titleContentState = ContentState.createFromText(this.props.note.title)
-    const contentContentState = ContentState.createFromText(this.props.note.content)
     this.state = {
-      titleEditorState: EditorState.createWithContent(titleContentState),
-      contentEditorState: EditorState.createWithContent(contentContentState),
+      titleEditorState: createEditor(this.props.note.title),
+      contentEditorState: createEditor(this.props.note.content),
       unsaved: false,
     }
     this.save = this.save.bind(this)
@@ -51,9 +54,14 @@ class Note extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.note.saved) {
+    if (props.note.saved) { // local event
       this.setState({
         unsaved: false,
+      })
+    } else if (!this.state.unsaved) { // remove event
+      this.setState({
+        titleEditorState: createEditor(props.note.title),
+        contentEditorState: createEditor(props.note.content),
       })
     }
   }

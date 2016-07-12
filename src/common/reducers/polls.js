@@ -3,7 +3,6 @@ import {
   GET_POLL_SUCCESS,
   GET_POLL_FAILURE,
   POST_VOTE_SUCCESS,
-  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -54,7 +53,6 @@ export default (state = initialState, action = null) => {
       }
     }
 
-    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

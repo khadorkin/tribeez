@@ -44,7 +44,7 @@ class CityField extends Component {
       window.onGooglePlaces()
     } else {
       scriptLoader.load('https://maps.googleapis.com/maps/api/js?key=' + config.google_web_key
-                      + '&libraries=places&callback=onGooglePlaces&language=en') // TODO: localized cities?
+                      + '&libraries=places&callback=onGooglePlaces&language=en') //TODO: localized cities?
     }
   }
 
