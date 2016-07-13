@@ -27,13 +27,13 @@ export default (values, dispatch) => {
 
     db.ref('tribes/' + tid + '/polls/' + id).set(values)
     .then(() => {
+      values.id = id
       return db.ref('tribes/' + tid + '/history').push({
         type: 'poll',
         action,
         added: timestamp,
         user: auth.currentUser.uid,
         item: values,
-        id,
       })
     })
     .then(() => {

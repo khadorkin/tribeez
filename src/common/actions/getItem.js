@@ -12,12 +12,20 @@ const on = (itemType, id) => {
     ref = db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id)
     ref.on('value', (snapshot) => {
       const item = snapshot.val()
-      item.id = snapshot.key
-      dispatch({
-        type: ITEM,
-        itemType,
-        item,
-      })
+      if (item) {
+        item.id = snapshot.key
+        dispatch({
+          type: ITEM,
+          itemType,
+          item,
+        })
+      } else {
+        dispatch({
+          type: ITEM,
+          itemType,
+          item: null,
+        })
+      }
     }, (error) => {
       dispatch({
         type: FIREBASE_FAILURE,

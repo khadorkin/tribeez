@@ -7,12 +7,20 @@ import asyncStorage from '../utils/asyncStorage'
 import {rand} from '../utils/utils'
 import {login} from './app'
 
-import {FIREBASE_FAILURE} from '../constants/actions'
+import {FIREBASE_FAILURE, API_FAILURE} from '../constants/actions'
+
+const origin = 'submitRegister'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    api.post('register', {captcha: values.captcha})
-    .then((response) => {
+    let promise
+    if (platform === 'web') {
+      promise = api.post('register', {captcha: values.captcha})
+    } else {
+      promise = Promise.resolve({})
+    }
+
+    promise.then((response) => {
       if (response.error) {
         reject(response.error)
       } else {
@@ -119,7 +127,7 @@ export default (values, dispatch) => {
             reject({_error: 'request'})
             dispatch({
               type: FIREBASE_FAILURE,
-              origin: 'submitRegister',
+              origin,
               error,
             })
             auth.signOut()
@@ -140,14 +148,19 @@ export default (values, dispatch) => {
               reject({_error: 'request'})
               dispatch({
                 type: FIREBASE_FAILURE,
-                origin: 'submitRegister',
+                origin,
                 error,
               })
           }
         })
       }
     })
-    .catch(() => {
+    .catch((error) => {
+      dispatch({
+        type: API_FAILURE,
+        origin,
+        error,
+      })
       reject({_error: 'request'})
     })
   })

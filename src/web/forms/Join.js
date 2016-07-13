@@ -56,6 +56,11 @@ class JoinForm extends Component {
 
     return (
       <Form name="join" title={invite.tribe_name} subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
+        <SelectField ref="lang"
+          {...lang}
+        >
+          {langItems}
+        </SelectField>
         <TextField ref="name"
           required={true}
           {...name}
@@ -73,11 +78,6 @@ class JoinForm extends Component {
           errorText={password.touched && password.error && <FormattedMessage id={'error.password_' + password.error} />}
           {...password}
         />
-        <SelectField ref="lang"
-          {...lang}
-        >
-          {langItems}
-        </SelectField>
       </Form>
     )
   }

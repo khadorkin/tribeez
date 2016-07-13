@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Text, StyleSheet} from 'react-native'
+import {View, ActivityIndicator, Text, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import FormattedMessage from '../components/FormattedMessage'
@@ -15,22 +15,34 @@ import langs from '../../common/resources/langs'
 class JoinForm extends Component {
   static propTypes = {
     // from parent component:
+    tribe: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
     // from redux-form:
     fields: PropTypes.object,
     // from redux:
     initialValues: PropTypes.object,
-    inviter: PropTypes.string,
-    title: PropTypes.string, // tribe_name
+    invite: PropTypes.object,
   }
 
   render() {
-    const {fields: {name, email, password, lang}, ...props} = this.props
+    const {fields: {name, email, password, lang}, invite, ...props} = this.props
+
+    if (!invite) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator animating={true} size="large" color={colors.main} />
+        </View>
+      )
+    }
 
     return (
-      <Form name="join" action={submitJoin} {...props}>
-        <Text style={styles.title}>{this.props.title}</Text>
-        <FormattedMessage id="invited_you" values={{name: this.props.inviter}} style={styles.subtitle} />
+      <Form name="join" action={submitJoin.bind(null, this.props.invite)} {...props}>
+        <Text style={styles.title}>{invite.tribe_name}</Text>
+        <FormattedMessage id="invited_you" values={{name: invite.inviter_name}} style={styles.subtitle} />
+        <SelectField ref="lang"
+          {...lang}
+          items={langs}
+        />
         <TextField ref="name"
           {...name}
           autoCorrect={false}
@@ -38,17 +50,14 @@ class JoinForm extends Component {
         />
         <TextField ref="email"
           {...email}
-          errorIsObject={true}
           autoCorrect={false}
           keyboardType="email-address"
+          errorId={email.error && 'email_' + email.error}
         />
         <TextField ref="password"
           {...password}
           secureTextEntry={true}
-        />
-        <SelectField ref="lang"
-          {...lang}
-          items={langs}
+          errorId={password.error && 'password_' + password.error}
         />
       </Form>
     )
@@ -56,6 +65,9 @@ class JoinForm extends Component {
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    marginTop: 200,
+  },
   title: {
     color: colors.primaryText,
     fontSize: 20,

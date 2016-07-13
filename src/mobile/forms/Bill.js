@@ -86,7 +86,7 @@ class BillForm extends Component {
               method={method.value}
               amount={part.amount}
               currency={currency}
-              user={userMap[part.user_id.value]}
+              user={userMap[part.uid.value]}
             />
           )
         }

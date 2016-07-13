@@ -77,13 +77,13 @@ export default (values, dispatch) => {
       })
     })
     .then(() => {
+      values.id = id
       return db.ref('tribes/' + tid + '/history').push({
         type: 'bill',
         action,
         added: timestamp,
         user: auth.currentUser.uid,
         item: values,
-        id,
       })
     })
     .then(() => {

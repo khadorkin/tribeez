@@ -12,8 +12,8 @@ class TextField extends Component {
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     touched: PropTypes.bool.isRequired,
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    errorId: PropTypes.string,
     multiline: PropTypes.bool,
-    errorIsObject: PropTypes.bool,
   }
 
   constructor(props) {
@@ -31,22 +31,12 @@ class TextField extends Component {
   }
 
   render() {
-    const {name, value, touched, error, errorIsObject, multiline, ...props} = this.props
+    const {name, value, touched, error, multiline, ...props} = this.props
+    let {errorId} = this.props
 
     const Comp = multiline ? TextArea : TextInput
 
-    let errorId
-    let values
-
-    if (error) {
-      errorId = 'error.' + name
-      if (errorIsObject) {
-        errorId += '_' + (error.id || error)
-      }
-      if (typeof error === 'object') {
-        values = error
-      }
-    }
+    errorId = error && ('error.' + (errorId || name))
 
     return (
       <View style={styles.container}>
@@ -58,7 +48,7 @@ class TextField extends Component {
           value={String(value)}
           {...props}
         />
-        <FormattedMessage id={touched && errorId} values={values} style={styles.error} />
+        <FormattedMessage id={touched && errorId} style={styles.error} />
       </View>
     )
   }

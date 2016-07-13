@@ -29,6 +29,10 @@ class RegisterForm extends Component {
     return (
       <Form name="register" action={submitRegister} {...props}>
         <FormattedMessage id="you" style={styles.subtitle} />
+        <SelectField ref="lang"
+          {...lang}
+          items={langs}
+        />
         <TextField ref="name"
           {...name}
           autoCorrect={false}
@@ -36,17 +40,12 @@ class RegisterForm extends Component {
         />
         <TextField ref="email"
           {...email}
-          errorIsObject={true}
           autoCorrect={false}
           keyboardType="email-address"
         />
         <TextField ref="password"
           {...password}
           secureTextEntry={true}
-        />
-        <SelectField ref="lang"
-          {...lang}
-          items={langs}
         />
         <FormattedMessage id="your_tribe" style={styles.subtitle} />
         <TextField

@@ -9,6 +9,8 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
+const origin = 'postInvite'
+
 export default (invite) => {
   return (dispatch) => {
     dispatch({
@@ -45,7 +47,7 @@ export default (invite) => {
       .catch((error) => {
         dispatch({
           type: API_FAILURE,
-          origin: 'submitInvite',
+          origin,
           error,
         })
       })
@@ -53,7 +55,7 @@ export default (invite) => {
     .catch((error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'postInvite',
+        origin,
         error: error.code,
       })
     })

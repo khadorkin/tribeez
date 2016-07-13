@@ -59,6 +59,11 @@ class RegisterForm extends Component {
     return (
       <Form name="register" onSubmit={this.handleSubmit} {...this.props}>
         <CardTitle title={<FormattedMessage id="you" />} style={{padding: '16px 0'}} />
+        <SelectField ref="lang"
+          {...lang}
+        >
+          {langItems}
+        </SelectField>
         <TextField ref="name"
           required={true}
           {...name}
@@ -75,11 +80,6 @@ class RegisterForm extends Component {
           required={true}
           {...password}
         />
-        <SelectField ref="lang"
-          {...lang}
-        >
-          {langItems}
-        </SelectField>
         <CardTitle title={<FormattedMessage id="your_tribe" />} style={{padding: '48px 0 16px'}} />
         <TextField ref="tribe_name"
           required={true}

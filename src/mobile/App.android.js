@@ -68,17 +68,11 @@ class App extends Component {
 
     Linking.getInitialURL().then((url) => {
       if (url) {
-        const join = url.match(/\/join\/(\w+)/)
+        const join = url.match(/\/join\/([^\/]+)\/([^\/]+)/)
         if (join) {
           const route = routes.JOIN
-          route.token = join[1]
-          router.push(route)
-          return
-        }
-        const reset = url.match(/\/reset\/(\w+)/)
-        if (reset) {
-          const route = routes.RESET
-          route.token = reset[1]
+          route.tribe = join[1]
+          route.token = join[2]
           router.push(route)
           return
         }
@@ -168,6 +162,9 @@ class App extends Component {
   renderScene(route, navigator) {
     router.update(route, navigator)
     const props = {}
+    if (route.tribe) {
+      props.tribe = route.tribe
+    }
     if (route.token) {
       props.token = route.token
     }

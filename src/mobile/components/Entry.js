@@ -40,10 +40,7 @@ class Entry extends Component {
         name: this.props.userMap[entry.user].name,
       }
     } else {
-      route.item = {
-        id: entry.id,
-        name: entry.item.name,
-      }
+      route.item = entry.item
     }
 
     router.push(route)

@@ -31,7 +31,6 @@ const rootReducer = combineReducers(reducers)
 
 let store
 if (__DEV__) {
-  //TODO: remove from prod
   const logger = createLogger({
     //TODO: remove these transformers
     stateTransformer: () => {
