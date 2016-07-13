@@ -7,7 +7,7 @@ import * as colors from 'material-ui/styles/colors'
 
 import routes from '../routes'
 
-import AutoLogin from '../../common/components/AutoLogin'
+import AutoLogin from '../components/AutoLogin'
 
 class Welcome extends Component {
 

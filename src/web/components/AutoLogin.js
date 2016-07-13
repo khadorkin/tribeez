@@ -2,25 +2,21 @@ import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import {auth} from '../firebase'
-import {login} from '../actions/app'
+import autoLogin from '../../common/actions/autoLogin'
 
 class AutoLogin extends Component {
   static propTypes = {
     // action creators:
-    login: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    this.off = auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.props.login(user)
-      }
-    })
+    this.props.subscribe()
   }
 
   componentWillUnmount() {
-    this.off()
+    this.props.unsubscribe()
   }
 
   render() {
@@ -29,7 +25,8 @@ class AutoLogin extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  login,
+  subscribe: autoLogin.on,
+  unsubscribe: autoLogin.off,
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(AutoLogin)
