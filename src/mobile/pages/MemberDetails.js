@@ -18,7 +18,7 @@ const infos = [
 class MemberDetails extends Component {
   static propTypes = {
     // from parent:
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     // from redux:
     user: PropTypes.object.isRequired,
   }

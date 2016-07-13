@@ -10,16 +10,15 @@ import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getItem'
 import postDone from '../../common/actions/postDone'
 import routes from '../../common/routes'
 
 class TaskDetails extends Component {
   static propTypes = {
     // from parent:
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     // from redux:
-    item: PropTypes.object,
+    task: PropTypes.object,
     uid: PropTypes.string.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
@@ -33,13 +32,13 @@ class TaskDetails extends Component {
   }
 
   handleDone() {
-    this.props.postDone(this.props.item.id, this.props.uid)
+    this.props.postDone(this.props.id)
   }
 
-  renderItem(task) {
-    const {uid, userMap} = this.props
+  renderItem() {
+    const {task, uid, userMap} = this.props
 
-    const author = userMap[task.author_id]
+    const author = userMap[task.author]
 
     const uids = Object.keys(task.counters)
 
@@ -70,18 +69,20 @@ class TaskDetails extends Component {
             </View>
           )
         }
-        <Log type="task" id={task.id} />
+        <Log item={task} />
       </ScrollView>
     )
   }
 
   render() {
     return (
-      <Details
-        {...this.props}
-        render={this.renderItem}
+      <Details type="task"
+        id={this.props.id}
+        item={this.props.task}
         editRoute={routes.TASKS_EDIT}
-      />
+      >
+        {this.props.task && this.renderItem()}
+      </Details>
     )
   }
 }
@@ -95,21 +96,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   // for <Details> HoC:
-  item: state.tasks.items.find((i) => i.id === ownProps.id)
-     || state.item.task,
-  loading: state.tasks.loading,
-  error: state.tasks.error,
+  task: state.item.task,
   // for this component:
   uid: state.user.uid,
   userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  // for HoC:
-  getItem,
-  // for this component:
   postDone,
 }, dispatch)
 

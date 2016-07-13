@@ -19,7 +19,7 @@ class Bill extends Component {
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:
-    item: PropTypes.object.isRequired,
+    bill: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -29,29 +29,29 @@ class Bill extends Component {
 
   handlePress() {
     const route = routes.BILL
-    route.item = this.props.item
+    route.item = this.props.bill
     router.push(route)
   }
 
   render() {
-    const {item, userMap, currency} = this.props
+    const {bill, userMap, currency} = this.props
 
-    const payer = userMap[item.payer_id]
+    const payer = userMap[bill.payer]
     if (!payer) {
       return null
     }
 
-    const user_part = item.parts.find((p) => p.user_id === this.props.uid)
+    const user_part = bill.parts[this.props.uid]
 
-    const total = <FormattedNumber value={item.amount} options={{style: 'currency', currency}} />
+    const total = <FormattedNumber value={bill.amount} options={{style: 'currency', currency}} />
 
     let formatted_part
     if (user_part) {
-      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part.amount}} />
+      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part}} />
     } else {
       formatted_part = <FormattedMessage id="bill.nopart" />
     }
-    const date = <FormattedRelative value={item.added} />
+    const date = <FormattedRelative value={bill.added} />
 
     return (
       <View style={styles.container}>
@@ -61,7 +61,7 @@ class Bill extends Component {
             style={styles.avatar}
           />
           <View style={styles.titles}>
-            <Text style={styles.title}>{total} — {item.name}</Text>
+            <Text style={styles.title}>{total} — {bill.name}</Text>
             <Text style={styles.subtitle}>{date} — {formatted_part}</Text>
           </View>
         </TouchableOpacity>

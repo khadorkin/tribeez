@@ -4,7 +4,7 @@ import validator from '../utils/formValidator'
 import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => {
-  const event = ownProps.current || state.item.event // either from routing state, or from ajax retrieval
+  const event = state.item.event || ownProps.current // first from routing state if any, then from ajax retrieval
   let initialValues
   if (event) {
     initialValues = {

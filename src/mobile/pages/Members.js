@@ -27,6 +27,10 @@ class Members extends Component {
     router.push(routes.MEMBERS_NEW)
   }
 
+  renderInvite(row) {
+    return <Invite invite={row} />
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -40,7 +44,7 @@ class Members extends Component {
             <View style={styles.spacer} />
           </ScrollView>
           <AsyncContent name="invites"
-            rowComponent={Invite}
+            renderRow={this.renderInvite}
             tabLabel="tab.invited"
           />
         </TabView>

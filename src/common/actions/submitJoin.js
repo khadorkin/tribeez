@@ -23,6 +23,7 @@ export default (invite, values, dispatch) => {
         gravatar,
         lang: values.lang,
         name: values.name,
+        registered: timestamp,
         tribes: {
           [invite.tribe]: invite.tribe_name,
         },
@@ -40,6 +41,7 @@ export default (invite, values, dispatch) => {
         balance: 0,
         gravatar,
         name: values.name,
+        joined: timestamp,
         invite: values.token, // for security rules
       }
 

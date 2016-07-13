@@ -15,7 +15,7 @@ class Event extends Component {
     // from redux:
     userMap: PropTypes.object.isRequired,
     // from parent:
-    item: PropTypes.object.isRequired,
+    event: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -25,26 +25,26 @@ class Event extends Component {
 
   handlePress() {
     const route = routes.EVENT
-    route.item = this.props.item
+    route.item = this.props.event
     router.push(route)
   }
 
   render() {
-    const {item, userMap} = this.props
+    const {event, userMap} = this.props
 
-    const author = userMap[item.host_id]
+    const author = userMap[event.author]
     if (!author) {
       return null
     }
 
-    const start = new Date(item.start)
+    const start = new Date(event.start)
     const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
 
     let date
-    if (item.end) {
-      date = <FormattedMessage id={'interval' + suffix} values={{start: item.start, end: item.end}} />
+    if (event.end) {
+      date = <FormattedMessage id={'interval' + suffix} values={{start: event.start, end: event.end}} />
     } else {
-      date = <FormattedMessage id={'date' + suffix} values={{date: item.start}} />
+      date = <FormattedMessage id={'date' + suffix} values={{date: event.start}} />
     }
 
     return (
@@ -55,7 +55,7 @@ class Event extends Component {
             style={styles.avatar}
           />
           <View style={styles.titles}>
-            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.title}>{event.name}</Text>
             <Text style={styles.subtitle}>{date}</Text>
           </View>
         </TouchableOpacity>

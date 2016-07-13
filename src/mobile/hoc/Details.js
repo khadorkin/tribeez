@@ -1,10 +1,14 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet, View} from 'react-native'
 
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+
 import Spinner from '../components/Spinner'
-import Button from '../components/Button'
 import FormattedMessage from '../components/FormattedMessage'
 import Fab from '../components/Fab'
+
+import getItem from '../../common/actions/getItem'
 
 import colors from '../../common/constants/colors'
 import router from '../../common/router'
@@ -12,29 +16,29 @@ import router from '../../common/router'
 class Details extends Component {
   static propTypes = {
     // from parent component
-    id: PropTypes.number.isRequired,
-    getItem: PropTypes.func.isRequired,
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    item: PropTypes.object,
+    children: PropTypes.node,
+    editRoute: PropTypes.object,
+    // action creators:
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
     error: PropTypes.string,
-    item: PropTypes.object,
-    render: PropTypes.func.isRequired,
-    editRoute: PropTypes.object,
   }
 
   constructor(props) {
     super(props)
-    this.handleRetry = this.handleRetry.bind(this)
     this.handleFab = this.handleFab.bind(this)
   }
 
   componentDidMount() {
-    if (!this.props.item || this.props.item.id !== this.props.id) {
-      this.props.getItem(this.props.id)
-    }
+    this.props.subscribe(this.props.type, this.props.id)
   }
 
-  handleRetry() {
-    this.props.getItem(this.props.id)
+  componentWillUnmount() {
+    this.props.unsubscribe(this.props.type, this.props.id)
   }
 
   handleFab() {
@@ -44,17 +48,12 @@ class Details extends Component {
   }
 
   render() {
-    const {loading, error, item, editRoute} = this.props
+    const {loading, error, item, children, editRoute} = this.props
 
     if (error) {
       return (
         <View style={styles.empty}>
           <FormattedMessage id={'error.' + error} style={styles.error} />
-          {
-            error !== 'not_found' && (
-              <Button id="retry" onPress={this.handleRetry} />
-            )
-          }
         </View>
       )
     }
@@ -69,7 +68,7 @@ class Details extends Component {
 
     return (
       <View style={styles.container}>
-        {this.props.render(item)}
+        {children}
         {editRoute && <Fab name="edit" onPress={this.handleFab} />}
       </View>
     )
@@ -94,4 +93,14 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Details
+const mapStateToProps = (/*state*/) => ({
+  loading: false, //TODO
+  error: null, //TODO
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  subscribe: getItem.on,
+  unsubscribe: getItem.off,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details)

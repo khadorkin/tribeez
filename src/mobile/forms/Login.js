@@ -17,7 +17,7 @@ class LoginForm extends Component {
     handleSubmit: PropTypes.func,
     // from redux:
     destination: PropTypes.object, // next route after login (when trying to directly access a page when anonymous)
-    invite: PropTypes.object.isRequired,
+    invite: PropTypes.object,
     initialValues: PropTypes.object,
   }
 
@@ -25,7 +25,6 @@ class LoginForm extends Component {
     super(props)
     this.handleNext = this.handleNext.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    //this.handleLostPassword = this.handleLostPassword.bind(this)
   }
 
   handleNext() {
@@ -43,7 +42,7 @@ class LoginForm extends Component {
   render() {
     const {fields: {email, password}, invite, ...props} = this.props
 
-    const subtitle = invite.email && (
+    const subtitle = invite && (
       <FormattedMessage id="login_to_join" values={invite} style={styles.subtitle} />
     )
 

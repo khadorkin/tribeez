@@ -2,6 +2,13 @@ import React, {Component, PropTypes} from 'react'
 import {StyleSheet, ListView, View, Text} from 'react-native'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+
+import {setLastViewedHistoryKey} from '../../common/actions/app'
+
+import {db} from '../../common/firebase'
+
+const PAGING = 20
 
 import Spinner from '../components/Spinner'
 import Button from '../components/Button'
@@ -11,70 +18,185 @@ import colors from '../../common/constants/colors'
 class AsyncContent extends Component {
   static propTypes = {
     // redux state
+    tid: PropTypes.string,
     uid: PropTypes.string,
     socketStatus: PropTypes.string,
     // from parent component
-    data: PropTypes.object.isRequired,
-    fetcher: PropTypes.func.isRequired,
-    rowComponent: PropTypes.any.isRequired,
+    name: PropTypes.string.isRequired,
+    renderRow: PropTypes.func.isRequired,
     splitter: PropTypes.func,
+    orderBy: PropTypes.string,
+    children: PropTypes.node,
     footer: PropTypes.node,
+    // action creators:
+    setLastViewedHistoryKey: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
-    this.handleEndReached = this.handleEndReached.bind(this)
-    this.handleLoad = this.handleLoad.bind(this)
-    this.renderRow = this.renderRow.bind(this)
-    this.renderFooter = this.renderFooter.bind(this)
-    this.renderSectionHeader = this.renderSectionHeader.bind(this)
-    this.updateData = this.updateData.bind(this)
-
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 !== r2,
         sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
       }),
+      loading: false,
+      empty: false,
     }
-  }
+    this.handleEndReached = this.handleEndReached.bind(this)
+    this.renderFooter = this.renderFooter.bind(this)
+    this.renderSectionHeader = this.renderSectionHeader.bind(this)
+    this.updateDataView = this.updateDataView.bind(this)
 
-  componentWillMount() {
-    this.updateData(this.props)
+    this.handleLoad = this.handleLoad.bind(this)
+    this.lastEntry = this.lastEntry.bind(this)
+    this.childAdded = this.childAdded.bind(this)
+    this.childChanged = this.childChanged.bind(this)
+    //this.childMoved = this.childMoved.bind(this)
+    this.childRemoved = this.childRemoved.bind(this)
+    this.flush = this.flush.bind(this)
+    this.handleError = this.handleError.bind(this)
+    this.queryRef = null
+    this.last = null
+    this.buffer = []
   }
 
   componentDidMount() {
-    if (this.props.uid) {
-      this.uid = this.props.uid
+    if (this.props.tid) {
+      this.tid = this.props.tid
       this.handleLoad()
     }
   }
 
   componentWillReceiveProps(props) {
-    if (props.uid && !this.uid) {
-      this.uid = props.uid
+    if (props.tid && !this.tid) {
+      this.tid = props.tid
       this.handleLoad()
-    }
-
-    this.updateData(props)
-
-    // reconnected => re-fetch in case content changed
-    if (props.socketStatus === 'connected' && this.props.socketStatus !== props.socketStatus) {
-      if (!props.data.loading) {
-        this.props.fetcher(0) //TODO: handle case when more than one page is already loaded
-      }
     }
   }
 
-  updateData(props) {
-    if (!props.data.items.length) {
+  componentWillUnmount() {
+    if (this.queryRef) {
+      this.queryRef.off('value', this.lastEntry)
+      this.queryRef.off('child_added', this.childAdded)
+      this.queryRef.off('child_changed', this.childChanged)
+      //this.queryRef.off('child_moved', this.childMoved)
+      this.queryRef.off('child_removed', this.childRemoved)
+    }
+    clearTimeout(this.timeout)
+  }
+
+  handleEndReached() {
+    if (this.tid) {
+      this.handleLoad()
+    }
+  }
+
+  handleLoad() {
+    if (!this.queryRef) {
+      this.queryRef = db.ref('tribes/' + this.tid + '/' + this.props.name)
+    }
+
+    let query
+    if (this.props.orderBy) {
+      query = this.queryRef.orderByChild(this.props.orderBy)
+    } else {
+      query = this.queryRef.orderByKey()
+    }
+
+    if (!this.listeningToLast) {
+      query.limitToLast(2).on('value', this.lastEntry, this.handleError)
+      this.listeningToLast = true
+    }
+
+    if (this.state.loading) {
+      return // e.g. multiple scrollings
+    }
+    if (this.first && this.last === this.first) {
+      return // already listening down to this index
+    }
+    this.setState({
+      loading: true,
+    })
+
+    if (this.last) {
+      query = query.endAt(this.last)
+    }
+    this.first = this.last // see below
+    query.limitToLast(PAGING).on('child_added', this.childAdded, this.handleError)
+    query.limitToLast(PAGING).on('child_changed', this.childChanged, this.handleError)
+    //query.limitToLast(PAGING).on('child_moved', this.childMoved, this.handleError)
+    query.limitToLast(PAGING).on('child_removed', this.childRemoved, this.handleError)
+  }
+
+  lastEntry(snapshot) {
+    this.setState({
+      empty: !snapshot.numChildren(),
+    })
+  }
+
+  childAdded(snapshot) {
+    clearTimeout(this.timeout)
+    if (snapshot.key !== this.first) { // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
+      const item = snapshot.val()
+      item.id = snapshot.key
+      this.buffer.push(item) // add to state but without re-rendering (see batching below)
+      if (!this.last || snapshot.key < this.last) {
+        this.last = snapshot.key // i.e. the next query will include the last item of the current one
+        // or:
+        // const key = snapshot.key
+        // this.last = key.substr(0, key.length - 1) + String.fromCharCode(key.substr(-1).charCodeAt() - 1) // replace last char with previous unicode one to not include the last item
+      }
+    }
+    this.timeout = setTimeout(this.flush, 20) // the "child_added" events normally arrive in 1 to 5 ms
+  }
+
+  flush() {
+    const sorter = this.props.orderBy || 'id'
+    this.buffer = this.buffer.sort((a, b) => (a[sorter] < b[sorter] ? 1 : -1))
+    if (this.props.name === 'history') {
+      if (!this.lastKey || this.buffer[0].id > this.lastKey) {
+        this.lastKey = this.buffer[0].id
+        this.props.setLastViewedHistoryKey(this.lastKey)
+      }
+    }
+    this.setState({
+      loading: false,
+    })
+    this.updateDataView()
+  }
+
+  childChanged(snapshot) {
+    const newItem = snapshot.val()
+    newItem.id = snapshot.key
+    this.buffer = this.buffer.map((item) => (item.id === snapshot.key ? newItem : item))
+    this.updateDataView()
+  }
+
+  // childMoved() {
+  //
+  // }
+
+  childRemoved(snapshot) {
+    this.buffer = this.buffer.filter((item) => item.id !== snapshot.key)
+    this.updateDataView()
+  }
+
+  handleError(error) {
+    this.setState({
+      error: 'firebase.error.' + error.code, //TODO
+    })
+  }
+
+  updateDataView() {
+    if (!this.buffer.length) {
       return
     }
 
-    if (props.splitter) {
+    if (this.props.splitter) {
       const blob = {}
       const sections = []
-      props.data.items.forEach((item) => {
-        const sectionId = props.splitter(item)
+      this.buffer.forEach((item) => {
+        const sectionId = this.props.splitter(item)
         if (!blob[sectionId]) {
           blob[sectionId] = []
           sections.push(sectionId)
@@ -86,42 +208,18 @@ class AsyncContent extends Component {
       })
     } else {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(props.data.items),
+        dataSource: this.state.dataSource.cloneWithRows(this.buffer),
       })
     }
-  }
-
-  handleEndReached() {
-    if (this.props.data.paging) {
-      this.handleLoad(true)
-    }
-  }
-
-  handleLoad(more) {
-    const data = this.props.data
-    if (data.loading) {
-      return
-    }
-    if (data.paging === undefined && data.items.length > 0) {
-      // pages without paging: already loaded it
-      return
-    }
-    if (!data.pages || (more && data.items.length / data.paging === data.pages)) {
-      this.props.fetcher(data.pages) // last page is N => N+1 pages => next page is N+1
-    }
-  }
-
-  renderRow(row) {
-    return <this.props.rowComponent item={row} />
   }
 
   renderFooter() {
     return (
       <View>
         <View style={styles.spinner}>
-          <Spinner visible={this.props.data.loading} />
+          <Spinner visible={this.state.loading} />
         </View>
-        {this.props.data.items.length > 0 && this.props.footer}
+        {this.buffer.length > 0 && this.props.footer}
       </View>
     )
   }
@@ -134,41 +232,44 @@ class AsyncContent extends Component {
   }
 
   render() {
-    const {error, loading, items} = this.props.data
-
-    if (error) {
+    if (this.state.error) {
       return (
         <View style={styles.empty}>
-          <Text style={styles.error}>{error}</Text>
+          <Text style={styles.error}>{this.state.error}</Text>
           <Button id="retry" onPress={this.handleLoad} />
         </View>
       )
-    } else if (!loading && !items.length) {
+    } else if (this.state.empty) {
       return (
         <View style={styles.empty}>
           <Text>Nothing to show!</Text>
         </View>
       )
-    } else {
-      return (
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          renderFooter={this.renderFooter}
-          renderSectionHeader={this.renderSectionHeader}
-          style={styles.container}
-          onEndReached={this.handleEndReached}
-        />
-      )
     }
+
+    return (
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.props.renderRow}
+        renderFooter={this.renderFooter}
+        renderSectionHeader={this.renderSectionHeader}
+        style={styles.container}
+        onEndReached={this.handleEndReached}
+      />
+    )
   }
 
 }
 
 const mapStateToProps = (state) => ({
+  tid: state.tribe.id,
   uid: state.user.uid,
   socketStatus: state.app.socketStatus,
 })
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  setLastViewedHistoryKey,
+}, dispatch)
 
 const styles = StyleSheet.create({
   container: {
@@ -192,4 +293,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps)(AsyncContent)
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncContent)

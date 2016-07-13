@@ -11,7 +11,6 @@ import FormattedDate from '../components/FormattedDate'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getItem'
 import postVote from '../../common/actions/postVote'
 import routes from '../../common/routes'
 import colors from '../../common/constants/colors'
@@ -21,9 +20,9 @@ import pollAnswers from '../../common/utils/pollAnswers'
 class PollDetails extends Component {
   static propTypes = {
     // from parent:
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     // from redux:
-    item: PropTypes.object,
+    poll: PropTypes.object,
     uid: PropTypes.string.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
@@ -45,11 +44,11 @@ class PollDetails extends Component {
   handleChoice(id) {
     if (this.state.choices.includes(id)) {
       this.setState({
-        choices: this.props.item.multiple ? this.state.choices.filter((i) => i !== id) : [],
+        choices: this.props.poll.multiple ? this.state.choices.filter((i) => i !== id) : [],
       })
     } else {
       this.setState({
-        choices: this.props.item.multiple ? [...this.state.choices, id] : [id],
+        choices: this.props.poll.multiple ? [...this.state.choices, id] : [id],
       })
     }
   }
@@ -57,7 +56,7 @@ class PollDetails extends Component {
   handleVote() {
     const choices = this.state.choices
     if (choices.length) {
-      this.props.postVote(this.props.item.id, choices, this.props.uid)
+      this.props.postVote(this.props.poll.id, choices)
       this.setState({
         again: false,
       })
@@ -70,10 +69,10 @@ class PollDetails extends Component {
     })
   }
 
-  renderItem(poll) {
-    const {userMap} = this.props
+  renderItem() {
+    const {poll, userMap} = this.props
 
-    const author = userMap[poll.author_id]
+    const author = userMap[poll.author]
 
     const results = pollAnswers(poll, userMap)
 
@@ -107,13 +106,13 @@ class PollDetails extends Component {
       body = (
         <View style={styles.info}>
           {
-            poll.options.map((option) => {
-              const checked = this.state.choices.includes(option.id)
+            poll.options.map((option, id) => {
+              const checked = this.state.choices.includes(id)
 
               return (
-                <TouchableOpacity key={option.id} style={styles.option} onPress={this.handleChoice.bind(this, option.id)}>
+                <TouchableOpacity key={id} style={styles.option} onPress={this.handleChoice.bind(this, id)}>
                   <Icon size={24} color={checked ? colors.main : colors.icon} name={checked ? checked_icon : unchecked_icon} />
-                  <Text style={styles.label}>{option.name}</Text>
+                  <Text style={styles.label}>{option}</Text>
                 </TouchableOpacity>
               )
             })
@@ -133,20 +132,20 @@ class PollDetails extends Component {
         <Text style={styles.info}>Added by {author.name}</Text>
         <Text style={styles.info}>{poll.description}</Text>
         {body}
-        <Log type="poll" id={poll.id} />
+        <Log item={poll} />
       </ScrollView>
     )
   }
 
   render() {
-    const hasAnswers = this.props.item && Object.keys(this.props.item.answers).length > 0
-
     return (
-      <Details
-        {...this.props}
-        render={this.renderItem}
-        editRoute={hasAnswers ? routes.POLLS_EDIT : null}
-      />
+      <Details type="poll"
+        id={this.props.id}
+        item={this.props.poll}
+        editRoute={routes.POLLS_EDIT}
+      >
+        {this.props.poll && this.renderItem()}
+      </Details>
     )
   }
 }
@@ -185,19 +184,15 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   // for <Details> HoC:
-  item: state.polls.items.find((i) => i.id === ownProps.id)
-     || state.item.poll,
-  loading: state.polls.loading,
-  error: state.polls.error,
+  poll: state.item.poll,
   // for this component:
   uid: state.user.uid,
   userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getItem,
   postVote,
 }, dispatch)
 

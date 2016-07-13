@@ -26,7 +26,13 @@ class Events extends Component {
   }
 
   handleFab() {
-    router.push(routes.EVENTS_NEW)
+    const route = routes.EVENTS_NEW
+    route.edit = null
+    router.push(route)
+  }
+
+  renderEvent(row) {
+    return <Event event={row} />
   }
 
   render() {
@@ -34,13 +40,13 @@ class Events extends Component {
       <View style={styles.container}>
         <TabView>
           <AsyncContent name="events"
-            rowComponent={Event}
+            renderRow={this.renderEvent}
             splitter={sectionSplitter}
             tabLabel="tab.upcoming"
           />
           <AsyncContent name="events"
             splitter={sectionSplitter}
-            rowComponent={Event}
+            renderRow={this.renderEvent}
             tabLabel="tab.past"
           />
         </TabView>

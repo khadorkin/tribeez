@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native'
 
+import {connect} from 'react-redux'
+
 import FormattedMessage from './FormattedMessage'
 
 import routes from '../../common/routes'
@@ -10,6 +12,8 @@ import gravatar from '../../common/utils/gravatar'
 
 class Member extends Component {
   static propTypes = {
+    // from redux:
+    userMap: PropTypes.object.isRequired,
     // from parent:
     user: PropTypes.object.isRequired,
   }
@@ -26,7 +30,8 @@ class Member extends Component {
   }
 
   render() {
-    const {user} = this.props
+    const {user, userMap} = this.props
+    const member = userMap[user.uid]
 
     return (
       <View style={styles.container}>
@@ -37,7 +42,7 @@ class Member extends Component {
           />
           <View style={styles.titles}>
             <Text style={styles.title}>{user.name}</Text>
-            <FormattedMessage id="member_since" values={{when: user.registered}} style={styles.subtitle} />
+            <FormattedMessage id="member_since" values={{when: member.joined}} style={styles.subtitle} />
           </View>
         </TouchableOpacity>
       </View>
@@ -72,4 +77,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Member
+const mapStateToProps = (state) => ({
+  userMap: state.tribe.userMap,
+})
+
+export default connect(mapStateToProps)(Member)

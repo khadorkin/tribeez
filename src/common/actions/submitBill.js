@@ -53,9 +53,9 @@ export default (values, dispatch) => {
       })
     } else {
       action = 'new'
+      values.added = timestamp
       id = db.ref('tribes/' + tid + '/bills').push().key
       promise = db.ref('tribes/' + tid + '/bills/' + id).set(values)
-      values.added = timestamp
     }
 
     promise

@@ -13,7 +13,7 @@ import postInvite from '../../common/actions/postInvite'
 class Invite extends Component {
   static propTypes = {
     // from parent:
-    item: PropTypes.object.isRequired,
+    invite: PropTypes.object.isRequired,
     // from redux:
     uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
@@ -29,21 +29,21 @@ class Invite extends Component {
   }
 
   handleResend() {
-    Alert.alert(this.props.messages.dialog_reinvite, this.props.item.email, [
+    Alert.alert(this.props.messages.dialog_reinvite, this.props.invite.email, [
       {text: this.props.messages.cancel},
       {text: this.props.messages.send, onPress: this.handleConfirm},
     ])
   }
 
   handleConfirm() {
-    const {item, uid} = this.props
-    this.props.postInvite(item.email, item.lang, uid) //TODO: show loader
+    const {invite, uid} = this.props
+    this.props.postInvite(invite.email, invite.lang, uid) //TODO: show loader
   }
 
   render() {
-    const {userMap, item} = this.props
+    const {userMap, invite} = this.props
 
-    const inviter = userMap[item.inviter_id]
+    const inviter = userMap[invite.inviter]
     if (!inviter) {
       return null
     }
@@ -51,9 +51,9 @@ class Invite extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.titles}>
-          <Text style={styles.title}>{item.email}</Text>
+          <Text style={styles.title}>{invite.email}</Text>
           <Text style={styles.subtitle}>
-            <FormattedMessage id="invited_by" values={{user: inviter.name}} relative={{when: item.invited}} />
+            <FormattedMessage id="invited_by" values={{user: inviter.name}} relative={{when: invite.invited}} />
           </Text>
         </View>
         <IconButton name="refresh" onPress={this.handleResend} style={styles.icon} />

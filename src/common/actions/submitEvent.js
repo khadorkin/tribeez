@@ -15,8 +15,8 @@ export default (values, dispatch) => {
       action = 'update'
     } else {
       action = 'new'
-      id = db.ref('tribes/' + tid + '/events').push().key
       values.added = timestamp
+      id = db.ref('tribes/' + tid + '/events').push().key
     }
     // this key is used to separate past/upcoming events:
     values.index = values.end || values.start

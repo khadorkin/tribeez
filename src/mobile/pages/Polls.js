@@ -19,14 +19,20 @@ class Polls extends Component {
   }
 
   handleFab() {
-    router.push(routes.POLLS_NEW)
+    const route = routes.POLLS_NEW
+    route.edit = null
+    router.push(route)
+  }
+
+  renderPoll(row) {
+    return <Poll poll={row} />
   }
 
   render() {
     return (
       <View style={styles.container}>
         <AsyncContent name="polls"
-          rowComponent={Poll}
+          renderRow={this.renderPoll}
         />
         <Fab name="add" onPress={this.handleFab} />
       </View>

@@ -21,8 +21,8 @@ export default (values, dispatch) => {
       action = 'update'
     } else {
       action = 'new'
-      id = db.ref('tribes/' + tid + '/polls').push().key
       values.added = timestamp
+      id = db.ref('tribes/' + tid + '/polls').push().key
     }
 
     db.ref('tribes/' + tid + '/polls/' + id).set(values)

@@ -14,7 +14,7 @@ import gravatar from '../../common/utils/gravatar'
 class Entry extends Component {
   static propTypes = {
     // from parent:
-    item: PropTypes.object,
+    entry: PropTypes.object,
     // from redux:
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
@@ -27,22 +27,22 @@ class Entry extends Component {
   }
 
   handleTouch() {
-    const {item} = this.props
+    const {entry} = this.props
 
-    if (item.action === 'delete') {
+    if (entry.action === 'delete') {
       return // no details page since it got deleted
     }
 
-    const route = routes[item.item_type.toUpperCase()]
+    const route = routes[entry.type.toUpperCase()]
     if (route.name === 'member') {
       route.item = {
-        id: item.user_id,
-        name: this.props.userMap[item.user_id].name,
+        id: entry.user,
+        name: this.props.userMap[entry.user].name,
       }
     } else {
       route.item = {
-        id: item.item_id,
-        name: item.data.name,
+        id: entry.id,
+        name: entry.item.name,
       }
     }
 
@@ -50,9 +50,9 @@ class Entry extends Component {
   }
 
   render() {
-    const {item, userMap, uid} = this.props
+    const {entry, userMap, uid} = this.props
 
-    const author = userMap[item.user_id]
+    const author = userMap[entry.user]
     if (!author) {
       return null
     }
@@ -66,48 +66,48 @@ class Entry extends Component {
 
     let infos
 
-    switch (item.item_type) {
+    switch (entry.type) {
       case 'member':
-        if (item.item_id) {
-          const inviter = userMap[item.item_id]
+        if (entry.inviter) {
+          const inviter = userMap[entry.inviter]
           if (inviter) {
-            infos = <FormattedMessage id={`entry.member.${item.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
+            infos = <FormattedMessage id={`entry.member.${entry.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
           }
         }
         break
       case 'bill':
-        values.name = item.data.name
-        values.amount = item.data.amount
-        const user_part = item.data.parts.find((part) => part.user_id === uid)
-        if (user_part) {
-          infos = <FormattedMessage id={`entry.bill.${item.action}.infos`} values={{amount: user_part.amount}} style={styles.infos} />
+        values.name = entry.item.name
+        values.amount = entry.item.amount
+        const amount = entry.item.parts[uid]
+        if (amount) {
+          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount}} style={styles.infos} />
         } else {
-          infos = <FormattedMessage id={`entry.bill.${item.action}.stranger`} style={styles.infos} />
+          infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} style={styles.infos} />
         }
         break
       case 'poll':
-        values.name = item.data.name
+        values.name = entry.item.name
         break
       case 'event':
-        values.name = item.data.name
-        values.when = item.data.start
+        values.name = entry.item.name
+        values.when = entry.item.start
         break
       case 'task':
-        values.name = item.data.name
+        values.name = entry.item.name
         break
       default:
         return null
     }
 
-    if (item.action === 'comment') {
-      infos = <Text style={styles.infos}>{item.data.text}</Text>
+    if (entry.action === 'comment') {
+      infos = <Text style={styles.infos}>{entry.item.text}</Text>
     }
 
-    const title = <FormattedMessage id={`entry.${item.item_type}.${item.action}`} values={values} />
-    const date = <FormattedRelative value={item.added} />
+    const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
+    const date = <FormattedRelative value={entry.added} />
 
     return (
-      <View style={[styles.container, {backgroundColor: item.new ? '#FFFFDD' : 'white'}]}>
+      <View style={[styles.container, {backgroundColor: entry.new ? '#FFFFDD' : 'white'}]}>
         <TouchableOpacity onPress={this.handleTouch} style={styles.main}>
           <Image
             source={{uri: gravatar(author)}}

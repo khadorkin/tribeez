@@ -4,7 +4,7 @@ import validator from '../utils/formValidator'
 import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => {
-  const task = ownProps.current || state.item.task // either from routing state, or from ajax retrieval
+  const task = state.item.task || ownProps.current // first from routing state if any, then from ajax retrieval
   let initialValues
   if (task) {
     initialValues = {

@@ -6,7 +6,7 @@ import platform from '../platform'
 const now = Date.now() // need to be called only once, otherwise form reinitializes indefinitely
 
 const mapStateToProps = (state, ownProps) => {
-  const bill = ownProps.current || state.item.bill // either from routing state, or from ajax retrieval
+  const bill = state.item.bill || ownProps.current // first from routing state if any, then from ajax retrieval
   let initialValues
   if (bill) {
     const parts = state.tribe.users

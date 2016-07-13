@@ -52,6 +52,14 @@ class Activity extends Component {
     )
   }
 
+  renderActivity(row) {
+    return <Card item={row} />
+  }
+
+  renderHistoryEntry(row) {
+    return <Entry entry={row} />
+  }
+
   render() {
     const {unread} = this.props
 
@@ -59,12 +67,12 @@ class Activity extends Component {
       <View style={styles.container}>
         <TabView>
           <AsyncContent name="activity"
-            rowComponent={Card}
+            renderRow={this.renderActivity}
             tabLabel="tab.activity"
             footer={this.renderFooter()}
           />
           <AsyncContent name="history"
-            rowComponent={Entry}
+            renderRow={this.renderHistoryEntry}
             tabLabel="tab.history"
             badge={unread > 0 && unread}
           />
@@ -96,6 +104,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   bot_token: state.user.bot_token,
   unread: state.app.unread,
+  lang: state.app.lang, // hack to force update when lang changes
 })
 
 export default connect(mapStateToProps)(Activity)

@@ -19,14 +19,20 @@ class Tasks extends Component {
   }
 
   handleFab() {
-    router.push(routes.TASKS_NEW)
+    const route = routes.TASKS_NEW
+    route.edit = null
+    router.push(route)
+  }
+
+  renderTask(row) {
+    return <Task task={row} />
   }
 
   render() {
     return (
       <View style={styles.container}>
         <AsyncContent name="tasks"
-          rowComponent={Task}
+          renderRow={this.renderTask}
         />
         <Fab name="add" onPress={this.handleFab} />
       </View>

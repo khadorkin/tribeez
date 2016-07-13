@@ -1,30 +1,24 @@
 import {db, auth} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
   ITEM,
 } from '../constants/actions'
 
-export default (itemType, id) => {
-  return (dispatch) => {
-    dispatch({
-      type: FIREBASE_REQUEST,
-    })
+let ref
 
-    db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id).once('value')
-    .then((snapshot) => {
+const on = (itemType, id) => {
+  return (dispatch) => {
+    ref = db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id)
+    ref.on('value', (snapshot) => {
+      const item = snapshot.val()
+      item.id = snapshot.key
       dispatch({
         type: ITEM,
         itemType,
-        data: snapshot.val(),
+        item,
       })
-      dispatch({
-        type: FIREBASE_SUCCESS,
-      })
-    })
-    .catch((error) => {
+    }, (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
         origin: 'getItem/' + itemType,
@@ -33,3 +27,19 @@ export default (itemType, id) => {
     })
   }
 }
+
+const off = (itemType/*, id*/) => {
+  return (dispatch) => {
+    if (ref) {
+      dispatch({
+        type: ITEM,
+        itemType,
+        item: null,
+      })
+      ref.off('value')
+      ref = null
+    }
+  }
+}
+
+export default {on, off}

@@ -30,6 +30,7 @@ export default (values, dispatch) => {
               type: values.tribe_type,
               currency: values.currency,
               city: values.city,
+              created: timestamp,
             },
             members: {
               [uid]: {
@@ -48,6 +49,7 @@ export default (values, dispatch) => {
               gravatar,
               lang: values.lang,
               name: values.name,
+              registered: timestamp,
               tribes: {
                 [tid]: values.tribe_name,
               },
@@ -65,6 +67,7 @@ export default (values, dispatch) => {
               balance: 0,
               gravatar,
               name: values.name,
+              joined: timestamp,
             }
 
             // private user infos

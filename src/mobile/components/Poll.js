@@ -18,7 +18,7 @@ class Poll extends Component {
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:
-    item: PropTypes.object.isRequired,
+    poll: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -28,24 +28,24 @@ class Poll extends Component {
 
   handlePress() {
     const route = routes.POLL
-    route.item = this.props.item
+    route.item = this.props.poll
     router.push(route)
   }
 
   render() {
-    const {item} = this.props
+    const {poll} = this.props
 
     // to render a poll, the users must be loaded for the current tribe polls
-    const author = this.props.userMap[item.author_id]
+    const author = this.props.userMap[poll.author]
     if (!author) {
       return null
     }
 
-    //const user_answer = item.answers[this.props.uid]
+    //const user_answer = poll.answers[this.props.uid]
 
-    const num_answers = Object.keys(item.answers).length
+    const num_answers = Object.keys(poll.answers).length
 
-    const date = <FormattedRelative value={item.created} />
+    const date = <FormattedRelative value={poll.added} />
     const subtitle = <FormattedMessage id="poll_answers" values={{num: num_answers}} />
 
     return (
@@ -56,7 +56,7 @@ class Poll extends Component {
             style={styles.avatar}
           />
           <View style={styles.titles}>
-            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.title}>{poll.name}</Text>
             <Text style={styles.subtitle}>{date} — {subtitle}</Text>
           </View>
         </TouchableOpacity>

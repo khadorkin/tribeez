@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {ScrollView, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -11,7 +10,6 @@ import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getItem'
 import routes from '../../common/routes'
 import colors from '../../common/constants/colors'
 
@@ -27,9 +25,9 @@ const infos = [
 class EventDetails extends Component {
   static propTypes = {
     // from parent:
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     // from redux:
-    item: PropTypes.object,
+    event: PropTypes.object,
     userMap: PropTypes.object.isRequired,
   }
 
@@ -83,18 +81,20 @@ class EventDetails extends Component {
               )
             })
         }
-        <Log type="event" id={event.id} />
+        <Log item={event} />
       </ScrollView>
     )
   }
 
   render() {
     return (
-      <Details
-        {...this.props}
-        render={this.renderItem}
+      <Details type="event"
+        id={this.props.id}
+        item={this.props.event}
         editRoute={routes.EVENTS_EDIT}
-      />
+      >
+        {this.props.event && this.renderItem()}
+      </Details>
     )
   }
 }
@@ -109,19 +109,13 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   // for <Details> HoC:
-  item: state.upcomingevents.items.find((i) => i.id === ownProps.id)
-      || state.pastevents.items.find((i) => i.id === ownProps.id)
-      || state.item.event,
+  event: state.item.event,
   loading: state.events.loading,
   error: state.events.error,
   // for this component:
   userMap: state.tribe.userMap,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getItem,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventDetails)
+export default connect(mapStateToProps)(EventDetails)

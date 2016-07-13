@@ -15,7 +15,7 @@ export default (state = initialState, action = null) => {
     case ITEM:
       return {
         ...state,
-        [action.itemType]: action.data,
+        [action.itemType]: action.item,
       }
 
     case LOGOUT_SUCCESS:

@@ -16,9 +16,7 @@ import Spinner from './components/Spinner'
 import routes from '../common/routes'
 import router from '../common/router'
 import colors from '../common/constants/colors'
-import getMember from '../common/actions/getMember'
 import submitLogin from '../common/actions/submitLogin'
-import {message} from '../common/actions/app'
 import deleteItem from '../common/actions/deleteItem'
 
 class App extends Component {
@@ -32,9 +30,7 @@ class App extends Component {
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
     // action creators:
-    getMember: PropTypes.func.isRequired,
     submitLogin: PropTypes.func.isRequired,
-    message: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
   }
 
@@ -87,11 +83,6 @@ class App extends Component {
           return
         }
       }
-
-      // default action: check for already authenticated user (HttpOnly cookie)
-      if (!this.props.uid) {
-        this.props.getMember(routes.ACTIVITY, routes.ACTIVITY, routes.WELCOME)
-      }
     })
     //TODO: catch
   }
@@ -124,11 +115,11 @@ class App extends Component {
         }
       },
       RightButton: (route/*, navigator, index, navState*/) => {
+        if (loading) {
+          return <Spinner color="white" visible={true} style={styles.rightIcon} />
+        }
         if (route.type === 'details') { //TODO: not show if does not exist
           return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
-        }
-        if (loading) {
-          return <Spinner visible={true} />
         }
         return null
       },
@@ -261,9 +252,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getMember,
   submitLogin,
-  message,
   deleteItem,
 }, dispatch)
 

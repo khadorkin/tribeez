@@ -2,25 +2,21 @@ import React, {Component, PropTypes} from 'react'
 import {ScrollView, Text, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import Details from '../hoc/Details'
 import FormattedNumber from '../components/FormattedNumber'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getItem'
 import routes from '../../common/routes'
 
 class BillDetails extends Component {
   static propTypes = {
     // from parent:
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     // from redux:
-    item: PropTypes.object,
+    bill: PropTypes.object,
     userMap: PropTypes.object.isRequired,
-    // action creators:
-    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -28,10 +24,10 @@ class BillDetails extends Component {
     this.renderItem = this.renderItem.bind(this)
   }
 
-  renderItem(bill) {
-    const {userMap} = this.props
+  renderItem() {
+    const {bill, userMap} = this.props
 
-    const payer = userMap[bill.payer_id]
+    const payer = userMap[bill.payer]
 
     //TODO: UI
 
@@ -42,29 +38,31 @@ class BillDetails extends Component {
         <Text style={styles.info}>Paid by {payer.name}</Text>
         <Text style={styles.info}>{bill.description}</Text>
         {
-          bill.parts.map((part) => {
-            const part_user = userMap[part.user_id]
-            const part_amount = <FormattedNumber value={part.amount} format="money" />
+          Object.keys(bill.parts).map((uid) => {
+            const part_user = userMap[uid]
+            const part_amount = <FormattedNumber value={bill.parts[uid]} format="money" />
 
             return (
-              <Text style={styles.info} key={part.user_id}>
+              <Text style={styles.info} key={uid}>
                 {part_user.name}: {part_amount}
               </Text>
             )
           })
         }
-        <Log type="bill" id={bill.id} />
+        <Log item={bill} />
       </ScrollView>
     )
   }
 
   render() {
     return (
-      <Details
-        {...this.props}
-        render={this.renderItem}
+      <Details type="bill"
+        id={this.props.id}
+        item={this.props.bill}
         editRoute={routes.BILLS_EDIT}
-      />
+      >
+        {this.props.bill && this.renderItem()}
+      </Details>
     )
   }
 }
@@ -75,18 +73,11 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   // for <Details> HoC:
-  item: state.bills.items.find((i) => i.id === ownProps.id)
-     || state.item.bill,
-  loading: state.bills.loading,
-  error: state.bills.error,
+  bill: state.item.bill,
   // for this component:
   userMap: state.tribe.userMap,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getItem,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(BillDetails)
+export default connect(mapStateToProps)(BillDetails)

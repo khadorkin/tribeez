@@ -4,23 +4,19 @@ import {StyleSheet, View, Text} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import Spinner from './Spinner'
 import CommentBox from './CommentBox'
 
-import getLog from '../../common/actions/getLog'
 import updateComment from '../../common/actions/updateComment'
 import postComment from '../../common/actions/postComment'
 
 class Log extends Component {
   static propTypes = {
     // from parent:
-    type: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    item: PropTypes.object.isRequired,
     // from redux:
     log: PropTypes.object.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
-    getLog: PropTypes.func.isRequired,
     updateComment: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
   }
@@ -31,10 +27,6 @@ class Log extends Component {
     this.handleComment = this.handleComment.bind(this)
   }
 
-  componentDidMount() {
-    this.props.getLog(this.props.type, this.props.id) //TODO: merge with get[Item]
-  }
-
   handleChange(text) {
     this.props.updateComment(text)
   }
@@ -42,40 +34,27 @@ class Log extends Component {
   handleComment() {
     const comment = this.props.log.comment.trim()
     if (comment) {
-      this.props.postComment(this.props.type, this.props.id, comment)
+      this.props.postComment(this.props.item, comment)
     }
   }
 
   render() {
-    const {log: {loading, error, items, comment}, userMap} = this.props
+    const {log: {comment}, userMap} = this.props
 
-    if (error) {
-      return (
-        <View style={styles.empty}>
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      )
-    }
-
-    if (loading) {
-      return (
-        <View style={styles.empty}>
-          <Spinner visible={true} />
-        </View>
-      )
-    }
+    const entries = {} //TODO: get from item
 
     //TODO: UI
 
     return (
       <View style={styles.container}>
         {
-          items.map((item) => {
-            const author = userMap[item.user_id]
-            if (item.action === 'comment') {
-              return <Text key={item.action + item.id}>Comment by {author.name}: {item.data.text}</Text>
+          Object.keys(entries).map((id) => {
+            const entry = entries[id]
+            const author = userMap[entry.author]
+            if (entry.action === 'comment') {
+              return <Text key={id}>Comment by {author.name}: {entry.text}</Text>
             } else {
-              return <Text key={item.action + item.id}>Entry by {author.name}: {item.action}</Text>
+              return <Text key={id}>Entry by {author.name}: {entry.action}</Text>
             }
           })
         }
@@ -109,7 +88,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getLog,
   updateComment,
   postComment,
 }, dispatch)

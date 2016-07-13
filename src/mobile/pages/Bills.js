@@ -24,7 +24,13 @@ class Bills extends Component {
   }
 
   handleFab() {
-    router.push(routes.BILLS_NEW)
+    const route = routes.BILLS_NEW
+    route.edit = null
+    router.push(route)
+  }
+
+  renderBill(row) {
+    return <Bill bill={row} />
   }
 
   render() {
@@ -32,7 +38,7 @@ class Bills extends Component {
       <View style={styles.container}>
         <TabView>
           <AsyncContent name="bills"
-            rowComponent={Bill}
+            renderRow={this.renderBill}
             tabLabel="tab.bills"
           />
           <ScrollView tabLabel="tab.balances" style={styles.content}>

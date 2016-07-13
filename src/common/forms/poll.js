@@ -4,7 +4,7 @@ import validator from '../utils/formValidator'
 import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => {
-  const poll = ownProps.current || state.item.poll // either from routing state, or from ajax retrieval
+  const poll = state.item.poll || ownProps.current // first from routing state if any, then from ajax retrieval
   let initialValues
   if (poll) {
     poll.options.push('') // update poll => add an empty option to be able to add options

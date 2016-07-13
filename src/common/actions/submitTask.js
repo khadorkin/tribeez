@@ -23,8 +23,8 @@ export default (values, dispatch) => {
       action = 'update'
     } else {
       action = 'new'
-      id = db.ref('tribes/' + tid + '/tasks').push().key
       values.added = timestamp
+      id = db.ref('tribes/' + tid + '/tasks').push().key
     }
 
     db.ref('tribes/' + tid + '/tasks/' + id).set(values)

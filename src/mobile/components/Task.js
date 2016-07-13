@@ -17,7 +17,7 @@ class Task extends Component {
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:
-    item: PropTypes.object.isRequired,
+    task: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -27,22 +27,22 @@ class Task extends Component {
 
   handlePress() {
     const route = routes.TASK
-    route.item = this.props.item
+    route.item = this.props.task
     router.push(route)
   }
 
   render() {
-    const {item} = this.props
+    const {task} = this.props
 
     // to render a task, the users must be loaded for the current tribe tasks
-    const author = this.props.userMap[item.author_id]
+    const author = this.props.userMap[task.author]
     if (!author) {
       return null
     }
 
     let subtitle
-    if (item.done) {
-      subtitle = <FormattedMessage id="last_done" values={{ago: item.done}} />
+    if (task.done) {
+      subtitle = <FormattedMessage id="last_done" values={{ago: task.done}} />
     } else {
       subtitle = <FormattedMessage id="never_done" />
     }
@@ -55,7 +55,7 @@ class Task extends Component {
             style={styles.avatar}
           />
           <View style={styles.titles}>
-            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.title}>{task.name}</Text>
             <Text style={styles.subtitle}>{subtitle}</Text>
           </View>
         </TouchableOpacity>

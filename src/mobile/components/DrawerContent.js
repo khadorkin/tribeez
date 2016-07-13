@@ -3,7 +3,6 @@ import {StyleSheet, View, ScrollView, Text, TouchableOpacity, Image} from 'react
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {IntlProvider} from 'react-intl'
 
 import FormattedMessage from './FormattedMessage'
 import IconButton from './IconButton'
@@ -33,8 +32,6 @@ class DrawerContent extends Component {
     // from redux:
     user: PropTypes.object,
     currentTribe: PropTypes.object,
-    lang: PropTypes.string.isRequired,
-    messages: PropTypes.object.isRequired,
     // action creators:
     postLogout: PropTypes.func.isRequired,
     putSwitch: PropTypes.func.isRequired,
@@ -111,11 +108,12 @@ class DrawerContent extends Component {
       </IconButton>
     )
 
-    const tribeItems = user.tribes.map((tribe) =>
-      <TouchableOpacity key={tribe.id} onPress={this.handleSwitchTribe.bind(this, tribe.id)} style={styles.tribe}>
-        <Text style={styles.tribeText}>{tribe.name}</Text>
+    const tribe_ids = Object.keys(user.tribes)
+    const tribeItems = tribe_ids.map((tid) =>
+      <TouchableOpacity key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
+        <Text style={styles.tribeText}>{user.tribes[tid]}</Text>
         {
-          !!tribe.active && (
+          tid === user.current_tribe && (
             <IconButton name="settings" style={styles.tribeSettings} onPress={this.handleTribeSettings} />
           )
         }
@@ -123,45 +121,43 @@ class DrawerContent extends Component {
     )
 
     return (
-      <IntlProvider locale={this.props.lang} messages={this.props.messages}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <View style={styles.actions}>
-              <IconButton name="exit-to-app" color="white" onPress={this.handleLogout} style={styles.action} />
-              <IconButton name="person" color="white" onPress={this.handleProfile} style={styles.action} />
-            </View>
-            <View style={styles.infos}>
-              <Image
-                source={{uri: gravatar(user, 160)}}
-                style={styles.avatar}
-              />
-              <Text style={styles.username}>
-                {user.name}
-              </Text>
-              <Text style={styles.currentTribe}>
-                {currentTribe.name}
-              </Text>
-              <IconButton
-                name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
-                color="white"
-                onPress={this.handleToggle}
-                style={styles.toggle}
-              />
-            </View>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.actions}>
+            <IconButton name="exit-to-app" color="white" onPress={this.handleLogout} style={styles.action} />
+            <IconButton name="person" color="white" onPress={this.handleProfile} style={styles.action} />
           </View>
-
-          <ScrollView style={styles.menu}>
-            {this.state.showTribes ? tribeItems : menuItems}
-          </ScrollView>
-          {
-            this.state.showTribes && (
-              <IconButton name="add" onPress={this.handleNewTribe}>
-                <FormattedMessage style={styles.tribeText} id="tribe_new" />
-              </IconButton>
-            )
-          }
+          <View style={styles.infos}>
+            <Image
+              source={{uri: gravatar(user, 160)}}
+              style={styles.avatar}
+            />
+            <Text style={styles.username}>
+              {user.name}
+            </Text>
+            <Text style={styles.currentTribe}>
+              {currentTribe.name}
+            </Text>
+            <IconButton
+              name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
+              color="white"
+              onPress={this.handleToggle}
+              style={styles.toggle}
+            />
+          </View>
         </View>
-      </IntlProvider>
+
+        <ScrollView style={styles.menu}>
+          {this.state.showTribes ? tribeItems : menuItems}
+        </ScrollView>
+        {
+          this.state.showTribes && (
+            <IconButton name="add" onPress={this.handleNewTribe}>
+              <FormattedMessage style={styles.tribeText} id="tribe_new" />
+            </IconButton>
+          )
+        }
+      </View>
     )
   }
 
@@ -170,8 +166,7 @@ class DrawerContent extends Component {
 const mapStateToProps = (state) => ({
   user: state.user,
   currentTribe: state.tribe,
-  lang: state.app.lang, // here is the app language
-  messages: state.app.messages,
+  lang: state.app.lang, // hack to force update when lang changes
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
