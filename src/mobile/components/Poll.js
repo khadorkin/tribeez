@@ -41,9 +41,9 @@ class Poll extends Component {
       return null
     }
 
-    //const user_answer = poll.answers[this.props.uid]
+    //const user_answer = poll.answers && poll.answers[this.props.uid]
 
-    const num_answers = Object.keys(poll.answers).length
+    const num_answers = poll.answers ? Object.keys(poll.answers).length : 0
 
     const date = <FormattedRelative value={poll.added} />
     const subtitle = <FormattedMessage id="poll_answers" values={{num: num_answers}} />

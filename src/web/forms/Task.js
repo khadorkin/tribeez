@@ -54,7 +54,7 @@ class TaskForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, wait, notice, users}, userMap, task} = this.props
+    const {fields: {name, description, wait, users}, userMap, task} = this.props
 
     let done = false
     if (task) {
@@ -85,14 +85,6 @@ class TaskForm extends Component {
           min="0"
           max="255"
           {...wait}
-        />
-        <TextField ref="notice"
-          required={true}
-          type="number"
-          step="1"
-          min="1"
-          max="255"
-          {...notice}
         />
         <div style={{margin: '32px 0 16px'}}>
           <FormattedMessage id="field.task_users" />

@@ -40,7 +40,9 @@ class EventDetails extends Component {
     Linking.openURL(url)
   }
 
-  renderItem(event) {
+  renderItem() {
+    const {event} = this.props
+
     const author = this.props.userMap[event.author]
 
     event.author = author.name
@@ -112,8 +114,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   // for <Details> HoC:
   event: state.item.event,
-  loading: state.events.loading,
-  error: state.events.error,
   // for this component:
   userMap: state.tribe.userMap,
 })

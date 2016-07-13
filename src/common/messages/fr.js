@@ -177,10 +177,8 @@ const fr = {
   'field.location': 'Lieu (facultatif)',
   'field.url': 'Lien (facultatif)',
   // task:
-  'field.wait': 'Période de carence (jours)',
+  'field.wait': 'Période de carence (jours avant de pouvoir l’accomplir)',
   'error.wait': 'Période incorrecte',
-  'field.notice': 'Délai d’application (jours)',
-  'error.notice': 'Délai incorrect',
   'field.task_users': 'Membres concernés :',
   'error.no_users': 'Vous devez choisir au moins un membre concerné',
   // submit buttons:

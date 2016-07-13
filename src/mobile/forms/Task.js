@@ -21,7 +21,7 @@ class TaskForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, wait, notice, users}, userMap, ...props} = this.props
+    const {fields: {name, description, wait, users}, userMap, ...props} = this.props
 
     return (
       <Form name={'task.' + (this.props.task ? 'update' : 'create')} action={submitTask} {...props}>
@@ -36,10 +36,6 @@ class TaskForm extends Component {
         <TextField ref="wait"
           keyboardType="numeric"
           {...wait}
-        />
-        <TextField ref="notice"
-          keyboardType="numeric"
-          {...notice}
         />
         {
           users.map((task_user, index) =>

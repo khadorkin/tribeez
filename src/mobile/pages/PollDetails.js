@@ -76,7 +76,7 @@ class PollDetails extends Component {
 
     const results = pollAnswers(poll, userMap)
 
-    const show_results = (poll.answers[this.props.uid] && !this.state.again)
+    const show_results = (poll.answers && poll.answers[this.props.uid] && !this.state.again)
 
     let body
     if (show_results) {

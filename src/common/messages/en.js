@@ -177,10 +177,8 @@ export default {
   'field.location': 'Location (optional)',
   'field.url': 'Link (optional)',
   // task:
-  'field.wait': 'Waiting period (days)',
+  'field.wait': 'Waiting period (days before it can be done)',
   'error.wait': 'Invalid period',
-  'field.notice': 'Warning delay (days)',
-  'error.notice': 'Invalid delay',
   'field.task_users': 'Concerned members:',
   'error.no_users': 'You must choose at lease one concerned member',
   // submit buttons:

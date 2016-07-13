@@ -13,6 +13,7 @@ export default (required, optional = []) => {
       } else if (field === 'password2' && values.password && values.password2 !== values.password) {
         errors.password2 = 'mismatch'
       } else if (field === 'parts') {
+        values.amount = Number(values.amount)
         const total = values.parts.reduce((prev, curr) => {
           return curr.amount + prev
         }, 0)
@@ -27,12 +28,9 @@ export default (required, optional = []) => {
           errors._error = 'no_users'
         }
       } else if (field === 'wait') {
+        values.wait = Number(values.wait)
         if (isNaN(values.wait) || values.wait < 0 || values.wait > 255 || !Number.isInteger(values.wait)) {
           errors.wait = 'invalid'
-        }
-      } else if (field === 'notice') {
-        if (isNaN(values.notice) || values.notice < 1 || values.notice > 255 || !Number.isInteger(values.notice)) {
-          errors.notice = 'invalid'
         }
       }
     })
