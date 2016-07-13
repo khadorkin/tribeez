@@ -11,7 +11,7 @@ import FormattedDate from '../components/FormattedDate'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getPoll'
+import getItem from '../../common/actions/getItem'
 import postVote from '../../common/actions/postVote'
 import routes from '../../common/routes'
 import colors from '../../common/constants/colors'

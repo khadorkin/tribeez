@@ -5,7 +5,7 @@
 
 ## Prerequisite
 
-You need to install and start the API first: https://bitbucket.org/antoinerousseau/tribeez-api
+You need to install and start the [API](https://bitbucket.org/antoinerousseau/tribeez-api) first:
 
 ## Dependencies
 
@@ -26,7 +26,7 @@ Then edit `config.development.json` and `config.production.json` with your infos
     npm run dev
     npm run serve
 
-Then go to [http://localhost:5000](http://localhost:5000/)
+Then go to [localhost:5000](http://localhost:5000/)
 
 ### Production
 
@@ -65,11 +65,9 @@ Connect a device or start an emulator, then run:
 
     react-native run-android
 
-You can see the logs by launching:
+You can see the logs by running:
 
-```
-adb logcat *:S ReactNative:V ReactNativeJS:V
-```
+    react-native log-android
 
 ### Production
 

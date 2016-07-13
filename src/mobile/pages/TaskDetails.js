@@ -10,7 +10,7 @@ import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getTask'
+import getItem from '../../common/actions/getItem'
 import postDone from '../../common/actions/postDone'
 import routes from '../../common/routes'
 

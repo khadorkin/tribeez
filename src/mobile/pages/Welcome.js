@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  loading: state.member.loading,
+  loading: state.app.loading > 0,
 })
 
 export default connect(mapStateToProps)(Welcome)

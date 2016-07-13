@@ -11,12 +11,12 @@ import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getEvent'
+import getItem from '../../common/actions/getItem'
 import routes from '../../common/routes'
 import colors from '../../common/constants/colors'
 
 const infos = [
-  {id: 'host', icon: 'person'},
+  {id: 'author', icon: 'person'},
   {id: 'description', icon: 'description'},
   {id: 'start', icon: 'flight-land', date: true},
   {id: 'end', icon: 'flight-takeoff', date: true},
@@ -43,9 +43,9 @@ class EventDetails extends Component {
   }
 
   renderItem(event) {
-    const host = this.props.userMap[event.host_id]
+    const author = this.props.userMap[event.author]
 
-    event.host = host.name
+    event.author = author.name
 
     //TODO: UI
 

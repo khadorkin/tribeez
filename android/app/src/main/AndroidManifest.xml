@@ -11,6 +11,7 @@
         android:targetSdkVersion="22" />
 
     <application
+      android:name=".MainApplication"
       android:allowBackup="true"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
@@ -33,10 +34,6 @@
               android:host="beta.tribeez.net" />
         </intent-filter>
       </activity>
-      <meta-data
-        android:name="io.fabric.ApiKey"
-        android:value="c8482c9488aea5b2e8a2bb347d7fa5a3fc98afa7"
-        />
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
 

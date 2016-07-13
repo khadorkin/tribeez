@@ -9,7 +9,7 @@ class TextArea extends Component {
     minHeight: PropTypes.number,
     onChange: PropTypes.func,
     value: PropTypes.string.isRequired,
-    id: PropTypes.number, // used in componentWillReceiveProps to detect initial height change
+    id: PropTypes.string, // used in componentWillReceiveProps to detect initial height change
   }
 
   constructor(props) {

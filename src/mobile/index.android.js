@@ -13,6 +13,7 @@ import locale_fr from 'react-intl/locale-data/fr'
 addLocaleData(locale_en)
 addLocaleData(locale_fr)
 
+// create the view
 import App from './App'
 
 // redux-form normalizers and plugins
@@ -28,18 +29,22 @@ reducers.form = formReducer
 
 const rootReducer = combineReducers(reducers)
 
-//TODO: remove from prod
-const logger = createLogger({
-  //TODO: remove these transformers
-  stateTransformer: () => {
-    return 'xxxx' // avoid polluting the terminal
-  },
-  actionTransformer: (action) => {
-    return {type: action.type} // avoid polluting the terminal
-  },
-})
-
-const store = createStore(rootReducer, applyMiddleware(thunk, logger))
+let store
+if (__DEV__) {
+  //TODO: remove from prod
+  const logger = createLogger({
+    //TODO: remove these transformers
+    stateTransformer: () => {
+      return 'xxxx' // avoid polluting the terminal
+    },
+    actionTransformer: (action) => {
+      return {type: action.type} // avoid polluting the terminal
+    },
+  })
+  store = createStore(rootReducer, applyMiddleware(thunk, logger))
+} else {
+  store = createStore(rootReducer, applyMiddleware(thunk))
+}
 
 export default class Index extends Component {
   render() {

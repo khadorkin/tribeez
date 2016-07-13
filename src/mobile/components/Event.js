@@ -32,8 +32,8 @@ class Event extends Component {
   render() {
     const {item, userMap} = this.props
 
-    const host = userMap[item.host_id]
-    if (!host) {
+    const author = userMap[item.host_id]
+    if (!author) {
       return null
     }
 
@@ -51,7 +51,7 @@ class Event extends Component {
       <View style={styles.container}>
         <TouchableOpacity onPress={this.handlePress} style={styles.main}>
           <Image
-            source={{uri: gravatar(host)}}
+            source={{uri: gravatar(author)}}
             style={styles.avatar}
           />
           <View style={styles.titles}>

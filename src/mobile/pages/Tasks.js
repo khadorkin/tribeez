@@ -1,8 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
-
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import AsyncContent from '../hoc/AsyncContent'
 import Task from '../components/Task'
@@ -10,14 +7,10 @@ import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import getTasks from '../../common/actions/getTasks'
 
 class Tasks extends Component {
   static propTypes = {
-    // redux state:
-    tasks: PropTypes.object.isRequired,
-    // action creators:
-    getTasks: PropTypes.func.isRequired,
+    //
   }
 
   constructor(props) {
@@ -32,9 +25,7 @@ class Tasks extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <AsyncContent
-          data={this.props.tasks}
-          fetcher={this.props.getTasks}
+        <AsyncContent name="tasks"
           rowComponent={Task}
         />
         <Fab name="add" onPress={this.handleFab} />
@@ -49,12 +40,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => ({
-  tasks: state.tasks,
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getTasks,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tasks)
+export default Tasks

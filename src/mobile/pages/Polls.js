@@ -1,8 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
-
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import AsyncContent from '../hoc/AsyncContent'
 import Poll from '../components/Poll'
@@ -10,14 +7,10 @@ import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import getPolls from '../../common/actions/getPolls'
 
 class Polls extends Component {
   static propTypes = {
-    // redux state:
-    polls: PropTypes.object.isRequired,
-    // action creators:
-    getPolls: PropTypes.func.isRequired,
+    //
   }
 
   constructor(props) {
@@ -32,9 +25,7 @@ class Polls extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <AsyncContent
-          data={this.props.polls}
-          fetcher={this.props.getPolls}
+        <AsyncContent name="polls"
           rowComponent={Poll}
         />
         <Fab name="add" onPress={this.handleFab} />
@@ -49,12 +40,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => ({
-  polls: state.polls,
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getPolls,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Polls)
+export default Polls

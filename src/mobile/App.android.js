@@ -1,48 +1,41 @@
 import React, {Component, PropTypes} from 'react'
 import {DrawerLayoutAndroid, Navigator, BackAndroid, Linking, StyleSheet, View, Text, Alert} from 'react-native'
 
-import {Crashlytics, Answers} from 'react-native-fabric'
-
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
 
-import './userAgent'
 import config from '../common/config'
-import io from 'socket.io-client'
 
 import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
 import IconButton from './components/IconButton'
+import Spinner from './components/Spinner'
 
 import routes from '../common/routes'
 import router from '../common/router'
 import colors from '../common/constants/colors'
 import getMember from '../common/actions/getMember'
-import {message, setSocketStatus} from '../common/actions/app'
-import deleteBill from '../common/actions/deleteBill'
-import deleteEvent from '../common/actions/deleteEvent'
-import deletePoll from '../common/actions/deletePoll'
-import deleteTask from '../common/actions/deleteTask'
+import submitLogin from '../common/actions/submitLogin'
+import {message} from '../common/actions/app'
+import deleteItem from '../common/actions/deleteItem'
 
 class App extends Component {
   static propTypes = {
     // from redux store:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     user: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
     error: PropTypes.string,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
     // action creators:
     getMember: PropTypes.func.isRequired,
+    submitLogin: PropTypes.func.isRequired,
     message: PropTypes.func.isRequired,
-    setSocketStatus: PropTypes.func.isRequired,
-    deleteBill: PropTypes.func.isRequired,
-    deleteEvent: PropTypes.func.isRequired,
-    deletePoll: PropTypes.func.isRequired,
-    deleteTask: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -56,27 +49,7 @@ class App extends Component {
     this.renderScene = this.renderScene.bind(this)
     this.handleDrawerOpened = this.handleDrawerOpened.bind(this)
     this.handleDrawerClosed = this.handleDrawerClosed.bind(this)
-
-    this.routeMapper = {
-      LeftButton: (/*route, navigator, index, navState*/) => {
-        return this.props.uid && (
-          <IconButton name="menu" color="white" onPress={this.handleOpenDrawer} style={styles.hamburger} />
-        )
-      },
-      Title: (route/*, navigator, index, navState*/) => {
-        if (route.item && route.item.name) {
-          return <Text style={styles.navTitle}>{route.item.name}</Text>
-        } else {
-          return <FormattedMessage style={styles.navTitle} id={route.name} />
-        }
-      },
-      RightButton: (route/*, navigator, index, navState*/) => {
-        if (route.type === 'details') { //TODO: not show if does not exist
-          return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
-        }
-        return null
-      },
-    }
+    this.routeMapper = this.routeMapper.bind(this)
   }
 
   componentDidMount() {
@@ -130,58 +103,36 @@ class App extends Component {
       ])
       return
     }
-    if (props.uid && !this.socket) { // log in
-      // Connect to WebSocket:
-      this.socket = io(config.api_endpoint, {
-        jsonp: false,
-        transports: ['websocket'],
-      })
-      this.socket.on('message', (msg) => {
-        this.props.message(msg)
-      })
-      this.socket.on('connect', () => {
-        this.props.setSocketStatus('connected', router.getCurrentName())
-      })
-      this.socket.on('error', (/*num*/) => {
-        this.props.setSocketStatus('error', router.getCurrentName())
-      })
-      this.socket.on('disconnect', () => {
-        this.props.setSocketStatus('disconnected', router.getCurrentName())
-      })
-      this.socket.on('reconnecting', (/*num*/) => {
-        this.props.setSocketStatus('reconnecting', router.getCurrentName())
-      })
-      this.socket.on('reconnect', (/*num*/) => {
-        this.props.setSocketStatus('connected', router.getCurrentName())
-      })
-      this.socket.on('reconnect_error', (/*num*/) => {
-        this.props.setSocketStatus('error', router.getCurrentName())
-      })
-      this.socket.on('reconnect_failed', () => {
-        this.props.setSocketStatus('error', router.getCurrentName())
-      })
-      // Set Fabric infos:
-      Crashlytics.setUserIdentifier(String(props.uid))
-      Crashlytics.setUserEmail(props.user.email)
-      Crashlytics.setUserName(props.user.name)
-      Crashlytics.setString('lang', props.user.lang)
-      Answers.logLogin('Email', true)
-    }
-    if (!props.uid && this.socket) { // log out
-      // Disconnect WebSocket:
-      this.socket.disconnect(true)
-      this.socket = null
-
-      // Clear Fabric infos
-      Crashlytics.setUserIdentifier(null)
-      Crashlytics.setUserEmail(null)
-      Crashlytics.setUserName(null)
-      Crashlytics.setString('lang', null)
-    }
   }
 
   ref(drawer) {
     this.drawer = drawer
+  }
+
+  routeMapper(loading) {
+    return {
+      LeftButton: (/*route, navigator, index, navState*/) => {
+        return this.props.uid && (
+          <IconButton name="menu" color="white" onPress={this.handleOpenDrawer} style={styles.hamburger} />
+        )
+      },
+      Title: (route/*, navigator, index, navState*/) => {
+        if (route.item && route.item.name) {
+          return <Text style={styles.navTitle}>{route.item.name}</Text>
+        } else {
+          return <FormattedMessage style={styles.navTitle} id={route.name} />
+        }
+      },
+      RightButton: (route/*, navigator, index, navState*/) => {
+        if (route.type === 'details') { //TODO: not show if does not exist
+          return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+        }
+        if (loading) {
+          return <Spinner visible={true} />
+        }
+        return null
+      },
+    }
   }
 
   handleOpenDrawer() {
@@ -209,20 +160,7 @@ class App extends Component {
   }
 
   handleConfirmDelete(route) {
-    switch (route.name) {
-      case 'bill':
-        this.props.deleteBill(route.item.id)
-        break
-      case 'event':
-        this.props.deleteEvent(route.item.id)
-        break
-      case 'poll':
-        this.props.deletePoll(route.item.id)
-        break
-      case 'task':
-        this.props.deleteTask(route.item.id)
-        break
-    }
+    this.props.deleteItem(route.name, route.item.id)
     router.pop()
   }
 
@@ -258,7 +196,7 @@ class App extends Component {
   render() {
     const navigationBar = (
       <Navigator.NavigationBar
-        routeMapper={this.routeMapper}
+        routeMapper={this.routeMapper(this.props.loading)}
         style={styles.navBar}
       />
     )
@@ -313,22 +251,20 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  user: state.member.user,
-  error: state.member.error,
+  uid: state.user.uid,
+  user: state.user,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
-  formats: state.member.formats,
+  formats: state.tribe.formats,
+  loading: state.app.loading > 0 || state.app.submitting,
+  error: state.app.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getMember,
+  submitLogin,
   message,
-  setSocketStatus,
-  deleteBill,
-  deleteEvent,
-  deletePoll,
-  deleteTask,
+  deleteItem,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

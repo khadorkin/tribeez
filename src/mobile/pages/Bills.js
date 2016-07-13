@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {View, ScrollView, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import TabView from '../hoc/TabView'
 import AsyncContent from '../hoc/AsyncContent'
@@ -12,15 +11,11 @@ import Fab from '../components/Fab'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
-import getBills from '../../common/actions/getBills'
 
 class Bills extends Component {
   static propTypes = {
     // redux state:
-    bills: PropTypes.object.isRequired,
     users: PropTypes.array.isRequired,
-    // action creators:
-    getBills: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -36,9 +31,7 @@ class Bills extends Component {
     return (
       <View style={styles.container}>
         <TabView>
-          <AsyncContent
-            data={this.props.bills}
-            fetcher={this.props.getBills}
+          <AsyncContent name="bills"
             rowComponent={Bill}
             tabLabel="tab.bills"
           />
@@ -58,13 +51,8 @@ class Bills extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  bills: state.bills,
   users: state.tribe.users,
 })
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getBills,
-}, dispatch)
 
 const styles = StyleSheet.create({
   container: {
@@ -78,4 +66,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Bills)
+export default connect(mapStateToProps)(Bills)

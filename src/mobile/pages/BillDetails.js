@@ -9,7 +9,7 @@ import FormattedNumber from '../components/FormattedNumber'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
-import getItem from '../../common/actions/getBill'
+import getItem from '../../common/actions/getItem'
 import routes from '../../common/routes'
 
 class BillDetails extends Component {

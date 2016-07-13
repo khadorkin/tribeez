@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {View, Text, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import TabView from '../hoc/TabView'
 import AsyncContent from '../hoc/AsyncContent'
@@ -12,19 +11,12 @@ import IconButton from '../components/IconButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import config from '../../common/config'
-import getActivity from '../../common/actions/getActivity'
-import getHistory from '../../common/actions/getHistory'
 
 class Activity extends Component {
   static propTypes = {
     // from redux:
-    activity: PropTypes.object,
-    history: PropTypes.object,
-    telegram_token: PropTypes.string,
+    bot_token: PropTypes.string,
     unread: PropTypes.number,
-    // action creators:
-    getActivity: PropTypes.func.isRequired,
-    getHistory: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -35,9 +27,9 @@ class Activity extends Component {
 
   handleTelegram() {
     Linking
-      .openURL('tg://resolve?domain=' + config.telegram_bot_name + '&start=' + this.props.telegram_token)
+      .openURL('tg://resolve?domain=' + config.telegram_bot_name + '&start=' + this.props.bot_token)
       .catch(() => {
-        Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.telegram_token)
+        Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.bot_token)
       })
   }
 
@@ -61,21 +53,17 @@ class Activity extends Component {
   }
 
   render() {
-    const {activity, history, unread} = this.props
+    const {unread} = this.props
 
     return (
       <View style={styles.container}>
         <TabView>
-          <AsyncContent
-            data={activity}
-            fetcher={this.props.getActivity}
+          <AsyncContent name="activity"
             rowComponent={Card}
             tabLabel="tab.activity"
             footer={this.renderFooter()}
           />
-          <AsyncContent
-            data={history}
-            fetcher={this.props.getHistory}
+          <AsyncContent name="history"
             rowComponent={Entry}
             tabLabel="tab.history"
             badge={unread > 0 && unread}
@@ -106,15 +94,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  activity: state.activity,
-  history: state.history,
-  telegram_token: state.user.telegram_token,
-  unread: state.user.unread,
+  bot_token: state.user.bot_token,
+  unread: state.app.unread,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getActivity,
-  getHistory,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Activity)
+export default connect(mapStateToProps)(Activity)
