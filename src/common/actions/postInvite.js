@@ -1,42 +1,61 @@
+import {db, auth, timestamp} from '../firebase'
 import api from '../utils/api'
 
 import {
-  INVITE_REQUEST,
-  INVITE_SUCCESS,
-  INVITE_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
+  API_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-export default (email, lang, inviter) => {
-  return function(dispatch) {
+export default (invite) => {
+  return (dispatch) => {
     dispatch({
-      type: INVITE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.post('invite', {email, lang})
+    db.ref('tribes/' + auth.currentUser.tid + '/invites/' + invite.id).transaction((current) => {
+      if (current) {
+        current.invited = timestamp
+        current.inviter = auth.currentUser.uid
+      }
+      return current
+    })
+    .then(() => {
+      api.post('invite', {
+        token: invite.id,
+        email: invite.email,
+        lang: invite.lang,
+        tribe: auth.currentUser.tid,
+        tribe_name: auth.currentUser.tribe,
+        inviter_name: auth.currentUser.name,
+      })
       .then((response) => {
         if (response.error) {
-          dispatch({
-            type: INVITE_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: INVITE_SUCCESS,
-            email,
-            inviter,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'invite_resent',
-          })
+          throw response.error
         }
-      })
-      .catch((err) => {
         dispatch({
-          type: INVITE_FAILURE,
-          error: 'request',
-          fetchError: err.message,
+          type: FIREBASE_SUCCESS,
+        })
+        dispatch({
+          type: SNACK_MESSAGE,
+          message: 'invite_resent',
         })
       })
+      .catch((error) => {
+        dispatch({
+          type: API_FAILURE,
+          origin: 'submitInvite',
+          error,
+        })
+      })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'postInvite',
+        error: error.code,
+      })
+    })
   }
 }

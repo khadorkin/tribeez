@@ -1,50 +1,43 @@
-import api from '../utils/api'
+import {auth, db} from '../firebase'
 
 import {
-  SWITCH_REQUEST,
-  SWITCH_SUCCESS,
-  SWITCH_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
+import router from '../router'
 import routes from '../routes'
 
 import getMember from './getMember'
-import getActivity from './getActivity'
-import getHistory from './getHistory'
 
-export default (id) => {
-  return function(dispatch) {
+export default (tid) => {
+  return (dispatch) => {
+    const uid = auth.currentUser.uid
+
     dispatch({
-      type: SWITCH_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.put('switch', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: SWITCH_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: SWITCH_SUCCESS,
-          })
-          // force redirect to home page:
-          dispatch(getMember(null, routes.ACTIVITY))
-          dispatch(getActivity())
-          dispatch(getHistory())
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'switched',
-          })
-        }
+    db.ref('users/' + uid + '/current_tribe').set(tid)
+    .then(() => {
+      dispatch(getMember.off())
+      router.resetTo(routes.ACTIVITY, dispatch)
+      dispatch(getMember.on(uid))
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'switched',
       })
-      .catch((err) => {
-        dispatch({
-          type: SWITCH_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'putSwitch',
+        error,
+      })
+    })
   }
 }

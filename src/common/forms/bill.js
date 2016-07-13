@@ -6,42 +6,41 @@ import platform from '../platform'
 const now = Date.now() // need to be called only once, otherwise form reinitializes indefinitely
 
 const mapStateToProps = (state, ownProps) => {
-  const bill = ownProps.current || state.bills.current // either from routing state, or from ajax retrieval
+  const bill = ownProps.current || state.item.bill // either from routing state, or from ajax retrieval
   let initialValues
   if (bill) {
-    const partsByUid = {}
-    bill.parts.forEach((part) => {
-      partsByUid[part.user_id] = part.amount
-    })
-    const parts = state.member.tribe.users
-      .map((user) => ({user_id: user.id, amount: partsByUid[user.id] || ''}))
+    const parts = state.tribe.users
+      .map((user) => ({uid: user.uid, amount: bill.parts[user.uid] || ''}))
       .sort((a, b) => (a.amount > b.amount ? -1 : 1))
 
     initialValues = {
       id: bill.id,
       name: bill.name,
-      payer: bill.payer_id,
+      payer: bill.payer,
       paid: bill.paid,
       amount: bill.amount,
       method: 'amounts',
       description: bill.description || '',
       parts,
+      added: bill.added,
+      author: bill.author,
     }
   } else {
     initialValues = {
-      payer: state.member.user.id,
+      payer: state.user.uid,
       paid: now,
       method: 'shares',
-      parts: state.member.tribe.users.map((user) => ({user_id: user.id, amount: 1})),
+      parts: state.tribe.users.map((user) => ({uid: user.uid, amount: 1})),
+      author: state.user.uid,
     }
   }
   return {
-    users: state.member.tribe.users,
-    userMap: state.member.tribe.userMap,
-    currency: state.member.tribe.currency, //TODO: be able to remove
-    lang: state.app.lang, //TODO: be able to remove
+    users: state.tribe.users,
+    userMap: state.tribe.userMap,
+    currency: state.tribe.currency, //TODO: be able to remove
     initialValues,
     bill,
+    tid: state.tribe.id,
   }
 }
 
@@ -52,7 +51,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'bill',
-    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].user_id', 'parts[].amount'],
+    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount', 'added', 'author'],
     validate: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

@@ -28,7 +28,7 @@ class ProfileForm extends Component {
     handleSubmit: PropTypes.func,
     // from redux:
     initialValues: PropTypes.object,
-    lang: PropTypes.string.isRequired,
+    reauth_prompt: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -37,7 +37,7 @@ class ProfileForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(submitProfile)(event)
+    this.props.handleSubmit(submitProfile.bind(null, this.props.reauth_prompt))(event)
       .catch((errors) => focus(errors, this.refs))
   }
 
@@ -65,7 +65,6 @@ class ProfileForm extends Component {
           {langItems}
         </SelectField>
         <DatePicker ref="birthdate"
-          locale={this.props.lang}
           maxDate={today}
           {...birthdate}
         />
@@ -74,6 +73,7 @@ class ProfileForm extends Component {
         />
         <TextField ref="password"
           type="password"
+          errorText={password.touched && password.error && <FormattedMessage id={'error.password_' + password.error} />}
           {...password}
           name="new_password"
         />

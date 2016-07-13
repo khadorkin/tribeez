@@ -13,7 +13,7 @@ import gravatar from '../../common/utils/gravatar'
 class Task extends Component {
   static propTypes = {
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // from parent:
@@ -65,9 +65,9 @@ class Task extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
 })
 
 const styles = StyleSheet.create({

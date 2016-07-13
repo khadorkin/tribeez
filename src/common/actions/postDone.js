@@ -1,42 +1,32 @@
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
 
 import {
-  POST_DONE_REQUEST,
-  POST_DONE_SUCCESS,
-  POST_DONE_FAILURE,
-  SNACK_MESSAGE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
-export default (id, uid) => {
-  return function(dispatch) {
+export default (id) => {
+  return (dispatch) => {
     dispatch({
-      type: POST_DONE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.post('done', {id})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: POST_DONE_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: POST_DONE_SUCCESS,
-            id,
-            uid,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'task_done',
-          })
-        }
+    db.ref('tribes/' + auth.currentUser.tid + '/tasks/' + id).transaction((task) => {
+      task.counters[auth.currentUser.uid]++
+      task.done = timestamp
+      return task
+    })
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: POST_DONE_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'postVote',
+        error: error.code,
       })
+    })
   }
 }

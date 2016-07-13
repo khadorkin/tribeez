@@ -8,6 +8,7 @@ env:
 globals:
   ga: false
   FB: false
+  Rollbar: false
   __DEV__: false
 
 parser: babel-eslint
@@ -78,6 +79,7 @@ rules:
   space-infix-ops: 2
   space-unary-ops: [2, { words: true, nonwords: false }]
   yoda: 2
+  no-console: 1 # warning only
 
   react/jsx-boolean-value: [2, always]
   react/jsx-closing-bracket-location: 2

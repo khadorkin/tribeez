@@ -25,7 +25,7 @@ class Task extends Component {
     task: PropTypes.object.isRequired,
     onDelete: PropTypes.func,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // action creators:
@@ -40,7 +40,7 @@ class Task extends Component {
 
   handleDoneTask(event) {
     event.stopPropagation()
-    this.props.postDone(this.props.task.id, this.props.uid)
+    this.props.postDone(this.props.task.id)
   }
 
   handleDelete() {
@@ -51,7 +51,7 @@ class Task extends Component {
     const {task, userMap} = this.props
 
     // to render a task, the users must be loaded for the current tribe tasks
-    const author = userMap[task.author_id]
+    const author = userMap[task.author]
     if (!author) {
       return null
     }
@@ -64,10 +64,8 @@ class Task extends Component {
       subtitle = <FormattedMessage id="never_done" />
     }
 
-    const elapsed = (Date.now() - task.done) / 86400000 // days
-
     let icon
-    if (elapsed > task.wait) {
+    if (!task.done || task.wait < ((Date.now() - task.done) / 86400000 /* days */)) {
       icon = (
         <IconButton onTouchTap={this.handleDoneTask} style={{position: 'absolute', right: 53, top: 13}}>
           <DoneIcon />
@@ -94,8 +92,8 @@ class Task extends Component {
               uids.map((uid) => {
                 const user = userMap[uid]
                 return (
-                  <ListItem key={user.id} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
-                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
+                  <ListItem key={user.uid} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
+                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.uid])}} />
                   </ListItem>
                 )
               })
@@ -126,9 +124,9 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

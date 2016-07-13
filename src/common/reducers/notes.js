@@ -1,13 +1,8 @@
 import {
-  GET_NOTES_REQUEST,
   GET_NOTES_SUCCESS,
-  GET_NOTES_FAILURE,
-  NEW_NOTE_SUCCESS,
   PUT_NOTE_SUCCESS,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
-  SOCKET_STATUS,
-  SWITCH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -15,39 +10,23 @@ const initialState = {
   loading: false,
   error: null,
   items: [],
-  pages: 0,
 }
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case GET_NOTES_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
+    case GET_NOTES_SUCCESS: {
+      const items = []
+      for (const key in action.notes) {
+        const item = action.notes[key]
+        item.id = key
+        items.push(item)
       }
-    case GET_NOTES_SUCCESS:
       return {
         ...state,
-        loading: false,
-        error: null,
-        items: action.page ? [...state.items, ...action.data.items] : action.data.items,
-        pages: action.page + 1,
-      }
-    case GET_NOTES_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
-      }
-    case NEW_NOTE_SUCCESS: {
-      const items = state.items.slice()
-      items.unshift(action.data)
-      return {
-        ...state,
-        items,
+        items: items.sort((a, b) => (a.position < b.position ? -1 : 1)),
       }
     }
+
     case PUT_NOTE_SUCCESS: {
       const items = state.items.map((item) => {
         if (item.id === action.data.id) {
@@ -87,13 +66,6 @@ export default (state = initialState, action = null) => {
       }
     }
 
-    case SOCKET_STATUS:
-      if (action.status !== 'connected' && action.path !== 'notes') {
-        return {...initialState}
-      }
-      return state
-
-    case SWITCH_SUCCESS:
     case LOGOUT_SUCCESS:
       return {...initialState}
     default:

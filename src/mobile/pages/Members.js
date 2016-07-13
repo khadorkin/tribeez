@@ -39,7 +39,7 @@ class Members extends Component {
           <ScrollView tabLabel="tab.registered" style={styles.content}>
             {
               this.props.users.map((user) =>
-                <Member user={user} key={user.id} />
+                <Member user={user} key={user.uid} />
               )
             }
             <View style={styles.spacer} />
@@ -58,7 +58,7 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
+  users: state.tribe.users,
   invites: state.invites,
 })
 

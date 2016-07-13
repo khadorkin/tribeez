@@ -24,7 +24,7 @@ class PollDetails extends Component {
     id: PropTypes.number.isRequired,
     // from redux:
     item: PropTypes.object,
-    uid: PropTypes.number.isRequired,
+    uid: PropTypes.string.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
     postVote: PropTypes.func.isRequired,
@@ -188,12 +188,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => ({
   // for <Details> HoC:
   item: state.polls.items.find((i) => i.id === ownProps.id)
-     || state.polls.current,
+     || state.item.poll,
   loading: state.polls.loading,
   error: state.polls.error,
   // for this component:
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

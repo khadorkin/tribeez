@@ -1,31 +1,40 @@
-import router from '../router'
-import routes from '../routes'
-
-import api from '../utils/api'
-
-import {GET_MEMBER_SUCCESS} from '../constants/actions'
+import {auth} from '../firebase'
+import platform from '../platform'
+import asyncStorage from '../utils/asyncStorage'
+import {login} from './app'
+import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (destination, values, dispatch) => {
   return new Promise((resolve, reject) => {
-    api.post('login', values)
-      .then((response) => {
-        if (response.error) {
-          if (typeof response.error === 'string') {
-            response.error = {_error: response.error}
-          }
-          reject(response.error)
-        } else {
-          resolve()
+    auth.signInWithEmailAndPassword(values.email, values.password)
+    .then((user) => {
+      if (platform !== 'web') {
+        asyncStorage.setItem('credentials', JSON.stringify(values))
+        .catch(() => {
+          // console.error('LOCAL STORAGE SET ERROR', error)
+        })
+      }
+      resolve()
+      dispatch(login(user))
+    })
+    .catch((error) => {
+      switch (error.code) {
+        case 'auth/invalid-email':
+        case 'auth/user-disabled':
+        case 'auth/user-not-found':
+          reject({email: 'unknown'})
+          break
+        case 'auth/wrong-password':
+          reject({password: 'wrong'})
+          break
+        default:
+          reject({_error: 'request'})
           dispatch({
-            type: GET_MEMBER_SUCCESS,
-            user: response.user,
-            tribe: response.tribe,
+            type: FIREBASE_FAILURE,
+            origin: 'submitLogin',
+            error,
           })
-          router.resetTo(destination || routes.ACTIVITY, dispatch)
-        }
-      })
-      .catch(() => {
-        reject({_error: 'request'})
-      })
+      }
+    })
   })
 }

@@ -168,8 +168,8 @@ class DrawerContent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.member.user,
-  currentTribe: state.member.tribe,
+  user: state.user,
+  currentTribe: state.tribe,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
 })

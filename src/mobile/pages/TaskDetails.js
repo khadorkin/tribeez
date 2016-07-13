@@ -20,7 +20,7 @@ class TaskDetails extends Component {
     id: PropTypes.number.isRequired,
     // from redux:
     item: PropTypes.object,
-    uid: PropTypes.number.isRequired,
+    uid: PropTypes.string.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
     postDone: PropTypes.func.isRequired,
@@ -58,7 +58,7 @@ class TaskDetails extends Component {
             const user = userMap[id]
             return (
               <View key={id} style={styles.info}>
-                <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.id])}} />
+                <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.uid])}} />
               </View>
             )
           })
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => ({
   // for <Details> HoC:
   item: state.tasks.items.find((i) => i.id === ownProps.id)
-     || state.tasks.current,
+     || state.item.task,
   loading: state.tasks.loading,
   error: state.tasks.error,
   // for this component:
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

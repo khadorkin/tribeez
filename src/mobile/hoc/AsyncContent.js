@@ -11,7 +11,7 @@ import colors from '../../common/constants/colors'
 class AsyncContent extends Component {
   static propTypes = {
     // redux state
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     socketStatus: PropTypes.string,
     // from parent component
     data: PropTypes.object.isRequired,
@@ -166,7 +166,7 @@ class AsyncContent extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
+  uid: state.user.uid,
   socketStatus: state.app.socketStatus,
 })
 

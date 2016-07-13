@@ -113,11 +113,11 @@ const mapStateToProps = (state, ownProps) => ({
   // for <Details> HoC:
   item: state.upcomingevents.items.find((i) => i.id === ownProps.id)
       || state.pastevents.items.find((i) => i.id === ownProps.id)
-      || state.events.current,
+      || state.item.event,
   loading: state.events.loading,
   error: state.events.error,
   // for this component:
-  userMap: state.member.tribe.userMap,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -1,41 +1,28 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  NEW_NOTE_REQUEST,
-  NEW_NOTE_SUCCESS,
-  NEW_NOTE_FAILURE,
-  SNACK_MESSAGE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
 export default (values) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
-      type: NEW_NOTE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.post('note', values)
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: NEW_NOTE_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: NEW_NOTE_SUCCESS,
-            data: response,
-          })
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'note_created',
-          })
-        }
+    db.ref('tribes/' + auth.currentUser.tid + '/notes').push(values)
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: NEW_NOTE_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'postNote',
+        error: error.code,
       })
+    })
   }
 }

@@ -11,7 +11,7 @@ class Card extends Component {
     // from redux:
     users: PropTypes.array.isRequired,
     currency: PropTypes.string,
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     // action creators:
     //TODO
   }
@@ -28,9 +28,9 @@ class Card extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  users: state.member.tribe.users,
-  currency: state.member.tribe.currency,
-  uid: state.member.user.id,
+  users: state.tribe.users,
+  currency: state.tribe.currency,
+  uid: state.user.uid,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -1,36 +1,50 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  GET_NOTES_REQUEST,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
   GET_NOTES_SUCCESS,
-  GET_NOTES_FAILURE,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
-export default () => {
-  return function(dispatch) {
+let ref
+
+const on = () => {
+  return (dispatch) => {
     dispatch({
-      type: GET_NOTES_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.get('notes')
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_NOTES_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: GET_NOTES_SUCCESS,
-            data: response,
-          })
-        }
+
+    ref = db.ref('tribes/' + auth.currentUser.tid + '/notes')
+    ref.on('value', (snapshot) => {
+      dispatch({
+        type: GET_NOTES_SUCCESS,
+        notes: snapshot.val(),
       })
-      .catch((err) => {
-        dispatch({
-          type: GET_NOTES_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
+    }, (error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'getNotes',
+        error: error.code,
+      })
+    })
   }
 }
+
+const off = () => {
+  return (dispatch) => {
+    if (ref) {
+      ref.off()
+      ref = null
+    }
+    dispatch({
+      type: GET_NOTES_SUCCESS,
+      notes: {},
+    })
+  }
+}
+
+export default {on, off}

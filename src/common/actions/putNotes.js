@@ -1,36 +1,33 @@
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  //PUT_NOTE_REQUEST,
-  PUT_NOTE_FAILURE,
-  //SNACK_MESSAGE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
 export default (ids) => {
-  return function(dispatch) {
-    /*dispatch({
-      type: PUT_NOTE_REQUEST,
-    })*/
-    api.put('notes', {ids})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: PUT_NOTE_FAILURE,
-            error: response.error,
-          })
-        }/* else {
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'notes_reordered',
-          })
-        }*/
+  return (dispatch) => {
+    dispatch({
+      type: FIREBASE_REQUEST,
+    })
+
+    const updates = {}
+    ids.forEach((id, index) => {
+      updates[id + '/position'] = index
+    })
+    db.ref('tribes/' + auth.currentUser.tid + '/notes').update(updates)
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: PUT_NOTE_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'putNotes',
+        error: error.code,
       })
+    })
   }
 }

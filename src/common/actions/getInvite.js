@@ -1,45 +1,70 @@
 import router from '../router'
 import routes from '../routes'
 
-import api from '../utils/api'
+import {db} from '../firebase'
 
 import {
-  GET_INVITE_REQUEST,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
   GET_INVITE_SUCCESS,
-  GET_INVITE_FAILURE,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
-export default (token) => {
-  return function(dispatch) {
+export default (tribe, token) => {
+  return (dispatch) => {
     dispatch({
-      type: GET_INVITE_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.get('invite', {token})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_INVITE_FAILURE,
-          })
-          router.resetTo(routes.LOGIN, dispatch)
-        } else {
-          dispatch({
-            type: GET_INVITE_SUCCESS,
-            data: response,
-          })
-          if (response.redirect === 'login') {
+
+    db.ref('tribes/' + tribe + '/invites/' + token).once('value')
+    .then((snapshot) => {
+      const invite = snapshot.val()
+      if (invite) {
+        Promise.all([
+          db.ref('tribes/' + tribe + '/infos/name').once('value'),
+          db.ref('tribes/' + tribe + '/members/' + invite.inviter + '/name').once('value'),
+        ]).then((snapshots) => {
+          if (snapshots[0] && snapshots[1]) {
+            invite.tribe = tribe
+            invite.tribe_name = snapshots[0].val()
+            invite.inviter_name = snapshots[1].val()
+            dispatch({
+              type: GET_INVITE_SUCCESS,
+              data: invite,
+            })
+            dispatch({
+              type: FIREBASE_SUCCESS,
+            })
+            //TODO:
+            // if (response.redirect === 'login') {
+            //   router.resetTo(routes.LOGIN, dispatch)
+            // } else if (response.redirect === 'home') {
+            //   router.resetTo(routes.ACTIVITY, dispatch)
+            // }
+          } else {
+            dispatch({
+              type: FIREBASE_FAILURE,
+              origin: 'getInvite',
+              error: 'not_found',
+            })
             router.resetTo(routes.LOGIN, dispatch)
-          } else if (response.redirect === 'home') {
-            router.resetTo(routes.ACTIVITY, dispatch)
           }
-        }
-      })
-      .catch((err) => {
+        })
+      } else {
         dispatch({
-          type: GET_INVITE_FAILURE,
-          error: 'request',
-          fetchError: err.message,
+          type: FIREBASE_FAILURE,
+          origin: 'getInvite',
+          error: 'not_found',
         })
         router.resetTo(routes.LOGIN, dispatch)
+      }
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'getInvite',
+        error,
       })
+    })
   }
 }

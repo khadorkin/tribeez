@@ -1,45 +1,31 @@
-import router from '../router'
-import routes from '../routes'
-
-import api from '../utils/api'
+import {auth} from '../firebase'
 
 import {
-  LOGOUT_REQUEST,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAILURE,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
 export default () => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
-      type: LOGOUT_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.post('logout')
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: LOGOUT_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: LOGOUT_SUCCESS,
-          })
-          router.resetTo(routes.WELCOME, dispatch) //TODO: fixme on mobile (?!?#@&)
-          //TODO: destroy the store
-          dispatch({
-            type: SNACK_MESSAGE,
-            message: 'logout_success',
-          })
-        }
+    auth.signOut().then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: LOGOUT_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'logout_success',
       })
+    }, (error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'postLogout',
+        error,
+      })
+    })
   }
 }

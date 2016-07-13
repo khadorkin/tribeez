@@ -1,16 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {FormattedMessage, FormattedRelative} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import {Link} from 'react-router'
 
 import {Tabs, Tab} from 'material-ui/Tabs'
-import Paper from 'material-ui/Paper'
-import {List, ListItem} from 'material-ui/List'
-import Subheader from 'material-ui/Subheader'
-import Divider from 'material-ui/Divider'
-import IconButton from 'material-ui/IconButton'
-import RefreshIcon from 'material-ui/svg-icons/navigation/refresh'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -19,22 +13,20 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import AsyncContent from '../hoc/AsyncContent'
 
 import Member from '../components/Member'
+import Invite from '../components/Invite'
 
 import styles from '../styles'
 import routes from '../routes'
 
-import getInvites from '../../common/actions/getInvites'
 import postInvite from '../../common/actions/postInvite'
 
 class Members extends Component {
   static propTypes = {
     // redux state:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
-    invites: PropTypes.object.isRequired,
     // action creators:
-    getInvites: PropTypes.func.isRequired,
     postInvite: PropTypes.func.isRequired,
   }
 
@@ -44,12 +36,13 @@ class Members extends Component {
       openDialog: false,
       invite: {},
     }
-    this.openDialog = this.openDialog.bind(this)
+    this.handleResendDialog = this.handleResendDialog.bind(this)
     this.handleResend = this.handleResend.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.renderInvite = this.renderInvite.bind(this)
   }
 
-  openDialog(invite) {
+  handleResendDialog(invite) {
     this.setState({
       openDialog: true,
       invite,
@@ -57,7 +50,7 @@ class Members extends Component {
   }
 
   handleResend() {
-    this.props.postInvite(this.state.invite.email, this.state.invite.lang, this.props.uid)
+    this.props.postInvite(this.state.invite)
     this.handleDialogClose()
   }
 
@@ -67,9 +60,11 @@ class Members extends Component {
     })
   }
 
-  render() {
-    const {invites, users, userMap} = this.props
+  renderInvite(row) {
+    return <Invite invite={row} key={row.id} onResent={this.handleResendDialog} />
+  }
 
+  render() {
     const dialogActions = [
       <FlatButton
         label={<FormattedMessage id="cancel" />}
@@ -89,46 +84,20 @@ class Members extends Component {
         <Tabs>
           <Tab label={<FormattedMessage id="tab.registered" />}>
             {
-              users.map((user) =>
-                <Member user={user} key={user.id} />
+              this.props.users.map((user) =>
+                <Member user={user} key={user.uid} />
               )
             }
           </Tab>
           <Tab label={<FormattedMessage id="tab.invited" />}>
-            <AsyncContent fetcher={this.props.getInvites} data={invites}>
-              {
-                invites.items.length > 0 &&
-                  <Paper style={{margin: '15px 10px'}}>
-                    <List>
-                      <Subheader>Invites send</Subheader>
-                      {
-                        invites.items.map((invite, index, arr) => {
-                          const refreshButton = <IconButton onTouchTap={this.openDialog.bind(this, invite)}><RefreshIcon /></IconButton>
-                          const inviter = userMap[invite.inviter_id]
-                          if (!inviter) {
-                            return null
-                          }
-                          const when = <FormattedRelative value={invite.invited} />
-                          const details = <div><FormattedMessage id="invited_by" values={{user: inviter.name, when}} /></div>
-                          return (
-                            <div key={invite.email}>
-                              <ListItem disabled={true} rightIconButton={refreshButton} primaryText={invite.email} secondaryText={details} />
-                              {index < arr.length - 1 && <Divider />}
-                            </div>
-                          )
-                        })
-                      }
-                    </List>
-
-                    <Dialog title={this.state.invite.email}
-                      actions={dialogActions}
-                      open={this.state.openDialog}
-                      onRequestClose={this.handleDialogClose}
-                    >
-                      <FormattedMessage id="dialog_reinvite" />
-                    </Dialog>
-                  </Paper>
-              }
+            <AsyncContent name="invites" renderRow={this.renderInvite}>
+              <Dialog title={this.state.invite.email}
+                actions={dialogActions}
+                open={this.state.openDialog}
+                onRequestClose={this.handleDialogClose}
+              >
+                <FormattedMessage id="dialog_reinvite" />
+              </Dialog>
             </AsyncContent>
           </Tab>
         </Tabs>
@@ -142,14 +111,12 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  users: state.member.tribe.users,
-  userMap: state.member.tribe.userMap,
-  invites: state.invites,
+  uid: state.user.uid,
+  users: state.tribe.users,
+  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getInvites,
   postInvite,
 }, dispatch)
 

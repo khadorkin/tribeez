@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {IntlProvider, FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
-import io from 'socket.io-client'
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
@@ -16,6 +15,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import LangIcon from 'material-ui/svg-icons/action/language'
 import CircularProgress from 'material-ui/CircularProgress'
+import WarnIcon from 'material-ui/svg-icons/alert/warning'
 import Snackbar from 'material-ui/Snackbar'
 import TelegramIcon from './resources/telegram-icon'
 import MessengerIcon from './resources/messenger-icon'
@@ -23,45 +23,40 @@ import Dialog from 'material-ui/Dialog'
 
 import Nav from './components/Nav'
 
-import {toggleMenu, closeSnack, updateLang, message, setSocketStatus} from '../common/actions/app'
-
+import config from '../common/config'
+import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
+import routes from './routes'
+import scriptLoader from './utils/scriptLoader'
 import langs from '../common/resources/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
-import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
-
-import routes from './routes'
-
-import scriptLoader from './utils/scriptLoader'
-
-import config from '../common/config'
+import {toggleMenu, closeSnack, updateLang, resize} from '../common/actions/app'
 
 class App extends Component {
   static propTypes = {
     // from router:
     location: PropTypes.object.isRequired,
     // from redux:
-    uid: PropTypes.number,
-    telegram_token: PropTypes.string,
-    messenger_token: PropTypes.string,
+    uid: PropTypes.string,
+    bot_token: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     formats: PropTypes.object,
     lang: PropTypes.string.isRequired,
     desktop: PropTypes.bool.isRequired,
     height: PropTypes.number.isRequired,
     messages: PropTypes.object.isRequired,
-    setSocketStatus: PropTypes.func.isRequired,
     menu_visible: PropTypes.bool.isRequired,
     snack: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
     // action creators:
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
-    message: PropTypes.func.isRequired,
+    resize: PropTypes.func.isRequired,
     // from react-router:
     children: PropTypes.node.isRequired,
     params: PropTypes.object.isRequired,
@@ -89,40 +84,8 @@ class App extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
-    if (props.uid && !this.socket) { // log in
-      // Connect to WebSocket:
-      this.socket = io(config.api_endpoint)
-      this.socket.on('message', (msg) => {
-        this.props.message(msg)
-      })
-      this.socket.on('connect', () => {
-        this.props.setSocketStatus('connected', this.props.location.pathname.substr(1))
-      })
-      this.socket.on('error', (/*num*/) => {
-        this.props.setSocketStatus('error', this.props.location.pathname.substr(1))
-      })
-      this.socket.on('disconnect', () => {
-        this.props.setSocketStatus('disconnected', this.props.location.pathname.substr(1))
-      })
-      this.socket.on('reconnecting', (/*num*/) => {
-        this.props.setSocketStatus('reconnecting', this.props.location.pathname.substr(1))
-      })
-      this.socket.on('reconnect', (/*num*/) => {
-        this.props.setSocketStatus('connected', this.props.location.pathname.substr(1))
-      })
-      this.socket.on('reconnect_error', (/*num*/) => {
-        this.props.setSocketStatus('error', this.props.location.pathname.substr(1))
-      })
-      this.socket.on('reconnect_failed', () => {
-        this.props.setSocketStatus('error', this.props.location.pathname.substr(1))
-      })
-    }
-    if (!props.uid && this.socket) { // log out
-      // Disconnect WebSocket:
-      this.socket.disconnect(true)
-      this.socket = null
-    }
+  componentDidMount() {
+    window.onresize = this.props.resize
   }
 
   handleMessenger() {
@@ -136,7 +99,7 @@ class App extends Component {
       node.innerHTML = `<div class="fb-send-to-messenger"
                           messenger_app_id="${config.facebook_app_id}"
                           page_id="${config.facebook_page_id}"
-                          data-ref="${this.props.messenger_token}"
+                          data-ref="${this.props.bot_token}"
                           color="blue"
                           size="xlarge"></div>`
       if (window.FB) {
@@ -206,10 +169,17 @@ class App extends Component {
           <IconButton onTouchTap={this.handleMessenger}>
             <MessengerIcon color="white" />
           </IconButton>
-          <IconButton containerElement={<a href={'https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.telegram_token} target="_blank" />}>
+          <IconButton containerElement={<a href={'https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.bot_token} target="_blank" />}>
             <TelegramIcon color="white" />
           </IconButton>
         </div>
+      )
+    }
+    if (this.props.error) {
+      iconRight = (
+        <IconButton onTouchTap={() => alert(this.props.error)}>
+          <WarnIcon color="white" />
+        </IconButton>
       )
     }
     if (this.props.loading) {
@@ -231,18 +201,12 @@ class App extends Component {
 
     const dockedUserMenu = uid && desktop
 
-    const path_parts = pathname.substr(1).split('/')
-    if (this.props.params.token) {
-      path_parts.pop()
-    }
-    if (this.props.params.id) {
-      path_parts[1] = 'edit'
-    }
+    const path_parts = pathname.split('/').slice(1, -Object.keys(this.props.params).length || undefined) // remove params
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
     const snack_author = this.props.userMap[snack.author]
-    const snack_author_name = snack_author && (snack_author.id === uid ? '_you_' : snack_author.name)
+    const snack_author_name = snack_author && (snack_author.uid === uid ? '_you_' : snack_author.name)
 
     const dialogActions = [
       <FlatButton
@@ -291,37 +255,25 @@ App.childContextTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  telegram_token: state.member.user.telegram_token,
-  messenger_token: state.member.user.messenger_token,
-  userMap: state.member.tribe.userMap,
-  formats: state.member.formats,
+  uid: state.user.uid,
+  bot_token: state.user.bot_token,
+  userMap: state.tribe.userMap,
+  formats: state.tribe.formats,
   lang: state.app.lang, // here is the app language
   desktop: state.app.width > 800,
   height: state.app.height,
   messages: state.app.messages,
   menu_visible: state.app.menu_visible,
   snack: state.app.snack,
-  loading: state.app.submitting
-        || state.activity.loading
-        || state.bills.loading
-        || state.events.loading
-        || state.notes.loading
-        || state.polls.loading
-        || state.invite.loading
-        || state.logout.loading
-        || state.member.loading
-        || state.join.loading
-        || state.reset.loading
-        || state.invites.loading,
+  loading: state.app.loading > 0 || state.app.submitting,
+  error: state.app.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleMenu,
   closeSnack,
   updateLang,
-  message,
-  setSocketStatus,
+  resize,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

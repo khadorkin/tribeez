@@ -1,28 +1,54 @@
 import router from '../router'
 import routes from '../routes'
 
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
+
+import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (values, dispatch) => {
-  values.users = values.users
-    .filter((task_user) => task_user.checked)
-    .map((task_user) => task_user.user_id)
-
   return new Promise((resolve, reject) => {
-    api[values.id ? 'put' : 'post']('task', values)
-      .then((response) => {
-        if (response.error) {
-          if (typeof response.error === 'string') {
-            response.error = {_error: response.error}
-          }
-          reject(response.error)
-        } else {
-          resolve()
-          router.resetTo(routes.TASKS, dispatch)
-        }
+    values.counters = {}
+    values.users.forEach((user) => {
+      if (user.checked) {
+        values.counters[user.user_id] = 0
+      }
+    })
+    delete values.users
+
+    const tid = auth.currentUser.tid
+    let id = values.id
+    delete values.id
+    let action
+    if (id) {
+      action = 'update'
+    } else {
+      action = 'new'
+      id = db.ref('tribes/' + tid + '/tasks').push().key
+      values.added = timestamp
+    }
+
+    db.ref('tribes/' + tid + '/tasks/' + id).set(values)
+    .then(() => {
+      return db.ref('tribes/' + tid + '/history').push({
+        type: 'task',
+        action,
+        added: timestamp,
+        user: auth.currentUser.uid,
+        item: values,
+        id,
       })
-      .catch(() => {
-        reject({_error: 'request'})
+    })
+    .then(() => {
+      resolve()
+      router.resetTo(routes.TASKS, dispatch)
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'submitTask',
+        error,
       })
+      reject({_error: 'request'})
+    })
   })
 }

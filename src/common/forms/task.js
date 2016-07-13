@@ -4,7 +4,7 @@ import validator from '../utils/formValidator'
 import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => {
-  const task = ownProps.current || state.tasks.current // either from routing state, or from ajax retrieval
+  const task = ownProps.current || state.item.task // either from routing state, or from ajax retrieval
   let initialValues
   if (task) {
     initialValues = {
@@ -13,18 +13,22 @@ const mapStateToProps = (state, ownProps) => {
       description: task.description || '',
       wait: task.wait,
       notice: task.notice,
-      users: state.member.tribe.users.map((user) => ({user_id: user.id, checked: (task.counters[user.id] !== undefined)})),
+      users: state.tribe.users.map((user) => ({user_id: user.uid, checked: (task.counters[user.uid] !== undefined)})),
+      added: task.added,
+      author: task.author,
     }
   } else {
     initialValues = {
-      users: state.member.tribe.users.map((user) => ({user_id: user.id, checked: true})),
+      users: state.tribe.users.map((user) => ({user_id: user.uid, checked: true})),
+      author: state.user.uid,
     }
   }
   return {
-    task,
     initialValues,
-    users: state.member.tribe.users,
-    userMap: state.member.tribe.userMap,
+    task,
+    tid: state.tribe.id,
+    users: state.tribe.users,
+    userMap: state.tribe.userMap,
   }
 }
 
@@ -35,7 +39,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'task',
-    fields: ['id', 'name', 'description', 'wait', 'notice', 'users[].user_id', 'users[].checked'],
+    fields: ['id', 'name', 'description', 'wait', 'notice', 'users[].user_id', 'users[].checked', 'added', 'author'],
     validate: validator(['name', 'wait', 'notice', 'users'], ['description']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

@@ -5,7 +5,7 @@ import {
 
 import {actionTypes as formActions} from 'redux-form'
 
-import lang from './lang'
+import {getLang} from './locale'
 
 const userPlugin = (state, action) => {
   switch (action.type) {
@@ -21,12 +21,12 @@ const userPlugin = (state, action) => {
       }
     case formActions.DESTROY:
       return {
-        lang: {value: lang.get()},
+        lang: {value: getLang()},
       }
     case formActions.INITIALIZE:
       return {
         ...state,
-        lang: {value: lang.get()},
+        lang: {value: getLang()},
       }
     default:
       return state

@@ -15,7 +15,7 @@ class Invite extends Component {
     // from parent:
     item: PropTypes.object.isRequired,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     // action creators:
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
   messages: state.app.messages, //TODO
 })
 

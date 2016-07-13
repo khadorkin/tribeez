@@ -12,5 +12,11 @@
   "google_ios_key": "xxxxxxxx",
   "telegram_bot_name": "xxxxxBot",
   "facebook_app_id": "xxxxxxxx",
-  "facebook_page_id": "xxxxxxxx"
+  "facebook_page_id": "xxxxxxxx",
+  "firebase": {
+    "apiKey": "xxxxxxxx",
+    "authDomain": "xxxxxxxx.firebaseapp.com",
+    "databaseURL": "https://xxxxxxxx.firebaseio.com",
+    "storageBucket": "xxxxxxxx.appspot.com"
+  }
 }

@@ -17,7 +17,7 @@ class Poll extends Component {
   render() {
     return (
       <Card>
-        <PollForm id={this.props.params.id ? Number(this.props.params.id) : null} current={this.props.location.state} setHook={this.props.setHook} />
+        <PollForm id={this.props.params.id} current={this.props.location.state} setHook={this.props.setHook} />
       </Card>
     )
   }

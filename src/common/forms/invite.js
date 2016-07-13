@@ -4,14 +4,15 @@ import platform from '../platform'
 
 const mapStateToProps = (state) => ({
   initialValues: {
-    lang: state.member.user.lang,
+    lang: state.app.lang,
+    tribe: state.tribe.id,
   },
 })
 
 export default (component) => {
   return reduxForm({
     form: 'invite',
-    fields: ['email', 'lang'],
+    fields: ['email', 'lang', 'tribe'],
     validate: validator(['email', 'lang']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

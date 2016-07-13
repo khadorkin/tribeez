@@ -1,59 +1,131 @@
-import router from '../router'
-import config from '../config'
-
-import api from '../utils/api'
+import {db, auth} from '../firebase'
 
 import {
-  GET_MEMBER_REQUEST,
-  GET_MEMBER_SUCCESS,
-  GET_MEMBER_FAILURE,
-  LOGIN_DESTINATION,
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
+  FIREBASE_FAILURE,
+  USER_UPDATED,
+  TRIBE_UPDATED,
+  MEMBER_ADDED,
+  MEMBER_UPDATED,
+  MEMBERS_REMOVED,
 } from '../constants/actions'
 
-export default (destination, redirectOnLoggedIn, redirectOnAnonymous) => {
-  return function(dispatch) {
+const origin = 'getMember'
+let privateRef
+let userRef
+let memberRef
+let tribeRef
+
+const on = (uid) => {
+  return (dispatch) => {
     dispatch({
-      type: GET_MEMBER_REQUEST,
+      type: FIREBASE_REQUEST,
     })
-    api.get('member', {version: config.android.versionCode})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: GET_MEMBER_FAILURE,
-            error: response.error,
-          })
-          if (redirectOnAnonymous) {
-            router.resetTo(redirectOnAnonymous, dispatch)
-            dispatch({
-              type: LOGIN_DESTINATION,
-              destination,
-            })
-          }
-        } else {
-          dispatch({
-            type: GET_MEMBER_SUCCESS,
-            user: response.user,
-            tribe: response.tribe,
-          })
-          if (redirectOnLoggedIn) {
-            router.resetTo(redirectOnLoggedIn, dispatch)
-          }
-        }
+
+    privateRef = db.ref('users_private/' + uid)
+
+    privateRef.on('value', (snapshot) => {
+      const user = snapshot.val()
+
+      dispatch({
+        type: USER_UPDATED,
+        user,
       })
-      .catch((err) => {
+    }, (error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin,
+        error: error.code,
+      })
+    })
+
+    userRef = db.ref('users/' + uid)
+
+    userRef.on('value', (snapshot) => {
+      const user = snapshot.val()
+      auth.currentUser.name = user.name
+      auth.currentUser.gravatar = user.gravatar
+      auth.currentUser.tid = user.current_tribe
+
+      dispatch({
+        type: USER_UPDATED,
+        user,
+      })
+
+      tribeRef = db.ref('tribes/' + user.current_tribe + '/infos')
+
+      tribeRef.on('value', (sub_snapshot) => {
+        const tribe = sub_snapshot.val()
+        tribe.id = user.current_tribe
+        auth.currentUser.tribe = tribe.name
+
         dispatch({
-          type: GET_MEMBER_FAILURE,
-          error: 'request',
-          fetchError: err.message,
+          type: TRIBE_UPDATED,
+          tribe,
         })
-        //TODO: show an error
-        if (redirectOnAnonymous) {
-          router.resetTo(redirectOnAnonymous, dispatch)
-          dispatch({
-            type: LOGIN_DESTINATION,
-            destination,
-          })
-        }
+        dispatch({
+          type: FIREBASE_SUCCESS,
+        })
+      }, (error) => {
+        dispatch({
+          type: FIREBASE_FAILURE,
+          origin,
+          error: error.code,
+        })
       })
+
+      memberRef = db.ref('tribes/' + user.current_tribe + '/members')
+
+      memberRef.on('child_added', (sub_snapshot) => {
+        const member = sub_snapshot.val()
+        member.uid = sub_snapshot.key
+        dispatch({
+          type: MEMBER_ADDED,
+          member,
+        })
+      }, (error) => {
+        dispatch({
+          type: FIREBASE_FAILURE,
+          origin,
+          error: error.code,
+        })
+      })
+
+      memberRef.on('child_changed', (sub_snapshot) => {
+        const member = sub_snapshot.val()
+        member.uid = sub_snapshot.key
+        dispatch({
+          type: MEMBER_UPDATED,
+          member,
+        })
+      }, (error) => {
+        dispatch({
+          type: FIREBASE_FAILURE,
+          origin,
+          error: error.code,
+        })
+      })
+    }, (error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin,
+        error: error.code,
+      })
+    })
   }
 }
+
+const off = () => {
+  return (dispatch) => {
+    privateRef.off()
+    userRef.off()
+    memberRef.off()
+    tribeRef.off()
+    dispatch({
+      type: MEMBERS_REMOVED,
+    })
+  }
+}
+
+export default {on, off}

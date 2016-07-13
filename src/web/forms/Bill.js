@@ -12,7 +12,7 @@ import Part from './deep/Part'
 
 import form from '../../common/forms/bill'
 import focus from '../../common/utils/formFocus'
-import getBill from '../../common/actions/getBill'
+import getItem from '../../common/actions/getItem'
 import submitBill from '../../common/actions/submitBill'
 
 const today = new Date()
@@ -20,7 +20,7 @@ const today = new Date()
 class BillForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
@@ -29,11 +29,11 @@ class BillForm extends Component {
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
-    lang: PropTypes.string,
     initialValues: PropTypes.object,
     bill: PropTypes.object,
+    tid: PropTypes.string,
     // action creators:
-    getBill: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -42,10 +42,10 @@ class BillForm extends Component {
     this.handleMethodChange = this.handleMethodChange.bind(this)
   }
 
-  componentDidMount() {
-    // when accessing directly to /bill/:id
-    if (!this.props.bill && this.props.id) {
-      this.props.getBill(this.props.id)
+  componentWillReceiveProps(props) {
+    // when accessing directly to /bills/edit/:id
+    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
+      this.props.getItem('bill', props.id)
     }
   }
 
@@ -74,7 +74,7 @@ class BillForm extends Component {
     const {fields: {name, description, payer, paid, amount, method, parts}, users, userMap, currency} = this.props
 
     const userItems = users.map((user) => {
-      return <MenuItem value={user.id} key={user.id} primaryText={user.name} />
+      return <MenuItem value={user.uid} key={user.uid} primaryText={user.name} />
     })
 
     return (
@@ -95,7 +95,6 @@ class BillForm extends Component {
         </SelectField>
         <DatePicker ref="paid"
           required={true}
-          locale={this.props.lang}
           maxDate={today}
           {...paid}
         />
@@ -117,7 +116,7 @@ class BillForm extends Component {
               method={method.value}
               amount={part.amount}
               currency={currency}
-              user={userMap[part.user_id.value]}
+              user={userMap[part.uid.value]}
             />
           )
         }
@@ -126,4 +125,4 @@ class BillForm extends Component {
   }
 }
 
-export default form(BillForm, {getBill})
+export default form(BillForm, {getItem})

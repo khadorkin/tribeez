@@ -74,8 +74,8 @@ Object.assign(config, {
     }),
     new webpack.IgnorePlugin(/\.(android|ios)\.js/),
     new CopyWebpackPlugin([
-      {from: 'src/web/static'},
-      {from: 'src/common/images'},
+      {context: 'src/web/static', from: '*.*'},
+      {context: 'src/common/images', from: '*.*'},
     ]),
   ]),
   module: {

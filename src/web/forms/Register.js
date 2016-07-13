@@ -48,11 +48,7 @@ class RegisterForm extends Component {
   handleSubmit(event) {
     this.props.handleSubmit(submitRegister)(event)
       .catch((errors) => {
-        if (errors._backend) { // 'empty' from backend
-          // we need to reset it because the API has already tested the value against reCAPTCHa server
-          this.refs.captcha.reset()
-          delete errors._backend
-        }
+        this.refs.captcha.reset()
         focus(errors, this.refs)
       })
   }

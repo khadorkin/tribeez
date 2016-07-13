@@ -45,10 +45,6 @@ import './index.css'
 import webfont from 'webfontloader'
 webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
-// redux actions
-import {resize} from '../common/actions/app'
-import getMember from '../common/actions/getMember'
-
 // app locales (keep list in sync with resources/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'
 import locale_fr from 'react-intl/locale-data/fr'
@@ -87,67 +83,57 @@ if (__DEV__) {
 }
 
 const history = syncHistoryWithStore(browserHistory, store)
-
 history.listen((location) => {
   ga('send', 'pageview', location.pathname)
 })
 
-// update app size
-window.onresize = store.dispatch.bind(store.dispatch, resize())
-window.onresize()
-
-// Needed for onTouchTap, Can go away when react 1.0 release. See https://github.com/zilverline/react-tap-event-plugin
+// Needed for onTouchTap events:
 injectTapEventPlugin()
 
-const authenticate = (nextState, replaceState, callback) => {
-  if (!store.getState().member.user.id) {
-    const destination = nextState.location.pathname
-    if (/^\/(join|reset)/.test(destination)) { // no auth for these routes
-      callback()
-      return
-    }
-    let redirectOnLoggedIn
-    let redirectOnAnonymous
+import {setDestination} from '../common/actions/app'
 
-    if (/^\/($|login|password|register)/.test(destination)) { // public routes
-      redirectOnLoggedIn = routes.ACTIVITY
-    } else { // private routes
-      redirectOnAnonymous = routes.LOGIN
-    }
-    store.dispatch(getMember(destination, redirectOnLoggedIn, redirectOnAnonymous))
+const authenticate = (nextState, replace) => {
+  if (!store.getState().user.uid) {
+    store.dispatch(setDestination(nextState.location.pathname))
+    replace(routes.LOGIN)
   }
-  callback()
+}
+
+const redirectToHome = (nextState, replace) => {
+  if (store.getState().user.uid) {
+    replace(routes.ACTIVITY)
+  }
 }
 
 ReactDOM.render((
   <Provider store={store}>
     <Router history={history}>
-      <Route path={routes.WELCOME} component={App} onEnter={authenticate}>
+      <Route path={routes.WELCOME} component={App}>
         <IndexRoute component={Welcome} />
-        <Route path={routes.LOGIN} component={Login} />
-        <Route path={routes.PASSWORD} component={Password} />
-        <Route path={routes.RESET} component={Reset} />
-        <Route path={routes.REGISTER} component={Register} />
-        <Route path={routes.JOIN} component={Join} />
-        <Route path={routes.ACTIVITY} component={Activity} />
-        <Route path={routes.PROFILE} component={Profile} />
-        <Route path={routes.TRIBE} component={Tribe} />
-        <Route path={routes.TRIBE_NEW} component={NewTribe} />
-        <Route path={routes.MEMBERS} component={Members} />
-        <Route path={routes.MEMBERS_NEW} component={Invite} />
-        <Route path={routes.BILLS} component={Bills} />
-        <Route path={routes.BILLS_NEW} component={Bill} />
-        <Route path={routes.BILLS_EDIT} component={Bill} />
-        <Route path={routes.EVENTS} component={Events} />
-        <Route path={routes.EVENTS_NEW} component={Event} />
-        <Route path={routes.EVENTS_EDIT} component={Event} />
-        <Route path={routes.TASKS} component={Tasks} />
-        <Route path={routes.TASKS_NEW} component={Task} />
-        <Route path={routes.TASKS_EDIT} component={Task} />
-        <Route path={routes.NOTES} component={Notes} />
-        <Route path={routes.POLLS} component={Polls} />
-        <Route path={routes.POLLS_NEW} component={Poll} />
-        <Route path={routes.POLLS_EDIT} component={Poll} />
+        <Route path={routes.LOGIN} component={Login} onEnter={redirectToHome} />
+        <Route path={routes.PASSWORD} component={Password} onEnter={redirectToHome} />
+        <Route path={routes.RESET} component={Reset} onEnter={redirectToHome} />
+        <Route path={routes.REGISTER} component={Register} onEnter={redirectToHome} />
+        <Route path={routes.JOIN} component={Join} onEnter={redirectToHome} />
+        <Route path={routes.ACTIVITY} component={Activity} onEnter={authenticate} />
+        <Route path={routes.PROFILE} component={Profile} onEnter={authenticate} />
+        <Route path={routes.TRIBE} component={Tribe} onEnter={authenticate} />
+        <Route path={routes.TRIBE_NEW} component={NewTribe} onEnter={authenticate} />
+        <Route path={routes.MEMBERS} component={Members} onEnter={authenticate} />
+        <Route path={routes.MEMBERS_NEW} component={Invite} onEnter={authenticate} />
+        <Route path={routes.BILLS} component={Bills} onEnter={authenticate} />
+        <Route path={routes.BILLS_NEW} component={Bill} onEnter={authenticate} />
+        <Route path={routes.BILLS_EDIT} component={Bill} onEnter={authenticate} />
+        <Route path={routes.EVENTS} component={Events} onEnter={authenticate} />
+        <Route path={routes.EVENTS_NEW} component={Event} onEnter={authenticate} />
+        <Route path={routes.EVENTS_EDIT} component={Event} onEnter={authenticate} />
+        <Route path={routes.TASKS} component={Tasks} onEnter={authenticate} />
+        <Route path={routes.TASKS_NEW} component={Task} onEnter={authenticate} />
+        <Route path={routes.TASKS_EDIT} component={Task} onEnter={authenticate} />
+        <Route path={routes.NOTES} component={Notes} onEnter={authenticate} />
+        <Route path={routes.POLLS} component={Polls} onEnter={authenticate} />
+        <Route path={routes.POLLS_NEW} component={Poll} onEnter={authenticate} />
+        <Route path={routes.POLLS_EDIT} component={Poll} onEnter={authenticate} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

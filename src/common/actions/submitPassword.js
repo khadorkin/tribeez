@@ -1,25 +1,31 @@
-import api from '../utils/api'
+import {auth} from '../firebase'
 
-import {PASSWORD_SUCCESS} from '../constants/actions'
+import {PASSWORD_SUCCESS, FIREBASE_FAILURE} from '../constants/actions'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    api.post('password', values)
-      .then((response) => {
-        if (response.error) {
-          if (typeof response.error === 'string') {
-            response.error = {_error: response.error}
-          }
-          reject(response.error)
-        } else {
-          resolve()
+    auth.sendPasswordResetEmail(values.email)
+    .then(() => {
+      resolve()
+      dispatch({
+        type: PASSWORD_SUCCESS,
+      })
+    })
+    .catch((error) => {
+      switch (error.code) {
+        case 'auth/invalid-email':
+        case 'auth/user-disabled':
+        case 'auth/user-not-found':
+          reject({email: 'unknown'})
+          break
+        default:
+          reject({_error: 'request'})
           dispatch({
-            type: PASSWORD_SUCCESS,
+            type: FIREBASE_FAILURE,
+            origin: 'submitPassword',
+            error,
           })
-        }
-      })
-      .catch(() => {
-        reject({_error: 'request'})
-      })
+      }
+    })
   })
 }

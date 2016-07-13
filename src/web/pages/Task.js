@@ -17,7 +17,7 @@ class Task extends Component {
   render() {
     return (
       <Card>
-        <TaskForm id={this.props.params.id ? Number(this.props.params.id) : null} current={this.props.location.state} setHook={this.props.setHook} />
+        <TaskForm id={this.props.params.id} current={this.props.location.state} setHook={this.props.setHook} />
       </Card>
     )
   }

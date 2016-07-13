@@ -11,7 +11,7 @@ class Snackbar extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     userMap: PropTypes.object.isRequired,
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     snack: PropTypes.object.isRequired,
     closeSnack: PropTypes.func.isRequired,
   }
@@ -40,8 +40,8 @@ class Snackbar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userMap: state.member.tribe.userMap,
-  uid: state.member.user.id,
+  userMap: state.tribe.userMap,
+  uid: state.user.uid,
   snack: state.app.snack,
 })
 

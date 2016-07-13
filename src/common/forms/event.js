@@ -4,7 +4,7 @@ import validator from '../utils/formValidator'
 import platform from '../platform'
 
 const mapStateToProps = (state, ownProps) => {
-  const event = ownProps.current || state.events.current // either from routing state, or from ajax retrieval
+  const event = ownProps.current || state.item.event // either from routing state, or from ajax retrieval
   let initialValues
   if (event) {
     initialValues = {
@@ -15,12 +15,18 @@ const mapStateToProps = (state, ownProps) => {
       end: event.end,
       location: event.location || '',
       url: event.url || '',
+      added: event.added,
+      author: event.author,
+    }
+  } else {
+    initialValues = {
+      author: state.user.uid,
     }
   }
   return {
-    lang: state.app.lang,
-    event,
     initialValues,
+    event,
+    tid: state.tribe.id,
   }
 }
 
@@ -31,7 +37,7 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'event',
-    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url'],
+    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'added', 'author'],
     validate: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

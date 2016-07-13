@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
 
 import MenuItem from 'material-ui/MenuItem'
+import CircularProgress from 'material-ui/CircularProgress'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -11,6 +12,7 @@ import form from '../../common/forms/join'
 import focus from '../../common/utils/formFocus'
 import submitJoin from '../../common/actions/submitJoin'
 import langs from '../../common/resources/langs'
+import colors from '../../common/constants/colors'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
@@ -19,39 +21,41 @@ const langItems = langs.map((item) =>
 class JoinForm extends Component {
   static propTypes = {
     // from parent component:
+    tribe: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
     // from redux-form:
     fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     // from redux:
     initialValues: PropTypes.object,
-    inviter: PropTypes.string,
-    title: PropTypes.string,
+    invite: PropTypes.object,
   }
 
   constructor(props) {
     super(props)
-    this.handleSuggestion = this.handleSuggestion.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSuggestion(event) {
-    event.preventDefault()
-    this.props.fields.email.onChange(event.target.innerHTML)
-  }
-
   handleSubmit(event) {
-    this.props.handleSubmit(submitJoin)(event)
+    this.props.handleSubmit(submitJoin.bind(null, this.props.invite))(event)
       .catch((errors) => focus(errors, this.refs))
   }
 
   render() {
-    const {fields: {name, email, password, lang}} = this.props
+    const {fields: {name, email, password, lang}, invite} = this.props
 
-    const subtitle = <FormattedMessage id="invited_you" values={{name: this.props.inviter}} />
+    if (!invite) {
+      return (
+        <div style={{textAlign: 'center', margin: '150px 0'}}>
+          <CircularProgress color={colors.main} size={0.5} />
+        </div>
+      )
+    }
+
+    const subtitle = <FormattedMessage id="invited_you" values={{name: invite.inviter_name}} />
 
     return (
-      <Form name="join" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
+      <Form name="join" title={invite.tribe_name} subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
@@ -60,12 +64,13 @@ class JoinForm extends Component {
         <TextField ref="email"
           type="email"
           required={true}
-          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
+          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error} />}
           {...email}
         />
         <TextField ref="password"
           type="password"
           required={true}
+          errorText={password.touched && password.error && <FormattedMessage id={'error.password_' + password.error} />}
           {...password}
         />
         <SelectField ref="lang"

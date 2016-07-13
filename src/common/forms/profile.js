@@ -4,13 +4,13 @@ import platform from '../platform'
 
 const mapStateToProps = (state) => ({
   initialValues: {
-    name: state.member.user.name,
-    email: state.member.user.email,
-    lang: state.member.user.lang,
-    phone: state.member.user.phone,
-    birthdate: state.member.user.birthdate,
+    name: state.user.name,
+    email: state.user.email,
+    lang: state.user.lang,
+    phone: state.user.phone,
+    birthdate: state.user.birthdate,
   },
-  lang: state.app.lang,
+  reauth_prompt: state.app.messages.reauth_prompt,
 })
 
 export default (component) => {

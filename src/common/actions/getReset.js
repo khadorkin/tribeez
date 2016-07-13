@@ -10,7 +10,7 @@ import {
 } from '../constants/actions'
 
 export default (token) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: GET_RESET_REQUEST,
     })

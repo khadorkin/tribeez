@@ -3,7 +3,7 @@ import {
 } from '../constants/actions'
 
 export const getLocal = (key) => {
-  return function(dispatch) {
+  return (dispatch) => {
     dispatch({
       type: LOCAL_STORAGE,
       key,
@@ -13,7 +13,7 @@ export const getLocal = (key) => {
 }
 
 export const setLocal = (key, value) => {
-  return function(dispatch) {
+  return (dispatch) => {
     localStorage.setItem('tribeez.' + key, value)
     dispatch({
       type: LOCAL_STORAGE,
@@ -24,7 +24,7 @@ export const setLocal = (key, value) => {
 }
 
 export const removeLocal = (key) => {
-  return function(dispatch) {
+  return (dispatch) => {
     localStorage.removeItem('tribeez.' + key)
     dispatch({
       type: LOCAL_STORAGE,

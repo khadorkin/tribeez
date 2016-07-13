@@ -1,18 +1,22 @@
 import React, {Component, PropTypes} from 'react'
 
+import {FormattedMessage} from 'react-intl'
+
+import {orange700} from 'material-ui/styles/colors'
+
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import Checkbox from './fields/Checkbox'
 
 import form from '../../common/forms/poll'
 import focus from '../../common/utils/formFocus'
-import getPoll from '../../common/actions/getPoll'
+import getItem from '../../common/actions/getItem'
 import submitPoll from '../../common/actions/submitPoll'
 
 class PollForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
@@ -20,8 +24,9 @@ class PollForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     poll: PropTypes.object,
+    tid: PropTypes.string,
     // action creators:
-    getPoll: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -29,10 +34,10 @@ class PollForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // when accessing directly to /poll/:id
-    if (!this.props.poll && this.props.id) {
-      this.props.getPoll(this.props.id)
+  componentWillReceiveProps(props) {
+    // when accessing directly to /polls/edit/:id
+    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
+      this.props.getItem('poll', props.id)
     }
   }
 
@@ -42,10 +47,12 @@ class PollForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, multiple, options}} = this.props
+    const {fields: {name, description, multiple, options}, poll} = this.props
+
+    const subtitle = ((poll && poll.answers) ? <span style={{color: orange700}}><FormattedMessage id="poll_edit_warning" /></span> : null)
 
     return (
-      <Form name={'poll.' + (this.props.poll ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+      <Form subtitle={subtitle} name={'poll.' + (poll ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
@@ -73,4 +80,4 @@ class PollForm extends Component {
   }
 }
 
-export default form(PollForm, {getPoll})
+export default form(PollForm, {getItem})

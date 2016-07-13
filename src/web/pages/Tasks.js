@@ -16,16 +16,12 @@ import Task from '../components/Task'
 import styles from '../styles'
 import routes from '../routes'
 
-import getTasks from '../../common/actions/getTasks'
-import deleteTask from '../../common/actions/deleteTask'
+import deleteItem from '../../common/actions/deleteItem'
 
 class Tasks extends Component {
   static propTypes = {
-    // redux state:
-    tasks: PropTypes.object.isRequired,
     // action creators:
-    getTasks: PropTypes.func.isRequired,
-    deleteTask: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -37,6 +33,7 @@ class Tasks extends Component {
     this.handleDialogOpen = this.handleDialogOpen.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleDialogClose = this.handleDialogClose.bind(this)
+    this.renderTask = this.renderTask.bind(this)
   }
 
   handleDialogOpen(task) {
@@ -47,7 +44,7 @@ class Tasks extends Component {
   }
 
   handleDelete() {
-    this.props.deleteTask(this.state.task.id)
+    this.props.deleteItem('task', this.state.task.id)
     this.handleDialogClose()
   }
 
@@ -57,9 +54,11 @@ class Tasks extends Component {
     })
   }
 
-  render() {
-    const {tasks} = this.props
+  renderTask(row) {
+    return <Task task={row} key={row.id} onDelete={this.handleDialogOpen} />
+  }
 
+  render() {
     const dialogActions = [
       <FlatButton
         label={<FormattedMessage id="cancel" />}
@@ -75,36 +74,27 @@ class Tasks extends Component {
     ]
 
     return (
-      <AsyncContent fetcher={this.props.getTasks} data={tasks}>
-        {
-          tasks.items.map((task) =>
-            <Task task={task} key={task.id} onDelete={this.handleDialogOpen} />
-          )
-        }
-
-        <Dialog title={this.state.task.name}
-          actions={dialogActions}
-          open={this.state.openDialog}
-          onRequestClose={this.handleDialogClose}
-        >
-          <FormattedMessage id="delete_dialog" values={{type: 'task'}} />
-        </Dialog>
+      <div>
+        <AsyncContent name="tasks" renderRow={this.renderTask}>
+          <Dialog title={this.state.task.name}
+            actions={dialogActions}
+            open={this.state.openDialog}
+            onRequestClose={this.handleDialogClose}
+          >
+            <FormattedMessage id="delete_dialog" values={{type: 'task'}} />
+          </Dialog>
+        </AsyncContent>
 
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.TASKS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </AsyncContent>
+      </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  tasks: state.tasks,
-})
-
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getTasks,
-  deleteTask,
+  deleteItem,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tasks)
+export default connect(null, mapDispatchToProps)(Tasks)

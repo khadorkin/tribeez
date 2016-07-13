@@ -10,6 +10,7 @@ You need to install and start the API first: https://bitbucket.org/antoinerousse
 ## Dependencies
 
     npm install
+    npm install -g firebase-tools
 
 ## Config
 
@@ -23,9 +24,9 @@ Then edit `config.development.json` and `config.production.json` with your infos
 ### Development
 
     npm run dev
-    npm run start
+    npm run serve
 
-Then go to [http://localhost:3001](http://localhost:3001/)
+Then go to [http://localhost:5000](http://localhost:5000/)
 
 ### Production
 
@@ -33,11 +34,16 @@ Build:
 
     npm run deploy
 
+Serve with [Firebase Hosting](https://firebase.google.com/docs/hosting/):
+
+    firebase login
+    firebase deploy
+
 Serve with [nginx](http://nginx.org/):
 
 ```
 server {
-    server_name tribeez.net;
+    server_name tribeez.net www.tribeez.net;
     root /home/<user>/apps/tribeez;
     #access_log off;
 
@@ -46,10 +52,6 @@ server {
     }
 }
 ```
-
-Serve with [PM2](http://pm2.keymetrics.io/):
-
-    PORT=3011 NODE_ENV=production pm2 start server.js --name "tribeez" -- --color
 
 ## Android app
 

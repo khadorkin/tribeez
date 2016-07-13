@@ -17,13 +17,13 @@ class Join extends Component {
   }
 
   componentDidMount() {
-    this.props.getInvite(this.props.params.token)
+    this.props.getInvite(this.props.params.tribe, this.props.params.token)
   }
 
   render() {
     return (
       <Card className="main">
-        <JoinForm token={this.props.params.token} />
+        <JoinForm tribe={this.props.params.tribe} token={this.props.params.token} />
       </Card>
     )
   }

@@ -28,7 +28,7 @@ class Poll extends Component {
     poll: PropTypes.object.isRequired,
     onDelete: PropTypes.func,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
     // action creators:
@@ -47,6 +47,7 @@ class Poll extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  // for multiple=true: checkboxes:
   handleCheck(id, event, checked) {
     if (checked) {
       this.setState({
@@ -59,6 +60,7 @@ class Poll extends Component {
     }
   }
 
+  // for multiple=false: radio buttons:
   handleChange(event, id) {
     this.setState({
       choices: [Number(id)],
@@ -88,18 +90,16 @@ class Poll extends Component {
   render() {
     const {poll, userMap} = this.props
 
-    const author = userMap[poll.author_id]
+    const author = userMap[poll.author]
 
     // to render a poll, the users must be loaded for the current tribe polls
     if (!author) {
       return null
     }
 
-    const hasAnswers = Object.keys(poll.answers).length > 0
-
     const results = pollAnswers(poll, userMap)
 
-    const user_answer = poll.answers[this.props.uid]
+    const user_answer = poll.answers && poll.answers[this.props.uid]
     const show_results = (user_answer && !this.state.again)
 
     let body
@@ -123,25 +123,26 @@ class Poll extends Component {
       )
     } else {
       if (poll.multiple) {
-        body = poll.options.map((option) => (
-          <Checkbox key={option.id}
-            label={option.name}
-            checked={this.state.choices.includes(option.id)}
-            onCheck={this.handleCheck.bind(this, option.id)}
+        body = poll.options.map((name, id) => (
+          <Checkbox key={id}
+            label={name}
+            checked={this.state.choices.includes(id)}
+            onCheck={this.handleCheck.bind(this, id)}
             style={{marginTop: 8}}
           />
         ))
       } else {
+        const selectedValue = isNaN(this.state.choices[0]) ? '' : String(this.state.choices[0])
         body = (
-          <RadioButtonGroup name={'poll_' + poll.id} onChange={this.handleChange} valueSelected={String(this.state.choices[0] || '')}>
-            {poll.options.map((option) => <RadioButton key={option.id} label={option.name} value={String(option.id)} style={{marginTop: 8}} />)}
+          <RadioButtonGroup name={'poll_' + poll.id} onChange={this.handleChange} valueSelected={selectedValue}>
+            {poll.options.map((name, id) => <RadioButton key={id} label={name} value={String(id)} style={{marginTop: 8}} />)}
           </RadioButtonGroup>
         )
       }
     }
 
     const title = <span>{poll.name}</span>
-    const date = <FormattedRelative value={poll.created} />
+    const date = <FormattedRelative value={poll.added} />
 
     return (
       <Card style={styles.container} initiallyExpanded={!user_answer}>
@@ -169,13 +170,9 @@ class Poll extends Component {
         {
           this.props.onDelete && (
             <CardActions expandable={true} style={{textAlign: 'right', marginTop: -20}}>
-              {
-                hasAnswers && (
-                  <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
-                    <EditButton color={colors.grey600} />
-                  </IconButton>
-                )
-              }
+              <IconButton containerElement={<Link to={{pathname: routes.POLLS_EDIT.replace(':id', poll.id), state: poll}} />}>
+                <EditButton color={colors.grey600} />
+              </IconButton>
               <IconButton onTouchTap={this.handleDelete}>
                 <DeleteButton color={colors.red400} />
               </IconButton>
@@ -194,9 +191,9 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
-  currency: state.member.tribe.currency,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
+  currency: state.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -28,6 +28,8 @@ import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 import {toggleTribes} from '../../common/actions/app'
 
+import MemberListeners from './MemberListeners'
+
 import routes from '../routes'
 
 import Money from './Money'
@@ -111,6 +113,7 @@ class Nav extends Component {
     height: PropTypes.number.isRequired,
     tribe_name: PropTypes.string,
     user: PropTypes.object,
+    balance: PropTypes.number,
     // action creators:
     putSwitch: PropTypes.func.isRequired,
     toggleTribes: PropTypes.func.isRequired,
@@ -136,7 +139,7 @@ class Nav extends Component {
   }
 
   render() {
-    const {user} = this.props
+    const {user, balance} = this.props
 
     const menuItems = menuEntries.map((entry) =>
       <MenuItem key={entry.route}
@@ -147,8 +150,8 @@ class Nav extends Component {
       >
         <FormattedMessage id={entry.route.substr(1)} />
         {
-          entry.route === routes.BILLS && (
-            <Money value={user.balance} style={styles.badge} />
+          entry.route === routes.BILLS && balance != null && (
+            <Money value={balance} style={styles.badge} />
           )
         }
       </MenuItem>
@@ -160,15 +163,20 @@ class Nav extends Component {
       </div>
     )
 
-    const tribeItems = user.tribes.map((tribe) =>
-      <MenuItem key={tribe.id}
-        onTouchTap={this.selectTribe.bind(this, tribe.id)}
-        style={tribe.active ? styles.current : styles.default}
-        rightIconButton={tribe.active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
-      >
-        {tribe.name}
-      </MenuItem>
-    )
+    const tribe_ids = Object.keys(user.tribes)
+    const tribeItems = tribe_ids.map((tid) => {
+      const name = user.tribes[tid]
+      const active = (tid === user.current_tribe)
+      return (
+        <MenuItem key={tid}
+          onTouchTap={this.selectTribe.bind(this, tid)}
+          style={active ? styles.current : styles.default}
+          rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
+        >
+          {name}
+        </MenuItem>
+      )
+    })
 
     const tribesContainer = (
       <div>
@@ -204,17 +212,22 @@ class Nav extends Component {
           </div>
         </div>
         {this.props.menu_tribes ? tribesContainer : menuContainer}
+        <MemberListeners />
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  menu_tribes: state.app.menu_tribes,
-  height: state.app.height,
-  tribe_name: state.member.tribe.name,
-  user: state.member.user,
-})
+const mapStateToProps = (state) => {
+  const member = state.user.uid && state.tribe.userMap[state.user.uid]
+  return {
+    menu_tribes: state.app.menu_tribes,
+    height: state.app.height,
+    tribe_name: state.tribe.name,
+    balance: member && member.balance,
+    user: state.user,
+  }
+}
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putSwitch,

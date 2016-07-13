@@ -6,23 +6,23 @@ import DatePicker from './fields/Date'
 
 import form from '../../common/forms/event'
 import focus from '../../common/utils/formFocus'
-import getEvent from '../../common/actions/getEvent'
+import getItem from '../../common/actions/getItem'
 import submitEvent from '../../common/actions/submitEvent'
 
 class EventForm extends Component {
   static propTypes = {
     // from parent component:
-    id: PropTypes.number,
+    id: PropTypes.string,
     current: PropTypes.object,
     // from redux-form:
     fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     // from redux:
-    lang: PropTypes.string.isRequired,
     initialValues: PropTypes.object,
     event: PropTypes.object,
+    tid: PropTypes.string,
     // action creators:
-    getEvent: PropTypes.func.isRequired,
+    getItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -30,10 +30,10 @@ class EventForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
-    // when accessing directly to /event/:id
-    if (!this.props.event && this.props.id) {
-      this.props.getEvent(this.props.id)
+  componentWillReceiveProps(props) {
+    // when accessing directly to /events/edit/:id
+    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
+      this.props.getItem('event', props.id)
     }
   }
 
@@ -54,12 +54,10 @@ class EventForm extends Component {
         />
         <DatePicker ref="start"
           required={true}
-          locale={this.props.lang}
           time={true}
           {...start}
         />
         <DatePicker ref="end"
-          locale={this.props.lang}
           time={true}
           {...end}
         />
@@ -78,4 +76,4 @@ class EventForm extends Component {
   }
 }
 
-export default form(EventForm, {getEvent})
+export default form(EventForm, {getItem})

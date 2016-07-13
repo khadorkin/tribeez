@@ -8,8 +8,6 @@ import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
-import AsyncContent from '../hoc/AsyncContent'
-
 import Dialog from 'material-ui/Dialog'
 import {List, ListItem} from 'material-ui/List'
 import DescIcon from 'material-ui/svg-icons/action/description'
@@ -28,8 +26,9 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import styles from '../styles'
 import routes from '../routes'
 
-import getEvents from '../../common/actions/getEvents'
-import deleteEvent from '../../common/actions/deleteEvent'
+import {db} from '../../common/firebase'
+
+import deleteItem from '../../common/actions/deleteItem'
 import newEvent from '../../common/actions/newEvent'
 
 BigCalendar.setLocalizer(
@@ -57,26 +56,75 @@ const infos = [
 class Events extends Component {
   static propTypes = {
     // redux state:
+    tid: PropTypes.string,
     lang: PropTypes.string.isRequired,
-    events: PropTypes.object,
     // action creators:
-    getEvents: PropTypes.func.isRequired,
-    deleteEvent: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
     newEvent: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
     this.state = {
+      events: [],
       event: {},
       openDelete: false,
+      error: null,
     }
+    this.load = this.load.bind(this)
+    this.valueChanged = this.valueChanged.bind(this)
+    this.handleError = this.handleError.bind(this)
     this.handleSelectEvent = this.handleSelectEvent.bind(this)
     this.handleCloseDetails = this.handleCloseDetails.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
     this.handleCloseDelete = this.handleCloseDelete.bind(this)
     this.handleSelectSlot = this.handleSelectSlot.bind(this)
+  }
+
+  componentDidMount() {
+    if (this.props.tid) {
+      this.load(this.props.tid)
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.tid) {
+      this.load(props.tid)
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.query) {
+      this.query.off('value')
+    }
+  }
+
+  load(tid) {
+    if (!this.listening) {
+      this.query = db.ref('tribes/' + tid + '/events')
+      this.query.on('value', this.valueChanged, this.handleError)
+      this.listening = true
+    }
+  }
+
+  valueChanged(snapshot) {
+    const values = snapshot.val()
+    const events = []
+    for (const id in values) {
+      const event = values[id]
+      event.id = id
+      events.push(event)
+    }
+    this.setState({
+      events,
+    })
+  }
+
+  handleError(error) {
+    this.setState({
+      error: 'firebase.error.' + error.code,
+    })
   }
 
   handleSelectEvent(event) {
@@ -98,7 +146,7 @@ class Events extends Component {
   }
 
   handleConfirmDelete() {
-    this.props.deleteEvent(this.state.event.id)
+    this.props.deleteItem('event', this.state.event.id)
     this.handleCloseDelete()
     this.handleCloseDetails()
   }
@@ -114,8 +162,17 @@ class Events extends Component {
   }
 
   render() {
-    const {events} = this.props
-    const {event} = this.state
+    const {events, event, error} = this.state
+
+    if (error) {
+      return (
+        <div style={styles.errorContainer}>
+          <div style={styles.errorText}>
+            <FormattedMessage id={error} />
+          </div>
+        </div>
+      )
+    }
 
     const detailsActions = [
       <IconButton containerElement={<Link to={{pathname: routes.EVENTS_EDIT.replace(':id', event.id), state: event}} />}>
@@ -154,10 +211,10 @@ class Events extends Component {
     const views = ['month', 'week', 'agenda']
 
     return (
-      <AsyncContent fetcher={this.props.getEvents} data={events}>
+      <div>
         <BigCalendar
           style={{height: '550px', backgroundColor: 'white', padding: 16}}
-          events={events.items}
+          events={events}
           popup={true}
           views={views}
           culture={this.props.lang}
@@ -214,19 +271,18 @@ class Events extends Component {
         <FloatingActionButton style={styles.fab} containerElement={<Link to={routes.EVENTS_NEW} />}>
           <ContentAdd />
         </FloatingActionButton>
-      </AsyncContent>
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
+  tid: state.tribe.id,
   lang: state.app.lang,
-  events: state.events,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getEvents,
-  deleteEvent,
+  deleteItem,
   newEvent,
 }, dispatch)
 

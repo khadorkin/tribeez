@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
-import {FormattedMessage, FormattedRelative, FormattedNumber} from 'react-intl'
+import {FormattedMessage, FormattedDate, FormattedNumber} from 'react-intl'
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import {List, ListItem} from 'material-ui/List'
@@ -21,7 +21,7 @@ class Bill extends Component {
     bill: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
     // from redux:
-    uid: PropTypes.number,
+    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
   }
 
@@ -38,7 +38,7 @@ class Bill extends Component {
     const {bill, userMap} = this.props
 
     // to render a bill, the userMap must be loaded for the current tribe bills
-    const user = userMap[bill.payer_id]
+    const user = userMap[bill.payer]
     if (!user) {
       return null
     }
@@ -49,12 +49,12 @@ class Bill extends Component {
 
     let formatted_part
     if (user_part) {
-      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part.amount}} />
+      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part}} />
     } else {
       formatted_part = <FormattedMessage id="bill.nopart" />
     }
     const title = <span>{total} — {bill.name}</span>
-    const date = <FormattedRelative value={bill.added} />
+    const date = <FormattedDate value={bill.paid} day="numeric" month="long" year="numeric" />
 
     return (
       <Card style={styles.container}>
@@ -68,13 +68,13 @@ class Bill extends Component {
           {bill.description}
           <List>
             {
-              bill.parts.map((part) => {
-                const part_user = userMap[part.user_id]
-                const part_amount = <FormattedNumber value={part.amount} format="money" />
+              Object.keys(bill.parts).map((part_uid) => {
+                const part_amount = bill.parts[part_uid]
+                const part_user = userMap[part_uid]
 
                 return (
-                  <ListItem key={part.user_id} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
-                    {part_amount}
+                  <ListItem key={part_uid} leftAvatar={<Avatar src={gravatar(part_user)} />} disabled={true}>
+                    <FormattedNumber value={part_amount} format="money" />
                   </ListItem>
                 )
               })
@@ -101,8 +101,8 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.member.user.id,
-  userMap: state.member.tribe.userMap,
+  uid: state.user.uid,
+  userMap: state.tribe.userMap,
 })
 
 export default connect(mapStateToProps)(Bill)
