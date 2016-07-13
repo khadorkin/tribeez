@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View} from 'react-native'
+import {ActivityIndicator, StyleSheet, View} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import Spinner from '../components/Spinner'
 import FormattedMessage from '../components/FormattedMessage'
 import Fab from '../components/Fab'
 
@@ -61,7 +60,7 @@ class Details extends Component {
     if (loading || !item) { //TODO: separate cases or remove loading check?
       return (
         <View style={styles.empty}>
-          <Spinner visible={true} />
+          <ActivityIndicator size="large" color={colors.main} />
         </View>
       )
     }

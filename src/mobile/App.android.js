@@ -1,5 +1,15 @@
 import React, {Component, PropTypes} from 'react'
-import {DrawerLayoutAndroid, Navigator, BackAndroid, Linking, StyleSheet, View, Text, Alert} from 'react-native'
+import {
+  ActivityIndicator,
+  DrawerLayoutAndroid,
+  Navigator,
+  BackAndroid,
+  Linking,
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -11,7 +21,6 @@ import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
 import IconButton from './components/IconButton'
-import Spinner from './components/Spinner'
 
 import routes from '../common/routes'
 import router from '../common/router'
@@ -110,7 +119,7 @@ class App extends Component {
       },
       RightButton: (route/*, navigator, index, navState*/) => {
         if (loading) {
-          return <Spinner color="white" visible={true} style={styles.rightIcon} />
+          return <ActivityIndicator size="small" color="white" style={styles.rightIcon} />
         }
         if (route.type === 'details') { //TODO: not show if does not exist
           return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />

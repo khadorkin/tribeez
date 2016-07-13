@@ -32,7 +32,7 @@ class Form extends Component {
     fields: PropTypes.object.isRequired,
     error: PropTypes.string,
     onSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired,
+    submitting: PropTypes.bool,
   }
 
   constructor(props) {

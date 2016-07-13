@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, ListView, View, Text} from 'react-native'
+import {ActivityIndicator, StyleSheet, ListView, View, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -10,7 +10,6 @@ import {db} from '../../common/firebase'
 
 const PAGING = 20
 
-import Spinner from '../components/Spinner'
 import Button from '../components/Button'
 
 import colors from '../../common/constants/colors'
@@ -217,7 +216,7 @@ class AsyncContent extends Component {
     return (
       <View>
         <View style={styles.spinner}>
-          <Spinner visible={this.state.loading} />
+          <ActivityIndicator size="small" color={colors.main} animating={this.state.loading} />
         </View>
         {this.buffer.length > 0 && this.props.footer}
       </View>

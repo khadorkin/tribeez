@@ -1,10 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Image} from 'react-native'
+import {ActivityIndicator, StyleSheet, View, Image} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import Spinner from '../components/Spinner'
 import Button from '../components/Button'
 
 import routes from '../../common/routes'
@@ -45,7 +44,7 @@ class Welcome extends Component {
         {
           this.props.loading ? (
             <View style={styles.actions}>
-              <Spinner visible={true} />
+              <ActivityIndicator size="large" color={colors.main} />
             </View>
           ) : (
             <View style={styles.actions}>

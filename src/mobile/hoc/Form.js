@@ -13,7 +13,7 @@ class Form extends Component {
     name: PropTypes.string.isRequired,
     action: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool.isRequired,
+    submitting: PropTypes.bool,
     error: PropTypes.string,
   }
 

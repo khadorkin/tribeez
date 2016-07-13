@@ -30,7 +30,7 @@ class JoinForm extends Component {
     if (!invite) {
       return (
         <View style={styles.loading}>
-          <ActivityIndicator animating={true} size="large" color={colors.main} />
+          <ActivityIndicator size="large" color={colors.main} />
         </View>
       )
     }
