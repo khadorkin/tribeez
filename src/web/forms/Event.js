@@ -22,7 +22,8 @@ class EventForm extends Component {
     event: PropTypes.object,
     tid: PropTypes.string,
     // action creators:
-    getItem: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -31,10 +32,14 @@ class EventForm extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // when accessing directly to /events/edit/:id
-    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getItem('event', props.id)
+    if (!this.subscribed && props.tid) {
+      this.props.subscribe('event', props.id)
+      this.subscribed = true
     }
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe('event', this.props.id)
   }
 
   handleSubmit(event) {
@@ -76,4 +81,7 @@ class EventForm extends Component {
   }
 }
 
-export default form(EventForm, {getItem})
+export default form(EventForm, {
+  subscribe: getItem.on,
+  unsubscribe: getItem.off,
+})

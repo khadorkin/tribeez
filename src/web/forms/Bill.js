@@ -33,7 +33,8 @@ class BillForm extends Component {
     bill: PropTypes.object,
     tid: PropTypes.string,
     // action creators:
-    getItem: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -43,10 +44,14 @@ class BillForm extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // when accessing directly to /bills/edit/:id
-    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getItem('bill', props.id)
+    if (!this.subscribed && props.tid) {
+      this.props.subscribe('bill', props.id)
+      this.subscribed = true
     }
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe('bill', this.props.id)
   }
 
   handleSubmit(event) {
@@ -125,4 +130,7 @@ class BillForm extends Component {
   }
 }
 
-export default form(BillForm, {getItem})
+export default form(BillForm, {
+  subscribe: getItem.on,
+  unsubscribe: getItem.off,
+})

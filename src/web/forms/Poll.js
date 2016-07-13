@@ -26,7 +26,8 @@ class PollForm extends Component {
     poll: PropTypes.object,
     tid: PropTypes.string,
     // action creators:
-    getItem: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -35,10 +36,14 @@ class PollForm extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // when accessing directly to /polls/edit/:id
-    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getItem('poll', props.id)
+    if (!this.subscribed && props.tid) {
+      this.props.subscribe('poll', props.id)
+      this.subscribed = true
     }
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe('poll', this.props.id)
   }
 
   handleSubmit(poll) {
@@ -80,4 +85,7 @@ class PollForm extends Component {
   }
 }
 
-export default form(PollForm, {getItem})
+export default form(PollForm, {
+  subscribe: getItem.on,
+  unsubscribe: getItem.off,
+})

@@ -28,7 +28,8 @@ class TaskForm extends Component {
     users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
-    getItem: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -37,10 +38,14 @@ class TaskForm extends Component {
   }
 
   componentWillReceiveProps(props) {
-    // when accessing directly to /task/edit/:id
-    if ((!props.poll && props.id) && (!this.props.tid && props.tid)) {
-      this.props.getItem('task', props.id)
+    if (!this.subscribed && props.tid) {
+      this.props.subscribe('task', props.id)
+      this.subscribed = true
     }
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe('task', this.props.id)
   }
 
   handleSubmit(task) {
@@ -105,4 +110,7 @@ class TaskForm extends Component {
   }
 }
 
-export default form(TaskForm, {getItem})
+export default form(TaskForm, {
+  subscribe: getItem.on,
+  unsubscribe: getItem.off,
+})

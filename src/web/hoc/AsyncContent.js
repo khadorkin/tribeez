@@ -66,7 +66,6 @@ class AsyncContent extends Component {
   componentWillUnmount() {
     if (this.queryRef) {
       this.queryRef.off('value', this.lastEntry)
-      //TODO: call multiple times if paging???
       this.queryRef.off('child_added', this.childAdded)
       this.queryRef.off('child_changed', this.childChanged)
       //this.queryRef.off('child_moved', this.childMoved)
@@ -86,7 +85,7 @@ class AsyncContent extends Component {
     }
     const atBottom = (document.body.scrollTop > this.element.scrollHeight - window.innerHeight)
     if (atBottom && this.tid) {
-      this.handleLoad(true)
+      this.handleLoad()
     }
   }
 
