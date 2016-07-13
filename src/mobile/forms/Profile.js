@@ -32,10 +32,10 @@ class ProfileForm extends Component {
         />
         <TextField ref="email"
           {...email}
-          errorIsObject={true}
           autoCorrect={false}
           keyboardType="email-address"
           onSubmitEditing={this.handleSubmit}
+          errorId={email.error && 'email_' + email.error}
         />
         <SelectField ref="lang"
           {...lang}

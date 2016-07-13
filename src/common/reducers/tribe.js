@@ -45,8 +45,17 @@ export default (state = initialState, action = null) => {
       }
     }
     case MEMBER_UPDATED: {
-      const users = state.users.map((user) => (user.uid === action.member.uid ? action.member : user))
-      const userMap = {...state.userMap, [action.member.uid]: action.member}
+      let users = state.users
+      let userMap = state.userMap
+      if (action.user) {
+        const augmentedUser = {...userMap[action.uid], ...action.user}
+        users = users.map((user) => (user.uid === action.uid ? augmentedUser : user))
+        userMap[action.uid] = augmentedUser
+      }
+      if (action.member) {
+        users = users.map((user) => (user.uid === action.member.uid ? action.member : user))
+        userMap = {...userMap, [action.member.uid]: action.member}
+      }
       return {
         ...state,
         users,

@@ -2,12 +2,15 @@ import React, {Component, PropTypes} from 'react'
 import {View, Text, ScrollView, TouchableOpacity, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import FormattedDate from '../components/FormattedDate'
 
 import colors from '../../common/constants/colors'
+
+import getUser from '../../common/actions/getUser'
 
 const infos = [
   {id: 'email', icon: 'email', href: 'mailto:'},
@@ -21,6 +24,14 @@ class MemberDetails extends Component {
     id: PropTypes.string.isRequired,
     // from redux:
     user: PropTypes.object.isRequired,
+    // action creators:
+    getUser: PropTypes.func.isRequired,
+  }
+
+  componentDidMount() {
+    if (!this.props.user.email) {
+      this.props.getUser(this.props.id)
+    }
   }
 
   handlePress(url) {
@@ -83,4 +94,8 @@ const mapStateToProps = (state, ownProps) => ({
   user: state.tribe.userMap[ownProps.id],
 })
 
-export default connect(mapStateToProps)(MemberDetails)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getUser,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(MemberDetails)
