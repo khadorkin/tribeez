@@ -3,7 +3,6 @@ import md5 from 'md5'
 import api from '../utils/api'
 import {auth, db, timestamp} from '../firebase'
 import platform from '../platform'
-import asyncStorage from '../utils/asyncStorage'
 import {rand} from '../utils/utils'
 import {login} from './auth'
 
@@ -114,12 +113,6 @@ export default (values, dispatch) => {
             return db.ref('tribes/' + tid + '/members/' + uid + '/last_viewed_history_key').set(historyKey)
           })
           .then(() => {
-            if (platform !== 'web') {
-              asyncStorage.setItem('credentials', JSON.stringify({email: values.email, password: values.password}))
-              .catch(() => {
-                // console.error('LOCAL STORAGE SET ERROR', error)
-              })
-            }
             resolve()
             dispatch(login(user))
           })

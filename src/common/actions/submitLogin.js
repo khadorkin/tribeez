@@ -1,6 +1,4 @@
 import {auth} from '../firebase'
-import platform from '../platform'
-import asyncStorage from '../utils/asyncStorage'
 import {login} from './auth'
 import {FIREBASE_FAILURE} from '../constants/actions'
 
@@ -8,12 +6,6 @@ export default (destination, values, dispatch) => {
   return new Promise((resolve, reject) => {
     auth.signInWithEmailAndPassword(values.email, values.password)
     .then((user) => {
-      if (platform !== 'web') {
-        asyncStorage.setItem('credentials', JSON.stringify(values))
-        .catch(() => {
-          // console.error('LOCAL STORAGE SET ERROR', error)
-        })
-      }
       resolve()
       dispatch(login(user))
     })
