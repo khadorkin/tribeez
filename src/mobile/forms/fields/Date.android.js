@@ -1,17 +1,18 @@
 import React, {Component, PropTypes} from 'react'
-import {Touchable, StyleSheet, View, DatePickerAndroid, TimePickerAndroid} from 'react-native'
+import {StyleSheet, View, DatePickerAndroid, TimePickerAndroid} from 'react-native'
 
 import FormattedDate from '../../components/FormattedDate'
 import FormattedTime from '../../components/FormattedTime'
 import FormattedMessage from '../../components/FormattedMessage'
+import Touchable from '../../components/Touchable'
 
 import colors from '../../../common/constants/colors'
 
-class SelectField extends Component {
+class DateField extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    min: PropTypes.object, // date
-    max: PropTypes.object, // date
+    min: PropTypes.number, // timestamp
+    max: PropTypes.number, // timestamp
     time: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     onChange: PropTypes.func.isRequired,
@@ -29,9 +30,8 @@ class SelectField extends Component {
   }
 
   handleOpenDate() {
-    const date = (typeof this.props.value === 'number') ? new Date(this.props.value) : new Date()
     DatePickerAndroid.open({
-      date,
+      date: this.props.value || Date.now(),
       minDate: this.props.min,
       maxDate: this.props.max,
     }).then((values) => {
@@ -116,4 +116,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SelectField
+export default DateField

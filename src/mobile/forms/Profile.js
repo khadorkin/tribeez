@@ -9,7 +9,7 @@ import form from '../../common/forms/profile'
 import submitProfile from '../../common/actions/submitProfile'
 import langs from '../../common/resources/langs'
 
-const today = new Date()
+const today = Date.now()
 
 class ProfileForm extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class ProfileForm extends Component {
     const {fields: {name, email, lang, birthdate, phone, password, password2}, ...props} = this.props
 
     return (
-      <Form name="profile" action={submitProfile} {...props}>
+      <Form name="profile" action={submitProfile.bind(null, '')} {...props}>
         <TextField ref="name"
           {...name}
           autoCorrect={false}

@@ -8,19 +8,17 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-let prompt_text
-const checkReAuth = (error) => {
-  if (error.code === 'auth/requires-recent-login') {
-    const password = prompt(prompt_text)
-    const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, password)
-    return auth.currentUser.reauthenticate(credential)
-  } else {
-    throw error
-  }
-}
-
 export default (reauth_prompt, values, dispatch) => {
-  prompt_text = reauth_prompt
+  const checkReAuth = (error) => {
+    if (error.code === 'auth/requires-recent-login') {
+      const password = prompt(reauth_prompt) //TODO: mobile version
+      const credential = firebase.auth.EmailAuthProvider.credential(auth.currentUser.email, password)
+      return auth.currentUser.reauthenticate(credential)
+    } else {
+      throw error
+    }
+  }
+
   return new Promise((resolve, reject) => {
     const gravatar = md5(values.email)
     auth.currentUser.updateEmail(values.email)

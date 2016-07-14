@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {Touchable, Text, StyleSheet} from 'react-native'
+import {Text, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import FormattedMessage from '../components/FormattedMessage'
+import Touchable from '../components/Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
