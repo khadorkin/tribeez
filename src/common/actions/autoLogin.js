@@ -7,31 +7,20 @@ import {
 
 import {login} from './auth'
 
-let stop
-
-const on = () => {
+export default () => {
   return (dispatch) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
 
-    stop = auth.onAuthStateChanged((user) => {
+    const stop = auth.onAuthStateChanged((user) => {
       dispatch({
         type: FIREBASE_SUCCESS,
       })
       if (user) {
         dispatch(login(user))
       }
+      stop()
     })
   }
 }
-
-const off = () => {
-  return () => {
-    if (stop) {
-      stop()
-    }
-  }
-}
-
-export default {on, off}

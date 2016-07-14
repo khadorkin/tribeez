@@ -33,6 +33,7 @@ const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />
 )
 
+import autoLogin from '../common/actions/autoLogin'
 import {toggleMenu, closeSnack, updateLang, resize} from '../common/actions/app'
 
 class App extends Component {
@@ -53,6 +54,7 @@ class App extends Component {
     loading: PropTypes.bool.isRequired,
     error: PropTypes.string,
     // action creators:
+    autoLogin: PropTypes.func.isRequired,
     toggleMenu: PropTypes.func.isRequired,
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
@@ -85,6 +87,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.props.autoLogin()
     window.onresize = this.props.resize
   }
 
@@ -270,6 +273,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  autoLogin,
   toggleMenu,
   closeSnack,
   updateLang,

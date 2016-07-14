@@ -17,16 +17,11 @@ class Welcome extends Component {
     // redux state
     loading: PropTypes.bool.isRequired,
     // action creators:
-    subscribe: PropTypes.func.isRequired,
-    unsubscribe: PropTypes.func.isRequired,
+    autoLogin: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    this.props.subscribe()
-  }
-
-  componentWillUnmount() {
-    this.props.unsubscribe()
+    this.props.autoLogin()
   }
 
   handleLogin() {
@@ -81,8 +76,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: autoLogin.on,
-  unsubscribe: autoLogin.off,
+  autoLogin,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome)

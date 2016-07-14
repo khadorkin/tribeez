@@ -12,8 +12,6 @@ import {
 import getMember from './getMember'
 import getUnread from './getUnread'
 
-let stopAuthListener
-
 export const login = (user) => {
   return (dispatch, getState) => {
     dispatch({
@@ -27,9 +25,10 @@ export const login = (user) => {
     const destination = getState().login.destination || routes.ACTIVITY
     router.resetTo(destination, dispatch)
 
-    stopAuthListener = auth.onAuthStateChanged((connectedUser) => {
+    const stop = auth.onAuthStateChanged((connectedUser) => {
       if (!connectedUser) {
         dispatch(logout())
+        stop()
       }
     })
   }
@@ -37,11 +36,6 @@ export const login = (user) => {
 
 export const logout = () => {
   return (dispatch) => {
-    if (stopAuthListener) {
-      stopAuthListener()
-      stopAuthListener = null
-    }
-
     // too late => should be done in postLogout:
     dispatch(getMember.off())
     dispatch(getUnread.off())
