@@ -55,6 +55,7 @@ class ProfileForm extends Component {
           name="new_password"
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
+          errorId={password.error && 'password_' + password.error}
         />
         <TextField ref="password2"
           {...password2}

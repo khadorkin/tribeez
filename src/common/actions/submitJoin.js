@@ -1,7 +1,6 @@
 import md5 from 'md5'
 
 import {auth, db, timestamp} from '../firebase'
-import platform from '../platform'
 import {rand} from '../utils/utils'
 import {login} from './auth'
 

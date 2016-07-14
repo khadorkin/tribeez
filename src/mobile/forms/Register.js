@@ -42,10 +42,12 @@ class RegisterForm extends Component {
           {...email}
           autoCorrect={false}
           keyboardType="email-address"
+          errorId={email.error && 'email_' + email.error}
         />
         <TextField ref="password"
           {...password}
           secureTextEntry={true}
+          errorId={password.error && 'password_' + password.error}
         />
         <FormattedMessage id="your_tribe" style={styles.subtitle} />
         <TextField

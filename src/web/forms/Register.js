@@ -72,12 +72,13 @@ class RegisterForm extends Component {
         <TextField ref="email"
           type="email"
           required={true}
-          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
+          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error} />}
           {...email}
         />
         <TextField ref="password"
           type="password"
           required={true}
+          errorText={password.touched && password.error && <FormattedMessage id={'error.password_' + password.error} />}
           {...password}
         />
         <CardTitle title={<FormattedMessage id="your_tribe" />} style={{padding: '48px 0 16px'}} />
