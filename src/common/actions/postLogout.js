@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 import getMember from './getMember'
-import subscribe from './subscribe'
+import getUnread from './getUnread'
 
 export default () => {
   return (dispatch) => {
@@ -16,7 +16,7 @@ export default () => {
       type: FIREBASE_REQUEST,
     })
     dispatch(getMember.off())
-    dispatch(subscribe.off())
+    dispatch(getUnread.off())
 
     // this will trigger auth.logout (see listener in auth.login):
     auth.signOut().then(() => {

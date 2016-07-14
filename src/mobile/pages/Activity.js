@@ -23,6 +23,8 @@ class Activity extends Component {
     super(props)
     this.handleTelegram = this.handleTelegram.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
+    this.ref = this.ref.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleTelegram() {
@@ -60,18 +62,31 @@ class Activity extends Component {
     return <Entry entry={row} />
   }
 
+  handleChange(tab) {
+    if (this.history) {
+      this.history.setVisible(tab.i === 1)
+    }
+  }
+
+  ref(element) {
+    if (element) {
+      this.history = element.getWrappedInstance()
+    }
+  }
+
   render() {
     const {unread} = this.props
 
     return (
       <View style={styles.container}>
-        <TabView>
+        <TabView onChangeTab={this.handleChange}>
           <AsyncContent name="activity"
             renderRow={this.renderActivity}
             tabLabel="tab.activity"
             footer={this.renderFooter()}
           />
           <AsyncContent name="history"
+            ref={this.ref}
             renderRow={this.renderHistoryEntry}
             tabLabel="tab.history"
             badge={unread > 0 && unread}
@@ -105,6 +120,7 @@ const mapStateToProps = (state) => ({
   bot_token: state.user.bot_token,
   unread: state.app.unread,
   lang: state.app.lang, // hack to force update when lang changes
+  currency: state.tribe.currency, // hack to force update when currency changes
 })
 
 export default connect(mapStateToProps)(Activity)

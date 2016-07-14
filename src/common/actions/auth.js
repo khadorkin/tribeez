@@ -10,7 +10,7 @@ import {
 } from '../constants/actions'
 
 import getMember from './getMember'
-import subscribe from './subscribe'
+import getUnread from './getUnread'
 
 let stopAuthListener
 
@@ -22,7 +22,7 @@ export const login = (user) => {
     })
 
     dispatch(getMember.on(user.uid))
-    // the subscription to subscribe.on is done once we have the tribe ID
+    // the subscription to getUnread.on is done once we have the tribe ID
 
     const destination = getState().login.destination || routes.ACTIVITY
     router.resetTo(destination, dispatch)
@@ -44,7 +44,7 @@ export const logout = () => {
 
     // too late => should be done in postLogout:
     dispatch(getMember.off())
-    dispatch(subscribe.off())
+    dispatch(getUnread.off())
     // these two listeners will raise an error if user is logged out by firebase
 
     dispatch({

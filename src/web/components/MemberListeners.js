@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
 import {injectIntl, intlShape} from 'react-intl'
 
-import subscribe from '../../common/actions/subscribe'
+import getUnread from '../../common/actions/getUnread'
 import gravatar from '../../common/utils/gravatar'
 
 class MemberListeners extends Component {
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: subscribe.on,
+  subscribe: getUnread.on,
 }, dispatch)
 
 export default compose(

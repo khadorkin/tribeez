@@ -37,8 +37,8 @@ class AsyncContent extends Component {
     super(props)
     this.state = {
       dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+        rowHasChanged: (/*r1, r2*/) => true, //TODO
+        sectionHeaderHasChanged: (/*s1, s2*/) => true, //TODO
       }),
       loading: false,
       empty: false,
@@ -48,6 +48,7 @@ class AsyncContent extends Component {
     this.renderSectionHeader = this.renderSectionHeader.bind(this)
     this.updateDataView = this.updateDataView.bind(this)
 
+    this.buffer = []
     this.handleLoad = this.handleLoad.bind(this)
     this.lastEntry = this.lastEntry.bind(this)
     this.childAdded = this.childAdded.bind(this)
@@ -56,9 +57,11 @@ class AsyncContent extends Component {
     this.childRemoved = this.childRemoved.bind(this)
     this.flush = this.flush.bind(this)
     this.handleError = this.handleError.bind(this)
-    this.queryRef = null
-    this.last = null
-    this.buffer = []
+    //this.queryRef = null
+    //this.last = null
+    //this.visible = true
+    //this.lastKey = null
+    //this.lastSetKey = null
   }
 
   componentDidMount() {
@@ -84,6 +87,14 @@ class AsyncContent extends Component {
       this.queryRef.off('child_removed', this.childRemoved)
     }
     clearTimeout(this.timeout)
+  }
+
+  setVisible(visible) {
+    if (visible && !this.visible && this.lastSetKey !== this.lastKey) {
+      this.props.setLastViewedHistoryKey(this.lastKey)
+      this.lastSetKey = this.lastKey
+    }
+    this.visible = visible
   }
 
   handleEndReached() {
@@ -169,7 +180,10 @@ class AsyncContent extends Component {
     if (this.props.name === 'history') {
       if (!this.lastKey || this.buffer[0].id > this.lastKey) {
         this.lastKey = this.buffer[0].id
-        this.props.setLastViewedHistoryKey(this.lastKey)
+        if (this.visible) {
+          this.props.setLastViewedHistoryKey(this.lastKey)
+          this.lastSetKey = this.lastKey
+        }
       }
     }
     this.setState({
@@ -306,4 +320,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncContent)
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(AsyncContent)

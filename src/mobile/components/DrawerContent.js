@@ -168,6 +168,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   currentTribe: state.tribe,
   lang: state.app.lang, // hack to force update when lang changes
+  currency: state.tribe.currency, // hack to force update when currency changes
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
