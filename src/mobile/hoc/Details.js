@@ -49,6 +49,14 @@ class Details extends Component {
   render() {
     const {loading, error, item, children, editRoute} = this.props
 
+    if (loading) { //TODO: separate cases or remove loading check?
+      return (
+        <View style={styles.empty}>
+          <ActivityIndicator size="large" color={colors.main} />
+        </View>
+      )
+    }
+
     if (error) {
       return (
         <View style={styles.empty}>
@@ -57,12 +65,8 @@ class Details extends Component {
       )
     }
 
-    if (loading || !item) { //TODO: separate cases or remove loading check?
-      return (
-        <View style={styles.empty}>
-          <ActivityIndicator size="large" color={colors.main} />
-        </View>
-      )
+    if (!item) { // should only happen on Firebase error
+      return null
     }
 
     return (
@@ -92,9 +96,9 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (/*state*/) => ({
-  loading: false, //TODO
-  error: null, //TODO
+const mapStateToProps = (state) => ({
+  loading: state.app.loading > 0,
+  error: state.item.error,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

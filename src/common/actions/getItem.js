@@ -1,14 +1,21 @@
 import {db, auth} from '../firebase'
 
 import {
+  FIREBASE_REQUEST,
+  FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
   ITEM,
 } from '../constants/actions'
 
 let ref
+let initial
 
 const on = (itemType, id) => {
   return (dispatch) => {
+    dispatch({
+      type: FIREBASE_REQUEST,
+    })
+    initial = true
     ref = db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id)
     ref.on('value', (snapshot) => {
       const item = snapshot.val()
@@ -23,8 +30,14 @@ const on = (itemType, id) => {
         dispatch({
           type: ITEM,
           itemType,
-          item: null,
+          error: 'not_found',
         })
+      }
+      if (initial) {
+        dispatch({
+          type: FIREBASE_SUCCESS,
+        })
+        initial = false
       }
     }, (error) => {
       dispatch({

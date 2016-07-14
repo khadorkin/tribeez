@@ -15,7 +15,6 @@ class Touchable extends Component {
         background={TouchableNativeFeedback.SelectableBackground()}
         /*eslint-enable new-cap*/
         onPress={onPress}
-        delayPressIn={0}
       >
         <View {...props}>
           {children}

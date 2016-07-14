@@ -8,6 +8,7 @@ const initialState = {
   event: null, // current event being viewed or edited
   poll: null, // current poll being viewed or edited
   task: null, // current task being viewed or edited
+  error: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -16,6 +17,7 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         [action.itemType]: action.item,
+        error: action.error,
       }
 
     case LOGOUT_SUCCESS:
