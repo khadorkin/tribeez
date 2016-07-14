@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableOpacity, StyleSheet, View} from 'react-native'
+import {TouchableNativeFeedback, View, StyleSheet} from 'react-native'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
@@ -21,10 +21,18 @@ class IconButton extends Component {
     const Icon = ((family === 'evil') ? EvilIcon : MaterialIcon)
 
     return (
-      <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
-        <Icon size={24} color={colors.icon} style={iconStyle} {...props} />
-        {children && <View style={styles.children}>{children}</View>}
-      </TouchableOpacity>
+      <TouchableNativeFeedback
+        /*eslint-disable new-cap*/
+        background={TouchableNativeFeedback.SelectableBackground()}
+        /*eslint-enable new-cap*/
+        onPress={onPress}
+        delayPressIn={0}
+      >
+        <View style={[styles.button, style]}>
+          <Icon size={24} color={colors.icon} style={iconStyle} {...props} />
+          {children && <View style={styles.children}>{children}</View>}
+        </View>
+      </TouchableNativeFeedback>
     )
   }
 }

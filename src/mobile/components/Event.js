@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native'
+import {StyleSheet, Text, View, Image} from 'react-native'
 
 import {connect} from 'react-redux'
 
 import FormattedMessage from './FormattedMessage'
+import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -49,7 +50,7 @@ class Event extends Component {
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.handlePress} style={styles.main}>
+        <Touchable onPress={this.handlePress} style={styles.main}>
           <Image
             source={{uri: gravatar(author)}}
             style={styles.avatar}
@@ -58,7 +59,7 @@ class Event extends Component {
             <Text style={styles.title}>{event.name}</Text>
             <Text style={styles.subtitle}>{date}</Text>
           </View>
-        </TouchableOpacity>
+        </Touchable>
       </View>
     )
   }

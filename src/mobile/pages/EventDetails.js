@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView, Text, TouchableOpacity, Linking, StyleSheet} from 'react-native'
+import {ScrollView, Text, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 
@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Details from '../hoc/Details'
 import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
+import Touchable from '../components/Touchable'
 import Log from '../components/Log'
 
 import routes from '../../common/routes'
@@ -76,10 +77,10 @@ class EventDetails extends Component {
                 value = <Text>{value}</Text>
               }
               return (
-                <TouchableOpacity onPress={href && this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
+                <Touchable onPress={href && this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
                   <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
                   {value}
-                </TouchableOpacity>
+                </Touchable>
               )
             })
         }

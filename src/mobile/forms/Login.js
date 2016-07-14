@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableOpacity, Text, StyleSheet} from 'react-native'
+import {Touchable, Text, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -62,9 +62,9 @@ class LoginForm extends Component {
           secureTextEntry={true}
           onSubmitEditing={this.handleSubmit}
         />
-        <TouchableOpacity style={styles.lostPassword} onPress={this.handleLostPassword}>
+        <Touchable style={styles.lostPassword} onPress={this.handleLostPassword}>
           <Text style={styles.lostText}>Lost password?</Text>
-        </TouchableOpacity>
+        </Touchable>
       </Form>
     )
   }

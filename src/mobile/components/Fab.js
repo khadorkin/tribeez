@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {View, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import Touchable from './Touchable'
 
 import colors from '../../common/constants/colors'
 
@@ -14,9 +16,9 @@ class Fab extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.onPress} style={styles.button}>
+        <Touchable onPress={this.props.onPress} style={styles.button}>
           <Icon name={this.props.name} color="white" size={24} />
-        </TouchableOpacity>
+        </Touchable>
       </View>
     )
   }

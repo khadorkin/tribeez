@@ -1,11 +1,12 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native'
+import {StyleSheet, Text, View, Image} from 'react-native'
 
 import {connect} from 'react-redux'
 
 import FormattedMessage from './FormattedMessage'
 import FormattedNumber from './FormattedNumber'
 import FormattedRelative from './FormattedRelative'
+import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -55,7 +56,7 @@ class Bill extends Component {
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.handlePress} style={styles.main}>
+        <Touchable onPress={this.handlePress} style={styles.main}>
           <Image
             source={{uri: gravatar(payer)}}
             style={styles.avatar}
@@ -64,7 +65,7 @@ class Bill extends Component {
             <Text style={styles.title}>{total} — {bill.name}</Text>
             <Text style={styles.subtitle}>{date} — {formatted_part}</Text>
           </View>
-        </TouchableOpacity>
+        </Touchable>
       </View>
     )
   }

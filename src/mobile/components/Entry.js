@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, TouchableOpacity, View, Image, Text} from 'react-native'
+import {StyleSheet, View, Image, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
+import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -105,7 +106,7 @@ class Entry extends Component {
 
     return (
       <View style={[styles.container, {backgroundColor: entry.new ? '#FFFFDD' : 'white'}]}>
-        <TouchableOpacity onPress={this.handleTouch} style={styles.main}>
+        <Touchable onPress={this.handleTouch} style={styles.main}>
           <Image
             source={{uri: gravatar(author)}}
             style={styles.avatar}
@@ -115,7 +116,7 @@ class Entry extends Component {
             {infos}
             <Text style={styles.date}>{date}</Text>
           </View>
-        </TouchableOpacity>
+        </Touchable>
       </View>
     )
   }

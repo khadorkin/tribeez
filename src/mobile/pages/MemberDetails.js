@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, ScrollView, TouchableOpacity, Linking, StyleSheet} from 'react-native'
+import {View, Text, ScrollView, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import FormattedDate from '../components/FormattedDate'
+import Touchable from '../components/Touchable'
 
 import colors from '../../common/constants/colors'
 
@@ -62,10 +63,10 @@ class MemberDetails extends Component {
                 }
 
                 return (
-                  <TouchableOpacity onPress={handlePress} style={styles.info} key={info.id}>
+                  <Touchable onPress={handlePress} style={styles.info} key={info.id}>
                     <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
                     {element}
-                  </TouchableOpacity>
+                  </Touchable>
                 )
               })
           }

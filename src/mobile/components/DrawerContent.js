@@ -1,10 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, ScrollView, Text, TouchableOpacity, Image} from 'react-native'
+import {StyleSheet, View, ScrollView, Text, Image} from 'react-native'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
 import FormattedMessage from './FormattedMessage'
+import Touchable from './Touchable'
 import IconButton from './IconButton'
 
 import routes from '../../common/routes'
@@ -110,14 +111,14 @@ class DrawerContent extends Component {
 
     const tribe_ids = Object.keys(user.tribes)
     const tribeItems = tribe_ids.map((tid) =>
-      <TouchableOpacity key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
+      <Touchable key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
         <Text style={styles.tribeText}>{user.tribes[tid]}</Text>
         {
           tid === user.current_tribe && (
             <IconButton name="settings" style={styles.tribeSettings} onPress={this.handleTribeSettings} />
           )
         }
-      </TouchableOpacity>
+      </Touchable>
     )
 
     return (

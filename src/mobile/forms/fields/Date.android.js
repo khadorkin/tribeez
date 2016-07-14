@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableOpacity, StyleSheet, View, DatePickerAndroid, TimePickerAndroid} from 'react-native'
+import {Touchable, StyleSheet, View, DatePickerAndroid, TimePickerAndroid} from 'react-native'
 
 import FormattedDate from '../../components/FormattedDate'
 import FormattedTime from '../../components/FormattedTime'
@@ -72,18 +72,18 @@ class SelectField extends Component {
       <View>
         <View style={styles.container}>
           <FormattedMessage id={'field.' + name} style={styles.label} />
-          <TouchableOpacity onPress={this.handleOpenDate} style={styles.field}>
+          <Touchable onPress={this.handleOpenDate} style={styles.field}>
             <FormattedDate value={Number(value)} style={styles.date} />
-          </TouchableOpacity>
+          </Touchable>
           <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
         </View>
         {
           this.props.time && (
             <View style={styles.container}>
               <FormattedMessage id={'field.time.' + name} style={styles.label} />
-              <TouchableOpacity onPress={this.handleOpenTime} style={styles.field}>
+              <Touchable onPress={this.handleOpenTime} style={styles.field}>
                 <FormattedTime value={this.state.time && Number(value)} style={styles.date} />
-              </TouchableOpacity>
+              </Touchable>
               <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
             </View>
           )

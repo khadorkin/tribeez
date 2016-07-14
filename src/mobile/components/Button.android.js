@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableOpacity, StyleSheet, Text} from 'react-native'
+import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
@@ -16,9 +16,17 @@ class Button extends Component {
   render() {
     const {intl, id, disabled, onPress, ...props} = this.props
     return (
-      <TouchableOpacity onPress={onPress} style={disabled ? styles.disabled : styles.enabled}>
-        <Text {...props}>{intl.formatMessage({id})}</Text>
-      </TouchableOpacity>
+      <TouchableNativeFeedback
+        /*eslint-disable new-cap*/
+        background={TouchableNativeFeedback.SelectableBackground()}
+        /*eslint-enable new-cap*/
+        onPress={onPress}
+        delayPressIn={0}
+      >
+        <View style={disabled ? styles.disabled : styles.enabled}>
+          <Text {...props}>{intl.formatMessage({id})}</Text>
+        </View>
+      </TouchableNativeFeedback>
     )
   }
 }

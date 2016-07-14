@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, Text, TextInput} from 'react-native'
 
 import FormattedMessage from '../../components/FormattedMessage'
+import Touchable from '../../components/Touchable'
 
 import {buildQuery} from '../../../common/utils/api'
 
@@ -115,9 +116,9 @@ class CityField extends Component {
         <View style={styles.suggestions}>
           {
             this.state.textPredictions.map((description, index) => (
-              <TouchableOpacity key={index} onPress={this.handleSelect.bind(this, index)}>
+              <Touchable key={index} onPress={this.handleSelect.bind(this, index)}>
                 <Text style={styles.suggestion}>{description}</Text>
-              </TouchableOpacity>
+              </Touchable>
             ))
           }
         </View>

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, Text, TouchableOpacity, StyleSheet} from 'react-native'
+import {View, ScrollView, Text, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
@@ -8,6 +8,7 @@ import {bindActionCreators} from 'redux'
 
 import Details from '../hoc/Details'
 import FormattedDate from '../components/FormattedDate'
+import Touchable from '../components/Touchable'
 import Button from '../components/Button'
 import Log from '../components/Log'
 
@@ -110,10 +111,10 @@ class PollDetails extends Component {
               const checked = this.state.choices.includes(id)
 
               return (
-                <TouchableOpacity key={id} style={styles.option} onPress={this.handleChoice.bind(this, id)}>
+                <Touchable key={id} style={styles.option} onPress={this.handleChoice.bind(this, id)}>
                   <Icon size={24} color={checked ? colors.main : colors.icon} name={checked ? checked_icon : unchecked_icon} />
                   <Text style={styles.label}>{option}</Text>
-                </TouchableOpacity>
+                </Touchable>
               )
             })
           }
