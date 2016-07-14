@@ -21,7 +21,7 @@ class TabView extends Component {
 
   render() {
     return (
-      <ScrollableTabView renderTabBar={this.renderTabBar}>
+      <ScrollableTabView renderTabBar={this.renderTabBar} {...this.props}>
         {this.props.children}
       </ScrollableTabView>
     )

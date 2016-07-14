@@ -15,11 +15,9 @@ const sectionSplitter = (event) => {
   return moment(event.start).format('MMMM YYYY')
 }
 
-class Events extends Component {
-  static propTypes = {
-    //
-  }
+const oneHourAgo = Date.now() - 3600000
 
+class Events extends Component {
   constructor(props) {
     super(props)
     this.handleFab = this.handleFab.bind(this)
@@ -40,11 +38,17 @@ class Events extends Component {
       <View style={styles.container}>
         <TabView>
           <AsyncContent name="events"
+            orderBy="index"
+            startAt={oneHourAgo}
+            ascending={true}
             renderRow={this.renderEvent}
             splitter={sectionSplitter}
             tabLabel="tab.upcoming"
           />
           <AsyncContent name="events"
+            orderBy="index"
+            startAt={oneHourAgo}
+            ascending={false}
             splitter={sectionSplitter}
             renderRow={this.renderEvent}
             tabLabel="tab.past"

@@ -18,8 +18,18 @@ export default (values, dispatch) => {
       values.added = timestamp
       id = db.ref('tribes/' + tid + '/events').push().key
     }
-    // this key is used to separate past/upcoming events:
-    values.index = values.end || values.start
+
+    // the index is used to split between past and upcoming events:
+    if (values.end) {
+      values.index = values.end
+    } else {
+      const start = new Date(values.start)
+      if (start.getHours() !== 0 || start.getMinutes() !== 0) {
+        values.index = values.start + 3600 * 1000 // default duration = 1 hour
+      } else {
+        values.index = values.start + 86400 * 1000 // default duration = 1 day
+      }
+    }
 
     db.ref('tribes/' + tid + '/events/' + id).set(values)
     .then(() => {

@@ -25,6 +25,8 @@ class AsyncContent extends Component {
     renderRow: PropTypes.func.isRequired,
     splitter: PropTypes.func,
     orderBy: PropTypes.string,
+    startAt: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    ascending: PropTypes.bool, // default false (descending)
     children: PropTypes.node,
     footer: PropTypes.node,
     // action creators:
@@ -102,8 +104,11 @@ class AsyncContent extends Component {
       query = this.queryRef.orderByKey()
     }
 
+    const limiter = this.props.ascending ? 'limitToFirst' : 'limitToLast'
+    const pager = this.props.ascending ? 'startAt' : 'endAt'
+
     if (!this.listeningToLast) {
-      query.limitToLast(2).on('value', this.lastEntry, this.handleError)
+      query[limiter](2).on('value', this.lastEntry, this.handleError)
       this.listeningToLast = true
     }
 
@@ -117,14 +122,19 @@ class AsyncContent extends Component {
       loading: true,
     })
 
-    if (this.last) {
-      query = query.endAt(this.last)
+    if (!this.last && this.props.startAt) {
+      this.last = this.props.startAt
     }
-    this.first = this.last // see below
-    query.limitToLast(PAGING).on('child_added', this.childAdded, this.handleError)
-    query.limitToLast(PAGING).on('child_changed', this.childChanged, this.handleError)
-    //query.limitToLast(PAGING).on('child_moved', this.childMoved, this.handleError)
-    query.limitToLast(PAGING).on('child_removed', this.childRemoved, this.handleError)
+
+    if (this.last) {
+      query = query[pager](this.last)
+    }
+    this.first = this.last // see childAdded/flush
+    //console.log((this.props.tabLabel || this.props.name) + ' listens to ' + this.props.name + ', orderBy ' + (this.props.orderBy || 'key') + ', ' + pager + ' ' + this.last + ', ' + limiter + ' ' + PAGING)
+    query[limiter](PAGING).on('child_added', this.childAdded, this.handleError)
+    query[limiter](PAGING).on('child_changed', this.childChanged, this.handleError)
+    //query[limiter](PAGING).on('child_moved', this.childMoved, this.handleError)
+    query[limiter](PAGING).on('child_removed', this.childRemoved, this.handleError)
   }
 
   lastEntry(snapshot) {
@@ -135,7 +145,7 @@ class AsyncContent extends Component {
 
   childAdded(snapshot) {
     clearTimeout(this.timeout)
-    if (snapshot.key !== this.first) { // adjacent queries have a row in common (last of previous === first of current) => deduplicate it
+    if (snapshot.key !== this.first) { // adjacent queries have a row in common (last of previous === first of current) => deduplicate it (first==null at first page)
       const item = snapshot.val()
       item.id = snapshot.key
       this.buffer.push(item) // add to state but without re-rendering (see batching below)
@@ -151,7 +161,11 @@ class AsyncContent extends Component {
 
   flush() {
     const sorter = this.props.orderBy || 'id'
-    this.buffer = this.buffer.sort((a, b) => (a[sorter] < b[sorter] ? 1 : -1))
+    this.buffer = this.buffer.sort((a, b) => {
+      const smaller = this.props.ascending ? -1 : 1
+      const bigger = this.props.ascending ? 1 : -1
+      return (a[sorter] > b[sorter] ? bigger : smaller)
+    })
     if (this.props.name === 'history') {
       if (!this.lastKey || this.buffer[0].id > this.lastKey) {
         this.lastKey = this.buffer[0].id
