@@ -21,7 +21,7 @@ import TelegramIcon from './resources/telegram-icon'
 import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
 
-import Nav from './components/Nav'
+import DrawerContent from './components/DrawerContent'
 
 import config from '../common/config'
 import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
@@ -195,7 +195,7 @@ class App extends Component {
         overlayStyle={{cursor: 'w-resize'}}
         width={MENU_WIDTH}
       >
-        <Nav module={pathname.split('/')[1]} />
+        <DrawerContent module={pathname.split('/')[1]} />
       </Drawer>
     ) // do not load left nav if not logged in
 

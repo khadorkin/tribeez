@@ -38,7 +38,7 @@ import gravatar from '../../common/utils/gravatar'
 
 //TODO: choose between CSS and style!
 
-import css from './Nav.css'
+import css from './DrawerContent.css'
 
 const styles = {
   container: {
@@ -104,7 +104,7 @@ const menuEntries = [
   {route: routes.POLLS, icon: <PollIcon />},
 ]
 
-class Nav extends Component {
+class DrawerContent extends Component {
   static propTypes = {
     // from parent component:
     module: PropTypes.string.isRequired,
@@ -235,4 +235,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   postLogout,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Nav)
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)
