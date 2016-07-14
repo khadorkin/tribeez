@@ -10,9 +10,10 @@ const calculateParts = (bill) => {
   // remove empty shares
   bill.parts = bill.parts.filter((part) => part.amount > 0)
 
-  // calculate parts
-  const sum = decimal(bill.parts.reduce((prev, curr) => (prev + curr.amount), 0)) // total number of shares, or sum of ammounts
+  // total number of shares, or sum of ammounts
+  const sum = decimal(bill.parts.reduce((prev, curr) => (prev + curr.amount), 0))
 
+  // calculate parts ("shares")
   const parts = {}
   if (bill.method === 'shares') {
     const share_amount = bill.amount / sum // no rounding yet, to keep sharing precision
@@ -81,8 +82,16 @@ export default (values, dispatch) => {
       return db.ref('tribes/' + tid + '/history').push({
         type: 'bill',
         action,
-        added: timestamp,
-        user: auth.currentUser.uid,
+        time: timestamp,
+        author: auth.currentUser.uid,
+        item: values,
+      })
+    })
+    .then(() => {
+      return db.ref('tribes/' + tid + '/bills/' + id + '/log').push({
+        action,
+        time: timestamp,
+        author: auth.currentUser.uid,
         item: values,
       })
     })

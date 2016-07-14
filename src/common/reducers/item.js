@@ -1,5 +1,9 @@
 import {
   ITEM,
+  UPDATE_COMMENT_TEXT,
+  COMMENT_REQUEST,
+  COMMENT_SUCCESS,
+  COMMENT_FAILURE,
   LOGOUT_SUCCESS,
 } from '../constants/actions'
 
@@ -9,6 +13,8 @@ const initialState = {
   poll: null, // current poll being viewed or edited
   task: null, // current task being viewed or edited
   error: null,
+  comment: '', // comment in item's log
+  commenting: false,
 }
 
 export default (state = initialState, action = null) => {
@@ -18,6 +24,27 @@ export default (state = initialState, action = null) => {
         ...state,
         [action.itemType]: action.item,
         error: action.error,
+      }
+    case UPDATE_COMMENT_TEXT:
+      return {
+        ...state,
+        comment: action.content,
+      }
+    case COMMENT_REQUEST:
+      return {
+        ...state,
+        commenting: true,
+      }
+    case COMMENT_SUCCESS:
+      return {
+        ...state,
+        comment: '',
+        commenting: false,
+      }
+    case COMMENT_FAILURE:
+      return {
+        ...state,
+        commenting: false,
       }
 
     case LOGOUT_SUCCESS:

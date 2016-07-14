@@ -8,7 +8,6 @@ import password from './password'
 import reset from './reset'
 import notes from './notes'
 import item from './item'
-import log from './log'
 
 export default {
   app,
@@ -21,5 +20,4 @@ export default {
   reset,
   notes,
   item,
-  log,
 }

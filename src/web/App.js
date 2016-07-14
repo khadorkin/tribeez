@@ -209,7 +209,7 @@ class App extends Component {
     const title = page_id && <FormattedMessage id={page_id} />
 
     const snack_author = this.props.userMap[snack.author]
-    const snack_author_name = snack_author && (snack_author.uid === uid ? '_you_' : snack_author.name)
+    const snack_author_name = snack_author && (snack.author === uid ? '_you_' : snack_author.name)
 
     const dialogActions = [
       <FlatButton

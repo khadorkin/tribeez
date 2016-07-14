@@ -55,7 +55,7 @@ export default (invite, values, dispatch) => {
         return db.ref('tribes/' + invite.tribe + '/history/' + historyKey).set({
           action: 'new',
           type: 'member',
-          added: timestamp,
+          time: timestamp,
           user: uid,
           inviter: invite.inviter,
         })

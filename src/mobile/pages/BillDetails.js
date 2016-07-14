@@ -49,7 +49,7 @@ class BillDetails extends Component {
             )
           })
         }
-        <Log item={bill} />
+        <Log type="bill" item={bill} />
       </ScrollView>
     )
   }

@@ -32,8 +32,8 @@ export default (type, id) => {
       return db.ref('tribes/' + tid + '/history').push({
         type,
         action: 'delete',
-        added: timestamp,
-        user: auth.currentUser.uid,
+        time: timestamp,
+        author: auth.currentUser.uid,
         item,
         id,
       })

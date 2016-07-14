@@ -33,8 +33,16 @@ export default (values, dispatch) => {
       return db.ref('tribes/' + tid + '/history').push({
         type: 'task',
         action,
-        added: timestamp,
-        user: auth.currentUser.uid,
+        time: timestamp,
+        author: auth.currentUser.uid,
+        item: values,
+      })
+    })
+    .then(() => {
+      return db.ref('tribes/' + tid + '/tasks/' + id + '/log').push({
+        action,
+        time: timestamp,
+        author: auth.currentUser.uid,
         item: values,
       })
     })

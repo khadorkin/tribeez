@@ -1,36 +1,37 @@
-import api from '../utils/api'
+import {db, auth, timestamp} from '../firebase'
 
 import {
   COMMENT_REQUEST,
   COMMENT_SUCCESS,
   COMMENT_FAILURE,
+  FIREBASE_FAILURE,
 } from '../constants/actions'
 
-export default (type, id, content) => {
+export default (type, item, text) => {
   return (dispatch) => {
     dispatch({
       type: COMMENT_REQUEST,
     })
-    api.post('comment', {type, id, content})
-      .then((response) => {
-        if (response.error) {
-          dispatch({
-            type: COMMENT_FAILURE,
-            error: response.error,
-          })
-        } else {
-          dispatch({
-            type: COMMENT_SUCCESS,
-            data: response,
-          })
-        }
+    db.ref('tribes/' + auth.currentUser.tid + '/' + type + 's/' + item.id + '/log').push({
+      action: 'comment',
+      time: timestamp,
+      author: auth.currentUser.uid,
+      text,
+    })
+    .then(() => {
+      dispatch({
+        type: COMMENT_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: COMMENT_FAILURE,
-          error: 'request',
-          fetchError: err.message,
-        })
+    })
+    .catch((error) => {
+      dispatch({
+        type: FIREBASE_FAILURE,
+        origin: 'postComment',
+        error: error.code,
       })
+      dispatch({
+        type: COMMENT_FAILURE,
+      })
+    })
   }
 }

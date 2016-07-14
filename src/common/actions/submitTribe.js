@@ -107,7 +107,7 @@ export default (values, dispatch) => {
         return db.ref('tribes/' + tid + '/history').push({
           action: 'new',
           type: 'member',
-          added: timestamp,
+          time: timestamp,
           user: uid,
         })
       })

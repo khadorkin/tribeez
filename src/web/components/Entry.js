@@ -17,7 +17,7 @@ class Entry extends Component {
     const {entry, userMap, uid} = this.props
 
     // to render an activity, the users must be loaded for the current tribe activity (see parent component)
-    const author = userMap[entry.user]
+    const author = userMap[entry.author]
     if (!author) {
       return null
     }
@@ -25,7 +25,7 @@ class Entry extends Component {
     let infos
 
     const values = {}
-    if (author.id === uid) {
+    if (author.uid === uid) {
       values.author = '_you_'
     } else {
       values.author = author.name

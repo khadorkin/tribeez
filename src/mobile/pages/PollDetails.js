@@ -133,7 +133,7 @@ class PollDetails extends Component {
         <Text style={styles.info}>Added by {author.name}</Text>
         <Text style={styles.info}>{poll.description}</Text>
         {body}
-        <Log item={poll} />
+        <Log type="poll" item={poll} />
       </ScrollView>
     )
   }

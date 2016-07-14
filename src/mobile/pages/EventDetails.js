@@ -84,7 +84,7 @@ class EventDetails extends Component {
               )
             })
         }
-        <Log item={event} />
+        <Log type="event" item={event} />
       </ScrollView>
     )
   }

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Text} from 'react-native'
+import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -8,14 +8,17 @@ import CommentBox from './CommentBox'
 
 import updateComment from '../../common/actions/updateComment'
 import postComment from '../../common/actions/postComment'
+import colors from '../../common/constants/colors'
 
 class Log extends Component {
   static propTypes = {
     // from parent:
+    type: PropTypes.string.isRequired,
     item: PropTypes.object.isRequired,
     // from redux:
-    log: PropTypes.object.isRequired,
     userMap: PropTypes.object.isRequired,
+    comment: PropTypes.string.isRequired,
+    commenting: PropTypes.bool.isRequired,
     // action creators:
     updateComment: PropTypes.func.isRequired,
     postComment: PropTypes.func.isRequired,
@@ -32,16 +35,16 @@ class Log extends Component {
   }
 
   handleComment() {
-    const comment = this.props.log.comment.trim()
+    const comment = this.props.comment.trim()
     if (comment) {
-      this.props.postComment(this.props.item, comment)
+      this.props.postComment(this.props.type, this.props.item, comment)
     }
   }
 
   render() {
-    const {log: {comment}, userMap} = this.props
+    const {item, userMap, comment, commenting} = this.props
 
-    const entries = {} //TODO: get from item
+    const entries = item.log //TODO: get from item
 
     //TODO: UI
 
@@ -63,6 +66,7 @@ class Log extends Component {
           onChangeText={this.handleChange}
           onSubmitEditing={this.handleComment}
         />
+        <ActivityIndicator size="small" color={colors.main} animating={commenting} />
       </View>
     )
   }
@@ -83,7 +87,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  log: state.log,
+  comment: state.item.comment,
+  commenting: state.item.commenting,
   userMap: state.tribe.userMap,
 })
 

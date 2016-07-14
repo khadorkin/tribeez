@@ -69,7 +69,7 @@ class TaskDetails extends Component {
             </View>
           )
         }
-        <Log item={task} />
+        <Log type="task" item={task} />
       </ScrollView>
     )
   }

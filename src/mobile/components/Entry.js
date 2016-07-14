@@ -37,8 +37,8 @@ class Entry extends Component {
     const route = routes[entry.type.toUpperCase()]
     if (route.name === 'member') {
       route.item = {
-        id: entry.user,
-        name: this.props.userMap[entry.user].name,
+        id: entry.author,
+        name: this.props.userMap[entry.author].name,
       }
     } else {
       route.item = entry.item
@@ -50,13 +50,13 @@ class Entry extends Component {
   render() {
     const {entry, userMap, uid} = this.props
 
-    const author = userMap[entry.user]
+    const author = userMap[entry.author]
     if (!author) {
       return null
     }
 
     const values = {}
-    if (author.id === uid) {
+    if (author.uid === uid) {
       values.author = '_you_'
     } else {
       values.author = author.name
@@ -102,7 +102,7 @@ class Entry extends Component {
     }
 
     const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
-    const date = <FormattedRelative value={entry.added} />
+    const date = <FormattedRelative value={entry.time} />
 
     return (
       <View style={[styles.container, {backgroundColor: entry.new ? '#FFFFDD' : 'white'}]}>

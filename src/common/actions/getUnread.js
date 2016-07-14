@@ -50,7 +50,7 @@ const on = (tid) => {
         dispatch({
           type: SNACK_MESSAGE,
           message: entry.action + '_' + entry.type,
-          author: entry.user,
+          author: entry.author,
           name: entry.item.name,
           id: snapshot.key,
         })
