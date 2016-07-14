@@ -5,7 +5,7 @@ import {auth, db, timestamp} from '../firebase'
 import platform from '../platform'
 import asyncStorage from '../utils/asyncStorage'
 import {rand} from '../utils/utils'
-import {login} from './app'
+import {login} from './auth'
 
 import {FIREBASE_FAILURE, API_FAILURE} from '../constants/actions'
 

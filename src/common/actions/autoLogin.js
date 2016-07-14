@@ -5,7 +5,7 @@ import {
   FIREBASE_SUCCESS,
 } from '../constants/actions'
 
-import {login} from './app'
+import {login} from './auth'
 
 let stop
 

@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 import {bindActionCreators, compose} from 'redux'
 import {injectIntl, intlShape} from 'react-intl'
 
-import {auth} from '../../common/firebase'
-import {logout} from '../../common/actions/app'
 import subscribe from '../../common/actions/subscribe'
 import gravatar from '../../common/utils/gravatar'
 
@@ -17,17 +15,7 @@ class MemberListeners extends Component {
     snack: PropTypes.object.isRequired,
     userMap: PropTypes.object,
     // action creators:
-    logout: PropTypes.func.isRequired,
     subscribe: PropTypes.func.isRequired,
-    unsubscribe: PropTypes.func.isRequired,
-  }
-
-  componentDidMount() {
-    this.off = auth.onAuthStateChanged((user) => {
-      if (!user) {
-        this.props.logout()
-      }
-    })
   }
 
   componentWillReceiveProps(props) {
@@ -49,12 +37,6 @@ class MemberListeners extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.props.unsubscribe()
-    this.off()
-    this.subscribed = false
-  }
-
   render() {
     return null
   }
@@ -68,9 +50,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  logout,
   subscribe: subscribe.on,
-  unsubscribe: subscribe.off,
 }, dispatch)
 
 export default compose(

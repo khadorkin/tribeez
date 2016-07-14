@@ -1,7 +1,7 @@
 import {auth} from '../firebase'
 import platform from '../platform'
 import asyncStorage from '../utils/asyncStorage'
-import {login} from './app'
+import {login} from './auth'
 import {FIREBASE_FAILURE} from '../constants/actions'
 
 export default (destination, values, dispatch) => {
