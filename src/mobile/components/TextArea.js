@@ -1,14 +1,18 @@
 import React, {Component, PropTypes} from 'react'
 import {TextInput, StyleSheet, View, Text} from 'react-native'
 
+import {injectIntl, intlShape} from 'react-intl'
+
 import colors from '../../common/constants/colors'
 
 class TextArea extends Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     style: Text.propTypes.style,
     minHeight: PropTypes.number,
     onChange: PropTypes.func,
     value: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     id: PropTypes.string, // used in componentWillReceiveProps to detect initial height change
   }
 
@@ -45,7 +49,12 @@ class TextArea extends Component {
   }
 
   render() {
-    const {style, minHeight, ...props} = this.props
+    const {style, minHeight, placeholder, ...props} = this.props
+
+    let translatedPlaceholder
+    if (placeholder) {
+      translatedPlaceholder = this.props.intl.formatMessage({id: 'placeholder.' + placeholder})
+    }
 
     const height = Math.max(minHeight || 39, this.state.height)
 
@@ -54,6 +63,7 @@ class TextArea extends Component {
         <TextInput
           underlineColorAndroid={colors.underline}
           {...props}
+          placeholder={translatedPlaceholder}
           multiline={true}
           style={[style, {height}]}
           onChange={this.handleChange}
@@ -76,4 +86,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default TextArea
+export default injectIntl(TextArea)

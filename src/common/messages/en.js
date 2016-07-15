@@ -256,6 +256,9 @@ export default {
   never_done: 'Never done',
   mark_done: 'I just did it',
 
+  // Notes
+  'placeholder.title': 'title',
+
   // Polls
   poll_answers: '{num, plural, =0 {No answers} one {1 answer} other {# answers}}',
 

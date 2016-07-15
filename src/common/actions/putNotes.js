@@ -6,15 +6,15 @@ import {
   FIREBASE_FAILURE,
 } from '../constants/actions'
 
-export default (ids) => {
-  return (dispatch) => {
+export default () => {
+  return (dispatch, getState) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
 
     const updates = {}
-    ids.forEach((id, index) => {
-      updates[id + '/position'] = index
+    getState().notes.items.forEach((note, index) => {
+      updates[note.id + '/position'] = index
     })
     db.ref('tribes/' + auth.currentUser.tid + '/notes').update(updates)
     .then(() => {

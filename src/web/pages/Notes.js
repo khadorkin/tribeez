@@ -106,7 +106,7 @@ class Notes extends Component {
   }
 
   handleMoved() {
-    this.props.putNotes(this.props.notes.map((note) => note.id))
+    this.props.putNotes()
   }
 
   handleDelete(note, unsaved) {

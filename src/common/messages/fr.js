@@ -256,6 +256,9 @@ const fr = {
   never_done: 'Jamais effectuée',
   mark_done: 'Je viens de le faire',
 
+  // Notes
+  'placeholder.title': 'titre',
+
   // Polls
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
 
