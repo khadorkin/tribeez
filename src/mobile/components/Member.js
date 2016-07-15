@@ -37,6 +37,10 @@ class Member extends Component {
     const {user, userMap} = this.props
     const member = userMap[user.uid]
 
+    if (!member) {
+      return null
+    }
+
     return (
       <View style={styles.container}>
         <Touchable onPress={this.handlePress} style={styles.main}>

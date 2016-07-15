@@ -13,7 +13,7 @@ class Member extends Component {
   render() {
     const {user} = this.props
 
-    const date = <FormattedMessage id="member_since" values={{when: user.registered}} />
+    const date = <FormattedMessage id="member_since" values={{when: user.joined}} />
 
     //TODO: link to detailed view
     return (
