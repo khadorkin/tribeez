@@ -56,7 +56,7 @@ export default (invite, values, dispatch) => {
           action: 'new',
           type: 'member',
           time: timestamp,
-          user: uid,
+          author: uid,
           inviter: invite.inviter,
         })
       })

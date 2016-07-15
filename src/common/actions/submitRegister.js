@@ -105,7 +105,7 @@ export default (values, dispatch) => {
               action: 'new',
               type: 'member',
               time: timestamp,
-              user: uid,
+              author: uid,
             })
           })
           .then(() => {
