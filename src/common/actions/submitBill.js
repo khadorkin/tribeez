@@ -43,23 +43,19 @@ export default (values, dispatch) => {
     let id = values.id
     delete values.id
     let action
-    let promise
     let current
     if (id) {
       action = 'update'
-      promise = db.ref('tribes/' + tid + '/bills/' + id).once('value')
-      .then((snapshot) => {
-        current = snapshot.val()
-        return db.ref('tribes/' + tid + '/bills/' + id).set(values)
-      })
     } else {
       action = 'new'
       values.added = timestamp
       id = db.ref('tribes/' + tid + '/bills').push().key
-      promise = db.ref('tribes/' + tid + '/bills/' + id).set(values)
     }
 
-    promise
+    db.ref('tribes/' + tid + '/bills/' + id).transaction((bill) => {
+      current = bill // null if new bill
+      return {...bill, ...values} // to keep the log
+    })
     .then(() => {
       return db.ref('tribes/' + tid + '/members').transaction((members) => {
         if (current) {

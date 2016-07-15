@@ -8,7 +8,7 @@ import {FIREBASE_FAILURE, API_FAILURE, SNACK_MESSAGE} from '../constants/actions
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    const ref = db.ref('tribes/' + auth.currentUser.tid + '/invites')
+    const ref = db.ref('tribes/' + auth.currentUser.tid + '/invites') //TODO: check existing
     const token = ref.push().key
     const invite = {
       email: values.email,

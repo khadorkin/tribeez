@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {FormattedMessage, FormattedHTMLMessage} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -44,7 +44,8 @@ class ProfileForm extends Component {
   render() {
     const {fields: {name, email, lang, phone, birthdate, password, password2}} = this.props
 
-    const subtitle = <FormattedHTMLMessage id="gravatar" />
+    const link = <a href="https://gravatar.com" target="_blank">gravatar.com</a>
+    const subtitle = <FormattedMessage id="gravatar" values={{link}} />
 
     return (
       <Form name="profile" subtitle={subtitle} onSubmit={this.handleSubmit} {...this.props}>

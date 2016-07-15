@@ -17,7 +17,9 @@ export default (values, dispatch) => {
     // EDIT CURRENT TRIBE:
     if (values.id) {
       const tid = auth.currentUser.tid
+      let current_city
       db.ref('tribes/' + tid + '/infos').transaction((infos) => {
+        current_city = infos.city.place_id
         infos.name = values.tribe_name
         infos.type = values.tribe_type
         infos.currency = values.currency
@@ -27,15 +29,18 @@ export default (values, dispatch) => {
       })
       .then(() => {
         // remove from current city
-        return db.ref('cities/' + values.current_city + '/tribes/' + tid).remove()
+        return db.ref('cities/' + current_city + '/tribes/' + tid).remove()
       })
       .then(() => {
         auth.currentUser.tribe = values.tribe_name
         // add to new city
         return db.ref('cities/' + values.city.place_id).transaction((city) => {
           if (!city) {
-            city = values.city
-            delete city.place_id // it's already the key
+            city = {
+              name: values.city.name,
+              country_code: values.city.country_code,
+              // place_id is already the key
+            }
           }
           if (!city.tribes) {
             city.tribes = {}
@@ -85,8 +90,11 @@ export default (values, dispatch) => {
         // add to new city
         return db.ref('cities/' + values.city.place_id).transaction((city) => {
           if (!city) {
-            city = values.city
-            delete city.place_id // it's already the key
+            city = {
+              name: values.city.name,
+              country_code: values.city.country_code,
+              // place_id is already the key
+            }
           }
           if (!city.tribes) {
             city.tribes = {}

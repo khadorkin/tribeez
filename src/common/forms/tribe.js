@@ -12,7 +12,6 @@ const mapStateToProps = (state, ownProps) => {
     initialValues.tribe_type = state.tribe.type
     initialValues.city = state.tribe.city
     initialValues.id = state.tribe.id
-    initialValues.current_city = state.tribe.city && state.tribe.city.place_id
   }
   return {
     initialValues,
@@ -22,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
 export default (component) => {
   return reduxForm({
     form: 'tribe',
-    fields: ['id', 'tribe_name', 'tribe_type', 'city', 'currency', 'current_city'],
+    fields: ['id', 'tribe_name', 'tribe_type', 'city', 'currency'],
     validate: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),

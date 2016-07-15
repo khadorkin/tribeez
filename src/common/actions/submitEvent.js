@@ -31,7 +31,9 @@ export default (values, dispatch) => {
       }
     }
 
-    db.ref('tribes/' + tid + '/events/' + id).set(values)
+    db.ref('tribes/' + tid + '/events/' + id).transaction((event) => {
+      return {...event, ...values} // to keep the log
+    })
     .then(() => {
       values.id = id
       return db.ref('tribes/' + tid + '/history').push({

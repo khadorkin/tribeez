@@ -13,10 +13,10 @@ import gravatar from '../../common/utils/gravatar'
 
 class Member extends Component {
   static propTypes = {
-    // from redux:
-    userMap: PropTypes.object.isRequired,
     // from parent:
     user: PropTypes.object.isRequired,
+    // from redux:
+    userMap: PropTypes.object.isRequired,
   }
 
   constructor(props) {

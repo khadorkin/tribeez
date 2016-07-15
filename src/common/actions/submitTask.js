@@ -10,7 +10,7 @@ export default (values, dispatch) => {
     values.counters = {}
     values.users.forEach((user) => {
       if (user.checked) {
-        values.counters[user.user_id] = 0
+        values.counters[user.uid] = 0
       }
     })
     delete values.users
@@ -27,7 +27,17 @@ export default (values, dispatch) => {
       id = db.ref('tribes/' + tid + '/tasks').push().key
     }
 
-    db.ref('tribes/' + tid + '/tasks/' + id).set(values)
+    db.ref('tribes/' + tid + '/tasks/' + id).transaction((task) => {
+      // keep existing counters for selected participants:
+      if (task) {
+        for (const key in values.counters) {
+          if (task.counters[key]) {
+            values.counters[key] = task.counters[key]
+          }
+        }
+      }
+      return {...task, ...values} // to keep the log
+    })
     .then(() => {
       values.id = id
       return db.ref('tribes/' + tid + '/history').push({

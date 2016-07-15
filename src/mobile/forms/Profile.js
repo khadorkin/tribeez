@@ -1,9 +1,11 @@
 import React, {Component, PropTypes} from 'react'
+import {StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DateField from './fields/Date'
+import FormattedMessage from '../components/FormattedMessage'
 
 import form from '../../common/forms/profile'
 import submitProfile from '../../common/actions/submitProfile'
@@ -24,6 +26,11 @@ class ProfileForm extends Component {
 
     return (
       <Form name="profile" action={submitProfile.bind(null, '')} {...props}>
+        <FormattedMessage
+          id="gravatar"
+          values={{link: 'gravatar.com'}}
+          style={styles.gravatar}
+        />
         <TextField ref="name"
           {...name}
           autoCorrect={false}
@@ -66,5 +73,12 @@ class ProfileForm extends Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  gravatar: {
+    marginHorizontal: 4,
+    marginBottom: 16,
+  },
+})
 
 export default form(ProfileForm)

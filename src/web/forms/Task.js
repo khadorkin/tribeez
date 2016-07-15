@@ -2,8 +2,6 @@ import React, {Component, PropTypes} from 'react'
 
 import {FormattedMessage} from 'react-intl'
 
-import {orange700} from 'material-ui/styles/colors'
-
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import TaskUser from './deep/TaskUser'
@@ -56,19 +54,8 @@ class TaskForm extends Component {
   render() {
     const {fields: {name, description, wait, users}, userMap, task} = this.props
 
-    let done = false
-    if (task) {
-      for (const key in task.counters) {
-        if (task.counters[key] > 0) {
-          done = true
-          break
-        }
-      }
-    }
-    const subtitle = (done ? <span style={{color: orange700}}><FormattedMessage id="task_edit_warning" /></span> : null)
-
     return (
-      <Form subtitle={subtitle} name={'task.' + (task ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
+      <Form name={'task.' + (task ? 'update' : 'create')} onSubmit={this.handleSubmit} {...this.props}>
         <TextField ref="name"
           required={true}
           {...name}
@@ -93,7 +80,7 @@ class TaskForm extends Component {
           users.map((task_user, index) =>
             <TaskUser key={index}
               checked={task_user.checked}
-              user={userMap[task_user.user_id.value]}
+              user={userMap[task_user.uid.value]}
             />
           )
         }

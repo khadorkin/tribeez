@@ -27,7 +27,6 @@ class Task extends Component {
     // from redux:
     uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
-    currency: PropTypes.string,
     // action creators:
     postDone: PropTypes.func.isRequired,
   }
@@ -48,7 +47,7 @@ class Task extends Component {
   }
 
   render() {
-    const {task, userMap} = this.props
+    const {task, uid, userMap} = this.props
 
     // to render a task, the users must be loaded for the current tribe tasks
     const author = userMap[task.author]
@@ -64,14 +63,18 @@ class Task extends Component {
       subtitle = <FormattedMessage id="never_done" />
     }
 
-    let icon
-    if (!task.done || task.wait < ((Date.now() - task.done) / 86400000 /* days */)) {
-      icon = (
-        <IconButton onTouchTap={this.handleDoneTask} style={{position: 'absolute', right: 53, top: 13}}>
-          <DoneIcon />
-        </IconButton>
-      )
+    let active = true
+    if (task.done) {
+      const elapsed = (Date.now() - task.done) / 86400000 // days
+      active = (elapsed > task.wait)
     }
+    const userIsConcerned = (active && task.counters[uid] !== undefined)
+
+    const icon = userIsConcerned && (
+      <IconButton onTouchTap={this.handleDoneTask} style={{position: 'absolute', right: 53, top: 13}}>
+        <DoneIcon />
+      </IconButton>
+    )
 
     const uids = Object.keys(task.counters)
 
@@ -89,11 +92,11 @@ class Task extends Component {
           {task.description}
           <List>
             {
-              uids.map((uid) => {
-                const user = userMap[uid]
+              uids.map((id) => {
+                const user = userMap[id]
                 return (
-                  <ListItem key={user.uid} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
-                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.uid])}} />
+                  <ListItem key={id} leftAvatar={<Avatar src={gravatar(user)} />} disabled={true}>
+                    <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[id])}} />
                   </ListItem>
                 )
               })
@@ -126,7 +129,6 @@ const styles = {
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
   userMap: state.tribe.userMap,
-  currency: state.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

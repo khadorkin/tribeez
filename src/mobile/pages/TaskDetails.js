@@ -42,8 +42,12 @@ class TaskDetails extends Component {
 
     const uids = Object.keys(task.counters)
 
-    const elapsed = (Date.now() - task.done) / 86400000 // days
-    const userIsConcerned = (elapsed > task.wait && task.counters[uid] !== undefined)
+    let active = true
+    if (task.done) {
+      const elapsed = (Date.now() - task.done) / 86400000 // days
+      active = (elapsed > task.wait)
+    }
+    const userIsConcerned = (active && task.counters[uid] !== undefined)
 
     //TODO: UI
 

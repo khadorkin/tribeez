@@ -18,14 +18,14 @@ import Balance from '../components/Balance'
 import styles from '../styles'
 import routes from '../routes'
 
-import deleteBill from '../../common/actions/deleteBill'
+import deleteItem from '../../common/actions/deleteItem'
 
 class Bills extends Component {
   static propTypes = {
     // redux state:
     users: PropTypes.array.isRequired,
     // action creators:
-    deleteBill: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -48,7 +48,7 @@ class Bills extends Component {
   }
 
   handleDelete() {
-    this.props.deleteBill(this.state.bill.id)
+    this.props.deleteItem('bill', this.state.bill.id)
     this.handleDialogClose()
   }
 
@@ -112,7 +112,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  deleteBill,
+  deleteItem,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bills)

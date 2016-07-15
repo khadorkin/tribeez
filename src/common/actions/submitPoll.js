@@ -25,7 +25,13 @@ export default (values, dispatch) => {
       id = db.ref('tribes/' + tid + '/polls').push().key
     }
 
-    db.ref('tribes/' + tid + '/polls/' + id).set(values)
+    db.ref('tribes/' + tid + '/polls/' + id).transaction((poll) => {
+      // delete existing answers since the options might have changed:
+      if (poll) {
+        delete poll.answers
+      }
+      return {...poll, ...values} // to keep the log
+    })
     .then(() => {
       values.id = id
       return db.ref('tribes/' + tid + '/history').push({

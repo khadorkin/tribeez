@@ -33,7 +33,7 @@ const on = (tid) => {
             first = false
             continue // exclude the last seen one
           }
-          if (entries[key].user !== auth.currentUser.uid) {
+          if (entries[key].author !== auth.currentUser.uid) {
             count++
           }
         }

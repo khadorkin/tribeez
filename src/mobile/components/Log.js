@@ -46,6 +46,10 @@ class Log extends Component {
 
     const entries = item.log //TODO: get from item
 
+    if (!entries) {
+      return null // loading
+    }
+
     //TODO: UI
 
     return (

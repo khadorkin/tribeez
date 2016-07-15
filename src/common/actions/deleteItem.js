@@ -21,12 +21,19 @@ export default (type, id) => {
       if (!item) {
         throw 'not_found'
       }
-      ref.remove()
+      return ref.remove()
     })
     .then(() => {
-      dispatch({
-        type: FIREBASE_SUCCESS,
-      })
+      if (type === 'bill') {
+        return db.ref('tribes/' + tid + '/members').transaction((members) => {
+          for (const uid in item.parts) {
+            members[uid].balance += item.parts[uid]
+          }
+          members[item.payer].balance -= item.amount
+          return members
+        })
+      }
+      return null
     })
     .then(() => {
       return db.ref('tribes/' + tid + '/history').push({
@@ -36,6 +43,11 @@ export default (type, id) => {
         author: auth.currentUser.uid,
         item,
         id,
+      })
+    })
+    .then(() => {
+      dispatch({
+        type: FIREBASE_SUCCESS,
       })
     })
     .catch((error) => {

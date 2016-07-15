@@ -41,7 +41,7 @@ class TaskForm extends Component {
           users.map((task_user, index) =>
             <TaskUser key={index}
               checked={task_user.checked}
-              user={userMap[task_user.user_id.value]}
+              user={userMap[task_user.uid.value]}
             />
           )
         }
