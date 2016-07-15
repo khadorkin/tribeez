@@ -12,35 +12,23 @@ export default (invite, values, dispatch) => {
     .then((user) => {
       const uid = user.uid
       const gravatar = md5(user.email)
+      const tid = invite.tribe
+      const historyKey = db.ref('tribes/' + tid + '/history').push().key
       const updates = {}
-      let historyKey
 
-      const user_record = {
-        current_tribe: invite.tribe,
+      // user infos
+      updates['users/' + uid] = {
+        current_tribe: tid,
         email: user.email,
         gravatar,
         lang: values.lang,
         name: values.name,
         registered: timestamp,
         tribes: {
-          [invite.tribe]: invite.tribe_name,
+          [tid]: invite.tribe_name,
         },
-      }
-      if (values.birthdate) {
-        user_record.birthdate = values.birthdate
-      }
-      if (values.phone) {
-        user_record.phone = values.phone
-      }
-      updates['users/' + uid] = user_record
-
-      // membership
-      updates['tribes/' + invite.tribe + '/members/' + uid] = {
-        balance: 0,
-        gravatar,
-        name: values.name,
-        joined: timestamp,
-        invite: values.token, // for security rules
+        // birthdate: values.birthdate || null,
+        // phone: values.phone || null,
       }
 
       // private user infos
@@ -48,11 +36,20 @@ export default (invite, values, dispatch) => {
         bot_token: rand(32),
       }
 
+      // membership
+      updates['tribes/' + tid + '/members/' + uid] = {
+        balance: 0,
+        gravatar,
+        name: values.name,
+        joined: timestamp,
+        last_viewed_history_key: historyKey,
+        invite: values.token, // for security rules
+      }
+
       db.ref().update(updates)
       .then(() => {
         // add history entry
-        historyKey = db.ref('tribes/' + invite.tribe + '/history').push().key
-        return db.ref('tribes/' + invite.tribe + '/history/' + historyKey).set({
+        return db.ref('tribes/' + tid + '/history/' + historyKey).set({
           action: 'new',
           type: 'member',
           time: timestamp,
@@ -61,25 +58,38 @@ export default (invite, values, dispatch) => {
         })
       })
       .then(() => {
-        // add history key as member's "last_viewed_history_key"
-        return db.ref('tribes/' + invite.tribe + '/members/' + uid + '/last_viewed_history_key').set(historyKey)
-      })
-      .then(() => {
         // remove invitation
-        return db.ref('tribes/' + invite.tribe + '/invites/' + values.token).remove()
-      })
-      .then(() => {
-        resolve()
-        dispatch(login(user))
+        return db.ref('tribes/' + tid + '/invites/' + values.token).remove()
       })
       .catch((error) => {
-        reject({_error: 'request'})
+        // rollback user creation:
+        db.ref().update({
+          ['tribes/' + tid + '/members/' + uid]: null,
+          ['users/' + uid]: null,
+          ['users_private/' + uid]: null,
+        })
+        .then(() => {
+          return Promise.all([
+            user.delete(),
+            auth.signOut(),
+          ])
+        })
+        .catch(() => {
+          // ignore
+        })
         dispatch({
           type: FIREBASE_FAILURE,
           origin: 'submitJoin',
           error,
         })
-        auth.signOut()
+        return Promise.reject()
+      })
+      .then(() => {
+        resolve()
+        dispatch(login(user))
+      })
+      .catch(() => { // either from a firebase fail or from a login dispatch fail
+        reject({_error: 'request'})
       })
     })
     .catch((error) => {

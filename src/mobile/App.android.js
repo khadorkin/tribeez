@@ -16,6 +16,7 @@ import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
 
 import config from '../common/config'
+import {auth} from '../common/firebase'
 
 import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
@@ -65,10 +66,17 @@ class App extends Component {
       }
       const currentRoutes = router.getCurrentRoutes()
       if (currentRoutes.length === 1) {
-        if (currentRoutes[0].name === 'activity') {
-          return false
+        if (auth.currentUser) {
+          if (currentRoutes[0].name === 'activity') {
+            return false
+          }
+          router.resetTo(routes.ACTIVITY)
+        } else {
+          if (currentRoutes[0].name === 'welcome') {
+            return false
+          }
+          router.resetTo(routes.WELCOME)
         }
-        router.resetTo(routes.ACTIVITY)
         return true
       }
       router.pop()
