@@ -5,6 +5,8 @@ import {db, auth, timestamp} from '../firebase'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
+import saveLog from './saveLog'
+
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
     values.options = values.options.filter((option) => option)
@@ -34,21 +36,7 @@ export default (values, dispatch) => {
     })
     .then(() => {
       values.id = id
-      return db.ref('tribes/' + tid + '/history').push({
-        type: 'poll',
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
-    })
-    .then(() => {
-      return db.ref('tribes/' + tid + '/polls/' + id + '/log').push({
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
+      return saveLog('poll', action, values)
     })
     .then(() => {
       resolve()

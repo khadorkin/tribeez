@@ -6,6 +6,8 @@ import {decimal} from '../utils/utils'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
+import saveLog from './saveLog'
+
 const calculateParts = (bill) => {
   // remove empty shares
   bill.parts = bill.parts.filter((part) => part.amount > 0)
@@ -75,21 +77,7 @@ export default (values, dispatch) => {
     })
     .then(() => {
       values.id = id
-      return db.ref('tribes/' + tid + '/history').push({
-        type: 'bill',
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
-    })
-    .then(() => {
-      return db.ref('tribes/' + tid + '/bills/' + id + '/log').push({
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
+      return saveLog('bill', action, values)
     })
     .then(() => {
       resolve()

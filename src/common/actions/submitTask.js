@@ -5,6 +5,8 @@ import {db, auth, timestamp} from '../firebase'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
+import saveLog from './saveLog'
+
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
     values.counters = {}
@@ -40,21 +42,7 @@ export default (values, dispatch) => {
     })
     .then(() => {
       values.id = id
-      return db.ref('tribes/' + tid + '/history').push({
-        type: 'task',
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
-    })
-    .then(() => {
-      return db.ref('tribes/' + tid + '/tasks/' + id + '/log').push({
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
+      return saveLog('task', action, values)
     })
     .then(() => {
       resolve()

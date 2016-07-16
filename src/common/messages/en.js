@@ -211,7 +211,7 @@ export default {
   // Activity
   'entry.member.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
   'entry.member.new.infos': 'Invited by {inviter}',
-  'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added a expense named "{name}" ({amount, number, money})',
+  'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added an expense named "{name}" ({amount, number, money})',
   'entry.bill.new.infos': 'Your share is {amount, number, money}',
   'entry.bill.new.stranger': 'You are not concerned',
   'entry.bill.update': '{author, select, _you_ {You} other {{author}}} modified the "{name}" expense ({amount, number, money})',
@@ -220,7 +220,7 @@ export default {
   'entry.bill.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" expense ({amount, number, money})',
   'entry.bill.delete.infos': 'Your share was {amount, number, money}',
   'entry.bill.delete.stranger': 'You were not concerned',
-  'entry.bill.comment': '{author, select, _you_ {You} other {{author} a}} commented the "{name}" expense:',
+  'entry.bill.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" expense:',
   'entry.poll.new': '{author, select, _you_ {You} other {{author}}} added a poll named "{name}"',
   'entry.poll.update': '{author, select, _you_ {You} other {{author}}} modified the "{name}" poll',
   'entry.poll.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" poll',

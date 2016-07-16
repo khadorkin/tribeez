@@ -5,6 +5,8 @@ import {db, auth, timestamp} from '../firebase'
 
 import {FIREBASE_FAILURE} from '../constants/actions'
 
+import saveLog from './saveLog'
+
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
     const tid = auth.currentUser.tid
@@ -36,21 +38,7 @@ export default (values, dispatch) => {
     })
     .then(() => {
       values.id = id
-      return db.ref('tribes/' + tid + '/history').push({
-        type: 'event',
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
-    })
-    .then(() => {
-      return db.ref('tribes/' + tid + '/events/' + id + '/log').push({
-        action,
-        time: timestamp,
-        author: auth.currentUser.uid,
-        item: values,
-      })
+      return saveLog('event', action, values)
     })
     .then(() => {
       resolve()
