@@ -15,6 +15,8 @@ import java.util.List;
 // Vector icons:
 import com.oblador.vectoricons.VectorIconsPackage;
 
+import com.evollu.react.fcm.FIRMessagingPackage;
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -27,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new FIRMessagingPackage(),
           new VectorIconsPackage()
       );
     }

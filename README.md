@@ -19,6 +19,27 @@ You need to install and start the [API](https://bitbucket.org/antoinerousseau/tr
 
 Then edit `config.development.json` and `config.production.json` with your infos
 
+Generate a key:
+
+    cd android/app
+    keytool -genkey -keystore android.keystore -alias android -keyalg RSA -keysize 2048 -validity 10000
+
+Edit `~/.gradle/gradle.properties`:
+
+```
+TRIBEEZ_RELEASE_STORE_FILE=android.keystore
+TRIBEEZ_RELEASE_KEY_ALIAS=android
+TRIBEEZ_RELEASE_STORE_PASSWORD=xxxxxxxx
+TRIBEEZ_RELEASE_KEY_PASSWORD=xxxxxxxx
+```
+
+Get the SHA1 fingerprint for Firebase Notifications:
+
+    cd android/app
+    keytool -exportcert -list -alias android -keystore android.keystore
+
+Generate `google-services.json` from Firebase console and add it to `android/app`
+
 ## Web app
 
 ### Development
@@ -71,20 +92,6 @@ You can see the logs by running:
 
 ### Production
 
-Generate a key:
-
-    cd android/app
-    keytool -genkey -keystore android.keystore -alias android -keyalg RSA -keysize 2048 -validity 10000
-
-Edit `~/.gradle/gradle.properties`:
-
-```
-TRIBEEZ_RELEASE_STORE_FILE=android.keystore
-TRIBEEZ_RELEASE_KEY_ALIAS=android
-TRIBEEZ_RELEASE_STORE_PASSWORD=xxxxxxxx
-TRIBEEZ_RELEASE_KEY_PASSWORD=xxxxxxxx
-```
-
 Bump version:
 
 * Edit `versionCode` and `versionName` in `android/app/build.gradle` and in `src/common/config.js`
@@ -93,4 +100,4 @@ Generate production builds:
 
     npm run android
 
-The generated package can be found at `android/app/build/outputs/apk/app-release.apk`
+The two generated APKs can be found at `android/app/build/outputs/apk/app-[platform]-release.apk`

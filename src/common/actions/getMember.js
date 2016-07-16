@@ -1,4 +1,5 @@
-import {db, auth} from '../firebase'
+import {db, auth, timestamp} from '../firebase'
+import fcm from '../fcm'
 
 import {
   FIREBASE_REQUEST,
@@ -11,14 +12,30 @@ import {
   MEMBERS_REMOVED,
 } from '../constants/actions'
 
-const origin = 'getMember'
 let privateRef
 let userRef
 let memberRef
 let tribeRef
 
 const on = (uid) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    // Firebase Cloud Messaging:
+    fcm.requestPermissions()
+
+    const onToken = (token) => {
+      const userTokens = getState().user.fcm_tokens
+      if (!userTokens || !userTokens[token]) {
+        privateRef.child('fcm_tokens').child(token).set(timestamp)
+        .catch((err) => {
+          dispatch({
+            type: FIREBASE_FAILURE,
+            origin: 'getMember/fcm_tokens',
+            error: err.code,
+          })
+        })
+      }
+    }
+
     dispatch({
       type: FIREBASE_REQUEST,
     })
@@ -32,10 +49,12 @@ const on = (uid) => {
         type: USER_UPDATED,
         user,
       })
+
+      fcm.subscribeToken(onToken)
     }, (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin,
+        origin: 'getMember/users_private',
         error: error.code,
       })
     })
@@ -70,7 +89,7 @@ const on = (uid) => {
       }, (error) => {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin,
+          origin: 'getMember/tribe_infos',
           error: error.code,
         })
       })
@@ -87,7 +106,7 @@ const on = (uid) => {
       }, (error) => {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin,
+          origin: 'getMember/tribe_members/added',
           error: error.code,
         })
       })
@@ -102,14 +121,14 @@ const on = (uid) => {
       }, (error) => {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin,
+          origin: 'getMember/tribe_members/changed',
           error: error.code,
         })
       })
     }, (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin,
+        origin: 'getMember/user',
         error: error.code,
       })
     })
@@ -125,6 +144,7 @@ const off = () => {
     dispatch({
       type: MEMBERS_REMOVED,
     })
+    fcm.unsubscribeToken()
   }
 }
 
