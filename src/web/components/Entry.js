@@ -69,7 +69,7 @@ class Entry extends Component {
     }
 
     const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
-    const date = <FormattedRelative value={entry.added} />
+    const date = <FormattedRelative value={entry.time} />
 
     if (infos) {
       infos = (

@@ -58,14 +58,11 @@ class Activity extends Component {
       <div>
         <Tabs onChange={this.handleTabs}>
           <Tab label={<FormattedMessage id="tab.activity" />} value="activity">
-            {
-              this.state.tab === 'activity' && (
-                <AsyncContent name="activity" renderRow={this.renderActivity} />
-              )
-            }
+            <AsyncContent name="activity" renderRow={this.renderActivity} />
           </Tab>
           <Tab label={historyLabel} value="history">
             {
+              // load only if visible, to not get rid of the unread badge:
               this.state.tab === 'history' && (
                 <AsyncContent name="history" renderRow={this.renderHistoryEntry} />
               )
