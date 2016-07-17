@@ -14,10 +14,10 @@ You need to install and start the [API](https://bitbucket.org/antoinerousseau/tr
 
 ## Config
 
+Create `config.development.json` and/or `config.production.json` with your infos:
+
     cp config.dist.json config.development.json
     cp config.dist.json config.production.json
-
-Then edit `config.development.json` and `config.production.json` with your infos
 
 Generate a key:
 
@@ -38,7 +38,7 @@ Get the SHA1 fingerprint for Firebase Notifications:
     cd android/app
     keytool -exportcert -list -alias android -keystore android.keystore
 
-Generate `google-services.json` from Firebase console and add it to `android/app`
+Generate `google-services.json` from the Firebase console and add it to `android/app`
 
 ## Web app
 
