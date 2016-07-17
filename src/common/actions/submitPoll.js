@@ -38,6 +38,12 @@ export default (values, dispatch) => {
       return saveLog('poll', action, values)
     })
     .then(() => {
+      if (action === 'new') {
+        return db.ref('notifications/poll/' + id).set(tid)
+      }
+      return true // nothing to update in the notification
+    })
+    .then(() => {
       resolve()
       router.resetTo(routes.POLLS, dispatch)
     })

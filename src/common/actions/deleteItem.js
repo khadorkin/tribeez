@@ -47,6 +47,12 @@ export default (type, id) => {
       })
     })
     .then(() => {
+      if (type === 'poll' || type === 'task') {
+        return db.ref('notifications/' + type + '/' + id).remove()
+      }
+      return true
+    })
+    .then(() => {
       dispatch({
         type: FIREBASE_SUCCESS,
       })

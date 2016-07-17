@@ -94,7 +94,6 @@ export default (values, dispatch) => {
           // private user infos
           updates['users_private/' + uid] = {
             bot_token: rand(32),
-            lang: values.lang,
           }
 
           return db.ref().update(updates)

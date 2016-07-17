@@ -44,6 +44,12 @@ export default (values, dispatch) => {
       return saveLog('task', action, values)
     })
     .then(() => {
+      if (action === 'new') {
+        return db.ref('notifications/task/' + id).set(tid)
+      }
+      return true // nothing to update in the notification
+    })
+    .then(() => {
       resolve()
       router.resetTo(routes.TASKS, dispatch)
     })
