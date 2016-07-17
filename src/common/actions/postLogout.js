@@ -1,4 +1,5 @@
-import {auth} from '../firebase'
+import {db, auth} from '../firebase'
+import fcm from '../fcm'
 
 import {
   FIREBASE_REQUEST,
@@ -16,11 +17,25 @@ export default () => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
-    dispatch(getMember.off())
-    dispatch(getUnread.off())
 
-    // this will trigger auth.logout (see listener in auth.login):
-    auth.signOut().then(() => {
+    const fcm_token = fcm.getToken()
+
+    let promise
+    if (fcm_token) {
+      promise = db.ref('users_private/' + auth.currentUser.uid + '/fcm_tokens/' + fcm_token).remove()
+    } else {
+      promise = Promise.resolve()
+    }
+
+    promise
+    .then(() => {
+      dispatch(getMember.off())
+      dispatch(getUnread.off())
+    })
+    .then(() => {
+      return auth.signOut() // this will trigger auth.logout (see listener in auth.login)
+    })
+    .then(() => {
       dispatch({
         type: FIREBASE_SUCCESS,
       })
@@ -28,7 +43,8 @@ export default () => {
         type: SNACK_MESSAGE,
         message: 'logout_success',
       })
-    }, (error) => {
+    })
+    .catch((error) => {
       dispatch(firebaseError(error, 'postLogout'))
     })
   }

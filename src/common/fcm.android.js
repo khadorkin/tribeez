@@ -1,6 +1,7 @@
 import fcm from 'react-native-fcm'
 
 let offToken
+let _token
 
 const subscribeToken = (callback) => {
   if (offToken) {
@@ -10,6 +11,7 @@ const subscribeToken = (callback) => {
   const onToken = (token) => {
     if (token) {
       callback(token)
+      _token = token
     }
   }
   fcm.getFCMToken().then(onToken)
@@ -21,10 +23,16 @@ const unsubscribeToken = () => {
     offToken()
     offToken = null
   }
+  _token = null
+}
+
+const getToken = () => {
+  return _token
 }
 
 export default {
   requestPermissions: fcm.requestPermissions,
   subscribeToken,
   unsubscribeToken,
+  getToken,
 }

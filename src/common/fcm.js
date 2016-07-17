@@ -4,4 +4,5 @@ export default {
   requestPermissions: () => {},
   subscribeToken: () => {},
   unsubscribeToken: () => {},
+  getToken: () => null,
 }

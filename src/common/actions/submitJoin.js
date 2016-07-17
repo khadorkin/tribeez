@@ -36,6 +36,7 @@ export default (invite, values, dispatch) => {
       // private user infos
       updates['users_private/' + uid] = {
         bot_token: rand(32),
+        lang: values.lang,
       }
 
       // membership
@@ -47,6 +48,9 @@ export default (invite, values, dispatch) => {
         last_viewed_history_key: historyKey,
         invite: values.token, // for security rules
       }
+
+      // notification
+      updates['notifications/join/' + uid] = tid
 
       db.ref().update(updates)
       .then(() => {
