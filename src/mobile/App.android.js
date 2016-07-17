@@ -129,7 +129,7 @@ class App extends Component {
         if (loading) {
           return <ActivityIndicator size="small" color="white" style={styles.rightIcon} />
         }
-        if (route.type === 'details') { //TODO: not show if does not exist
+        if (route.type === 'details' && route.name !== 'member') { //TODO: not show if does not exist
           return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
         }
         return null

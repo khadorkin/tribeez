@@ -1,24 +1,26 @@
-let _route
-let _navigator
+let currentRoute
+let navigator
 
-const update = (route, navigator) => {
-  _route = route
-  _navigator = navigator
+const update = (route, nav) => {
+  currentRoute = route
+  if (navigator !== nav) {
+    navigator = nav
+  }
 }
 
 const push = (route) => {
-  if (route.name === _route.name) {
+  if (route.name === currentRoute.name) {
     return
   }
-  _navigator.push(route)
+  navigator.push(route)
 }
 
 export default {
   update,
   push,
-  pop: () => _navigator.pop(),
-  replace: (route) => _navigator.replace(route),
-  resetTo: (route) => _navigator.resetTo(route),
-  getCurrentRoutes: () => _navigator.getCurrentRoutes(),
-  getCurrentName: () => _route.name,
+  pop: () => navigator.pop(),
+  replace: (route) => navigator.replace(route),
+  resetTo: (route) => navigator.resetTo(route),
+  getCurrentRoutes: () => navigator.getCurrentRoutes(),
+  //getCurrentName: () => currentRoute.name,
 }

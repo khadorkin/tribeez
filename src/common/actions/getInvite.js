@@ -44,7 +44,7 @@ export default (tribe, token) => {
           } else {
             dispatch({
               type: FIREBASE_FAILURE,
-              origin: 'getInvite',
+              origin: 'getInvite/infos',
               error: 'not_found',
             })
             router.resetTo(routes.LOGIN, dispatch)
@@ -53,7 +53,7 @@ export default (tribe, token) => {
       } else {
         dispatch({
           type: FIREBASE_FAILURE,
-          origin: 'getInvite',
+          origin: 'getInvite/token',
           error: 'not_found',
         })
         router.resetTo(routes.LOGIN, dispatch)

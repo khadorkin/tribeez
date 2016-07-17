@@ -139,8 +139,10 @@ const off = () => {
   return (dispatch) => {
     privateRef.off()
     userRef.off()
-    memberRef.off()
-    tribeRef.off()
+    if (tribeRef) {
+      tribeRef.off()
+      memberRef.off()
+    }
     dispatch({
       type: MEMBERS_REMOVED,
     })

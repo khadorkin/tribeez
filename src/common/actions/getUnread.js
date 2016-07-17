@@ -18,7 +18,7 @@ const on = (tid) => {
     const onError = (error) => {
       dispatch({
         type: FIREBASE_FAILURE,
-        origin: 'subscribe',
+        origin: 'getUnread',
         error,
       })
     }
@@ -51,7 +51,7 @@ const on = (tid) => {
           type: SNACK_MESSAGE,
           message: entry.action + '_' + entry.type,
           author: entry.author,
-          name: entry.item.name,
+          name: entry.item && entry.item.name,
           id: snapshot.key,
         })
         countUnread()
@@ -78,9 +78,11 @@ const off = () => {
   return () => {
     if (historyRef) {
       historyRef.off()
+      historyRef = null
     }
     if (lastKeyRef) {
       lastKeyRef.off()
+      lastKeyRef = null
     }
   }
 }

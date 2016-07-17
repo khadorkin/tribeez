@@ -77,6 +77,7 @@ const fr = {
   'snack.invite_sent': 'Invitation envoyée',
   'snack.invite_resent': 'Invitation renvoyée',
   'snack.switched': 'Tribu changée',
+  'snack.new_member': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu',
   'snack.new_bill': '{author, select, _you_ {Dépense ajoutée} other {{author} a ajouté la dépense "{name}"}}',
   'snack.update_bill': '{author, select, _you_ {Dépense modifiée} other {{author} a modifié la dépense "{name}"}}',
   'snack.delete_bill': '{author, select, _you_ {Dépense supprimée} other {{author} a supprimé la dépense "{name}"}}',

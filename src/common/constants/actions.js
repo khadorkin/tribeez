@@ -4,7 +4,6 @@ export const TOGGLE_TRIBES = 'TOGGLE_TRIBES'
 export const RESIZE = 'RESIZE'
 export const SNACK_MESSAGE = 'SNACK_MESSAGE'
 export const CLOSE_SNACK = 'CLOSE_SNACK'
-export const LOCAL_STORAGE = 'LOCAL_STORAGE'
 export const UPDATE_LANG = 'UPDATE_LANG'
 
 // Firebase events:

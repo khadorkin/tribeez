@@ -19,6 +19,7 @@ const subscribeToken = (callback) => {
 const unsubscribeToken = () => {
   if (offToken) {
     offToken()
+    offToken = null
   }
 }
 
