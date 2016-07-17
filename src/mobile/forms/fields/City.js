@@ -87,10 +87,18 @@ class CityField extends Component {
         const country = place.address_components.find((component) => {
           return (component.types.includes('country') && component.short_name && component.short_name.length === 2)
         })
+        const location = place.geometry.location
+        // choices for city name:
+        // short: place.name (city name only)
+        // medium: this.props.value
+        // long: place.formatted_address
         this.props.onChange({
-          name: prediction.description, // could be also place.formatted_address, but place.name does not contain country
-          country_code: country.short_name,
+          name: prediction.description,
           place_id: place.place_id,
+          country_code: country.short_name,
+          lat: location.lat,
+          lng: location.lng,
+          utc_offset: place.utc_offset,
         })
         this.setState({
           textPredictions: [],

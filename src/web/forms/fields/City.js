@@ -112,6 +112,7 @@ class CityField extends Component {
       country_code: country.short_name,
       lat: location.lat(),
       lng: location.lng(),
+      utc_offset: place.utc_offset,
     })
   }
 
