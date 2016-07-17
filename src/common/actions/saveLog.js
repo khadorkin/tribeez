@@ -5,8 +5,6 @@ export default (type, action, item) => {
   const entryKey = db.ref(entries).push().key
   const logs = 'tribes/' + auth.currentUser.tid + '/' + type + 's/' + item.id + '/log'
   const logKey = db.ref(logs).push().key
-  const notifications = 'notifications'
-  const notificationKey = db.ref(notifications).push().key
 
   // data fan-out:
   return db.ref().update({
@@ -20,12 +18,6 @@ export default (type, action, item) => {
     [logs + '/' + logKey]: {
       action,
       time: timestamp,
-      author: auth.currentUser.uid,
-      item,
-    },
-    [notifications + '/' + notificationKey]: { //TODO: avoid flooding the users
-      type,
-      action,
       author: auth.currentUser.uid,
       item,
     },

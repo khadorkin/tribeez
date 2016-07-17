@@ -46,15 +46,6 @@ export default (invite, values, dispatch) => {
         invite: values.token, // for security rules
       }
 
-      // notify members:
-      const notificationKey = db.ref('notifications').push().key
-      updates['notifications/' + notificationKey] = {
-        type: 'member',
-        action: 'new',
-        author: uid,
-        inviter: invite.inviter,
-      }
-
       db.ref().update(updates)
       .then(() => {
         // add history entry
