@@ -4,8 +4,9 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   GET_NOTES_SUCCESS,
-  FIREBASE_FAILURE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 let ref
 
@@ -25,11 +26,7 @@ const on = () => {
         type: FIREBASE_SUCCESS,
       })
     }, (error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getNotes',
-        error: error.code,
-      })
+      dispatch(firebaseError(error, 'getNotes'))
     })
   }
 }

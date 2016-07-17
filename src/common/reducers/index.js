@@ -5,7 +5,6 @@ import tribe from './tribe'
 import invite from './invite'
 import join from './join'
 import password from './password'
-import reset from './reset'
 import notes from './notes'
 import item from './item'
 
@@ -17,7 +16,6 @@ export default {
   invite,
   join,
   password,
-  reset,
   notes,
   item,
 }

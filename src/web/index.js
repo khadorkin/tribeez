@@ -15,7 +15,6 @@ import App from './App'
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Password from './pages/Password'
-import Reset from './pages/Reset'
 import Register from './pages/Register'
 import Join from './pages/Join'
 import Activity from './pages/Activity'
@@ -112,7 +111,6 @@ ReactDOM.render((
         <IndexRoute component={Welcome} />
         <Route path={routes.LOGIN} component={Login} onEnter={redirectToHome} />
         <Route path={routes.PASSWORD} component={Password} onEnter={redirectToHome} />
-        <Route path={routes.RESET} component={Reset} onEnter={redirectToHome} />
         <Route path={routes.REGISTER} component={Register} onEnter={redirectToHome} />
         <Route path={routes.JOIN} component={Join} onEnter={redirectToHome} />
         <Route path={routes.ACTIVITY} component={Activity} onEnter={authenticate} />

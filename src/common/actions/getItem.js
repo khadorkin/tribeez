@@ -3,9 +3,10 @@ import {db, auth} from '../firebase'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
   ITEM,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 let ref
 let initial
@@ -40,11 +41,7 @@ const on = (itemType, id) => {
         initial = false
       }
     }, (error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getItem/' + itemType,
-        error,
-      })
+      dispatch(firebaseError(error, 'getItem/' + itemType))
     })
   }
 }

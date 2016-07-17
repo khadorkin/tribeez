@@ -4,7 +4,7 @@ import {auth, db, timestamp} from '../firebase'
 import {rand} from '../utils/utils'
 import {login} from './auth'
 
-import {FIREBASE_FAILURE} from '../constants/actions'
+import {firebaseError} from './error'
 
 export default (invite, values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -15,6 +15,8 @@ export default (invite, values, dispatch) => {
       const tid = invite.tribe
       const historyKey = db.ref('tribes/' + tid + '/history').push().key
       const updates = {}
+
+      let errorOrigin = 'updates'
 
       // user infos
       updates['users/' + uid] = {
@@ -48,6 +50,7 @@ export default (invite, values, dispatch) => {
 
       db.ref().update(updates)
       .then(() => {
+        errorOrigin = 'history'
         // add history entry
         return db.ref('tribes/' + tid + '/history/' + historyKey).set({
           action: 'new',
@@ -58,6 +61,7 @@ export default (invite, values, dispatch) => {
         })
       })
       .then(() => {
+        errorOrigin = 'removeInvite'
         // remove invitation
         return db.ref('tribes/' + tid + '/invites/' + values.token).remove()
       })
@@ -75,13 +79,9 @@ export default (invite, values, dispatch) => {
           ])
         })
         .catch(() => {
-          // ignore
+          dispatch(firebaseError(error, 'submitJoin/rollback'))
         })
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'submitJoin',
-          error,
-        })
+        dispatch(firebaseError(error, 'submitJoin/' + errorOrigin))
         return Promise.reject()
       })
       .then(() => {
@@ -105,11 +105,7 @@ export default (invite, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          dispatch({
-            type: FIREBASE_FAILURE,
-            origin: 'submitJoin',
-            error,
-          })
+          dispatch(firebaseError(error, 'submitJoin/createUser'))
       }
     })
   })

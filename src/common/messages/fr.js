@@ -186,7 +186,6 @@ const fr = {
   'submit.join': 'S’inscrire et rejoindre cette tribu',
   'submit.login': 'Connexion',
   'submit.password': 'Envoyer',
-  'submit.reset': 'Enregistrer',
   'submit.profile': 'Enregistrer',
   'submit.invite': 'Envoyer l’invitation',
   'submit.tribe.create': 'Créer la tribu',

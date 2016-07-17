@@ -4,8 +4,9 @@ import {
   COMMENT_REQUEST,
   COMMENT_SUCCESS,
   COMMENT_FAILURE,
-  FIREBASE_FAILURE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export default (type, item, text) => {
   return (dispatch) => {
@@ -24,11 +25,7 @@ export default (type, item, text) => {
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'postComment',
-        error: error.code,
-      })
+      dispatch(firebaseError(error, 'postComment'))
       dispatch({
         type: COMMENT_FAILURE,
       })

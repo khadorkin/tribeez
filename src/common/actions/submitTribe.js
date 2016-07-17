@@ -1,14 +1,12 @@
 import {auth, db, timestamp} from '../firebase'
 
-import {
-  SNACK_MESSAGE,
-  FIREBASE_FAILURE,
-} from '../constants/actions'
+import {SNACK_MESSAGE} from '../constants/actions'
 
 import router from '../router'
 import routes from '../routes'
 
 import getMember from './getMember'
+import {firebaseError} from './error'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -58,11 +56,7 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: 'request'})
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'submitTribe/edit',
-          error,
-        })
+        dispatch(firebaseError(error, 'submitTribe/edit'))
       })
 
     // CREATE NEW TRIBE:
@@ -131,11 +125,7 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: 'request'})
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'submitTribe/new',
-          error,
-        })
+        dispatch(firebaseError(error, 'submitTribe/new'))
       })
     }
   })

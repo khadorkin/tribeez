@@ -3,9 +3,10 @@ import {db, auth, timestamp} from '../firebase'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export default (type, id) => {
   return (dispatch) => {
@@ -51,11 +52,7 @@ export default (type, id) => {
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'deleteItem/' + type,
-        error,
-      })
+      dispatch(firebaseError(error, 'deleteItem/' + type))
       dispatch({
         type: SNACK_MESSAGE,
         message: 'error',

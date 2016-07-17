@@ -3,9 +3,8 @@ import routes from '../routes'
 
 import {db, auth, timestamp} from '../firebase'
 
-import {FIREBASE_FAILURE} from '../constants/actions'
-
 import saveLog from './saveLog'
+import {firebaseError} from './error'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -43,11 +42,7 @@ export default (values, dispatch) => {
       router.resetTo(routes.POLLS, dispatch)
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'submitPoll',
-        error,
-      })
+      dispatch(firebaseError(error, 'submitPoll'))
       reject({_error: 'request'})
     })
   })

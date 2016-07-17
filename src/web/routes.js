@@ -3,7 +3,6 @@ export default {
   WELCOME: '/',
   LOGIN: '/login',
   PASSWORD: '/password',
-  RESET: '/reset/:token',
   REGISTER: '/register',
   JOIN: '/join/:tribe/:token',
 

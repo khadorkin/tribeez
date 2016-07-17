@@ -4,9 +4,8 @@ import routes from '../routes'
 import {db, auth, timestamp} from '../firebase'
 import {decimal} from '../utils/utils'
 
-import {FIREBASE_FAILURE} from '../constants/actions'
-
 import saveLog from './saveLog'
+import {firebaseError} from './error'
 
 const calculateParts = (bill) => {
   // remove empty shares
@@ -84,11 +83,7 @@ export default (values, dispatch) => {
       router.resetTo(routes.BILLS, dispatch)
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'submitBill',
-        error,
-      })
+      dispatch(firebaseError(error, 'submitBill'))
       reject({_error: 'request'})
     })
   })

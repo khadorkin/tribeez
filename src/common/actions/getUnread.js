@@ -2,9 +2,10 @@ import {db, auth} from '../firebase'
 
 import {
   SNACK_MESSAGE,
-  FIREBASE_FAILURE,
   UNREAD,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 let historyRef
 let lastKeyRef
@@ -16,11 +17,7 @@ const on = (tid) => {
     let lastKey
 
     const onError = (error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getUnread',
-        error,
-      })
+      dispatch(firebaseError(error, 'getUnread'))
     }
 
     const countUnread = () => {

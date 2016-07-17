@@ -7,7 +7,7 @@ export default (event) => {
   const state = end > start ? {start, end} : {start: end, end: start}
   return (dispatch) => {
     dispatch(push({
-      pathname: routes.EVENTS_NEW, //TODO: mobile
+      pathname: routes.EVENTS_NEW, // Web-only
       state,
     }))
   }

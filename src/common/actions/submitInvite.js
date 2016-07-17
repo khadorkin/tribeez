@@ -4,7 +4,8 @@ import routes from '../routes'
 import {db, auth, timestamp} from '../firebase'
 import api from '../utils/api'
 
-import {FIREBASE_FAILURE, API_FAILURE, SNACK_MESSAGE} from '../constants/actions'
+import {SNACK_MESSAGE} from '../constants/actions'
+import {firebaseError, apiError} from './error'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -39,20 +40,12 @@ export default (values, dispatch) => {
         })
       })
       .catch((error) => {
-        dispatch({
-          type: API_FAILURE,
-          origin: 'submitInvite',
-          error,
-        })
+        dispatch(apiError(error, 'submitInvite'))
         reject({_error: 'request'})
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'submitInvite',
-        error,
-      })
+      dispatch(firebaseError(error, 'submitInvite'))
       reject({_error: 'request'})
     })
   })

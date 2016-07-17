@@ -3,8 +3,9 @@ import {db, auth, timestamp} from '../firebase'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export default (id) => {
   return (dispatch) => {
@@ -22,11 +23,7 @@ export default (id) => {
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'postVote',
-        error: error.code,
-      })
+      dispatch(firebaseError(error, 'postDone'))
     })
   }
 }

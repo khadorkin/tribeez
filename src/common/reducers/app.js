@@ -1,7 +1,5 @@
 import {LOCATION_CHANGE} from 'react-router-redux'
 
-import {auth} from '../firebase'
-
 import {actionTypes as formActions} from 'redux-form'
 
 import {
@@ -115,29 +113,12 @@ export default (state = initialState, action = null) => {
         loading: Math.max(0, state.loading - 1),
         error: null,
       }
-    case FIREBASE_FAILURE: //TODO: move impure calls out of this reducer
+    case FIREBASE_FAILURE:
     case API_FAILURE:
-      const err = action.error
-      if (__DEV__) {
-        /*eslint-disable no-console*/
-        console.error(action.type, 'from', action.origin + ':', err)
-        /*eslint-enable no-console*/
-      }
-      const error = (err.code || err.message || err.toString()) //TODO: improve
-      if (window.Rollbar) {
-        const extra = {
-          origin: action.origin,
-        }
-        if (auth.currentUser) {
-          extra.user = auth.currentUser.uid
-          extra.tribe = auth.currentUser.tid
-        }
-        Rollbar.error(action.type + ': ' + error, extra)
-      }
       return {
         ...state,
         loading: Math.max(0, state.loading - 1),
-        error,
+        error: action.error,
       }
     case formActions.CHANGE: {
       if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {

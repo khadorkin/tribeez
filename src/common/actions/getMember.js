@@ -4,13 +4,14 @@ import fcm from '../fcm'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
   USER_UPDATED,
   TRIBE_UPDATED,
   MEMBER_ADDED,
   MEMBER_UPDATED,
   MEMBERS_REMOVED,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 let privateRef
 let userRef
@@ -26,12 +27,8 @@ const on = (uid) => {
       const userTokens = getState().user.fcm_tokens
       if (!userTokens || !userTokens[token]) {
         privateRef.child('fcm_tokens').child(token).set(timestamp)
-        .catch((err) => {
-          dispatch({
-            type: FIREBASE_FAILURE,
-            origin: 'getMember/fcm_tokens',
-            error: err.code,
-          })
+        .catch((error) => {
+          dispatch(firebaseError(error, 'getMember/fcm_tokens'))
         })
       }
     }
@@ -52,11 +49,7 @@ const on = (uid) => {
 
       fcm.subscribeToken(onToken)
     }, (error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getMember/users_private',
-        error: error.code,
-      })
+      dispatch(firebaseError(error, 'getMember/users_private'))
     })
 
     userRef = db.ref('users/' + uid)
@@ -87,11 +80,7 @@ const on = (uid) => {
           type: FIREBASE_SUCCESS,
         })
       }, (error) => {
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'getMember/tribe_infos',
-          error: error.code,
-        })
+        dispatch(firebaseError(error, 'getMember/tribe_infos'))
       })
 
       memberRef = db.ref('tribes/' + user.current_tribe + '/members')
@@ -104,11 +93,7 @@ const on = (uid) => {
           member,
         })
       }, (error) => {
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'getMember/tribe_members/added',
-          error: error.code,
-        })
+        dispatch(firebaseError(error, 'getMember/tribe_members/added'))
       })
 
       memberRef.on('child_changed', (sub_snapshot) => {
@@ -119,18 +104,10 @@ const on = (uid) => {
           member,
         })
       }, (error) => {
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'getMember/tribe_members/changed',
-          error: error.code,
-        })
+        dispatch(firebaseError(error, 'getMember/tribe_members/changed'))
       })
     }, (error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getMember/user',
-        error: error.code,
-      })
+      dispatch(firebaseError(error, 'getMember/user'))
     })
   }
 }

@@ -3,7 +3,6 @@ import {auth, db} from '../firebase'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -11,6 +10,7 @@ import router from '../router'
 import routes from '../routes'
 
 import getMember from './getMember'
+import {firebaseError} from './error'
 
 export default (tid) => {
   return (dispatch) => {
@@ -33,11 +33,7 @@ export default (tid) => {
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'putSwitch',
-        error,
-      })
+      dispatch(firebaseError(error, 'putSwitch'))
     })
   }
 }

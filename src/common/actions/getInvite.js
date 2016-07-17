@@ -7,8 +7,9 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   GET_INVITE_SUCCESS,
-  FIREBASE_FAILURE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export default (tribe, token) => {
   return (dispatch) => {
@@ -42,29 +43,17 @@ export default (tribe, token) => {
             //   router.resetTo(routes.ACTIVITY, dispatch)
             // }
           } else {
-            dispatch({
-              type: FIREBASE_FAILURE,
-              origin: 'getInvite/infos',
-              error: 'not_found',
-            })
+            dispatch(firebaseError('not_found', 'getInvite/infos'))
             router.resetTo(routes.LOGIN, dispatch)
           }
         })
       } else {
-        dispatch({
-          type: FIREBASE_FAILURE,
-          origin: 'getInvite/token',
-          error: 'not_found',
-        })
+        dispatch(firebaseError('not_found', 'getInvite/token'))
         router.resetTo(routes.LOGIN, dispatch)
       }
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getInvite',
-        error,
-      })
+      dispatch(firebaseError(error, 'getInvite'))
     })
   }
 }

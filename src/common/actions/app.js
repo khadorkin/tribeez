@@ -8,8 +8,9 @@ import {
   UPDATE_LANG,
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export const toggleMenu = (open) => {
   return (dispatch) => {
@@ -67,11 +68,7 @@ export const setLastViewedHistoryKey = (key) => {
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'setLastViewedHistoryKey',
-        error,
-      })
+      dispatch(firebaseError(error, 'setLastViewedHistoryKey'))
     })
   }
 }

@@ -4,10 +4,10 @@ import api from '../utils/api'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
-  API_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
+
+import {firebaseError, apiError} from './error'
 
 const origin = 'postInvite'
 
@@ -45,19 +45,11 @@ export default (invite) => {
         })
       })
       .catch((error) => {
-        dispatch({
-          type: API_FAILURE,
-          origin,
-          error,
-        })
+        dispatch(apiError(error, origin))
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin,
-        error: error.code,
-      })
+      dispatch(firebaseError(error, origin))
     })
   }
 }

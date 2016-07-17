@@ -3,9 +3,10 @@ import {auth} from '../firebase'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
   SNACK_MESSAGE,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 import getMember from './getMember'
 import getUnread from './getUnread'
@@ -28,11 +29,7 @@ export default () => {
         message: 'logout_success',
       })
     }, (error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'postLogout',
-        error,
-      })
+      dispatch(firebaseError(error, 'postLogout'))
     })
   }
 }

@@ -3,9 +3,10 @@ import {db} from '../firebase'
 import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
   MEMBER_UPDATED,
 } from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export default (uid) => {
   return (dispatch) => {
@@ -24,11 +25,7 @@ export default (uid) => {
       })
     })
     .catch((error) => {
-      dispatch({
-        type: FIREBASE_FAILURE,
-        origin: 'getUser',
-        error: error.code,
-      })
+      dispatch(firebaseError(error, 'getUser'))
     })
   }
 }

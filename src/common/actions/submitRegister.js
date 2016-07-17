@@ -6,9 +6,7 @@ import platform from '../platform'
 import {rand} from '../utils/utils'
 import {login} from './auth'
 
-import {FIREBASE_FAILURE, API_FAILURE} from '../constants/actions'
-
-const origin = 'submitRegister'
+import {firebaseError, apiError} from './error'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -32,6 +30,7 @@ export default (values, dispatch) => {
         const tid = db.ref('tribes').push().key
         const historyKey = db.ref('tribes/' + tid + '/history').push().key
 
+        let errorOrigin = 'cities'
         db.ref('cities/' + values.city.place_id).transaction((city) => {
           if (!city) {
             city = {
@@ -47,6 +46,7 @@ export default (values, dispatch) => {
           return city
         })
         .then(() => {
+          errorOrigin = 'updates'
           const updates = {}
 
           updates['tribes/' + tid] = {
@@ -99,16 +99,13 @@ export default (values, dispatch) => {
           return db.ref().update(updates)
         })
         .then(() => {
+          errorOrigin = 'login'
           resolve()
           dispatch(login(user))
         })
         .catch((error) => {
           reject({_error: 'request'})
-          dispatch({
-            type: FIREBASE_FAILURE,
-            origin,
-            error,
-          })
+          dispatch(firebaseError(error, 'submitRegister/' + errorOrigin))
           // silently rollback user creation:
           Promise.all([
             user.delete(),
@@ -130,20 +127,12 @@ export default (values, dispatch) => {
             break
           default:
             reject({_error: 'request'})
-            dispatch({
-              type: FIREBASE_FAILURE,
-              origin,
-              error,
-            })
+            dispatch(firebaseError(error, 'submitRegister/createUser'))
         }
       })
     })
     .catch((error) => {
-      dispatch({
-        type: API_FAILURE,
-        origin,
-        error,
-      })
+      dispatch(apiError(error, 'submitRegister'))
       reject({_error: 'request'})
     })
   })

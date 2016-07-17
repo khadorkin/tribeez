@@ -3,10 +3,9 @@ import firebase from 'firebase'
 
 import {auth, db} from '../firebase'
 
-import {
-  FIREBASE_FAILURE,
-  SNACK_MESSAGE,
-} from '../constants/actions'
+import {SNACK_MESSAGE} from '../constants/actions'
+
+import {firebaseError} from './error'
 
 export default (reauth_prompt, values, dispatch) => {
   const checkReAuth = (error) => {
@@ -73,11 +72,7 @@ export default (reauth_prompt, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          dispatch({
-            type: FIREBASE_FAILURE,
-            origin: 'submitProfile',
-            error,
-          })
+          dispatch(firebaseError(error, 'submitProfile'))
       }
     })
   })

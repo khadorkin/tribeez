@@ -186,7 +186,6 @@ export default {
   'submit.join': 'Register & join this tribe',
   'submit.login': 'Login',
   'submit.password': 'Send',
-  'submit.reset': 'Set my password',
   'submit.profile': 'Save profile',
   'submit.invite': 'Send invite',
   'submit.tribe.create': 'Create tribe',
