@@ -48,7 +48,7 @@ export default (type, id) => {
     })
     .then(() => {
       if (type === 'poll' || type === 'task') {
-        return db.ref('notifications/' + type + '/' + id).remove()
+        return db.ref('reminders/' + type + '/' + id).remove()
       }
       return true
     })

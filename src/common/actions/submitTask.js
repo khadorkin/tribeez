@@ -45,7 +45,7 @@ export default (values, dispatch) => {
     })
     .then(() => {
       if (action === 'new') {
-        return db.ref('notifications/task/' + id).set(tid)
+        return db.ref('reminders/task/' + id).set(tid)
       }
       return true // nothing to update in the notification
     })

@@ -38,10 +38,10 @@ export default (values, dispatch) => {
       return saveLog('poll', action, values)
     })
     .then(() => {
-      if (action === 'new') {
-        return db.ref('notifications/poll/' + id).set(tid)
-      }
-      return true // nothing to update in the notification
+      return db.ref().update({
+        ['notifications/poll/' + id]: tid,
+        ['reminders/poll/' + id]: tid, // this is not doing anything when updating the poll
+      })
     })
     .then(() => {
       resolve()

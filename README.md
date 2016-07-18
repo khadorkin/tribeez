@@ -5,7 +5,7 @@
 
 ## Prerequisite
 
-You need to install and start the [API](https://bitbucket.org/antoinerousseau/tribeez-api) first:
+You need to install and start the [API](https://bitbucket.org/antoinerousseau/tribeez-api)
 
 ## Dependencies
 

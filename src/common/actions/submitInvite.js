@@ -42,6 +42,10 @@ export default (values, dispatch) => {
       .catch((error) => {
         dispatch(apiError(error, 'submitInvite'))
         reject({_error: 'request'})
+        ref.child(token).remove()
+        .catch(() => {
+          dispatch(firebaseError(error, 'submitInvite/rollback'))
+        })
       })
     })
     .catch((error) => {
