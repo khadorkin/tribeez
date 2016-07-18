@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
       url: event.url || '',
       reminder: event.reminder || 'none',
       added: event.added,
-      author: event.author,
+      author: event.author || state.user.uid,
     }
   } else {
     initialValues = {

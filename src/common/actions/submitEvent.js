@@ -5,6 +5,7 @@ import {db, auth, timestamp} from '../firebase'
 
 import saveLog from './saveLog'
 import {firebaseError} from './error'
+import {getTimeId} from '../utils/utils'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -12,6 +13,7 @@ export default (values, dispatch) => {
     let id = values.id
     delete values.id
     let action
+    let current
     if (id) {
       action = 'update'
     } else {
@@ -33,11 +35,24 @@ export default (values, dispatch) => {
     }
 
     db.ref('tribes/' + tid + '/events/' + id).transaction((event) => {
+      current = event // null if new bill
       return {...event, ...values} // to keep the log
     })
     .then(() => {
       values.id = id
       return saveLog('event', action, values)
+    })
+    .then(() => {
+      if (current && current.reminder !== 'none') {
+        return db.ref('reminders/event/' + getTimeId(current.start, current.reminder) + '/' + id).remove()
+      }
+      return null
+    })
+    .then(() => {
+      if (values.reminder !== 'none') {
+        return db.ref('reminders/event/' + getTimeId(values.start, values.reminder) + '/' + id).set(tid)
+      }
+      return null
     })
     .then(() => {
       resolve()

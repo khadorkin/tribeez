@@ -7,6 +7,7 @@ import {
 } from '../constants/actions'
 
 import {firebaseError} from './error'
+import {getTimeId} from '../utils/utils'
 
 export default (type, id) => {
   return (dispatch) => {
@@ -34,6 +35,12 @@ export default (type, id) => {
           return members
         })
       }
+      if (type === 'event' && item.reminder !== 'none') {
+        return db.ref('reminders/event/' + getTimeId(item.start, item.reminder) + '/' + id).remove()
+      }
+      if (type === 'poll' || type === 'task') {
+        return db.ref('reminders/' + type + '/' + id).remove()
+      }
       return null
     })
     .then(() => {
@@ -45,12 +52,6 @@ export default (type, id) => {
         item,
         id,
       })
-    })
-    .then(() => {
-      if (type === 'poll' || type === 'task') {
-        return db.ref('reminders/' + type + '/' + id).remove()
-      }
-      return true
     })
     .then(() => {
       dispatch({
