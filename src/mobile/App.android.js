@@ -14,6 +14,7 @@ import {
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
+import {Crashlytics, Answers} from 'react-native-fabric'
 
 import config from '../common/config'
 import {auth} from '../common/firebase'
@@ -104,6 +105,24 @@ class App extends Component {
         {text: 'OK', onPress: this.handleOpenStore},
       ])
       return
+    }
+
+    if (props.user.name && !this.props.user.name) { // login
+      // Set Fabric infos:
+      Crashlytics.setUserIdentifier(String(props.uid))
+      Crashlytics.setUserEmail(props.user.email)
+      Crashlytics.setUserName(props.user.name)
+      Crashlytics.setString('lang', props.user.lang)
+      Answers.logLogin('Email', true)
+      console.log('Crashlytics login')
+    }
+
+    if (this.props.user.name && !props.user.name) { // logout
+      Crashlytics.setUserIdentifier('(anonymous)')
+      Crashlytics.setUserEmail('(anonymous)')
+      Crashlytics.setUserName('(anonymous)')
+      Crashlytics.setString('lang', props.user.lang)
+      console.log('Crashlytics logout')
     }
   }
 

@@ -40,6 +40,15 @@ Get the SHA1 fingerprint for Firebase Notifications:
 
 Generate `google-services.json` from the Firebase console and add it to `android/app`
 
+Create `android/app/fabric.properties` like this to configure Crashlytics & Answers:
+
+```
+apiSecret=xxxxxxxx
+apiKey=xxxxxxxx
+```
+
+These values can be found in your [Organization settings](https://fabric.io/settings/organizations)
+
 ## Web app
 
 ### Development
