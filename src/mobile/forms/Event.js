@@ -3,9 +3,14 @@ import React, {Component, PropTypes} from 'react'
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import DateField from './fields/Date'
+import SelectField from './fields/Select'
 
 import form from '../../common/forms/event'
 import submitEvent from '../../common/actions/submitEvent'
+
+import {REMINDERS} from '../../common/constants/product'
+
+const reminders = REMINDERS.map((code) => ({code}))
 
 class EventForm extends Component {
   static propTypes = {
@@ -19,7 +24,7 @@ class EventForm extends Component {
   }
 
   render() {
-    const {fields: {name, description, start, end, location, url}, ...props} = this.props
+    const {fields: {name, description, start, end, location, url, reminder}, ...props} = this.props
 
     return (
       <Form name={'event.' + (this.props.event ? 'update' : 'create')} action={submitEvent} {...props}>
@@ -44,6 +49,10 @@ class EventForm extends Component {
         />
         <TextField ref="url"
           {...url}
+        />
+        <SelectField
+          items={reminders}
+          {...reminder}
         />
       </Form>
     )

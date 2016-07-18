@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react'
+import {FormattedMessage} from 'react-intl'
 
 import MenuItem from 'material-ui/MenuItem'
 
@@ -11,13 +12,14 @@ import form from '../../common/forms/tribe'
 import focus from '../../common/utils/formFocus'
 import submitTribe from '../../common/actions/submitTribe'
 import currencies from '../../common/resources/currencies'
+
 import {TRIBE_TYPES} from '../../common/constants/product'
 
 const currencyItems = currencies.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={`${item.name} (${item.code})`} />
 )
-const typeItems = TRIBE_TYPES.map((type) =>
-  <MenuItem value={type} key={type} primaryText={type} />
+const typeItems = TRIBE_TYPES.map((item) =>
+  <MenuItem value={item} key={item} primaryText={<FormattedMessage id={'select.' + item} />} />
 )
 
 class TribeForm extends Component {

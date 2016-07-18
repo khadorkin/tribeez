@@ -111,8 +111,8 @@ class BillForm extends Component {
           {...method}
           onChange={this.handleMethodChange}
         >
-          <MenuItem value="shares" primaryText={<FormattedMessage id={'method.shares'} />} />
-          <MenuItem value="amounts" primaryText={<FormattedMessage id={'method.amounts'} />} />
+          <MenuItem value="shares" primaryText={<FormattedMessage id="select.shares" />} />
+          <MenuItem value="amounts" primaryText={<FormattedMessage id="select.amounts" />} />
           {/* TODO: add items named "Category: _____" */}
         </SelectField>
         {

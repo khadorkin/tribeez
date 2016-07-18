@@ -11,9 +11,9 @@ import form from '../../common/forms/bill'
 import submitBill from '../../common/actions/submitBill'
 
 const today = Date.now()
-const methods = [ //TODO: translate
-  {name: 'Shares', code: 'shares'},
-  {name: 'Amounts', code: 'amounts'},
+const methods = [
+  {code: 'shares'},
+  {code: 'amounts'},
 ]
 
 class BillForm extends Component {

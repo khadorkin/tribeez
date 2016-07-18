@@ -15,12 +15,14 @@ const mapStateToProps = (state, ownProps) => {
       end: event.end,
       location: event.location || '',
       url: event.url || '',
+      reminder: event.reminder || 'none',
       added: event.added,
       author: event.author,
     }
   } else {
     initialValues = {
       author: state.user.uid,
+      reminder: '1d',
     }
   }
   return {
@@ -37,8 +39,8 @@ export default (component, actionCreators) => {
   }
   return reduxForm({
     form: 'event',
-    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'added', 'author'],
-    validate: validator(['name', 'start'], ['end', 'description', 'location', 'url']),
+    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'reminder', 'added', 'author'],
+    validate: validator(['name', 'start'], ['end', 'description', 'location', 'url', 'reminder']),
     touchOnBlur: (platform === 'web'),
     returnRejectedSubmitPromise: (platform === 'web'),
   }, mapStateToProps, mapDispatchToProps)(component)

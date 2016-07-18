@@ -34,11 +34,7 @@ export default (values, dispatch) => {
         // add to new city
         return db.ref('cities/' + values.city.place_id).transaction((city) => {
           if (!city) {
-            city = {
-              name: values.city.name,
-              country_code: values.city.country_code,
-              // place_id is already the key
-            }
+            city = {...values.city, place_id: null} // place_id is already the key
           }
           if (!city.tribes) {
             city.tribes = {}
@@ -84,11 +80,7 @@ export default (values, dispatch) => {
         // add to new city
         return db.ref('cities/' + values.city.place_id).transaction((city) => {
           if (!city) {
-            city = {
-              name: values.city.name,
-              country_code: values.city.country_code,
-              // place_id is already the key
-            }
+            city = {...values.city, place_id: null} // place_id is already the key
           }
           if (!city.tribes) {
             city.tribes = {}

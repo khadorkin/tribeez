@@ -1,12 +1,15 @@
 import React, {Component, PropTypes} from 'react'
 import {Picker, StyleSheet, View} from 'react-native'
 
+import {injectIntl, intlShape} from 'react-intl'
+
 import FormattedMessage from '../../components/FormattedMessage'
 
 import colors from '../../../common/constants/colors'
 
 class SelectField extends Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func.isRequired,
@@ -25,10 +28,10 @@ class SelectField extends Component {
   }
 
   render() {
-    const {name, value, items, touched, error/*, ...props*/} = this.props
+    const {intl, name, value, items, touched, error/*, ...props*/} = this.props
 
     const children = items.map((item) =>
-      <Picker.Item label={item.name} value={item.code} key={item.code} />
+      <Picker.Item label={item.name || intl.formatMessage({id: 'select.' + item.code})} value={item.code} key={item.code} />
     )
 
     return (
@@ -65,4 +68,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SelectField
+export default injectIntl(SelectField)

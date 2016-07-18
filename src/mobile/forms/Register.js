@@ -13,8 +13,10 @@ import form from '../../common/forms/register'
 import submitRegister from '../../common/actions/submitRegister'
 import langs from '../../common/resources/langs'
 import currencies from '../../common/resources/currencies'
+
 import {TRIBE_TYPES} from '../../common/constants/product'
-const types = TRIBE_TYPES.map((type) => ({name: type, code: type})) //TODO: translate
+
+const types = TRIBE_TYPES.map((type) => ({code: type}))
 
 class RegisterForm extends Component {
   static propTypes = {
@@ -49,19 +51,20 @@ class RegisterForm extends Component {
           secureTextEntry={true}
           errorId={password.error && 'password_' + password.error}
         />
+
         <FormattedMessage id="your_tribe" style={styles.subtitle} />
-        <TextField
+        <TextField ref="tribe_name"
           {...tribe_name}
           autoCorrect={false}
         />
-        <SelectField
+        <SelectField ref="tribe_type"
           {...tribe_type}
           items={types}
         />
-        <CityField
+        <CityField ref="city"
           {...city}
         />
-        <SelectField
+        <SelectField ref="currency"
           {...currency}
           items={currencies}
         />

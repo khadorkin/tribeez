@@ -8,8 +8,10 @@ import CityField from './fields/City'
 import form from '../../common/forms/tribe'
 import submitTribe from '../../common/actions/submitTribe'
 import currencies from '../../common/resources/currencies'
+
 import {TRIBE_TYPES} from '../../common/constants/product'
-const types = TRIBE_TYPES.map((type) => ({name: type, code: type})) //TODO: translate
+
+const types = TRIBE_TYPES.map((type) => ({code: type}))
 
 class TribeForm extends Component {
   static propTypes = {
