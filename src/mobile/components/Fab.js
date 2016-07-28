@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     right: 16,
-  },
-  button: {
-    padding: 16,
-    backgroundColor: colors.main,
     borderRadius: 44,
+    backgroundColor: colors.main,
     // Android:
     elevation: 5,
     //iOS: TODO
+  },
+  button: {
+    padding: 16,
   },
 })
 
