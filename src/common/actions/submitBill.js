@@ -52,6 +52,7 @@ export default (values, dispatch) => {
       values.added = timestamp
       id = db.ref('tribes/' + tid + '/bills').push().key
     }
+    let updatedMembers
 
     db.ref('tribes/' + tid + '/bills/' + id).transaction((bill) => {
       current = bill // null if new bill
@@ -71,12 +72,30 @@ export default (values, dispatch) => {
           members[uid].balance -= values.parts[uid]
         }
         members[values.payer].balance += values.amount
+
+        updatedMembers = members
         return members
       })
     })
     .then(() => {
       values.id = id
       return saveLog('bill', action, values)
+    })
+    .then(() => {
+      return db.ref('reminders/balance/' + tid).transaction((balances) => {
+        if (!balances) {
+          balances = {}
+        }
+        for (const uid in updatedMembers) {
+          const balance = updatedMembers[uid].balance
+          if (balance < -100) { //TODO: use user-defined trigger
+            balances[uid] = balance
+          } else {
+            delete balances[uid]
+          }
+        }
+        return balances
+      })
     })
     .then(() => {
       resolve()

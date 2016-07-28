@@ -15,6 +15,7 @@ export default (type, id) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
+    let updatedMembers
     let item
     const ref = db.ref('tribes/' + tid + '/' + type + 's/' + id)
     ref.once('value')
@@ -32,6 +33,8 @@ export default (type, id) => {
             members[uid].balance += item.parts[uid]
           }
           members[item.payer].balance -= item.amount
+
+          updatedMembers = members
           return members
         })
       }
@@ -52,6 +55,25 @@ export default (type, id) => {
         item,
         id,
       })
+    })
+    .then(() => {
+      if (type === 'bill') {
+        return db.ref('reminders/balance/' + tid).transaction((balances) => {
+          if (!balances) {
+            balances = {}
+          }
+          for (const uid in updatedMembers) {
+            const balance = updatedMembers[uid].balance
+            if (balance < -100) { //TODO: use user-defined trigger
+              balances[uid] = balance
+            } else {
+              delete balances[uid]
+            }
+          }
+          return balances
+        })
+      }
+      return null
     })
     .then(() => {
       dispatch({
