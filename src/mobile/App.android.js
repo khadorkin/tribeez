@@ -114,7 +114,6 @@ class App extends Component {
       Crashlytics.setUserName(props.user.name)
       Crashlytics.setString('lang', props.user.lang)
       Answers.logLogin('Email', true)
-      console.log('Crashlytics login')
     }
 
     if (this.props.user.name && !props.user.name) { // logout
@@ -122,7 +121,6 @@ class App extends Component {
       Crashlytics.setUserEmail('(anonymous)')
       Crashlytics.setUserName('(anonymous)')
       Crashlytics.setString('lang', props.user.lang)
-      console.log('Crashlytics logout')
     }
   }
 
