@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -33,20 +33,35 @@ class PasswordForm extends Component {
 
     return (
       <Form name="password" action={submitPassword} {...props}>
-        {subtitle}
-        <TextField ref="email"
-          {...email}
-          autoFocus={true}
-          autoCorrect={false}
-          keyboardType="email-address"
-          onSubmitEditing={this.handleSubmit}
-        />
+        <View style={styles.container}>
+          <View style={styles.box}>
+            {subtitle}
+            <TextField ref="email"
+              {...email}
+              autoFocus={true}
+              autoCorrect={false}
+              keyboardType="email-address"
+              onSubmitEditing={this.handleSubmit}
+            />
+          </View>
+        </View>
       </Form>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: 32, // bump up by 16dp
+  },
+  box: {
+    backgroundColor: 'white',
+    elevation: 1,
+    margin: 16,
+    padding: 24,
+  },
   subtitle: {
     marginBottom: 50,
     textAlign: 'center',

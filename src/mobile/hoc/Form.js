@@ -31,7 +31,7 @@ class Form extends Component {
     const {style, children, name, submitting, error} = this.props
 
     return (
-      <View style={style}>
+      <View style={[styles.container, style]}>
         {children}
         <FormattedMessage id={error && 'error.' + error} style={styles.error} />
         <Button id={'submit.' + name} onPress={this.handleSubmit} loading={submitting} />
@@ -41,6 +41,10 @@ class Form extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   error: {
     color: colors.error,
     padding: 8,

@@ -53,7 +53,7 @@ class LoginForm extends Component {
     )
 
     return (
-      <Form name="login" style={styles.form} action={submitLogin.bind(null, this.props.destination)} {...props}>
+      <Form name="login" action={submitLogin.bind(null, this.props.destination)} {...props}>
         <View style={styles.container}>
           <Image source={require('../../common/images/logo.png')} style={styles.logo} />
           <View style={styles.box}>
@@ -89,9 +89,6 @@ class LoginForm extends Component {
 }
 
 const styles = StyleSheet.create({
-  form: {
-    flex: 1,
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
