@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {TextInput, StyleSheet, View} from 'react-native'
 
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+
 import FormattedMessage from '../../components/FormattedMessage'
 import TextArea from '../../components/TextArea'
 
@@ -14,6 +16,7 @@ class TextField extends Component {
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     errorId: PropTypes.string,
     multiline: PropTypes.bool,
+    icon: PropTypes.string,
   }
 
   constructor(props) {
@@ -31,19 +34,26 @@ class TextField extends Component {
   }
 
   render() {
-    const {name, value, touched, error, multiline, ...props} = this.props
+    const {name, value, touched, error, multiline, icon, ...props} = this.props
     let {errorId} = this.props
 
     const Comp = multiline ? TextArea : TextInput
 
     errorId = error && ('error.' + (errorId || name))
 
+    let label
+    if (icon) {
+      label = <MaterialIcon name={icon} size={20} color={colors.input} style={styles.icon} />
+    } else {
+      label = <FormattedMessage id={'field.' + name} style={styles.label} />
+    }
+
     return (
       <View style={styles.container}>
-        <FormattedMessage id={'field.' + name} style={styles.label} />
+        {label}
         <Comp
           ref={this.ref}
-          style={styles.field}
+          style={icon ? styles.fieldWithIcon : styles.field}
           underlineColorAndroid={colors.underline}
           value={String(value)}
           {...props}
@@ -61,8 +71,18 @@ const styles = StyleSheet.create({
   label: {
     marginHorizontal: 5,
   },
+  icon: {
+    position: 'absolute',
+    left: 4,
+    top: 8,
+  },
   field: {
     height: 39,
+  },
+  fieldWithIcon: {
+    height: 39,
+    paddingLeft: 32,
+    color: colors.input,
   },
   error: {
     color: colors.error,

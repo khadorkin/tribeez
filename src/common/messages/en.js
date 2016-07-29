@@ -108,6 +108,7 @@ export default {
   login_to_join: '{inviter_name} invited you to join "{tribe_name}"',
   you: 'You',
   your_tribe: 'Your tribe',
+  create_account: 'Create account',
   password_lost: 'Lost your password?',
   no_account: 'No account yet?',
   register_now: 'Register now!',

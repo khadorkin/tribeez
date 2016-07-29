@@ -15,6 +15,7 @@ class Form extends Component {
     handleSubmit: PropTypes.func.isRequired,
     submitting: PropTypes.bool,
     error: PropTypes.string,
+    style: View.propTypes.style,
   }
 
   constructor(props) {
@@ -27,30 +28,22 @@ class Form extends Component {
   }
 
   render() {
-    const {children, name, submitting, error} = this.props
+    const {style, children, name, submitting, error} = this.props
 
     return (
-      <View style={styles.container}>
+      <View style={style}>
         {children}
-        <View style={styles.actions}>
-          <Button id={'submit.' + name} onPress={this.handleSubmit} disabled={submitting} />
-        </View>
         <FormattedMessage id={error && 'error.' + error} style={styles.error} />
+        <Button id={'submit.' + name} onPress={this.handleSubmit} loading={submitting} />
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 16,
-    backgroundColor: 'white',
-  },
-  actions: {
-    alignItems: 'center',
-  },
   error: {
     color: colors.error,
+    padding: 8,
     textAlign: 'center',
   },
 })

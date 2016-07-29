@@ -209,19 +209,19 @@ class App extends Component {
       props.edit = route.edit
     }
     return (
-      <View style={styles.page}>
+      <View style={[this.props.uid ? styles.privatePage : styles.publicPage]}>
         <route.component {...props} />
       </View>
     )
   }
 
   render() {
-    const navigationBar = (
+    const navigationBar = this.props.uid ? (
       <Navigator.NavigationBar
         routeMapper={this.routeMapper(this.props.loading)}
         style={styles.navBar}
       />
-    )
+    ) : null
 
     const drawerLockMode = this.props.uid ? 'unlocked' : 'locked-closed'
 
@@ -229,7 +229,7 @@ class App extends Component {
       <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={this.props.formats}>
         <DrawerLayoutAndroid
           renderNavigationView={this.renderNavigation}
-          statusBarBackgroundColor={colors.main}
+          statusBarBackgroundColor={this.props.uid ? colors.main : colors.statusBar}
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
@@ -262,7 +262,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 56, // to not overlap the right icon
   },
-  page: {
+  publicPage: {
+    flex: 1,
+  },
+  privatePage: {
     marginTop: 56,
     flex: 1,
     backgroundColor: colors.background,

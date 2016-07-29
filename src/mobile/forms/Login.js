@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Text, StyleSheet} from 'react-native'
+import {View, Image, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -10,6 +10,7 @@ import routes from '../../common/routes'
 import router from '../../common/router'
 import form from '../../common/forms/login'
 import submitLogin from '../../common/actions/submitLogin'
+import colors from '../../common/constants/colors'
 
 class LoginForm extends Component {
   static propTypes = {
@@ -36,6 +37,10 @@ class LoginForm extends Component {
     this.props.handleSubmit(submitLogin.bind(null, this.props.destination))(event) //TODO: prevent duplicate code
   }
 
+  handleCreateAccount() {
+    router.replace(routes.REGISTER)
+  }
+
   handleLostPassword() {
     router.push(routes.PASSWORD)
   }
@@ -48,40 +53,73 @@ class LoginForm extends Component {
     )
 
     return (
-      <Form name="login" action={submitLogin.bind(null, this.props.destination)} {...props}>
-        {subtitle}
-        <TextField ref="email"
-          {...email}
-          autoFocus={true}
-          autoCorrect={false}
-          keyboardType="email-address"
-          onSubmitEditing={this.handleNext}
-        />
-        <TextField ref="password"
-          {...password}
-          name="login_password"
-          secureTextEntry={true}
-          onSubmitEditing={this.handleSubmit}
-        />
-        <Touchable style={styles.lostPassword} onPress={this.handleLostPassword}>
-          <Text style={styles.lostText}>Lost password?</Text>
-        </Touchable>
+      <Form name="login" style={styles.form} action={submitLogin.bind(null, this.props.destination)} {...props}>
+        <View style={styles.container}>
+          <Image source={require('../../common/images/logo.png')} style={styles.logo} />
+          <View style={styles.box}>
+            {subtitle}
+            <TextField ref="email"
+              {...email}
+              icon="mail-outline"
+              autoFocus={true}
+              autoCorrect={false}
+              keyboardType="email-address"
+              onSubmitEditing={this.handleNext}
+            />
+            <TextField ref="password"
+              {...password}
+              icon="lock-outline"
+              name="login_password"
+              secureTextEntry={true}
+              onSubmitEditing={this.handleSubmit}
+            />
+          </View>
+          <View style={styles.links}>
+            <Touchable onPress={this.handleCreateAccount}>
+              <FormattedMessage id="create_account" style={styles.link} />
+            </Touchable>
+            <Touchable onPress={this.handleLostPassword}>
+              <FormattedMessage id="password_lost" style={styles.link} />
+            </Touchable>
+          </View>
+        </View>
       </Form>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  form: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: 32, // bump up by 16dp
+  },
+  logo: {
+    width: 64,
+    height: 64,
+    alignSelf: 'center',
+    marginBottom: 16, // some space between logo and form
+  },
+  box: {
+    backgroundColor: 'white',
+    elevation: 1,
+    margin: 16,
+    padding: 24,
+  },
   subtitle: {
     marginBottom: 50,
     textAlign: 'center',
   },
-  lostPassword: {
-    alignSelf: 'flex-end',
-    padding: 8,
+  links: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
   },
-  lostText: {
-    //
+  link: {
+    color: colors.button,
   },
 })
 

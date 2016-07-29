@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native'
+import {TouchableNativeFeedback, View, Text, ActivityIndicator, StyleSheet} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
@@ -10,11 +10,20 @@ class Button extends Component {
     intl: intlShape.isRequired,
     id: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
+    loading: PropTypes.bool,
+    style: View.propTypes.style,
+    textStyle: View.propTypes.style,
   }
 
   render() {
-    const {intl, id, disabled, onPress, ...props} = this.props
+    const {intl, id, loading, onPress, style, textStyle, ...props} = this.props
+
+    const content = loading ? (
+      <ActivityIndicator size="small" animating={true} color="white" />
+    ) : (
+      <Text style={[styles.text, textStyle]} {...props}>{intl.formatMessage({id}).toUpperCase()}</Text>
+    )
+
     return (
       <TouchableNativeFeedback
         /*eslint-disable new-cap*/
@@ -23,8 +32,8 @@ class Button extends Component {
         onPress={onPress}
         delayPressIn={0}
       >
-        <View style={disabled ? styles.disabled : styles.enabled}>
-          <Text {...props}>{intl.formatMessage({id})}</Text>
+        <View style={[styles.button, style]}>
+          {content}
         </View>
       </TouchableNativeFeedback>
     )
@@ -32,24 +41,13 @@ class Button extends Component {
 }
 
 const styles = StyleSheet.create({
-  enabled: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 20,
-    backgroundColor: 'white',
-    // Android:
-    elevation: 2,
-    //iOS:
-    // shadowColor: 'red',
-    // shadowOffset: {width: 5, height: 5},
-    // shadowOpacity: 0.5,
-    // shadowRadius: 5,
+  button: {
+    padding: 28,
+    backgroundColor: colors.button,
   },
-  disabled: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 20,
-    backgroundColor: colors.background,
+  text: {
+    alignSelf: 'center',
+    color: 'white',
   },
 })
 

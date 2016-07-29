@@ -108,6 +108,7 @@ const fr = {
   login_to_join: '{inviter_name} vous a invité-e à rejoindre la tribu "{tribe_name}"',
   you: 'Vous',
   your_tribe: 'Votre tribu',
+  create_account: 'Créer un compte',
   password_lost: 'Mot de passe perdu ?',
   no_account: 'Pas encore de compte ?',
   register_now: 'Inscrivez-vous !',
