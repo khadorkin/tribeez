@@ -1,5 +1,8 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Text, TextInput} from 'react-native'
+import {StyleSheet, View, Text} from 'react-native'
+import {injectIntl, intlShape} from 'react-intl'
+
+import {MKTextField} from 'react-native-material-kit'
 
 import FormattedMessage from '../../components/FormattedMessage'
 import Touchable from '../../components/Touchable'
@@ -35,6 +38,7 @@ const requestPlace = (service, query) => {
 
 class CityField extends Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.object,
     onChange: PropTypes.func.isRequired,
@@ -108,18 +112,20 @@ class CityField extends Component {
   }
 
   render() {
-    const {name, value, touched, error, ...props} = this.props
+    const {intl, name, value, touched, error, ...props} = this.props
 
     return (
       <View style={styles.container}>
-        <FormattedMessage id={'field.' + name} style={styles.label} />
-        <TextInput
-          underlineColorAndroid={colors.underline}
+        <MKTextField
+          floatingLabelEnabled={true}
+          highlightColor={colors.input} // Color of highlighted underline & floating label
+          style={styles.field}
+          textInputStyle={styles.input}
+          placeholder={intl.formatMessage({id: 'field.' + name})}
           {...props}
           value={(value && value.name) ? value.name : ''}
           onChange={null}
           onChangeText={this.handleChange}
-          style={styles.field}
         />
         <View style={styles.suggestions}>
           {
@@ -138,24 +144,26 @@ class CityField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
-  },
-  label: {
-    marginHorizontal: 5,
+    marginHorizontal: 8,
   },
   field: {
-    height: 39,
+    //
+  },
+  input: {
+    color: colors.text,
   },
   suggestions: {
-    marginHorizontal: 5,
+    paddingTop: 8,
   },
   suggestion: {
-    paddingVertical: 5,
+    paddingVertical: 8,
+    color: colors.main,
+    fontSize: 16,
   },
   error: {
     color: colors.error,
-    marginHorizontal: 5,
+    marginVertical: 8,
   },
 })
 
-export default CityField
+export default injectIntl(CityField, {withRef: true})

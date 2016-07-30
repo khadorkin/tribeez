@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, DatePickerAndroid, TimePickerAndroid} from 'react-native'
+import {StyleSheet, View, Text, DatePickerAndroid, TimePickerAndroid} from 'react-native'
 
 import FormattedDate from '../../components/FormattedDate'
 import FormattedTime from '../../components/FormattedTime'
@@ -48,7 +48,7 @@ class DateField extends Component {
     TimePickerAndroid.open({
       hour: date.getHours(),
       minute: date.getMinutes(),
-      //is24Hour: true, //depends on phone's locale?
+      //is24Hour: true, //TODO: depends on phone's locale?
     }).then((values) => {
       if (values.action === TimePickerAndroid.dismissedAction) {
         return
@@ -65,26 +65,44 @@ class DateField extends Component {
     })
   }
 
+  //TODO: distinguish date/time errors
+
   render() {
     const {name, value, touched, error/*, ...props*/} = this.props
+
+    let dateLabel = <Text style={styles.label}>{' '}</Text>
+    let datePlaceholder = <FormattedMessage id={'field.' + name} style={styles.placeholder} />
+    let timeLabel = <Text style={styles.label}>{' '}</Text>
+    let timePlaceholder = <FormattedMessage id={'field.time.' + name} style={styles.placeholder} />
+
+    if (value) {
+      dateLabel = <FormattedMessage id={'field.' + name} style={styles.label} />
+      datePlaceholder = <FormattedDate value={Number(value)} style={styles.date} />
+      if (this.state.time) {
+        timeLabel = <FormattedMessage id={'field.time.' + name} style={styles.label} />
+        timePlaceholder = <FormattedTime value={this.state.time && Number(value)} style={styles.date} />
+      }
+    }
+
+    const errorText = <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
 
     return (
       <View>
         <View style={styles.container}>
-          <FormattedMessage id={'field.' + name} style={styles.label} />
+          {dateLabel}
           <Touchable onPress={this.handleOpenDate} style={styles.field}>
-            <FormattedDate value={Number(value)} style={styles.date} />
+            {datePlaceholder}
           </Touchable>
-          <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
+          {errorText}
         </View>
         {
           this.props.time && (
             <View style={styles.container}>
-              <FormattedMessage id={'field.time.' + name} style={styles.label} />
+              {timeLabel}
               <Touchable onPress={this.handleOpenTime} style={styles.field}>
-                <FormattedTime value={this.state.time && Number(value)} style={styles.date} />
+                {timePlaceholder}
               </Touchable>
-              <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
+              {errorText}
             </View>
           )
         }
@@ -95,24 +113,27 @@ class DateField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
+    marginHorizontal: 8,
   },
   label: {
-    marginHorizontal: 5,
+    fontSize: 12,
   },
   field: {
-    marginHorizontal: 5,
     paddingTop: 9,
-    paddingBottom: 2,
+    paddingBottom: 5,
     borderBottomWidth: 1,
     borderBottomColor: colors.underline,
   },
+  placeholder: {
+    fontSize: 16,
+  },
   date: {
-    color: 'black',
+    fontSize: 16,
+    color: colors.text,
   },
   error: {
     color: colors.error,
-    marginHorizontal: 5,
+    marginVertical: 8,
   },
 })
 

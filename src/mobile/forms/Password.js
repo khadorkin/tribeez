@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     elevation: 1,
     margin: 16,
-    padding: 24,
+    padding: 16,
   },
   subtitle: {
     marginBottom: 50,

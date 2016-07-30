@@ -4,7 +4,6 @@ import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DateField from './fields/Date'
-import MoneyField from './fields/Money'
 import Part from './deep/Part'
 
 import form from '../../common/forms/bill'
@@ -71,7 +70,7 @@ class BillForm extends Component {
           max={today}
           {...paid}
         />
-        <MoneyField
+        <TextField
           currency={currency}
           {...amount}
         />

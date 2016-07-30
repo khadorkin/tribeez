@@ -28,7 +28,7 @@ class SelectField extends Component {
   }
 
   render() {
-    const {intl, name, value, items, touched, error/*, ...props*/} = this.props
+    const {intl, name, value, items, error/*, ...props*/} = this.props
 
     const children = items.map((item) =>
       <Picker.Item label={item.name || intl.formatMessage({id: 'select.' + item.code})} value={item.code} key={item.code} />
@@ -41,7 +41,7 @@ class SelectField extends Component {
           {children}
         </Picker>
         <View style={styles.bottom} />
-        <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
+        <FormattedMessage id={error && 'error.' + name} style={styles.error} />
       </View>
     )
   }
@@ -49,22 +49,23 @@ class SelectField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
+    //
   },
   label: {
-    marginHorizontal: 5,
+    marginHorizontal: 8,
+    fontSize: 12,
   },
   picker: {
-    height: 30, //TODO: reduce font-size (must be the same than text fields)
+    height: 30,
   },
   bottom: {
-    marginHorizontal: 5,
+    marginHorizontal: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.underline,
   },
   error: {
     color: colors.error,
-    marginHorizontal: 5,
+    margin: 8,
   },
 })
 

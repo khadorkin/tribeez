@@ -86,16 +86,18 @@ class Part extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginVertical: 5,
+    marginVertical: 4,
     flexDirection: 'row',
   },
   label: {
     flex: 1,
     color: colors.primaryText,
-    margin: 5,
+    marginHorizontal: 8,
+    marginVertical: 5,
   },
   amount: {
     flexDirection: 'row',
+    marginHorizontal: 5,
   },
   button: {
     paddingVertical: 5,
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
   currency: {
     position: 'absolute',
     top: 5.5,
-    right: 4,
+    right: 3,
   },
   error: {
     color: colors.error,

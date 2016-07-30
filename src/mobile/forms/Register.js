@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import FormattedMessage from '../components/FormattedMessage'
@@ -30,50 +30,55 @@ class RegisterForm extends Component {
 
     return (
       <Form name="register" action={submitRegister} {...props}>
-        <FormattedMessage id="you" style={styles.subtitle} />
-        <SelectField ref="lang"
-          {...lang}
-          items={langs}
-        />
-        <TextField ref="name"
-          {...name}
-          autoCorrect={false}
-          name="username"
-        />
-        <TextField ref="email"
-          {...email}
-          autoCorrect={false}
-          keyboardType="email-address"
-          errorId={email.error && 'email_' + email.error}
-        />
-        <TextField ref="password"
-          {...password}
-          secureTextEntry={true}
-          errorId={password.error && 'password_' + password.error}
-        />
+        <View style={styles.container}>
+          <FormattedMessage id="you" style={styles.subtitle} />
+          <SelectField ref="lang"
+            {...lang}
+            items={langs}
+          />
+          <TextField ref="name"
+            {...name}
+            autoCorrect={false}
+            name="username"
+          />
+          <TextField ref="email"
+            {...email}
+            autoCorrect={false}
+            keyboardType="email-address"
+            errorId={email.error && 'email_' + email.error}
+          />
+          <TextField ref="password"
+            {...password}
+            secureTextEntry={true}
+            errorId={password.error && 'password_' + password.error}
+          />
 
-        <FormattedMessage id="your_tribe" style={styles.subtitle} />
-        <TextField ref="tribe_name"
-          {...tribe_name}
-          autoCorrect={false}
-        />
-        <SelectField ref="tribe_type"
-          {...tribe_type}
-          items={types}
-        />
-        <CityField ref="city"
-          {...city}
-        />
-        <SelectField ref="currency"
-          {...currency}
-          items={currencies}
-        />
+          <FormattedMessage id="your_tribe" style={styles.subtitle} />
+          <TextField ref="tribe_name"
+            {...tribe_name}
+            autoCorrect={false}
+          />
+          <SelectField ref="tribe_type"
+            {...tribe_type}
+            items={types}
+          />
+          <CityField ref="city"
+            {...city}
+          />
+          <SelectField ref="currency"
+            {...currency}
+            items={currencies}
+          />
+        </View>
       </Form>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 8,
+  },
   subtitle: {
     color: colors.primaryText,
     marginHorizontal: 5,

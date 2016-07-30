@@ -1,5 +1,6 @@
 export default {
   main: 'rgb(0, 188, 212)',
+  text: '#222',
   background: '#F2F2F2',
   primaryText: 'rgba(0, 0, 0, 0.8)',
   secondaryText: 'rgba(0, 0, 0, 0.5)',
