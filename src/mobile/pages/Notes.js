@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react'
-import {View, StyleSheet, Platform, UIManager} from 'react-native'
+import {StyleSheet, Platform, UIManager} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import SortableListView from 'react-native-sortable-listview'
 
-//import AsyncContent from '../hoc/AsyncContent'
+import SimpleView from '../hoc/SimpleView'
 import Note from '../components/Note'
 import Fab from '../components/Fab'
 
@@ -90,7 +90,7 @@ class Notes extends Component {
     const {notes} = this.props
 
     return (
-      <View style={styles.container}>
+      <SimpleView>
         <SortableListView
           ref={this.ref}
           style={styles.list}
@@ -100,7 +100,7 @@ class Notes extends Component {
           keyboardShouldPersistTaps={true}
         />
         <Fab name="add" onPress={this.handleFab} />
-      </View>
+      </SimpleView>
     )
   }
 }
@@ -119,9 +119,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch)
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   list: {
     //TODO: add 4px at the begining
     //TODO: add space at the end for FAB

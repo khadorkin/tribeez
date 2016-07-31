@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import BillForm from '../forms/Bill'
 
 class Bill extends Component {
@@ -10,9 +10,9 @@ class Bill extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <BillForm current={this.props.edit} />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

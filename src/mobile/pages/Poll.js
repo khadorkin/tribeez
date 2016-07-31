@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import PollForm from '../forms/Poll'
 
 class Poll extends Component {
@@ -10,9 +10,9 @@ class Poll extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <PollForm current={this.props.edit} />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

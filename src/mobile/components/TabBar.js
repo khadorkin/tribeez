@@ -7,6 +7,8 @@ import TabButton from 'react-native-scrollable-tab-view/Button'
 
 import colors from '../../common/constants/colors'
 
+const UNDERLINE_MARGIN = 20
+
 class TabBar extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
@@ -60,17 +62,19 @@ class TabBar extends Component {
   render() {
     const containerWidth = this.props.containerWidth
     const numberOfTabs = this.props.tabs.length
+    const width = containerWidth / numberOfTabs - (UNDERLINE_MARGIN * 2)
 
     const tabUnderlineStyle = {
       position: 'absolute',
-      width: containerWidth / numberOfTabs,
-      height: 4,
+      width,
+      height: 6,
       backgroundColor: 'white',
       bottom: 0,
+      marginLeft: UNDERLINE_MARGIN,
     }
 
     const left = this.props.scrollValue.interpolate({
-      inputRange: [0, 1], outputRange: [0, containerWidth / numberOfTabs],
+      inputRange: [0, 1], outputRange: [0, width + (UNDERLINE_MARGIN * 2)],
     })
 
     return (
@@ -92,7 +96,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
     borderRightWidth: 0,
     borderBottomColor: '#ccc',
-    backgroundColor: colors.main,
   },
   tab: {
     flex: 1,

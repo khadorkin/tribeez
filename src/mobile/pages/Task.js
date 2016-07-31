@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import TaskForm from '../forms/Task'
 
 class Task extends Component {
@@ -10,9 +10,9 @@ class Task extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <TaskForm current={this.props.edit} />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

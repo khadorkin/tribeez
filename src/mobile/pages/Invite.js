@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import InviteForm from '../forms/Invite'
 
 class Invite extends Component {
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <InviteForm />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

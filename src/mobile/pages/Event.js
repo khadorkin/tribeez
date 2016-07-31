@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import EventForm from '../forms/Event'
 
 class Event extends Component {
@@ -10,9 +10,9 @@ class Event extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <EventForm current={this.props.edit} />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

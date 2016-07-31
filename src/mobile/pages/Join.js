@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import JoinForm from '../forms/Join'
 
 import getInvite from '../../common/actions/getInvite'
@@ -22,9 +22,9 @@ class Join extends Component {
 
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <JoinForm tribe={this.props.tribe} token={this.props.token} />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

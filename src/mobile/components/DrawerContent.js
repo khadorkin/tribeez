@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.main,
-    paddingTop: 24, // because DrawerLayoutAndroid has a statusBarBackgroundColor
+    //paddingTop: 24, // set if DrawerLayoutAndroid has a statusBarBackgroundColor
   },
   actions: {
     flexDirection: 'row',

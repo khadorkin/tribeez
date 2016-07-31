@@ -6,9 +6,9 @@ import {
   BackAndroid,
   Linking,
   StyleSheet,
-  View,
   Text,
   Alert,
+  StatusBar,
 } from 'react-native'
 
 import {connect} from 'react-redux'
@@ -26,7 +26,6 @@ import IconButton from './components/IconButton'
 
 import routes from '../common/routes'
 import router from '../common/router'
-import colors from '../common/constants/colors'
 import submitLogin from '../common/actions/submitLogin'
 import deleteItem from '../common/actions/deleteItem'
 
@@ -136,6 +135,9 @@ class App extends Component {
         )
       },
       Title: (route/*, navigator, index, navState*/) => {
+        if (route.noHeader) {
+          return null
+        }
         if (route.item && route.item.name) {
           return <Text style={styles.navTitle}>{route.item.name}</Text>
         } else {
@@ -194,7 +196,7 @@ class App extends Component {
   }
 
   renderScene(route, navigator) {
-    router.update(route, navigator)
+    router.update(navigator)
     const props = {}
     if (route.tribe) {
       props.tribe = route.tribe
@@ -208,20 +210,13 @@ class App extends Component {
     if (route.edit) {
       props.edit = route.edit
     }
-    return (
-      <View style={[this.props.uid ? styles.privatePage : styles.publicPage]}>
-        <route.component {...props} />
-      </View>
-    )
+    return <route.component {...props} />
   }
 
   render() {
-    const navigationBar = this.props.uid ? (
-      <Navigator.NavigationBar
-        routeMapper={this.routeMapper(this.props.loading)}
-        style={styles.navBar}
-      />
-    ) : null
+    const navigationBar = (
+      <Navigator.NavigationBar routeMapper={this.routeMapper(this.props.loading)} style={styles.navBar} />
+    )
 
     const drawerLockMode = this.props.uid ? 'unlocked' : 'locked-closed'
 
@@ -229,13 +224,13 @@ class App extends Component {
       <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={this.props.formats}>
         <DrawerLayoutAndroid
           renderNavigationView={this.renderNavigation}
-          statusBarBackgroundColor={this.props.uid ? colors.main : colors.statusBar}
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
           drawerWidth={250}
           drawerLockMode={drawerLockMode}
         >
+          <StatusBar translucent={true} backgroundColor="transparent" />
           <Navigator
             initialRoute={routes.WELCOME}
             renderScene={this.renderScene}
@@ -248,27 +243,20 @@ class App extends Component {
   }
 }
 
+// nav bar styles:
 const styles = StyleSheet.create({
+  navBar: {
+    marginTop: 24, // height of status bar
+    height: 56, // 80 - 24
+  },
   hamburger: {
     padding: 15,
   },
-  navBar: {
-    backgroundColor: colors.main,
-  },
   navTitle: {
     color: 'white',
-    marginVertical: 15,
-    fontWeight: '500',
-    fontSize: 16,
+    fontSize: 24,
+    marginTop: 9,
     marginRight: 56, // to not overlap the right icon
-  },
-  publicPage: {
-    flex: 1,
-  },
-  privatePage: {
-    marginTop: 56,
-    flex: 1,
-    backgroundColor: colors.background,
   },
   rightIcon: {
     padding: 15,

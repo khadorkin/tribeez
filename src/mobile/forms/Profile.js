@@ -76,7 +76,7 @@ class ProfileForm extends Component {
 
 const styles = StyleSheet.create({
   gravatar: {
-    marginHorizontal: 4,
+    margin: 8,
     marginBottom: 16,
   },
 })

@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import ProfileForm from '../forms/Profile'
 
 class Profile extends Component {
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <ProfileForm />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }

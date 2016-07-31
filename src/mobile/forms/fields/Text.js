@@ -34,10 +34,9 @@ class TextField extends Component {
   }
 
   render() {
-    const {intl, name, value, touched, error, currency, ...props} = this.props
-    let {errorId} = this.props
+    const {intl, name, value, touched, error, errorId, currency, ...props} = this.props
 
-    errorId = error && ('error.' + (errorId || name))
+    const errorMessage = touched && error && ('error.' + (errorId || name))
 
     const currencyLabel = currency && (
       <Text style={styles.currency}>{currency}</Text>
@@ -50,13 +49,13 @@ class TextField extends Component {
           placeholder={intl.formatMessage({id: 'field.' + name})}
           floatingLabelEnabled={true}
           highlightColor={colors.input} // Color of highlighted underline & floating label
-          style={styles.field}
+          style={styles.field} // must set it even if empty, otherwise the height of the fields is broken
           textInputStyle={styles.input}
           keyboardType={currency && 'numeric'}
           {...props}
         />
         {currencyLabel}
-        <FormattedMessage id={touched && errorId} style={styles.error} />
+        <FormattedMessage id={errorMessage} style={styles.error} />
       </View>
     )
   }

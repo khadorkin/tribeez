@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {ActivityIndicator, StyleSheet, View, Image} from 'react-native'
+import {View, ActivityIndicator, StyleSheet, Image} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'

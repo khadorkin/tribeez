@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
-import {ScrollView} from 'react-native'
 
+import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
 import TribeForm from '../forms/Tribe'
 
 class NewTribe extends Component {
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollViewWithHeader>
         <TribeForm type="create" />
-      </ScrollView>
+      </ScrollViewWithHeader>
     )
   }
 }
