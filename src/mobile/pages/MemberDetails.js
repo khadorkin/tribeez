@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import Header from '../components/Header'
 import FormattedDate from '../components/FormattedDate'
 import Touchable from '../components/Touchable'
 
@@ -46,6 +47,7 @@ class MemberDetails extends Component {
 
     return (
       <View style={styles.container}>
+        <Header />
         <ScrollView>
           {
             infos
@@ -78,8 +80,6 @@ class MemberDetails extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 4,
-    backgroundColor: 'white',
     flex: 1,
   },
   info: {

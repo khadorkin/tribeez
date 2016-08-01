@@ -1,8 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import {Dimensions, View, Image, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
-const windowWidth = Dimensions.get('window').width
-const headerHeight = windowWidth * 412 / 1000
+import Header from '../components/Header'
 
 class SimpleView extends Component {
   static propTypes = {
@@ -12,7 +11,7 @@ class SimpleView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={require('../../common/images/header.png')} resizeMode="cover" style={styles.image} />
+        <Header />
         {this.props.children}
       </View>
     )
@@ -22,10 +21,6 @@ class SimpleView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  image: {
-    height: headerHeight,
-    width: windowWidth,
   },
 })
 

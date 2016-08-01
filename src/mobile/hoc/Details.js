@@ -4,6 +4,7 @@ import {ActivityIndicator, StyleSheet, View} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import Header from '../components/Header'
 import FormattedMessage from '../components/FormattedMessage'
 import Fab from '../components/Fab'
 
@@ -71,6 +72,7 @@ class Details extends Component {
 
     return (
       <View style={styles.container}>
+        <Header />
         {children}
         {editRoute && <Fab name="edit" onPress={this.handleFab} />}
       </View>
@@ -90,8 +92,6 @@ const styles = StyleSheet.create({
     margin: 32,
   },
   container: {
-    paddingTop: 4,
-    backgroundColor: 'white',
     flex: 1,
   },
 })

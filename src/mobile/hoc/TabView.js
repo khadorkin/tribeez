@@ -1,12 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {Dimensions, View, Image, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
+import Header from '../components/Header'
 import TabBar from '../components/TabBar'
-
-const windowWidth = Dimensions.get('window').width
-const headerHeight = windowWidth * 412 / 1000
 
 class TabView extends Component {
   static propTypes = {
@@ -26,7 +24,7 @@ class TabView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={require('../../common/images/header.png')} resizeMode="cover" style={styles.image} />
+        <Header style={styles.header} />
         <ScrollableTabView renderTabBar={this.renderTabBar} {...this.props}>
           {this.props.children}
         </ScrollableTabView>
@@ -39,10 +37,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image: {
-    height: headerHeight,
-    width: windowWidth,
-    marginBottom: -50,
+  header: {
+    marginBottom: -57.5,
   },
 })
 

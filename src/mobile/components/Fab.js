@@ -1,9 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import {View, StyleSheet} from 'react-native'
+import {View, TouchableNativeFeedback, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
-
-import Touchable from './Touchable'
 
 import colors from '../../common/constants/colors'
 
@@ -16,9 +14,16 @@ class Fab extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Touchable onPress={this.props.onPress} style={styles.button}>
-          <Icon name={this.props.name} color="white" size={24} />
-        </Touchable>
+        <TouchableNativeFeedback
+          /*eslint-disable new-cap*/
+          background={TouchableNativeFeedback.Ripple('rbga(0,0,0,.5)', true)}
+          /*eslint-enable new-cap*/
+          onPress={this.props.onPress}
+        >
+          <View style={styles.button}>
+            <Icon name={this.props.name} color="white" size={24} />
+          </View>
+        </TouchableNativeFeedback>
       </View>
     )
   }

@@ -12,7 +12,7 @@ class Touchable extends Component {
     return (
       <TouchableNativeFeedback
         /*eslint-disable new-cap*/
-        background={TouchableNativeFeedback.Ripple('rbga(0,0,0,.5)', true)}
+        background={TouchableNativeFeedback.SelectableBackground()}
         /*eslint-enable new-cap*/
         onPress={onPress}
       >

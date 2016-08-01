@@ -1,7 +1,7 @@
 export default {
   main: 'rgb(0, 188, 212)', // turquoise
   text: '#222', // black
-  background: '#F2F2F2', // light grey
+  background: 'white', // white
   primaryText: 'rgba(0, 0, 0, 0.8)',
   secondaryText: 'rgba(0, 0, 0, 0.5)',
   icon: 'rgb(117, 117, 117)', // grey
@@ -10,5 +10,5 @@ export default {
   error: '#F44336', // red500
   button: '#26C6DA', // cyan400
   input: '#00ACC1', // cyan600
-  statusBar: 'rgba(0, 0, 0, 0.2)',
+  statusBar: 'transparent', // or rgba(0, 0, 0, 0.2) to make it a bit more visible
 }

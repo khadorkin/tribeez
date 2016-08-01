@@ -18,6 +18,7 @@ import {Crashlytics, Answers} from 'react-native-fabric'
 
 import config from '../common/config'
 import {auth} from '../common/firebase'
+import colors from '../common/constants/colors'
 
 import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
@@ -230,11 +231,12 @@ class App extends Component {
           drawerWidth={250}
           drawerLockMode={drawerLockMode}
         >
-          <StatusBar translucent={true} backgroundColor="transparent" />
+          <StatusBar translucent={true} backgroundColor={colors.statusBar} />
           <Navigator
             initialRoute={routes.WELCOME}
             renderScene={this.renderScene}
             navigationBar={navigationBar}
+            sceneStyle={styles.scene}
           />
           <Snackbar />
         </DrawerLayoutAndroid>
@@ -260,6 +262,9 @@ const styles = StyleSheet.create({
   },
   rightIcon: {
     padding: 15,
+  },
+  scene: {
+    backgroundColor: colors.background,
   },
 })
 
