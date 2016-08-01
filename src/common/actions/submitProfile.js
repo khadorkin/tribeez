@@ -7,7 +7,7 @@ import {SNACK_MESSAGE} from '../constants/actions'
 
 import {firebaseError} from './error'
 
-export default (reauth_prompt, values, dispatch) => {
+export default (reauth_prompt, tribe_ids, values, dispatch) => {
   const checkReAuth = (error) => {
     if (error.code === 'auth/requires-recent-login') {
       const password = prompt(reauth_prompt) //TODO: mobile version
@@ -35,10 +35,16 @@ export default (reauth_prompt, values, dispatch) => {
     })
     .then(() => {
       auth.currentUser.name = values.name
-      return db.ref('tribes/' + auth.currentUser.tid + '/members/' + auth.currentUser.uid).transaction((member) => {
-        member.name = values.name
-        member.gravatar = gravatar
-      })
+
+      return Promise.all(tribe_ids.map((tid) => {
+        return db.ref('tribes/' + tid + '/members/' + auth.currentUser.uid).transaction((member) => {
+          if (member) {
+            member.name = values.name
+            member.gravatar = gravatar
+          }
+          return member
+        })
+      }))
     })
     .then(() => {
       if (values.password) {

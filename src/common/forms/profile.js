@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
     birthdate: state.user.birthdate,
   },
   reauth_prompt: state.app.messages.reauth_prompt,
+  tribe_ids: Object.keys(state.user.tribes),
 })
 
 export default (component) => {

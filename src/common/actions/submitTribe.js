@@ -58,6 +58,7 @@ export default (values, dispatch) => {
     // CREATE NEW TRIBE:
     } else {
       const tid = db.ref('tribes').push().key
+      const historyKey = db.ref('tribes/' + tid + '/history').push().key
 
       db.ref('tribes/' + tid).set({
         infos: {
@@ -71,6 +72,8 @@ export default (values, dispatch) => {
             balance: 0,
             gravatar: auth.currentUser.gravatar,
             name: auth.currentUser.name,
+            joined: timestamp,
+            last_viewed_history_key: historyKey,
           },
         },
       })
@@ -98,7 +101,7 @@ export default (values, dispatch) => {
       })
       .then(() => {
         // add history entry
-        return db.ref('tribes/' + tid + '/history').push({
+        return db.ref('tribes/' + tid + '/history/' + historyKey).set({
           action: 'new',
           type: 'member',
           time: timestamp,

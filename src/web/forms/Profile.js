@@ -29,6 +29,7 @@ class ProfileForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     reauth_prompt: PropTypes.string.isRequired,
+    tribe_ids: PropTypes.array,
   }
 
   constructor(props) {
@@ -37,7 +38,7 @@ class ProfileForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(submitProfile.bind(null, this.props.reauth_prompt))(event)
+    this.props.handleSubmit(submitProfile.bind(null, this.props.reauth_prompt, this.props.tribe_ids))(event)
       .catch((errors) => focus(errors, this.refs))
   }
 
