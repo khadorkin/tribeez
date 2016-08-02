@@ -74,7 +74,7 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     marginVertical: 5,
     elevation: 1,
   },

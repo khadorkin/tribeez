@@ -109,7 +109,7 @@ class Note extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     marginVertical: 5,
     marginHorizontal: 7,
     padding: 8,

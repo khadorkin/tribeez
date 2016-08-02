@@ -237,7 +237,7 @@ class App extends Component {
             open={this.state.messengerDialog}
             onRequestClose={this.handleDialogClose}
           >
-            <div ref={this.messengerMounted}></div>
+            <div ref={this.messengerMounted} />
           </Dialog>
 
           <Snackbar

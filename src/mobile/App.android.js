@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   navTitle: {
-    color: 'white',
+    color: colors.lightText,
     fontSize: 24,
     marginTop: 9,
     marginRight: 56, // to not overlap the right icon

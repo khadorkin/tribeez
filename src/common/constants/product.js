@@ -1,4 +1,4 @@
-export const TRIBE_TYPES = ['houseshare', 'family', 'friends', 'organization', 'other']
+export const TRIBE_TYPES = ['flatshare', 'family', 'friends', 'organization', 'other']
 
 export const REMINDERS = ['none', '2d', '1d', '2h', '1h']
 

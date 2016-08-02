@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   text: {
     alignSelf: 'center',
-    color: 'white',
+    color: colors.lightText,
   },
 })
 

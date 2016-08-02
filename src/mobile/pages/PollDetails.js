@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   out: {
     height: 24,
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     elevation: 1,
   },
   option: {

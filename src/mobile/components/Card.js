@@ -4,6 +4,8 @@ import {StyleSheet, View, Text} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import colors from '../../common/constants/colors'
+
 class Card extends Component {
   static propTypes = {
     // from parent:
@@ -39,7 +41,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     marginVertical: 5,
     marginHorizontal: 8,
     padding: 8,

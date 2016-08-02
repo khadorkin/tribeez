@@ -143,7 +143,7 @@ const fr = {
   'field.currency': 'Devise',
   'error.currency': 'Devise incorrecte',
   'field.tribe_type': 'Type',
-  'select.houseshare': 'Colocation',
+  'select.flatshare': 'Colocation',
   'select.family': 'Famille',
   'select.friends': 'Amis',
   'select.organization': 'Organisation',

@@ -42,7 +42,6 @@ class TabBar extends Component {
 
     return (
       <TabButton
-        style={{flex: 1}}
         key={id}
         accessible={true}
         accessibilityLabel={name}
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   badgeText: {
-    color: 'white',
+    color: colors.lightText,
     fontSize: 12,
   },
 })

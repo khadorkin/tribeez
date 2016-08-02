@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginBottom: 16, // some space between logo and form
   },
   box: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     elevation: 1,
     margin: 16,
     padding: 16,

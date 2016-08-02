@@ -81,13 +81,6 @@ const styles = StyleSheet.create({
     margin: 16,
     marginBottom: 80,
   },
-  empty: {
-    marginVertical: 24,
-    alignItems: 'center',
-  },
-  errorText: {
-    color: 'red',
-  },
 })
 
 const mapStateToProps = (state) => ({

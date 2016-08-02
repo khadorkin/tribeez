@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.main,
-    //paddingTop: 24, // set if DrawerLayoutAndroid has a statusBarBackgroundColor
+    //paddingTop: 24, // set if status bar's background color is visible
   },
   actions: {
     flexDirection: 'row',
@@ -200,13 +200,13 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   username: {
-    color: 'white',
+    color: colors.lightText,
     fontWeight: '400',
     fontSize: 18,
     marginVertical: 5,
   },
   currentTribe: {
-    color: 'white',
+    color: colors.lightText,
     fontWeight: '400',
     fontSize: 14,
     marginBottom: 10,

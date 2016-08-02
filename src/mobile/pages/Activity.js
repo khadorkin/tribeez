@@ -48,7 +48,7 @@ class Activity extends Component {
           <FormattedMessage id="telegram" />
         </IconButton>
         <Text style={styles.version}>
-          App version: beta {config.android.versionName} ({config.android.versionCode})
+          App version: beta {config.android.versionName}
         </Text>
       </View>
     )
@@ -100,9 +100,6 @@ class Activity extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  content: {
-    paddingTop: 4,
   },
   telegram: {
     alignSelf: 'center',

@@ -143,7 +143,7 @@ export default {
   'field.currency': 'Currency',
   'error.currency': 'Please choose a currency',
   'field.tribe_type': 'Type',
-  'select.houseshare': 'Houseshare',
+  'select.flatshare': 'Flatshare',
   'select.family': 'Family',
   'select.friends': 'Friends',
   'select.organization': 'Organization',

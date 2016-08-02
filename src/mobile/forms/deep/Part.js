@@ -117,10 +117,6 @@ const styles = StyleSheet.create({
     top: 5.5,
     right: 3,
   },
-  error: {
-    color: colors.error,
-    marginHorizontal: 5,
-  },
 })
 
 export default Part

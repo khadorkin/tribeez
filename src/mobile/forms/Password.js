@@ -7,6 +7,7 @@ import FormattedMessage from '../components/FormattedMessage'
 
 import form from '../../common/forms/password'
 import submitPassword from '../../common/actions/submitPassword'
+import colors from '../../common/constants/colors'
 
 class PasswordForm extends Component {
   static propTypes = {
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32, // bump up by 16dp
   },
   box: {
-    backgroundColor: 'white',
+    backgroundColor: colors.background,
     elevation: 1,
     margin: 16,
     padding: 16,
@@ -65,13 +66,6 @@ const styles = StyleSheet.create({
   subtitle: {
     marginBottom: 50,
     textAlign: 'center',
-  },
-  lostPassword: {
-    alignSelf: 'flex-end',
-    padding: 8,
-  },
-  lostText: {
-    //
   },
 })
 
