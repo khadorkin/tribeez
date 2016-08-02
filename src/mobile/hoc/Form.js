@@ -32,7 +32,9 @@ class Form extends Component {
 
     return (
       <View style={[styles.container, style]}>
-        {children}
+        <View style={styles.container}>
+          {children}
+        </View>
         <FormattedMessage id={error && 'error.' + error} style={styles.error} />
         <Button id={'submit.' + name} onPress={this.handleSubmit} loading={submitting} />
       </View>

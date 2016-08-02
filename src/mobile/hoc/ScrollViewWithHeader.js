@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, StyleSheet} from 'react-native'
+import {Dimensions, View, ScrollView, StyleSheet} from 'react-native'
 
 import Header from '../components/Header'
 
@@ -33,7 +33,7 @@ class ScrollViewWithHeader extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView keyboardShouldPersistTaps={true} onScroll={this.handleScroll}>
+        <ScrollView keyboardShouldPersistTaps={true} onScroll={this.handleScroll} contentContainerStyle={styles.content}>
           <Header />
           {this.props.children}
         </ScrollView>
@@ -46,6 +46,9 @@ class ScrollViewWithHeader extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  content: {
+    minHeight: Dimensions.get('window').height,
   },
 })
 
