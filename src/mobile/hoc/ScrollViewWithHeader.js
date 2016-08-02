@@ -33,7 +33,7 @@ class ScrollViewWithHeader extends Component {
 
     return (
       <View style={styles.container}>
-        <ScrollView keyboardShouldPersistTaps={true} keyboardDismissMode="on-drag" onScroll={this.handleScroll}>
+        <ScrollView keyboardShouldPersistTaps={true} onScroll={this.handleScroll}>
           <Header />
           {this.props.children}
         </ScrollView>

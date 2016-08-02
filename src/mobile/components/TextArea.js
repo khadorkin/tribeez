@@ -49,11 +49,11 @@ class TextArea extends Component {
   }
 
   render() {
-    const {style, minHeight, placeholder, ...props} = this.props
+    const {intl, style, minHeight, placeholder, ...props} = this.props
 
     let translatedPlaceholder
     if (placeholder) {
-      translatedPlaceholder = this.props.intl.formatMessage({id: 'placeholder.' + placeholder})
+      translatedPlaceholder = intl.formatMessage({id: 'placeholder.' + placeholder})
     }
 
     const height = Math.max(minHeight || 39, this.state.height)

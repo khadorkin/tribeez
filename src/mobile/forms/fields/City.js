@@ -40,7 +40,7 @@ class CityField extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     name: PropTypes.string.isRequired,
-    value: PropTypes.object,
+    value: PropTypes.object, //TODO: fix bug
     onChange: PropTypes.func.isRequired,
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,

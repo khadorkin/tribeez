@@ -17,10 +17,10 @@ import colors from '../../common/constants/colors'
 const infos = [
   {id: 'author', icon: 'person'},
   {id: 'description', icon: 'description'},
-  {id: 'start', icon: 'flight-land', date: true},
-  {id: 'end', icon: 'flight-takeoff', date: true},
-  {id: 'location', icon: 'place', map: true},
-  {id: 'url', icon: 'link', link: true},
+  {id: 'start', icon: 'flight-land'},
+  {id: 'end', icon: 'flight-takeoff'},
+  {id: 'location', icon: 'place'},
+  {id: 'url', icon: 'link'},
 ]
 
 class EventDetails extends Component {
@@ -44,10 +44,6 @@ class EventDetails extends Component {
   renderItem() {
     const {event} = this.props
 
-    const author = this.props.userMap[event.author]
-
-    event.author = author.name
-
     //TODO: UI
 
     return (
@@ -57,25 +53,29 @@ class EventDetails extends Component {
             .filter((info) => event[info.id])
             .map((info) => {
               let value = event[info.id]
-              if (info.date) {
+              let href = null
+              if (info.id === 'url') {
+                href = value
+                value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
+              }
+              if (info.id === 'location') {
+                href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
+              }
+              if (info.id === 'author') {
+                value = this.props.userMap[value].name
+              }
+
+              if (info.id === 'start' || info.id === 'end') {
                 const date = new Date(value)
                 if (date.getHours() !== 0 || date.getMinutes() !== 0) {
                   value = <FormattedMessage id="datetime" values={{date}} />
                 } else {
                   value = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} />
                 }
+              } else {
+                value = <Text style={styles.value}>{value}</Text>
               }
-              let href = null
-              if (info.link) {
-                href = value
-                value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
-              }
-              if (info.map) {
-                href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
-              }
-              if (typeof value === 'string') {
-                value = <Text>{value}</Text>
-              }
+
               return (
                 <Touchable onPress={href && this.handlePress.bind(this, href)} style={styles.info} key={info.id}>
                   <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
@@ -106,6 +106,9 @@ const styles = StyleSheet.create({
   info: {
     flexDirection: 'row',
     padding: 10,
+  },
+  value: {
+    flex: 1,
   },
   icon: {
     marginRight: 10,
