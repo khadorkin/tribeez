@@ -78,29 +78,24 @@ class Activity extends Component {
     const {unread} = this.props
 
     return (
-      <View style={styles.container}>
-        <TabView onChangeTab={this.handleChange}>
-          <AsyncContent name="activity"
-            renderRow={this.renderActivity}
-            tabLabel="tab.activity"
-            footer={this.renderFooter()}
-          />
-          <AsyncContent name="history"
-            ref={this.ref}
-            renderRow={this.renderHistoryEntry}
-            tabLabel="tab.history"
-            badge={unread > 0 && unread}
-          />
-        </TabView>
-      </View>
+      <TabView onChangeTab={this.handleChange}>
+        <AsyncContent name="activity"
+          renderRow={this.renderActivity}
+          tabLabel="tab.activity"
+          footer={this.renderFooter()}
+        />
+        <AsyncContent name="history"
+          ref={this.ref}
+          renderRow={this.renderHistoryEntry}
+          tabLabel="tab.history"
+          badge={unread > 0 && unread}
+        />
+      </TabView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   telegram: {
     alignSelf: 'center',
   },

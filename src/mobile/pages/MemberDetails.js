@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, ScrollView, Linking, StyleSheet} from 'react-native'
+import {Text, ScrollView, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
-import Header from '../components/Header'
+import PageView from '../hoc/PageView'
 import FormattedDate from '../components/FormattedDate'
 import Touchable from '../components/Touchable'
 
@@ -46,8 +46,7 @@ class MemberDetails extends Component {
     //TODO: UI
 
     return (
-      <View style={styles.container}>
-        <Header />
+      <PageView>
         <ScrollView>
           {
             infos
@@ -73,15 +72,12 @@ class MemberDetails extends Component {
               })
           }
         </ScrollView>
-      </View>
+      </PageView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   info: {
     flexDirection: 'row',
     padding: 10,

@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 
-import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
+import ScrollView from '../hoc/ScrollView'
 import TribeForm from '../forms/Tribe'
 
 class Tribe extends Component {
   render() {
     return (
-      <ScrollViewWithHeader>
+      <ScrollView>
         <TribeForm type="update" />
-      </ScrollViewWithHeader>
+      </ScrollView>
     )
   }
 }

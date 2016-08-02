@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
+import ScrollView from '../hoc/ScrollView'
 import EventForm from '../forms/Event'
 
 class Event extends Component {
@@ -10,9 +10,9 @@ class Event extends Component {
 
   render() {
     return (
-      <ScrollViewWithHeader>
+      <ScrollView>
         <EventForm current={this.props.edit} />
-      </ScrollViewWithHeader>
+      </ScrollView>
     )
   }
 }

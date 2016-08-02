@@ -10,6 +10,8 @@ import colors from '../../common/constants/colors'
 const UNDERLINE_MARGIN = 20
 
 class TabBar extends Component {
+  static height = 50
+
   static propTypes = {
     intl: intlShape.isRequired,
     goToPage: PropTypes.func,
@@ -87,7 +89,7 @@ class TabBar extends Component {
 
 const styles = StyleSheet.create({
   tabs: {
-    height: 50,
+    height: TabBar.height,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
@@ -110,4 +112,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default injectIntl(TabBar)
+// transfer static prop:
+const component = injectIntl(TabBar)
+component.height = TabBar.height
+
+export default component

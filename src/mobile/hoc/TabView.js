@@ -24,10 +24,11 @@ class TabView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header style={styles.header} />
+        <Header style={styles.header} only="image" />
         <ScrollableTabView renderTabBar={this.renderTabBar} {...this.props}>
           {this.props.children}
         </ScrollableTabView>
+        <Header style={styles.shadow} only="shadow" />
       </View>
     )
   }
@@ -38,7 +39,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    marginBottom: -57.5,
+    marginBottom: -TabBar.height,
+  },
+  shadow: {
+    position: 'absolute',
+    top: Header.height,
   },
 })
 

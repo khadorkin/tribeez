@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native'
 
 import Header from '../components/Header'
 
-class SimpleView extends Component {
+class PageView extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
   }
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SimpleView
+export default PageView

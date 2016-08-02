@@ -30,11 +30,12 @@ class ScrollViewWithHeader extends Component {
 
   render() {
     const stickyStyle = {position: 'absolute', top: this.state.scrolled ? -SCROLL_TRIGGER : -500}
+    const headerStyle = {opacity: this.state.scrolled ? 0 : 1}
 
     return (
       <View style={styles.container}>
         <ScrollView keyboardShouldPersistTaps={true} onScroll={this.handleScroll} contentContainerStyle={styles.content}>
-          <Header />
+          <Header style={headerStyle} />
           {this.props.children}
         </ScrollView>
         <Header style={stickyStyle} />

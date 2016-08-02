@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import SimpleView from '../hoc/SimpleView'
+import PageView from '../hoc/PageView'
 import AsyncContent from '../hoc/AsyncContent'
 import Poll from '../components/Poll'
 import Fab from '../components/Fab'
@@ -30,12 +30,12 @@ class Polls extends Component {
 
   render() {
     return (
-      <SimpleView>
+      <PageView>
         <AsyncContent name="polls"
           renderRow={this.renderPoll}
         />
         <Fab name="add" onPress={this.handleFab} />
-      </SimpleView>
+      </PageView>
     )
   }
 }

@@ -6,7 +6,7 @@ import {bindActionCreators} from 'redux'
 
 import SortableListView from 'react-native-sortable-listview'
 
-import SimpleView from '../hoc/SimpleView'
+import PageView from '../hoc/PageView'
 import Note from '../components/Note'
 import Fab from '../components/Fab'
 
@@ -90,7 +90,7 @@ class Notes extends Component {
     const {notes} = this.props
 
     return (
-      <SimpleView>
+      <PageView>
         <SortableListView
           ref={this.ref}
           style={styles.list}
@@ -100,7 +100,7 @@ class Notes extends Component {
           keyboardShouldPersistTaps={true}
         />
         <Fab name="add" onPress={this.handleFab} />
-      </SimpleView>
+      </PageView>
     )
   }
 }

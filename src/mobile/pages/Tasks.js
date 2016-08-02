@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-import SimpleView from '../hoc/SimpleView'
+import PageView from '../hoc/PageView'
 import AsyncContent from '../hoc/AsyncContent'
 import Task from '../components/Task'
 import Fab from '../components/Fab'
@@ -30,12 +30,12 @@ class Tasks extends Component {
 
   render() {
     return (
-      <SimpleView>
+      <PageView>
         <AsyncContent name="tasks"
           renderRow={this.renderTask}
         />
         <Fab name="add" onPress={this.handleFab} />
-      </SimpleView>
+      </PageView>
     )
   }
 }

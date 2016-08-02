@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
+import ScrollView from '../hoc/ScrollView'
 import TaskForm from '../forms/Task'
 
 class Task extends Component {
@@ -10,9 +10,9 @@ class Task extends Component {
 
   render() {
     return (
-      <ScrollViewWithHeader>
+      <ScrollView>
         <TaskForm current={this.props.edit} />
-      </ScrollViewWithHeader>
+      </ScrollView>
     )
   }
 }

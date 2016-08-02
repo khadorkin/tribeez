@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
+import ScrollView from '../hoc/ScrollView'
 import BillForm from '../forms/Bill'
 
 class Bill extends Component {
@@ -10,9 +10,9 @@ class Bill extends Component {
 
   render() {
     return (
-      <ScrollViewWithHeader>
+      <ScrollView>
         <BillForm current={this.props.edit} />
-      </ScrollViewWithHeader>
+      </ScrollView>
     )
   }
 }

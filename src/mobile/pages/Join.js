@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
+import ScrollView from '../hoc/ScrollView'
 import JoinForm from '../forms/Join'
 
 import getInvite from '../../common/actions/getInvite'
@@ -22,9 +22,9 @@ class Join extends Component {
 
   render() {
     return (
-      <ScrollViewWithHeader>
+      <ScrollView>
         <JoinForm tribe={this.props.tribe} token={this.props.token} />
-      </ScrollViewWithHeader>
+      </ScrollView>
     )
   }
 }

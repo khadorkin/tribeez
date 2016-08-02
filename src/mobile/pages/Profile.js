@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 
-import ScrollViewWithHeader from '../hoc/ScrollViewWithHeader'
+import ScrollView from '../hoc/ScrollView'
 import ProfileForm from '../forms/Profile'
 
 class Profile extends Component {
   render() {
     return (
-      <ScrollViewWithHeader>
+      <ScrollView>
         <ProfileForm />
-      </ScrollViewWithHeader>
+      </ScrollView>
     )
   }
 }
