@@ -8,7 +8,7 @@ export default {
   login: 'Login',
   password: 'Lost password',
   reset: 'Password update',
-  activity: 'Activity',
+  activity: 'Tribeez',
   profile: 'Profile',
   members: 'Members',
   members_new: 'New member',

@@ -16,7 +16,7 @@ class Fab extends Component {
       <View style={styles.container}>
         <TouchableNativeFeedback
           /*eslint-disable new-cap*/
-          background={TouchableNativeFeedback.Ripple('rbga(0,0,0,.5)', true)}
+          background={TouchableNativeFeedback.Ripple(colors.secondaryText, true)}
           /*eslint-enable new-cap*/
           onPress={this.props.onPress}
         >

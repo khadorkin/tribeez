@@ -9,6 +9,7 @@ import {
   Text,
   Alert,
   StatusBar,
+  Dimensions,
 } from 'react-native'
 
 import {connect} from 'react-redux'
@@ -29,6 +30,8 @@ import routes from '../common/routes'
 import router from '../common/router'
 import submitLogin from '../common/actions/submitLogin'
 import deleteItem from '../common/actions/deleteItem'
+
+const drawerWidth = Dimensions.get('window').width * 0.75
 
 class App extends Component {
   static propTypes = {
@@ -140,6 +143,7 @@ class App extends Component {
           return null
         }
         if (route.item && route.item.name) {
+          //TODO: allow variable height
           return <Text style={styles.navTitle}>{route.item.name}</Text>
         } else {
           return <FormattedMessage style={styles.navTitle} id={route.name} />
@@ -228,10 +232,10 @@ class App extends Component {
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
-          drawerWidth={250}
+          drawerWidth={drawerWidth}
           drawerLockMode={drawerLockMode}
         >
-          <StatusBar translucent={true} backgroundColor={colors.statusBar} />
+          <StatusBar translucent={true} backgroundColor={colors.statusBar} animated={true} />
           <Navigator
             initialRoute={routes.WELCOME}
             renderScene={this.renderScene}
@@ -252,7 +256,7 @@ const styles = StyleSheet.create({
     height: 56, // 80 - 24
   },
   hamburger: {
-    padding: 15,
+    padding: 12,
   },
   navTitle: {
     color: colors.lightText,

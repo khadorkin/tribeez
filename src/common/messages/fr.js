@@ -8,7 +8,7 @@ const fr = {
   login: 'Connexion',
   password: 'Mot de passe perdu',
   reset: 'Nouveau mot de passe',
-  activity: 'Activité',
+  activity: 'Tribeez',
   profile: 'Profil',
   members: 'Membres',
   members_new: 'Nouveau membre',

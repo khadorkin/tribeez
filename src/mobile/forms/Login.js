@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   link: {
-    color: colors.button,
+    color: colors.main,
   },
 })
 

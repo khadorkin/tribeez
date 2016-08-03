@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, ScrollView, Text, Image} from 'react-native'
+import {StyleSheet, View, ScrollView, Text, Image, TouchableHighlight} from 'react-native'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import FormattedMessage from './FormattedMessage'
 import Touchable from './Touchable'
 import IconButton from './IconButton'
+import Button from './Button'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -16,7 +17,6 @@ import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 
 const menuEntries = [
-  {route: routes.ACTIVITY, icon: 'view-stream'},
   {route: routes.MEMBERS, icon: 'group'},
   {route: routes.BILLS, icon: 'shopping-cart'},
   {route: routes.EVENTS, icon: 'event'},
@@ -99,53 +99,89 @@ class DrawerContent extends Component {
   render() {
     const {user, currentTribe} = this.props
 
-    const menuItems = menuEntries.map((entry) =>
-      <IconButton
-        key={entry.route.name}
-        name={entry.icon}
-        onPress={this.handleLink.bind(this, entry.route)}
-      >
-        <FormattedMessage style={styles.entry} id={entry.route.name} />
-      </IconButton>
-    )
+    // first route in stack == current menu entry \o/
+    // works because router.resetTo is called when clicking an entry
+    const currentRoute = router.getRoute().name
+
+    const menuItems = menuEntries.map((entry) => {
+      const color = colors[entry.route.name]
+      const isCurrent = (currentRoute === entry.route.name)
+
+      return (
+        <IconButton
+          key={entry.route.name}
+          name={entry.icon}
+          onPress={this.handleLink.bind(this, entry.route)}
+          color={color}
+          style={[styles.entry, {borderLeftColor: (isCurrent ? color : colors.background)}]}
+        >
+          <FormattedMessage style={[styles.entryText, {color: isCurrent ? color : colors.primaryText}]} id={entry.route.name} />
+        </IconButton>
+      )
+    })
 
     const tribe_ids = Object.keys(user.tribes)
-    const tribeItems = tribe_ids.map((tid) =>
-      <Touchable key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
-        <Text style={styles.tribeText}>{user.tribes[tid]}</Text>
-        {
-          tid === user.current_tribe && (
-            <IconButton name="settings" style={styles.tribeSettings} onPress={this.handleTribeSettings} />
-          )
-        }
-      </Touchable>
-    )
+    const tribeItems = tribe_ids.map((tid) => {
+      const isCurrent = (tid === user.current_tribe)
+      const color = isCurrent ? colors.main : colors.primaryText
+
+      return (
+        <Touchable key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
+          <Text style={[styles.tribeText, {color}]}>{user.tribes[tid]}</Text>
+          {
+            isCurrent && (
+              <IconButton color={colors.main} name="settings" onPress={this.handleTribeSettings} />
+            )
+          }
+        </Touchable>
+      )
+    })
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.actions}>
-            <IconButton name="exit-to-app" color="white" onPress={this.handleLogout} style={styles.action} />
-            <IconButton name="person" color="white" onPress={this.handleProfile} style={styles.action} />
-          </View>
           <View style={styles.infos}>
-            <Image
-              source={{uri: gravatar(user, 160)}}
+            <TouchableHighlight
+              onPress={this.handleProfile}
               style={styles.avatar}
-            />
-            <Text style={styles.username}>
-              {user.name}
-            </Text>
-            <Text style={styles.currentTribe}>
-              {currentTribe.name}
-            </Text>
-            <IconButton
-              name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
-              color="white"
-              onPress={this.handleToggle}
-              style={styles.toggle}
-            />
+              underlayColor={colors.secondaryText}
+            >
+              <Image
+                source={{uri: gravatar(user, 160)}}
+                style={styles.avatarImage}
+              />
+            </TouchableHighlight>
+            <View style={styles.member}>
+              <Text style={styles.username}>
+                {user.name}
+              </Text>
+              <View style={styles.currentTribeContainer}>
+                <Text style={styles.currentTribe}>
+                  {currentTribe.name}
+                </Text>
+                <IconButton
+                  name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
+                  color={colors.lightText}
+                  onPress={this.handleToggle}
+                  style={styles.toggle}
+                  size={24}
+                />
+              </View>
+            </View>
           </View>
+          <IconButton
+            name="home"
+            color={colors.lightText}
+            onPress={this.handleLink.bind(this, routes.ACTIVITY)}
+            style={styles.home}
+          />
+          <IconButton
+            name="exit-to-app"
+            size={20}
+            color={colors.lightText}
+            onPress={this.handleLogout}
+            style={styles.logout}
+          />
         </View>
 
         <ScrollView style={styles.menu}>
@@ -153,9 +189,10 @@ class DrawerContent extends Component {
         </ScrollView>
         {
           this.state.showTribes && (
-            <IconButton name="add" onPress={this.handleNewTribe}>
-              <FormattedMessage style={styles.tribeText} id="tribe_new" />
-            </IconButton>
+            <Button id="tribe_new" onPress={this.handleNewTribe} />
+            // <IconButton name="add" onPress={this.handleNewTribe} style={styles.entry}>
+            //   <FormattedMessage style={styles.entryText} id="tribe_new" />
+            // </IconButton>
           )
         }
       </View>
@@ -182,63 +219,86 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.main,
-    //paddingTop: 24, // set if status bar's background color is visible
-  },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  action: {
-    paddingBottom: 0,
+    //paddingTop: 24, // add space here if status bar's background color is visible
   },
   infos: {
-    alignItems: 'center',
+    flexDirection: 'row',
+    minHeight: 150,
   },
   avatar: {
+    borderRadius: 40,
+    margin: 16,
+    alignSelf: 'center',
+  },
+  avatarImage: {
     width: 80,
     height: 80,
     borderRadius: 40,
+  },
+  member: {
+    flex: 1,
+    justifyContent: 'center',
   },
   username: {
     color: colors.lightText,
     fontWeight: '400',
     fontSize: 18,
-    marginVertical: 5,
+    marginTop: 8,
+    marginBottom: -8,
+    marginRight: 8,
+  },
+  currentTribeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   currentTribe: {
+    flex: 1,
+    marginTop: 10,
     color: colors.lightText,
     fontWeight: '400',
     fontSize: 14,
-    marginBottom: 10,
   },
   toggle: {
+    marginTop: -2,
+    alignSelf: 'center',
+  },
+  home: {
+    alignSelf: 'flex-start',
+    marginTop: -12,
+    marginLeft: 8, // == entry.borderLeftWidth
+  },
+  logout: {
     position: 'absolute',
     bottom: 0,
     right: 0,
-    paddingBottom: 6,
   },
+  //////////////////////////////////////////////////
   menu: {
     flex: 1,
-    paddingTop: 6,
   },
   entry: {
-    color: colors.primaryText,
+    borderLeftColor: colors.background, // overwritten when current entry
+    borderLeftWidth: 8,
+    paddingVertical: 16,
+  },
+  entryText: {
+    // color is handled in render
     fontWeight: '400',
-    paddingVertical: 1,
+    fontSize: 15,
+    marginVertical: 3,
   },
   tribe: {
-    padding: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 62.5,
   },
   tribeText: {
     color: colors.primaryText,
     fontWeight: '400',
-    paddingBottom: 1.5,
-    marginRight: 30,
-  },
-  tribeSettings: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
+    fontSize: 15,
+    marginLeft: 20,
+    marginRight: 40,
   },
 })
 

@@ -13,4 +13,5 @@ export default {
   replace: (route) => navigator.replace(route),
   resetTo: (route) => navigator.resetTo(route),
   getCurrentRoutes: () => navigator.getCurrentRoutes(),
+  getRoute: () => navigator.getCurrentRoutes()[0],
 }

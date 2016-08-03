@@ -13,10 +13,11 @@ class IconButton extends Component {
     iconStyle: View.propTypes.style,
     children: PropTypes.node,
     family: PropTypes.string,
+    size: PropTypes.number,
   }
 
   render() {
-    const {onPress, style, iconStyle, children, family, ...props} = this.props
+    const {onPress, style, iconStyle, children, family, size, ...props} = this.props
 
     const Icon = ((family === 'evil') ? EvilIcon : MaterialIcon)
 
@@ -29,7 +30,7 @@ class IconButton extends Component {
         delayPressIn={0}
       >
         <View style={[styles.button, style]}>
-          <Icon size={24} color={colors.icon} style={iconStyle} {...props} />
+          <Icon size={size || 30} color={colors.icon} style={iconStyle} {...props} />
           {children && <View style={styles.children}>{children}</View>}
         </View>
       </TouchableNativeFeedback>

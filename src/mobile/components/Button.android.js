@@ -43,7 +43,7 @@ class Button extends Component {
 const styles = StyleSheet.create({
   button: {
     padding: 28,
-    backgroundColor: colors.button,
+    backgroundColor: colors.main,
   },
   text: {
     alignSelf: 'center',

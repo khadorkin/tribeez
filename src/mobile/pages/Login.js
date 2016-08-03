@@ -9,7 +9,7 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor={colors.main} />
+        <StatusBar backgroundColor={colors.main} animated={true} />
         <LoginForm />
       </View>
     )
