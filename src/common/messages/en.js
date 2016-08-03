@@ -35,14 +35,14 @@ export default {
   title: 'Title',
 
   // tabs
-  'tab.activity': 'WHAT\'S UP',
-  'tab.history': 'HISTORY',
-  'tab.registered': 'REGISTERED',
-  'tab.invited': 'INVITED',
-  'tab.upcoming': 'UPCOMING',
-  'tab.past': 'PAST',
-  'tab.bills': 'LIST',
-  'tab.balances': 'BALANCES',
+  'tab.activity': 'What\'s up',
+  'tab.history': 'History',
+  'tab.registered': 'Registered',
+  'tab.invited': 'Invited',
+  'tab.upcoming': 'Upcoming',
+  'tab.past': 'Past',
+  'tab.bills': 'List',
+  'tab.balances': 'Balances',
 
   // dates
   date: 'On {date, date, event}',
@@ -216,12 +216,15 @@ export default {
   // Comment box:
   comment: 'Your comment...',
 
-  // Members
-  'add_member': 'Add a member',
-  'member_since': 'Member since {when, date}',
-  'invited_by': 'Invited by {user} {when}',
-
   // Activity
+  'activity.members': '{num, plural, one {New member} other {# new members}}',
+  'activity.polls': '{num, plural, one {Unanswered poll} other {# unanswered polls}}',
+  'activity.tasks': '{num, plural, one {Task to do} other {# tasks to do}}',
+  'activity.events': '{num, plural, one {Upcoming event} other {# upcoming events}}',
+  'activity.bills': '{num, plural, one {New bill} other {# new bills}}',
+  'activity.notes': '{num, plural, one {Modified note} other {# modified notes}}',
+
+  // History
   'entry.member.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
   'entry.member.new.infos': 'Invited by {inviter}',
   'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added an expense named "{name}" ({amount, number, money})',
@@ -248,6 +251,10 @@ export default {
   'entry.task.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" task:',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
   telegram: 'Using Telegram? Chat with TribeezBot!   ',
+
+  // Members
+  'member_since': 'Member since {when, date}',
+  'invited_by': 'Invited by {user} {when}',
 
   // Bills
   'bill.mypart': 'Your share is {amount, number, money}',

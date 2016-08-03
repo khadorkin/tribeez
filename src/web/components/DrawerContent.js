@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton'
 
-import StreamIcon from 'material-ui/svg-icons/action/view-stream'
+import HomeIcon from 'material-ui/svg-icons/action/home'
 import GroupIcon from 'material-ui/svg-icons/social/group'
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart'
 import EventIcon from 'material-ui/svg-icons/action/event'
@@ -95,7 +95,7 @@ const styles = {
 }
 
 const menuEntries = [
-  {route: routes.ACTIVITY, icon: <StreamIcon />},
+  {route: routes.ACTIVITY, icon: <HomeIcon />},
   {route: routes.MEMBERS, icon: <GroupIcon />},
   {route: routes.BILLS, icon: <CartIcon />},
   {route: routes.EVENTS, icon: <EventIcon />},

@@ -35,14 +35,14 @@ const fr = {
   title: 'Titre',
 
   // tabs
-  'tab.activity': 'QUOI DE NEUF',
-  'tab.history': 'HISTORIQUE',
-  'tab.registered': 'INSCRITS',
-  'tab.invited': 'INVITÉS',
-  'tab.upcoming': 'A VENIR',
-  'tab.past': 'PASSÉS',
-  'tab.bills': 'LISTE',
-  'tab.balances': 'BALANCES',
+  'tab.activity': 'Quoi de neuf',
+  'tab.history': 'Historique',
+  'tab.registered': 'Inscrits',
+  'tab.invited': 'Invités',
+  'tab.upcoming': 'A venir',
+  'tab.past': 'Passés',
+  'tab.bills': 'Liste',
+  'tab.balances': 'Balances',
 
   // dates
   date: 'Le {date, date, event}',
@@ -216,12 +216,15 @@ const fr = {
   // Comment box:
   comment: 'Votre commentaire...',
 
-  // Members
-  'add_member': 'Ajouter un membre',
-  'member_since': 'Membre depuis le {when, date}',
-  'invited_by': 'Invité-e par {user} {when}',
-
   // Activity
+  'activity.members': '{num, plural, one {Nouveau membre} other {# nouveaux membres}}',
+  'activity.polls': '{num, plural, one {Sondage non répondu} other {# sondages non répondus}}',
+  'activity.tasks': '{num, plural, one {Tâche à effectuer} other {# tâches à effectuer}}',
+  'activity.events': '{num, plural, one {Évènement à venir} other {# évènements à venir}}',
+  'activity.bills': '{num, plural, one {Nouvelle dépense} other {# nouvelles dépenses}}',
+  'activity.notes': '{num, plural, one {Note modifiée} other {# notes modifiées}}',
+
+  // History
   'entry.member.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
   'entry.member.new.infos': 'Invité-e par {inviter}',
   'entry.bill.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté une dépense nommée "{name}" ({amount, number, money})',
@@ -248,6 +251,10 @@ const fr = {
   'entry.task.comment': '{author, select, _you_ {Vous avez} other {{author} a}} commenté la tâche "{name}" :',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
   telegram: 'Vous utilisez Telegram ? Discutez avec le TribeezBot !   ',
+
+  // Members
+  'member_since': 'Membre depuis le {when, date}',
+  'invited_by': 'Invité-e par {user} {when}',
 
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',

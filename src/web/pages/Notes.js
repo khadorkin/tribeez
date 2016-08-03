@@ -84,6 +84,7 @@ class Notes extends Component {
         this.props.postNote({
           title: '',
           content: '',
+          position: lastNote ? lastNote.position - 1 : 0,
         })
         this.autoCreated = true
       }

@@ -65,10 +65,12 @@ class Notes extends Component {
   }
 
   handleFab() {
+    const lastNote = this.props.notes[0]
+
     this.props.postNote({
       title: '',
       content: '',
-      position: this.props.notes.length ? this.props.notes[0].position - 1 : 0,
+      position: lastNote ? lastNote.position - 1 : 0,
     })
   }
 

@@ -12,6 +12,10 @@ export default (values) => {
     dispatch({
       type: FIREBASE_REQUEST,
     })
+
+    values.updated = Date.now()
+    values.author = auth.currentUser.uid
+
     db.ref('tribes/' + auth.currentUser.tid + '/notes').push(values)
     .then(() => {
       dispatch({

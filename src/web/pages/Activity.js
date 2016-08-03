@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
 
 import {Tabs, Tab} from 'material-ui/Tabs'
@@ -7,13 +8,25 @@ import {red500} from 'material-ui/styles/colors'
 
 import AsyncContent from '../hoc/AsyncContent'
 
+import ActivityCard from '../components/ActivityCard'
 import Entry from '../components/Entry'
 import SpeedDial from '../components/SpeedDial'
+
+import getActivity from '../../common/actions/getActivity'
+
+// display order of activity cards after members is set here:
+const ACTIVITIES = [/*'members', */'polls', 'tasks', 'events', 'bills', 'notes']
 
 class Activity extends Component {
   static propTypes = {
     // redux state:
-    unread: PropTypes.number,
+    tid: PropTypes.string,
+    members: PropTypes.array.isRequired,
+    activity: PropTypes.object.isRequired,
+    unread: PropTypes.number.isRequired,
+    // action creators:
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -21,7 +34,27 @@ class Activity extends Component {
     this.state = {
       tab: 'activity',
     }
+    this.load = this.load.bind(this)
     this.handleTabs = this.handleTabs.bind(this)
+  }
+
+  componentDidMount() {
+    this.load(this.props.tid)
+  }
+
+  componentWillReceiveProps(props) {
+    this.load(props.tid)
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe()
+  }
+
+  load(tid) {
+    if (tid && this.tid !== tid) {
+      this.tid = tid
+      this.props.subscribe(tid)
+    }
   }
 
   handleTabs(tab) {
@@ -30,16 +63,12 @@ class Activity extends Component {
     })
   }
 
-  renderActivity(row) {
-    return <div style={{margin: '15px 10px 0', TODO: true}} key={row.id}>{JSON.stringify(row)}</div>
-  }
-
   renderHistoryEntry(row) {
     return <Entry entry={row} key={row.id} />
   }
 
   render() {
-    const {unread} = this.props
+    const {members, activity, unread} = this.props
 
     const historyLabel = (
       <span>
@@ -58,7 +87,12 @@ class Activity extends Component {
       <div>
         <Tabs onChange={this.handleTabs}>
           <Tab label={<FormattedMessage id="tab.activity" />} value="activity">
-            <AsyncContent name="activity" renderRow={this.renderActivity} />
+            <ActivityCard type="members" data={members} />
+            {
+              ACTIVITIES.map((type) =>
+                <ActivityCard key={type} type={type} data={activity[type]} />
+              )
+            }
           </Tab>
           <Tab label={historyLabel} value="history">
             {
@@ -88,7 +122,15 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
+  tid: state.tribe.id,
+  members: state.tribe.users.filter((user) => user.joined > Date.now() - (7 * 86400 * 1000)), // new members (one week)
+  activity: state.activity,
   unread: state.app.unread,
 })
 
-export default connect(mapStateToProps)(Activity)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  subscribe: getActivity.on,
+  unsubscribe: getActivity.off,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Activity)

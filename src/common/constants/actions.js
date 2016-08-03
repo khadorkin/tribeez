@@ -23,6 +23,11 @@ export const MEMBERS_REMOVED = 'MEMBERS_REMOVED'
 
 export const UNREAD = 'UNREAD'
 
+export const ACTIVITY = 'ACTIVITY'
+export const ACTIVITY_ADDED = 'ACTIVITY_ADDED'
+export const ACTIVITY_CHANGED = 'ACTIVITY_CHANGED'
+export const ACTIVITY_REMOVED = 'ACTIVITY_REMOVED'
+
 
 // other events:
 

@@ -17,6 +17,8 @@ export default (data) => {
       title: data.title,
       content: data.content,
       position: data.position,
+      updated: Date.now(),
+      author: auth.currentUser.uid,
     })
     .then(() => {
       dispatch({
