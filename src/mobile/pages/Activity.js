@@ -1,30 +1,59 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, Linking, StyleSheet} from 'react-native'
-
+import {View, ScrollView, Text, Linking, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
 
 import TabView from '../hoc/TabView'
+import ActivityCard from '../components/ActivityCard'
 import AsyncContent from '../hoc/AsyncContent'
-import Card from '../components/Card'
 import Entry from '../components/Entry'
 import IconButton from '../components/IconButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import config from '../../common/config'
 
+import getActivity from '../../common/actions/getActivity'
+import {ACTIVITIES} from '../../common/constants/product'
+
 class Activity extends Component {
   static propTypes = {
     // from redux:
-    bot_token: PropTypes.string,
+    tid: PropTypes.string,
+    members: PropTypes.array.isRequired,
+    activity: PropTypes.object.isRequired,
     unread: PropTypes.number,
+    bot_token: PropTypes.string,
+    // action creators:
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
+    this.load = this.load.bind(this)
     this.handleTelegram = this.handleTelegram.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.ref = this.ref.bind(this)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    this.load(this.props.tid)
+  }
+
+  componentWillReceiveProps(props) {
+    this.load(props.tid)
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe()
+  }
+
+  load(tid) {
+    if (tid && this.tid !== tid) {
+      this.tid = tid
+      this.props.subscribe(tid)
+    }
   }
 
   handleTelegram() {
@@ -37,13 +66,13 @@ class Activity extends Component {
 
   renderFooter() {
     return (
-      <View>
+      <View style={styles.footer}>
         <IconButton
           family="evil"
           name="sc-telegram"
           color="gray"
           onPress={this.handleTelegram}
-          style={styles.telegram}
+          iconStyle={styles.telegramIcon}
         >
           <FormattedMessage id="telegram" />
         </IconButton>
@@ -52,10 +81,6 @@ class Activity extends Component {
         </Text>
       </View>
     )
-  }
-
-  renderActivity(row) {
-    return <Card item={row} />
   }
 
   renderHistoryEntry(row) {
@@ -75,15 +100,23 @@ class Activity extends Component {
   }
 
   render() {
-    const {unread} = this.props
+    const {members, activity, unread} = this.props
+
+    const notEmpty = (members.length > 0 || ACTIVITIES.some((type) => activity[type].length > 0))
 
     return (
       <TabView onChangeTab={this.handleChange}>
-        <AsyncContent name="activity"
-          renderRow={this.renderActivity}
-          tabLabel="tab.activity"
-          footer={this.renderFooter()}
-        />
+        <ScrollView tabLabel="tab.activity">
+          <ActivityCard type="members" data={members} />
+          {
+            ACTIVITIES.map((type) =>
+              <ActivityCard key={type} type={type} data={activity[type]} />
+            )
+          }
+          {
+            notEmpty && this.renderFooter()
+          }
+        </ScrollView>
         <AsyncContent name="history"
           ref={this.ref}
           renderRow={this.renderHistoryEntry}
@@ -96,23 +129,34 @@ class Activity extends Component {
 }
 
 const styles = StyleSheet.create({
-  telegram: {
-    alignSelf: 'center',
+  footer: {
+    marginTop: 32,
+    alignItems: 'center',
+  },
+  telegramIcon: {
+    marginTop: 8,
   },
   //TODO: remove (or move):
   version: {
     marginTop: 20,
-    alignSelf: 'center',
     fontSize: 10,
     height: 20,
   },
 })
 
 const mapStateToProps = (state) => ({
-  bot_token: state.user.bot_token,
+  tid: state.tribe.id,
+  members: state.tribe.users.filter((user) => user.joined > Date.now() - (7 * 86400 * 1000)), // new members (one week)
+  activity: state.activity,
   unread: state.app.unread,
+  bot_token: state.user.bot_token,
   lang: state.app.lang, // hack to force update when lang changes
   currency: state.tribe.currency, // hack to force update when currency changes
 })
 
-export default connect(mapStateToProps)(Activity)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  subscribe: getActivity.on,
+  unsubscribe: getActivity.off,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Activity)

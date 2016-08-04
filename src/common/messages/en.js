@@ -250,7 +250,7 @@ export default {
   'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.task.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" task:',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
-  telegram: 'Using Telegram? Chat with TribeezBot!   ',
+  telegram: 'Using Telegram?\nChat with TribeezBot!',
 
   // Members
   'member_since': 'Member since {when, date}',
@@ -278,9 +278,11 @@ export default {
 
   // Notes
   'placeholder.title': 'title',
+  'notes.by': 'By {author}',
 
   // Polls
   poll_answers: '{num, plural, =0 {No answers} one {1 answer} other {# answers}}',
+  asked_by: '{author} asked',
 
   // Common error handling
   'error.request': 'Request error: please try again later',

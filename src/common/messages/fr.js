@@ -250,7 +250,7 @@ const fr = {
   'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.task.comment': '{author, select, _you_ {Vous avez} other {{author} a}} commenté la tâche "{name}" :',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
-  telegram: 'Vous utilisez Telegram ? Discutez avec le TribeezBot !   ',
+  telegram: 'Vous utilisez Telegram ?\nDiscutez avec le TribeezBot !',
 
   // Members
   'member_since': 'Membre depuis le {when, date}',
@@ -278,9 +278,11 @@ const fr = {
 
   // Notes
   'placeholder.title': 'titre',
+  'notes.by': 'Par {author}',
 
   // Polls
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
+  asked_by: '{author} demande',
 
   // Common error handling
   'error.request': 'Erreur: veuillez rééssayer plus tard',

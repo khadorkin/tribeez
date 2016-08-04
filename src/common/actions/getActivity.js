@@ -14,6 +14,8 @@ const DAYS_NEW = 7 // number of days an item remains considerd "new"
 
 const ONE_DAY = 86400000 // one day = 24 x 60 x 60 x 1000 ms
 
+let refs = []
+
 const on = (tid) => {
   return (dispatch) => {
     const uid = auth.currentUser.uid
@@ -25,6 +27,7 @@ const on = (tid) => {
     // POLLS
 
     const pollsRef = tribeRef.child('polls')
+    refs.push(pollsRef)
 
     pollsRef.on('value', (snapshot) => {
       const values = snapshot.val()
@@ -37,7 +40,6 @@ const on = (tid) => {
             name: poll.name,
             added: poll.added,
             author: poll.author,
-            description: poll.description,
           })
         }
       }
@@ -53,6 +55,7 @@ const on = (tid) => {
     // TASKS
 
     const tasksRef = tribeRef.child('tasks')
+    refs.push(tasksRef)
 
     tasksRef.on('value', (snapshot) => {
       const values = snapshot.val()
@@ -81,10 +84,7 @@ const on = (tid) => {
         tasks.push({
           id: key,
           name: task.name,
-          added: task.added,
-          author: task.author,
-          description: task.description,
-          done: task.done,
+          added: task.done,
         })
       }
       dispatch({
@@ -101,6 +101,7 @@ const on = (tid) => {
     const oneHourAgo = now - 3600000
 
     const eventsRef = tribeRef.child('events').orderByChild('index').startAt(oneHourAgo).limitToLast(FETCH_MAX)
+    refs.push(eventsRef)
 
     const eventsCallback = (type, snapshot) => {
       const value = snapshot.val()
@@ -108,9 +109,9 @@ const on = (tid) => {
       const row = {
         id: snapshot.key,
         name: value.name,
-        added: value.added,
-        author: value.author,
-        description: value.description,
+        added: value.start,
+        start: value.start,
+        end: value.end,
       }
 
       dispatch({
@@ -134,6 +135,7 @@ const on = (tid) => {
     // BILLS
 
     const billsRef = tribeRef.child('bills').orderByChild('added').limitToLast(FETCH_MAX)
+    refs.push(billsRef)
 
     const billsCallback = (type, snapshot) => {
       const value = snapshot.val()
@@ -146,10 +148,6 @@ const on = (tid) => {
         id: snapshot.key,
         name: value.name,
         added: value.added,
-        author: value.author,
-        payer: value.payer,
-        description: value.description,
-        amount: value.amount,
         part: value.parts[uid],
       }
 
@@ -174,6 +172,7 @@ const on = (tid) => {
     // NOTES
 
     const notesRef = tribeRef.child('notes')
+    refs.push(notesRef)
 
     notesRef.on('value', (snapshot) => {
       const values = snapshot.val()
@@ -202,7 +201,10 @@ const on = (tid) => {
 
 const off = () => {
   return () => {
-    //TODO
+    refs.forEach((ref) => {
+      ref.off()
+    })
+    refs = []
   }
 }
 

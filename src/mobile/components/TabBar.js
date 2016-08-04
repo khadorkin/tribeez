@@ -28,9 +28,8 @@ class TabBar extends Component {
   }
 
   renderTabOption(id, index) {
-    const isTabActive = this.props.activeTab === index
-    const color = isTabActive ? 'white' : 'white'
-    const fontWeight = isTabActive ? 'bold' : 'normal'
+    const isActive = this.props.activeTab === index
+    const fontWeight = isActive ? 'bold' : 'normal'
     const name = this.props.intl.formatMessage({id})
     const badge = this.props.badges[index]
 
@@ -51,7 +50,7 @@ class TabBar extends Component {
         onPress={() => this.props.goToPage(index)}
       >
         <View style={styles.tab}>
-          <Text style={{color, fontWeight}}>
+          <Text style={[styles.text, {fontWeight}]}>
             {name}
           </Text>
           {badgeNode}
@@ -99,6 +98,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingBottom: 10,
     flexDirection: 'row',
+  },
+  text: {
+    color: colors.lightText,
+    fontSize: 18,
   },
   badge: {
     backgroundColor: colors.error,

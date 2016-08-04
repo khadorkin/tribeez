@@ -17,12 +17,12 @@ import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 
 const menuEntries = [
-  {route: routes.MEMBERS, icon: 'group'},
-  {route: routes.BILLS, icon: 'shopping-cart'},
-  {route: routes.EVENTS, icon: 'event'},
-  {route: routes.TASKS, icon: 'assignment-turned-in'},
-  {route: routes.NOTES, icon: 'content-paste'},
-  {route: routes.POLLS, icon: 'poll'},
+  routes.MEMBERS,
+  routes.BILLS,
+  routes.EVENTS,
+  routes.TASKS,
+  routes.NOTES,
+  routes.POLLS,
 ]
 
 class DrawerContent extends Component {
@@ -103,19 +103,19 @@ class DrawerContent extends Component {
     // works because router.resetTo is called when clicking an entry
     const currentRoute = router.getRoute().name
 
-    const menuItems = menuEntries.map((entry) => {
-      const color = colors[entry.route.name]
-      const isCurrent = (currentRoute === entry.route.name)
+    const menuItems = menuEntries.map((route) => {
+      const color = colors[route.name]
+      const isCurrent = (currentRoute === route.name)
 
       return (
         <IconButton
-          key={entry.route.name}
-          name={entry.icon}
-          onPress={this.handleLink.bind(this, entry.route)}
+          key={route.name}
+          name={route.icon}
+          onPress={this.handleLink.bind(this, route)}
           color={color}
           style={[styles.entry, {borderLeftColor: (isCurrent ? color : colors.background)}]}
         >
-          <FormattedMessage style={[styles.entryText, {color: isCurrent ? color : colors.primaryText}]} id={entry.route.name} />
+          <FormattedMessage style={[styles.entryText, {color: isCurrent ? color : colors.primaryText}]} id={route.name} />
         </IconButton>
       )
     })

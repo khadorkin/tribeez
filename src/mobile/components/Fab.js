@@ -21,7 +21,7 @@ class Fab extends Component {
           onPress={this.props.onPress}
         >
           <View style={styles.button}>
-            <Icon name={this.props.name} color="white" size={24} />
+            <Icon name={this.props.name} color="white" size={30} />
           </View>
         </TouchableNativeFeedback>
       </View>
@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     right: 16,
-    borderRadius: 44,
+    borderRadius: 32,
     backgroundColor: colors.main,
     // Android:
-    elevation: 5,
+    elevation: 6,
     //iOS: TODO
   },
   button: {
-    padding: 16,
+    padding: 12,
   },
 })
 

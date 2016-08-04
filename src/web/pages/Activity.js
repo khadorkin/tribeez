@@ -13,9 +13,7 @@ import Entry from '../components/Entry'
 import SpeedDial from '../components/SpeedDial'
 
 import getActivity from '../../common/actions/getActivity'
-
-// display order of activity cards after members is set here:
-const ACTIVITIES = [/*'members', */'polls', 'tasks', 'events', 'bills', 'notes']
+import {ACTIVITIES} from '../../common/constants/product'
 
 class Activity extends Component {
   static propTypes = {

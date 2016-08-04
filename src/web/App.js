@@ -24,7 +24,7 @@ import Dialog from 'material-ui/Dialog'
 import DrawerContent from './components/DrawerContent'
 
 import config from '../common/config'
-import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
+import {WEB_DRAWER_WIDTH, FB_LOCALES} from '../common/constants/product'
 import routes from './routes'
 import scriptLoader from './utils/scriptLoader'
 import langs from '../common/resources/langs'
@@ -196,7 +196,7 @@ class App extends Component {
         onRequestChange={this.handleNavToggle}
         style={{overflow: 'hidden'}}
         overlayStyle={{cursor: 'w-resize'}}
-        width={MENU_WIDTH}
+        width={WEB_DRAWER_WIDTH}
       >
         <DrawerContent module={pathname.split('/')[1]} />
       </Drawer>
@@ -221,7 +221,7 @@ class App extends Component {
 
     return (
       <IntlProvider locale={lang} messages={this.props.messages} formats={this.props.formats}>
-        <div className="app" style={{marginLeft: dockedUserMenu ? MENU_WIDTH : 0}}>
+        <div className="app" style={{marginLeft: dockedUserMenu ? WEB_DRAWER_WIDTH : 0}}>
           {nav}
           <AppBar title={title} zDepth={0}
             iconElementLeft={iconLeft} iconElementRight={iconRight}

@@ -151,7 +151,7 @@ class App extends Component {
       },
       RightButton: (route/*, navigator, index, navState*/) => {
         if (loading) {
-          return <ActivityIndicator size="small" color="white" style={styles.rightIcon} />
+          return <ActivityIndicator size="small" color="white" style={styles.loading} />
         }
         if (route.type === 'details' && route.name !== 'member') { //TODO: not show if does not exist
           return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
@@ -265,7 +265,10 @@ const styles = StyleSheet.create({
     marginRight: 56, // to not overlap the right icon
   },
   rightIcon: {
-    padding: 15,
+    padding: 12,
+  },
+  loading: {
+    padding: 17,
   },
   scene: {
     backgroundColor: colors.background,

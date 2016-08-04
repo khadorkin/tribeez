@@ -26,6 +26,9 @@ class Header extends Component {
       )
     }
 
+    // the image shadow is used since the elevation API also affects z-index
+    // and we don't want to overlap elements
+
     if (only === 'shadow') {
       return (
         <Image source={shadow} resizeMode="cover" style={[styles.shadow, style]} />

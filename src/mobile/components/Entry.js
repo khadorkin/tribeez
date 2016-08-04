@@ -105,13 +105,13 @@ class Entry extends Component {
     const date = <FormattedRelative value={entry.time} />
 
     return (
-      <View style={[styles.container, entry.new ? styles.new : styles.read]}>
+      <View style={entry.new ? styles.new : styles.read}>
         <Touchable onPress={this.handleTouch} style={styles.main}>
           <Image
             source={{uri: gravatar(author)}}
             style={styles.avatar}
           />
-          <View style={styles.titles}>
+          <View style={styles.text}>
             <Text style={styles.title}>{title}</Text>
             {infos}
             <Text style={styles.date}>{date}</Text>
@@ -129,10 +129,6 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: 5,
-    elevation: 1,
-  },
   new: {
     backgroundColor: colors.new,
   },
@@ -140,17 +136,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   main: {
-    padding: 10,
+    paddingLeft: 12,
+    paddingTop: 12,
     flexDirection: 'row',
   },
   avatar: {
     height: 40,
     width: 40,
     borderRadius: 20,
-    marginRight: 10,
+    marginRight: 12,
   },
-  titles: {
+  text: {
     flex: 1,
+    paddingBottom: 12,
+    paddingRight: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.underline,
   },
   title: {
     color: colors.primaryText,
