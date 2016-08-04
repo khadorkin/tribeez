@@ -25,7 +25,7 @@ class Bills extends Component {
 
   handleFab() {
     const route = routes.BILLS_NEW
-    route.edit = null
+    route.props = {} // clear 'edit' prop = null
     router.push(route)
   }
 

@@ -43,7 +43,9 @@ class Details extends Component {
 
   handleFab() {
     const route = this.props.editRoute
-    route.edit = this.props.item
+    route.props = {
+      edit: this.props.item,
+    }
     router.push(route)
   }
 

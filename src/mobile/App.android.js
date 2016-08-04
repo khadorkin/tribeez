@@ -92,8 +92,10 @@ class App extends Component {
         const join = url.match(/\/join\/([^\/]+)\/([^\/]+)/)
         if (join) {
           const route = routes.JOIN
-          route.tribe = join[1]
-          route.token = join[2]
+          route.props = {
+            tribe: join[1],
+            token: join[2],
+          }
           router.push(route)
           return
         }
@@ -142,9 +144,9 @@ class App extends Component {
         if (route.noHeader) {
           return null
         }
-        if (route.item && route.item.name) {
+        if (route.title) {
           //TODO: allow variable height
-          return <Text style={styles.navTitle}>{route.item.name}</Text>
+          return <Text style={styles.navTitle}>{route.title}</Text>
         } else {
           return <FormattedMessage style={styles.navTitle} id={route.name} />
         }
@@ -179,14 +181,14 @@ class App extends Component {
 
   handleDelete(route) {
     const {messages} = this.props
-    Alert.alert(route.item.name, messages.dialog_delete, [
+    Alert.alert(route.title, messages.dialog_delete, [
       {text: messages.cancel},
       {text: messages.delete, onPress: this.handleConfirmDelete.bind(this, route)},
     ])
   }
 
   handleConfirmDelete(route) {
-    this.props.deleteItem(route.name, route.item.id)
+    this.props.deleteItem(route.name, route.props.id)
     router.pop()
   }
 
@@ -202,20 +204,7 @@ class App extends Component {
 
   renderScene(route, navigator) {
     router.update(navigator)
-    const props = {}
-    if (route.tribe) {
-      props.tribe = route.tribe
-    }
-    if (route.token) {
-      props.token = route.token
-    }
-    if (route.item) {
-      props.id = route.item.id
-    }
-    if (route.edit) {
-      props.edit = route.edit
-    }
-    return <route.component {...props} />
+    return <route.component {...route.props} />
   }
 
   render() {

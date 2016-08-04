@@ -26,10 +26,10 @@ class Member extends Component {
 
   handlePress() {
     const route = routes.MEMBER
-    route.item = {
+    route.props = {
       id: this.props.user.uid,
-      name: this.props.user.name,
     }
+    route.title = this.props.user.name
     router.push(route)
   }
 

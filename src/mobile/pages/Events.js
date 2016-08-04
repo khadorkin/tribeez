@@ -25,7 +25,7 @@ class Events extends Component {
 
   handleFab() {
     const route = routes.EVENTS_NEW
-    route.edit = null
+    route.props = {} // clear 'edit' prop = null
     router.push(route)
   }
 

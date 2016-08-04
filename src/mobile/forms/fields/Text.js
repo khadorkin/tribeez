@@ -58,7 +58,7 @@ class TextField extends Component {
   }
 
   render() {
-    const {intl, name, touched, error, errorId, currency, ...props} = this.props
+    const {intl, name, value, touched, error, errorId, currency, ...props} = this.props
 
     const errorMessage = touched && error && ('error.' + (errorId || name))
 
@@ -74,7 +74,7 @@ class TextField extends Component {
     return (
       <View style={styles.container}>
         <MKTextField ref={this.ref}
-          //value={String(value)}
+          value={String(value)}
           placeholder={intl.formatMessage({id: 'field.' + name})}
           floatingLabelEnabled={true}
           highlightColor={colors.input} // Color of highlighted underline & floating label

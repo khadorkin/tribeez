@@ -28,7 +28,10 @@ class Task extends Component {
 
   handlePress() {
     const route = routes.TASK
-    route.item = this.props.task
+    route.props = {
+      id: this.props.task.id,
+    }
+    route.title = this.props.task.name
     router.push(route)
   }
 

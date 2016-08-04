@@ -30,7 +30,10 @@ class Bill extends Component {
 
   handlePress() {
     const route = routes.BILL
-    route.item = this.props.bill
+    route.props = {
+      id: this.props.bill.id,
+    }
+    route.title = this.props.bill.name
     router.push(route)
   }
 

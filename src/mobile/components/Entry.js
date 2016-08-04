@@ -36,12 +36,16 @@ class Entry extends Component {
 
     const route = routes[entry.type.toUpperCase()]
     if (route.name === 'member') {
-      route.item = {
+      route.props = {
         id: entry.author,
         name: this.props.userMap[entry.author].name,
       }
+      route.title = this.props.userMap[entry.author].name
     } else {
-      route.item = entry.item
+      route.props = {
+        id: entry.item.id,
+      }
+      route.title = entry.item.name
     }
 
     router.push(route)

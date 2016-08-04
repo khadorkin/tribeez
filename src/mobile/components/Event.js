@@ -26,7 +26,10 @@ class Event extends Component {
 
   handlePress() {
     const route = routes.EVENT
-    route.item = this.props.event
+    route.props = {
+      id: this.props.event.id,
+    }
+    route.title = this.props.event.name
     router.push(route)
   }
 

@@ -20,7 +20,7 @@ class Polls extends Component {
 
   handleFab() {
     const route = routes.POLLS_NEW
-    route.edit = null
+    route.props = {} // clear 'edit' prop = null
     router.push(route)
   }
 

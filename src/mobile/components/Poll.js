@@ -29,7 +29,10 @@ class Poll extends Component {
 
   handlePress() {
     const route = routes.POLL
-    route.item = this.props.poll
+    route.props = {
+      id: this.props.poll.id,
+    }
+    route.title = this.props.poll.name
     router.push(route)
   }
 
