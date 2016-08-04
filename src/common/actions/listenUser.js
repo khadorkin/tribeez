@@ -45,7 +45,6 @@ const on = (uid) => {
 
       if (auth.currentUser.tid !== tid) {
         dispatch(listenTribe.off())
-        auth.currentUser.tid = tid
         dispatch(listenTribe.on(tid))
       }
     }, (error) => {

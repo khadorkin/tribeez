@@ -49,9 +49,12 @@ class Activity extends Component {
   }
 
   load(tid) {
-    if (tid && this.tid !== tid) {
+    if (this.tid !== tid) { // new tid (login) or modified (switch)
+      this.props.unsubscribe()
+      if (tid) {
+        this.props.subscribe(tid)
+      }
       this.tid = tid
-      this.props.subscribe(tid)
     }
   }
 

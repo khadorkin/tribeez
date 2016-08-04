@@ -2,9 +2,25 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {FormattedMessage, FormattedRelative} from 'react-intl'
 
-import {Card, CardTitle, CardText} from 'material-ui/Card'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
 
-//import Paper from 'material-ui/Paper'
+import GroupIcon from 'material-ui/svg-icons/social/group'
+import CartIcon from 'material-ui/svg-icons/action/shopping-cart'
+import EventIcon from 'material-ui/svg-icons/action/event'
+import CheckIcon from 'material-ui/svg-icons/action/assignment-turned-in'
+import PasteIcon from 'material-ui/svg-icons/content/content-paste'
+import PollIcon from 'material-ui/svg-icons/social/poll'
+
+import colors from '../../common/constants/colors'
+
+const icons = {
+  members: <GroupIcon />,
+  bills: <CartIcon />,
+  events: <EventIcon />,
+  tasks: <CheckIcon />,
+  notes: <PasteIcon />,
+  polls: <PollIcon />,
+}
 
 class ActivityCard extends Component {
   static propTypes = {
@@ -19,25 +35,80 @@ class ActivityCard extends Component {
   constructor(props) {
     super(props)
     this.renderItem = this.renderItem.bind(this)
-    this.renderMember = this.renderMember.bind(this)
   }
 
   renderItem(row) {
-    const author = this.props.userMap[row.author]
+    let author
+    if (row.author) {
+      const authorObj = this.props.userMap[row.author]
+      if (!authorObj) { // might not be available when switching tribe
+        return null
+      }
+      author = authorObj.name
+    }
+
+    let date = row.added
+    let textId = null
+    let values = null
+
+    switch (this.props.type) {
+      case 'members':
+        date = row.joined
+        break
+      case 'polls':
+        textId = 'asked_by'
+        values = {author}
+        break
+      case 'tasks':
+        //nothing
+        break
+      case 'bills':
+        if (row.part) {
+          textId = 'bill.mypart'
+          values = {amount: row.part}
+        } else {
+          textId = 'bill.nopart'
+        }
+        break
+      case 'events':
+        const start = new Date(row.start)
+        const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
+        if (row.end) {
+          textId = 'interval' + suffix
+          values = {start: row.start, end: row.end}
+        } else {
+          textId = 'date' + suffix
+          values = {date: row.start}
+        }
+        break
+      case 'notes':
+        textId = 'notes.by'
+        values = {author}
+        break
+    }
+
     return (
-      <div key={row.id}>
-        {author.name} / "{row.name}" / <FormattedRelative value={row.added} />
-      </div>
+      <CardText key={row.id || row.uid} style={styles.itemContainer}>
+        <div style={styles.itemTitle}>{row.name}</div>
+        {
+          textId && (
+            <div style={styles.itemText}>
+              <FormattedMessage id={textId} values={values} />
+            </div>
+          )
+        }
+        {
+          date && (
+            <div style={styles.itemTime}>
+              <FormattedRelative value={date} />
+            </div>
+          )
+        }
+      </CardText>
     )
   }
 
-  renderMember(row) {
-    return (
-      <div key={row.id}>
-        {row.name} joined / <FormattedRelative value={row.joined} />
-      </div>
-    )
-  }
+  //TODO: toggables cards
 
   render() {
     const {type, data} = this.props
@@ -46,23 +117,15 @@ class ActivityCard extends Component {
       return null
     }
 
-    let renderer
-    switch (type) {
-      case 'members':
-        renderer = this.renderMember
-        break
-      default:
-        renderer = this.renderItem
-    }
-
     return (
       <Card style={styles.container}>
-        <CardTitle title={<FormattedMessage id={'activity.' + type} values={{num: data.length}} />} />
-        <CardText>
-          {
-            data.map(renderer)
-          }
-        </CardText>
+        <CardHeader
+          title={<FormattedMessage id={'activity.' + type} values={{num: data.length}} />}
+          avatar={icons[type]}
+        />
+        {
+          data.map(this.renderItem)
+        }
       </Card>
     )
   }
@@ -72,6 +135,22 @@ const styles = {
   container: {
     margin: '15px 15px 0',
     padding: '5px 15px',
+  },
+  itemContainer: {
+    position: 'relative',
+  },
+  itemTitle: {
+    //TODO
+  },
+  itemText: {
+    color: colors.secondaryText,
+  },
+  itemTime: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
+    fontStyle: 'italic',
+    color: colors.secondaryText,
   },
 }
 

@@ -25,7 +25,7 @@ export const login = (user) => {
 
     const stop = auth.onAuthStateChanged((connectedUser) => {
       if (!connectedUser) {
-        dispatch(logout())
+        dispatch(logout()) // warning: exceptions are ignored here :/
         stop()
       }
     })
@@ -34,9 +34,6 @@ export const login = (user) => {
 
 export const logout = () => {
   return (dispatch) => {
-    // too late => should be done in postLogout:
-    dispatch(listenUser.off()) // will raise an error if user is logged out by firebase
-
     dispatch({
       type: LOGGED_OUT,
     })

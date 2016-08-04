@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
 import {connect} from 'react-redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -26,8 +26,14 @@ class ActivityCard extends Component {
   }
 
   renderItem(row) {
-    const authorObj = this.props.userMap[row.author]
-    const author = authorObj && authorObj.name // might not be available when switching tribe
+    let author
+    if (row.author) {
+      const authorObj = this.props.userMap[row.author]
+      if (!authorObj) { // might not be available when switching tribe
+        return null
+      }
+      author = authorObj.name
+    }
 
     let date = row.added
     let textId = null
@@ -75,7 +81,7 @@ class ActivityCard extends Component {
           <Text style={styles.itemTitle}>{row.name}</Text>
           {textId && <FormattedMessage style={styles.itemText} id={textId} values={values} />}
         </View>
-        <FormattedRelative value={date} style={styles.date} />
+        <FormattedRelative value={date} style={styles.itemTime} />
       </View>
     )
   }
@@ -146,7 +152,7 @@ const styles = StyleSheet.create({
   itemText: {
     color: colors.secondaryText,
   },
-  date: {
+  itemTime: {
     fontStyle: 'italic',
     color: colors.secondaryText,
     marginLeft: 16,

@@ -4,6 +4,7 @@ import {
   COMMENT_REQUEST,
   COMMENT_SUCCESS,
   COMMENT_FAILURE,
+  ITEM_CLEAR,
   LOGGED_OUT,
 } from '../constants/actions'
 
@@ -47,6 +48,7 @@ export default (state = initialState, action = null) => {
         commenting: false,
       }
 
+    case ITEM_CLEAR:
     case LOGGED_OUT:
       return {...initialState}
     default:

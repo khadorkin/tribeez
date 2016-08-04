@@ -18,6 +18,8 @@ let lastKeyRef
 
 const on = (tid) => {
   return (dispatch) => {
+    auth.currentUser.tid = tid
+
     tribeRef = db.ref('tribes/' + tid + '/infos')
 
     tribeRef.on('value', (sub_snapshot) => {
@@ -140,6 +142,9 @@ const off = () => {
     dispatch({
       type: MEMBERS_REMOVED,
     })
+    if (auth.currentUser) {
+      auth.currentUser.tid = null
+    }
   }
 }
 

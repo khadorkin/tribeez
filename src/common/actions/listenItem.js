@@ -4,6 +4,7 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   ITEM,
+  ITEM_CLEAR,
 } from '../constants/actions'
 
 import {firebaseError} from './error'
@@ -50,9 +51,7 @@ const off = (itemType/*, id*/) => {
   return (dispatch) => {
     if (ref) {
       dispatch({
-        type: ITEM,
-        itemType,
-        item: null,
+        type: ITEM_CLEAR,
       })
       ref.off('value')
       ref = null

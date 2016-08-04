@@ -66,14 +66,12 @@ class Details extends Component {
       )
     }
 
-    if (!item) { // should only happen on Firebase error
-      return null
-    }
+    // item is null when logging out and on firebase error
 
     return (
       <View style={styles.container}>
         <Header />
-        {children}
+        {item && children}
         {editRoute && <Fab name="edit" onPress={this.handleFab} />}
       </View>
     )

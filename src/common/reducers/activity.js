@@ -8,7 +8,7 @@ import {
 } from '../constants/actions'
 
 const initialState = {
-  members: [],
+  //members: [], // handled separately
   polls: [],
   tasks: [],
   events: [],

@@ -9,6 +9,9 @@ import {
 
 import {firebaseError} from './error'
 
+import listenActivity from './listenActivity'
+import listenItem from './listenItem'
+import listenNotes from './listenNotes'
 import listenUser from './listenUser'
 
 export default () => {
@@ -28,6 +31,9 @@ export default () => {
 
     promise
     .then(() => {
+      dispatch(listenActivity.off())
+      dispatch(listenItem.off())
+      dispatch(listenNotes.off())
       dispatch(listenUser.off())
     })
     .then(() => {
