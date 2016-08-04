@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, Text, Linking, StyleSheet} from 'react-native'
+import {ActivityIndicator, View, ScrollView, Text, Linking, StyleSheet} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -11,9 +11,9 @@ import IconButton from '../components/IconButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import config from '../../common/config'
-
-import listenActivity from '../../common/actions/listenActivity'
 import {ACTIVITIES} from '../../common/constants/product'
+import colors from '../../common/constants/colors'
+import listenActivity from '../../common/actions/listenActivity'
 
 class Activity extends Component {
   static propTypes = {
@@ -67,18 +67,23 @@ class Activity extends Component {
       })
   }
 
-  renderFooter() {
+  renderFooter(notEmpty) {
     return (
       <View style={styles.footer}>
-        <IconButton
-          family="evil"
-          name="sc-telegram"
-          color="gray"
-          onPress={this.handleTelegram}
-          iconStyle={styles.telegramIcon}
-        >
-          <FormattedMessage id="telegram" />
-        </IconButton>
+        <ActivityIndicator size="small" color={colors.main} animating={this.props.activity.loading} />
+        {
+          notEmpty && (
+            <IconButton
+              family="evil"
+              name="sc-telegram"
+              color="gray"
+              onPress={this.handleTelegram}
+              iconStyle={styles.telegramIcon}
+            >
+              <FormattedMessage id="telegram" />
+            </IconButton>
+          )
+        }
         <Text style={styles.version}>
           App version: beta {config.android.versionName}
         </Text>
@@ -117,7 +122,7 @@ class Activity extends Component {
             )
           }
           {
-            notEmpty && this.renderFooter()
+            this.renderFooter(notEmpty)
           }
         </ScrollView>
         <AsyncContent name="history"

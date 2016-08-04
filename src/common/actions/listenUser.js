@@ -1,7 +1,7 @@
 import {db, auth, timestamp} from '../firebase'
 import fcm from '../fcm'
 
-import {USER_UPDATED} from '../constants/actions'
+import {FIREBASE_REQUEST, USER_UPDATED} from '../constants/actions'
 
 import {firebaseError} from './error'
 
@@ -25,9 +25,9 @@ const on = (uid) => {
       }
     }
 
-    // dispatch({
-    //   type: FIREBASE_REQUEST,
-    // })
+    dispatch({
+      type: FIREBASE_REQUEST, // FIREBASE_SUCCESS is handled in listenTribe.on
+    })
 
     publicRef = db.ref('users/' + uid)
 

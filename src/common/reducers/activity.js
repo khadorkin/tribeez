@@ -1,4 +1,5 @@
 import {
+  ACTIVITY_LOADED,
   ACTIVITY,
   ACTIVITY_ADDED,
   ACTIVITY_CHANGED,
@@ -14,10 +15,16 @@ const initialState = {
   events: [],
   bills: [],
   notes: [],
+  loading: true,
 }
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
+    case ACTIVITY_LOADED:
+      return {
+        ...state,
+        loading: false,
+      }
     case ACTIVITY:
       return {
         ...state,

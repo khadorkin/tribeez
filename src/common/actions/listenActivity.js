@@ -1,6 +1,7 @@
 import {db, auth} from '../firebase'
 
 import {
+  ACTIVITY_LOADED,
   ACTIVITY,
   ACTIVITY_CLEAR,
   ACTIVITY_ADDED,
@@ -24,6 +25,16 @@ const on = (tid) => {
 
     const tribeRef = db.ref('tribes/' + tid)
 
+    let loaded = 0
+    const loadedOne = () => {
+      loaded++
+      if (loaded === 3) {
+        dispatch({
+          type: ACTIVITY_LOADED,
+        })
+      }
+    }
+
 
     // POLLS
 
@@ -44,6 +55,7 @@ const on = (tid) => {
           })
         }
       }
+      loadedOne()
       dispatch({
         type: ACTIVITY,
         data: {polls},
@@ -88,6 +100,7 @@ const on = (tid) => {
           added: task.done,
         })
       }
+      loadedOne()
       dispatch({
         type: ACTIVITY,
         data: {tasks},
@@ -190,6 +203,7 @@ const on = (tid) => {
           })
         }
       }
+      loadedOne()
       dispatch({
         type: ACTIVITY,
         data: {notes},

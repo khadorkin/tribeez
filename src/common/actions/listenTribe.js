@@ -7,6 +7,7 @@ import {
   SNACK_MESSAGE,
   UNREAD,
   MEMBERS_REMOVED,
+  FIREBASE_SUCCESS,
 } from '../constants/actions'
 
 import {firebaseError} from './error'
@@ -22,6 +23,8 @@ const on = (tid) => {
 
     tribeRef = db.ref('tribes/' + tid + '/infos')
 
+    let gotOnce = false
+
     tribeRef.on('value', (sub_snapshot) => {
       const tribe = sub_snapshot.val()
       tribe.id = tid
@@ -31,9 +34,12 @@ const on = (tid) => {
         type: TRIBE_UPDATED,
         tribe,
       })
-      // dispatch({
-      //   type: FIREBASE_SUCCESS,
-      // })
+      if (!gotOnce) {
+        dispatch({
+          type: FIREBASE_SUCCESS,
+        })
+        gotOnce = true
+      }
     }, (error) => {
       dispatch(firebaseError(error, 'listenUser/tribe_infos'))
     })
