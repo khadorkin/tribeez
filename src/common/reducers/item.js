@@ -4,7 +4,7 @@ import {
   COMMENT_REQUEST,
   COMMENT_SUCCESS,
   COMMENT_FAILURE,
-  LOGOUT_SUCCESS,
+  LOGGED_OUT,
 } from '../constants/actions'
 
 const initialState = {
@@ -47,7 +47,7 @@ export default (state = initialState, action = null) => {
         commenting: false,
       }
 
-    case LOGOUT_SUCCESS:
+    case LOGGED_OUT:
       return {...initialState}
     default:
       return state

@@ -2,6 +2,7 @@ import {db, auth} from '../firebase'
 
 import {
   ACTIVITY,
+  ACTIVITY_CLEAR,
   ACTIVITY_ADDED,
   ACTIVITY_CHANGED,
   ACTIVITY_REMOVED,
@@ -48,7 +49,7 @@ const on = (tid) => {
         data: {polls},
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'getActivity/polls'))
+      dispatch(firebaseError(error, 'listenActivity/polls'))
     })
 
 
@@ -92,7 +93,7 @@ const on = (tid) => {
         data: {tasks},
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'getActivity/tasks'))
+      dispatch(firebaseError(error, 'listenActivity/tasks'))
     })
 
 
@@ -122,13 +123,13 @@ const on = (tid) => {
     }
 
     eventsRef.on('child_added', eventsCallback.bind(null, ACTIVITY_ADDED), (error) => {
-      dispatch(firebaseError(error, 'getActivity/events/added'))
+      dispatch(firebaseError(error, 'listenActivity/events/added'))
     })
     eventsRef.on('child_changed', eventsCallback.bind(null, ACTIVITY_CHANGED), (error) => {
-      dispatch(firebaseError(error, 'getActivity/events/changed'))
+      dispatch(firebaseError(error, 'listenActivity/events/changed'))
     })
     eventsRef.on('child_removed', eventsCallback.bind(null, ACTIVITY_REMOVED), (error) => {
-      dispatch(firebaseError(error, 'getActivity/events/removed'))
+      dispatch(firebaseError(error, 'listenActivity/events/removed'))
     })
 
 
@@ -159,13 +160,13 @@ const on = (tid) => {
     }
 
     billsRef.on('child_added', billsCallback.bind(null, ACTIVITY_ADDED), (error) => {
-      dispatch(firebaseError(error, 'getActivity/bills/added'))
+      dispatch(firebaseError(error, 'listenActivity/bills/added'))
     })
     billsRef.on('child_changed', billsCallback.bind(null, ACTIVITY_CHANGED), (error) => {
-      dispatch(firebaseError(error, 'getActivity/bills/changed'))
+      dispatch(firebaseError(error, 'listenActivity/bills/changed'))
     })
     billsRef.on('child_removed', billsCallback.bind(null, ACTIVITY_REMOVED), (error) => {
-      dispatch(firebaseError(error, 'getActivity/bills/removed'))
+      dispatch(firebaseError(error, 'listenActivity/bills/removed'))
     })
 
 
@@ -194,17 +195,20 @@ const on = (tid) => {
         data: {notes},
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'getActivity/tasks'))
+      dispatch(firebaseError(error, 'listenActivity/tasks'))
     })
   }
 }
 
 const off = () => {
-  return () => {
+  return (dispatch) => {
     refs.forEach((ref) => {
       ref.off()
     })
     refs = []
+    dispatch({
+      type: ACTIVITY_CLEAR,
+    })
   }
 }
 

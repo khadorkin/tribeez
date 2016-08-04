@@ -9,7 +9,6 @@ import {
 import router from '../router'
 import routes from '../routes'
 
-import getMember from './getMember'
 import {firebaseError} from './error'
 
 export default (tid) => {
@@ -21,9 +20,7 @@ export default (tid) => {
     })
     db.ref('users/' + uid + '/current_tribe').set(tid)
     .then(() => {
-      dispatch(getMember.off())
       router.resetTo(routes.ACTIVITY, dispatch)
-      dispatch(getMember.on(uid))
       dispatch({
         type: SNACK_MESSAGE,
         message: 'switched',

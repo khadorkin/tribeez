@@ -3,6 +3,8 @@ import {
   ACTIVITY_ADDED,
   ACTIVITY_CHANGED,
   ACTIVITY_REMOVED,
+  ACTIVITY_CLEAR,
+  LOGGED_OUT,
 } from '../constants/actions'
 
 const initialState = {
@@ -40,6 +42,12 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         [action.in]: state[action.in].filter((row) => (row.id !== action.row.id)),
+      }
+
+    case ACTIVITY_CLEAR:
+    case LOGGED_OUT:
+      return {
+        ...initialState,
       }
     default:
       return state

@@ -5,7 +5,6 @@ import {SNACK_MESSAGE} from '../constants/actions'
 import router from '../router'
 import routes from '../routes'
 
-import getMember from './getMember'
 import {firebaseError} from './error'
 
 export default (values, dispatch) => {
@@ -109,8 +108,6 @@ export default (values, dispatch) => {
         })
       })
       .then(() => {
-        dispatch(getMember.off())
-        dispatch(getMember.on(uid))
         resolve()
         router.resetTo(routes.ACTIVITY, dispatch)
         dispatch({

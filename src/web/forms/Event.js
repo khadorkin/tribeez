@@ -10,7 +10,7 @@ import SelectField from './fields/Select'
 
 import form from '../../common/forms/event'
 import focus from '../../common/utils/formFocus'
-import getItem from '../../common/actions/getItem'
+import listenItem from '../../common/actions/listenItem'
 import submitEvent from '../../common/actions/submitEvent'
 
 import {REMINDERS} from '../../common/constants/product'
@@ -97,6 +97,6 @@ class EventForm extends Component {
 }
 
 export default form(EventForm, {
-  subscribe: getItem.on,
-  unsubscribe: getItem.off,
+  subscribe: listenItem.on,
+  unsubscribe: listenItem.off,
 })

@@ -10,7 +10,7 @@ import Checkbox from './fields/Checkbox'
 
 import form from '../../common/forms/poll'
 import focus from '../../common/utils/formFocus'
-import getItem from '../../common/actions/getItem'
+import listenItem from '../../common/actions/listenItem'
 import submitPoll from '../../common/actions/submitPoll'
 
 class PollForm extends Component {
@@ -86,6 +86,6 @@ class PollForm extends Component {
 }
 
 export default form(PollForm, {
-  subscribe: getItem.on,
-  unsubscribe: getItem.off,
+  subscribe: listenItem.on,
+  unsubscribe: listenItem.off,
 })

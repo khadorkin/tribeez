@@ -1,23 +1,71 @@
 import {db, auth} from '../firebase'
 
 import {
+  TRIBE_UPDATED,
+  MEMBER_ADDED,
+  MEMBER_UPDATED,
   SNACK_MESSAGE,
   UNREAD,
+  MEMBERS_REMOVED,
 } from '../constants/actions'
 
 import {firebaseError} from './error'
 
+let tribeRef
+let memberRef
 let historyRef
 let lastKeyRef
 
 const on = (tid) => {
   return (dispatch) => {
+    tribeRef = db.ref('tribes/' + tid + '/infos')
+
+    tribeRef.on('value', (sub_snapshot) => {
+      const tribe = sub_snapshot.val()
+      tribe.id = tid
+      auth.currentUser.tribe = tribe.name
+
+      dispatch({
+        type: TRIBE_UPDATED,
+        tribe,
+      })
+      // dispatch({
+      //   type: FIREBASE_SUCCESS,
+      // })
+    }, (error) => {
+      dispatch(firebaseError(error, 'listenUser/tribe_infos'))
+    })
+
+    memberRef = db.ref('tribes/' + tid + '/members')
+
+    memberRef.on('child_added', (sub_snapshot) => {
+      const member = sub_snapshot.val()
+      member.uid = sub_snapshot.key
+      dispatch({
+        type: MEMBER_ADDED,
+        member,
+      })
+    }, (error) => {
+      dispatch(firebaseError(error, 'listenUser/tribe_members/added'))
+    })
+
+    memberRef.on('child_changed', (sub_snapshot) => {
+      const member = sub_snapshot.val()
+      member.uid = sub_snapshot.key
+      dispatch({
+        type: MEMBER_UPDATED,
+        member,
+      })
+    }, (error) => {
+      dispatch(firebaseError(error, 'listenUser/tribe_members/changed'))
+    })
+
     historyRef = db.ref('tribes/' + tid + '/history')
     let isNew = false
     let lastKey
 
     const onError = (error) => {
-      dispatch(firebaseError(error, 'getUnread'))
+      dispatch(firebaseError(error, 'listenTribe'))
     }
 
     const countUnread = () => {
@@ -72,7 +120,15 @@ const on = (tid) => {
 }
 
 const off = () => {
-  return () => {
+  return (dispatch) => {
+    if (tribeRef) {
+      tribeRef.off()
+      tribeRef = null
+    }
+    if (memberRef) {
+      memberRef.off()
+      memberRef = null
+    }
     if (historyRef) {
       historyRef.off()
       historyRef = null
@@ -81,6 +137,9 @@ const off = () => {
       lastKeyRef.off()
       lastKeyRef = null
     }
+    dispatch({
+      type: MEMBERS_REMOVED,
+    })
   }
 }
 

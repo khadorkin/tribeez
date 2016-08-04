@@ -27,6 +27,7 @@ export const ACTIVITY = 'ACTIVITY'
 export const ACTIVITY_ADDED = 'ACTIVITY_ADDED'
 export const ACTIVITY_CHANGED = 'ACTIVITY_CHANGED'
 export const ACTIVITY_REMOVED = 'ACTIVITY_REMOVED'
+export const ACTIVITY_CLEAR = 'ACTIVITY_CLEAR'
 
 
 // other events:

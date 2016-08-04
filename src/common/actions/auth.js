@@ -9,8 +9,7 @@ import {
   LOGIN_DESTINATION,
 } from '../constants/actions'
 
-import getMember from './getMember'
-import getUnread from './getUnread'
+import listenUser from './listenUser'
 
 export const login = (user) => {
   return (dispatch, getState) => {
@@ -19,8 +18,7 @@ export const login = (user) => {
       user,
     })
 
-    dispatch(getMember.on(user.uid))
-    // the subscription to getUnread.on is done once we have the tribe ID
+    dispatch(listenUser.on(user.uid))
 
     const destination = getState().login.destination || routes.ACTIVITY
     router.resetTo(destination, dispatch)
@@ -37,9 +35,7 @@ export const login = (user) => {
 export const logout = () => {
   return (dispatch) => {
     // too late => should be done in postLogout:
-    dispatch(getMember.off())
-    dispatch(getUnread.off())
-    // these two listeners will raise an error if user is logged out by firebase
+    dispatch(listenUser.off()) // will raise an error if user is logged out by firebase
 
     dispatch({
       type: LOGGED_OUT,

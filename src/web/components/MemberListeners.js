@@ -1,9 +1,8 @@
 import {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {bindActionCreators, compose} from 'redux'
+import {compose} from 'redux'
 import {injectIntl, intlShape} from 'react-intl'
 
-import getUnread from '../../common/actions/getUnread'
 import gravatar from '../../common/utils/gravatar'
 
 class MemberListeners extends Component {
@@ -15,12 +14,10 @@ class MemberListeners extends Component {
     snack: PropTypes.object.isRequired,
     userMap: PropTypes.object,
     // action creators:
-    subscribe: PropTypes.func.isRequired,
   }
 
   componentWillReceiveProps(props) {
     if (props.tid && !this.subscribed) {
-      this.props.subscribe(props.tid)
       this.subscribed = true
 
       if (window.Notification && Notification.permission !== 'granted') {
@@ -49,11 +46,7 @@ const mapStateToProps = (state) => ({
   userMap: state.tribe.userMap,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getUnread.on,
-}, dispatch)
-
 export default compose(
   injectIntl,
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
 )(MemberListeners)

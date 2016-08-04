@@ -6,7 +6,6 @@ import {bindActionCreators, compose} from 'redux'
 import {injectIntl, intlShape} from 'react-intl'
 
 import {closeSnack} from '../../common/actions/app'
-import getUnread from '../../common/actions/getUnread'
 
 class Snackbar extends Component {
   static propTypes = {
@@ -18,14 +17,9 @@ class Snackbar extends Component {
     snack: PropTypes.object.isRequired,
     // action creators:
     closeSnack: PropTypes.func.isRequired,
-    subscribe: PropTypes.func.isRequired,
   }
 
   componentWillReceiveProps(props) {
-    if (props.tid && !this.props.tid) {
-      this.props.subscribe(props.tid)
-    }
-
     const {snack} = props
 
     if (!snack.open) {
@@ -57,7 +51,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   closeSnack,
-  subscribe: getUnread.on,
 }, dispatch)
 
 export default compose(

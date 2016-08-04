@@ -8,7 +8,7 @@ import Header from '../components/Header'
 import FormattedMessage from '../components/FormattedMessage'
 import Fab from '../components/Fab'
 
-import getItem from '../../common/actions/getItem'
+import listenItem from '../../common/actions/listenItem'
 
 import colors from '../../common/constants/colors'
 import router from '../../common/router'
@@ -102,8 +102,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getItem.on,
-  unsubscribe: getItem.off,
+  subscribe: listenItem.on,
+  unsubscribe: listenItem.off,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Details)

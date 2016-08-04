@@ -12,7 +12,7 @@ import FormattedMessage from '../components/FormattedMessage'
 
 import config from '../../common/config'
 
-import getActivity from '../../common/actions/getActivity'
+import listenActivity from '../../common/actions/listenActivity'
 import {ACTIVITIES} from '../../common/constants/product'
 
 class Activity extends Component {
@@ -50,7 +50,8 @@ class Activity extends Component {
   }
 
   load(tid) {
-    if (tid && this.tid !== tid) {
+    if (tid && this.tid !== tid) { // new tid (login) or modified (switch)
+      this.props.unsubscribe()
       this.tid = tid
       this.props.subscribe(tid)
     }
@@ -155,8 +156,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getActivity.on,
-  unsubscribe: getActivity.off,
+  subscribe: listenActivity.on,
+  unsubscribe: listenActivity.off,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity)

@@ -10,7 +10,7 @@ import PageView from '../hoc/PageView'
 import Note from '../components/Note'
 import Fab from '../components/Fab'
 
-import getNotes from '../../common/actions/getNotes'
+import listenNotes from '../../common/actions/listenNotes'
 import postNote from '../../common/actions/postNote'
 import moveNote from '../../common/actions/moveNote'
 import putNotes from '../../common/actions/putNotes'
@@ -113,8 +113,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getNotes.on,
-  unsubscribe: getNotes.off,
+  subscribe: listenNotes.on,
+  unsubscribe: listenNotes.off,
   postNote,
   moveNote,
   putNotes,

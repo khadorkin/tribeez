@@ -9,8 +9,7 @@ import {
 
 import {firebaseError} from './error'
 
-import getMember from './getMember'
-import getUnread from './getUnread'
+import listenUser from './listenUser'
 
 export default () => {
   return (dispatch) => {
@@ -29,8 +28,7 @@ export default () => {
 
     promise
     .then(() => {
-      dispatch(getMember.off())
-      dispatch(getUnread.off())
+      dispatch(listenUser.off())
     })
     .then(() => {
       return auth.signOut() // this will trigger auth.logout (see listener in auth.login)

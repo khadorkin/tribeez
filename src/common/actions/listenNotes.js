@@ -26,7 +26,7 @@ const on = () => {
         type: FIREBASE_SUCCESS,
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'getNotes'))
+      dispatch(firebaseError(error, 'listenNotes'))
     })
   }
 }

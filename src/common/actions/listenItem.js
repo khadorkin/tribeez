@@ -41,7 +41,7 @@ const on = (itemType, id) => {
         initial = false
       }
     }, (error) => {
-      dispatch(firebaseError(error, 'getItem/' + itemType))
+      dispatch(firebaseError(error, 'listenItem/' + itemType))
     })
   }
 }

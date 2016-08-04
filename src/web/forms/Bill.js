@@ -12,7 +12,7 @@ import Part from './deep/Part'
 
 import form from '../../common/forms/bill'
 import focus from '../../common/utils/formFocus'
-import getItem from '../../common/actions/getItem'
+import listenItem from '../../common/actions/listenItem'
 import submitBill from '../../common/actions/submitBill'
 
 const today = new Date()
@@ -131,6 +131,6 @@ class BillForm extends Component {
 }
 
 export default form(BillForm, {
-  subscribe: getItem.on,
-  unsubscribe: getItem.off,
+  subscribe: listenItem.on,
+  unsubscribe: listenItem.off,
 })

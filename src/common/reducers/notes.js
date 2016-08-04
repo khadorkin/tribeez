@@ -3,7 +3,7 @@ import {
   PUT_NOTE_SUCCESS,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
-  LOGOUT_SUCCESS,
+  LOGGED_OUT,
 } from '../constants/actions'
 
 const initialState = {
@@ -66,7 +66,7 @@ export default (state = initialState, action = null) => {
       }
     }
 
-    case LOGOUT_SUCCESS:
+    case LOGGED_OUT:
       return {...initialState}
     default:
       return state

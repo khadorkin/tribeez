@@ -12,7 +12,7 @@ import ActivityCard from '../components/ActivityCard'
 import Entry from '../components/Entry'
 import SpeedDial from '../components/SpeedDial'
 
-import getActivity from '../../common/actions/getActivity'
+import listenActivity from '../../common/actions/listenActivity'
 import {ACTIVITIES} from '../../common/constants/product'
 
 class Activity extends Component {
@@ -127,8 +127,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getActivity.on,
-  unsubscribe: getActivity.off,
+  subscribe: listenActivity.on,
+  unsubscribe: listenActivity.off,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity)

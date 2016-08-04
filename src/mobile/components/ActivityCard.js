@@ -26,7 +26,8 @@ class ActivityCard extends Component {
   }
 
   renderItem(row) {
-    const author = this.props.userMap[row.author]
+    const authorObj = this.props.userMap[row.author]
+    const author = authorObj && authorObj.name // might not be available when switching tribe
 
     let date = row.added
     let textId = null
@@ -38,7 +39,7 @@ class ActivityCard extends Component {
         break
       case 'polls':
         textId = 'asked_by'
-        values = {author: author.name}
+        values = {author}
         break
       case 'tasks':
         //nothing
@@ -64,7 +65,7 @@ class ActivityCard extends Component {
         break
       case 'notes':
         textId = 'notes.by'
-        values = {author: author.name}
+        values = {author}
         break
     }
 
