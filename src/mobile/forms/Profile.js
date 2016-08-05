@@ -19,13 +19,14 @@ class ProfileForm extends Component {
     fields: PropTypes.object,
     // from redux:
     initialValues: PropTypes.object,
+    tribe_ids: PropTypes.array,
   }
 
   render() {
     const {fields: {name, email, lang, birthdate, phone, password, password2}, ...props} = this.props
 
     return (
-      <Form name="profile" action={submitProfile.bind(null, '')} {...props}>
+      <Form name="profile" action={submitProfile.bind(null, '', this.props.tribe_ids)} {...props}>
         <FormattedMessage
           id="gravatar"
           values={{link: 'gravatar.com'}}

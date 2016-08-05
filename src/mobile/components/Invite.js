@@ -15,7 +15,6 @@ class Invite extends Component {
     // from parent:
     invite: PropTypes.object.isRequired,
     // from redux:
-    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     // action creators:
@@ -36,8 +35,7 @@ class Invite extends Component {
   }
 
   handleConfirm() {
-    const {invite, uid} = this.props
-    this.props.postInvite(invite.email, invite.lang, uid) //TODO: show loader
+    this.props.postInvite(this.props.invite)
   }
 
   render() {
@@ -67,7 +65,6 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  uid: state.user.uid,
   userMap: state.tribe.userMap,
   messages: state.app.messages, //TODO
 })
