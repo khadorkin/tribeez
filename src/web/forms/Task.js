@@ -43,7 +43,7 @@ class TaskForm extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe('task', this.props.id)
+    this.props.unsubscribe()
   }
 
   handleSubmit(task) {

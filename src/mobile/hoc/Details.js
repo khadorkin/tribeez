@@ -38,7 +38,7 @@ class Details extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe(this.props.type, this.props.id)
+    this.props.unsubscribe()
   }
 
   handleFab() {

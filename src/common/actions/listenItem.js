@@ -47,7 +47,7 @@ const on = (itemType, id) => {
   }
 }
 
-const off = (itemType/*, id*/) => {
+const off = () => {
   return (dispatch) => {
     if (ref) {
       dispatch({

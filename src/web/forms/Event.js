@@ -49,7 +49,7 @@ class EventForm extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe('event', this.props.id)
+    this.props.unsubscribe()
   }
 
   handleSubmit(event) {

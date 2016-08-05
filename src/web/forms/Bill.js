@@ -51,7 +51,7 @@ class BillForm extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe('bill', this.props.id)
+    this.props.unsubscribe()
   }
 
   handleSubmit(event) {

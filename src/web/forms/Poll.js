@@ -43,7 +43,7 @@ class PollForm extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe('poll', this.props.id)
+    this.props.unsubscribe()
   }
 
   handleSubmit(poll) {
