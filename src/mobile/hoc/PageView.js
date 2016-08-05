@@ -11,8 +11,9 @@ class PageView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header />
+        <Header only="image" />
         {this.props.children}
+        <Header style={styles.shadow} only="shadow" />
       </View>
     )
   }
@@ -21,6 +22,10 @@ class PageView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  shadow: {
+    position: 'absolute',
+    top: Header.height,
   },
 })
 

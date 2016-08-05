@@ -280,7 +280,6 @@ class AsyncContent extends Component {
         renderRow={this.props.renderRow}
         renderFooter={this.renderFooter}
         renderSectionHeader={this.renderSectionHeader}
-        style={styles.container}
         onEndReached={this.handleEndReached}
       />
     )
@@ -299,9 +298,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch)
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 4,
-  },
   section: {
     margin: 8,
     alignSelf: 'center',

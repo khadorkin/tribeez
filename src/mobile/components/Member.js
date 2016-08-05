@@ -1,15 +1,14 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
+import ListItem from '../hoc/ListItem'
 import FormattedMessage from './FormattedMessage'
-import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 
 class Member extends Component {
   static propTypes = {
@@ -42,41 +41,15 @@ class Member extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Touchable onPress={this.handlePress} style={styles.main}>
-          <Image
-            source={{uri: gravatar(user)}}
-            style={styles.avatar}
-          />
-          <View style={styles.titles}>
-            <Text style={styles.title}>{user.name}</Text>
-            <FormattedMessage id="member_since" values={{when: member.joined}} style={styles.subtitle} />
-          </View>
-        </Touchable>
-      </View>
+      <ListItem user={user} onPress={this.handlePress}>
+        <Text style={styles.title}>{user.name}</Text>
+        <FormattedMessage id="member_since" values={{when: member.joined}} style={styles.subtitle} />
+      </ListItem>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    marginVertical: 5,
-    elevation: 1,
-  },
-  main: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
     color: colors.primaryText,
   },

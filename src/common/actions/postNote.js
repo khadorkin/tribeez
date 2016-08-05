@@ -1,4 +1,4 @@
-import {db, auth} from '../firebase'
+import {db, auth, timestamp} from '../firebase'
 
 import {
   FIREBASE_REQUEST,
@@ -13,7 +13,7 @@ export default (values) => {
       type: FIREBASE_REQUEST,
     })
 
-    values.updated = Date.now()
+    values.updated = timestamp
     values.author = auth.currentUser.uid
 
     db.ref('tribes/' + auth.currentUser.tid + '/notes').push(values)

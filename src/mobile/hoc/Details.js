@@ -72,8 +72,9 @@ class Details extends Component {
 
     return (
       <View style={styles.container}>
-        <Header />
+        <Header only="image" />
         {item && children}
+        <Header style={styles.shadow} only="shadow" />
         {editRoute && <Fab name="edit" onPress={this.handleFab} />}
       </View>
     )
@@ -93,6 +94,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  shadow: {
+    position: 'absolute',
+    top: Header.height,
   },
 })
 

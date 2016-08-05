@@ -41,7 +41,7 @@ class Bills extends Component {
             renderRow={this.renderBill}
             tabLabel="tab.bills"
           />
-          <ScrollView tabLabel="tab.balances" style={styles.content}>
+          <ScrollView tabLabel="tab.balances">
             {
               this.props.users.map((user) =>
                 <Balance user={user} key={user.uid} />
@@ -63,9 +63,6 @@ const mapStateToProps = (state) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  content: {
-    paddingTop: 4,
   },
   spacer: {
     height: 80,

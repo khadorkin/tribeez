@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
+import ListItem from '../hoc/ListItem'
 import FormattedNumber from './FormattedNumber'
 
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 
 class Balance extends Component {
   static propTypes = {
@@ -16,42 +16,20 @@ class Balance extends Component {
     const {user} = this.props
 
     return (
-      <View style={styles.container}>
-        <Image
-          source={{uri: gravatar(user)}}
-          style={styles.avatar}
+      <ListItem user={user}>
+        <Text style={styles.title}>{user.name}</Text>
+        <FormattedNumber
+          value={user.balance}
+          format="money"
+          sign={true}
+          style={user.balance < 0 ? styles.negative : styles.positive}
         />
-        <View style={styles.titles}>
-          <Text style={styles.title}>{user.name}</Text>
-          <FormattedNumber
-            value={user.balance}
-            format="money"
-            sign={true}
-            style={user.balance < 0 ? styles.negative : styles.positive}
-          />
-        </View>
-      </View>
+      </ListItem>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    marginVertical: 5,
-    elevation: 1,
-    padding: 10,
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
     color: colors.primaryText,
   },

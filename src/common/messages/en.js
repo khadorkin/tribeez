@@ -254,7 +254,7 @@ export default {
 
   // Members
   'member_since': 'Member since {when, date}',
-  'invited_by': 'Invited by {user} {when}',
+  'invited_by': 'Invited by {user} {ago}',
 
   // Bills
   'bill.mypart': 'Your share is {amount, number, money}',

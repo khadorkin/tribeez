@@ -1,4 +1,4 @@
-import {db, auth} from '../firebase'
+import {db, auth, timestamp} from '../firebase'
 
 import {
   FIREBASE_REQUEST,
@@ -17,7 +17,7 @@ export default (data) => {
       title: data.title,
       content: data.content,
       position: data.position,
-      updated: Date.now(),
+      updated: timestamp,
       author: auth.currentUser.uid,
     })
     .then(() => {

@@ -110,8 +110,9 @@ class Note extends Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
-    marginVertical: 5,
-    marginHorizontal: 7,
+    marginTop: 6,
+    marginBottom: 2,
+    marginHorizontal: 8,
     padding: 8,
     elevation: 1,
   },

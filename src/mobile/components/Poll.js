@@ -1,16 +1,15 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
+import ListItem from '../hoc/ListItem'
 import FormattedRelative from './FormattedRelative'
 import FormattedMessage from './FormattedMessage'
-import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 
 class Poll extends Component {
   static propTypes = {
@@ -53,18 +52,10 @@ class Poll extends Component {
     const subtitle = <FormattedMessage id="poll_answers" values={{num: num_answers}} />
 
     return (
-      <View style={styles.container}>
-        <Touchable onPress={this.handlePress} style={styles.main}>
-          <Image
-            source={{uri: gravatar(author)}}
-            style={styles.avatar}
-          />
-          <View style={styles.titles}>
-            <Text style={styles.title}>{poll.name}</Text>
-            <Text style={styles.subtitle}>{date} — {subtitle}</Text>
-          </View>
-        </Touchable>
-      </View>
+      <ListItem user={author} onPress={this.handlePress}>
+        <Text style={styles.title}>{poll.name}</Text>
+        <Text style={styles.subtitle}>{date} — {subtitle}</Text>
+      </ListItem>
     )
   }
 }
@@ -76,24 +67,6 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.background,
-    marginVertical: 5,
-    elevation: 1,
-  },
-  main: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
     color: colors.primaryText,
   },

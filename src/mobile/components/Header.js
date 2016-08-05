@@ -5,9 +5,11 @@ const IMAGE_WIDTH = 1000
 const IMAGE_HEIGHT = 412
 const SHADOW_HEIGHT = 23
 
+const windowWidth = Dimensions.get('window').width
+
 class Header extends Component {
-  static width = Dimensions.get('window').width
-  static height = Dimensions.get('window').width * IMAGE_HEIGHT / IMAGE_WIDTH
+  static width = windowWidth
+  static height = windowWidth * IMAGE_HEIGHT / IMAGE_WIDTH
 
   static propTypes = {
     style: View.propTypes.style,

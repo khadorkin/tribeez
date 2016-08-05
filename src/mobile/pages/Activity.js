@@ -138,7 +138,7 @@ class Activity extends Component {
 
 const styles = StyleSheet.create({
   footer: {
-    marginTop: 32,
+    marginTop: 24,
     alignItems: 'center',
   },
   telegramIcon: {
