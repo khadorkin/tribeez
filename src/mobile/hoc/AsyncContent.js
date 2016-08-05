@@ -43,7 +43,6 @@ class AsyncContent extends Component {
       loading: false,
       empty: false,
     }
-    this.handleEndReached = this.handleEndReached.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.renderSectionHeader = this.renderSectionHeader.bind(this)
     this.updateDataView = this.updateDataView.bind(this)
@@ -53,40 +52,54 @@ class AsyncContent extends Component {
     this.lastEntry = this.lastEntry.bind(this)
     this.childAdded = this.childAdded.bind(this)
     this.childChanged = this.childChanged.bind(this)
-    //this.childMoved = this.childMoved.bind(this)
     this.childRemoved = this.childRemoved.bind(this)
     this.flush = this.flush.bind(this)
     this.handleError = this.handleError.bind(this)
+    //this.tid = null
+    //this.timeout = null
     //this.queryRef = null
+    //this.first = null
     //this.last = null
     //this.visible = true
     //this.lastKey = null
     //this.lastSetKey = null
+    //this.listeningToLast = false
   }
 
   componentDidMount() {
-    if (this.props.tid) {
+    if (this.tid !== this.props.tid) {
       this.tid = this.props.tid
       this.handleLoad()
     }
   }
 
   componentWillReceiveProps(props) {
-    if (props.tid && !this.tid) {
+    if (this.tid !== props.tid) {
+      if (this.tid) {
+        // switching tribe => clear first
+        this.componentWillUnmount()
+        this.setState({
+          loading: true,
+        })
+      }
       this.tid = props.tid
       this.handleLoad()
     }
   }
 
   componentWillUnmount() {
+    clearTimeout(this.timeout)
     if (this.queryRef) {
       this.queryRef.off('value', this.lastEntry)
       this.queryRef.off('child_added', this.childAdded)
       this.queryRef.off('child_changed', this.childChanged)
-      //this.queryRef.off('child_moved', this.childMoved)
       this.queryRef.off('child_removed', this.childRemoved)
+      this.queryRef = null
+      this.listeningToLast = false
+      this.first = null
+      this.last = null
+      this.buffer = []
     }
-    clearTimeout(this.timeout)
   }
 
   setVisible(visible) {
@@ -97,13 +110,11 @@ class AsyncContent extends Component {
     this.visible = visible
   }
 
-  handleEndReached() {
-    if (this.tid) {
-      this.handleLoad()
-    }
-  }
-
   handleLoad() {
+    if (!this.tid) {
+      return
+    }
+
     if (!this.queryRef) {
       this.queryRef = db.ref('tribes/' + this.tid + '/' + this.props.name)
     }
@@ -144,7 +155,6 @@ class AsyncContent extends Component {
     //console.log((this.props.tabLabel || this.props.name) + ' listens to ' + this.props.name + ', orderBy ' + (this.props.orderBy || 'key') + ', ' + pager + ' ' + this.last + ', ' + limiter + ' ' + PAGING)
     query[limiter](PAGING).on('child_added', this.childAdded, this.handleError)
     query[limiter](PAGING).on('child_changed', this.childChanged, this.handleError)
-    //query[limiter](PAGING).on('child_moved', this.childMoved, this.handleError)
     query[limiter](PAGING).on('child_removed', this.childRemoved, this.handleError)
   }
 
@@ -171,6 +181,12 @@ class AsyncContent extends Component {
   }
 
   flush() {
+    if (this.buffer.length === 0) { // shouldn't happen
+      this.setState({
+        empty: true,
+      })
+      return
+    }
     const sorter = this.props.orderBy || 'id'
     this.buffer = this.buffer.sort((a, b) => {
       const smaller = this.props.ascending ? -1 : 1
@@ -186,9 +202,6 @@ class AsyncContent extends Component {
         }
       }
     }
-    this.setState({
-      loading: false,
-    })
     this.updateDataView()
   }
 
@@ -198,10 +211,6 @@ class AsyncContent extends Component {
     this.buffer = this.buffer.map((item) => (item.id === snapshot.key ? newItem : item))
     this.updateDataView()
   }
-
-  // childMoved() {
-  //
-  // }
 
   childRemoved(snapshot) {
     this.buffer = this.buffer.filter((item) => item.id !== snapshot.key)
@@ -215,10 +224,7 @@ class AsyncContent extends Component {
   }
 
   updateDataView() {
-    if (!this.buffer.length) {
-      return
-    }
-
+    let dataSource
     if (this.props.splitter) {
       const blob = {}
       const sections = []
@@ -230,14 +236,14 @@ class AsyncContent extends Component {
         }
         blob[sectionId].push(item)
       })
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(blob, sections),
-      })
+      dataSource = this.state.dataSource.cloneWithRowsAndSections(blob, sections)
     } else {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.buffer),
-      })
+      dataSource = this.state.dataSource.cloneWithRows(this.buffer)
     }
+    this.setState({
+      dataSource, //TODO: fix update delay when switching tribe
+      loading: false,
+    })
   }
 
   renderFooter() {
@@ -280,7 +286,7 @@ class AsyncContent extends Component {
         renderRow={this.props.renderRow}
         renderFooter={this.renderFooter}
         renderSectionHeader={this.renderSectionHeader}
-        onEndReached={this.handleEndReached}
+        onEndReached={this.handleLoad}
       />
     )
   }
