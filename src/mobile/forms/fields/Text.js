@@ -28,8 +28,7 @@ class TextField extends Component {
     }
     this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
-    this.handleLayout = this.handleLayout.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleContentSizeChange = this.handleContentSizeChange.bind(this)
   }
 
   ref(element) {
@@ -40,20 +39,11 @@ class TextField extends Component {
     this.element.focus()
   }
 
-  handleLayout(event) {
-    this.setState({
-      height: event.nativeEvent.layout.height + 10,
-    })
-  }
-
-  handleChange(event) {
+  handleContentSizeChange(event) {
     if (this.props.multiline) {
       this.setState({
-        height: event.nativeEvent.contentSize.height + 25, // layout height = input height + 25
+        height: event.nativeEvent.contentSize.height + 24,
       })
-    }
-    if (this.props.onChange) {
-      this.props.onChange(event)
     }
   }
 
@@ -67,7 +57,7 @@ class TextField extends Component {
     )
 
     const fieldStyle = {}
-    if (props.multiline) {
+    if (this.state.height) {
       fieldStyle.height = Math.max(54, this.state.height)
     }
 
@@ -82,13 +72,8 @@ class TextField extends Component {
           textInputStyle={styles.input}
           keyboardType={currency && 'numeric'}
           {...props}
-          onChange={this.handleChange}
+          onContentSizeChange={this.handleContentSizeChange}
         />
-        { // this is a hack to calculate the initial height:
-          props.multiline && !this.state.height && (
-            <Text style={styles.hidden} onLayout={this.handleLayout}>{String(props.value || 'x')}</Text>
-          )
-        }
         {currencyLabel}
         <FormattedMessage id={errorMessage} style={styles.error} />
       </View>
@@ -102,12 +87,6 @@ const styles = StyleSheet.create({
   },
   input: {
     color: colors.text,
-  },
-  hidden: {
-    position: 'absolute',
-    left: 10000,
-    paddingVertical: 10,
-    fontSize: 16,
   },
   currency: {
     position: 'absolute',

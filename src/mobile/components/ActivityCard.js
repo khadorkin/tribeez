@@ -155,7 +155,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     color: colors.primaryText,
-    paddingBottom: 4,
   },
   itemContainer: {
     flex: 1,
@@ -164,13 +163,14 @@ const styles = StyleSheet.create({
   },
   itemContent: {
     flex: 1, // to wrap
+    marginTop: 4,
   },
   itemTitle: {
     color: colors.main,
   },
   itemText: {
     color: colors.secondaryText,
-    paddingBottom: 6,
+    //TODO: fix cropped overflow bug
   },
   itemTime: {
     fontStyle: 'italic',
