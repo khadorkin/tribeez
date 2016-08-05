@@ -4,10 +4,12 @@ import {connect} from 'react-redux'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
+import Touchable from './Touchable'
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
 
 import routes from '../../common/routes'
+import router from '../../common/router'
 import colors from '../../common/constants/colors'
 
 class ActivityCard extends Component {
@@ -25,6 +27,21 @@ class ActivityCard extends Component {
     this.renderItem = this.renderItem.bind(this)
   }
 
+  handlePress(type, row) {
+    const route = routes[type.toUpperCase()]
+
+    if (type === 'note') {
+      router.resetTo(routes.NOTES) // TODO: needs push but breaks navigation
+    } else {
+      route.props = {
+        id: row.id || row.uid,
+      }
+      route.title = row.name
+
+      router.push(route)
+    }
+  }
+
   renderItem(row) {
     let author
     if (row.author) {
@@ -35,22 +52,24 @@ class ActivityCard extends Component {
       author = authorObj.name
     }
 
+    const type = this.props.type.slice(0, -1) // plural => singular
+
     let date = row.added
     let textId = null
     let values = null
 
-    switch (this.props.type) {
-      case 'members':
+    switch (type) {
+      case 'member':
         date = row.joined
         break
-      case 'polls':
+      case 'poll':
         textId = 'asked_by'
         values = {author}
         break
-      case 'tasks':
+      case 'task':
         //nothing
         break
-      case 'bills':
+      case 'bill':
         if (row.part) {
           textId = 'bill.mypart'
           values = {amount: row.part}
@@ -58,7 +77,7 @@ class ActivityCard extends Component {
           textId = 'bill.nopart'
         }
         break
-      case 'events':
+      case 'event':
         const start = new Date(row.start)
         const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
         if (row.end) {
@@ -69,20 +88,20 @@ class ActivityCard extends Component {
           values = {date: row.start}
         }
         break
-      case 'notes':
+      case 'note':
         textId = 'notes.by'
         values = {author}
         break
     }
 
     return (
-      <View key={row.id || row.uid} style={styles.itemContainer}>
+      <Touchable key={row.id || row.uid} style={styles.itemContainer} onPress={this.handlePress.bind(this, type, row)}>
         <View style={styles.itemContent}>
           <Text style={styles.itemTitle}>{row.name}</Text>
           {textId && <FormattedMessage style={styles.itemText} id={textId} values={values} />}
         </View>
         <FormattedRelative value={date} style={styles.itemTime} />
-      </View>
+      </Touchable>
     )
   }
 
@@ -140,7 +159,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   itemContent: {
     flex: 1, // to wrap
@@ -151,6 +170,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: colors.secondaryText,
+    //TODO: fix cropped overflow bug
   },
   itemTime: {
     fontStyle: 'italic',

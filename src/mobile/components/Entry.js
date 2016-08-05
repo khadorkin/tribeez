@@ -38,7 +38,6 @@ class Entry extends Component {
     if (route.name === 'member') {
       route.props = {
         id: entry.author,
-        name: this.props.userMap[entry.author].name,
       }
       route.title = this.props.userMap[entry.author].name
     } else {
