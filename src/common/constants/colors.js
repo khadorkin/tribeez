@@ -12,6 +12,7 @@ export default {
   error: '#F44336', // red500
   input: '#00ACC1', // cyan600
   statusBar: 'rgba(38, 198, 218, 0)', // transparent from colors.main to make the transition work
+  dot: 'rgba(255, 255, 255, 0.4)',
 
   // module colors:
   members: '#AB47BC', // purple400

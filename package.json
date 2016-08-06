@@ -49,6 +49,7 @@
     "react-native-material-kit": "^0.3.2",
     "react-native-scrollable-tab-view": "^0.5.3",
     "react-native-sortable-listview": "^0.1.1",
+    "react-native-swiper": "^1.4.8",
     "react-native-vector-icons": "^2.0.3",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",

@@ -1,6 +1,22 @@
 // base messages: this file is the fallback for other langs
 
 export default {
+  // slides
+  'slide.logo.title': 'Tribeez',
+  'slide.logo.description': 'The best way to sort your group life',
+  'slide.bills.title': 'Expenses',
+  'slide.bills.description': 'Easily split expenses with your housemates, friends or family members',
+  'slide.events.title': 'Events',
+  'slide.events.description': 'Create and get notified of events to enjoy moments with your tribe',
+  'slide.polls.title': 'Polls',
+  'slide.polls.description': 'Ask for opinions and get instant answers',
+  'slide.tasks.title': 'Tasks',
+  'slide.tasks.description': 'Get things done',
+  'slide.notes.title': 'Notes',
+  'slide.notes.description': 'Remember stuff',
+  'slides.login': 'LOGIN',
+  'slides.register': 'CREATE ACCOUNT',
+
   // titles
   welcome: 'Welcome',
   register: 'Register',
