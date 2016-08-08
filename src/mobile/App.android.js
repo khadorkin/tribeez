@@ -33,6 +33,8 @@ import deleteItem from '../common/actions/deleteItem'
 
 const drawerWidth = Dimensions.get('window').width * 0.75
 
+import {marginTop, navBarHeight} from './dimensions'
+
 class App extends Component {
   static propTypes = {
     // from redux store:
@@ -241,8 +243,8 @@ class App extends Component {
 // nav bar styles:
 const styles = StyleSheet.create({
   navBar: {
-    marginTop: 24, // height of status bar
-    height: 56, // 80 - 24
+    marginTop, // height of status bar (usually aroung 25)
+    height: navBarHeight,
   },
   hamburger: {
     padding: 12,

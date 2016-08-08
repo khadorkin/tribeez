@@ -11,6 +11,7 @@ import putNote from '../../common/actions/putNote'
 import deleteNote from '../../common/actions/deleteNote'
 
 import colors from '../../common/constants/colors'
+import {elevation} from '../dimensions'
 
 class Note extends Component {
   static propTypes = {
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
     marginHorizontal: 8,
     padding: 8,
-    elevation: 1,
+    ...elevation(1),
   },
   title: {
     color: colors.primaryText,

@@ -23,9 +23,7 @@ class IconButton extends Component {
 
     return (
       <TouchableNativeFeedback
-        /*eslint-disable new-cap*/
         background={TouchableNativeFeedback.SelectableBackground()}
-        /*eslint-enable new-cap*/
         onPress={onPress}
         delayPressIn={0}
       >

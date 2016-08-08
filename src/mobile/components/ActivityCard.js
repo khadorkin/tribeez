@@ -11,6 +11,7 @@ import FormattedRelative from './FormattedRelative'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
+import {elevation} from '../dimensions'
 
 class ActivityCard extends Component {
   static propTypes = {
@@ -138,10 +139,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     marginTop: 8,
     marginHorizontal: 8,
-    elevation: 1,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
+    ...elevation(1),
   },
   iconContainer: {
     paddingRight: 16,
@@ -155,6 +156,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     color: colors.primaryText,
+    paddingBottom: 4,
   },
   itemContainer: {
     flex: 1,
@@ -163,14 +165,13 @@ const styles = StyleSheet.create({
   },
   itemContent: {
     flex: 1, // to wrap
-    marginTop: 4,
   },
   itemTitle: {
     color: colors.main,
   },
   itemText: {
     color: colors.secondaryText,
-    //TODO: fix cropped overflow bug
+    paddingBottom: 6, //TODO: this is a hack to fix the cropped overflow bug: http://stackoverflow.com/questions/38779726
   },
   itemTime: {
     fontStyle: 'italic',

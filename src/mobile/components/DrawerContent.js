@@ -190,9 +190,6 @@ class DrawerContent extends Component {
         {
           this.state.showTribes && (
             <Button id="tribe_new" onPress={this.handleNewTribe} />
-            // <IconButton name="add" onPress={this.handleNewTribe} style={styles.entry}>
-            //   <FormattedMessage style={styles.entryText} id="tribe_new" />
-            // </IconButton>
           )
         }
       </View>

@@ -34,7 +34,6 @@ class CityField extends Component {
     this.handleDetails = this.handleDetails.bind(this)
   }
 
-  /*eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
     window.onGooglePlaces = () => {
       this.autocomplete = new google.maps.places.AutocompleteService()

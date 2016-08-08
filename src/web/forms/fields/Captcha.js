@@ -20,7 +20,6 @@ class Captcha extends Component {
     this.focus = this.focus.bind(this)
   }
 
-  /*eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
     window.onRecaptcha = () => {
       grecaptcha.render('captcha', {

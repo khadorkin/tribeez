@@ -3,7 +3,9 @@ import {Dimensions, View, ScrollView, StyleSheet} from 'react-native'
 
 import Header from '../components/Header'
 
-const SCROLL_TRIGGER = 90 // ideally headerHeight - navBar.height (170-80=90)
+import {marginTop, navBarHeight} from '../dimensions'
+
+const SCROLL_TRIGGER = Header.height - (navBarHeight + marginTop)
 
 class ScrollViewWithHeader extends Component {
   static propTypes = {

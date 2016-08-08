@@ -35,7 +35,7 @@ class SelectField extends Component {
     )
 
     return (
-      <View style={styles.container}>
+      <View>
         <FormattedMessage id={'field.' + name} style={styles.label} />
         <Picker selectedValue={value} onValueChange={this.handleChange} style={styles.picker}>
           {children}
@@ -48,17 +48,15 @@ class SelectField extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    //
-  },
   label: {
     marginHorizontal: 8,
     fontSize: 12,
   },
   picker: {
-    height: 30,
+    height: 36,
   },
   bottom: {
+    marginTop: -5,
     marginHorizontal: 8,
     borderBottomWidth: 1,
     borderBottomColor: colors.underline,

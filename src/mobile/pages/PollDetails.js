@@ -17,6 +17,7 @@ import routes from '../../common/routes'
 import colors from '../../common/constants/colors'
 
 import pollAnswers from '../../common/utils/pollAnswers'
+import {elevation} from '../dimensions'
 
 class PollDetails extends Component {
   static propTypes = {
@@ -165,12 +166,12 @@ const styles = StyleSheet.create({
   in: {
     height: 24,
     backgroundColor: colors.main,
-    elevation: 1,
+    ...elevation(1),
   },
   out: {
     height: 24,
     backgroundColor: colors.background,
-    elevation: 1,
+    ...elevation(1),
   },
   option: {
     marginVertical: 10,
