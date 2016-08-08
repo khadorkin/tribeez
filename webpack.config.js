@@ -83,10 +83,14 @@ Object.assign(config, {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: [
-          'babel', // ES6
-          'eslint-loader', // JS linter
-        ],
+        loader: 'babel',
+        query: {
+          'env': {
+            'production': {
+              'plugins': ['transform-react-remove-prop-types'],
+            },
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -107,9 +111,7 @@ Object.assign(config, {
       {
         test: /\.(png|jpg)$/,
         exclude: /node_modules/,
-        loaders: [
-          'url-loader?limit=8192', // inline base64 URLs for <=8k images, direct URLs for the rest
-        ],
+        loader: 'url-loader?limit=8192', // inline base64 URLs for <=8k images, direct URLs for the rest
       },
       {
         test: /\.svg$/,
@@ -122,9 +124,7 @@ Object.assign(config, {
       {
         test: /\.json$/,
         exclude: /node_modules/,
-        loaders: [
-          'json-loader',
-        ],
+        loader: 'json-loader',
       },
     ],
   },
