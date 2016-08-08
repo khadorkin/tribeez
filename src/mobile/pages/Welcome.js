@@ -83,8 +83,8 @@ class Welcome extends Component {
                 <View style={styles.slide} key={index}>
                   <Image source={slide.background} resizeMode="stretch" style={styles.background}>
                     <View style={styles.content}>
-                      <FormattedMessage id={'slide.' + slide.id + '.title'} style={styles.title}>Title</FormattedMessage>
                       <Image source={slide.illustration} style={styles.illustration} />
+                      <FormattedMessage id={'slide.' + slide.id + '.title'} style={styles.title}>Title</FormattedMessage>
                       <FormattedMessage id={'slide.' + slide.id + '.description'} style={styles.description}>{'Desc\nblabla'}</FormattedMessage>
                     </View>
                   </Image>
@@ -106,6 +106,8 @@ class Welcome extends Component {
   }
 }
 
+const contentWidth = (width * 0.7)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -122,27 +124,33 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: (height * 0.28),
-    marginLeft: (width * 0.1),
+    width: contentWidth,
+    justifyContent: 'center',
+  },
+  illustration: {
+    width: contentWidth,
+    height: contentWidth,
+    //borderWidth: 1, borderColor: 'rgba(255, 255, 255, .5)',
   },
   title: {
     color: colors.lightText,
     fontSize: 40,
-  },
-  illustration: {
-    width: (width * 0.3),
-    height: (width * 0.3),
-    marginLeft: (width * 0.1),
-    marginVertical: 40,
-    // borderWidth: 1, borderColor: 'rgba(255, 255, 255, .5)',
+    position: 'absolute',
+    top: (height * 0.25),
+    width: contentWidth,
+    textAlign: 'center',
   },
   description: {
-    width: (width * 0.5),
+    position: 'absolute',
+    top: (height * 0.66),
+    paddingHorizontal: (width * 0.07),
+    width: contentWidth,
     color: colors.lightText,
-    fontSize: 20,
+    fontSize: 16,
+    textAlign: 'center',
   },
   paginationStyle: {
-    bottom: (height * 0.13),
+    bottom: (height * 0.15),
   },
   dot: {
     width: 8,
@@ -165,7 +173,7 @@ const styles = StyleSheet.create({
   action: {
     color: colors.lightText,
     fontSize: 16,
-    padding: 32,
+    padding: 24,
   },
 })
 
