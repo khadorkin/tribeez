@@ -35,6 +35,7 @@
 		82A9E3990A474FE99B8FFDD2 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F77B1D7D8944B439364F2E3 /* Zocial.ttf */; };
 		B5D168245618441CB806B627 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A34E41997A824A258D359E0F /* libSMXCrashlytics.a */; };
 		A6F8AF59B9C24C82B4EA5D4E /* libRCTMaterialKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FBCA88897746F28B9B3D17 /* libRCTMaterialKit.a */; };
+		45C52393E6A44C3E8FBE0118 /* libRCTLocale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F542E0185294CA38DDE8710 /* libRCTLocale.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,8 @@
 		A34E41997A824A258D359E0F /* libSMXCrashlytics.a */ = {isa = PBXFileReference; name = "libSMXCrashlytics.a"; path = "libSMXCrashlytics.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		E584CA81E0A74C879ECB4BEE /* RCTMaterialKit.xcodeproj */ = {isa = PBXFileReference; name = "RCTMaterialKit.xcodeproj"; path = "../node_modules/react-native-material-kit/iOS/RCTMaterialKit.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		35FBCA88897746F28B9B3D17 /* libRCTMaterialKit.a */ = {isa = PBXFileReference; name = "libRCTMaterialKit.a"; path = "libRCTMaterialKit.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		92441DEC9FA1459E9B27831E /* RCTLocale.xcodeproj */ = {isa = PBXFileReference; name = "RCTLocale.xcodeproj"; path = "../node_modules/react-native-locale/RCTLocale.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3F542E0185294CA38DDE8710 /* libRCTLocale.a */ = {isa = PBXFileReference; name = "libRCTLocale.a"; path = "libRCTLocale.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,7 @@
 				FC896F21186E4D9F882E56F8 /* libRNVectorIcons.a in Frameworks */,
 				B5D168245618441CB806B627 /* libSMXCrashlytics.a in Frameworks */,
 				A6F8AF59B9C24C82B4EA5D4E /* libRCTMaterialKit.a in Frameworks */,
+				45C52393E6A44C3E8FBE0118 /* libRCTLocale.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +314,7 @@
 				59A0F07F6C91485C8EBAEA7A /* RNVectorIcons.xcodeproj */,
 				1F8C3D5A3D33407AA37C1DDA /* SMXCrashlytics.xcodeproj */,
 				E584CA81E0A74C879ECB4BEE /* RCTMaterialKit.xcodeproj */,
+				92441DEC9FA1459E9B27831E /* RCTLocale.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -676,6 +681,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
 					"$(SRCROOT)/../node_modules/react-native-material-kit/iOS/RCTMaterialKit",
+					"$(SRCROOT)/../node_modules/react-native-locale/RCTLocale",
 				);
 				INFOPLIST_FILE = "tribeez/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -700,6 +706,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
 					"$(SRCROOT)/../node_modules/react-native-material-kit/iOS/RCTMaterialKit",
+					"$(SRCROOT)/../node_modules/react-native-locale/RCTLocale",
 				);
 				INFOPLIST_FILE = "tribeez/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -754,6 +761,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
 					"$(SRCROOT)/../node_modules/react-native-material-kit/iOS/RCTMaterialKit",
+					"$(SRCROOT)/../node_modules/react-native-locale/RCTLocale",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -798,6 +806,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
 					"$(SRCROOT)/../node_modules/react-native-material-kit/iOS/RCTMaterialKit",
+					"$(SRCROOT)/../node_modules/react-native-locale/RCTLocale",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

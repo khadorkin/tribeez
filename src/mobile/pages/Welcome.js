@@ -19,7 +19,7 @@ const {width, height} = Dimensions.get('window')
 
 const slides = [
   {
-    id: 'logo',
+    id: 'start',
     background: require('../../common/images/slides/logo.png'),
     illustration: require('../../common/images/illustrations/logo.png'),
   },
@@ -47,6 +47,11 @@ const slides = [
     id: 'notes',
     background: require('../../common/images/slides/notes.png'),
     illustration: require('../../common/images/illustrations/notes.png'),
+  },
+  {
+    id: 'end',
+    background: require('../../common/images/slides/logo.png'),
+    illustration: require('../../common/images/illustrations/logo.png'),
   },
 ]
 
@@ -84,8 +89,8 @@ class Welcome extends Component {
                   <Image source={slide.background} resizeMode="stretch" style={styles.background}>
                     <View style={styles.content}>
                       <Image source={slide.illustration} style={styles.illustration} />
-                      <FormattedMessage id={'slide.' + slide.id + '.title'} style={styles.title}>Title</FormattedMessage>
-                      <FormattedMessage id={'slide.' + slide.id + '.description'} style={styles.description}>{'Desc\nblabla'}</FormattedMessage>
+                      <FormattedMessage id={slide.id} style={styles.title} />
+                      <FormattedMessage id={slide.id + '.description'} style={styles.description} />
                     </View>
                   </Image>
                 </View>
@@ -106,7 +111,7 @@ class Welcome extends Component {
   }
 }
 
-const contentWidth = (width * 0.7)
+const contentWidth = (width * 0.73)
 
 const styles = StyleSheet.create({
   container: {
@@ -134,7 +139,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.lightText,
-    fontSize: 40,
+    fontSize: 36,
     position: 'absolute',
     top: (height * 0.25),
     width: contentWidth,

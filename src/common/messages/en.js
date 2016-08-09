@@ -1,22 +1,6 @@
 // base messages: this file is the fallback for other langs
 
 export default {
-  // slides
-  'slide.logo.title': 'Tribeez',
-  'slide.logo.description': 'The best way to sort\nyour group life',
-  'slide.bills.title': 'Expenses',
-  'slide.bills.description': 'Easily split expenses with your tribe members',
-  'slide.events.title': 'Events',
-  'slide.events.description': 'Create and get notified of events to enjoy moments with your tribe',
-  'slide.polls.title': 'Polls',
-  'slide.polls.description': 'Ask for opinions and get instant answers',
-  'slide.tasks.title': 'Tasks',
-  'slide.tasks.description': 'Assign to get things done',
-  'slide.notes.title': 'Notes',
-  'slide.notes.description': 'Share shopping lists and never forget that WiFi password again',
-  'slides.login': 'LOGIN',
-  'slides.register': 'CREATE ACCOUNT',
-
   // titles
   welcome: 'Welcome',
   register: 'Register',
@@ -44,6 +28,19 @@ export default {
   polls_edit: 'Edit poll',
   tribe: 'Tribe',
   tribe_new: 'New tribe',
+
+  // slides
+  start: 'Tribeez',
+  end: 'You\'re all set!',
+  'start.description': 'The best way to sort\nyour group life',
+  'bills.description': 'Easily split expenses between concerned members',
+  'events.description': 'Create and get notified of events to enjoy moments together',
+  'polls.description': 'Ask for opinions and quickly get answers',
+  'tasks.description': 'Assign them to get things done',
+  'notes.description': 'Share shopping lists and never forget that Wifi password again',
+  'end.description': 'Choose an option below\nto get started',
+  'slides.login': 'LOGIN',
+  'slides.register': 'CREATE ACCOUNT',
 
   // subtitles
   messenger_bot: 'Facebook Messenger Bot',
