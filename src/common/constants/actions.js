@@ -34,6 +34,7 @@ export const ACTIVITY_LOADED = 'ACTIVITY_LOADED'
 // other events:
 
 export const LOGIN_DESTINATION = 'LOGIN_DESTINATION'
+export const LOGIN_EMAIL = 'LOGIN_EMAIL'
 
 export const PASSWORD_SUCCESS = 'PASSWORD_SUCCESS'
 

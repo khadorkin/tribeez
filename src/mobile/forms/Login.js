@@ -20,6 +20,7 @@ class LoginForm extends Component {
     // from redux:
     destination: PropTypes.object, // next route after login (when trying to directly access a page when anonymous)
     invite: PropTypes.object,
+    stored_email: PropTypes.string,
     initialValues: PropTypes.object,
   }
 
@@ -46,7 +47,7 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {fields: {email, password}, invite, ...props} = this.props
+    const {fields: {email, password}, invite, stored_email, ...props} = this.props
 
     const subtitle = invite && (
       <FormattedMessage id="login_to_join" values={invite} style={styles.subtitle} />
@@ -61,7 +62,7 @@ class LoginForm extends Component {
             <TextField ref="email"
               {...email}
               icon="mail-outline"
-              autoFocus={true}
+              autoFocus={!stored_email}
               autoCorrect={false}
               keyboardType="email-address"
               onSubmitEditing={this.handleNext}
@@ -69,6 +70,7 @@ class LoginForm extends Component {
             <TextField ref="password"
               {...password}
               icon="lock-outline"
+              autoFocus={!!stored_email}
               name="login_password"
               secureTextEntry={true}
               onSubmitEditing={this.handleSubmit}

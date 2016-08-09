@@ -5,8 +5,9 @@ import platform from '../platform'
 const mapStateToProps = (state) => ({
   destination: state.login.destination,
   invite: state.join.invite,
+  stored_email: state.login.email,
   initialValues: {
-    email: state.join.invite ? state.join.invite.email : '',
+    email: state.join.invite ? state.join.invite.email : state.login.email,
     invite_token: state.join.invite ? state.join.invite.token : '',
   },
 })

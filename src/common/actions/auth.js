@@ -2,6 +2,7 @@ import router from '../router'
 import routes from '../routes'
 
 import {auth} from '../firebase'
+import storage from '../storage'
 
 import {
   LOGGED_IN,
@@ -22,6 +23,8 @@ export const login = (user) => {
 
     const destination = getState().login.destination || routes.ACTIVITY
     router.resetTo(destination, dispatch)
+
+    storage.set('login', user.email).catch((error) => {}) // ignore fails
 
     const stop = auth.onAuthStateChanged((connectedUser) => {
       if (!connectedUser) {
