@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import {TextInput, StyleSheet, View, Text} from 'react-native'
+import {StyleSheet, View, Text} from 'react-native'
+
+import {MKTextField} from 'react-native-material-kit'
 
 import IconButton from '../../components/IconButton'
 
@@ -54,20 +56,22 @@ class Part extends Component {
           method === 'shares' ? (
             <View style={styles.amount}>
               <IconButton onPress={this.handleRemoveShare} name="remove" style={styles.button} />
-              <TextInput
+              <MKTextField
                 style={styles.shareField}
+                textInputStyle={styles.shareInput}
                 keyboardType="numeric"
                 {...amount}
                 value={String(amount.value)}
                 onChange={null}
                 onChangeText={this.handleChange}
               />
-              <IconButton onPress={this.handleAddShare} name="add" style={styles.button} />
+              <IconButton onPress={this.handleAddShare} name="add" style={[styles.button, styles.right]} />
             </View>
           ) : (
             <View style={styles.amount}>
-              <TextInput
+              <MKTextField
                 style={styles.amountField}
+                textInputStyle={styles.amountInput}
                 keyboardType="numeric"
                 {...amount}
                 value={String(amount.value)}
@@ -97,20 +101,26 @@ const styles = StyleSheet.create({
   },
   amount: {
     flexDirection: 'row',
-    marginHorizontal: 5,
+    margin: 5,
   },
   button: {
-    paddingVertical: 5,
+    paddingVertical: 6,
+    marginVertical: -8,
+  },
+  right: {
+    marginRight: -12,
   },
   shareField: {
-    paddingTop: 0,
     width: 50,
+  },
+  shareInput: {
     textAlign: 'center',
   },
   amountField: {
-    paddingTop: 0,
-    paddingRight: 50,
     width: 120,
+  },
+  amountInput: {
+    paddingRight: 50,
   },
   currency: {
     position: 'absolute',

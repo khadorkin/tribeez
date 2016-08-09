@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
+import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SwitchField from './fields/Switch'
@@ -22,27 +23,29 @@ class PollForm extends Component {
     const {fields: {name, description, multiple, options}, ...props} = this.props
 
     return (
-      <Form name={'poll.' + (this.props.poll ? 'update' : 'create')} action={submitPoll} {...props}>
-        <TextField
-          {...name}
-          name="title"
-        />
-        <TextField
-          multiline={true}
-          {...description}
-        />
-        {
-          options.map((option, index) => (
-            <TextField key={index}
-              {...option}
-              name="option"
-            />
-          ))
-        }
-        <SwitchField
-          {...multiple}
-        />
-      </Form>
+      <ScrollView>
+        <Form name={'poll.' + (this.props.poll ? 'update' : 'create')} action={submitPoll} {...props}>
+          <TextField
+            {...name}
+            name="title"
+          />
+          <TextField
+            multiline={true}
+            {...description}
+          />
+          {
+            options.map((option, index) => (
+              <TextField key={index}
+                {...option}
+                name="option"
+              />
+            ))
+          }
+          <SwitchField
+            {...multiple}
+          />
+        </Form>
+      </ScrollView>
     )
   }
 }

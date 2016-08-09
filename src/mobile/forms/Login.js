@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Image, StyleSheet} from 'react-native'
+import {KeyboardAvoidingView, StatusBar, View, Image, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -54,8 +54,9 @@ class LoginForm extends Component {
     )
 
     return (
-      <Form name="login" action={submitLogin.bind(null, this.props.destination)} {...props}>
-        <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <StatusBar backgroundColor={colors.main} animated={true} />
+        <Form name="login" action={submitLogin.bind(null, this.props.destination)} style={styles.form} {...props}>
           <Image source={require('../../common/images/logo.png')} style={styles.logo} />
           <View style={styles.box}>
             {subtitle}
@@ -84,8 +85,8 @@ class LoginForm extends Component {
               <FormattedMessage id="password_lost" style={styles.link} />
             </Touchable>
           </View>
-        </View>
-      </Form>
+        </Form>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -93,6 +94,8 @@ class LoginForm extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  form: {
     justifyContent: 'center',
     paddingBottom: 32, // bump up by 16dp
   },

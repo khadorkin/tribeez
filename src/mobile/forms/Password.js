@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, StyleSheet} from 'react-native'
+import {KeyboardAvoidingView, View, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
@@ -33,8 +33,8 @@ class PasswordForm extends Component {
     const subtitle = <FormattedMessage id="password_reset" style={styles.subtitle} />
 
     return (
-      <Form name="password" action={submitPassword} {...props}>
-        <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <Form name="password" action={submitPassword} style={styles.form} {...props}>
           <View style={styles.box}>
             {subtitle}
             <TextField ref="email"
@@ -45,8 +45,8 @@ class PasswordForm extends Component {
               onSubmitEditing={this.handleSubmit}
             />
           </View>
-        </View>
-      </Form>
+        </Form>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -54,10 +54,12 @@ class PasswordForm extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  form: {
     justifyContent: 'center',
-    paddingBottom: 32, // bump up by 16dp
   },
   box: {
+    marginTop: 56,
     backgroundColor: colors.background,
     elevation: 1,
     margin: 16,

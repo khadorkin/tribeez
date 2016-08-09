@@ -23,7 +23,7 @@ class TaskUser extends Component {
     return (
       <View style={styles.container}>
         <Switch value={checked.value} onValueChange={this.handleCheck} />
-        <Text>{user.name}</Text>
+        <Text style={styles.label}>{user.name}</Text>
       </View>
     )
   }
@@ -31,7 +31,13 @@ class TaskUser extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 8,
     flexDirection: 'row',
+  },
+  label: {
+    marginVertical: 2,
+    marginHorizontal: 8,
+    fontSize: 16,
   },
 })
 

@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
+import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import TaskUser from './deep/TaskUser'
@@ -24,28 +25,30 @@ class TaskForm extends Component {
     const {fields: {name, description, wait, users}, userMap, ...props} = this.props
 
     return (
-      <Form name={'task.' + (this.props.task ? 'update' : 'create')} action={submitTask} {...props}>
-        <TextField
-          {...name}
-          name="title"
-        />
-        <TextField
-          multiline={true}
-          {...description}
-        />
-        <TextField ref="wait"
-          keyboardType="numeric"
-          {...wait}
-        />
-        {
-          users.map((task_user, index) =>
-            <TaskUser key={index}
-              checked={task_user.checked}
-              user={userMap[task_user.uid.value]}
-            />
-          )
-        }
-      </Form>
+      <ScrollView>
+        <Form name={'task.' + (this.props.task ? 'update' : 'create')} action={submitTask} {...props}>
+          <TextField
+            {...name}
+            name="title"
+          />
+          <TextField
+            multiline={true}
+            {...description}
+          />
+          <TextField ref="wait"
+            keyboardType="numeric"
+            {...wait}
+          />
+          {
+            users.map((task_user, index) =>
+              <TaskUser key={index}
+                checked={task_user.checked}
+                user={userMap[task_user.uid.value]}
+              />
+            )
+          }
+        </Form>
+      </ScrollView>
     )
   }
 }

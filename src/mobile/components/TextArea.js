@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TextInput, StyleSheet, View, Text} from 'react-native'
+import {TextInput} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
@@ -8,7 +8,7 @@ import colors from '../../common/constants/colors'
 class TextArea extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    style: Text.propTypes.style,
+    style: TextInput.propTypes.style,
     minHeight: PropTypes.number,
     onChange: PropTypes.func,
     value: PropTypes.string.isRequired,
@@ -21,31 +21,13 @@ class TextArea extends Component {
     this.state = {
       height: null,
     }
-    this.handleLayout = this.handleLayout.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleContentSizeChange = this.handleContentSizeChange.bind(this)
   }
 
-  componentWillReceiveProps(props) {
-    if (props.id && props.id !== this.props.id) {
-      this.setState({
-        height: null, // re-trigger height calculation by mounting the <Text>
-      })
-    }
-  }
-
-  handleLayout(event) {
+  handleContentSizeChange(event) {
     this.setState({
-      height: event.nativeEvent.layout.height,
+      height: event.nativeEvent.contentSize.height + 24,
     })
-  }
-
-  handleChange(event) {
-    this.setState({
-      height: event.nativeEvent.contentSize.height,
-    })
-    if (this.props.onChange) {
-      this.props.onChange(event)
-    }
   }
 
   render() {
@@ -59,31 +41,16 @@ class TextArea extends Component {
     const height = Math.max(minHeight || 39, this.state.height)
 
     return (
-      <View style={styles.container}>
-        <TextInput
-          underlineColorAndroid={colors.underline}
-          {...props}
-          placeholder={translatedPlaceholder}
-          multiline={true}
-          style={[style, {height}]}
-          onChange={this.handleChange}
-        />
-        { // this is a hack to calculate the initial height:
-          !this.state.height && (
-            <Text style={[style, styles.hidden]} onLayout={this.handleLayout}>{props.value || 'x'}</Text>
-          )
-        }
-      </View>
+      <TextInput
+        underlineColorAndroid={colors.underline}
+        {...props}
+        placeholder={translatedPlaceholder}
+        multiline={true}
+        style={[style, {height}]}
+        onContentSizeChange={this.handleContentSizeChange}
+      />
     )
   }
 }
-
-const styles = StyleSheet.create({
-  hidden: {
-    position: 'absolute',
-    left: 10000,
-    paddingVertical: 10,
-  },
-})
 
 export default injectIntl(TextArea)

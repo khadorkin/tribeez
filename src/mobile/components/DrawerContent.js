@@ -47,7 +47,7 @@ class DrawerContent extends Component {
     this.handleProfile = this.handleProfile.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
     this.handleNewTribe = this.handleNewTribe.bind(this)
-    this.handleTribeSettings = this.handleTribeSettings.bind(this)
+    this.handleEditTribe = this.handleEditTribe.bind(this)
   }
 
   componentWillReceiveProps(props) {
@@ -80,12 +80,20 @@ class DrawerContent extends Component {
   }
 
   handleNewTribe() {
-    router.resetTo(routes.TRIBE_NEW)
+    const route = routes.TRIBE_NEW
+    route.props = {
+      type: 'create',
+    }
+    router.resetTo(route)
     this.props.drawer.closeDrawer()
   }
 
-  handleTribeSettings() {
-    router.resetTo(routes.TRIBE)
+  handleEditTribe() {
+    const route = routes.TRIBE
+    route.props = {
+      type: 'update',
+    }
+    router.resetTo(route)
     this.props.drawer.closeDrawer()
   }
 
@@ -130,7 +138,7 @@ class DrawerContent extends Component {
           <Text style={[styles.tribeText, {color}]}>{user.tribes[tid]}</Text>
           {
             isCurrent && (
-              <IconButton color={colors.main} name="settings" onPress={this.handleTribeSettings} />
+              <IconButton color={colors.main} name="settings" onPress={this.handleEditTribe} />
             )
           }
         </Touchable>

@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import {View, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 
+import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
 import FormattedMessage from '../components/FormattedMessage'
 import TextField from './fields/Text'
@@ -29,8 +30,8 @@ class RegisterForm extends Component {
     const {fields: {name, email, password, lang, tribe_name, tribe_type, city, currency}, ...props} = this.props
 
     return (
-      <Form name="register" action={submitRegister} {...props}>
-        <View style={styles.container}>
+      <ScrollView>
+        <Form name="register" action={submitRegister} {...props}>
           <FormattedMessage id="you" style={styles.subtitle} />
           <SelectField ref="lang"
             {...lang}
@@ -64,27 +65,24 @@ class RegisterForm extends Component {
           />
           <CityField ref="city"
             {...city}
+            //onFocus={this.handleFocus} //TODO: make visible the list of proposals
           />
           <SelectField ref="currency"
             {...currency}
             items={currencies}
           />
-        </View>
-      </Form>
+        </Form>
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 8,
-  },
   subtitle: {
     color: colors.primaryText,
     marginHorizontal: 5,
     marginBottom: 10,
     fontSize: 20,
-    //textAlign: 'center',
   },
 })
 
