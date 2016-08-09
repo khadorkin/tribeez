@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Alert, StyleSheet} from 'react-native'
+import {KeyboardAvoidingView, Alert, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 
@@ -29,15 +29,16 @@ class Password extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <PasswordForm />
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 80,
     flex: 1,
   },
 })

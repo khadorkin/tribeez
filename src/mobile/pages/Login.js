@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StatusBar, StyleSheet} from 'react-native'
+import {KeyboardAvoidingView, StatusBar, StyleSheet} from 'react-native'
 
 import colors from '../../common/constants/colors'
 
@@ -8,10 +8,10 @@ import LoginForm from '../forms/Login'
 class Login extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <StatusBar backgroundColor={colors.main} animated={true} />
         <LoginForm />
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

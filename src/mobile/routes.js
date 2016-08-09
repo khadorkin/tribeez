@@ -26,8 +26,8 @@ import Task from './pages/Task'
 
 export default {
   WELCOME: {name: 'welcome', component: Welcome, noHeader: true},
-  LOGIN: {name: 'login', component: Login},
-  PASSWORD: {name: 'password', component: Password},
+  LOGIN: {name: 'login', component: Login, noHeader: true},
+  PASSWORD: {name: 'password', component: Password, noHeader: true},
   REGISTER: {name: 'register', component: Register},
   JOIN: {name: 'join', component: Join},
   PROFILE: {name: 'profile', component: Profile, type: 'edit'},
