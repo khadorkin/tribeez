@@ -4,6 +4,8 @@ import {auth, db, timestamp} from '../firebase'
 import {rand} from '../utils/utils'
 import {login} from './auth'
 
+import {SNACK_MESSAGE} from '../constants/actions'
+
 import {firebaseError} from './error'
 
 export default (invite, values, dispatch) => {
@@ -90,6 +92,11 @@ export default (invite, values, dispatch) => {
       .then(() => {
         resolve()
         dispatch(login(user))
+        dispatch({
+          type: SNACK_MESSAGE,
+          message: 'joined',
+          name: invite.tribe_name,
+        })
       })
       .catch(() => { // either from a firebase fail or from a login dispatch fail
         reject({_error: 'request'})

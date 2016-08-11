@@ -106,7 +106,7 @@ class CityField extends Component {
     // medium: this.props.value
     // long: place.formatted_address
     this.props.onChange({
-      name: this.props.value, // unchanged
+      name: this.props.value.name, // unchanged
       place_id: place.place_id, // unchanged
       country_code: country.short_name,
       lat: location.lat(),

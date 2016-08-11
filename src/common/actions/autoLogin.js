@@ -19,7 +19,7 @@ export default () => {
     .then((value) => {
       dispatch({
         type: LOGIN_EMAIL,
-        value: value || '',
+        email: value || '',
       })
     })
     .catch(() => {}) // ignore fails

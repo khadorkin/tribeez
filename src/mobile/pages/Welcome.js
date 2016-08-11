@@ -1,8 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {View, Image, StyleSheet, Dimensions} from 'react-native'
-
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import Swiper from 'react-native-swiper'
 
@@ -13,7 +10,6 @@ import routes from '../../common/routes'
 import router from '../../common/router'
 
 import colors from '../../common/constants/colors'
-import autoLogin from '../../common/actions/autoLogin'
 
 const {width, height} = Dimensions.get('window')
 
@@ -56,17 +52,6 @@ const slides = [
 ]
 
 class Welcome extends Component {
-  static propTypes = {
-    // redux state
-    loading: PropTypes.bool.isRequired,
-    // action creators:
-    autoLogin: PropTypes.func.isRequired,
-  }
-
-  componentDidMount() {
-    this.props.autoLogin()
-  }
-
   handleLogin() {
     router.push(routes.LOGIN)
   }
@@ -182,12 +167,4 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapStateToProps = (state) => ({
-  loading: state.app.loading > 0,
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  autoLogin,
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(Welcome)
+export default Welcome

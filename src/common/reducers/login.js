@@ -1,6 +1,7 @@
 import {
   LOGIN_DESTINATION,
   LOGIN_EMAIL,
+  LOGGED_IN,
 } from '../constants/actions'
 
 const initialState = {
@@ -15,10 +16,15 @@ export default (state = initialState, action = null) => {
         ...state,
         destination: action.destination,
       }
+    case LOGGED_IN:
+      return {
+        ...state,
+        email: action.user.email,
+      }
     case LOGIN_EMAIL:
       return {
         ...state,
-        email: action.value,
+        email: action.email,
       }
     default:
       return state

@@ -13,6 +13,8 @@ import {
   FIREBASE_REQUEST,
   FIREBASE_SUCCESS,
   FIREBASE_FAILURE,
+  API_REQUEST,
+  API_SUCCESS,
   API_FAILURE,
   UNREAD,
 } from '../constants/actions'
@@ -103,11 +105,13 @@ export default (state = initialState, action = null) => {
         unread: action.count,
       }
     case FIREBASE_REQUEST:
+    case API_REQUEST:
       return {
         ...state,
         loading: state.loading + 1,
       }
     case FIREBASE_SUCCESS:
+    case API_SUCCESS:
       return {
         ...state,
         loading: Math.max(0, state.loading - 1),

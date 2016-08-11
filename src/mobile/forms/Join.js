@@ -37,7 +37,7 @@ class JoinForm extends Component {
   render() {
     const {fields: {name, email, password, lang}, invite, ...props} = this.props
 
-    if (!invite) {
+    if (!invite || invite.converted) {
       return (
         <View style={styles.loading}>
           <ActivityIndicator size="large" color={colors.main} />

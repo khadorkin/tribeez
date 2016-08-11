@@ -44,7 +44,7 @@ class JoinForm extends Component {
   render() {
     const {fields: {name, email, password, lang}, invite} = this.props
 
-    if (!invite) {
+    if (!invite || invite.converted) {
       return (
         <div style={{textAlign: 'center', margin: '150px 0'}}>
           <CircularProgress color={colors.main} size={0.5} />

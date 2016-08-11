@@ -30,6 +30,7 @@ import routes from '../common/routes'
 import router from '../common/router'
 import submitLogin from '../common/actions/submitLogin'
 import deleteItem from '../common/actions/deleteItem'
+import autoLogin from '../common/actions/autoLogin'
 
 const drawerWidth = Dimensions.get('window').width * 0.75
 
@@ -48,6 +49,7 @@ class App extends Component {
     // action creators:
     submitLogin: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
+    autoLogin: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -72,13 +74,14 @@ class App extends Component {
       }
       const currentRoutes = router.getCurrentRoutes()
       if (currentRoutes.length === 1) {
+        const firstRouteName = currentRoutes[0].name
         if (auth.currentUser) {
-          if (currentRoutes[0].name === 'activity') {
+          if (firstRouteName === 'activity') {
             return false
           }
           router.resetTo(routes.ACTIVITY)
         } else {
-          if (currentRoutes[0].name === 'welcome') {
+          if (firstRouteName === 'welcome') {
             return false
           }
           router.resetTo(routes.WELCOME)
@@ -102,8 +105,9 @@ class App extends Component {
           return
         }
       }
+      this.props.autoLogin()
     })
-    //TODO: catch
+    .catch(() => {}) // ignore fails
   }
 
   componentWillReceiveProps(props) {
@@ -279,6 +283,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   submitLogin,
   deleteItem,
+  autoLogin,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

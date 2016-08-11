@@ -87,7 +87,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.autoLogin()
+    if (!this.props.params.token) { // no autoLogin if fetching an invite
+      this.props.autoLogin()
+    }
     window.onresize = this.props.resize
   }
 
