@@ -10,12 +10,9 @@ import {
   UPDATE_LANG,
   SNACK_MESSAGE,
   CLOSE_SNACK,
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
-  FIREBASE_FAILURE,
-  API_REQUEST,
-  API_SUCCESS,
-  API_FAILURE,
+  REQUEST,
+  SUCCESS,
+  FAILURE,
   UNREAD,
 } from '../constants/actions'
 
@@ -91,7 +88,6 @@ export default (state = initialState, action = null) => {
         message: action.message,
         author: action.author,
         name: action.name,
-        id: action.id,
       }
       return {...state, snack}
     case CLOSE_SNACK:
@@ -104,21 +100,18 @@ export default (state = initialState, action = null) => {
         ...state,
         unread: action.count,
       }
-    case FIREBASE_REQUEST:
-    case API_REQUEST:
+    case REQUEST:
       return {
         ...state,
         loading: state.loading + 1,
       }
-    case FIREBASE_SUCCESS:
-    case API_SUCCESS:
+    case SUCCESS:
       return {
         ...state,
         loading: Math.max(0, state.loading - 1),
         error: null,
       }
-    case FIREBASE_FAILURE:
-    case API_FAILURE:
+    case FAILURE:
       return {
         ...state,
         loading: Math.max(0, state.loading - 1),

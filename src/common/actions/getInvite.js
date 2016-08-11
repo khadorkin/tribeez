@@ -4,25 +4,25 @@ import routes from '../routes'
 import api from '../utils/api'
 
 import {
-  API_REQUEST,
-  API_SUCCESS,
+  REQUEST,
+  SUCCESS,
   GET_INVITE_SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {apiError} from './error'
+import report from './error'
 import autoLogin from './autoLogin'
 
 export default (tribe, token) => {
   return (dispatch) => {
     dispatch({
-      type: API_REQUEST,
+      type: REQUEST,
     })
 
     api.get('invite', {tribe, token})
     .then((invite) => {
       dispatch({
-        type: API_SUCCESS,
+        type: SUCCESS,
       })
       if (invite) {
         dispatch({
@@ -43,7 +43,7 @@ export default (tribe, token) => {
       }
     })
     .catch((error) => {
-      dispatch(apiError(error, 'getInvite'))
+      dispatch(report(error, 'getInvite', 'api'))
     })
   }
 }

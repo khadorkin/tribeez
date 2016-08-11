@@ -6,11 +6,11 @@ import {
   RESIZE,
   CLOSE_SNACK,
   UPDATE_LANG,
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export const toggleMenu = (open) => {
   return (dispatch) => {
@@ -59,16 +59,16 @@ export const updateLang = (lang) => {
 export const setLastViewedHistoryKey = (key) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/members/' + auth.currentUser.uid + '/last_viewed_history_key').set(key)
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'setLastViewedHistoryKey'))
+      dispatch(report(error, 'setLastViewedHistoryKey'))
     })
   }
 }

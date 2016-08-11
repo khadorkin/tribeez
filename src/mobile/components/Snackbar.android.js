@@ -26,8 +26,11 @@ class Snackbar extends Component {
       return
     }
 
-    const snack_author = props.userMap[snack.author]
-    const snack_author_name = snack_author && (snack.author === props.uid ? '_you_' : snack_author.name)
+    let snack_author_name
+    if (snack.author) {
+      const snack_author = props.userMap[snack.author]
+      snack_author_name = (snack.author === props.uid ? '_you_' : snack_author.name)
+    }
 
     const id = 'snack.' + snack.message
     const values = {author: snack_author_name, name: snack.name}

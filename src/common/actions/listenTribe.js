@@ -7,10 +7,10 @@ import {
   SNACK_MESSAGE,
   UNREAD,
   MEMBERS_REMOVED,
-  FIREBASE_SUCCESS,
+  SUCCESS,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 let tribeRef
 let memberRef
@@ -36,12 +36,12 @@ const on = (tid) => {
       })
       if (!gotOnce) {
         dispatch({
-          type: FIREBASE_SUCCESS,
+          type: SUCCESS,
         })
         gotOnce = true
       }
     }, (error) => {
-      dispatch(firebaseError(error, 'listenUser/tribe_infos'))
+      dispatch(report(error, 'listenUser/tribe_infos'))
     })
 
     memberRef = db.ref('tribes/' + tid + '/members')
@@ -54,7 +54,7 @@ const on = (tid) => {
         member,
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'listenUser/tribe_members/added'))
+      dispatch(report(error, 'listenUser/tribe_members/added'))
     })
 
     memberRef.on('child_changed', (sub_snapshot) => {
@@ -65,7 +65,7 @@ const on = (tid) => {
         member,
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'listenUser/tribe_members/changed'))
+      dispatch(report(error, 'listenUser/tribe_members/changed'))
     })
 
     historyRef = db.ref('tribes/' + tid + '/history')
@@ -73,7 +73,7 @@ const on = (tid) => {
     let lastKey
 
     const onError = (error) => {
-      dispatch(firebaseError(error, 'listenTribe'))
+      dispatch(report(error, 'listenTribe'))
     }
 
     const countUnread = () => {

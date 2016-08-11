@@ -1,17 +1,17 @@
 import {db} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   MEMBER_UPDATED,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export default (uid) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     db.ref('users/' + uid).once('value')
     .then((snapshot) => {
@@ -21,11 +21,11 @@ export default (uid) => {
         uid,
       })
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'getUser'))
+      dispatch(report(error, 'getUser'))
     })
   }
 }

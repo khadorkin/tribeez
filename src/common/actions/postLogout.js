@@ -2,12 +2,12 @@ import {db, auth} from '../firebase'
 import fcm from '../fcm'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 import listenActivity from './listenActivity'
 import listenItem from './listenItem'
@@ -17,7 +17,7 @@ import listenUser from './listenUser'
 export default () => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
 
     const fcm_token = fcm.getToken()
@@ -41,7 +41,7 @@ export default () => {
     })
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
       dispatch({
         type: SNACK_MESSAGE,
@@ -49,7 +49,7 @@ export default () => {
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'postLogout'))
+      dispatch(report(error, 'postLogout'))
     })
   }
 }

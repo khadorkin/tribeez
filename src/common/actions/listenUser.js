@@ -1,9 +1,9 @@
 import {db, auth, timestamp} from '../firebase'
 import fcm from '../fcm'
 
-import {FIREBASE_REQUEST, USER_UPDATED} from '../constants/actions'
+import {REQUEST, USER_UPDATED} from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 import listenTribe from './listenTribe'
 
@@ -20,13 +20,13 @@ const on = (uid) => {
       if (!userTokens || !userTokens[token]) {
         privateRef.child('fcm_tokens').child(token).set(timestamp)
         .catch((error) => {
-          dispatch(firebaseError(error, 'listenUser/fcm_tokens'))
+          dispatch(report(error, 'listenUser/fcm_tokens'))
         })
       }
     }
 
     dispatch({
-      type: FIREBASE_REQUEST, // FIREBASE_SUCCESS is handled in listenTribe.on
+      type: REQUEST, // SUCCESS is handled in listenTribe.on
     })
 
     publicRef = db.ref('users/' + uid)
@@ -48,7 +48,7 @@ const on = (uid) => {
         dispatch(listenTribe.on(tid))
       }
     }, (error) => {
-      dispatch(firebaseError(error, 'listenUser/user'))
+      dispatch(report(error, 'listenUser/user'))
     })
 
 
@@ -64,7 +64,7 @@ const on = (uid) => {
 
       fcm.subscribeToken(onToken)
     }, (error) => {
-      dispatch(firebaseError(error, 'listenUser/users_private'))
+      dispatch(report(error, 'listenUser/users_private'))
     })
   }
 }

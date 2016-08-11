@@ -51,7 +51,7 @@ class InviteForm extends Component {
         <TextField ref="email"
           type="email"
           required={true}
-          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + (email.error.id || email.error)} values={email.error.suggestion && {suggestion: <a href="" onTouchTap={this.handleSuggestion}>{email.error.suggestion}</a>}} />}
+          errorText={email.touched && email.error && <FormattedMessage id={'error.email_' + email.error} />}
           {...email}
         />
         <SelectField ref="lang"

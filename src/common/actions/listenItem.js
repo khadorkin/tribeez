@@ -1,13 +1,13 @@
 import {db, auth} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   ITEM,
   ITEM_CLEAR,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 let ref
 let initial
@@ -15,7 +15,7 @@ let initial
 const on = (itemType, id) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     initial = true
     ref = db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id)
@@ -37,12 +37,12 @@ const on = (itemType, id) => {
       }
       if (initial) {
         dispatch({
-          type: FIREBASE_SUCCESS,
+          type: SUCCESS,
         })
         initial = false
       }
     }, (error) => {
-      dispatch(firebaseError(error, 'listenItem/' + itemType))
+      dispatch(report(error, 'listenItem/' + itemType))
     })
   }
 }

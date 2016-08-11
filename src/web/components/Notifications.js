@@ -5,7 +5,7 @@ import {injectIntl, intlShape} from 'react-intl'
 
 import gravatar from '../../common/utils/gravatar'
 
-class MemberListeners extends Component {
+class Notifications extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     // from redux:
@@ -17,16 +17,25 @@ class MemberListeners extends Component {
   }
 
   componentWillReceiveProps(props) {
+    if (!window.Notification) {
+      return // browser not supported
+    }
+
     if (props.tid && !this.subscribed) {
       this.subscribed = true
 
-      if (window.Notification && Notification.permission !== 'granted') {
+      if (Notification.permission !== 'granted') {
         Notification.requestPermission()
       }
     }
 
     const snack = props.snack
-    if (snack.open && snack.id !== this.props.snack.id && snack.author !== this.props.uid && window.Notification && Notification.permission === 'granted') {
+
+    if (!snack.author || snack.author === this.props.uid) {
+      return // origin = self => no need for this type of popup
+    }
+
+    if (snack.open && snack !== this.props.snack && Notification.permission === 'granted') {
       const author = this.props.userMap[snack.author]
       const title = this.props.intl.formatMessage({id: 'snack.' + snack.message}, {author: author.name, name: snack.name})
       const notification = new Notification(title, {icon: gravatar(author, 160)})
@@ -49,4 +58,4 @@ const mapStateToProps = (state) => ({
 export default compose(
   injectIntl,
   connect(mapStateToProps),
-)(MemberListeners)
+)(Notifications)

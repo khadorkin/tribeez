@@ -1,22 +1,22 @@
 import {db, auth} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export default (id) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/notes/' + id).remove()
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
       dispatch({
         type: SNACK_MESSAGE,
@@ -24,7 +24,7 @@ export default (id) => {
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'deleteNote'))
+      dispatch(report(error, 'deleteNote'))
     })
   }
 }

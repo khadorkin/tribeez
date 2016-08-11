@@ -210,8 +210,11 @@ class App extends Component {
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
-    const snack_author = this.props.userMap[snack.author]
-    const snack_author_name = snack_author && (snack.author === uid ? '_you_' : snack_author.name)
+    let snack_author_name
+    if (snack.author) {
+      const snack_author = this.props.userMap[snack.author]
+      snack_author_name = (snack.author === uid ? '_you_' : snack_author.name)
+    }
 
     const dialogActions = [
       <FlatButton

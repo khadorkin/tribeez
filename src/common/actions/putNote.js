@@ -1,17 +1,17 @@
 import {db, auth, timestamp} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   PUT_NOTE_SUCCESS,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export default (data) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/notes/' + data.id).set({
       title: data.title,
@@ -26,11 +26,11 @@ export default (data) => {
         data,
       })
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'putNote'))
+      dispatch(report(error, 'putNote'))
     })
   }
 }

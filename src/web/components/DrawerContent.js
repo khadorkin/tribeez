@@ -28,7 +28,7 @@ import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 import {toggleTribes} from '../../common/actions/app'
 
-import MemberListeners from './MemberListeners'
+import Notifications from './Notifications'
 
 import routes from '../routes'
 
@@ -212,7 +212,7 @@ class DrawerContent extends Component {
           </div>
         </div>
         {this.props.menu_tribes ? tribesContainer : menuContainer}
-        <MemberListeners />
+        <Notifications />
       </div>
     )
   }

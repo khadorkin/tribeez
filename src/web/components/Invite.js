@@ -34,8 +34,8 @@ class Invite extends Component {
       return null
     }
 
-    const when = <FormattedRelative value={invite.invited} />
-    const subtitle = <FormattedMessage id="invited_by" values={{user: inviter.name, when}} />
+    const ago = <FormattedRelative value={invite.invited} />
+    const subtitle = <FormattedMessage id="invited_by" values={{user: inviter.name, ago}} />
 
     //TODO: link to detailed view
     return (

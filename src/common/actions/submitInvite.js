@@ -5,7 +5,7 @@ import {db, auth, timestamp} from '../firebase'
 import api from '../utils/api'
 
 import {SNACK_MESSAGE} from '../constants/actions'
-import {firebaseError, apiError} from './error'
+import report from './error'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -17,7 +17,6 @@ export default (values, dispatch) => {
       invited: timestamp,
       inviter: auth.currentUser.uid,
     }
-    //TODO: send email
     return ref.child(token).set(invite)
     .then(() => {
       api.post('invite', {
@@ -40,16 +39,16 @@ export default (values, dispatch) => {
         })
       })
       .catch((error) => {
-        dispatch(apiError(error, 'submitInvite'))
+        dispatch(report(error, 'submitInvite', 'api'))
         reject({_error: 'request'})
         ref.child(token).remove()
         .catch(() => {
-          dispatch(firebaseError(error, 'submitInvite/rollback'))
+          dispatch(report(error, 'submitInvite/rollback'))
         })
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'submitInvite'))
+      dispatch(report(error, 'submitInvite'))
       reject({_error: 'request'})
     })
   })

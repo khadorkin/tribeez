@@ -1,19 +1,19 @@
 import {db, auth} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   GET_NOTES_SUCCESS,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 let ref
 
 const on = () => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
 
     ref = db.ref('tribes/' + auth.currentUser.tid + '/notes')
@@ -23,10 +23,10 @@ const on = () => {
         notes: snapshot.val(),
       })
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     }, (error) => {
-      dispatch(firebaseError(error, 'listenNotes'))
+      dispatch(report(error, 'listenNotes'))
     })
   }
 }

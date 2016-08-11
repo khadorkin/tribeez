@@ -1,19 +1,19 @@
 import {db, auth, timestamp} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 import {getTimeId} from '../utils/utils'
 
 export default (type, id) => {
   return (dispatch) => {
     const tid = auth.currentUser.tid
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     let updatedMembers
     let item
@@ -77,11 +77,11 @@ export default (type, id) => {
     })
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'deleteItem/' + type))
+      dispatch(report(error, 'deleteItem/' + type))
       dispatch({
         type: SNACK_MESSAGE,
         message: 'error',

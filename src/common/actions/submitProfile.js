@@ -5,7 +5,7 @@ import {auth, db} from '../firebase'
 
 import {SNACK_MESSAGE} from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export default (reauth_prompt, tribe_ids, values, dispatch) => {
   const checkReAuth = (error) => {
@@ -78,7 +78,7 @@ export default (reauth_prompt, tribe_ids, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          dispatch(firebaseError(error, 'submitProfile'))
+          dispatch(report(error, 'submitProfile'))
       }
     })
   })
