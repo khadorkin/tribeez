@@ -204,7 +204,7 @@ export default {
   'select.1h': '1 hour before',
   'error.reminder': 'Invalid reminder',
   // task:
-  'field.wait': 'Waiting period (days before it can be done)',
+  'field.wait': 'Waiting period (days)',
   'error.wait': 'Invalid period',
   'field.task_users': 'Concerned members:',
   'error.no_users': 'You must choose at lease one concerned member',

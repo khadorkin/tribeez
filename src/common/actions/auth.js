@@ -22,7 +22,7 @@ export const login = (user) => {
     dispatch(listenUser.on(user.uid))
 
     const destination = getState().login.destination || routes.ACTIVITY
-    router.resetTo(destination, dispatch)
+    router.resetHard(destination, dispatch)
 
     storage.set('login', user.email).catch(() => {}) // ignore fails
 

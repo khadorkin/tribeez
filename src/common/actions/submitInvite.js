@@ -39,8 +39,12 @@ export default (values, dispatch) => {
         })
       })
       .catch((error) => {
-        dispatch(report(error, 'submitInvite', 'api'))
-        reject({_error: 'request'})
+        if (error.email) {
+          reject({email: error.email})
+        } else {
+          dispatch(report(error, 'submitInvite', 'api'))
+          reject({_error: 'request'})
+        }
         ref.child(token).remove()
         .catch(() => {
           dispatch(report(error, 'submitInvite/rollback'))

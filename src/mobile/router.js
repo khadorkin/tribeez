@@ -11,7 +11,8 @@ export default {
   push: (route) => navigator.push(route),
   pop: () => navigator.pop(),
   replace: (route) => navigator.replace(route),
-  resetTo: (route) => navigator.immediatelyResetRouteStack([route]),
+  resetTo: (route) => navigator.resetTo(route),
+  resetHard: (route) => navigator.immediatelyResetRouteStack([route]),
   getCurrentRoutes: () => navigator.getCurrentRoutes(),
   getRoute: () => navigator.getCurrentRoutes()[0],
 }

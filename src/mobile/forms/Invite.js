@@ -27,6 +27,7 @@ class InviteForm extends Component {
             {...email}
             autoCorrect={false}
             keyboardType="email-address"
+            errorId={email.error && 'email_' + email.error}
             onSubmitEditing={this.handleSubmit}
           />
           <SelectField ref="lang"

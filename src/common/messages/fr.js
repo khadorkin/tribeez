@@ -204,7 +204,7 @@ const fr = {
   'select.1h': '1 heure avant',
   'error.reminder': 'Rappel invalide',
   // task:
-  'field.wait': 'Période de carence (jours avant de pouvoir l’accomplir)',
+  'field.wait': 'Période de carence (jours)',
   'error.wait': 'Période incorrecte',
   'field.task_users': 'Membres concernés :',
   'error.no_users': 'Vous devez choisir au moins un membre concerné',
