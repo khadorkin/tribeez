@@ -13,7 +13,6 @@ import Button from '../components/Button'
 import Log from '../components/Log'
 
 import postVote from '../../common/actions/postVote'
-import routes from '../../common/routes'
 import colors from '../../common/constants/colors'
 
 import pollAnswers from '../../common/utils/pollAnswers'
@@ -141,11 +140,7 @@ class PollDetails extends Component {
 
   render() {
     return (
-      <Details type="poll"
-        id={this.props.id}
-        item={this.props.poll}
-        editRoute={routes.POLLS_EDIT}
-      >
+      <Details type="poll" id={this.props.id}>
         {this.props.poll && this.renderItem()}
       </Details>
     )

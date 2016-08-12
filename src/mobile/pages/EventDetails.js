@@ -11,7 +11,6 @@ import FormattedDate from '../components/FormattedDate'
 import Touchable from '../components/Touchable'
 import Log from '../components/Log'
 
-import routes from '../../common/routes'
 import colors from '../../common/constants/colors'
 
 const infos = [
@@ -91,11 +90,7 @@ class EventDetails extends Component {
 
   render() {
     return (
-      <Details type="event"
-        id={this.props.id}
-        item={this.props.event}
-        editRoute={routes.EVENTS_EDIT}
-      >
+      <Details type="event" id={this.props.id}>
         {this.props.event && this.renderItem()}
       </Details>
     )

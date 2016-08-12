@@ -8,8 +8,6 @@ import FormattedNumber from '../components/FormattedNumber'
 import FormattedDate from '../components/FormattedDate'
 import Log from '../components/Log'
 
-import routes from '../../common/routes'
-
 class BillDetails extends Component {
   static propTypes = {
     // from parent:
@@ -56,11 +54,7 @@ class BillDetails extends Component {
 
   render() {
     return (
-      <Details type="bill"
-        id={this.props.id}
-        item={this.props.bill}
-        editRoute={routes.BILLS_EDIT}
-      >
+      <Details type="bill" id={this.props.id}>
         {this.props.bill && this.renderItem()}
       </Details>
     )

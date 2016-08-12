@@ -11,7 +11,6 @@ import Button from '../components/Button'
 import Log from '../components/Log'
 
 import postDone from '../../common/actions/postDone'
-import routes from '../../common/routes'
 
 class TaskDetails extends Component {
   static propTypes = {
@@ -80,11 +79,7 @@ class TaskDetails extends Component {
 
   render() {
     return (
-      <Details type="task"
-        id={this.props.id}
-        item={this.props.task}
-        editRoute={routes.TASKS_EDIT}
-      >
+      <Details type="task" id={this.props.id}>
         {this.props.task && this.renderItem()}
       </Details>
     )

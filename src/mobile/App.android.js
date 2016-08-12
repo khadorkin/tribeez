@@ -10,6 +10,7 @@ import {
   Alert,
   StatusBar,
   Dimensions,
+  View,
 } from 'react-native'
 
 import {connect} from 'react-redux'
@@ -46,6 +47,7 @@ class App extends Component {
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
+    item: PropTypes.object.isRequired,
     // action creators:
     submitLogin: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
@@ -162,7 +164,12 @@ class App extends Component {
           return <ActivityIndicator size="small" color="white" style={styles.loading} />
         }
         if (route.type === 'details' && route.name !== 'member') { //TODO: not show if does not exist
-          return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+          return (
+            <View style={styles.rightIcons}>
+              <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+              <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
+            </View>
+          )
         }
         return null
       },
@@ -183,6 +190,10 @@ class App extends Component {
     this.setState({
       drawerOpened: false,
     })
+  }
+
+  handleEdit(currentRoute) {
+    router.push(routes[currentRoute.name.toUpperCase() + 'S_EDIT'])
   }
 
   handleDelete(route) {
@@ -256,8 +267,11 @@ const styles = StyleSheet.create({
   navTitle: {
     color: colors.lightText,
     fontSize: 24,
-    marginTop: 9,
+    marginTop: 10,
     marginRight: 56, // to not overlap the right icon
+  },
+  rightIcons: {
+    flexDirection: 'row',
   },
   rightIcon: {
     padding: 12,
@@ -278,6 +292,7 @@ const mapStateToProps = (state) => ({
   formats: state.tribe.formats,
   loading: state.app.loading > 0 || state.app.submitting,
   error: state.app.error,
+  item: state.item,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
