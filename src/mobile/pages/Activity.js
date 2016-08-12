@@ -7,8 +7,8 @@ import TabView from '../hoc/TabView'
 import ActivityCard from '../components/ActivityCard'
 import AsyncContent from '../hoc/AsyncContent'
 import Entry from '../components/Entry'
-import IconButton from '../components/IconButton'
-import FormattedMessage from '../components/FormattedMessage'
+// import IconButton from '../components/IconButton'
+// import FormattedMessage from '../components/FormattedMessage'
 
 import config from '../../common/config'
 import {ACTIVITIES} from '../../common/constants/product'
@@ -31,7 +31,7 @@ class Activity extends Component {
   constructor(props) {
     super(props)
     this.load = this.load.bind(this)
-    this.handleTelegram = this.handleTelegram.bind(this)
+    //this.handleTelegram = this.handleTelegram.bind(this)
     this.renderFooter = this.renderFooter.bind(this)
     this.ref = this.ref.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -59,30 +59,30 @@ class Activity extends Component {
     }
   }
 
-  handleTelegram() {
-    Linking
-      .openURL('tg://resolve?domain=' + config.telegram_bot_name + '&start=' + this.props.bot_token)
-      .catch(() => {
-        Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.bot_token)
-      })
-  }
+  // handleTelegram() {
+  //   Linking
+  //     .openURL('tg://resolve?domain=' + config.telegram_bot_name + '&start=' + this.props.bot_token)
+  //     .catch(() => {
+  //       Linking.openURL('https://telegram.me/' + config.telegram_bot_name + '?start=' + this.props.bot_token)
+  //     })
+  // }
 
-  renderFooter(notEmpty) {
+  renderFooter(/*notEmpty*/) {
     return (
       <View style={styles.footer}>
         <ActivityIndicator size="small" color={colors.main} animating={this.props.activity.loading} />
         {
-          notEmpty && (
-            <IconButton
-              family="evil"
-              name="sc-telegram"
-              color="gray"
-              onPress={this.handleTelegram}
-              iconStyle={styles.telegramIcon}
-            >
-              <FormattedMessage id="telegram" />
-            </IconButton>
-          )
+          // notEmpty && (
+          //   <IconButton
+          //     family="evil"
+          //     name="sc-telegram"
+          //     color="gray"
+          //     onPress={this.handleTelegram}
+          //     iconStyle={styles.telegramIcon}
+          //   >
+          //     <FormattedMessage id="telegram" />
+          //   </IconButton>
+          // )
         }
         <Text style={styles.version}>
           App version: beta {config.android.versionName}
@@ -141,9 +141,10 @@ const styles = StyleSheet.create({
     marginTop: 24,
     alignItems: 'center',
   },
-  telegramIcon: {
-    marginTop: 8,
-  },
+  //TODO: add:
+  // telegramIcon: {
+  //   marginTop: 8,
+  // },
   //TODO: remove (or move):
   version: {
     marginTop: 20,

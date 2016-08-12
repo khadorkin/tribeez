@@ -17,8 +17,8 @@ import LangIcon from 'material-ui/svg-icons/action/language'
 import CircularProgress from 'material-ui/CircularProgress'
 import WarnIcon from 'material-ui/svg-icons/alert/warning'
 import Snackbar from 'material-ui/Snackbar'
-import TelegramIcon from './resources/telegram-icon'
-import MessengerIcon from './resources/messenger-icon'
+// import TelegramIcon from './resources/telegram-icon'
+// import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
 
 import DrawerContent from './components/DrawerContent'
@@ -168,7 +168,7 @@ class App extends Component {
         iconLeft = <IconButton containerElement={<Link to={routes.WELCOME} />}><HomeIcon /></IconButton>
       }
       iconRight = <FlatButton label={<FormattedMessage id="login" />} containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
-    } else {
+    }/* else {
       iconRight = (
         <div>
           <IconButton onTouchTap={this.handleMessenger}>
@@ -179,7 +179,7 @@ class App extends Component {
           </IconButton>
         </div>
       )
-    }
+    }*/
     if (this.props.error) {
       iconRight = (
         <IconButton onTouchTap={() => alert(this.props.error)}>

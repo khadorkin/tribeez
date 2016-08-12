@@ -38,7 +38,7 @@ const fr = {
   'polls.description': 'Obtenez rapidement l’opinion général en posant n’importe quelles questions',
   'tasks.description': 'Assignez-les et faites avancer les choses',
   'notes.description': 'Partagez des listes de courses et ne perdez plus le mot de passe du Wifi',
-  'end.description': 'Choisissez une option ci-dessous\npour commencer',
+  'end.description': 'Choisissez une option ci-dessous pour commencer',
   'slides.login': 'CONNEXION',
   'slides.register': 'CRÉER UN COMPTE',
 

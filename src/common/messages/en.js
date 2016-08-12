@@ -38,7 +38,7 @@ export default {
   'polls.description': 'Ask for opinions and quickly get answers',
   'tasks.description': 'Assign them to get things done',
   'notes.description': 'Share shopping lists and never forget that Wifi password again',
-  'end.description': 'Choose an option below\nto get started',
+  'end.description': 'Choose an option below to get started',
   'slides.login': 'LOGIN',
   'slides.register': 'CREATE ACCOUNT',
 
