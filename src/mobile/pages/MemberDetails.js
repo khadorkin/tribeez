@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Text, ScrollView, Linking, StyleSheet} from 'react-native'
+import {Image, Text, ScrollView, Linking, StyleSheet, Dimensions} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -7,14 +7,19 @@ import {bindActionCreators} from 'redux'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import PageView from '../hoc/PageView'
+import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 import Touchable from '../components/Touchable'
+import IconButton from '../components/IconButton'
 
 import colors from '../../common/constants/colors'
+import gravatar from '../../common/utils/gravatar'
+import listenMember from '../../common/actions/listenMember'
 
-import getUser from '../../common/actions/getUser'
+const {width} = Dimensions.get('window')
 
 const infos = [
+  {id: 'joined', icon: 'schedule'},
   {id: 'email', icon: 'email', href: 'mailto:'},
   {id: 'phone', icon: 'call', href: 'tel:'},
   {id: 'birthdate', icon: 'cake'},
@@ -27,13 +32,16 @@ class MemberDetails extends Component {
     // from redux:
     user: PropTypes.object.isRequired,
     // action creators:
-    getUser: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    if (!this.props.user.email) {
-      this.props.getUser(this.props.id)
-    }
+    this.props.subscribe(this.props.id)
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe()
   }
 
   handlePress(url) {
@@ -48,6 +56,7 @@ class MemberDetails extends Component {
     return (
       <PageView>
         <ScrollView>
+          <Image source={{uri: gravatar(user, 500)}} style={styles.avatar} />
           {
             infos
               .filter((info) => user[info.id])
@@ -57,17 +66,18 @@ class MemberDetails extends Component {
                 const handlePress = info.href && this.handlePress.bind(this, info.href + value)
 
                 let element
-                if (info.id === 'birthdate') {
-                  element = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} /*day="numeric" month="long"*/ />
+                if (info.id === 'joined') {
+                  element = <FormattedMessage id="member_since" values={{when: value}} style={styles.text} />
+                } else if (info.id === 'birthdate') {
+                  element = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} style={styles.text} />
                 } else {
-                  element = <Text>{value}</Text>
+                  element = <Text style={styles.text}>{value}</Text>
                 }
 
                 return (
-                  <Touchable onPress={handlePress} style={styles.info} key={info.id}>
-                    <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
+                  <IconButton key={info.id} name={info.icon} color={colors.members} separator={true} onPress={handlePress}>
                     {element}
-                  </Touchable>
+                  </IconButton>
                 )
               })
           }
@@ -78,12 +88,16 @@ class MemberDetails extends Component {
 }
 
 const styles = StyleSheet.create({
-  info: {
-    flexDirection: 'row',
-    padding: 10,
+  avatar: {
+    alignSelf: 'center',
+    width: (width / 2.5),
+    height: (width / 2.5),
+    borderRadius: (width / 5),
+    margin: 32,
   },
-  icon: {
-    marginRight: 10,
+  text: {
+    color: colors.primaryText,
+    fontSize: 16,
   },
 })
 
@@ -92,7 +106,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getUser,
+  subscribe: listenMember.on,
+  unsubscribe: listenMember.off,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemberDetails)

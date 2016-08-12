@@ -10,14 +10,15 @@ class IconButton extends Component {
   static propTypes = {
     onPress: PropTypes.func,
     style: View.propTypes.style,
-    iconStyle: View.propTypes.style,
-    children: PropTypes.node,
-    family: PropTypes.string,
     size: PropTypes.number,
+    children: PropTypes.node,
+    separator: PropTypes.bool, // for details
+    iconStyle: View.propTypes.style, // for telegram
+    family: PropTypes.string, // for telegram
   }
 
   render() {
-    const {onPress, style, iconStyle, children, family, size, ...props} = this.props
+    const {onPress, style, iconStyle, children, family, size, separator, ...props} = this.props
 
     const Icon = ((family === 'evil') ? EvilIcon : MaterialIcon)
 
@@ -29,7 +30,7 @@ class IconButton extends Component {
       >
         <View style={[styles.button, style]}>
           <Icon size={size || 30} color={colors.icon} style={iconStyle} {...props} />
-          {children && <View style={styles.children}>{children}</View>}
+          {children && <View style={separator ? styles.childrenWithSeparator : styles.children}>{children}</View>}
         </View>
       </TouchableNativeFeedback>
     )
@@ -40,10 +41,17 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     padding: 10,
+    alignItems: 'center', // like "vertical-align: middle" for text
   },
   children: {
-    marginLeft: 10,
-    paddingVertical: 1,
+    marginLeft: 12,
+  },
+  childrenWithSeparator: {
+    marginLeft: 12,
+    borderLeftWidth: 1,
+    borderLeftColor: colors.underline,
+    paddingVertical: 6,
+    paddingLeft: 16,
   },
 })
 

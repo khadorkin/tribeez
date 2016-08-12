@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  ///////////////////////// HEADER /////////////////////////
   header: {
     backgroundColor: colors.main,
     //paddingTop: 24, // add space here if status bar's background color is visible
@@ -277,7 +278,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
-  //////////////////////////////////////////////////
+  ////////////////////////// MENU //////////////////////////
   menu: {
     flex: 1,
   },
@@ -290,7 +291,6 @@ const styles = StyleSheet.create({
     // color is handled in render
     fontWeight: '400',
     fontSize: 15,
-    marginVertical: 3,
   },
   tribe: {
     flexDirection: 'row',
