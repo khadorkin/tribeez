@@ -32,7 +32,7 @@ const fr = {
   // slides
   start: 'Tribeez',
   end: 'Vous êtes prêt !',
-  'start.description': 'La meilleure façon d’organiser\nvotre vie en groupe',
+  'start.description': 'La meilleure façon d’organiser votre vie en groupe',
   'bills.description': 'Répartissez-les facilement entre membres concernés',
   'events.description': 'Soyez notifié-e et profitez de bons moments avec votre tribu',
   'polls.description': 'Obtenez rapidement l’opinion général en posant n’importe quelles questions',

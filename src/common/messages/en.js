@@ -32,7 +32,7 @@ export default {
   // slides
   start: 'Tribeez',
   end: 'You\'re all set!',
-  'start.description': 'The best way to sort\nyour group life',
+  'start.description': 'The best way to sort your group life',
   'bills.description': 'Easily split expenses between concerned members',
   'events.description': 'Create and get notified of events to enjoy moments together',
   'polls.description': 'Ask for opinions and quickly get answers',

@@ -12,6 +12,7 @@ import router from '../../common/router'
 import colors from '../../common/constants/colors'
 
 const {width, height} = Dimensions.get('window')
+console.log('>>>', width)
 
 const slides = [
   {
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.lightText,
-    fontSize: 36,
+    fontSize: (width / 12),
     position: 'absolute',
     top: (height * 0.25),
     width: contentWidth,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: (width * 0.07),
     width: contentWidth,
     color: colors.lightText,
-    fontSize: 16,
+    fontSize: (width / 24),
     textAlign: 'center',
   },
   paginationStyle: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
   },
   action: {
     color: colors.lightText,
-    fontSize: 16,
+    fontSize: (width / 24),
     padding: 24,
   },
 })
