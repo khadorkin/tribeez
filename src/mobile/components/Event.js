@@ -9,6 +9,7 @@ import FormattedMessage from './FormattedMessage'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
+import {getTimestamp} from '../../common/utils/utils'
 
 class Event extends Component {
   static propTypes = {
@@ -40,14 +41,13 @@ class Event extends Component {
       return null
     }
 
-    const start = new Date(event.start)
-    const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
+    const suffix = (typeof event.start === 'string') ? '' : 'time'
 
     let date
     if (event.end) {
-      date = <FormattedMessage id={'interval' + suffix} values={{start: event.start, end: event.end}} />
+      date = <FormattedMessage id={'interval' + suffix} values={{start: getTimestamp(event.start), end: getTimestamp(event.end)}} />
     } else {
-      date = <FormattedMessage id={'date' + suffix} values={{date: event.start}} />
+      date = <FormattedMessage id={'date' + suffix} values={{date: getTimestamp(event.start)}} />
     }
 
     return (

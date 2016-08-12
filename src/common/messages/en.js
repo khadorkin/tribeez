@@ -264,7 +264,7 @@ export default {
   'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.task.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" task:',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
-  telegram: 'Using Telegram?\nChat with TribeezBot!',
+  //telegram: 'Using Telegram?\nChat with TribeezBot!',
 
   // Members
   'member_since': 'Member since {when, date}',

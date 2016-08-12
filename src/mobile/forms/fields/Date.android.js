@@ -22,8 +22,13 @@ class DateField extends Component {
 
   constructor(props) {
     super(props)
+    let time = false
+    if (typeof props.value === 'number') {
+      const date = new Date(props.value)
+      time = (date.getHours() !== 0 || date.getMinutes() !== 0)
+    }
     this.state = {
-      time: false,
+      time,
     }
     this.handleOpenDate = this.handleOpenDate.bind(this)
     this.handleOpenTime = this.handleOpenTime.bind(this)

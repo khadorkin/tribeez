@@ -7,7 +7,7 @@ import {
 } from '../constants/actions'
 
 import report from './error'
-import {getTimeId} from '../utils/utils'
+import {reminderTimeId} from '../utils/utils'
 
 export default (type, id) => {
   return (dispatch) => {
@@ -39,7 +39,7 @@ export default (type, id) => {
         })
       }
       if (type === 'event' && item.reminder !== 'none') {
-        return db.ref('reminders/event/' + getTimeId(item.start, item.reminder) + '/' + id).remove()
+        return db.ref('reminders/event/' + reminderTimeId(item.start, item.reminder) + '/' + id).remove()
       }
       if (type === 'poll' || type === 'task') {
         return db.ref('reminders/' + type + '/' + id).remove()

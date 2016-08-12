@@ -10,6 +10,7 @@ import FormattedRelative from './FormattedRelative'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
+import {getTimestamp} from '../../common/utils/utils'
 
 class Entry extends Component {
   static propTypes = {
@@ -90,7 +91,7 @@ class Entry extends Component {
         break
       case 'event':
         values.name = entry.item.name
-        values.when = entry.item.start
+        values.when = getTimestamp(entry.item.start)
         break
       case 'task':
         values.name = entry.item.name

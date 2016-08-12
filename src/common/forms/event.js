@@ -2,6 +2,7 @@ import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
 import platform from '../platform'
+import {getTimestamp} from '../utils/utils'
 
 const mapStateToProps = (state, ownProps) => {
   const event = state.item.event || ownProps.current // first from routing state if any, then from ajax retrieval
@@ -11,8 +12,8 @@ const mapStateToProps = (state, ownProps) => {
       id: event.id,
       name: event.name,
       description: event.description || '',
-      start: event.start,
-      end: event.end,
+      start: getTimestamp(event.start),
+      end: getTimestamp(event.end),
       location: event.location || '',
       url: event.url || '',
       reminder: event.reminder || 'none',

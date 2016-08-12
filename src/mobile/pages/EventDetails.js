@@ -12,6 +12,7 @@ import Touchable from '../components/Touchable'
 import Log from '../components/Log'
 
 import colors from '../../common/constants/colors'
+import {getTimestamp} from '../../common/utils/utils'
 
 const infos = [
   {id: 'author', icon: 'person'},
@@ -65,11 +66,10 @@ class EventDetails extends Component {
               }
 
               if (info.id === 'start' || info.id === 'end') {
-                const date = new Date(value)
-                if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                  value = <FormattedMessage id="datetime" values={{date}} />
+                if (typeof value === 'string') {
+                  value = <FormattedDate value={getTimestamp(value)} options={{day: 'numeric', month: 'long', year: 'numeric'}} />
                 } else {
-                  value = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} />
+                  value = <FormattedMessage id="datetime" values={{date: value}} />
                 }
               } else {
                 value = <Text style={styles.value}>{value}</Text>

@@ -97,7 +97,7 @@ const on = (tid) => {
         tasks.push({
           id: key,
           name: task.name,
-          added: task.done,
+          done: task.done,
         })
       }
       loadedOne()
@@ -123,7 +123,6 @@ const on = (tid) => {
       const row = {
         id: snapshot.key,
         name: value.name,
-        added: value.start,
         start: value.start,
         end: value.end,
       }
@@ -198,7 +197,7 @@ const on = (tid) => {
           notes.push({
             id: key,
             name: note.title,
-            added: note.updated,
+            updated: note.updated,
             author: note.author,
           })
         }

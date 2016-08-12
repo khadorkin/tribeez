@@ -11,6 +11,7 @@ import FormattedRelative from './FormattedRelative'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
+import {getTimestamp} from '../../common/utils/utils'
 import {elevation} from '../dimensions'
 
 class ActivityCard extends Component {
@@ -55,22 +56,24 @@ class ActivityCard extends Component {
 
     const type = this.props.type.slice(0, -1) // plural => singular
 
-    let date = row.added
-    let textId = null
-    let values = null
+    let textId
+    let values
+    let date
 
     switch (type) {
       case 'member':
         date = row.joined
         break
       case 'poll':
+        date = row.added
         textId = 'asked_by'
         values = {author}
         break
       case 'task':
-        //nothing
+        date = row.done
         break
       case 'bill':
+        date = row.added
         if (row.part) {
           textId = 'bill.mypart'
           values = {amount: row.part}
@@ -79,17 +82,18 @@ class ActivityCard extends Component {
         }
         break
       case 'event':
-        const start = new Date(row.start)
-        const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
+        date = getTimestamp(row.start)
+        const suffix = (typeof row.start === 'string') ? '' : 'time'
         if (row.end) {
           textId = 'interval' + suffix
-          values = {start: row.start, end: row.end}
+          values = {start: date, end: getTimestamp(row.end)}
         } else {
           textId = 'date' + suffix
-          values = {date: row.start}
+          values = {date}
         }
         break
       case 'note':
+        date = row.updated
         textId = 'notes.by'
         values = {author}
         break

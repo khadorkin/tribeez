@@ -12,6 +12,7 @@ import PasteIcon from 'material-ui/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/svg-icons/social/poll'
 
 import colors from '../../common/constants/colors'
+import {getTimestamp} from '../../common/utils/utils'
 
 const icons = {
   members: <GroupIcon />,
@@ -47,22 +48,24 @@ class ActivityCard extends Component {
       author = authorObj.name
     }
 
-    let date = row.added
-    let textId = null
-    let values = null
+    let textId
+    let values
+    let date
 
     switch (this.props.type) {
       case 'members':
         date = row.joined
         break
       case 'polls':
+        date = row.added
         textId = 'asked_by'
         values = {author}
         break
       case 'tasks':
-        //nothing
+        date = row.done
         break
       case 'bills':
+        date = row.added
         if (row.part) {
           textId = 'bill.mypart'
           values = {amount: row.part}
@@ -71,17 +74,18 @@ class ActivityCard extends Component {
         }
         break
       case 'events':
-        const start = new Date(row.start)
-        const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
+        date = getTimestamp(row.start)
+        const suffix = (typeof row.start === 'string') ? '' : 'time'
         if (row.end) {
           textId = 'interval' + suffix
-          values = {start: row.start, end: row.end}
+          values = {start: date, end: getTimestamp(row.end)}
         } else {
           textId = 'date' + suffix
-          values = {date: row.start}
+          values = {date}
         }
         break
       case 'notes':
+        date = row.updated
         textId = 'notes.by'
         values = {author}
         break
