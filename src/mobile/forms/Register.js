@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
+
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
@@ -32,7 +34,12 @@ class RegisterForm extends Component {
     return (
       <ScrollView>
         <Form name="register" action={submitRegister} {...props}>
-          <FormattedMessage id="you" style={styles.subtitle} />
+          <View style={styles.section}>
+            <View style={styles.sectionIcon}>
+              <Icon name="person" size={24} color={colors.members} />
+            </View>
+            <FormattedMessage id="you" style={styles.sectionText} />
+          </View>
           <SelectField ref="lang"
             {...lang}
             items={langs}
@@ -54,7 +61,12 @@ class RegisterForm extends Component {
             errorId={password.error && 'password_' + password.error}
           />
 
-          <FormattedMessage id="your_tribe" style={styles.subtitle} />
+          <View style={styles.section}>
+            <View style={styles.sectionIcon}>
+              <Icon name="people" size={24} color={colors.members} />
+            </View>
+            <FormattedMessage id="your_tribe" style={styles.sectionText} />
+          </View>
           <TextField ref="tribe_name"
             {...tribe_name}
             autoCorrect={false}
@@ -78,11 +90,20 @@ class RegisterForm extends Component {
 }
 
 const styles = StyleSheet.create({
-  subtitle: {
+  section: {
+    flexDirection: 'row',
+    marginVertical: 16,
+  },
+  sectionIcon: {
+    marginLeft: 8,
+    paddingRight: 16,
+    borderRightWidth: 1,
+    borderRightColor: colors.underline,
+  },
+  sectionText: {
     color: colors.primaryText,
-    marginHorizontal: 5,
-    marginBottom: 10,
-    fontSize: 20,
+    marginLeft: 20,
+    fontSize: 18,
   },
 })
 
