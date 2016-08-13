@@ -11,6 +11,7 @@ import router from '../../common/router'
 import form from '../../common/forms/login'
 import submitLogin from '../../common/actions/submitLogin'
 import colors from '../../common/constants/colors'
+import {elevation} from '../dimensions'
 
 class LoginForm extends Component {
   static propTypes = {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: colors.background,
-    elevation: 1,
+    ...elevation(1),
     margin: 16,
     padding: 16,
   },

@@ -273,6 +273,9 @@ export default {
   // Bills
   'bill.mypart': 'Your share is {amount, number, money}',
   'bill.nopart': 'You are not concerned',
+  paid_by: 'Paid by {user}',
+  paid_on: 'Paid on {when, date}',
+  parts: 'Shares',
 
   // Calendar
   'calendar.allDay': 'All day',
@@ -289,6 +292,7 @@ export default {
   last_done: 'Last done {ago}',
   never_done: 'Never done',
   mark_done: 'I just did it',
+  counters: 'Counters',
 
   // Notes
   'placeholder.title': 'title',
@@ -297,6 +301,9 @@ export default {
   // Polls
   poll_answers: '{num, plural, =0 {No answers} one {1 answer} other {# answers}}',
   asked_by: '{author} asked',
+
+  //Details
+  created_by: 'Created by {author}',
 
   // Common error handling
   'error.request': 'Request error: please try again later',

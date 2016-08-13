@@ -1,11 +1,15 @@
 import React, {Component, PropTypes} from 'react'
-import {ActivityIndicator, StyleSheet, View} from 'react-native'
+import {ActivityIndicator, StyleSheet, View, Text, Linking} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import Header from '../components/Header'
+import ScrollView from '../hoc/ScrollView'
 import FormattedMessage from '../components/FormattedMessage'
+//import FormattedDate from '../components/FormattedDate'
+import FormattedNumber from '../components/FormattedNumber'
+import IconButton from '../components/IconButton'
+import Log from '../components/Log'
 
 import listenItem from '../../common/actions/listenItem'
 
@@ -16,12 +20,17 @@ class Details extends Component {
     // from parent component
     type: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    children: PropTypes.node,
+    mapper: PropTypes.func.isRequired,
+    renderBody: PropTypes.func,
+    // from redux:
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
+    item: PropTypes.object,
+    userMap: PropTypes.object.isRequired,
+    uid: PropTypes.string,
     // action creators:
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
   }
 
   componentDidMount() {
@@ -32,33 +41,70 @@ class Details extends Component {
     this.props.unsubscribe()
   }
 
+  handlePress(url) {
+    Linking.openURL(url)
+  }
+
   render() {
-    const {loading, error, children} = this.props
+    const {type, loading, error, userMap, uid, item, mapper, renderBody} = this.props
 
-    let content = children
+    let content
+    let body
+    let log
 
-    if (loading) {
-      content = (
-        <View style={styles.empty}>
-          <ActivityIndicator size="large" color={colors.main} />
-        </View>
-      )
-    }
+    if (item) {
+      content = mapper(item, userMap)
+        .filter((info) => item[info.id])
+        .map((info, index) => {
+          const style = (index === 0) ? styles.title : styles.text
 
-    if (error) {
-      content = (
-        <View style={styles.empty}>
-          <FormattedMessage id={'error.' + error} style={styles.error} />
-        </View>
-      )
+          let element
+          if (info.message) {
+            element = <FormattedMessage style={style} id={info.message} values={info.values} />
+          } else if (info.money) {
+            element = <FormattedNumber style={style} value={info.money} format="money" />
+          } else {
+            element = <Text style={style}>{info.text}</Text>
+          }
+
+          const onPress = info.url && this.handlePress.bind(this, info.url)
+
+          return (
+            <IconButton key={info.id} name={info.icon} color={colors[type + 's']} separator={true} onPress={onPress}>
+              {element}
+            </IconButton>
+          )
+        })
+
+      if (renderBody) {
+        body = renderBody(item, userMap, uid)
+      }
+
+      log = <Log type="event" item={item} />
+    } else {
+      if (loading) {
+        content = (
+          <View style={styles.empty}>
+            <ActivityIndicator size="large" color={colors.main} />
+          </View>
+        )
+      }
+
+      if (error) {
+        content = (
+          <View style={styles.empty}>
+            <FormattedMessage id={'error.' + error} style={styles.error} />
+          </View>
+        )
+      }
     }
 
     return (
-      <View style={styles.container}>
-        <Header only="image" />
+      <ScrollView>
         {content}
-        <Header style={styles.shadow} only="shadow" />
-      </View>
+        {body}
+        {log}
+      </ScrollView>
     )
   }
 }
@@ -74,18 +120,22 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 32,
   },
-  container: {
-    flex: 1,
+  title: {
+    color: colors.primaryText,
+    fontSize: 20,
   },
-  shadow: {
-    position: 'absolute',
-    top: Header.height,
+  text: {
+    color: colors.primaryText,
+    fontSize: 16,
   },
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
   loading: state.app.loading > 0,
   error: state.item.error,
+  item: state.item[props.type],
+  userMap: state.tribe.userMap,
+  uid: state.user.uid,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

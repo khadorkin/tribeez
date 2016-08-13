@@ -273,6 +273,9 @@ const fr = {
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',
   'bill.nopart': 'Vous n’êtes pas concerné-e',
+  paid_by: 'Payé par {user}',
+  paid_on: 'Payé le {when, date}',
+  parts: 'Parts',
 
   // Calendar
   'calendar.allDay': 'Journée',
@@ -289,6 +292,7 @@ const fr = {
   last_done: 'Dernière fois {ago}',
   never_done: 'Jamais effectuée',
   mark_done: 'Je viens de le faire',
+  counters: 'Compteurs',
 
   // Notes
   'placeholder.title': 'titre',
@@ -297,6 +301,9 @@ const fr = {
   // Polls
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
   asked_by: '{author} demande',
+
+  //Details
+  created_by: 'Créé par {author}',
 
   // Common error handling
   'error.request': 'Erreur: veuillez rééssayer plus tard',

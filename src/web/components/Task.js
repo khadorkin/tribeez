@@ -65,8 +65,9 @@ class Task extends Component {
 
     let active = true
     if (task.done) {
-      const elapsed = (Date.now() - task.done) / 86400000 // days
-      active = (elapsed > task.wait)
+      const elapsed = Date.now() - task.done
+      const wait = (task.wait * 86400000) || 600000 // minimum 10 minutes
+      active = (elapsed > wait)
     }
     const userIsConcerned = (active && task.counters[uid] !== undefined)
 

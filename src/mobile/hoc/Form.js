@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet, View} from 'react-native'
 
-import Button from '../components/Button'
+import FormButton from '../components/FormButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import colors from '../../common/constants/colors'
@@ -36,7 +36,7 @@ class Form extends Component {
           {children}
           <FormattedMessage id={error && 'error.' + error} style={styles.error} />
         </View>
-        <Button id={'submit.' + name} onPress={this.handleSubmit} loading={submitting} />
+        <FormButton id={'submit.' + name} onPress={this.handleSubmit} loading={submitting} />
       </View>
     )
   }

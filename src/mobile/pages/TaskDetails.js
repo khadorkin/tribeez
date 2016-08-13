@@ -1,32 +1,28 @@
 import React, {Component, PropTypes} from 'react'
-import {View, ScrollView, Text, StyleSheet} from 'react-native'
+import {View, Image, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import Details from '../hoc/Details'
-import FormattedDate from '../components/FormattedDate'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
-import Log from '../components/Log'
 
+import gravatar from '../../common/utils/gravatar'
+import colors from '../../common/constants/colors'
 import postDone from '../../common/actions/postDone'
 
 class TaskDetails extends Component {
   static propTypes = {
     // from parent:
     id: PropTypes.string.isRequired,
-    // from redux:
-    task: PropTypes.object,
-    uid: PropTypes.string.isRequired,
-    userMap: PropTypes.object.isRequired,
     // action creators:
     postDone: PropTypes.func.isRequired,
   }
 
   constructor(props) {
     super(props)
-    this.renderItem = this.renderItem.bind(this)
+    this.renderBody = this.renderBody.bind(this)
     this.handleDone = this.handleDone.bind(this)
   }
 
@@ -34,77 +30,93 @@ class TaskDetails extends Component {
     this.props.postDone(this.props.id)
   }
 
-  renderItem() {
-    const {task, uid, userMap} = this.props
+  mapper(task, userMap) {
+    return [
+      {
+        id: 'author',
+        icon: 'person',
+        message: 'created_by',
+        values: {author: userMap[task.author].name},
+      },
+      {
+        id: 'description',
+        icon: 'description',
+        text: task.description,
+      },
+    ]
+  }
 
-    const author = userMap[task.author]
-
-    const uids = Object.keys(task.counters)
-
+  renderBody(task, userMap, uid) {
     let active = true
     if (task.done) {
-      const elapsed = (Date.now() - task.done) / 86400000 // days
-      active = (elapsed > task.wait)
+      const elapsed = Date.now() - task.done
+      const wait = (task.wait * 86400000) || 600000 // minimum 10 minutes
+      active = (elapsed > wait)
     }
     const userIsConcerned = (active && task.counters[uid] !== undefined)
 
-    //TODO: UI
-
     return (
-      <ScrollView>
-        <FormattedDate value={task.created} style={styles.info} />
-        <Text style={styles.info}>Added by {author.name}</Text>
-        <Text style={styles.info}>{task.description}</Text>
+      <View style={styles.body}>
+        <FormattedMessage id="counters" style={styles.title} />
         {
-          uids.map((id) => {
+          Object.keys(task.counters).map((id) => {
             const user = userMap[id]
+
             return (
-              <View key={id} style={styles.info}>
-                <FormattedMessage id="task_counter" values={{user: user.name, count: (task.counters[user.uid])}} />
+              <View style={styles.part} key={id}>
+                <Image source={{uri: gravatar(user)}} style={styles.avatar} />
+                <FormattedMessage id="task_counter" values={{user: user.name, count: task.counters[id]}} style={styles.counter} />
               </View>
             )
           })
         }
         {
           userIsConcerned && (
-            <View style={styles.actions}>
-              <Button id="mark_done" onPress={this.handleDone} />
-            </View>
+            <Button id="mark_done" onPress={this.handleDone} />
           )
         }
-        <Log type="task" item={task} />
-      </ScrollView>
+      </View>
     )
   }
 
   render() {
     return (
-      <Details type="task" id={this.props.id}>
-        {this.props.task && this.renderItem()}
-      </Details>
+      <Details type="task" id={this.props.id} mapper={this.mapper} renderBody={this.renderBody} />
     )
   }
 }
 
 const styles = StyleSheet.create({
-  info: {
-    margin: 10,
+  body: {
+    margin: 12,
+    borderTopWidth: 1,
+    borderTopColor: colors.underline,
   },
-  actions: {
+  title: {
+    color: colors.primaryText,
+    fontSize: 20,
+    marginVertical: 8,
+  },
+  part: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 8,
   },
-})
-
-const mapStateToProps = (state) => ({
-  // for <Details> HoC:
-  task: state.item.task,
-  // for this component:
-  uid: state.user.uid,
-  userMap: state.tribe.userMap,
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  counter: {
+    flex: 1,
+    color: colors.primaryText,
+    fontSize: 16,
+    marginLeft: 24,
+  },
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   postDone,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskDetails)
+export default connect(null, mapDispatchToProps)(TaskDetails)

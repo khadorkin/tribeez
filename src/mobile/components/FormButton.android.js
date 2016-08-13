@@ -1,33 +1,37 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native'
+import {TouchableNativeFeedback, View, Text, ActivityIndicator, StyleSheet} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
 import colors from '../../common/constants/colors'
-import {elevation} from '../dimensions'
 
-class Button extends Component {
+class FormButton extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     id: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
     style: View.propTypes.style,
     textStyle: View.propTypes.style,
   }
 
   render() {
-    const {intl, id, onPress, style, textStyle, ...props} = this.props
+    const {intl, id, loading, onPress, style, textStyle, ...props} = this.props
+
+    const content = loading ? (
+      <ActivityIndicator size="small" animating={true} color="white" />
+    ) : (
+      <Text style={[styles.text, textStyle]} {...props}>{intl.formatMessage({id}).toUpperCase()}</Text>
+    )
 
     return (
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={onPress}
+        onPress={loading ? null : onPress}
         delayPressIn={0}
       >
         <View style={[styles.button, style]}>
-          <Text style={[styles.text, textStyle]} {...props}>
-            {intl.formatMessage({id}).toUpperCase()}
-          </Text>
+          {content}
         </View>
       </TouchableNativeFeedback>
     )
@@ -36,19 +40,13 @@ class Button extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
+    padding: 28,
     backgroundColor: colors.main,
-    ...elevation(2),
-    alignSelf: 'center',
-    margin: 8,
-    borderRadius: 2,
   },
   text: {
     alignSelf: 'center',
     color: colors.lightText,
-    fontWeight: '500',
   },
 })
 
-export default injectIntl(Button)
+export default injectIntl(FormButton)

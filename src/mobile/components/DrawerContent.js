@@ -7,7 +7,7 @@ import {connect} from 'react-redux'
 import FormattedMessage from './FormattedMessage'
 import Touchable from './Touchable'
 import IconButton from './IconButton'
-import Button from './Button'
+import FormButton from './FormButton'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -197,7 +197,7 @@ class DrawerContent extends Component {
         </ScrollView>
         {
           this.state.showTribes && (
-            <Button id="tribe_new" onPress={this.handleNewTribe} />
+            <FormButton id="tribe_new" onPress={this.handleNewTribe} />
           )
         }
       </View>

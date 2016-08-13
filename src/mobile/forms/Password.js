@@ -8,6 +8,7 @@ import FormattedMessage from '../components/FormattedMessage'
 import form from '../../common/forms/password'
 import submitPassword from '../../common/actions/submitPassword'
 import colors from '../../common/constants/colors'
+import {elevation} from '../dimensions'
 
 class PasswordForm extends Component {
   static propTypes = {
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
   box: {
     marginTop: 56,
     backgroundColor: colors.background,
-    elevation: 1,
+    ...elevation(1),
     margin: 16,
     padding: 16,
   },

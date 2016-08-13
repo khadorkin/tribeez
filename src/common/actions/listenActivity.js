@@ -77,8 +77,9 @@ const on = (tid) => {
         const task = values[key]
 
         if (task.done) {
-          const elapsed = (now - task.done) / ONE_DAY // days
-          if (elapsed < task.wait) {
+          const elapsed = now - task.done
+          const wait = (task.wait * ONE_DAY) || 600000 // minimum 10 minutes
+          if (elapsed < wait) {
             continue // too early => skip
           }
         }
