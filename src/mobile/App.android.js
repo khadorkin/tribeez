@@ -163,13 +163,23 @@ class App extends Component {
         if (loading) {
           return <ActivityIndicator size="small" color="white" style={styles.loading} />
         }
-        if (route.type === 'details' && route.name !== 'member') { //TODO: not show if does not exist
-          return (
-            <View style={styles.rightIcons}>
-              <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
-              <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
-            </View>
-          )
+        if (route.type === 'details') { //TODO: not show if item does not exist
+          if (route.name === 'member') {
+            if (route.props.id === this.props.uid) {
+              return (
+                <View style={styles.rightIcons}>
+                  <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
+                </View>
+              )
+            }
+          } else {
+            return (
+              <View style={styles.rightIcons}>
+                <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+                <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
+              </View>
+            )
+          }
         }
         return null
       },

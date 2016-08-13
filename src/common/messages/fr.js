@@ -26,8 +26,8 @@ const fr = {
   polls: 'Sondages',
   polls_new: 'Nouveau sondage',
   polls_edit: 'Modifier le sondage',
-  tribe: 'Tribu',
   tribe_new: 'Nouvelle tribu',
+  tribe_edit: 'Tribu',
 
   // slides
   start: 'Tribeez',

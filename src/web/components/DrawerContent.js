@@ -171,7 +171,7 @@ class DrawerContent extends Component {
         <MenuItem key={tid}
           onTouchTap={this.selectTribe.bind(this, tid)}
           style={active ? styles.current : styles.default}
-          rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
+          rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE_EDIT} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
         >
           {name}
         </MenuItem>
@@ -199,7 +199,7 @@ class DrawerContent extends Component {
           <IconButton style={styles.logout} onTouchTap={this.handleLogout}>
             <ExitIcon color="white" />
           </IconButton>
-          <IconButton style={styles.profile} containerElement={<Link to={routes.PROFILE} />}>
+          <IconButton style={styles.profile} containerElement={<Link to={routes.MEMBERS_EDIT} />}>
             <PersonIcon color="white" />
           </IconButton>
           <Avatar style={styles.avatar} src={gravatar(user, 160)} size={80} />

@@ -64,7 +64,7 @@ class DrawerContent extends Component {
   }
 
   handleProfile() {
-    router.resetTo(routes.PROFILE)
+    router.resetTo(routes.MEMBERS_EDIT)
     this.props.drawer.closeDrawer()
   }
 
@@ -89,7 +89,7 @@ class DrawerContent extends Component {
   }
 
   handleEditTribe() {
-    const route = routes.TRIBE
+    const route = routes.TRIBE_EDIT
     route.props = {
       type: 'update',
     }

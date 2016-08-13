@@ -26,8 +26,8 @@ export default {
   polls: 'Polls',
   polls_new: 'New poll',
   polls_edit: 'Edit poll',
-  tribe: 'Tribe',
   tribe_new: 'New tribe',
+  tribe_edit: 'Tribe',
 
   // slides
   start: 'Tribeez',

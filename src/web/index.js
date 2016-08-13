@@ -113,25 +113,33 @@ ReactDOM.render((
         <Route path={routes.PASSWORD} component={Password} onEnter={redirectToHome} />
         <Route path={routes.REGISTER} component={Register} onEnter={redirectToHome} />
         <Route path={routes.JOIN} component={Join} onEnter={redirectToHome} />
+
         <Route path={routes.ACTIVITY} component={Activity} onEnter={authenticate} />
-        <Route path={routes.PROFILE} component={Profile} onEnter={authenticate} />
-        <Route path={routes.TRIBE} component={Tribe} onEnter={authenticate} />
         <Route path={routes.TRIBE_NEW} component={NewTribe} onEnter={authenticate} />
+        <Route path={routes.TRIBE_EDIT} component={Tribe} onEnter={authenticate} />
+
         <Route path={routes.MEMBERS} component={Members} onEnter={authenticate} />
         <Route path={routes.MEMBERS_NEW} component={Invite} onEnter={authenticate} />
+        <Route path={routes.MEMBERS_EDIT} component={Profile} onEnter={authenticate} />
+
         <Route path={routes.BILLS} component={Bills} onEnter={authenticate} />
         <Route path={routes.BILLS_NEW} component={Bill} onEnter={authenticate} />
         <Route path={routes.BILLS_EDIT} component={Bill} onEnter={authenticate} />
+
         <Route path={routes.EVENTS} component={Events} onEnter={authenticate} />
         <Route path={routes.EVENTS_NEW} component={Event} onEnter={authenticate} />
         <Route path={routes.EVENTS_EDIT} component={Event} onEnter={authenticate} />
+
         <Route path={routes.TASKS} component={Tasks} onEnter={authenticate} />
         <Route path={routes.TASKS_NEW} component={Task} onEnter={authenticate} />
         <Route path={routes.TASKS_EDIT} component={Task} onEnter={authenticate} />
+
         <Route path={routes.NOTES} component={Notes} onEnter={authenticate} />
+
         <Route path={routes.POLLS} component={Polls} onEnter={authenticate} />
         <Route path={routes.POLLS_NEW} component={Poll} onEnter={authenticate} />
         <Route path={routes.POLLS_EDIT} component={Poll} onEnter={authenticate} />
+
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

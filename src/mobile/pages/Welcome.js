@@ -12,7 +12,6 @@ import router from '../../common/router'
 import colors from '../../common/constants/colors'
 
 const {width, height} = Dimensions.get('window')
-console.log('>>>', width)
 
 const slides = [
   {
