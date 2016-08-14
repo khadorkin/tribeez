@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Image, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -7,8 +7,8 @@ import {bindActionCreators} from 'redux'
 import Details from '../hoc/Details'
 import FormattedMessage from '../components/FormattedMessage'
 import Button from '../components/Button'
+import Avatar from '../components/Avatar'
 
-import gravatar from '../../common/utils/gravatar'
 import colors from '../../common/constants/colors'
 import postDone from '../../common/actions/postDone'
 
@@ -64,7 +64,7 @@ class TaskDetails extends Component {
 
             return (
               <View style={styles.part} key={id}>
-                <Image source={{uri: gravatar(user)}} style={styles.avatar} />
+                <Avatar user={user} />
                 <FormattedMessage id="task_counter" values={{user: user.name, count: task.counters[id]}} style={styles.counter} />
               </View>
             )
@@ -88,7 +88,7 @@ class TaskDetails extends Component {
 
 const styles = StyleSheet.create({
   body: {
-    margin: 12,
+    margin: 16,
     borderTopWidth: 1,
     borderTopColor: colors.underline,
   },
@@ -101,11 +101,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 8,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
   },
   counter: {
     flex: 1,

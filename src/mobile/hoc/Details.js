@@ -70,7 +70,13 @@ class Details extends Component {
           const onPress = info.url && this.handlePress.bind(this, info.url)
 
           return (
-            <IconButton key={info.id} name={info.icon} color={colors[type + 's']} separator={true} onPress={onPress}>
+            <IconButton key={info.id}
+              name={info.icon}
+              color={colors[type + 's']}
+              separator={true}
+              onPress={onPress}
+              style={styles.button}
+            >
               {element}
             </IconButton>
           )
@@ -127,6 +133,9 @@ const styles = StyleSheet.create({
   text: {
     color: colors.primaryText,
     fontSize: 16,
+  },
+  button: {
+    paddingHorizontal: 16,
   },
 })
 

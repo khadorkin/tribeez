@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {Image, View, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import Touchable from '../components/Touchable'
+import Avatar from '../components/Avatar'
 import IconButton from '../components/IconButton'
 
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 
 class ListItem extends Component {
   static propTypes = {
@@ -27,10 +27,7 @@ class ListItem extends Component {
 
     return (
       <Touchable onPress={onPress} style={[styles.container, style]}>
-        <Image
-          source={{uri: gravatar(user)}}
-          style={styles.avatar}
-        />
+        <Avatar user={user} style={styles.avatar} />
         <View style={styles.content}>
           <View style={styles.text}>
             {children}
@@ -49,9 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
     marginRight: 12,
   },
   content: {

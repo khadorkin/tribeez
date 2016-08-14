@@ -1,11 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Image, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 
 import Details from '../hoc/Details'
 import FormattedMessage from '../components/FormattedMessage'
 import FormattedNumber from '../components/FormattedNumber'
+import Avatar from '../components/Avatar'
 
-import gravatar from '../../common/utils/gravatar'
 import colors from '../../common/constants/colors'
 
 class BillDetails extends Component {
@@ -22,15 +22,15 @@ class BillDetails extends Component {
         money: bill.amount,
       },
       {
+        id: 'description',
+        icon: 'description',
+        text: bill.description,
+      },
+      {
         id: 'payer',
         icon: 'person',
         message: 'paid_by',
         values: {user: userMap[bill.payer].name},
-      },
-      {
-        id: 'description',
-        icon: 'description',
-        text: bill.description,
       },
       {
         id: 'paid',
@@ -51,7 +51,7 @@ class BillDetails extends Component {
 
             return (
               <View style={styles.part} key={id}>
-                <Image source={{uri: gravatar(user)}} style={styles.avatar} />
+                <Avatar user={user} />
                 <Text style={styles.name}>{user.name}</Text>
                 <FormattedNumber value={bill.parts[id]} format="money" style={styles.amount} />
               </View>
@@ -71,7 +71,7 @@ class BillDetails extends Component {
 
 const styles = StyleSheet.create({
   body: {
-    margin: 12,
+    margin: 16,
     borderTopWidth: 1,
     borderTopColor: colors.underline,
   },
@@ -84,11 +84,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 8,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
   },
   name: {
     flex: 1,

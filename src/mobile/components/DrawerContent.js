@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, ScrollView, Text, Image, TouchableHighlight} from 'react-native'
+import {StyleSheet, View, ScrollView, Text, TouchableHighlight} from 'react-native'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
+import Avatar from './Avatar'
 import FormattedMessage from './FormattedMessage'
 import Touchable from './Touchable'
 import IconButton from './IconButton'
@@ -12,7 +13,6 @@ import FormButton from './FormButton'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 
@@ -154,10 +154,7 @@ class DrawerContent extends Component {
               style={styles.avatar}
               underlayColor={colors.secondaryText}
             >
-              <Image
-                source={{uri: gravatar(user, 160)}}
-                style={styles.avatarImage}
-              />
+              <Avatar user={user} size={80} />
             </TouchableHighlight>
             <View style={styles.member}>
               <Text style={styles.username}>
@@ -235,11 +232,6 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     margin: 16,
     alignSelf: 'center',
-  },
-  avatarImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
   },
   member: {
     flex: 1,

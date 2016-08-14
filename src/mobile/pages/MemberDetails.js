@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Image, Text, Linking, StyleSheet, Dimensions} from 'react-native'
+import {Text, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -8,9 +8,9 @@ import ScrollView from '../hoc/ScrollView'
 import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
 import IconButton from '../components/IconButton'
+import Avatar from '../components/Avatar'
 
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 import listenMember from '../../common/actions/listenMember'
 
 class MemberDetails extends Component {
@@ -66,12 +66,18 @@ class MemberDetails extends Component {
 
     return (
       <ScrollView>
-        <Image source={{uri: gravatar(user, 500)}} style={styles.avatar} />
+        <Avatar user={user} size={160} style={styles.avatar} />
         {
           infos
             .filter((info) => user[info.id])
             .map((info) => (
-              <IconButton key={info.id} name={info.icon} color={colors.members} separator={true} onPress={info.handlePress}>
+              <IconButton key={info.id}
+                name={info.icon}
+                color={colors.members}
+                separator={true}
+                onPress={info.handlePress}
+                style={styles.button}
+              >
                 {info.element}
               </IconButton>
             ))
@@ -81,19 +87,17 @@ class MemberDetails extends Component {
   }
 }
 
-const {width} = Dimensions.get('window')
-
 const styles = StyleSheet.create({
   avatar: {
     alignSelf: 'center',
-    width: (width / 2.5),
-    height: (width / 2.5),
-    borderRadius: (width / 5),
     margin: 32,
   },
   text: {
     color: colors.primaryText,
     fontSize: 16,
+  },
+  button: {
+    paddingHorizontal: 16,
   },
 })
 

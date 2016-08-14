@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {ActivityIndicator, View, ScrollView, Text, Linking, StyleSheet} from 'react-native'
+import {ActivityIndicator, View, ScrollView, Text, StyleSheet/*, Linking*/} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, Image, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -7,8 +7,8 @@ import {bindActionCreators} from 'redux'
 import Details from '../hoc/Details'
 import Checkbox from '../components/Checkbox'
 import Button from '../components/Button'
+import Avatar from '../components/Avatar'
 
-import gravatar from '../../common/utils/gravatar'
 import colors from '../../common/constants/colors'
 import postVote from '../../common/actions/postVote'
 
@@ -124,7 +124,7 @@ class PollDetails extends Component {
               <View style={styles.users}>
                 {
                   result.users.map((user) =>
-                    <Image key={user.uid} source={{uri: gravatar(user)}} style={styles.avatar} />
+                    <Avatar key={user.uid} user={user} style={styles.avatar} />
                   )
                 }
               </View>
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
-    margin: 12,
+    margin: 16,
   },
   result: {
     marginVertical: 10,
@@ -204,9 +204,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
     marginRight: 12,
   },
 })

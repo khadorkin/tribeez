@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   childrenWithSeparator: {
-    marginLeft: 12,
+    marginLeft: 16,
     borderLeftWidth: 1,
     borderLeftColor: colors.underline,
     paddingVertical: 6,
