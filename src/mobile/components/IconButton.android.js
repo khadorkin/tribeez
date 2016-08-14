@@ -26,7 +26,6 @@ class IconButton extends Component {
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.SelectableBackground()}
         onPress={onPress}
-        delayPressIn={0}
       >
         <View style={[styles.button, style]}>
           <Icon size={size || 30} color={colors.icon} style={iconStyle} {...props} />

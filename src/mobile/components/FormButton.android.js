@@ -12,7 +12,7 @@ class FormButton extends Component {
     onPress: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     style: View.propTypes.style,
-    textStyle: View.propTypes.style,
+    textStyle: Text.propTypes.style,
   }
 
   render() {
@@ -28,7 +28,6 @@ class FormButton extends Component {
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.SelectableBackground()}
         onPress={loading ? null : onPress}
-        delayPressIn={0}
       >
         <View style={[styles.button, style]}>
           {content}

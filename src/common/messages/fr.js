@@ -69,7 +69,7 @@ const fr = {
   cancel: 'Annuler',
   close: 'Fermer',
   delete_dialog: 'Voulez-vous vraiment supprimer {type, select, bill {cette dépense} event {cet évènement} note {cette note} poll {ce sondage} task {cette tâche}} ?',
-  vote_again: 'Re-voter',
+  vote_again: 'Changer votre vote',
   submit_vote: 'Voter',
   return_home: 'Revenir à l’Activité',
   retry: 'Réessayer',

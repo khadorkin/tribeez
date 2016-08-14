@@ -69,8 +69,8 @@ export default {
   cancel: 'Cancel',
   close: 'Close',
   delete_dialog: 'Do you really want to delete this {type}?',
-  vote_again: 'Vote again',
-  submit_vote: 'Submit vote',
+  vote_again: 'Change your vote',
+  submit_vote: 'Vote',
   return_home: 'Return to Activity',
   retry: 'Retry',
 
