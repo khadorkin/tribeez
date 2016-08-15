@@ -34,7 +34,7 @@ class Tasks extends Component {
         <AsyncContent name="tasks"
           renderRow={this.renderTask}
         />
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="tasks" />
       </PageView>
     )
   }

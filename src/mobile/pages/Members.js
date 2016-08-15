@@ -48,7 +48,7 @@ class Members extends Component {
             tabLabel="tab.invited"
           />
         </TabView>
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="members" />
       </View>
     )
   }

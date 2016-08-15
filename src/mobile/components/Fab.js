@@ -9,26 +9,29 @@ class Fab extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
+    type: PropTypes.string,
   }
 
   render() {
+    const {name, onPress, type} = this.props
+
     const content = (
       <View style={styles.button}>
-        <Icon name={this.props.name} color="white" size={30} />
+        <Icon name={name} color="white" size={30} />
       </View>
     )
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: colors[type || 'main']}]}>
         {
           (Platform.OS === 'android' && Platform.Version >= 21) ? (
-            <TouchableNativeFeedback onPress={this.props.onPress}
+            <TouchableNativeFeedback onPress={onPress}
               background={TouchableNativeFeedback.Ripple(colors.secondaryText, true)}
             >
               {content}
             </TouchableNativeFeedback>
           ) : (
-            <TouchableOpacity onPress={this.props.onPress}>
+            <TouchableOpacity onPress={onPress}>
               {content}
             </TouchableOpacity>
           )
@@ -44,7 +47,6 @@ const styles = StyleSheet.create({
     bottom: 16,
     right: 16,
     borderRadius: 32,
-    backgroundColor: colors.main,
     // Android:
     elevation: 6,
     //iOS: TODO

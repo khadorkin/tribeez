@@ -101,7 +101,7 @@ class Notes extends Component {
           onRowMoved={this.handleMove}
           keyboardShouldPersistTaps={true}
         />
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="notes" />
       </PageView>
     )
   }

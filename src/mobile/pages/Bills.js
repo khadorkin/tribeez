@@ -50,7 +50,7 @@ class Bills extends Component {
             <View style={styles.spacer} />
           </ScrollView>
         </TabView>
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="bills" />
       </View>
     )
   }

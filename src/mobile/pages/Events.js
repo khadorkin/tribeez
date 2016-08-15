@@ -54,7 +54,7 @@ class Events extends Component {
             tabLabel="tab.past"
           />
         </TabView>
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="events" />
       </View>
     )
   }

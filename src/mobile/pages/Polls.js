@@ -34,7 +34,7 @@ class Polls extends Component {
         <AsyncContent name="polls"
           renderRow={this.renderPoll}
         />
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="polls" />
       </PageView>
     )
   }
