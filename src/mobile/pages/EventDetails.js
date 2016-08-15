@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 
 import Details from '../hoc/Details'
 
-import {getTimestamp} from '../../common/utils/utils'
+import {getTimestamp} from '../../common/utils/time'
 
 class EventDetails extends Component {
   static propTypes = {

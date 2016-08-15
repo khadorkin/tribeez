@@ -1,7 +1,7 @@
 import md5 from 'md5'
 
 import {auth, db, timestamp} from '../firebase'
-import {rand} from '../utils/utils'
+import {rand} from '../utils/text'
 import {login} from './auth'
 
 import {SNACK_MESSAGE} from '../constants/actions'

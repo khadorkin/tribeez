@@ -5,7 +5,7 @@ import {db, auth, timestamp} from '../firebase'
 
 import saveLog from './saveLog'
 import report from './error'
-import {reminderTimeId, storedTime} from '../utils/utils'
+import {reminderTimeId, storedTime} from '../utils/time'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {

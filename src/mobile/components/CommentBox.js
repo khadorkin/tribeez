@@ -20,8 +20,6 @@ class CommentBox extends Component {
           underlineColorAndroid="transparent"
           placeholder={intl.formatMessage({id: 'comment'})}
           style={styles.input}
-          multiline={true}
-          numberOfLines={3}
           {...props}
         />
       </View>
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     marginLeft: 12,
-    paddingVertical: 4,
+    paddingVertical: 12,
   },
 })
 

@@ -3,7 +3,7 @@ import md5 from 'md5'
 import api from '../utils/api'
 import {auth, db, timestamp} from '../firebase'
 import platform from '../platform'
-import {rand} from '../utils/utils'
+import {rand} from '../utils/text'
 import {login} from './auth'
 
 import report from './error'

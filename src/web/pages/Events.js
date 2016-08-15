@@ -27,7 +27,7 @@ import styles from '../styles'
 import routes from '../routes'
 
 import {db} from '../../common/firebase'
-import {getTimestamp} from '../../common/utils/utils'
+import {getTimestamp} from '../../common/utils/time'
 
 import deleteItem from '../../common/actions/deleteItem'
 import newEvent from '../../common/actions/newEvent'

@@ -2,7 +2,7 @@ import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
 import platform from '../platform'
-import {getTimestamp} from '../utils/utils'
+import {getTimestamp} from '../utils/time'
 
 const mapStateToProps = (state, ownProps) => {
   const event = state.item.event || ownProps.current // first from routing state if any, then from ajax retrieval

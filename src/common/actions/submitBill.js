@@ -2,7 +2,7 @@ import router from '../router'
 import routes from '../routes'
 
 import {db, auth, timestamp} from '../firebase'
-import {decimal} from '../utils/utils'
+import {decimal} from '../utils/number'
 
 import saveLog from './saveLog'
 import report from './error'

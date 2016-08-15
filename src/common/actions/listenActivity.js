@@ -11,6 +11,8 @@ import {
 
 import report from './error'
 
+import {oneLine} from '../utils/text'
+
 const FETCH_MAX = 10
 const DAYS_NEW = 7 // number of days an item remains considerd "new"
 
@@ -193,11 +195,12 @@ const on = (tid) => {
       const notes = []
       for (const key in values) {
         const note = values[key]
+        const title = oneLine(note.title) || oneLine(note.content)
 
-        if (note.updated > now - (DAYS_NEW * ONE_DAY)) {
+        if (title && note.updated > (now - (DAYS_NEW * ONE_DAY))) {
           notes.push({
             id: key,
-            name: note.title,
+            name: title,
             updated: note.updated,
             author: note.author,
           })

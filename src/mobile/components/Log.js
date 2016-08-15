@@ -10,7 +10,7 @@ import FormattedRelative from '../components/FormattedRelative'
 import FormattedMessage from '../components/FormattedMessage'
 
 import colors from '../../common/constants/colors'
-import {getTimestamp} from '../../common/utils/utils'
+import {getTimestamp} from '../../common/utils/time'
 import updateComment from '../../common/actions/updateComment'
 import postComment from '../../common/actions/postComment'
 

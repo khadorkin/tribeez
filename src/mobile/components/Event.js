@@ -9,7 +9,7 @@ import FormattedMessage from './FormattedMessage'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import {getTimestamp} from '../../common/utils/utils'
+import {getTimestamp} from '../../common/utils/time'
 
 class Event extends Component {
   static propTypes = {

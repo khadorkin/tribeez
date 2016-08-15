@@ -12,7 +12,7 @@ import PasteIcon from 'material-ui/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/svg-icons/social/poll'
 
 import colors from '../../common/constants/colors'
-import {getTimestamp} from '../../common/utils/utils'
+import {getTimestamp} from '../../common/utils/time'
 
 const icons = {
   members: <GroupIcon />,

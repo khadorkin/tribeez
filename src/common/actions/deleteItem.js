@@ -7,7 +7,7 @@ import {
 } from '../constants/actions'
 
 import report from './error'
-import {reminderTimeId} from '../utils/utils'
+import {reminderTimeId} from '../utils/time'
 
 export default (type, id) => {
   return (dispatch) => {

@@ -11,7 +11,7 @@ import FormattedRelative from './FormattedRelative'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import {getTimestamp} from '../../common/utils/utils'
+import {getTimestamp} from '../../common/utils/time'
 import {elevation} from '../dimensions'
 
 class ActivityCard extends Component {
@@ -59,6 +59,7 @@ class ActivityCard extends Component {
     let textId
     let values
     let date
+    let dateFallback
 
     switch (type) {
       case 'member':
@@ -71,6 +72,7 @@ class ActivityCard extends Component {
         break
       case 'task':
         date = row.done
+        dateFallback = 'never_done'
         break
       case 'bill':
         date = row.added
@@ -102,10 +104,10 @@ class ActivityCard extends Component {
     return (
       <Touchable key={row.id || row.uid} style={styles.itemContainer} onPress={this.handlePress.bind(this, type, row)}>
         <View style={styles.itemContent}>
-          <Text style={styles.itemTitle}>{row.name}</Text>
+          <Text style={styles.itemTitle} numberOfLines={3}>{row.name}</Text>
           {textId && <FormattedMessage style={styles.itemText} id={textId} values={values} />}
         </View>
-        <FormattedRelative value={date} style={styles.itemTime} />
+        <FormattedRelative value={date} style={styles.itemTime} fallback={dateFallback} />
       </Touchable>
     )
   }
@@ -163,9 +165,9 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
   },
   itemContainer: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 4,
   },
   itemContent: {
     flex: 1, // to wrap
@@ -175,7 +177,6 @@ const styles = StyleSheet.create({
   },
   itemText: {
     color: colors.secondaryText,
-    paddingBottom: 6, //TODO: this is a hack to fix the cropped overflow bug: http://stackoverflow.com/questions/38779726
   },
   itemTime: {
     fontStyle: 'italic',
