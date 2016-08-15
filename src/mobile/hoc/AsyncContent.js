@@ -11,6 +11,7 @@ import {db} from '../../common/firebase'
 const PAGING = 20
 
 import Button from '../components/Button'
+import Empty from '../components/Empty'
 
 import colors from '../../common/constants/colors'
 
@@ -129,11 +130,6 @@ class AsyncContent extends Component {
     const limiter = this.props.ascending ? 'limitToFirst' : 'limitToLast'
     const pager = this.props.ascending ? 'startAt' : 'endAt'
 
-    if (!this.listeningToLast) {
-      query[limiter](2).on('value', this.lastEntry, this.handleError)
-      this.listeningToLast = true
-    }
-
     if (this.state.loading) {
       return // e.g. multiple scrollings
     }
@@ -152,6 +148,13 @@ class AsyncContent extends Component {
       query = query[pager](this.last)
     }
     this.first = this.last // see childAdded/flush
+
+    // to check if it's empty:
+    if (!this.listeningToLast) {
+      query[limiter](1).on('value', this.lastEntry, this.handleError)
+      this.listeningToLast = true
+    }
+
     //console.log((this.props.tabLabel || this.props.name) + ' listens to ' + this.props.name + ', orderBy ' + (this.props.orderBy || 'key') + ', ' + pager + ' ' + this.last + ', ' + limiter + ' ' + PAGING)
     query[limiter](PAGING).on('child_added', this.childAdded, this.handleError)
     query[limiter](PAGING).on('child_changed', this.childChanged, this.handleError)
@@ -273,11 +276,7 @@ class AsyncContent extends Component {
         </View>
       )
     } else if (this.state.empty) {
-      return (
-        <View style={styles.empty}>
-          <Text>Nothing to show!</Text>
-        </View>
-      )
+      return <Empty name={this.props.name} />
     }
 
     return (
@@ -311,11 +310,6 @@ const styles = StyleSheet.create({
   spinner: {
     paddingTop: 8,
     justifyContent: 'center', // vertically center
-  },
-  empty: {
-    flex: 1, // take all space
-    justifyContent: 'center', // vertically center
-    alignItems: 'center', // horizontally center
   },
   error: {
     color: colors.error,

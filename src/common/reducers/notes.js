@@ -7,8 +7,6 @@ import {
 } from '../constants/actions'
 
 const initialState = {
-  loading: false,
-  error: null,
   items: [],
 }
 

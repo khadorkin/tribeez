@@ -16,7 +16,7 @@ class FormattedNumber extends Component {
     const {intl, value, format, options, sign, ...props} = this.props
 
     let prefix = ''
-    if (sign) {
+    if (sign && value !== 0) {
       prefix = (value > 0 ? '+ ' : '− ') // <-- this is the MINUS SIGN in the UTF-8 table
     }
 

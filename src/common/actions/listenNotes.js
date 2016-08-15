@@ -15,6 +15,7 @@ const on = () => {
     dispatch({
       type: REQUEST,
     })
+    let gotOnce = false
 
     ref = db.ref('tribes/' + auth.currentUser.tid + '/notes')
     ref.on('value', (snapshot) => {
@@ -22,9 +23,12 @@ const on = () => {
         type: GET_NOTES_SUCCESS,
         notes: snapshot.val(),
       })
-      dispatch({
-        type: SUCCESS,
-      })
+      if (!gotOnce) {
+        dispatch({
+          type: SUCCESS,
+        })
+        gotOnce = true
+      }
     }, (error) => {
       dispatch(report(error, 'listenNotes'))
     })

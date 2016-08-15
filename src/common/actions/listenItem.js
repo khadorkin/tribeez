@@ -10,14 +10,14 @@ import {
 import report from './error'
 
 let ref
-let initial
 
 const on = (itemType, id) => {
   return (dispatch) => {
     dispatch({
       type: REQUEST,
     })
-    initial = true
+    let gotOnce = false
+
     ref = db.ref('tribes/' + auth.currentUser.tid + '/' + itemType + 's/' + id)
     ref.on('value', (snapshot) => {
       const item = snapshot.val()
@@ -35,11 +35,11 @@ const on = (itemType, id) => {
           error: 'not_found',
         })
       }
-      if (initial) {
+      if (!gotOnce) {
         dispatch({
           type: SUCCESS,
         })
-        initial = false
+        gotOnce = true
       }
     }, (error) => {
       dispatch(report(error, 'listenItem/' + itemType))

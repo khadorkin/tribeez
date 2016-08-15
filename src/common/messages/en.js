@@ -57,6 +57,14 @@ export default {
   'tab.bills': 'List',
   'tab.balances': 'Balances',
 
+  // empty
+  'empty.bills': 'First expense?\nAdd it now!',
+  'empty.events': 'First event?\nAdd it now!',
+  'empty.tasks': 'First task?\nAdd it now!',
+  'empty.notes': 'First note?\nAdd it now!',
+  'empty.polls': 'First poll?\nAdd it now!',
+  'empty.invites': 'First invite?\nAdd it now!',
+
   // dates
   date: 'On {date, date, event}',
   datetime: 'On {date, date, event} at {date, time, short}',

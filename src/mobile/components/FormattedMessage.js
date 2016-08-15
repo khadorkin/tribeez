@@ -9,11 +9,10 @@ class FormattedMessage extends Component {
     id: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     defaultMessage: PropTypes.string,
     values: PropTypes.object,
-    relative: PropTypes.object,
   }
 
   render() {
-    const {intl, id, defaultMessage, values, relative, ...props} = this.props
+    const {intl, id, defaultMessage, values, ...props} = this.props
 
     if (values && values.ago && typeof values.ago !== 'string') {
       values.ago = intl.formatRelative(values.ago)
@@ -21,7 +20,7 @@ class FormattedMessage extends Component {
 
     return (
       <Text {...props}>
-        {id ? intl.formatMessage({id, defaultMessage}, {...values, ...relative}) : ' '}
+        {id ? intl.formatMessage({id, defaultMessage}, values) : ' '}
       </Text>
     )
   }

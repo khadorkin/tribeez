@@ -1,4 +1,4 @@
-export default {
+const colors = {
   main: '#26C6DA', // cyan400
   text: '#222', // black
   lightText: 'white',
@@ -30,3 +30,9 @@ export default {
   notes_light: '#C5CAE9', // indigo100
   polls_light: '#B2EBF2', // cyan100
 }
+
+// aliases:
+colors.invites = colors.members
+colors.invites_light = colors.members_light
+
+export default colors

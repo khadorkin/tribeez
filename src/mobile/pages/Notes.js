@@ -9,6 +9,7 @@ import SortableListView from 'react-native-sortable-listview'
 import PageView from '../hoc/PageView'
 import Note from '../components/Note'
 import Fab from '../components/Fab'
+import Empty from '../components/Empty'
 
 import listenNotes from '../../common/actions/listenNotes'
 import postNote from '../../common/actions/postNote'
@@ -91,8 +92,9 @@ class Notes extends Component {
   render() {
     const {notes} = this.props
 
-    return (
-      <PageView>
+    let content
+    if (notes.length) {
+      content = (
         <SortableListView
           ref={this.ref}
           style={styles.list}
@@ -101,6 +103,14 @@ class Notes extends Component {
           onRowMoved={this.handleMove}
           keyboardShouldPersistTaps={true}
         />
+      )
+    } else {
+      content = <Empty name="notes" />
+    }
+
+    return (
+      <PageView>
+        {content}
         <Fab name="add" onPress={this.handleFab} type="notes" />
       </PageView>
     )
