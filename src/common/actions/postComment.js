@@ -20,6 +20,19 @@ export default (type, item, text) => {
       text,
     })
     .then(() => {
+      return db.ref('tribes/' + auth.currentUser.tid + '/history').push({
+        type,
+        action: 'comment',
+        time: timestamp,
+        author: auth.currentUser.uid,
+        item: {
+          id: item.id,
+          name: item.name,
+          text,
+        },
+      })
+    })
+    .then(() => {
       dispatch({
         type: SUCCESS,
       })

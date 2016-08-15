@@ -141,7 +141,7 @@ class App extends Component {
     this.drawer = drawer
   }
 
-  routeMapper(loading) {
+  routeMapper(loading, items) {
     return {
       LeftButton: (/*route, navigator, index, navState*/) => {
         return this.props.uid && (
@@ -153,8 +153,10 @@ class App extends Component {
           return null
         }
         if (route.title) {
+          const item = items[route.name]
+          const title = item ? item.name : route.title
           //TODO: allow variable height
-          return <Text style={styles.navTitle}>{route.title}</Text>
+          return <Text style={styles.navTitle}>{title}</Text>
         } else {
           return <FormattedMessage style={styles.navTitle} id={route.name} />
         }
@@ -236,7 +238,7 @@ class App extends Component {
 
   render() {
     const navigationBar = (
-      <Navigator.NavigationBar routeMapper={this.routeMapper(this.props.loading)} style={styles.navBar} />
+      <Navigator.NavigationBar routeMapper={this.routeMapper(this.props.loading, this.props.item)} style={styles.navBar} />
     )
 
     const drawerLockMode = this.props.uid ? 'unlocked' : 'locked-closed'
