@@ -3,8 +3,6 @@ import {TextInput} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
-import colors from '../../common/constants/colors'
-
 class TextArea extends Component {
   static propTypes = {
     intl: intlShape.isRequired,

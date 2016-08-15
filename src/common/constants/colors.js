@@ -23,10 +23,10 @@ export default {
   notes: '#7986CB', // indigo300
   polls: '#00ACC1', // cyan600
   // light versions:
-  members_light: '#CE93D8', // purple200
+  members_light: '#E1BEE7', // purple100
   bills_light: '#F8BBD0', // pink100
-  events_light: '#FFAB91', // deepOrange200
-  tasks_light: '#FFE0B2', // orange100
-  notes_light: '#9FA8DA', // indigo200
-  polls_light: '#4DD0E1', // cyan300
+  events_light: '#FFCCBC', // deepOrange100
+  tasks_light: '#FFECB3', // amber100
+  notes_light: '#C5CAE9', // indigo100
+  polls_light: '#B2EBF2', // cyan100
 }
