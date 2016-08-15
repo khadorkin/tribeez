@@ -24,8 +24,8 @@ if (window.Promise) {
 if (window.fetch) {
   loaded()
 } else {
-  require.ensure(['isomorphic-fetch'], (require) => {
-    require('isomorphic-fetch')
+  require.ensure(['whatwg-fetch'], (require) => {
+    require('whatwg-fetch')
     loaded()
   })
 }

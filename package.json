@@ -32,7 +32,6 @@
     "es6-promise": "^3.2.1",
     "firebase": "^3.2.1",
     "intl": "^1.2.4",
-    "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.15.4",
     "md5": "^2.1.0",
     "moment": "^2.13.0",
@@ -62,7 +61,8 @@
     "redux-thunk": "^2.1.0",
     "rollbar": "^0.6.2",
     "string.prototype.startswith": "^0.2.0",
-    "webfontloader": "^1.6.26"
+    "webfontloader": "^1.6.26",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -76,7 +76,7 @@
     "css-loader": "^0.23.1",
     "eslint": "^3.3.0",
     "eslint-loader": "^1.5.0",
-    "eslint-plugin-react": "^6.0.0",
+    "eslint-plugin-react": "^6.1.0",
     "eslint-plugin-react-native": "^2.0.0",
     "exports-loader": "^0.6.3",
     "file-loader": "^0.9.0",
@@ -84,7 +84,7 @@
     "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
     "postcss": "^5.1.2",
-    "postcss-loader": "^0.9.1",
+    "postcss-loader": "^0.10.0",
     "react-css-modules": "^3.7.10",
     "style-loader": "^0.13.1",
     "svg-react-loader": "^0.3.7",
