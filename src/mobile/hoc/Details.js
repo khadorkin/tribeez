@@ -86,7 +86,7 @@ class Details extends Component {
         body = renderBody(item, userMap, uid)
       }
 
-      log = <Log type="event" item={item} />
+      log = <Log type={type} item={item} />
     } else {
       if (loading) {
         content = (

@@ -55,11 +55,18 @@ class TaskDetails extends Component {
     }
     const userIsConcerned = (active && task.counters[uid] !== undefined)
 
+    // smallest counters first:
+    const keys = Object.keys(task.counters).sort((a, b) => {
+      const av = task.counters[a]
+      const bv = task.counters[b]
+      return av > bv ? 1 : (av < bv ? -1 : 0)
+    })
+
     return (
       <View style={styles.body}>
         <FormattedMessage id="counters" style={styles.title} />
         {
-          Object.keys(task.counters).map((id) => {
+          keys.map((id) => {
             const user = userMap[id]
 
             return (
@@ -72,7 +79,7 @@ class TaskDetails extends Component {
         }
         {
           userIsConcerned && (
-            <Button id="mark_done" onPress={this.handleDone} />
+            <Button id="mark_done" onPress={this.handleDone} style={styles.button} />
           )
         }
       </View>
@@ -95,7 +102,8 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primaryText,
     fontSize: 20,
-    marginVertical: 8,
+    marginTop: 24,
+    marginBottom: 16,
   },
   part: {
     flexDirection: 'row',
@@ -107,6 +115,9 @@ const styles = StyleSheet.create({
     color: colors.primaryText,
     fontSize: 16,
     marginLeft: 24,
+  },
+  button: {
+    marginTop: 24,
   },
 })
 

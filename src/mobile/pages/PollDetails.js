@@ -102,7 +102,7 @@ class PollDetails extends Component {
             </Checkbox>
           )
         }
-        <Button id="submit_vote" onPress={this.handleVote} />
+        <Button id="submit_vote" onPress={this.handleVote} style={styles.button} />
       </View>
     )
   }
@@ -165,6 +165,9 @@ const styles = StyleSheet.create({
     color: colors.main,
     paddingHorizontal: 10,
     flex: 1,
+  },
+  button: {
+    marginTop: 16,
   },
   body: {
     margin: 16,

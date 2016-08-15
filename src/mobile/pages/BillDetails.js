@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primaryText,
     fontSize: 20,
-    marginVertical: 8,
+    marginTop: 24,
+    marginBottom: 16,
   },
   part: {
     flexDirection: 'row',

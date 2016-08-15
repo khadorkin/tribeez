@@ -13,6 +13,8 @@ import deleteNote from '../../common/actions/deleteNote'
 import colors from '../../common/constants/colors'
 import {elevation} from '../dimensions'
 
+const SAVE_DELAY = 2000
+
 class Note extends Component {
   static propTypes = {
     // from parent:
@@ -51,7 +53,7 @@ class Note extends Component {
       unsaved: true,
     })
     clearTimeout(this.timeoutId)
-    this.timeoutId = setTimeout(this.save, 2000)
+    this.timeoutId = setTimeout(this.save, SAVE_DELAY)
   }
 
   handleContentChange(content) {
@@ -60,7 +62,7 @@ class Note extends Component {
       unsaved: true,
     })
     clearTimeout(this.timeoutId)
-    this.timeoutId = setTimeout(this.save, 2000)
+    this.timeoutId = setTimeout(this.save, SAVE_DELAY)
   }
 
   handleDelete() {
@@ -83,8 +85,7 @@ class Note extends Component {
       <TouchableWithoutFeedback onLongPress={this.props.onLongPress} onPressOut={this.props.onPressOut}>
         <View style={styles.container}>
           <TextArea
-            placeholder="title" //TODO: translate
-            underlineColorAndroid="transparent"
+            placeholder="title"
             value={this.state.title}
             style={styles.title}
             minHeight={47}
@@ -92,7 +93,6 @@ class Note extends Component {
             id={this.props.note.id} // to refresh TextArea height when drag&dropping
           />
           <TextArea
-            underlineColorAndroid="transparent"
             value={this.state.content}
             style={styles.content}
             onChangeText={this.handleContentChange}

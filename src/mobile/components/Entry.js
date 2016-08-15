@@ -3,7 +3,7 @@ import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
-import ListItem from '../hoc/ListItem'
+import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
 

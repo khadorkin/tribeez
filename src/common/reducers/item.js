@@ -1,9 +1,6 @@
 import {
   ITEM,
   UPDATE_COMMENT_TEXT,
-  COMMENT_REQUEST,
-  COMMENT_SUCCESS,
-  COMMENT_FAILURE,
   ITEM_CLEAR,
   LOGGED_OUT,
 } from '../constants/actions'
@@ -15,7 +12,6 @@ const initialState = {
   task: null, // current task being viewed or edited
   error: null,
   comment: '', // comment in item's log
-  commenting: false,
 }
 
 export default (state = initialState, action = null) => {
@@ -30,22 +26,6 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         comment: action.content,
-      }
-    case COMMENT_REQUEST:
-      return {
-        ...state,
-        commenting: true,
-      }
-    case COMMENT_SUCCESS:
-      return {
-        ...state,
-        comment: '',
-        commenting: false,
-      }
-    case COMMENT_FAILURE:
-      return {
-        ...state,
-        commenting: false,
       }
 
     case ITEM_CLEAR:

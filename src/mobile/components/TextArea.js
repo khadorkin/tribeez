@@ -42,7 +42,7 @@ class TextArea extends Component {
 
     return (
       <TextInput
-        underlineColorAndroid={colors.underline}
+        underlineColorAndroid="transparent"
         {...props}
         placeholder={translatedPlaceholder}
         multiline={true}

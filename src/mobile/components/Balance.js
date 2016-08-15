@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet, Text} from 'react-native'
 
-import ListItem from '../hoc/ListItem'
+import ListItem from '../components/ListItem'
 import FormattedNumber from './FormattedNumber'
 
 import colors from '../../common/constants/colors'

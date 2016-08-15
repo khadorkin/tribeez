@@ -304,6 +304,7 @@ const fr = {
 
   //Details
   created_by: 'Créé par {author}',
+  log: 'Historique et commentaires',
 
   // Common error handling
   'error.request': 'Erreur: veuillez rééssayer plus tard',

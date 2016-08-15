@@ -4,7 +4,7 @@ import {StyleSheet, Text, Alert} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import ListItem from '../hoc/ListItem'
+import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
 
 import colors from '../../common/constants/colors'

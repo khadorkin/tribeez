@@ -1,9 +1,9 @@
 import {db, auth, timestamp} from '../firebase'
 
 import {
-  COMMENT_REQUEST,
-  COMMENT_SUCCESS,
-  COMMENT_FAILURE,
+  REQUEST,
+  SUCCESS,
+  UPDATE_COMMENT_TEXT,
 } from '../constants/actions'
 
 import report from './error'
@@ -11,7 +11,7 @@ import report from './error'
 export default (type, item, text) => {
   return (dispatch) => {
     dispatch({
-      type: COMMENT_REQUEST,
+      type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/' + type + 's/' + item.id + '/log').push({
       action: 'comment',
@@ -21,14 +21,15 @@ export default (type, item, text) => {
     })
     .then(() => {
       dispatch({
-        type: COMMENT_SUCCESS,
+        type: SUCCESS,
+      })
+      dispatch({
+        type: UPDATE_COMMENT_TEXT,
+        content: '', // clear
       })
     })
     .catch((error) => {
       dispatch(report(error, 'postComment'))
-      dispatch({
-        type: COMMENT_FAILURE,
-      })
     })
   }
 }

@@ -46,9 +46,6 @@ export const MOVE_NOTE = 'MOVE_NOTE'
 
 export const ITEM = 'ITEM'
 export const UPDATE_COMMENT_TEXT = 'UPDATE_COMMENT_TEXT'
-export const COMMENT_REQUEST = 'COMMENT_REQUEST'
-export const COMMENT_SUCCESS = 'COMMENT_SUCCESS'
-export const COMMENT_FAILURE = 'COMMENT_FAILURE'
 export const ITEM_CLEAR = 'ITEM_CLEAR'
 
 

@@ -304,6 +304,7 @@ export default {
 
   //Details
   created_by: 'Created by {author}',
+  log: 'History & comments',
 
   // Common error handling
   'error.request': 'Request error: please try again later',
