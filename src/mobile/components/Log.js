@@ -58,8 +58,8 @@ class Log extends Component {
     let backgroundColor
 
     if (entry.action === 'comment') {
-      title = <Text style={[styles.text, {color: colors[type + 's']}]}>{author.name}</Text>
-      content = <Text style={styles.text}>{entry.text}</Text>
+      title = <Text style={styles.text}>{author.name}</Text>
+      content = <Text style={[styles.text, {color: colors[type + 's']}]}>{entry.text}</Text>
     } else {
       const values = {}
       if (author.uid === user.uid) {

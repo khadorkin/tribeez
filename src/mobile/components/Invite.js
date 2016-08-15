@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux'
 
 import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
+import FormattedRelative from './FormattedRelative'
 
 import colors from '../../common/constants/colors'
 import postInvite from '../../common/actions/postInvite'
@@ -47,7 +48,7 @@ class Invite extends Component {
     }
 
     return (
-      <ListItem user={inviter} icon="refresh" onIconPress={this.handleResend}>
+      <ListItem user={inviter} icon="refresh" onIconPress={this.handleResend} rightLabel={<FormattedRelative value={invite.invited} style={styles.time} />}>
         <Text style={styles.title}>{invite.email}</Text>
         <FormattedMessage id="invited_by" values={{user: inviter.name, ago: invite.invited}} style={styles.subtitle} />
       </ListItem>
@@ -57,10 +58,17 @@ class Invite extends Component {
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryText,
+    color: colors.members,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 16,
+  },
+  time: {
+    fontStyle: 'italic',
+    color: colors.secondaryText,
+    marginLeft: 16,
   },
 })
 

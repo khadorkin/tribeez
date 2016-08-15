@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
+import FormattedRelative from './FormattedRelative'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -50,8 +51,10 @@ class Event extends Component {
       date = <FormattedMessage id={'date' + suffix} values={{date: getTimestamp(event.start)}} />
     }
 
+    const rightLabel = <FormattedRelative value={event.added} style={styles.time} />
+
     return (
-      <ListItem user={author} onPress={this.handlePress}>
+      <ListItem user={author} onPress={this.handlePress} rightLabel={rightLabel}>
         <Text style={styles.title}>{event.name}</Text>
         <Text style={styles.subtitle}>{date}</Text>
       </ListItem>
@@ -65,10 +68,19 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryText,
+    color: colors.events,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 8,
+  },
+  time: {
+    fontStyle: 'italic',
+    color: colors.secondaryText,
+    marginLeft: 16,
+    marginTop: 2, // to compensate the +2 fontSize of title
   },
 })
 

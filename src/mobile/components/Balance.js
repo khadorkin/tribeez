@@ -15,28 +15,37 @@ class Balance extends Component {
   render() {
     const {user} = this.props
 
+    const rightLabel = (
+      <FormattedNumber
+        value={user.balance}
+        format="money"
+        sign={true}
+        style={user.balance < 0 ? styles.negative : styles.positive}
+      />
+    )
+
     return (
-      <ListItem user={user}>
+      <ListItem user={user} rightLabel={rightLabel} style={styles.container}>
         <Text style={styles.title}>{user.name}</Text>
-        <FormattedNumber
-          value={user.balance}
-          format="money"
-          sign={true}
-          style={user.balance < 0 ? styles.negative : styles.positive}
-        />
       </ListItem>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
   title: {
+    fontSize: 16,
     color: colors.primaryText,
   },
   positive: {
+    fontSize: 16,
     color: colors.positive,
   },
   negative: {
+    fontSize: 16,
     color: colors.error,
   },
 })

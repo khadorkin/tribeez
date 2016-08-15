@@ -14,15 +14,16 @@ class ListItem extends Component {
     style: View.propTypes.style,
     user: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
+    rightLabel: PropTypes.node,
     icon: PropTypes.string,
     onIconPress: PropTypes.func,
   }
 
   render() {
-    const {onPress, style, user, children, icon, onIconPress} = this.props
+    const {onPress, style, user, children, rightLabel, icon, onIconPress} = this.props
 
     const action = icon && (
-      <IconButton name={icon} onPress={onIconPress} style={styles.icon} />
+      <IconButton name={icon} onPress={onIconPress} style={styles.icon} size={24} color={colors.members} />
     )
 
     return (
@@ -32,6 +33,7 @@ class ListItem extends Component {
           <View style={styles.text}>
             {children}
           </View>
+          {rightLabel}
           {action}
         </View>
       </Touchable>
@@ -41,27 +43,28 @@ class ListItem extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 12,
-    paddingTop: 12,
+    padding: 16,
     flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: colors.underline,
+    minHeight: 64,
   },
   avatar: {
-    marginRight: 12,
+    marginRight: 16,
   },
   content: {
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: 12,
-    paddingRight: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.underline,
-    marginTop: -1,
   },
   text: {
     flex: 1,
   },
   icon: {
-    paddingVertical: 6,
+    padding: 12,
+    margin: 0,
+    position: 'absolute',
+    bottom: -16,
+    right: -16,
   },
 })
 

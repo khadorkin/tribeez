@@ -250,7 +250,7 @@ class AsyncContent extends Component {
     return (
       <View>
         <View style={styles.spinner}>
-          <ActivityIndicator size="small" color={colors.main} animating={this.state.loading} />
+          <ActivityIndicator size="small" color={colors[this.props.name] || colors.main} animating={this.state.loading} />
         </View>
         {this.buffer.length > 0 && this.props.footer}
       </View>
@@ -259,7 +259,7 @@ class AsyncContent extends Component {
 
   renderSectionHeader(sectionData, sectionId) {
     if (this.props.splitter) {
-      return <Text style={styles.section}>{sectionId}</Text>
+      return <Text style={[styles.section, {color: colors[this.props.name]}]}>{sectionId}</Text>
     }
     return null
   }
@@ -305,7 +305,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const styles = StyleSheet.create({
   section: {
-    margin: 8,
+    marginTop: 16,
     alignSelf: 'center',
   },
   spinner: {

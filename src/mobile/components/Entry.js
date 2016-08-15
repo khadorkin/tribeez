@@ -100,18 +100,28 @@ class Entry extends Component {
         return null
     }
 
+    let backgroundColor
     if (entry.action === 'comment') {
-      infos = <Text style={styles.infos}>{entry.item.text}</Text>
+      const infosStyle = {color: colors[entry.type + 's']}
+      infos = <Text style={[styles.infos, infosStyle]}>{entry.item.text}</Text>
+      backgroundColor = colors.background
+    } else {
+      backgroundColor = colors[entry.type + 's_light']
     }
 
     const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
     const date = <FormattedRelative value={entry.time} />
 
+    const style = {backgroundColor, borderBottomWidth: 0}
+
     return (
-      <ListItem user={author} onPress={this.handleTouch} style={entry.new ? styles.new : styles.read}>
+      <ListItem user={author}
+        onPress={this.handleTouch}
+        style={style}
+        rightLabel={<Text style={styles.time}>{date}</Text>}
+      >
         <Text style={styles.title}>{title}</Text>
         {infos}
-        <Text style={styles.date}>{date}</Text>
       </ListItem>
     )
   }
@@ -124,12 +134,6 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  new: {
-    backgroundColor: colors.new,
-  },
-  read: {
-    backgroundColor: colors.background,
-  },
   title: {
     color: colors.primaryText,
   },
@@ -137,8 +141,10 @@ const styles = StyleSheet.create({
     color: colors.primaryText,
     fontStyle: 'italic',
   },
-  date: {
+  time: {
+    fontStyle: 'italic',
     color: colors.secondaryText,
+    marginLeft: 16,
   },
 })
 

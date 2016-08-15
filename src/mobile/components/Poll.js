@@ -48,13 +48,12 @@ class Poll extends Component {
 
     const num_answers = poll.answers ? Object.keys(poll.answers).length : 0
 
-    const date = <FormattedRelative value={poll.added} />
-    const subtitle = <FormattedMessage id="poll_answers" values={{num: num_answers}} />
+    const rightLabel = <FormattedRelative value={poll.added} style={styles.time} />
 
     return (
-      <ListItem user={author} onPress={this.handlePress}>
+      <ListItem user={author} onPress={this.handlePress} rightLabel={rightLabel}>
         <Text style={styles.title}>{poll.name}</Text>
-        <Text style={styles.subtitle}>{date} — {subtitle}</Text>
+        <FormattedMessage id="poll_answers" values={{num: num_answers}} style={styles.subtitle} />
       </ListItem>
     )
   }
@@ -68,10 +67,18 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryText,
+    color: colors.polls,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 8,
+  },
+  time: {
+    fontStyle: 'italic',
+    color: colors.secondaryText,
+    marginLeft: 16,
   },
 })
 

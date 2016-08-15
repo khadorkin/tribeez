@@ -15,11 +15,19 @@ class FormattedNumber extends Component {
   render() {
     const {intl, value, format, options, sign, ...props} = this.props
 
-    const prefix = sign && value > 0 ? '+' : ''
+    let prefix = ''
+    if (sign) {
+      prefix = (value > 0 ? '+ ' : '− ') // <-- this is the MINUS SIGN in the UTF-8 table
+    }
+
+    let text = ' '
+    if (!isNaN(value)) {
+      text = prefix + intl.formatNumber(Math.abs(value), {format, ...options})
+    }
 
     return (
       <Text {...props}>
-        {isNaN(value) ? ' ' : (prefix + intl.formatNumber(value, {format, ...options}))}
+        {text}
       </Text>
     )
   }

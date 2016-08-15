@@ -67,10 +67,13 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryText,
+    color: colors.tasks,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 8,
   },
 })
 

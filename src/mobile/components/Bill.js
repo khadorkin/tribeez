@@ -48,18 +48,18 @@ class Bill extends Component {
 
     const total = <FormattedNumber value={bill.amount} options={{style: 'currency', currency}} />
 
-    let formatted_part
-    if (user_part) {
-      formatted_part = <FormattedMessage id="bill.mypart" values={{amount: user_part}} />
-    } else {
-      formatted_part = <FormattedMessage id="bill.nopart" />
-    }
     const date = <FormattedRelative value={bill.added} />
 
+    let rightLabel
+    if (user_part) {
+      rightLabel = <FormattedNumber value={user_part} format="money" style={styles.part} />
+    }
+
     return (
-      <ListItem user={payer} onPress={this.handlePress}>
-        <Text style={styles.title}>{total} — {bill.name}</Text>
-        <Text style={styles.subtitle}>{date} — {formatted_part}</Text>
+      <ListItem user={payer} onPress={this.handlePress} rightLabel={rightLabel}>
+        <Text style={styles.title}>{bill.name}</Text>
+        <Text style={styles.subtitle}>{total}</Text>
+        <Text style={styles.subtitle}>{date}</Text>
       </ListItem>
     )
   }
@@ -73,10 +73,19 @@ const mapStateToProps = (state) => ({
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryText,
+    color: colors.bills,
+    fontSize: 16,
+    //marginBottom: 8,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+  },
+  part: {
+    fontStyle: 'italic',
+    color: colors.secondaryText,
+    marginLeft: 16,
+    marginTop: 2, // to compensate the +2 fontSize of title
   },
 })
 

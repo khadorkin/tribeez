@@ -51,10 +51,13 @@ class Member extends Component {
 
 const styles = StyleSheet.create({
   title: {
-    color: colors.primaryText,
+    color: colors.members,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 8,
   },
 })
 
