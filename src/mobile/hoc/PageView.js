@@ -11,9 +11,9 @@ class PageView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header only="image" />
+        <Header.Image />
         {this.props.children}
-        <Header style={styles.shadow} only="shadow" />
+        <Header.Shadow style={styles.shadow} />
       </View>
     )
   }

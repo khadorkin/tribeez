@@ -37,10 +37,14 @@ class ScrollViewWithHeader extends Component {
     return (
       <View style={styles.container}>
         <ScrollView keyboardShouldPersistTaps={true} onScroll={this.handleScroll} contentContainerStyle={styles.content}>
-          <Header style={headerStyle} />
+          <Header.Image style={headerStyle} />
+          <Header.Shadow style={headerStyle} />
           {this.props.children}
         </ScrollView>
-        <Header style={stickyStyle} />
+        <View style={stickyStyle}>
+          <Header.Image />
+          <Header.Shadow />
+        </View>
       </View>
     )
   }
