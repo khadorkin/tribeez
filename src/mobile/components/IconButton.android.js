@@ -40,10 +40,10 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     padding: 10,
+    alignItems: 'center', // like "vertical-align: middle"
   },
   children: {
     marginLeft: 12,
-    alignItems: 'center', // like "vertical-align: middle" for text
     flex: 1,
     flexDirection: 'row',
   },
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     borderLeftColor: colors.underline,
     paddingVertical: 6,
     paddingLeft: 16,
+    flex: 1,
   },
 })
 
