@@ -240,7 +240,7 @@ const fr = {
   // leave hook:
   confirm_leave_form: 'Le formulaire a été modifié : voulez-vous vraiment abandonner vos entrées ?',
   // Comment box:
-  comment: 'Votre commentaire...',
+  comment: 'Votre commentaire…',
 
   // Activity
   'activity.members': '{num, plural, one {Nouveau membre} other {# nouveaux membres}}',
@@ -309,7 +309,8 @@ const fr = {
   counters: 'Compteurs',
 
   // Notes
-  'placeholder.title': 'titre',
+  'placeholder.title': 'Titre',
+  'placeholder.content': 'Prenez une note…',
   'notes.by': 'Par {author}',
 
   // Polls

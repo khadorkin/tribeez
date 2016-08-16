@@ -108,13 +108,14 @@ class Note extends Component {
             placeholder="title"
             value={this.state.title}
             style={styles.title}
-            minHeight={47}
             onChangeText={this.handleTitleChange}
             id={this.props.note.id} // to refresh TextArea height when drag&dropping
           />
           <TextArea
+            placeholder="content"
             value={this.state.content}
             style={styles.content}
+            minHeight={64}
             onChangeText={this.handleContentChange}
             id={this.props.note.id} // to refresh TextArea height when drag&dropping
           />
@@ -140,10 +141,11 @@ const styles = StyleSheet.create({
   title: {
     color: colors.primaryText,
     fontSize: 20,
+    textAlignVertical: 'top',
   },
   content: {
     color: colors.primaryText,
-    marginVertical: 12,
+    textAlignVertical: 'top',
   },
   icons: {
     flexDirection: 'row',

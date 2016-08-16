@@ -24,7 +24,7 @@ class TextArea extends Component {
 
   handleContentSizeChange(event) {
     this.setState({
-      height: event.nativeEvent.contentSize.height + 24,
+      height: event.nativeEvent.contentSize.height + 4,
     })
   }
 
@@ -36,7 +36,7 @@ class TextArea extends Component {
       translatedPlaceholder = intl.formatMessage({id: 'placeholder.' + placeholder})
     }
 
-    const height = Math.max(minHeight || 39, this.state.height)
+    const height = Math.max(minHeight || 0, this.state.height)
 
     return (
       <TextInput
@@ -45,7 +45,7 @@ class TextArea extends Component {
         placeholder={translatedPlaceholder}
         multiline={true}
         style={[style, {height}]}
-        onContentSizeChange={this.handleContentSizeChange}
+        onContentSizeChange={this.handleContentSizeChange} // triggered on mount too
       />
     )
   }

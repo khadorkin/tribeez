@@ -240,7 +240,7 @@ export default {
   // leave hook:
   confirm_leave_form: 'The form has been modified. Do you want to leave without finishing?',
   // Comment box:
-  comment: 'Your comment...',
+  comment: 'Your comment…',
 
   // Activity
   'activity.members': '{num, plural, one {New member} other {# new members}}',
@@ -309,7 +309,8 @@ export default {
   counters: 'Counters',
 
   // Notes
-  'placeholder.title': 'title',
+  'placeholder.title': 'Title',
+  'placeholder.content': 'Take a note…',
   'notes.by': 'By {author}',
 
   // Polls
