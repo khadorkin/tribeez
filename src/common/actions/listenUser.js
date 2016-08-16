@@ -3,6 +3,7 @@ import fcm from '../fcm'
 
 import {REQUEST, USER_UPDATED} from '../constants/actions'
 
+import {setAttr, setUser, clearUser} from '../error-report'
 import report from './error'
 
 import listenTribe from './listenTribe'
@@ -34,6 +35,8 @@ const on = (uid) => {
     publicRef.on('value', (snapshot) => {
       const user = snapshot.val()
       const tid = user.current_tribe
+      setUser(uid, user)
+      setAttr('tribe', tid)
 
       auth.currentUser.name = user.name
       auth.currentUser.gravatar = user.gravatar
@@ -75,6 +78,7 @@ const off = () => {
     privateRef.off()
     dispatch(listenTribe.off())
     fcm.unsubscribeToken()
+    clearUser()
   }
 }
 

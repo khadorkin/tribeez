@@ -12,6 +12,7 @@ const PAGING = 20
 
 import Button from '../components/Button'
 import Empty from '../components/Empty'
+import FormattedMessage from '../components/FormattedMessage'
 
 import colors from '../../common/constants/colors'
 
@@ -252,9 +253,7 @@ class AsyncContent extends Component {
   renderFooter() {
     return (
       <View>
-        <View style={styles.spinner}>
-          <ActivityIndicator size="small" color={colors[this.props.name] || colors.main} animating={this.state.loading} />
-        </View>
+        <ActivityIndicator style={styles.spinner} size="small" color={colors[this.props.name] || colors.main} animating={this.state.loading} />
         {this.buffer.length > 0 && this.props.footer}
       </View>
     )
@@ -270,8 +269,9 @@ class AsyncContent extends Component {
   render() {
     if (this.state.error) {
       return (
-        <View style={styles.empty}>
-          <Text style={styles.error}>{this.state.error}</Text>
+        <View style={styles.error}>
+          <FormattedMessage id="error.request" style={styles.errorText} />
+          <Text>{this.state.error}</Text>
           <Button id="retry" onPress={this.handleLoad} />
         </View>
       )
@@ -308,10 +308,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   spinner: {
-    paddingTop: 8,
-    justifyContent: 'center', // vertically center
+    marginTop: 16,
   },
   error: {
+    flex: 1, // take all space
+    justifyContent: 'center', // vertically center
+    alignItems: 'center', // horizontally center
+  },
+  errorText: {
     color: colors.error,
   },
 })

@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 
+import {initHandler} from '../common/error-report'
+initHandler()
+
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
