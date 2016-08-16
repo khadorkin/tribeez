@@ -110,3 +110,5 @@ Generate production builds:
     npm run android
 
 The two generated APKs can be found at `android/app/build/outputs/apk/app-[platform]-release.apk`
+
+When the change is breaking, update `config/android/minimum_version` in Firebase database

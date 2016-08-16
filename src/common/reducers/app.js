@@ -14,6 +14,9 @@ import {
   SUCCESS,
   FAILURE,
   UNREAD,
+  ALERT,
+  CLOSE_ALERT,
+  CONFIG,
 } from '../constants/actions'
 
 import {getLang, setLang} from '../utils/locale'
@@ -31,10 +34,14 @@ const initialState = {
   snack: {
     open: false,
   },
+  alert: {
+    open: false,
+  },
   unread: 0,
   loading: 0,
   submitting: false,
   error: null,
+  config: null,
 }
 
 export default (state = initialState, action = null) => {
@@ -94,6 +101,24 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         snack: {...initialState.snack},
+      }
+    case ALERT:
+      return {
+        ...state,
+        alert: {
+          open: true,
+          ...action.options,
+        },
+      }
+    case CLOSE_ALERT:
+      return {
+        ...state,
+        alert: {...initialState.alert},
+      }
+    case CONFIG:
+      return {
+        ...state,
+        config: action.config,
       }
     case UNREAD:
       return {

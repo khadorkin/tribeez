@@ -272,7 +272,7 @@ const fr = {
 
   // Members
   'member_since': 'Membre depuis le {when, date}',
-  'invited_by': 'Invité-e par {user} {ago}',
+  'invited_by': 'Invité-e par {user}',
 
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',

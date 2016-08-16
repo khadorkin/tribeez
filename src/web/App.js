@@ -40,6 +40,9 @@ class App extends Component {
   static propTypes = {
     // from router:
     location: PropTypes.object.isRequired,
+    // from react-router:
+    children: PropTypes.node.isRequired,
+    params: PropTypes.object.isRequired,
     // from redux:
     uid: PropTypes.string,
     bot_token: PropTypes.string,
@@ -59,9 +62,6 @@ class App extends Component {
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
     resize: PropTypes.func.isRequired,
-    // from react-router:
-    children: PropTypes.node.isRequired,
-    params: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -90,6 +90,7 @@ class App extends Component {
     if (!this.props.params.token) { // no autoLogin if fetching an invite
       this.props.autoLogin()
     }
+
     window.onresize = this.props.resize
   }
 

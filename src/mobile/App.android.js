@@ -7,7 +7,6 @@ import {
   Linking,
   StyleSheet,
   Text,
-  Alert,
   StatusBar,
   Dimensions,
   View,
@@ -25,13 +24,16 @@ import colors from '../common/constants/colors'
 import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
+import Alerts from './components/Alerts'
 import IconButton from './components/IconButton'
 
 import routes from '../common/routes'
 import router from '../common/router'
+import getConfig from '../common/actions/getConfig'
+import autoLogin from '../common/actions/autoLogin'
 import submitLogin from '../common/actions/submitLogin'
 import deleteItem from '../common/actions/deleteItem'
-import autoLogin from '../common/actions/autoLogin'
+import {alert} from '../common/actions/app'
 
 const drawerWidth = Dimensions.get('window').width * 0.75
 
@@ -40,6 +42,7 @@ import {marginTop, navBarHeight} from './dimensions'
 class App extends Component {
   static propTypes = {
     // from redux store:
+    config: PropTypes.object,
     uid: PropTypes.string,
     user: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -49,9 +52,11 @@ class App extends Component {
     formats: PropTypes.object,
     item: PropTypes.object.isRequired,
     // action creators:
+    getConfig: PropTypes.func.isRequired,
     submitLogin: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
     autoLogin: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -110,14 +115,21 @@ class App extends Component {
       this.props.autoLogin()
     })
     .catch(() => {}) // ignore fails
+
+    this.props.getConfig()
   }
 
   componentWillReceiveProps(props) {
-    if (props.error === 'version') {
-      Alert.alert(props.messages.dialog_update_title, props.messages.dialog_update_text, [
-        {text: 'OK', onPress: this.handleOpenStore},
-      ])
-      return
+    if (props.config && !this.props.config) {
+      if (props.config.minimum_version > config.android.versionName) {
+        this.props.alert({
+          title_id: 'dialog_update_title',
+          text: props.config.minimum_version + '>' + config.android.versionName, //'dialog_update_text',
+          buttons: [
+            {text: 'OK', onPress: this.handleOpenStore},
+          ],
+        })
+      }
     }
 
     if (props.user.name && !this.props.user.name) { // login
@@ -209,11 +221,15 @@ class App extends Component {
   }
 
   handleDelete(route) {
-    const {messages} = this.props
-    Alert.alert(route.title, messages.dialog_delete, [
-      {text: messages.cancel},
-      {text: messages.delete, onPress: this.handleConfirmDelete.bind(this, route)},
-    ])
+    this.props.alert({
+      title: route.title,
+      text_id: 'dialog_delete',
+      //onConfirm: this.handleConfirmDelete.bind(this, route),
+      buttons: [
+        {text_id: 'cancel'},
+        {text_id: 'delete', onPress: this.handleConfirmDelete.bind(this, route)},
+      ],
+    })
   }
 
   handleConfirmDelete(route) {
@@ -261,6 +277,7 @@ class App extends Component {
             sceneStyle={styles.scene}
           />
           <Snackbar />
+          <Alerts />
         </DrawerLayoutAndroid>
       </IntlProvider>
     )
@@ -297,6 +314,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
+  config: state.app.config,
   uid: state.user.uid,
   user: state.user,
   lang: state.app.lang, // here is the app language
@@ -308,9 +326,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getConfig,
   submitLogin,
   deleteItem,
   autoLogin,
+  alert,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

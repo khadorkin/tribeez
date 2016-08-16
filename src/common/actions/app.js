@@ -8,6 +8,8 @@ import {
   UPDATE_LANG,
   REQUEST,
   SUCCESS,
+  ALERT,
+  CLOSE_ALERT,
 } from '../constants/actions'
 
 import report from './error'
@@ -52,6 +54,23 @@ export const updateLang = (lang) => {
     dispatch({
       type: UPDATE_LANG,
       lang,
+    })
+  }
+}
+
+export const alert = (options) => {
+  return (dispatch) => {
+    dispatch({
+      type: ALERT,
+      options,
+    })
+  }
+}
+
+export const closeAlert = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CLOSE_ALERT,
     })
   }
 }
