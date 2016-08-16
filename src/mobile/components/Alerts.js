@@ -7,6 +7,8 @@ import {injectIntl, intlShape} from 'react-intl'
 
 import {closeAlert} from '../../common/actions/app'
 
+const ALERT_MAX_LENGTH = 50
+
 class Alerts extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
@@ -28,6 +30,10 @@ class Alerts extends Component {
     }
     if (alert.text_id) {
       alert.text = intl.formatMessage({id: alert.text_id})
+    }
+
+    if (alert.text.length > ALERT_MAX_LENGTH) {
+      alert.text = alert.text.substr(0, ALERT_MAX_LENGTH - 3) + '...'
     }
 
     const buttons = alert.buttons.map((button) => {

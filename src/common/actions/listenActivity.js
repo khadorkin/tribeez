@@ -195,12 +195,12 @@ const on = (tid) => {
       const notes = []
       for (const key in values) {
         const note = values[key]
-        const title = oneLine(note.title) || oneLine(note.content)
+        const text = oneLine(note.title) || oneLine(note.content)
 
-        if (title && note.updated > (now - (DAYS_NEW * ONE_DAY))) {
+        if (text && note.updated > (now - (DAYS_NEW * ONE_DAY))) {
           notes.push({
             id: key,
-            name: title,
+            name: text,
             updated: note.updated,
             author: note.author,
           })

@@ -9,9 +9,11 @@ import IconButton from './IconButton'
 
 import putNote from '../../common/actions/putNote'
 import deleteNote from '../../common/actions/deleteNote'
+import {alert} from '../../common/actions/app'
 
 import colors from '../../common/constants/colors'
 import {elevation} from '../dimensions'
+import {oneLine} from '../../common/utils/text'
 
 const SAVE_DELAY = 2000
 
@@ -25,6 +27,7 @@ class Note extends Component {
     // action creators:
     putNote: PropTypes.func.isRequired,
     deleteNote: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -37,6 +40,7 @@ class Note extends Component {
     this.handleTitleChange = this.handleTitleChange.bind(this)
     this.handleContentChange = this.handleContentChange.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
     this.save = this.save.bind(this)
   }
 
@@ -66,6 +70,22 @@ class Note extends Component {
   }
 
   handleDelete() {
+    const text = oneLine(this.state.title) || oneLine(this.state.content)
+    if (text) {
+      this.props.alert({
+        title_id: 'dialog_delete',
+        text,
+        buttons: [
+          {text_id: 'cancel'},
+          {text_id: 'delete', onPress: this.handleConfirmDelete},
+        ],
+      })
+    } else {
+      this.handleConfirmDelete()
+    }
+  }
+
+  handleConfirmDelete() {
     this.props.deleteNote(this.props.note.id)
   }
 
@@ -134,6 +154,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putNote,
   deleteNote,
+  alert,
 }, dispatch)
 
 export default connect(null, mapDispatchToProps)(Note)
