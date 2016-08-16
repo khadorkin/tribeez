@@ -124,7 +124,7 @@ class App extends Component {
       if (props.config.minimum_version > config.android.versionName) {
         this.props.alert({
           title_id: 'dialog_update_title',
-          text: props.config.minimum_version + '>' + config.android.versionName, //'dialog_update_text',
+          text_id: 'dialog_update_text',
           buttons: [
             {text: 'OK', onPress: this.handleOpenStore},
           ],
