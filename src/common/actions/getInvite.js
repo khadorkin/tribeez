@@ -25,6 +25,7 @@ export default (tribe, token) => {
         type: SUCCESS,
       })
       if (invite) {
+        invite.tribe = tribe
         dispatch({
           type: GET_INVITE_SUCCESS,
           data: invite,

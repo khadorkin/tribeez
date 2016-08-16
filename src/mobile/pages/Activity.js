@@ -7,8 +7,12 @@ import TabView from '../hoc/TabView'
 import ActivityCard from '../components/ActivityCard'
 import AsyncContent from '../hoc/AsyncContent'
 import Entry from '../components/Entry'
+import Button from '../components/Button'
 // import IconButton from '../components/IconButton'
-// import FormattedMessage from '../components/FormattedMessage'
+import FormattedMessage from '../components/FormattedMessage'
+
+import routes from '../../common/routes'
+import router from '../../common/router'
 
 import config from '../../common/config'
 import {ACTIVITIES} from '../../common/constants/product'
@@ -19,7 +23,8 @@ class Activity extends Component {
   static propTypes = {
     // from redux:
     tid: PropTypes.string,
-    members: PropTypes.array.isRequired,
+    num_members: PropTypes.number.isRequired,
+    new_members: PropTypes.array.isRequired,
     activity: PropTypes.object.isRequired,
     unread: PropTypes.number,
     bot_token: PropTypes.string,
@@ -32,7 +37,6 @@ class Activity extends Component {
     super(props)
     this.load = this.load.bind(this)
     //this.handleTelegram = this.handleTelegram.bind(this)
-    this.renderFooter = this.renderFooter.bind(this)
     this.ref = this.ref.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
@@ -67,30 +71,6 @@ class Activity extends Component {
   //     })
   // }
 
-  renderFooter(/*notEmpty*/) {
-    return (
-      <View style={styles.footer}>
-        <ActivityIndicator size="small" color={colors.main} animating={this.props.activity.loading} />
-        {
-          // notEmpty && (
-          //   <IconButton
-          //     family="evil"
-          //     name="sc-telegram"
-          //     color="gray"
-          //     onPress={this.handleTelegram}
-          //     iconStyle={styles.telegramIcon}
-          //   >
-          //     <FormattedMessage id="telegram" />
-          //   </IconButton>
-          // )
-        }
-        <Text style={styles.version}>
-          App version: beta {config.android.versionName}
-        </Text>
-      </View>
-    )
-  }
-
   renderHistoryEntry(row) {
     return <Entry entry={row} />
   }
@@ -101,6 +81,10 @@ class Activity extends Component {
     }
   }
 
+  handleInvite() {
+    router.push(routes.MEMBERS_NEW)
+  }
+
   ref(element) {
     if (element) {
       this.history = element.getWrappedInstance()
@@ -108,22 +92,49 @@ class Activity extends Component {
   }
 
   render() {
-    const {members, activity, unread} = this.props
+    const {num_members, new_members, activity, unread} = this.props
 
-    const notEmpty = (members.length > 0 || ACTIVITIES.some((type) => activity[type].length > 0))
+    //const notEmpty = (new_members.length > 0 || ACTIVITIES.some((type) => activity[type].length > 0))
+
+    let inviteButton
+    if (num_members === 1) {
+      inviteButton = (
+        <View>
+          <FormattedMessage id="welcome_message" style={styles.welcome} />
+          <Button id="invite_button" flat={true} onPress={this.handleInvite} />
+        </View>
+      )
+    }
 
     return (
       <TabView onChangeTab={this.handleChange}>
         <ScrollView tabLabel="tab.activity">
-          <ActivityCard type="members" data={members} />
+          <ActivityCard type="members" data={new_members} />
           {
             ACTIVITIES.map((type) =>
               <ActivityCard key={type} type={type} data={activity[type]} />
             )
           }
-          {
-            this.renderFooter(notEmpty)
-          }
+          <View style={styles.footer}>
+            <ActivityIndicator size="small" color={colors.main} animating={this.props.activity.loading} />
+            {inviteButton}
+            {
+              // notEmpty && (
+              //   <IconButton
+              //     family="evil"
+              //     name="sc-telegram"
+              //     color="gray"
+              //     onPress={this.handleTelegram}
+              //     iconStyle={styles.telegramIcon}
+              //   >
+              //     <FormattedMessage id="telegram" />
+              //   </IconButton>
+              // )
+            }
+            <Text style={styles.version}>
+              App version: beta {config.android.versionName}
+            </Text>
+          </View>
         </ScrollView>
         <AsyncContent name="history"
           ref={this.ref}
@@ -141,13 +152,21 @@ const styles = StyleSheet.create({
     marginTop: 24,
     alignItems: 'center',
   },
+  welcome: {
+    color: colors.main,
+    paddingHorizontal: 48,
+    textAlign: 'center',
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 16,
+  },
   //TODO: add:
   // telegramIcon: {
   //   marginTop: 8,
   // },
   //TODO: remove (or move):
   version: {
-    marginTop: 20,
+    marginTop: 32,
     fontSize: 10,
     height: 20,
   },
@@ -155,7 +174,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   tid: state.tribe.id,
-  members: state.tribe.users.filter((user) => user.joined > Date.now() - (7 * 86400 * 1000)), // new members (one week)
+  num_members: state.tribe.users.length,
+  new_members: state.tribe.users.filter((user) => user.uid !== state.user.uid && user.joined > Date.now() - (7 * 86400 * 1000)), // new members (one week)
   activity: state.activity,
   unread: state.app.unread,
   bot_token: state.user.bot_token,

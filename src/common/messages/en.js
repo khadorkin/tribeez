@@ -58,12 +58,12 @@ export default {
   'tab.balances': 'Balances',
 
   // empty
-  'empty.bills': 'First expense?\nAdd it now!',
-  'empty.events': 'First event?\nAdd it now!',
-  'empty.tasks': 'First task?\nAdd it now!',
-  'empty.notes': 'First note?\nAdd it now!',
-  'empty.polls': 'First poll?\nAdd it now!',
-  'empty.invites': 'First invite?\nAdd it now!',
+  'empty.bills': 'Did you pay something for your tribe?\nRegister it here!',
+  'empty.events': 'Do you want to let your tribe know about an upcoming event?\nThis is your calendar!',
+  'empty.tasks': 'Do you want to assign a recurring task?\nCreate it now!',
+  'empty.notes': 'Do you want to make a list or remember something?\nWrite a note!',
+  'empty.polls': 'Do you want to ask something to your tribe?\nAsk them here!',
+  'empty.invites': 'Do you want to add people to your tribe?\nInvite them now!',
 
   // dates
   date: 'On {date, date, event}',
@@ -249,6 +249,8 @@ export default {
   'activity.events': '{num, plural, one {Upcoming event} other {# upcoming events}}',
   'activity.bills': '{num, plural, one {New bill} other {# new bills}}',
   'activity.notes': '{num, plural, one {Modified note} other {# modified notes}}',
+  welcome_message: 'Welcome to your new tribe! This is a private space made of tools to help you sort your group life, so it\'s better if you are not alone:',
+  invite_button: 'Invite people now!',
 
   // History
   'entry.member.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',

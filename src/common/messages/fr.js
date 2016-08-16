@@ -57,6 +57,14 @@ const fr = {
   'tab.bills': 'Liste',
   'tab.balances': 'Balances',
 
+  // empty
+  'empty.bills': 'Vous avez payé quelque chose pour la tribu ?\nEnregistrez-le ici !',
+  'empty.events': 'Voulez vous informer votre tribu d’un évènement à venir ?\nCeci est votre agenda !',
+  'empty.tasks': 'Voulez-vous assigner une tâche récurrente ?\nCréez-la dès maintenant !',
+  'empty.notes': 'Voulez-vous faire une liste ou écrire un pense-bête ?\nAjoutez une note !',
+  'empty.polls': 'Vous voulez poser une question à votre tribu ?\nDemandez-leur ici !',
+  'empty.invites': 'Voulez-vous ajouter des membres à votre tribu ?\nInvitez-les maintenant !',
+
   // dates
   date: 'Le {date, date, event}',
   datetime: 'Le {date, date, event} à {date, time, short}',
@@ -241,6 +249,8 @@ const fr = {
   'activity.events': '{num, plural, one {Évènement à venir} other {# évènements à venir}}',
   'activity.bills': '{num, plural, one {Nouvelle dépense} other {# nouvelles dépenses}}',
   'activity.notes': '{num, plural, one {Note modifiée} other {# notes modifiées}}',
+  welcome_message: 'Bienvenue dans votre nouvelle tribu ! C’est un espace privé fait d’outils pour vous aider à organiser votre vie de groupe, donc c’est mieux si vous êtes plusieurs :',
+  invite_button: 'Invitez des membres !',
 
   // History
   'entry.member.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
