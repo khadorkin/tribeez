@@ -187,12 +187,14 @@ class App extends Component {
               )
             }
           } else {
-            return (
-              <View style={styles.rightIcons}>
-                <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
-                <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
-              </View>
-            )
+            if (items[route.name]) {
+              return (
+                <View style={styles.rightIcons}>
+                  <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+                  <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
+                </View>
+              )
+            }
           }
         }
         return null
