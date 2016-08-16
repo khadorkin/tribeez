@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 
 import Avatar from './Avatar'
 import FormattedMessage from './FormattedMessage'
+import FormattedNumber from './FormattedNumber'
 import Touchable from './Touchable'
 import IconButton from './IconButton'
 import FormButton from './FormButton'
@@ -32,6 +33,7 @@ class DrawerContent extends Component {
     opened: PropTypes.bool.isRequired,
     // from redux:
     user: PropTypes.object,
+    balance: PropTypes.number,
     currentTribe: PropTypes.object,
     // action creators:
     postLogout: PropTypes.func.isRequired,
@@ -105,11 +107,15 @@ class DrawerContent extends Component {
   }
 
   render() {
-    const {user, currentTribe} = this.props
+    const {user, balance, currentTribe} = this.props
 
     // first route in stack == current menu entry \o/
     // works because router.resetTo is called when clicking an entry
     const currentRoute = router.getRoute().name
+
+    const extras = {
+      'bills': <FormattedNumber value={balance} format="money" sign={true} style={balance < 0 ? styles.negativeBalance : styles.positiveBalance} />,
+    }
 
     const menuItems = menuEntries.map((route) => {
       const color = colors[route.name]
@@ -124,6 +130,7 @@ class DrawerContent extends Component {
           style={[styles.entry, {borderLeftColor: (isCurrent ? color : colors.background)}]}
         >
           <FormattedMessage style={[styles.entryText, {color: isCurrent ? color : colors.primaryText}]} id={route.name} />
+          {extras[route.name]}
         </IconButton>
       )
     })
@@ -203,18 +210,6 @@ class DrawerContent extends Component {
 
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-  currentTribe: state.tribe,
-  lang: state.app.lang, // hack to force update when lang changes
-  currency: state.tribe.currency, // hack to force update when currency changes
-})
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  postLogout,
-  putSwitch,
-}, dispatch)
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -278,11 +273,20 @@ const styles = StyleSheet.create({
     borderLeftColor: colors.background, // overwritten when current entry
     borderLeftWidth: 8,
     paddingVertical: 16,
+    marginRight: 8,
+    alignItems: 'center',
   },
   entryText: {
     // color is handled in render
     fontWeight: '400',
     fontSize: 15,
+    flex: 1,
+  },
+  positiveBalance: {
+    color: colors.positive,
+  },
+  negativeBalance: {
+    color: colors.error,
   },
   tribe: {
     flexDirection: 'row',
@@ -298,5 +302,21 @@ const styles = StyleSheet.create({
     marginRight: 40,
   },
 })
+
+const mapStateToProps = (state) => {
+  const member = state.user.uid && state.tribe.userMap[state.user.uid]
+  return {
+    user: state.user,
+    balance: member && member.balance,
+    currentTribe: state.tribe,
+    lang: state.app.lang, // hack to force update when lang changes
+    currency: state.tribe.currency, // hack to force update when currency changes
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  postLogout,
+  putSwitch,
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)

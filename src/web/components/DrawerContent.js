@@ -109,11 +109,11 @@ class DrawerContent extends Component {
     // from parent component:
     module: PropTypes.string.isRequired,
     // from redux:
+    user: PropTypes.object,
+    balance: PropTypes.number,
     menu_tribes: PropTypes.bool.isRequired,
     height: PropTypes.number.isRequired,
     tribe_name: PropTypes.string,
-    user: PropTypes.object,
-    balance: PropTypes.number,
     // action creators:
     putSwitch: PropTypes.func.isRequired,
     toggleTribes: PropTypes.func.isRequired,
@@ -221,11 +221,11 @@ class DrawerContent extends Component {
 const mapStateToProps = (state) => {
   const member = state.user.uid && state.tribe.userMap[state.user.uid]
   return {
+    user: state.user,
+    balance: member && member.balance,
     menu_tribes: state.app.menu_tribes,
     height: state.app.height,
     tribe_name: state.tribe.name,
-    balance: member && member.balance,
-    user: state.user,
   }
 }
 

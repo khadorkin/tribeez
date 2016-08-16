@@ -6,7 +6,7 @@ import {injectIntl, intlShape} from 'react-intl'
 class FormattedNumber extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.number,
     format: PropTypes.string,
     options: PropTypes.object,
     sign: PropTypes.bool,

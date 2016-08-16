@@ -40,10 +40,12 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     padding: 10,
-    alignItems: 'center', // like "vertical-align: middle" for text
   },
   children: {
     marginLeft: 12,
+    alignItems: 'center', // like "vertical-align: middle" for text
+    flex: 1,
+    flexDirection: 'row',
   },
   childrenWithSeparator: {
     marginLeft: 16,
