@@ -34,7 +34,6 @@ class CityField extends Component {
     this.handleDetails = this.handleDetails.bind(this)
   }
 
-  /*eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
     window.onGooglePlaces = () => {
       this.autocomplete = new google.maps.places.AutocompleteService()
@@ -107,7 +106,7 @@ class CityField extends Component {
     // medium: this.props.value
     // long: place.formatted_address
     this.props.onChange({
-      name: this.props.value, // unchanged
+      name: this.props.value.name, // unchanged
       place_id: place.place_id, // unchanged
       country_code: country.short_name,
       lat: location.lat(),

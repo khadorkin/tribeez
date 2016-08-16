@@ -1,16 +1,16 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Image, Text} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
+import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
-import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
+import {getTimestamp} from '../../common/utils/time'
 
 class Entry extends Component {
   static propTypes = {
@@ -36,12 +36,15 @@ class Entry extends Component {
 
     const route = routes[entry.type.toUpperCase()]
     if (route.name === 'member') {
-      route.item = {
+      route.props = {
         id: entry.author,
-        name: this.props.userMap[entry.author].name,
       }
+      route.title = this.props.userMap[entry.author].name
     } else {
-      route.item = entry.item
+      route.props = {
+        id: entry.item.id,
+      }
+      route.title = entry.item.name
     }
 
     router.push(route)
@@ -88,7 +91,7 @@ class Entry extends Component {
         break
       case 'event':
         values.name = entry.item.name
-        values.when = entry.item.start
+        values.when = getTimestamp(entry.item.start)
         break
       case 'task':
         values.name = entry.item.name
@@ -97,27 +100,29 @@ class Entry extends Component {
         return null
     }
 
+    let backgroundColor
     if (entry.action === 'comment') {
-      infos = <Text style={styles.infos}>{entry.item.text}</Text>
+      const infosStyle = {color: colors[entry.type + 's']}
+      infos = <Text style={[styles.infos, infosStyle]}>{entry.item.text}</Text>
+      backgroundColor = colors.background
+    } else {
+      backgroundColor = colors[entry.type + 's_light']
     }
 
     const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
     const date = <FormattedRelative value={entry.time} />
 
+    const style = {backgroundColor, borderBottomWidth: 0}
+
     return (
-      <View style={[styles.container, {backgroundColor: entry.new ? '#FFFFDD' : 'white'}]}>
-        <Touchable onPress={this.handleTouch} style={styles.main}>
-          <Image
-            source={{uri: gravatar(author)}}
-            style={styles.avatar}
-          />
-          <View style={styles.titles}>
-            <Text style={styles.title}>{title}</Text>
-            {infos}
-            <Text style={styles.date}>{date}</Text>
-          </View>
-        </Touchable>
-      </View>
+      <ListItem user={author}
+        onPress={this.handleTouch}
+        style={style}
+        rightLabel={<Text style={styles.time}>{date}</Text>}
+      >
+        <Text style={styles.title}>{title}</Text>
+        {infos}
+      </ListItem>
     )
   }
 }
@@ -129,23 +134,6 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  container: {
-    marginVertical: 5,
-    elevation: 1,
-  },
-  main: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
     color: colors.primaryText,
   },
@@ -153,8 +141,10 @@ const styles = StyleSheet.create({
     color: colors.primaryText,
     fontStyle: 'italic',
   },
-  date: {
+  time: {
+    fontStyle: 'italic',
     color: colors.secondaryText,
+    marginLeft: 16,
   },
 })
 

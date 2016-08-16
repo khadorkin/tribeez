@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Avatar from 'material-ui/Avatar'
 import IconButton from 'material-ui/IconButton'
 
-import StreamIcon from 'material-ui/svg-icons/action/view-stream'
+import HomeIcon from 'material-ui/svg-icons/action/home'
 import GroupIcon from 'material-ui/svg-icons/social/group'
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart'
 import EventIcon from 'material-ui/svg-icons/action/event'
@@ -28,7 +28,7 @@ import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 import {toggleTribes} from '../../common/actions/app'
 
-import MemberListeners from './MemberListeners'
+import Notifications from './Notifications'
 
 import routes from '../routes'
 
@@ -95,7 +95,7 @@ const styles = {
 }
 
 const menuEntries = [
-  {route: routes.ACTIVITY, icon: <StreamIcon />},
+  {route: routes.ACTIVITY, icon: <HomeIcon />},
   {route: routes.MEMBERS, icon: <GroupIcon />},
   {route: routes.BILLS, icon: <CartIcon />},
   {route: routes.EVENTS, icon: <EventIcon />},
@@ -109,11 +109,11 @@ class DrawerContent extends Component {
     // from parent component:
     module: PropTypes.string.isRequired,
     // from redux:
+    user: PropTypes.object,
+    balance: PropTypes.number,
     menu_tribes: PropTypes.bool.isRequired,
     height: PropTypes.number.isRequired,
     tribe_name: PropTypes.string,
-    user: PropTypes.object,
-    balance: PropTypes.number,
     // action creators:
     putSwitch: PropTypes.func.isRequired,
     toggleTribes: PropTypes.func.isRequired,
@@ -171,7 +171,7 @@ class DrawerContent extends Component {
         <MenuItem key={tid}
           onTouchTap={this.selectTribe.bind(this, tid)}
           style={active ? styles.current : styles.default}
-          rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
+          rightIconButton={active ? <IconButton containerElement={<Link to={routes.TRIBE_EDIT} />}><SettingsIcon color={colors.grey600} /></IconButton> : null}
         >
           {name}
         </MenuItem>
@@ -199,7 +199,7 @@ class DrawerContent extends Component {
           <IconButton style={styles.logout} onTouchTap={this.handleLogout}>
             <ExitIcon color="white" />
           </IconButton>
-          <IconButton style={styles.profile} containerElement={<Link to={routes.PROFILE} />}>
+          <IconButton style={styles.profile} containerElement={<Link to={routes.MEMBERS_EDIT} />}>
             <PersonIcon color="white" />
           </IconButton>
           <Avatar style={styles.avatar} src={gravatar(user, 160)} size={80} />
@@ -212,7 +212,7 @@ class DrawerContent extends Component {
           </div>
         </div>
         {this.props.menu_tribes ? tribesContainer : menuContainer}
-        <MemberListeners />
+        <Notifications />
       </div>
     )
   }
@@ -221,11 +221,11 @@ class DrawerContent extends Component {
 const mapStateToProps = (state) => {
   const member = state.user.uid && state.tribe.userMap[state.user.uid]
   return {
+    user: state.user,
+    balance: member && member.balance,
     menu_tribes: state.app.menu_tribes,
     height: state.app.height,
     tribe_name: state.tribe.name,
-    balance: member && member.balance,
-    user: state.user,
   }
 }
 

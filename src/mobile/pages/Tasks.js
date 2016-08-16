@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import {View, StyleSheet} from 'react-native'
 
+import PageView from '../hoc/PageView'
 import AsyncContent from '../hoc/AsyncContent'
 import Task from '../components/Task'
 import Fab from '../components/Fab'
@@ -20,7 +20,7 @@ class Tasks extends Component {
 
   handleFab() {
     const route = routes.TASKS_NEW
-    route.edit = null
+    route.props = {} // clear 'edit' prop = null
     router.push(route)
   }
 
@@ -30,20 +30,14 @@ class Tasks extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <PageView>
         <AsyncContent name="tasks"
           renderRow={this.renderTask}
         />
-        <Fab name="add" onPress={this.handleFab} />
-      </View>
+        <Fab name="add" onPress={this.handleFab} type="tasks" />
+      </PageView>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-})
 
 export default Tasks

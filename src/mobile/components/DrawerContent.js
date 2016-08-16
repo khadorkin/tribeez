@@ -1,28 +1,29 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, ScrollView, Text, Image} from 'react-native'
+import {StyleSheet, View, ScrollView, Text, TouchableHighlight} from 'react-native'
 
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
+import Avatar from './Avatar'
 import FormattedMessage from './FormattedMessage'
+import FormattedNumber from './FormattedNumber'
 import Touchable from './Touchable'
 import IconButton from './IconButton'
+import FormButton from './FormButton'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
 
 const menuEntries = [
-  {route: routes.ACTIVITY, icon: 'view-stream'},
-  {route: routes.MEMBERS, icon: 'group'},
-  {route: routes.BILLS, icon: 'shopping-cart'},
-  {route: routes.EVENTS, icon: 'event'},
-  {route: routes.TASKS, icon: 'assignment-turned-in'},
-  {route: routes.NOTES, icon: 'content-paste'},
-  {route: routes.POLLS, icon: 'poll'},
+  routes.MEMBERS,
+  routes.BILLS,
+  routes.EVENTS,
+  routes.TASKS,
+  routes.NOTES,
+  routes.POLLS,
 ]
 
 class DrawerContent extends Component {
@@ -32,6 +33,7 @@ class DrawerContent extends Component {
     opened: PropTypes.bool.isRequired,
     // from redux:
     user: PropTypes.object,
+    balance: PropTypes.number,
     currentTribe: PropTypes.object,
     // action creators:
     postLogout: PropTypes.func.isRequired,
@@ -47,7 +49,7 @@ class DrawerContent extends Component {
     this.handleProfile = this.handleProfile.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
     this.handleNewTribe = this.handleNewTribe.bind(this)
-    this.handleTribeSettings = this.handleTribeSettings.bind(this)
+    this.handleEditTribe = this.handleEditTribe.bind(this)
   }
 
   componentWillReceiveProps(props) {
@@ -64,7 +66,7 @@ class DrawerContent extends Component {
   }
 
   handleProfile() {
-    router.resetTo(routes.PROFILE)
+    router.resetTo(routes.MEMBERS_EDIT)
     this.props.drawer.closeDrawer()
   }
 
@@ -80,12 +82,20 @@ class DrawerContent extends Component {
   }
 
   handleNewTribe() {
-    router.resetTo(routes.TRIBE_NEW)
+    const route = routes.TRIBE_NEW
+    route.props = {
+      type: 'create',
+    }
+    router.resetTo(route)
     this.props.drawer.closeDrawer()
   }
 
-  handleTribeSettings() {
-    router.resetTo(routes.TRIBE)
+  handleEditTribe() {
+    const route = routes.TRIBE_EDIT
+    route.props = {
+      type: 'update',
+    }
+    router.resetTo(route)
     this.props.drawer.closeDrawer()
   }
 
@@ -97,55 +107,93 @@ class DrawerContent extends Component {
   }
 
   render() {
-    const {user, currentTribe} = this.props
+    const {user, balance, currentTribe} = this.props
 
-    const menuItems = menuEntries.map((entry) =>
-      <IconButton
-        key={entry.route.name}
-        name={entry.icon}
-        onPress={this.handleLink.bind(this, entry.route)}
-      >
-        <FormattedMessage style={styles.entry} id={entry.route.name} />
-      </IconButton>
-    )
+    // first route in stack == current menu entry \o/
+    // works because router.resetTo is called when clicking an entry
+    const currentRoute = router.getRoute().name
+
+    const extras = {
+      'bills': <FormattedNumber value={balance} format="money" sign={true} style={balance < 0 ? styles.negativeBalance : styles.positiveBalance} />,
+    }
+
+    const menuItems = menuEntries.map((route) => {
+      const color = colors[route.name]
+      const isCurrent = (currentRoute === route.name)
+
+      return (
+        <IconButton
+          key={route.name}
+          name={route.icon}
+          onPress={this.handleLink.bind(this, route)}
+          color={color}
+          style={[styles.entry, {borderLeftColor: (isCurrent ? color : colors.background)}]}
+        >
+          <FormattedMessage style={[styles.entryText, {color: isCurrent ? color : colors.primaryText}]} id={route.name} />
+          {extras[route.name]}
+        </IconButton>
+      )
+    })
 
     const tribe_ids = Object.keys(user.tribes)
-    const tribeItems = tribe_ids.map((tid) =>
-      <Touchable key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
-        <Text style={styles.tribeText}>{user.tribes[tid]}</Text>
-        {
-          tid === user.current_tribe && (
-            <IconButton name="settings" style={styles.tribeSettings} onPress={this.handleTribeSettings} />
-          )
-        }
-      </Touchable>
-    )
+    const tribeItems = tribe_ids.map((tid) => {
+      const isCurrent = (tid === user.current_tribe)
+      const color = isCurrent ? colors.main : colors.primaryText
+
+      return (
+        <Touchable key={tid} onPress={this.handleSwitchTribe.bind(this, tid)} style={styles.tribe}>
+          <Text style={[styles.tribeText, {color}]}>{user.tribes[tid]}</Text>
+          {
+            isCurrent && (
+              <IconButton color={colors.main} name="settings" onPress={this.handleEditTribe} />
+            )
+          }
+        </Touchable>
+      )
+    })
 
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <View style={styles.actions}>
-            <IconButton name="exit-to-app" color="white" onPress={this.handleLogout} style={styles.action} />
-            <IconButton name="person" color="white" onPress={this.handleProfile} style={styles.action} />
-          </View>
           <View style={styles.infos}>
-            <Image
-              source={{uri: gravatar(user, 160)}}
+            <TouchableHighlight
+              onPress={this.handleProfile}
               style={styles.avatar}
-            />
-            <Text style={styles.username}>
-              {user.name}
-            </Text>
-            <Text style={styles.currentTribe}>
-              {currentTribe.name}
-            </Text>
-            <IconButton
-              name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
-              color="white"
-              onPress={this.handleToggle}
-              style={styles.toggle}
-            />
+              underlayColor={colors.secondaryText}
+            >
+              <Avatar user={user} size={80} />
+            </TouchableHighlight>
+            <View style={styles.member}>
+              <Text style={styles.username}>
+                {user.name}
+              </Text>
+              <View style={styles.currentTribeContainer}>
+                <Text style={styles.currentTribe}>
+                  {currentTribe.name}
+                </Text>
+                <IconButton
+                  name={this.state.showTribes ? 'arrow-drop-up' : 'arrow-drop-down'}
+                  color={colors.lightText}
+                  onPress={this.handleToggle}
+                  style={styles.toggle}
+                  size={24}
+                />
+              </View>
+            </View>
           </View>
+          <IconButton
+            name="home"
+            color={colors.lightText}
+            onPress={this.handleLink.bind(this, routes.ACTIVITY)}
+            style={styles.home}
+          />
+          <IconButton
+            name="exit-to-app"
+            size={20}
+            color={colors.lightText}
+            onPress={this.handleLogout}
+            style={styles.logout}
+          />
         </View>
 
         <ScrollView style={styles.menu}>
@@ -153,9 +201,7 @@ class DrawerContent extends Component {
         </ScrollView>
         {
           this.state.showTribes && (
-            <IconButton name="add" onPress={this.handleNewTribe}>
-              <FormattedMessage style={styles.tribeText} id="tribe_new" />
-            </IconButton>
+            <FormButton id="tribe_new" onPress={this.handleNewTribe} />
           )
         }
       </View>
@@ -164,82 +210,113 @@ class DrawerContent extends Component {
 
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-  currentTribe: state.tribe,
-  lang: state.app.lang, // hack to force update when lang changes
-  currency: state.tribe.currency, // hack to force update when currency changes
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  ///////////////////////// HEADER /////////////////////////
+  header: {
+    backgroundColor: colors.main,
+    //paddingTop: 24, // add space here if status bar's background color is visible
+  },
+  infos: {
+    flexDirection: 'row',
+    minHeight: 150,
+  },
+  avatar: {
+    borderRadius: 40,
+    margin: 16,
+    alignSelf: 'center',
+  },
+  member: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  username: {
+    color: colors.lightText,
+    fontWeight: '400',
+    fontSize: 18,
+    marginTop: 8,
+    marginBottom: -8,
+    marginRight: 8,
+  },
+  currentTribeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  currentTribe: {
+    flex: 1,
+    marginTop: 10,
+    color: colors.lightText,
+    fontWeight: '400',
+    fontSize: 14,
+  },
+  toggle: {
+    marginTop: -2,
+    alignSelf: 'center',
+  },
+  home: {
+    alignSelf: 'flex-start',
+    marginTop: -12,
+    marginLeft: 8, // == entry.borderLeftWidth
+  },
+  logout: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
+  ////////////////////////// MENU //////////////////////////
+  menu: {
+    flex: 1,
+  },
+  entry: {
+    borderLeftColor: colors.background, // overwritten when current entry
+    borderLeftWidth: 8,
+    paddingVertical: 16,
+    marginRight: 8,
+    alignItems: 'center',
+  },
+  entryText: {
+    // color is handled in render
+    fontWeight: '400',
+    fontSize: 15,
+    flex: 1,
+  },
+  positiveBalance: {
+    color: colors.positive,
+  },
+  negativeBalance: {
+    color: colors.error,
+  },
+  tribe: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 62.5,
+  },
+  tribeText: {
+    color: colors.primaryText,
+    fontWeight: '400',
+    fontSize: 15,
+    marginLeft: 20,
+    marginRight: 40,
+  },
 })
+
+const mapStateToProps = (state) => {
+  const member = state.user.uid && state.tribe.userMap[state.user.uid]
+  return {
+    user: state.user,
+    balance: member && member.balance,
+    currentTribe: state.tribe,
+    lang: state.app.lang, // hack to force update when lang changes
+    currency: state.tribe.currency, // hack to force update when currency changes
+  }
+}
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   postLogout,
   putSwitch,
 }, dispatch)
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    backgroundColor: colors.main,
-    paddingTop: 24, // because DrawerLayoutAndroid has a statusBarBackgroundColor
-  },
-  actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  action: {
-    paddingBottom: 0,
-  },
-  infos: {
-    alignItems: 'center',
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
-  username: {
-    color: 'white',
-    fontWeight: '400',
-    fontSize: 18,
-    marginVertical: 5,
-  },
-  currentTribe: {
-    color: 'white',
-    fontWeight: '400',
-    fontSize: 14,
-    marginBottom: 10,
-  },
-  toggle: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    paddingBottom: 6,
-  },
-  menu: {
-    flex: 1,
-    paddingTop: 6,
-  },
-  entry: {
-    color: colors.primaryText,
-    fontWeight: '400',
-    paddingVertical: 1,
-  },
-  tribe: {
-    padding: 12,
-  },
-  tribeText: {
-    color: colors.primaryText,
-    fontWeight: '400',
-    paddingBottom: 1.5,
-    marginRight: 30,
-  },
-  tribeSettings: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-  },
-})
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)

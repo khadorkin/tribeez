@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import {StyleSheet, View} from 'react-native'
 
-import Button from '../components/Button'
+import FormButton from '../components/FormButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import colors from '../../common/constants/colors'
@@ -15,6 +15,7 @@ class Form extends Component {
     handleSubmit: PropTypes.func.isRequired,
     submitting: PropTypes.bool,
     error: PropTypes.string,
+    style: View.propTypes.style,
   }
 
   constructor(props) {
@@ -27,15 +28,15 @@ class Form extends Component {
   }
 
   render() {
-    const {children, name, submitting, error} = this.props
+    const {style, children, name, submitting, error} = this.props
 
     return (
       <View style={styles.container}>
-        {children}
-        <View style={styles.actions}>
-          <Button id={'submit.' + name} onPress={this.handleSubmit} disabled={submitting} />
+        <View style={[styles.form, style]}>
+          {children}
+          <FormattedMessage id={error && 'error.' + error} style={styles.error} />
         </View>
-        <FormattedMessage id={error && 'error.' + error} style={styles.error} />
+        <FormButton id={'submit.' + name} onPress={this.handleSubmit} loading={submitting} />
       </View>
     )
   }
@@ -43,11 +44,11 @@ class Form extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 16,
-    backgroundColor: 'white',
+    flex: 1,
   },
-  actions: {
-    alignItems: 'center',
+  form: {
+    flex: 1,
+    padding: 8,
   },
   error: {
     color: colors.error,

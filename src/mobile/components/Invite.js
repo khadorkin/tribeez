@@ -1,25 +1,27 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Alert} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
-import IconButton from './IconButton'
+import FormattedRelative from './FormattedRelative'
 
 import colors from '../../common/constants/colors'
 import postInvite from '../../common/actions/postInvite'
+import {alert} from '../../common/actions/app'
 
 class Invite extends Component {
   static propTypes = {
     // from parent:
     invite: PropTypes.object.isRequired,
     // from redux:
-    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
     messages: PropTypes.object.isRequired,
     // action creators:
     postInvite: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -29,15 +31,18 @@ class Invite extends Component {
   }
 
   handleResend() {
-    Alert.alert(this.props.messages.dialog_reinvite, this.props.invite.email, [
-      {text: this.props.messages.cancel},
-      {text: this.props.messages.send, onPress: this.handleConfirm},
-    ])
+    this.props.alert({
+      title_id: 'dialog_reinvite',
+      text: this.props.invite.email,
+      buttons: [
+        {text_id: 'cancel'},
+        {text_id: 'send', onPress: this.handleConfirm},
+      ],
+    })
   }
 
   handleConfirm() {
-    const {invite, uid} = this.props
-    this.props.postInvite(invite.email, invite.lang, uid) //TODO: show loader
+    this.props.postInvite(this.props.invite)
   }
 
   render() {
@@ -49,49 +54,38 @@ class Invite extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <View style={styles.titles}>
-          <Text style={styles.title}>{invite.email}</Text>
-          <Text style={styles.subtitle}>
-            <FormattedMessage id="invited_by" values={{user: inviter.name}} relative={{when: invite.invited}} />
-          </Text>
-        </View>
-        <IconButton name="refresh" onPress={this.handleResend} style={styles.icon} />
-      </View>
+      <ListItem user={inviter} icon="refresh" onIconPress={this.handleResend} rightLabel={<FormattedRelative value={invite.invited} style={styles.time} />}>
+        <Text style={styles.title}>{invite.email}</Text>
+        <FormattedMessage id="invited_by" values={{user: inviter.name}} style={styles.subtitle} />
+      </ListItem>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    marginVertical: 5,
-    elevation: 1,
-    padding: 10,
-    flexDirection: 'row',
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
-    color: colors.primaryText,
+    color: colors.members,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 16,
   },
-  icon: {
-    paddingVertical: 6,
+  time: {
+    fontStyle: 'italic',
+    color: colors.secondaryText,
+    marginLeft: 16,
   },
 })
 
 const mapStateToProps = (state) => ({
-  uid: state.user.uid,
   userMap: state.tribe.userMap,
   messages: state.app.messages, //TODO
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   postInvite,
+  alert,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Invite)

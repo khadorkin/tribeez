@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 
+import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DateField from './fields/Date'
-import MoneyField from './fields/Money'
 import Part from './deep/Part'
 
 import form from '../../common/forms/bill'
@@ -54,43 +54,45 @@ class BillForm extends Component {
     const userItems = users.map((user) => ({name: user.name, code: user.uid}))
 
     return (
-      <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} action={submitBill} {...props}>
-        <TextField
-          {...name}
-          name="title"
-        />
-        <TextField
-          multiline={true}
-          {...description}
-        />
-        <SelectField
-          items={userItems}
-          {...payer}
-        />
-        <DateField
-          max={today}
-          {...paid}
-        />
-        <MoneyField
-          currency={currency}
-          {...amount}
-        />
-        <SelectField
-          {...method}
-          items={methods}
-          onChange={this.handleMethodChange}
-        />
-        {
-          parts.map((part, index) =>
-            <Part key={index}
-              method={method.value}
-              amount={part.amount}
-              currency={currency}
-              user={userMap[part.uid.value]}
-            />
-          )
-        }
-      </Form>
+      <ScrollView>
+        <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} action={submitBill} {...props}>
+          <TextField
+            {...name}
+            name="title"
+          />
+          <TextField
+            multiline={true}
+            {...description}
+          />
+          <SelectField
+            items={userItems}
+            {...payer}
+          />
+          <DateField
+            max={today}
+            {...paid}
+          />
+          <TextField
+            currency={currency}
+            {...amount}
+          />
+          <SelectField
+            {...method}
+            items={methods}
+            onChange={this.handleMethodChange}
+          />
+          {
+            parts.map((part, index) =>
+              <Part key={index}
+                method={method.value}
+                amount={part.amount}
+                currency={currency}
+                user={userMap[part.uid.value]}
+              />
+            )
+          }
+        </Form>
+      </ScrollView>
     )
   }
 }

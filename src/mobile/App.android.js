@@ -6,9 +6,10 @@ import {
   BackAndroid,
   Linking,
   StyleSheet,
-  View,
   Text,
-  Alert,
+  StatusBar,
+  Dimensions,
+  View,
 } from 'react-native'
 
 import {connect} from 'react-redux'
@@ -18,21 +19,30 @@ import {Crashlytics, Answers} from 'react-native-fabric'
 
 import config from '../common/config'
 import {auth} from '../common/firebase'
+import colors from '../common/constants/colors'
 
 import FormattedMessage from './components/FormattedMessage'
 import DrawerContent from './components/DrawerContent'
 import Snackbar from './components/Snackbar'
+import Alerts from './components/Alerts'
 import IconButton from './components/IconButton'
 
 import routes from '../common/routes'
 import router from '../common/router'
-import colors from '../common/constants/colors'
+import getConfig from '../common/actions/getConfig'
+import autoLogin from '../common/actions/autoLogin'
 import submitLogin from '../common/actions/submitLogin'
 import deleteItem from '../common/actions/deleteItem'
+import {alert} from '../common/actions/app'
+
+const drawerWidth = Dimensions.get('window').width * 0.75
+
+import {marginTop, navBarHeight} from './dimensions'
 
 class App extends Component {
   static propTypes = {
     // from redux store:
+    config: PropTypes.object,
     uid: PropTypes.string,
     user: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
@@ -40,9 +50,13 @@ class App extends Component {
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
+    item: PropTypes.object.isRequired,
     // action creators:
+    getConfig: PropTypes.func.isRequired,
     submitLogin: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
+    autoLogin: PropTypes.func.isRequired,
+    alert: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -67,13 +81,14 @@ class App extends Component {
       }
       const currentRoutes = router.getCurrentRoutes()
       if (currentRoutes.length === 1) {
+        const firstRouteName = currentRoutes[0].name
         if (auth.currentUser) {
-          if (currentRoutes[0].name === 'activity') {
+          if (firstRouteName === 'activity') {
             return false
           }
           router.resetTo(routes.ACTIVITY)
         } else {
-          if (currentRoutes[0].name === 'welcome') {
+          if (firstRouteName === 'welcome') {
             return false
           }
           router.resetTo(routes.WELCOME)
@@ -89,22 +104,32 @@ class App extends Component {
         const join = url.match(/\/join\/([^\/]+)\/([^\/]+)/)
         if (join) {
           const route = routes.JOIN
-          route.tribe = join[1]
-          route.token = join[2]
+          route.props = {
+            tribe: join[1],
+            token: join[2],
+          }
           router.push(route)
           return
         }
       }
+      this.props.autoLogin()
     })
-    //TODO: catch
+    .catch(() => {}) // ignore fails
+
+    this.props.getConfig()
   }
 
   componentWillReceiveProps(props) {
-    if (props.error === 'version') {
-      Alert.alert(props.messages.dialog_update_title, props.messages.dialog_update_text, [
-        {text: 'OK', onPress: this.handleOpenStore},
-      ])
-      return
+    if (props.config && !this.props.config) {
+      if (props.config.minimum_version > config.android.versionName) {
+        this.props.alert({
+          title_id: 'dialog_update_title',
+          text: props.config.minimum_version + '>' + config.android.versionName, //'dialog_update_text',
+          buttons: [
+            {text: 'OK', onPress: this.handleOpenStore},
+          ],
+        })
+      }
     }
 
     if (props.user.name && !this.props.user.name) { // login
@@ -128,7 +153,7 @@ class App extends Component {
     this.drawer = drawer
   }
 
-  routeMapper(loading) {
+  routeMapper(loading, items) {
     return {
       LeftButton: (/*route, navigator, index, navState*/) => {
         return this.props.uid && (
@@ -136,18 +161,41 @@ class App extends Component {
         )
       },
       Title: (route/*, navigator, index, navState*/) => {
-        if (route.item && route.item.name) {
-          return <Text style={styles.navTitle}>{route.item.name}</Text>
+        if (route.noHeader) {
+          return null
+        }
+        if (route.title) {
+          const item = items[route.name]
+          const title = item ? item.name : route.title
+          //TODO: allow variable height
+          return <Text style={styles.navTitle}>{title}</Text>
         } else {
           return <FormattedMessage style={styles.navTitle} id={route.name} />
         }
       },
       RightButton: (route/*, navigator, index, navState*/) => {
         if (loading) {
-          return <ActivityIndicator size="small" color="white" style={styles.rightIcon} />
+          return <ActivityIndicator size="small" color="white" style={styles.loading} />
         }
-        if (route.type === 'details' && route.name !== 'member') { //TODO: not show if does not exist
-          return <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+        if (route.type === 'details') { //TODO: not show if item does not exist
+          if (route.name === 'member') {
+            if (route.props.id === this.props.uid) {
+              return (
+                <View style={styles.rightIcons}>
+                  <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
+                </View>
+              )
+            }
+          } else {
+            if (items[route.name]) {
+              return (
+                <View style={styles.rightIcons}>
+                  <IconButton name="delete" color="white" onPress={this.handleDelete.bind(this, route)} style={styles.rightIcon} />
+                  <IconButton name="edit" color="white" onPress={this.handleEdit.bind(this, route)} style={styles.rightIcon} />
+                </View>
+              )
+            }
+          }
         }
         return null
       },
@@ -170,16 +218,24 @@ class App extends Component {
     })
   }
 
+  handleEdit(currentRoute) {
+    router.push(routes[currentRoute.name.toUpperCase() + 'S_EDIT'])
+  }
+
   handleDelete(route) {
-    const {messages} = this.props
-    Alert.alert(route.item.name, messages.dialog_delete, [
-      {text: messages.cancel},
-      {text: messages.delete, onPress: this.handleConfirmDelete.bind(this, route)},
-    ])
+    this.props.alert({
+      title: route.title,
+      text_id: 'dialog_delete',
+      //onConfirm: this.handleConfirmDelete.bind(this, route),
+      buttons: [
+        {text_id: 'cancel'},
+        {text_id: 'delete', onPress: this.handleConfirmDelete.bind(this, route)},
+      ],
+    })
   }
 
   handleConfirmDelete(route) {
-    this.props.deleteItem(route.name, route.item.id)
+    this.props.deleteItem(route.name, route.props.id)
     router.pop()
   }
 
@@ -194,33 +250,13 @@ class App extends Component {
   }
 
   renderScene(route, navigator) {
-    router.update(route, navigator)
-    const props = {}
-    if (route.tribe) {
-      props.tribe = route.tribe
-    }
-    if (route.token) {
-      props.token = route.token
-    }
-    if (route.item) {
-      props.id = route.item.id
-    }
-    if (route.edit) {
-      props.edit = route.edit
-    }
-    return (
-      <View style={styles.page}>
-        <route.component {...props} />
-      </View>
-    )
+    router.update(navigator)
+    return <route.component {...route.props} />
   }
 
   render() {
     const navigationBar = (
-      <Navigator.NavigationBar
-        routeMapper={this.routeMapper(this.props.loading)}
-        style={styles.navBar}
-      />
+      <Navigator.NavigationBar routeMapper={this.routeMapper(this.props.loading, this.props.item)} style={styles.navBar} />
     )
 
     const drawerLockMode = this.props.uid ? 'unlocked' : 'locked-closed'
@@ -229,50 +265,58 @@ class App extends Component {
       <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={this.props.formats}>
         <DrawerLayoutAndroid
           renderNavigationView={this.renderNavigation}
-          statusBarBackgroundColor={colors.main}
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
           onDrawerClose={this.handleDrawerClosed}
-          drawerWidth={250}
+          drawerWidth={drawerWidth}
           drawerLockMode={drawerLockMode}
         >
+          <StatusBar translucent={true} backgroundColor={colors.statusBar} animated={true} />
           <Navigator
             initialRoute={routes.WELCOME}
             renderScene={this.renderScene}
             navigationBar={navigationBar}
+            sceneStyle={styles.scene}
           />
           <Snackbar />
+          <Alerts />
         </DrawerLayoutAndroid>
       </IntlProvider>
     )
   }
 }
 
+// nav bar styles:
 const styles = StyleSheet.create({
-  hamburger: {
-    padding: 15,
-  },
   navBar: {
-    backgroundColor: colors.main,
+    marginTop, // height of status bar (usually aroung 25)
+    height: navBarHeight,
+  },
+  hamburger: {
+    padding: 12,
   },
   navTitle: {
-    color: 'white',
-    marginVertical: 15,
-    fontWeight: '500',
-    fontSize: 16,
+    color: colors.lightText,
+    fontSize: 24,
+    marginTop: 10,
     marginRight: 56, // to not overlap the right icon
   },
-  page: {
-    marginTop: 56,
-    flex: 1,
-    backgroundColor: colors.background,
+  rightIcons: {
+    flexDirection: 'row',
   },
   rightIcon: {
-    padding: 15,
+    padding: 12,
+  },
+  loading: {
+    padding: 17,
+  },
+  scene: {
+    backgroundColor: colors.background,
   },
 })
 
 const mapStateToProps = (state) => ({
+  config: state.app.config,
   uid: state.user.uid,
   user: state.user,
   lang: state.app.lang, // here is the app language
@@ -280,11 +324,15 @@ const mapStateToProps = (state) => ({
   formats: state.tribe.formats,
   loading: state.app.loading > 0 || state.app.submitting,
   error: state.app.error,
+  item: state.item,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  getConfig,
   submitLogin,
   deleteItem,
+  autoLogin,
+  alert,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

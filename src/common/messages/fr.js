@@ -8,7 +8,7 @@ const fr = {
   login: 'Connexion',
   password: 'Mot de passe perdu',
   reset: 'Nouveau mot de passe',
-  activity: 'Activité',
+  activity: 'Tribeez',
   profile: 'Profil',
   members: 'Membres',
   members_new: 'Nouveau membre',
@@ -26,8 +26,21 @@ const fr = {
   polls: 'Sondages',
   polls_new: 'Nouveau sondage',
   polls_edit: 'Modifier le sondage',
-  tribe: 'Tribu',
   tribe_new: 'Nouvelle tribu',
+  tribe_edit: 'Tribu',
+
+  // slides
+  start: 'Tribeez',
+  end: 'Vous êtes prêt !',
+  'start.description': 'La meilleure façon d’organiser votre vie en groupe',
+  'bills.description': 'Répartissez-les facilement entre membres concernés',
+  'events.description': 'Soyez notifié-e et profitez de bons moments avec votre tribu',
+  'polls.description': 'Obtenez rapidement l’opinion général en posant n’importe quelles questions',
+  'tasks.description': 'Assignez-les et faites avancer les choses',
+  'notes.description': 'Partagez des listes de courses et ne perdez plus le mot de passe du Wifi',
+  'end.description': 'Choisissez une option ci-dessous pour commencer',
+  'slides.login': 'CONNEXION',
+  'slides.register': 'CRÉER UN COMPTE',
 
   // subtitles
   messenger_bot: 'Robot pour Facebook Messenger',
@@ -35,14 +48,14 @@ const fr = {
   title: 'Titre',
 
   // tabs
-  'tab.activity': 'QUOI DE NEUF',
-  'tab.history': 'HISTORIQUE',
-  'tab.registered': 'INSCRITS',
-  'tab.invited': 'INVITÉS',
-  'tab.upcoming': 'A VENIR',
-  'tab.past': 'PASSÉS',
-  'tab.bills': 'LISTE',
-  'tab.balances': 'BALANCES',
+  'tab.activity': 'Quoi de neuf',
+  'tab.history': 'Historique',
+  'tab.registered': 'Inscrits',
+  'tab.invited': 'Invités',
+  'tab.upcoming': 'A venir',
+  'tab.past': 'Passés',
+  'tab.bills': 'Liste',
+  'tab.balances': 'Balances',
 
   // dates
   date: 'Le {date, date, event}',
@@ -56,7 +69,7 @@ const fr = {
   cancel: 'Annuler',
   close: 'Fermer',
   delete_dialog: 'Voulez-vous vraiment supprimer {type, select, bill {cette dépense} event {cet évènement} note {cette note} poll {ce sondage} task {cette tâche}} ?',
-  vote_again: 'Re-voter',
+  vote_again: 'Changer votre vote',
   submit_vote: 'Voter',
   return_home: 'Revenir à l’Activité',
   retry: 'Réessayer',
@@ -77,10 +90,12 @@ const fr = {
   'snack.invite_sent': 'Invitation envoyée',
   'snack.invite_resent': 'Invitation renvoyée',
   'snack.switched': 'Tribu changée',
+  'snack.joined': 'Bienvenue dans la tribu "{name}"',
   'snack.new_member': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu',
   'snack.new_bill': '{author, select, _you_ {Dépense ajoutée} other {{author} a ajouté la dépense "{name}"}}',
   'snack.update_bill': '{author, select, _you_ {Dépense modifiée} other {{author} a modifié la dépense "{name}"}}',
   'snack.delete_bill': '{author, select, _you_ {Dépense supprimée} other {{author} a supprimé la dépense "{name}"}}',
+  'snack.comment_bill': '{author, select, _you_ {Commentaire envoyé} other {{author} a commenté la dépense "{name}"}}',
   'snack.note_created': 'Note créée',
   'snack.note_updated': 'Note sauvegardée',
   'snack.notes_reordered': 'Notes réordonnées',
@@ -88,13 +103,16 @@ const fr = {
   'snack.new_event': '{author, select, _you_ {Évènement ajouté} other {{author} a ajouté l’évènement "{name}"}}',
   'snack.update_event': '{author, select, _you_ {Évènement modifié} other {{author} a modifié l’évènement "{name}"}}',
   'snack.delete_event': '{author, select, _you_ {Évènement supprimé} other {{author} a supprimé l’évènement "{name}"}}',
+  'snack.comment_event': '{author, select, _you_ {Commentaire envoyé} other {{author} a commenté l’évènement"{name}"}}',
   'snack.new_poll': '{author, select, _you_ {Sondage ajouté} other {{author} a ajouté le sondage "{name}"}}',
   'snack.update_poll': '{author, select, _you_ {Sondage modifié} other {{author} a modifié le sondage "{name}"}}',
   'snack.delete_poll': '{author, select, _you_ {Sondage supprimé} other {{author} a supprimé le sondage "{name}"}}',
+  'snack.comment_poll': '{author, select, _you_ {Commentaire envoyé} other {{author} a commenté le sondage "{name}"}}',
   'snack.poll_updated': 'Sondage modifié', // after on/off switch
   'snack.new_task': '{author, select, _you_ {Tâche ajoutée} other {{author} a ajouté la tâche "{name}"}}',
   'snack.update_task': '{author, select, _you_ {Tâche modifiée} other {{author} a modifié la tâche "{name}"}}',
   'snack.delete_task': '{author, select, _you_ {Tâche supprimée} other {{author} a supprimé la tâche "{name}"}}',
+  'snack.comment_task': '{author, select, _you_ {Commentaire envoyé} other {{author} a commenté la tâche "{name}"}}',
   'snack.voted': 'Voté',
   'snack.task_done': 'Tâche marquée comme effectuée',
   'snack.logout_success': 'Vous êtes déconnecté',
@@ -105,9 +123,10 @@ const fr = {
   password_reset: 'Renplissez ce formulaire pour recevoir un lien de réinitialisation de mot de passe par e-mail',
   password_change: '{name}, choisissez votre nouveau mot de passe',
   invited_you: '{name} vous a invité-e',
-  login_to_join: '{inviter_name} vous a invité-e à rejoindre la tribu "{tribe_name}"',
+  login_to_join: 'Vous êtes maintenant membre de la tribu "{tribe_name}", sur invitation de {inviter_name}',
   you: 'Vous',
   your_tribe: 'Votre tribu',
+  create_account: 'Créer un compte',
   password_lost: 'Mot de passe perdu ?',
   no_account: 'Pas encore de compte ?',
   register_now: 'Inscrivez-vous !',
@@ -142,7 +161,7 @@ const fr = {
   'field.currency': 'Devise',
   'error.currency': 'Devise incorrecte',
   'field.tribe_type': 'Type',
-  'select.houseshare': 'Colocation',
+  'select.flatshare': 'Colocation',
   'select.family': 'Famille',
   'select.friends': 'Amis',
   'select.organization': 'Organisation',
@@ -189,7 +208,7 @@ const fr = {
   'select.1h': '1 heure avant',
   'error.reminder': 'Rappel invalide',
   // task:
-  'field.wait': 'Période de carence (jours avant de pouvoir l’accomplir)',
+  'field.wait': 'Période de carence (jours)',
   'error.wait': 'Période incorrecte',
   'field.task_users': 'Membres concernés :',
   'error.no_users': 'Vous devez choisir au moins un membre concerné',
@@ -215,12 +234,15 @@ const fr = {
   // Comment box:
   comment: 'Votre commentaire...',
 
-  // Members
-  'add_member': 'Ajouter un membre',
-  'member_since': 'Membre depuis le {when, date}',
-  'invited_by': 'Invité-e par {user} {when}',
-
   // Activity
+  'activity.members': '{num, plural, one {Nouveau membre} other {# nouveaux membres}}',
+  'activity.polls': '{num, plural, one {Sondage non répondu} other {# sondages non répondus}}',
+  'activity.tasks': '{num, plural, one {Tâche à effectuer} other {# tâches à effectuer}}',
+  'activity.events': '{num, plural, one {Évènement à venir} other {# évènements à venir}}',
+  'activity.bills': '{num, plural, one {Nouvelle dépense} other {# nouvelles dépenses}}',
+  'activity.notes': '{num, plural, one {Note modifiée} other {# notes modifiées}}',
+
+  // History
   'entry.member.new': '{author, select, _you_ {Vous avez} other {{author} a}} rejoint la tribu !',
   'entry.member.new.infos': 'Invité-e par {inviter}',
   'entry.bill.new': '{author, select, _you_ {Vous avez} other {{author} a}} ajouté une dépense nommée "{name}" ({amount, number, money})',
@@ -246,11 +268,18 @@ const fr = {
   'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.task.comment': '{author, select, _you_ {Vous avez} other {{author} a}} commenté la tâche "{name}" :',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
-  telegram: 'Vous utilisez Telegram ? Discutez avec le TribeezBot !   ',
+  //telegram: 'Vous utilisez Telegram ?\nDiscutez avec le TribeezBot !',
+
+  // Members
+  'member_since': 'Membre depuis le {when, date}',
+  'invited_by': 'Invité-e par {user}',
 
   // Bills
   'bill.mypart': 'Votre part est de {amount, number, money}',
   'bill.nopart': 'Vous n’êtes pas concerné-e',
+  paid_by: 'Payé par {user}',
+  paid_on: 'Payé le {when, date}',
+  parts: 'Parts',
 
   // Calendar
   'calendar.allDay': 'Journée',
@@ -267,12 +296,19 @@ const fr = {
   last_done: 'Dernière fois {ago}',
   never_done: 'Jamais effectuée',
   mark_done: 'Je viens de le faire',
+  counters: 'Compteurs',
 
   // Notes
   'placeholder.title': 'titre',
+  'notes.by': 'Par {author}',
 
   // Polls
   poll_answers: '{num, plural, =0 {Aucune réponse} one {1 réponse} other {# réponses}}',
+  asked_by: '{author} demande',
+
+  //Details
+  created_by: 'Créé par {author}',
+  log: 'Historique et commentaires',
 
   // Common error handling
   'error.request': 'Erreur: veuillez rééssayer plus tard',

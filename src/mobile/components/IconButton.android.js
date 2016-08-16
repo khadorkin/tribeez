@@ -10,27 +10,26 @@ class IconButton extends Component {
   static propTypes = {
     onPress: PropTypes.func,
     style: View.propTypes.style,
-    iconStyle: View.propTypes.style,
+    size: PropTypes.number,
     children: PropTypes.node,
-    family: PropTypes.string,
+    separator: PropTypes.bool, // for details
+    iconStyle: View.propTypes.style, // for telegram
+    family: PropTypes.string, // for telegram
   }
 
   render() {
-    const {onPress, style, iconStyle, children, family, ...props} = this.props
+    const {onPress, style, iconStyle, children, family, size, separator, ...props} = this.props
 
     const Icon = ((family === 'evil') ? EvilIcon : MaterialIcon)
 
     return (
       <TouchableNativeFeedback
-        /*eslint-disable new-cap*/
         background={TouchableNativeFeedback.SelectableBackground()}
-        /*eslint-enable new-cap*/
         onPress={onPress}
-        delayPressIn={0}
       >
         <View style={[styles.button, style]}>
-          <Icon size={24} color={colors.icon} style={iconStyle} {...props} />
-          {children && <View style={styles.children}>{children}</View>}
+          <Icon size={size || 30} color={colors.icon} style={iconStyle} {...props} />
+          {children && <View style={separator ? styles.childrenWithSeparator : styles.children}>{children}</View>}
         </View>
       </TouchableNativeFeedback>
     )
@@ -43,9 +42,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   children: {
-    marginLeft: 10,
-    paddingVertical: 1,
-    flex: 1, // to wrap
+    marginLeft: 12,
+    alignItems: 'center', // like "vertical-align: middle" for text
+    flex: 1,
+    flexDirection: 'row',
+  },
+  childrenWithSeparator: {
+    marginLeft: 16,
+    borderLeftWidth: 1,
+    borderLeftColor: colors.underline,
+    paddingVertical: 6,
+    paddingLeft: 16,
   },
 })
 

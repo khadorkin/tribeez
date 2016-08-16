@@ -8,7 +8,7 @@ export default {
   login: 'Login',
   password: 'Lost password',
   reset: 'Password update',
-  activity: 'Activity',
+  activity: 'Tribeez',
   profile: 'Profile',
   members: 'Members',
   members_new: 'New member',
@@ -26,8 +26,21 @@ export default {
   polls: 'Polls',
   polls_new: 'New poll',
   polls_edit: 'Edit poll',
-  tribe: 'Tribe',
   tribe_new: 'New tribe',
+  tribe_edit: 'Tribe',
+
+  // slides
+  start: 'Tribeez',
+  end: 'You\'re all set!',
+  'start.description': 'The best way to sort your group life',
+  'bills.description': 'Easily split expenses between concerned members',
+  'events.description': 'Create and get notified of events to enjoy moments together',
+  'polls.description': 'Ask for opinions and quickly get answers',
+  'tasks.description': 'Assign them to get things done',
+  'notes.description': 'Share shopping lists and never forget that Wifi password again',
+  'end.description': 'Choose an option below to get started',
+  'slides.login': 'LOGIN',
+  'slides.register': 'CREATE ACCOUNT',
 
   // subtitles
   messenger_bot: 'Facebook Messenger Bot',
@@ -35,14 +48,22 @@ export default {
   title: 'Title',
 
   // tabs
-  'tab.activity': 'WHAT\'S UP',
-  'tab.history': 'HISTORY',
-  'tab.registered': 'REGISTERED',
-  'tab.invited': 'INVITED',
-  'tab.upcoming': 'UPCOMING',
-  'tab.past': 'PAST',
-  'tab.bills': 'LIST',
-  'tab.balances': 'BALANCES',
+  'tab.activity': 'What\'s up',
+  'tab.history': 'History',
+  'tab.registered': 'Registered',
+  'tab.invited': 'Invited',
+  'tab.upcoming': 'Upcoming',
+  'tab.past': 'Past',
+  'tab.bills': 'List',
+  'tab.balances': 'Balances',
+
+  // empty
+  'empty.bills': 'First expense?\nAdd it now!',
+  'empty.events': 'First event?\nAdd it now!',
+  'empty.tasks': 'First task?\nAdd it now!',
+  'empty.notes': 'First note?\nAdd it now!',
+  'empty.polls': 'First poll?\nAdd it now!',
+  'empty.invites': 'First invite?\nAdd it now!',
 
   // dates
   date: 'On {date, date, event}',
@@ -56,8 +77,8 @@ export default {
   cancel: 'Cancel',
   close: 'Close',
   delete_dialog: 'Do you really want to delete this {type}?',
-  vote_again: 'Vote again',
-  submit_vote: 'Submit vote',
+  vote_again: 'Change your vote',
+  submit_vote: 'Vote',
   return_home: 'Return to Activity',
   retry: 'Retry',
 
@@ -77,10 +98,12 @@ export default {
   'snack.invite_sent': 'Invite sent',
   'snack.invite_resent': 'Invite sent again',
   'snack.switched': 'Tribe changed',
+  'snack.joined': 'Welcome to the "{name}" tribe',
   'snack.new_member': '{author, select, _you_ {You} other {{author}}} joined the tribe',
   'snack.new_bill': '{author, select, _you_ {Expense created} other {{author} created the "{name}" expense}}',
   'snack.update_bill': '{author, select, _you_ {Expense updated} other {{author} updated the "{name}" expense}}',
   'snack.delete_bill': '{author, select, _you_ {Expense deleted} other {{author} deleted the "{name}" expense}}',
+  'snack.comment_bill': '{author, select, _you_ {Comment sent} other {{author} commented the "{name}" expense}}',
   'snack.note_created': 'Note created',
   'snack.note_updated': 'Note saved',
   'snack.notes_reordered': 'Notes reordered',
@@ -88,13 +111,16 @@ export default {
   'snack.new_event': '{author, select, _you_ {Event created} other {{author} created the "{name}" event}}',
   'snack.update_event': '{author, select, _you_ {Event updated} other {{author} updated the "{name}" event}}',
   'snack.delete_event': '{author, select, _you_ {Event deleted} other {{author} deleted the "{name}" event}}',
+  'snack.comment_event': '{author, select, _you_ {Comment sent} other {{author} commented the "{name}" event}}',
   'snack.new_poll': '{author, select, _you_ {Poll created} other {{author} created the "{name}" poll}}',
   'snack.update_poll': '{author, select, _you_ {Poll updated} other {{author} updated the "{name}" poll}}',
   'snack.delete_poll': '{author, select, _you_ {Poll deleted} other {{author} deleted the "{name}" poll}}',
+  'snack.comment_poll': '{author, select, _you_ {Comment sent} other {{author} commented the "{name}" poll}}',
   'snack.poll_updated': 'Poll updated',
   'snack.new_task': '{author, select, _you_ {Task created} other {{author} created the "{name}" task}}',
   'snack.update_task': '{author, select, _you_ {Task updated} other {{author} updated the "{name}" task}}',
   'snack.delete_task': '{author, select, _you_ {Task deleted} other {{author} deleted the "{name}" task}}',
+  'snack.comment_task': '{author, select, _you_ {Comment sent} other {{author} commented the "{name}" task}}',
   'snack.voted': 'Voted',
   'snack.task_done': 'Task marked as done',
   'snack.logout_success': 'You have been logged out',
@@ -105,9 +131,10 @@ export default {
   password_reset: 'Fill this form to receive a reset link via email',
   password_change: '{name}, please choose a new password',
   invited_you: '{name} invited you',
-  login_to_join: '{inviter_name} invited you to join "{tribe_name}"',
+  login_to_join: 'You are now part of the "{tribe_name}" tribe, following {inviter_name}\'s invitation',
   you: 'You',
   your_tribe: 'Your tribe',
+  create_account: 'Create account',
   password_lost: 'Lost your password?',
   no_account: 'No account yet?',
   register_now: 'Register now!',
@@ -142,7 +169,7 @@ export default {
   'field.currency': 'Currency',
   'error.currency': 'Please choose a currency',
   'field.tribe_type': 'Type',
-  'select.houseshare': 'Houseshare',
+  'select.flatshare': 'Flatshare',
   'select.family': 'Family',
   'select.friends': 'Friends',
   'select.organization': 'Organization',
@@ -189,7 +216,7 @@ export default {
   'select.1h': '1 hour before',
   'error.reminder': 'Invalid reminder',
   // task:
-  'field.wait': 'Waiting period (days before it can be done)',
+  'field.wait': 'Waiting period (days)',
   'error.wait': 'Invalid period',
   'field.task_users': 'Concerned members:',
   'error.no_users': 'You must choose at lease one concerned member',
@@ -215,12 +242,15 @@ export default {
   // Comment box:
   comment: 'Your comment...',
 
-  // Members
-  'add_member': 'Add a member',
-  'member_since': 'Member since {when, date}',
-  'invited_by': 'Invited by {user} {when}',
-
   // Activity
+  'activity.members': '{num, plural, one {New member} other {# new members}}',
+  'activity.polls': '{num, plural, one {Unanswered poll} other {# unanswered polls}}',
+  'activity.tasks': '{num, plural, one {Task to do} other {# tasks to do}}',
+  'activity.events': '{num, plural, one {Upcoming event} other {# upcoming events}}',
+  'activity.bills': '{num, plural, one {New bill} other {# new bills}}',
+  'activity.notes': '{num, plural, one {Modified note} other {# modified notes}}',
+
+  // History
   'entry.member.new': '{author, select, _you_ {You} other {{author}}} joined the tribe!',
   'entry.member.new.infos': 'Invited by {inviter}',
   'entry.bill.new': '{author, select, _you_ {You} other {{author}}} added an expense named "{name}" ({amount, number, money})',
@@ -236,7 +266,7 @@ export default {
   'entry.poll.new': '{author, select, _you_ {You} other {{author}}} added a poll named "{name}"',
   'entry.poll.update': '{author, select, _you_ {You} other {{author}}} modified the "{name}" poll',
   'entry.poll.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" poll',
-  'entry.pollcomment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" poll:',
+  'entry.poll.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" poll:',
   'entry.event.new': '{author, select, _you_ {You} other {{author}}} added an event named "{name}" starting {when, date}',
   'entry.event.update': '{author, select, _you_ {You} other {{author}}} modified the "{name}" event starting {when, date}',
   'entry.event.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" event starting {when, date}',
@@ -246,11 +276,18 @@ export default {
   'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.task.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" task:',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
-  telegram: 'Using Telegram? Chat with TribeezBot!   ',
+  //telegram: 'Using Telegram?\nChat with TribeezBot!',
+
+  // Members
+  'member_since': 'Member since {when, date}',
+  'invited_by': 'Invited by {user}',
 
   // Bills
   'bill.mypart': 'Your share is {amount, number, money}',
   'bill.nopart': 'You are not concerned',
+  paid_by: 'Paid by {user}',
+  paid_on: 'Paid on {when, date}',
+  parts: 'Shares',
 
   // Calendar
   'calendar.allDay': 'All day',
@@ -267,12 +304,19 @@ export default {
   last_done: 'Last done {ago}',
   never_done: 'Never done',
   mark_done: 'I just did it',
+  counters: 'Counters',
 
   // Notes
   'placeholder.title': 'title',
+  'notes.by': 'By {author}',
 
   // Polls
   poll_answers: '{num, plural, =0 {No answers} one {1 answer} other {# answers}}',
+  asked_by: '{author} asked',
+
+  //Details
+  created_by: 'Created by {author}',
+  log: 'History & comments',
 
   // Common error handling
   'error.request': 'Request error: please try again later',

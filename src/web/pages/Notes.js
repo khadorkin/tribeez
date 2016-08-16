@@ -14,13 +14,13 @@ import Note from '../components/Note'
 
 import styles from '../styles'
 
-import getNotes from '../../common/actions/getNotes'
+import listenNotes from '../../common/actions/listenNotes'
 import postNote from '../../common/actions/postNote'
 import moveNote from '../../common/actions/moveNote'
 import putNotes from '../../common/actions/putNotes'
 import deleteNote from '../../common/actions/deleteNote'
 
-import {MENU_WIDTH} from '../../common/constants/product'
+import {WEB_DRAWER_WIDTH} from '../../common/constants/product'
 
 class Notes extends Component {
   static propTypes = {
@@ -84,6 +84,7 @@ class Notes extends Component {
         this.props.postNote({
           title: '',
           content: '',
+          position: lastNote ? lastNote.position - 1 : 0,
         })
         this.autoCreated = true
       }
@@ -200,12 +201,12 @@ class Notes extends Component {
 const mapStateToProps = (state) => ({
   tid: state.tribe.id,
   notes: state.notes.items,
-  containerWidth: (state.app.width > 800 ? state.app.width - MENU_WIDTH : state.app.width),
+  containerWidth: (state.app.width > 800 ? state.app.width - WEB_DRAWER_WIDTH : state.app.width),
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getNotes.on,
-  unsubscribe: getNotes.off,
+  subscribe: listenNotes.on,
+  unsubscribe: listenNotes.off,
   postNote,
   moveNote,
   putNotes,

@@ -8,7 +8,7 @@ import TaskUser from './deep/TaskUser'
 
 import form from '../../common/forms/task'
 import focus from '../../common/utils/formFocus'
-import getItem from '../../common/actions/getItem'
+import listenItem from '../../common/actions/listenItem'
 import submitTask from '../../common/actions/submitTask'
 
 class TaskForm extends Component {
@@ -43,7 +43,7 @@ class TaskForm extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe('task', this.props.id)
+    this.props.unsubscribe()
   }
 
   handleSubmit(task) {
@@ -90,6 +90,6 @@ class TaskForm extends Component {
 }
 
 export default form(TaskForm, {
-  subscribe: getItem.on,
-  unsubscribe: getItem.off,
+  subscribe: listenItem.on,
+  unsubscribe: listenItem.off,
 })

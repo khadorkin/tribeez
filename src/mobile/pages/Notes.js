@@ -1,16 +1,17 @@
 import React, {Component, PropTypes} from 'react'
-import {View, StyleSheet, Platform, UIManager} from 'react-native'
+import {StyleSheet, Platform, UIManager} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import SortableListView from 'react-native-sortable-listview'
 
-//import AsyncContent from '../hoc/AsyncContent'
+import PageView from '../hoc/PageView'
 import Note from '../components/Note'
 import Fab from '../components/Fab'
+import Empty from '../components/Empty'
 
-import getNotes from '../../common/actions/getNotes'
+import listenNotes from '../../common/actions/listenNotes'
 import postNote from '../../common/actions/postNote'
 import moveNote from '../../common/actions/moveNote'
 import putNotes from '../../common/actions/putNotes'
@@ -65,10 +66,12 @@ class Notes extends Component {
   }
 
   handleFab() {
+    const lastNote = this.props.notes[0]
+
     this.props.postNote({
       title: '',
       content: '',
-      position: this.props.notes.length ? this.props.notes[0].position - 1 : 0,
+      position: lastNote ? lastNote.position - 1 : 0,
     })
   }
 
@@ -89,8 +92,9 @@ class Notes extends Component {
   render() {
     const {notes} = this.props
 
-    return (
-      <View style={styles.container}>
+    let content
+    if (notes.length) {
+      content = (
         <SortableListView
           ref={this.ref}
           style={styles.list}
@@ -99,8 +103,16 @@ class Notes extends Component {
           onRowMoved={this.handleMove}
           keyboardShouldPersistTaps={true}
         />
-        <Fab name="add" onPress={this.handleFab} />
-      </View>
+      )
+    } else {
+      content = <Empty name="notes" />
+    }
+
+    return (
+      <PageView>
+        {content}
+        <Fab name="add" onPress={this.handleFab} type="notes" />
+      </PageView>
     )
   }
 }
@@ -111,17 +123,14 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getNotes.on,
-  unsubscribe: getNotes.off,
+  subscribe: listenNotes.on,
+  unsubscribe: listenNotes.off,
   postNote,
   moveNote,
   putNotes,
 }, dispatch)
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   list: {
     //TODO: add 4px at the begining
     //TODO: add space at the end for FAB

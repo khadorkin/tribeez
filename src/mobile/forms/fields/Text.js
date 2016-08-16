@@ -1,25 +1,34 @@
 import React, {Component, PropTypes} from 'react'
-import {TextInput, StyleSheet, View} from 'react-native'
+import {StyleSheet, View, Text} from 'react-native'
+import {injectIntl, intlShape} from 'react-intl'
+
+import {MKTextField} from 'react-native-material-kit'
 
 import FormattedMessage from '../../components/FormattedMessage'
-import TextArea from '../../components/TextArea'
 
 import colors from '../../../common/constants/colors'
 
 class TextField extends Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     touched: PropTypes.bool.isRequired,
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     errorId: PropTypes.string,
+    currency: PropTypes.string,
     multiline: PropTypes.bool,
+    onChange: PropTypes.func,
   }
 
   constructor(props) {
     super(props)
+    this.state = {
+      height: null, // only used when props.multiline
+    }
     this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
+    this.handleContentSizeChange = this.handleContentSizeChange.bind(this)
   }
 
   ref(element) {
@@ -30,25 +39,43 @@ class TextField extends Component {
     this.element.focus()
   }
 
+  handleContentSizeChange(event) {
+    if (this.props.multiline) {
+      this.setState({
+        height: event.nativeEvent.contentSize.height + 24,
+      })
+    }
+  }
+
   render() {
-    const {name, value, touched, error, multiline, ...props} = this.props
-    let {errorId} = this.props
+    const {intl, name, value, touched, error, errorId, currency, ...props} = this.props
 
-    const Comp = multiline ? TextArea : TextInput
+    const errorMessage = touched && error && ('error.' + (errorId || name))
 
-    errorId = error && ('error.' + (errorId || name))
+    const currencyLabel = currency && (
+      <Text style={styles.currency}>{currency}</Text>
+    )
+
+    const fieldStyle = {}
+    if (this.state.height) {
+      fieldStyle.height = Math.max(54, this.state.height)
+    }
 
     return (
       <View style={styles.container}>
-        <FormattedMessage id={'field.' + name} style={styles.label} />
-        <Comp
-          ref={this.ref}
-          style={styles.field}
-          underlineColorAndroid={colors.underline}
+        <MKTextField ref={this.ref}
           value={String(value)}
+          placeholder={intl.formatMessage({id: 'field.' + name})}
+          floatingLabelEnabled={true}
+          highlightColor={colors.input} // Color of highlighted underline & floating label
+          style={fieldStyle} // must be set even if empty, otherwise the height of the fields is broken
+          textInputStyle={styles.input}
+          keyboardType={currency && 'numeric'}
           {...props}
+          onContentSizeChange={this.handleContentSizeChange}
         />
-        <FormattedMessage id={touched && errorId} style={styles.error} />
+        {currencyLabel}
+        <FormattedMessage id={errorMessage} style={styles.error} />
       </View>
     )
   }
@@ -56,18 +83,20 @@ class TextField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
+    marginHorizontal: 8,
   },
-  label: {
-    marginHorizontal: 5,
+  input: {
+    color: colors.text,
   },
-  field: {
-    height: 39,
+  currency: {
+    position: 'absolute',
+    top: 28,
+    right: 0,
   },
   error: {
     color: colors.error,
-    marginHorizontal: 5,
+    marginVertical: 8,
   },
 })
 
-export default TextField
+export default injectIntl(TextField, {withRef: true})

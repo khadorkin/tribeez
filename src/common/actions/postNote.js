@@ -1,25 +1,29 @@
-import {db, auth} from '../firebase'
+import {db, auth, timestamp} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export default (values) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
+
+    values.updated = timestamp
+    values.author = auth.currentUser.uid
+
     db.ref('tribes/' + auth.currentUser.tid + '/notes').push(values)
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'postNote'))
+      dispatch(report(error, 'postNote'))
     })
   }
 }

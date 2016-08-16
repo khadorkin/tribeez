@@ -1,35 +1,36 @@
 import React, {Component, PropTypes} from 'react'
-import {ActivityIndicator, StyleSheet, View} from 'react-native'
+import {ActivityIndicator, StyleSheet, View, Text, Linking} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
+import ScrollView from '../hoc/ScrollView'
 import FormattedMessage from '../components/FormattedMessage'
-import Fab from '../components/Fab'
+//import FormattedDate from '../components/FormattedDate'
+import FormattedNumber from '../components/FormattedNumber'
+import IconButton from '../components/IconButton'
+import Log from '../components/Log'
 
-import getItem from '../../common/actions/getItem'
+import listenItem from '../../common/actions/listenItem'
 
 import colors from '../../common/constants/colors'
-import router from '../../common/router'
 
 class Details extends Component {
   static propTypes = {
     // from parent component
     type: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
+    mapper: PropTypes.func.isRequired,
+    renderBody: PropTypes.func,
+    // from redux:
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.string,
     item: PropTypes.object,
-    children: PropTypes.node,
-    editRoute: PropTypes.object,
+    userMap: PropTypes.object.isRequired,
+    uid: PropTypes.string,
     // action creators:
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
-  }
-
-  constructor(props) {
-    super(props)
-    this.handleFab = this.handleFab.bind(this)
   }
 
   componentDidMount() {
@@ -37,43 +38,79 @@ class Details extends Component {
   }
 
   componentWillUnmount() {
-    this.props.unsubscribe(this.props.type, this.props.id)
+    this.props.unsubscribe()
   }
 
-  handleFab() {
-    const route = this.props.editRoute
-    route.edit = this.props.item
-    router.push(route)
+  handlePress(url) {
+    Linking.openURL(url)
   }
 
   render() {
-    const {loading, error, item, children, editRoute} = this.props
+    const {type, loading, error, userMap, uid, item, mapper, renderBody} = this.props
 
-    if (loading) { //TODO: separate cases or remove loading check?
-      return (
-        <View style={styles.empty}>
-          <ActivityIndicator size="large" color={colors.main} />
-        </View>
-      )
-    }
+    let content
+    let body
+    let log
 
-    if (error) {
-      return (
-        <View style={styles.empty}>
-          <FormattedMessage id={'error.' + error} style={styles.error} />
-        </View>
-      )
-    }
+    if (item) {
+      content = mapper(item, userMap)
+        .filter((info) => item[info.id])
+        .map((info, index) => {
+          const style = (index === 0) ? styles.title : styles.text
 
-    if (!item) { // should only happen on Firebase error
-      return null
+          let element
+          if (info.message) {
+            element = <FormattedMessage style={style} id={info.message} values={info.values} />
+          } else if (info.money) {
+            element = <FormattedNumber style={style} value={info.money} format="money" />
+          } else {
+            element = <Text style={style}>{info.text}</Text>
+          }
+
+          const onPress = info.url && this.handlePress.bind(this, info.url)
+
+          return (
+            <IconButton key={info.id}
+              name={info.icon}
+              color={colors[type + 's']}
+              separator={true}
+              onPress={onPress}
+              style={styles.button}
+            >
+              {element}
+            </IconButton>
+          )
+        })
+
+      if (renderBody) {
+        body = renderBody(item, userMap, uid)
+      }
+
+      log = <Log type={type} item={item} />
+    } else {
+      if (loading) {
+        content = (
+          <View style={styles.empty}>
+            <ActivityIndicator size="large" color={colors.main} />
+          </View>
+        )
+      }
+
+      if (error) {
+        content = (
+          <View style={styles.empty}>
+            <FormattedMessage id={'error.' + error} style={styles.error} />
+          </View>
+        )
+      }
     }
 
     return (
-      <View style={styles.container}>
-        {children}
-        {editRoute && <Fab name="edit" onPress={this.handleFab} />}
-      </View>
+      <ScrollView>
+        {content}
+        {body}
+        {log}
+      </ScrollView>
     )
   }
 }
@@ -89,21 +126,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 32,
   },
-  container: {
-    paddingTop: 4,
-    backgroundColor: 'white',
-    flex: 1,
+  title: {
+    color: colors.primaryText,
+    fontSize: 20,
+  },
+  text: {
+    color: colors.primaryText,
+    fontSize: 16,
+  },
+  button: {
+    paddingHorizontal: 16,
   },
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
   loading: state.app.loading > 0,
   error: state.item.error,
+  item: state.item[props.type],
+  userMap: state.tribe.userMap,
+  uid: state.user.uid,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  subscribe: getItem.on,
-  unsubscribe: getItem.off,
+  subscribe: listenItem.on,
+  unsubscribe: listenItem.off,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Details)

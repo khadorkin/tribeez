@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {FormattedMessage, FormattedRelative} from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 
 import {Card, CardHeader} from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
@@ -34,8 +34,7 @@ class Invite extends Component {
       return null
     }
 
-    const when = <FormattedRelative value={invite.invited} />
-    const subtitle = <FormattedMessage id="invited_by" values={{user: inviter.name, when}} />
+    const subtitle = <FormattedMessage id="invited_by" values={{user: inviter.name}} />
 
     //TODO: link to detailed view
     return (

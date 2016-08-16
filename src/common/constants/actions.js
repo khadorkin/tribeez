@@ -5,15 +5,17 @@ export const RESIZE = 'RESIZE'
 export const SNACK_MESSAGE = 'SNACK_MESSAGE'
 export const CLOSE_SNACK = 'CLOSE_SNACK'
 export const UPDATE_LANG = 'UPDATE_LANG'
+export const ALERT = 'ALERT'
+export const CLOSE_ALERT = 'CLOSE_ALERT'
+export const CONFIG = 'CONFIG'
 
 // Firebase events:
 export const LOGGED_IN = 'LOGGED_IN'
 export const LOGGED_OUT = 'LOGGED_OUT'
 
-export const FIREBASE_REQUEST = 'FIREBASE_REQUEST'
-export const FIREBASE_SUCCESS = 'FIREBASE_SUCCESS'
-export const FIREBASE_FAILURE = 'FIREBASE_FAILURE'
-export const API_FAILURE = 'API_FAILURE'
+export const REQUEST = 'REQUEST'
+export const SUCCESS = 'SUCCESS'
+export const FAILURE = 'FAILURE'
 
 export const TRIBE_UPDATED = 'TRIBE_UPDATED'
 export const USER_UPDATED = 'USER_UPDATED'
@@ -23,10 +25,18 @@ export const MEMBERS_REMOVED = 'MEMBERS_REMOVED'
 
 export const UNREAD = 'UNREAD'
 
+export const ACTIVITY = 'ACTIVITY'
+export const ACTIVITY_ADDED = 'ACTIVITY_ADDED'
+export const ACTIVITY_CHANGED = 'ACTIVITY_CHANGED'
+export const ACTIVITY_REMOVED = 'ACTIVITY_REMOVED'
+export const ACTIVITY_CLEAR = 'ACTIVITY_CLEAR'
+export const ACTIVITY_LOADED = 'ACTIVITY_LOADED'
+
 
 // other events:
 
 export const LOGIN_DESTINATION = 'LOGIN_DESTINATION'
+export const LOGIN_EMAIL = 'LOGIN_EMAIL'
 
 export const PASSWORD_SUCCESS = 'PASSWORD_SUCCESS'
 
@@ -39,9 +49,7 @@ export const MOVE_NOTE = 'MOVE_NOTE'
 
 export const ITEM = 'ITEM'
 export const UPDATE_COMMENT_TEXT = 'UPDATE_COMMENT_TEXT'
-export const COMMENT_REQUEST = 'COMMENT_REQUEST'
-export const COMMENT_SUCCESS = 'COMMENT_SUCCESS'
-export const COMMENT_FAILURE = 'COMMENT_FAILURE'
+export const ITEM_CLEAR = 'ITEM_CLEAR'
 
 
 //TODO: refacto:

@@ -1,24 +1,25 @@
 export default (poll, userMap) => {
-  const namesByOption = {}
+  const usersByOption = {}
 
   let total_users_answered = 0
   for (const uid in poll.answers) {
-    poll.answers[uid].forEach((option_id) => {
-      if (!namesByOption[option_id]) {
-        namesByOption[option_id] = []
+    const user_answers = poll.answers[uid]
+    for (const option_id in user_answers) {
+      if (!usersByOption[option_id]) {
+        usersByOption[option_id] = []
       }
-      namesByOption[option_id].push(userMap[uid].name)
-    })
+      usersByOption[option_id].push(userMap[uid])
+    }
     total_users_answered++
   }
 
   const results = poll.options.map((name, id) => {
-    const names = namesByOption[id] || []
+    const users = usersByOption[id] || []
     return {
       id,
       name,
-      users: names,
-      percent: Math.round((100 * names.length / total_users_answered) || 0),
+      users,
+      percent: Math.round((100 * users.length / total_users_answered) || 0),
     }
   })
   .sort((a, b) => {

@@ -1,16 +1,16 @@
 import {db, auth} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
 export default (id, choices) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/polls/' + id).transaction((poll) => {
       if (!poll.answers) {
@@ -21,11 +21,11 @@ export default (id, choices) => {
     })
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'postVote'))
+      dispatch(report(error, 'postVote'))
     })
   }
 }

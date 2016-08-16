@@ -7,13 +7,12 @@ const mapStateToProps = (state, ownProps) => {
   const poll = state.item.poll || ownProps.current // first from routing state if any, then from ajax retrieval
   let initialValues
   if (poll) {
-    poll.options.push('') // update poll => add an empty option to be able to add options
     initialValues = {
       id: poll.id,
       name: poll.name,
       description: poll.description || '',
       multiple: Boolean(poll.multiple),
-      options: poll.options,
+      options: poll.options.concat(''), // update poll => add an empty option to be able to add options
       added: poll.added,
       author: poll.author,
     }

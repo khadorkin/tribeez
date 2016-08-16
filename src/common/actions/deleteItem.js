@@ -1,19 +1,19 @@
 import {db, auth, timestamp} from '../firebase'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
-import {getTimeId} from '../utils/utils'
+import report from './error'
+import {reminderTimeId} from '../utils/time'
 
 export default (type, id) => {
   return (dispatch) => {
     const tid = auth.currentUser.tid
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     let updatedMembers
     let item
@@ -39,7 +39,7 @@ export default (type, id) => {
         })
       }
       if (type === 'event' && item.reminder !== 'none') {
-        return db.ref('reminders/event/' + getTimeId(item.start, item.reminder) + '/' + id).remove()
+        return db.ref('reminders/event/' + reminderTimeId(item.start, item.reminder) + '/' + id).remove()
       }
       if (type === 'poll' || type === 'task') {
         return db.ref('reminders/' + type + '/' + id).remove()
@@ -77,11 +77,11 @@ export default (type, id) => {
     })
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'deleteItem/' + type))
+      dispatch(report(error, 'deleteItem/' + type))
       dispatch({
         type: SNACK_MESSAGE,
         message: 'error',

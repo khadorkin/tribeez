@@ -1,83 +1,101 @@
 import React, {Component, PropTypes} from 'react'
-import {ScrollView, Text, StyleSheet} from 'react-native'
-
-import {connect} from 'react-redux'
+import {View, Text, StyleSheet} from 'react-native'
 
 import Details from '../hoc/Details'
+import FormattedMessage from '../components/FormattedMessage'
 import FormattedNumber from '../components/FormattedNumber'
-import FormattedDate from '../components/FormattedDate'
-import Log from '../components/Log'
+import Avatar from '../components/Avatar'
 
-import routes from '../../common/routes'
+import colors from '../../common/constants/colors'
 
 class BillDetails extends Component {
   static propTypes = {
     // from parent:
     id: PropTypes.string.isRequired,
-    // from redux:
-    bill: PropTypes.object,
-    userMap: PropTypes.object.isRequired,
   }
 
-  constructor(props) {
-    super(props)
-    this.renderItem = this.renderItem.bind(this)
+  mapper(bill, userMap) {
+    return [
+      {
+        id: 'amount',
+        icon: 'local-atm',
+        money: bill.amount,
+      },
+      {
+        id: 'description',
+        icon: 'description',
+        text: bill.description,
+      },
+      {
+        id: 'payer',
+        icon: 'person',
+        message: 'paid_by',
+        values: {user: userMap[bill.payer].name},
+      },
+      {
+        id: 'paid',
+        icon: 'schedule',
+        message: 'paid_on',
+        values: {when: bill.paid},
+      },
+    ]
   }
 
-  renderItem() {
-    const {bill, userMap} = this.props
-
-    const payer = userMap[bill.payer]
-
-    //TODO: UI
-
+  renderBody(bill, userMap) {
     return (
-      <ScrollView>
-        <FormattedNumber value={bill.amount} style={styles.info} format="money" />
-        <FormattedDate value={bill.paid} style={styles.info} />
-        <Text style={styles.info}>Paid by {payer.name}</Text>
-        <Text style={styles.info}>{bill.description}</Text>
+      <View style={styles.body}>
+        <FormattedMessage id="parts" style={styles.title} />
         {
-          Object.keys(bill.parts).map((uid) => {
-            const part_user = userMap[uid]
-            const part_amount = <FormattedNumber value={bill.parts[uid]} format="money" />
+          Object.keys(bill.parts).map((id) => {
+            const user = userMap[id]
 
             return (
-              <Text style={styles.info} key={uid}>
-                {part_user.name}: {part_amount}
-              </Text>
+              <View style={styles.part} key={id}>
+                <Avatar user={user} />
+                <Text style={styles.name}>{user.name}</Text>
+                <FormattedNumber value={bill.parts[id]} format="money" style={styles.amount} />
+              </View>
             )
           })
         }
-        <Log type="bill" item={bill} />
-      </ScrollView>
+      </View>
     )
   }
 
   render() {
     return (
-      <Details type="bill"
-        id={this.props.id}
-        item={this.props.bill}
-        editRoute={routes.BILLS_EDIT}
-      >
-        {this.props.bill && this.renderItem()}
-      </Details>
+      <Details type="bill" id={this.props.id} mapper={this.mapper} renderBody={this.renderBody} />
     )
   }
 }
 
 const styles = StyleSheet.create({
-  info: {
-    margin: 10,
+  body: {
+    margin: 16,
+    borderTopWidth: 1,
+    borderTopColor: colors.underline,
+  },
+  title: {
+    color: colors.primaryText,
+    fontSize: 20,
+    marginTop: 24,
+    marginBottom: 16,
+  },
+  part: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  name: {
+    flex: 1,
+    color: colors.primaryText,
+    fontSize: 16,
+    marginLeft: 24,
+  },
+  amount: {
+    color: colors.bills,
+    fontSize: 16,
   },
 })
 
-const mapStateToProps = (state) => ({
-  // for <Details> HoC:
-  bill: state.item.bill,
-  // for this component:
-  userMap: state.tribe.userMap,
-})
-
-export default connect(mapStateToProps)(BillDetails)
+export default BillDetails

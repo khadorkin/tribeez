@@ -17,14 +17,14 @@ import LangIcon from 'material-ui/svg-icons/action/language'
 import CircularProgress from 'material-ui/CircularProgress'
 import WarnIcon from 'material-ui/svg-icons/alert/warning'
 import Snackbar from 'material-ui/Snackbar'
-import TelegramIcon from './resources/telegram-icon'
-import MessengerIcon from './resources/messenger-icon'
+// import TelegramIcon from './resources/telegram-icon'
+// import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
 
 import DrawerContent from './components/DrawerContent'
 
 import config from '../common/config'
-import {MENU_WIDTH, FB_LOCALES} from '../common/constants/product'
+import {WEB_DRAWER_WIDTH, FB_LOCALES} from '../common/constants/product'
 import routes from './routes'
 import scriptLoader from './utils/scriptLoader'
 import langs from '../common/resources/langs'
@@ -40,6 +40,9 @@ class App extends Component {
   static propTypes = {
     // from router:
     location: PropTypes.object.isRequired,
+    // from react-router:
+    children: PropTypes.node.isRequired,
+    params: PropTypes.object.isRequired,
     // from redux:
     uid: PropTypes.string,
     bot_token: PropTypes.string,
@@ -59,9 +62,6 @@ class App extends Component {
     closeSnack: PropTypes.func.isRequired,
     updateLang: PropTypes.func.isRequired,
     resize: PropTypes.func.isRequired,
-    // from react-router:
-    children: PropTypes.node.isRequired,
-    params: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -87,7 +87,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.autoLogin()
+    if (!this.props.params.token) { // no autoLogin if fetching an invite
+      this.props.autoLogin()
+    }
+
     window.onresize = this.props.resize
   }
 
@@ -166,7 +169,7 @@ class App extends Component {
         iconLeft = <IconButton containerElement={<Link to={routes.WELCOME} />}><HomeIcon /></IconButton>
       }
       iconRight = <FlatButton label={<FormattedMessage id="login" />} containerElement={<Link to={routes.LOGIN} />} style={{textAlign: 'center'}} />
-    } else {
+    }/* else {
       iconRight = (
         <div>
           <IconButton onTouchTap={this.handleMessenger}>
@@ -177,7 +180,7 @@ class App extends Component {
           </IconButton>
         </div>
       )
-    }
+    }*/
     if (this.props.error) {
       iconRight = (
         <IconButton onTouchTap={() => alert(this.props.error)}>
@@ -196,7 +199,7 @@ class App extends Component {
         onRequestChange={this.handleNavToggle}
         style={{overflow: 'hidden'}}
         overlayStyle={{cursor: 'w-resize'}}
-        width={MENU_WIDTH}
+        width={WEB_DRAWER_WIDTH}
       >
         <DrawerContent module={pathname.split('/')[1]} />
       </Drawer>
@@ -208,8 +211,11 @@ class App extends Component {
     const page_id = path_parts.join('_') // e.g. "/members/new" => "members_new"
     const title = page_id && <FormattedMessage id={page_id} />
 
-    const snack_author = this.props.userMap[snack.author]
-    const snack_author_name = snack_author && (snack.author === uid ? '_you_' : snack_author.name)
+    let snack_author_name
+    if (snack.author) {
+      const snack_author = this.props.userMap[snack.author]
+      snack_author_name = (snack.author === uid ? '_you_' : snack_author.name)
+    }
 
     const dialogActions = [
       <FlatButton
@@ -221,7 +227,7 @@ class App extends Component {
 
     return (
       <IntlProvider locale={lang} messages={this.props.messages} formats={this.props.formats}>
-        <div className="app" style={{marginLeft: dockedUserMenu ? MENU_WIDTH : 0}}>
+        <div className="app" style={{marginLeft: dockedUserMenu ? WEB_DRAWER_WIDTH : 0}}>
           {nav}
           <AppBar title={title} zDepth={0}
             iconElementLeft={iconLeft} iconElementRight={iconRight}
@@ -237,7 +243,7 @@ class App extends Component {
             open={this.state.messengerDialog}
             onRequestClose={this.handleDialogClose}
           >
-            <div ref={this.messengerMounted}></div>
+            <div ref={this.messengerMounted} />
           </Dialog>
 
           <Snackbar

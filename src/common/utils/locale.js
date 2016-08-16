@@ -1,6 +1,8 @@
+import moment from 'moment'
+
 import {map as langs} from '../resources/langs'
 
-import moment from 'moment'
+const browserLang = (navigator.language || navigator.userLanguage || 'en').substr(0, 2).toLowerCase()
 
 export const getLang = () => {
   let lang
@@ -8,7 +10,7 @@ export const getLang = () => {
     lang = localStorage.getItem('lang')
   }
   if (!lang) {
-    lang = (navigator.language || navigator.userLanguage || 'en').substr(0, 2).toLowerCase()
+    lang = browserLang
   }
   if (!langs[lang]) {
     lang = 'en'

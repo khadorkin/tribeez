@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
+import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
@@ -27,23 +28,25 @@ class TribeForm extends Component {
     const {fields: {tribe_name, tribe_type, city, currency}, ...props} = this.props
 
     return (
-      <Form name={'tribe.' + this.props.type} action={submitTribe} {...props}>
-        <TextField
-          {...tribe_name}
-          autoCorrect={false}
-        />
-        <SelectField
-          {...tribe_type}
-          items={types}
-        />
-        <CityField
-          {...city}
-        />
-        <SelectField
-          {...currency}
-          items={currencies}
-        />
-      </Form>
+      <ScrollView>
+        <Form name={'tribe.' + this.props.type} action={submitTribe} {...props}>
+          <TextField
+            {...tribe_name}
+            autoCorrect={false}
+          />
+          <SelectField
+            {...tribe_type}
+            items={types}
+          />
+          <CityField
+            {...city}
+          />
+          <SelectField
+            {...currency}
+            items={currencies}
+          />
+        </Form>
+      </ScrollView>
     )
   }
 }

@@ -7,7 +7,11 @@ import TabButton from 'react-native-scrollable-tab-view/Button'
 
 import colors from '../../common/constants/colors'
 
+const UNDERLINE_MARGIN = 20
+
 class TabBar extends Component {
+  static height = 50
+
   static propTypes = {
     intl: intlShape.isRequired,
     goToPage: PropTypes.func,
@@ -24,9 +28,8 @@ class TabBar extends Component {
   }
 
   renderTabOption(id, index) {
-    const isTabActive = this.props.activeTab === index
-    const color = isTabActive ? 'white' : 'white'
-    const fontWeight = isTabActive ? 'bold' : 'normal'
+    const isActive = this.props.activeTab === index
+    const fontWeight = isActive ? 'bold' : 'normal'
     const name = this.props.intl.formatMessage({id})
     const badge = this.props.badges[index]
 
@@ -40,7 +43,6 @@ class TabBar extends Component {
 
     return (
       <TabButton
-        style={{flex: 1}}
         key={id}
         accessible={true}
         accessibilityLabel={name}
@@ -48,7 +50,7 @@ class TabBar extends Component {
         onPress={() => this.props.goToPage(index)}
       >
         <View style={styles.tab}>
-          <Text style={{color, fontWeight}}>
+          <Text style={[styles.text, {fontWeight}]}>
             {name}
           </Text>
           {badgeNode}
@@ -60,17 +62,19 @@ class TabBar extends Component {
   render() {
     const containerWidth = this.props.containerWidth
     const numberOfTabs = this.props.tabs.length
+    const width = containerWidth / numberOfTabs - (UNDERLINE_MARGIN * 2)
 
     const tabUnderlineStyle = {
       position: 'absolute',
-      width: containerWidth / numberOfTabs,
-      height: 4,
+      width,
+      height: 6,
       backgroundColor: 'white',
       bottom: 0,
+      marginLeft: UNDERLINE_MARGIN,
     }
 
     const left = this.props.scrollValue.interpolate({
-      inputRange: [0, 1], outputRange: [0, containerWidth / numberOfTabs],
+      inputRange: [0, 1], outputRange: [0, width + (UNDERLINE_MARGIN * 2)],
     })
 
     return (
@@ -84,15 +88,9 @@ class TabBar extends Component {
 
 const styles = StyleSheet.create({
   tabs: {
-    height: 50,
+    height: TabBar.height,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderBottomColor: '#ccc',
-    backgroundColor: colors.main,
   },
   tab: {
     flex: 1,
@@ -101,6 +99,10 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'row',
   },
+  text: {
+    color: colors.lightText,
+    fontSize: 18,
+  },
   badge: {
     backgroundColor: colors.error,
     borderRadius: 10,
@@ -108,9 +110,13 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   badgeText: {
-    color: 'white',
+    color: colors.lightText,
     fontSize: 12,
   },
 })
 
-export default injectIntl(TabBar)
+// transfer static prop:
+const component = injectIntl(TabBar)
+component.height = TabBar.height
+
+export default component

@@ -1,10 +1,10 @@
 import config from '../config'
-
+/*
 // when the API is HTTPS but the App is HTTP, redirect to the HTTPS version of the App:
 if (config.api_endpoint.indexOf('https') === 0 && window.location && location.protocol !== 'https:') {
   location.protocol = 'https:' // changing the protocol acts as a redirect
 }
-
+*/
 export const buildQuery = (params) => {
   const arr = []
   for (const key in params) {

@@ -1,10 +1,12 @@
 import md5 from 'md5'
 
 import {auth, db, timestamp} from '../firebase'
-import {rand} from '../utils/utils'
+import {rand} from '../utils/text'
 import {login} from './auth'
 
-import {firebaseError} from './error'
+import {SNACK_MESSAGE} from '../constants/actions'
+
+import report from './error'
 
 export default (invite, values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -82,14 +84,19 @@ export default (invite, values, dispatch) => {
           ])
         })
         .catch(() => {
-          dispatch(firebaseError(error, 'submitJoin/rollback'))
+          dispatch(report(error, 'submitJoin/rollback'))
         })
-        dispatch(firebaseError(error, 'submitJoin/' + errorOrigin))
+        dispatch(report(error, 'submitJoin/' + errorOrigin))
         return Promise.reject()
       })
       .then(() => {
         resolve()
         dispatch(login(user))
+        dispatch({
+          type: SNACK_MESSAGE,
+          message: 'joined',
+          name: invite.tribe_name,
+        })
       })
       .catch(() => { // either from a firebase fail or from a login dispatch fail
         reject({_error: 'request'})
@@ -108,7 +115,7 @@ export default (invite, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          dispatch(firebaseError(error, 'submitJoin/createUser'))
+          dispatch(report(error, 'submitJoin/createUser'))
       }
     })
   })

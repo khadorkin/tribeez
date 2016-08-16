@@ -2,19 +2,19 @@ import {db, auth, timestamp} from '../firebase'
 import api from '../utils/api'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError, apiError} from './error'
+import report from './error'
 
 const origin = 'postInvite'
 
 export default (invite) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/invites/' + invite.id).transaction((current) => {
       if (current) {
@@ -37,7 +37,7 @@ export default (invite) => {
           throw response.error
         }
         dispatch({
-          type: FIREBASE_SUCCESS,
+          type: SUCCESS,
         })
         dispatch({
           type: SNACK_MESSAGE,
@@ -45,11 +45,11 @@ export default (invite) => {
         })
       })
       .catch((error) => {
-        dispatch(apiError(error, origin))
+        dispatch(report(error, origin, 'api'))
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, origin))
+      dispatch(report(error, origin))
     })
   }
 }

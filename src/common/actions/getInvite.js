@@ -1,59 +1,49 @@
 import router from '../router'
 import routes from '../routes'
 
-import {db} from '../firebase'
+import api from '../utils/api'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   GET_INVITE_SUCCESS,
+  SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
+import autoLogin from './autoLogin'
 
 export default (tribe, token) => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
 
-    db.ref('tribes/' + tribe + '/invites/' + token).once('value')
-    .then((snapshot) => {
-      const invite = snapshot.val()
+    api.get('invite', {tribe, token})
+    .then((invite) => {
+      dispatch({
+        type: SUCCESS,
+      })
       if (invite) {
-        Promise.all([
-          db.ref('tribes/' + tribe + '/infos/name').once('value'),
-          db.ref('tribes/' + tribe + '/members/' + invite.inviter + '/name').once('value'),
-        ]).then((snapshots) => {
-          if (snapshots[0] && snapshots[1]) {
-            invite.tribe = tribe
-            invite.tribe_name = snapshots[0].val()
-            invite.inviter_name = snapshots[1].val()
-            dispatch({
-              type: GET_INVITE_SUCCESS,
-              data: invite,
-            })
-            dispatch({
-              type: FIREBASE_SUCCESS,
-            })
-            //TODO:
-            // if (response.redirect === 'login') {
-            //   router.resetTo(routes.LOGIN, dispatch)
-            // } else if (response.redirect === 'home') {
-            //   router.resetTo(routes.ACTIVITY, dispatch)
-            // }
-          } else {
-            dispatch(firebaseError('not_found', 'getInvite/infos'))
-            router.resetTo(routes.LOGIN, dispatch)
-          }
+        dispatch({
+          type: GET_INVITE_SUCCESS,
+          data: invite,
         })
+        if (invite.converted) { // the invite just got converted into a membership => log the user in
+          router.resetTo(routes.LOGIN, dispatch)
+          dispatch(autoLogin())
+          dispatch({
+            type: SNACK_MESSAGE,
+            message: 'joined',
+            name: invite.tribe_name,
+          })
+        }
       } else {
-        dispatch(firebaseError('not_found', 'getInvite/token'))
-        router.resetTo(routes.LOGIN, dispatch)
+        router.resetTo(routes.WELCOME, dispatch)
       }
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'getInvite'))
+      dispatch(report(error, 'getInvite', 'api'))
     })
   }
 }

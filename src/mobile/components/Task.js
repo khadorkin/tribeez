@@ -1,15 +1,14 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
+import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
-import Touchable from './Touchable'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
 
 class Task extends Component {
   static propTypes = {
@@ -28,7 +27,10 @@ class Task extends Component {
 
   handlePress() {
     const route = routes.TASK
-    route.item = this.props.task
+    route.props = {
+      id: this.props.task.id,
+    }
+    route.title = this.props.task.name
     router.push(route)
   }
 
@@ -49,18 +51,10 @@ class Task extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <Touchable onPress={this.handlePress} style={styles.main}>
-          <Image
-            source={{uri: gravatar(author)}}
-            style={styles.avatar}
-          />
-          <View style={styles.titles}>
-            <Text style={styles.title}>{task.name}</Text>
-            <Text style={styles.subtitle}>{subtitle}</Text>
-          </View>
-        </Touchable>
-      </View>
+      <ListItem user={author} onPress={this.handlePress}>
+        <Text style={styles.title}>{task.name}</Text>
+        <Text style={styles.subtitle}>{subtitle}</Text>
+      </ListItem>
     )
   }
 }
@@ -72,29 +66,14 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    marginVertical: 5,
-    elevation: 1,
-  },
-  main: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
-    color: colors.primaryText,
+    color: colors.tasks,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 8,
   },
 })
 

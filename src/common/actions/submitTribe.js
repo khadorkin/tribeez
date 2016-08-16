@@ -5,8 +5,7 @@ import {SNACK_MESSAGE} from '../constants/actions'
 import router from '../router'
 import routes from '../routes'
 
-import getMember from './getMember'
-import {firebaseError} from './error'
+import report from './error'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -52,7 +51,7 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: 'request'})
-        dispatch(firebaseError(error, 'submitTribe/edit'))
+        dispatch(report(error, 'submitTribe/edit'))
       })
 
     // CREATE NEW TRIBE:
@@ -109,8 +108,6 @@ export default (values, dispatch) => {
         })
       })
       .then(() => {
-        dispatch(getMember.off())
-        dispatch(getMember.on(uid))
         resolve()
         router.resetTo(routes.ACTIVITY, dispatch)
         dispatch({
@@ -120,7 +117,7 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: 'request'})
-        dispatch(firebaseError(error, 'submitTribe/new'))
+        dispatch(report(error, 'submitTribe/new'))
       })
     }
   })

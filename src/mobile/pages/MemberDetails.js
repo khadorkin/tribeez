@@ -1,23 +1,17 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, ScrollView, Linking, StyleSheet} from 'react-native'
+import {Text, Linking, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
-import Icon from 'react-native-vector-icons/MaterialIcons'
-
+import ScrollView from '../hoc/ScrollView'
+import FormattedMessage from '../components/FormattedMessage'
 import FormattedDate from '../components/FormattedDate'
-import Touchable from '../components/Touchable'
+import IconButton from '../components/IconButton'
+import Avatar from '../components/Avatar'
 
 import colors from '../../common/constants/colors'
-
-import getUser from '../../common/actions/getUser'
-
-const infos = [
-  {id: 'email', icon: 'email', href: 'mailto:'},
-  {id: 'phone', icon: 'call', href: 'tel:'},
-  {id: 'birthdate', icon: 'cake'},
-]
+import listenMember from '../../common/actions/listenMember'
 
 class MemberDetails extends Component {
   static propTypes = {
@@ -26,13 +20,16 @@ class MemberDetails extends Component {
     // from redux:
     user: PropTypes.object.isRequired,
     // action creators:
-    getUser: PropTypes.func.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    unsubscribe: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    if (!this.props.user.email) {
-      this.props.getUser(this.props.id)
-    }
+    this.props.subscribe(this.props.id)
+  }
+
+  componentWillUnmount() {
+    this.props.unsubscribe()
   }
 
   handlePress(url) {
@@ -42,52 +39,65 @@ class MemberDetails extends Component {
   render() {
     const {user} = this.props
 
-    //TODO: UI
+    const infos = [
+      {
+        id: 'joined',
+        icon: 'schedule',
+        element: <FormattedMessage id="member_since" values={{when: user.joined}} style={styles.text} />,
+      },
+      {
+        id: 'email',
+        icon: 'email',
+        handlePress: this.handlePress.bind(this, 'mailto:' + user.email),
+        element: <Text style={styles.text}>{user.email}</Text>,
+      },
+      {
+        id: 'phone',
+        icon: 'call',
+        handlePress: this.handlePress.bind(this, 'tel:' + user.phone),
+        element: <Text style={styles.text}>{user.phone}</Text>,
+      },
+      {
+        id: 'birthdate',
+        icon: 'cake',
+        element: <FormattedDate value={user.birthdate} options={{day: 'numeric', month: 'long', year: 'numeric'}} style={styles.text} />,
+      },
+    ]
 
     return (
-      <View style={styles.container}>
-        <ScrollView>
-          {
-            infos
-              .filter((info) => user[info.id])
-              .map((info) => {
-                const value = user[info.id]
-
-                const handlePress = info.href && this.handlePress.bind(this, info.href + value)
-
-                let element
-                if (info.id === 'birthdate') {
-                  element = <FormattedDate value={value} options={{day: 'numeric', month: 'long', year: 'numeric'}} /*day="numeric" month="long"*/ />
-                } else {
-                  element = <Text>{value}</Text>
-                }
-
-                return (
-                  <Touchable onPress={handlePress} style={styles.info} key={info.id}>
-                    <Icon name={info.icon} color={colors.icon} size={24} style={styles.icon} />
-                    {element}
-                  </Touchable>
-                )
-              })
-          }
-        </ScrollView>
-      </View>
+      <ScrollView>
+        <Avatar user={user} size={160} style={styles.avatar} />
+        {
+          infos
+            .filter((info) => user[info.id])
+            .map((info) => (
+              <IconButton key={info.id}
+                name={info.icon}
+                color={colors.members}
+                separator={true}
+                onPress={info.handlePress}
+                style={styles.button}
+              >
+                {info.element}
+              </IconButton>
+            ))
+        }
+      </ScrollView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 4,
-    backgroundColor: 'white',
-    flex: 1,
+  avatar: {
+    alignSelf: 'center',
+    margin: 32,
   },
-  info: {
-    flexDirection: 'row',
-    padding: 10,
+  text: {
+    color: colors.primaryText,
+    fontSize: 16,
   },
-  icon: {
-    marginRight: 10,
+  button: {
+    paddingHorizontal: 16,
   },
 })
 
@@ -96,7 +106,8 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  getUser,
+  subscribe: listenMember.on,
+  unsubscribe: listenMember.off,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MemberDetails)

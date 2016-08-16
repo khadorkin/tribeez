@@ -27,6 +27,7 @@ import styles from '../styles'
 import routes from '../routes'
 
 import {db} from '../../common/firebase'
+import {getTimestamp} from '../../common/utils/time'
 
 import deleteItem from '../../common/actions/deleteItem'
 import newEvent from '../../common/actions/newEvent'
@@ -235,27 +236,24 @@ class Events extends Component {
         >
           <List>
             {
-              infos.filter((info) => event[info.id]) // remove undefined infos
-                   .map((info) => {
-                     let value = event[info.id]
-                     if (info.date) {
-                       const date = new Date(value)
-                       let suffix = ''
-                       if (date.getHours() !== 0 || date.getMinutes() !== 0) {
-                         suffix = 'time'
-                       }
-                       value = <FormattedMessage id={'date' + suffix} values={{date}} />
-                     }
-                     let href = null
-                     if (info.link) {
-                       href = value
-                       value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
-                     }
-                     if (info.map) {
-                       href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
-                     }
-                     return <ListItem key={info.id} leftIcon={info.icon} primaryText={value} disabled={!href} href={href} />
-                   })
+              infos
+                .filter((info) => event[info.id]) // remove undefined infos
+                .map((info) => {
+                  let value = event[info.id]
+                  if (info.date) {
+                    const suffix = (typeof value === 'string') ? '' : 'time'
+                    value = <FormattedMessage id={'date' + suffix} values={{date: getTimestamp(value)}} />
+                  }
+                  let href = null
+                  if (info.link) {
+                    href = value
+                    value = value.replace(/^(https?:\/\/|)(www\.|)/, '')
+                  }
+                  if (info.map) {
+                    href = 'https://www.google.com/maps?q=' + encodeURIComponent(value)
+                  }
+                  return <ListItem key={info.id} leftIcon={info.icon} primaryText={value} disabled={!href} href={href} />
+                })
             }
           </List>
         </Dialog>

@@ -4,27 +4,30 @@ import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native'
 import {injectIntl, intlShape} from 'react-intl'
 
 import colors from '../../common/constants/colors'
+import {elevation} from '../dimensions'
 
 class Button extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
     id: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
+    style: View.propTypes.style,
+    textStyle: Text.propTypes.style,
+    flat: PropTypes.bool,
   }
 
   render() {
-    const {intl, id, disabled, onPress, ...props} = this.props
+    const {intl, id, onPress, style, textStyle, flat, ...props} = this.props
+
     return (
       <TouchableNativeFeedback
-        /*eslint-disable new-cap*/
         background={TouchableNativeFeedback.SelectableBackground()}
-        /*eslint-enable new-cap*/
         onPress={onPress}
-        delayPressIn={0}
       >
-        <View style={disabled ? styles.disabled : styles.enabled}>
-          <Text {...props}>{intl.formatMessage({id})}</Text>
+        <View style={[styles.button, (flat ? styles.flat : styles.raised), style]}>
+          <Text style={[styles.text, (flat ? styles.flatText : styles.raisedText), textStyle]} {...props}>
+            {intl.formatMessage({id}).toUpperCase()}
+          </Text>
         </View>
       </TouchableNativeFeedback>
     )
@@ -32,24 +35,29 @@ class Button extends Component {
 }
 
 const styles = StyleSheet.create({
-  enabled: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 20,
-    backgroundColor: 'white',
-    // Android:
-    elevation: 2,
-    //iOS:
-    // shadowColor: 'red',
-    // shadowOffset: {width: 5, height: 5},
-    // shadowOpacity: 0.5,
-    // shadowRadius: 5,
+  button: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    alignSelf: 'center',
+    marginVertical: 8,
   },
-  disabled: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 20,
+  flat: {
     backgroundColor: colors.background,
+  },
+  raised: {
+    backgroundColor: colors.main,
+    ...elevation(2),
+    borderRadius: 2,
+  },
+  text: {
+    alignSelf: 'center',
+    fontWeight: '500',
+  },
+  flatText: {
+    color: colors.main,
+  },
+  raisedText: {
+    color: colors.lightText,
   },
 })
 

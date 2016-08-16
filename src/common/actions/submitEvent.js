@@ -4,8 +4,8 @@ import routes from '../routes'
 import {db, auth, timestamp} from '../firebase'
 
 import saveLog from './saveLog'
-import {firebaseError} from './error'
-import {getTimeId} from '../utils/utils'
+import report from './error'
+import {reminderTimeId, storedTime} from '../utils/time'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -27,12 +27,16 @@ export default (values, dispatch) => {
       values.index = values.end
     } else {
       const start = new Date(values.start)
-      if (start.getHours() !== 0 || start.getMinutes() !== 0) {
-        values.index = values.start + 3600 * 1000 // default duration = 1 hour
-      } else {
+      if (start.getHours() === 0 && start.getMinutes() === 0) {
         values.index = values.start + 86400 * 1000 // default duration = 1 day
+      } else {
+        values.index = values.start + 3600 * 1000 // default duration = 1 hour
       }
     }
+
+    // store day events as Y-m-d strings instead of timestamps, to avoid timezone issues:
+    values.start = storedTime(values.start)
+    values.end = storedTime(values.end)
 
     db.ref('tribes/' + tid + '/events/' + id).transaction((event) => {
       current = event // null if new bill
@@ -44,13 +48,13 @@ export default (values, dispatch) => {
     })
     .then(() => {
       if (current && current.reminder !== 'none') {
-        return db.ref('reminders/event/' + getTimeId(current.start, current.reminder) + '/' + id).remove()
+        return db.ref('reminders/event/' + reminderTimeId(current.start, current.reminder) + '/' + id).remove()
       }
       return null
     })
     .then(() => {
       if (values.reminder !== 'none') {
-        return db.ref('reminders/event/' + getTimeId(values.start, values.reminder) + '/' + id).set(tid)
+        return db.ref('reminders/event/' + reminderTimeId(values.start, values.reminder) + '/' + id).set(tid)
       }
       return null
     })
@@ -59,7 +63,7 @@ export default (values, dispatch) => {
       router.resetTo(routes.EVENTS, dispatch)
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'submitEvent'))
+      dispatch(report(error, 'submitEvent'))
       reject({_error: 'request'})
     })
   })

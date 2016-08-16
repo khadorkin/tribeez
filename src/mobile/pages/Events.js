@@ -25,7 +25,7 @@ class Events extends Component {
 
   handleFab() {
     const route = routes.EVENTS_NEW
-    route.edit = null
+    route.props = {} // clear 'edit' prop = null
     router.push(route)
   }
 
@@ -54,7 +54,7 @@ class Events extends Component {
             tabLabel="tab.past"
           />
         </TabView>
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="events" />
       </View>
     )
   }

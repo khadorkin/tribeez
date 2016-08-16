@@ -31,18 +31,20 @@ class SwitchField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 5,
+    marginVertical: 8,
   },
   field: {
     flexDirection: 'row',
-    marginHorizontal: 5,
+    marginHorizontal: 4,
   },
   label: {
-    margin: 3,
+    marginVertical: 2,
+    marginHorizontal: 8,
+    fontSize: 16,
   },
   error: {
     color: colors.error,
-    marginHorizontal: 5,
+    margin: 8,
   },
 })
 

@@ -1,15 +1,16 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text} from 'react-native'
 
 import {connect} from 'react-redux'
 
+import ListItem from '../components/ListItem'
 import FormattedMessage from './FormattedMessage'
-import Touchable from './Touchable'
+import FormattedRelative from './FormattedRelative'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import gravatar from '../../common/utils/gravatar'
+import {getTimestamp} from '../../common/utils/time'
 
 class Event extends Component {
   static propTypes = {
@@ -26,7 +27,10 @@ class Event extends Component {
 
   handlePress() {
     const route = routes.EVENT
-    route.item = this.props.event
+    route.props = {
+      id: this.props.event.id,
+    }
+    route.title = this.props.event.name
     router.push(route)
   }
 
@@ -38,29 +42,22 @@ class Event extends Component {
       return null
     }
 
-    const start = new Date(event.start)
-    const suffix = (start.getHours() !== 0 || start.getMinutes() !== 0) ? 'time' : ''
+    const suffix = (typeof event.start === 'string') ? '' : 'time'
 
     let date
     if (event.end) {
-      date = <FormattedMessage id={'interval' + suffix} values={{start: event.start, end: event.end}} />
+      date = <FormattedMessage id={'interval' + suffix} values={{start: getTimestamp(event.start), end: getTimestamp(event.end)}} />
     } else {
-      date = <FormattedMessage id={'date' + suffix} values={{date: event.start}} />
+      date = <FormattedMessage id={'date' + suffix} values={{date: getTimestamp(event.start)}} />
     }
 
+    const rightLabel = <FormattedRelative value={event.added} style={styles.time} />
+
     return (
-      <View style={styles.container}>
-        <Touchable onPress={this.handlePress} style={styles.main}>
-          <Image
-            source={{uri: gravatar(author)}}
-            style={styles.avatar}
-          />
-          <View style={styles.titles}>
-            <Text style={styles.title}>{event.name}</Text>
-            <Text style={styles.subtitle}>{date}</Text>
-          </View>
-        </Touchable>
-      </View>
+      <ListItem user={author} onPress={this.handlePress} rightLabel={rightLabel}>
+        <Text style={styles.title}>{event.name}</Text>
+        <Text style={styles.subtitle}>{date}</Text>
+      </ListItem>
     )
   }
 }
@@ -70,29 +67,20 @@ const mapStateToProps = (state) => ({
 })
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'white',
-    marginVertical: 5,
-    elevation: 1,
-  },
-  main: {
-    padding: 10,
-    flexDirection: 'row',
-  },
-  avatar: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-  titles: {
-    flex: 1,
-  },
   title: {
-    color: colors.primaryText,
+    color: colors.events,
+    fontSize: 16,
   },
   subtitle: {
     color: colors.secondaryText,
+    fontStyle: 'italic',
+    marginTop: 8,
+  },
+  time: {
+    fontStyle: 'italic',
+    color: colors.secondaryText,
+    marginLeft: 16,
+    marginTop: 2, // to compensate the +2 fontSize of title
   },
 })
 

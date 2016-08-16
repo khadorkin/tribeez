@@ -2,20 +2,22 @@ import {db, auth} from '../firebase'
 import fcm from '../fcm'
 
 import {
-  FIREBASE_REQUEST,
-  FIREBASE_SUCCESS,
+  REQUEST,
+  SUCCESS,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import {firebaseError} from './error'
+import report from './error'
 
-import getMember from './getMember'
-import getUnread from './getUnread'
+import listenActivity from './listenActivity'
+import listenItem from './listenItem'
+import listenNotes from './listenNotes'
+import listenUser from './listenUser'
 
 export default () => {
   return (dispatch) => {
     dispatch({
-      type: FIREBASE_REQUEST,
+      type: REQUEST,
     })
 
     const fcm_token = fcm.getToken()
@@ -29,15 +31,17 @@ export default () => {
 
     promise
     .then(() => {
-      dispatch(getMember.off())
-      dispatch(getUnread.off())
+      dispatch(listenActivity.off())
+      dispatch(listenItem.off())
+      dispatch(listenNotes.off())
+      dispatch(listenUser.off())
     })
     .then(() => {
       return auth.signOut() // this will trigger auth.logout (see listener in auth.login)
     })
     .then(() => {
       dispatch({
-        type: FIREBASE_SUCCESS,
+        type: SUCCESS,
       })
       dispatch({
         type: SNACK_MESSAGE,
@@ -45,7 +49,7 @@ export default () => {
       })
     })
     .catch((error) => {
-      dispatch(firebaseError(error, 'postLogout'))
+      dispatch(report(error, 'postLogout'))
     })
   }
 }

@@ -35,7 +35,7 @@ class Members extends Component {
     return (
       <View style={styles.container}>
         <TabView>
-          <ScrollView tabLabel="tab.registered" style={styles.content}>
+          <ScrollView tabLabel="tab.registered">
             {
               this.props.users.map((user) =>
                 <Member user={user} key={user.uid} />
@@ -48,7 +48,7 @@ class Members extends Component {
             tabLabel="tab.invited"
           />
         </TabView>
-        <Fab name="add" onPress={this.handleFab} />
+        <Fab name="add" onPress={this.handleFab} type="members" />
       </View>
     )
   }
@@ -61,9 +61,6 @@ const mapStateToProps = (state) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  content: {
-    paddingTop: 4,
   },
   spacer: {
     height: 80,

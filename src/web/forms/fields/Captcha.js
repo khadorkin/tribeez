@@ -20,7 +20,6 @@ class Captcha extends Component {
     this.focus = this.focus.bind(this)
   }
 
-  /*eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
     window.onRecaptcha = () => {
       grecaptcha.render('captcha', {
@@ -61,7 +60,7 @@ class Captcha extends Component {
   render() {
     return (
       <div ref={this.ref} style={{textAlign: 'center', margin: '48px 0 32px'}}>
-        <div id="captcha" style={{display: 'inline-block', minHeight: '80px'}} ref="input"></div>
+        <div id="captcha" style={{display: 'inline-block', minHeight: '80px'}} ref="input" />
         <p className="error">{this.props.touched && this.props.error && <FormattedMessage id="error.captcha" />}</p>
       </div>
     )

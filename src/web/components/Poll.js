@@ -108,13 +108,14 @@ class Poll extends Component {
         <List>
           {
             results.map((result) => {
+              const userNames = result.users.map((user) => user.name)
               return (
                 <ListItem key={result.id} disabled={true}>
                   <div>{result.name}</div>
                   <Paper style={{height: 24, margin: '8px 0'}}>
-                    <div style={{height: '100%', width: result.percent + '%', backgroundColor: colors.cyan500}}></div>
+                    <div style={{height: '100%', width: result.percent + '%', backgroundColor: colors.cyan500}} />
                   </Paper>
-                  <div>{result.percent + '%'} {result.users.length ? '(' + result.users.join(', ') + ')' : ''}</div>
+                  <div>{result.percent + '%'} {userNames.length ? '(' + userNames.join(', ') + ')' : ''}</div>
                 </ListItem>
               )
             })

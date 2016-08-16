@@ -11,9 +11,7 @@ class Touchable extends Component {
     const {onPress, children, ...props} = this.props
     return (
       <TouchableNativeFeedback
-        /*eslint-disable new-cap*/
-        background={TouchableNativeFeedback.Ripple('rbga(0,0,0,.5)', true)}
-        /*eslint-enable new-cap*/
+        background={TouchableNativeFeedback.SelectableBackground()}
         onPress={onPress}
       >
         <View {...props}>
