@@ -7,8 +7,8 @@ if (__DEV__) {
 
 config.android = {
   package: 'net.tribeez',
-  versionCode: 8,
-  versionName: '0.8',
+  versionCode: 9,
+  versionName: '0.9',
 }
 
 module.exports = config

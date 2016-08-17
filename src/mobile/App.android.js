@@ -120,7 +120,7 @@ class App extends Component {
 
   componentWillReceiveProps(props) {
     if (props.config && !this.props.config) {
-      if (props.config.minimum_version > config.android.versionName) {
+      if (props.config.minimum_version > config.android.versionCode) {
         this.props.alert({
           title_id: 'dialog_update_title',
           text_id: 'dialog_update_text',
