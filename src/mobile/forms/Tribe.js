@@ -20,8 +20,13 @@ class TribeForm extends Component {
     type: PropTypes.string.isRequired,
     // from redux-form:
     fields: PropTypes.object,
+    resetForm: PropTypes.func.isRequired,
     // from redux:
     initialValues: PropTypes.object,
+  }
+
+  componentDidMount() {
+    this.props.resetForm() // because remounting the same component does not clear the form :/
   }
 
   render() {

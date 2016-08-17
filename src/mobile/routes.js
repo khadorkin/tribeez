@@ -33,8 +33,8 @@ export default {
 
   // private routes
   ACTIVITY: {name: 'activity', component: Activity, type: 'list'},
-  TRIBE_NEW: {name: 'tribe', component: TribeForm, type: 'new'},
-  TRIBE_EDIT: {name: 'tribe', component: TribeForm, type: 'edit'},
+  TRIBE_NEW: {name: 'tribe_new', component: TribeForm, type: 'new'},
+  TRIBE_EDIT: {name: 'tribe_edit', component: TribeForm, type: 'edit'},
 
   MEMBERS: {name: 'members', component: Members, type: 'list', icon: 'group'},
   MEMBER: {name: 'member', component: MemberDetails, type: 'details'},
