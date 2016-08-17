@@ -3,7 +3,7 @@ import {db, auth, timestamp} from '../firebase'
 import {
   REQUEST,
   SUCCESS,
-  PUT_NOTE_SUCCESS,
+  PUT_NOTE,
 } from '../constants/actions'
 
 import report from './error'
@@ -22,7 +22,7 @@ export default (data) => {
     })
     .then(() => {
       dispatch({
-        type: PUT_NOTE_SUCCESS,
+        type: PUT_NOTE,
         data,
       })
       dispatch({

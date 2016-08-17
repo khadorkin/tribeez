@@ -12,6 +12,7 @@ import {
 import report from './error'
 
 import {oneLine} from '../utils/text'
+import {getTimestamp} from '../utils/time'
 
 const FETCH_MAX = 10
 const DAYS_NEW = 7 // number of days an item remains considerd "new"
@@ -126,8 +127,9 @@ const on = (tid) => {
       const row = {
         id: snapshot.key,
         name: value.name,
-        start: value.start,
-        end: value.end,
+        start: getTimestamp(value.start),
+        end: getTimestamp(value.end),
+        day: (typeof value.start === 'string'),
       }
 
       dispatch({

@@ -1,6 +1,6 @@
 import {
-  GET_NOTES_SUCCESS,
-  PUT_NOTE_SUCCESS,
+  NOTES,
+  PUT_NOTE,
   DELETE_NOTE_SUCCESS,
   MOVE_NOTE,
   LOGGED_OUT,
@@ -12,7 +12,7 @@ const initialState = {
 
 export default (state = initialState, action = null) => {
   switch (action.type) {
-    case GET_NOTES_SUCCESS: {
+    case NOTES: {
       const items = []
       for (const key in action.notes) {
         const item = action.notes[key]
@@ -25,7 +25,7 @@ export default (state = initialState, action = null) => {
       }
     }
 
-    case PUT_NOTE_SUCCESS: {
+    case PUT_NOTE: {
       const items = state.items.map((item) => {
         if (item.id === action.data.id) {
           return {...item, ...action.data, saved: true}

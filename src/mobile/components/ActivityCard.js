@@ -11,8 +11,16 @@ import FormattedRelative from './FormattedRelative'
 import routes from '../../common/routes'
 import router from '../../common/router'
 import colors from '../../common/constants/colors'
-import {getTimestamp} from '../../common/utils/time'
 import {elevation} from '../dimensions'
+
+const sorters = {
+  members: {date: 'joined', sort: 'desc'},
+  polls: {date: 'added', sort: 'asc'},
+  tasks: {date: 'done', sort: 'asc'},
+  bills: {date: 'added', sort: 'desc'},
+  events: {date: 'start', sort: 'asc'},
+  notes: {date: 'updated', sort: 'desc'},
+}
 
 class ActivityCard extends Component {
   static propTypes = {
@@ -30,52 +38,46 @@ class ActivityCard extends Component {
   }
 
   handlePress(type, row) {
-    const route = routes[type.toUpperCase()]
-
-    if (type === 'note') {
+    if (type === 'notes') {
       router.resetTo(routes.NOTES) // TODO: needs push but breaks navigation
     } else {
+      const route = routes[type.slice(0, -1).toUpperCase()]
       route.props = {
         id: row.id || row.uid,
       }
       route.title = row.name
-
       router.push(route)
     }
   }
 
   renderItem(row) {
+    const {type, userMap} = this.props
+
     let author
     if (row.author) {
-      const authorObj = this.props.userMap[row.author]
+      const authorObj = userMap[row.author]
       if (!authorObj) { // might not be available when switching tribe
         return null
       }
       author = authorObj.name
     }
 
-    const type = this.props.type.slice(0, -1) // plural => singular
-
     let textId
     let values
-    let date
+    let date = row[sorters[type].date]
     let dateFallback
 
     switch (type) {
-      case 'member':
-        date = row.joined
+      case 'members':
         break
-      case 'poll':
-        date = row.added
+      case 'polls':
         textId = 'asked_by'
         values = {author}
         break
-      case 'task':
-        date = row.done
+      case 'tasks':
         dateFallback = 'never_done'
         break
-      case 'bill':
-        date = row.added
+      case 'bills':
         if (row.part) {
           textId = 'bill.mypart'
           values = {amount: row.part}
@@ -83,19 +85,17 @@ class ActivityCard extends Component {
           textId = 'bill.nopart'
         }
         break
-      case 'event':
-        date = getTimestamp(row.start)
-        const suffix = (typeof row.start === 'string') ? '' : 'time'
+      case 'events':
+        const suffix = row.day ? '' : 'time'
         if (row.end) {
           textId = 'interval' + suffix
-          values = {start: date, end: getTimestamp(row.end)}
+          values = {start: date, end: row.end}
         } else {
           textId = 'date' + suffix
           values = {date}
         }
         break
-      case 'note':
-        date = row.updated
+      case 'notes':
         textId = 'notes.by'
         values = {author}
         break
@@ -120,6 +120,16 @@ class ActivityCard extends Component {
     if (!data.length) {
       return null
     }
+
+    const sorter = sorters[type]
+    const dateProp = sorter.date
+    data.sort((a, b) => {
+      if (sorter.sort === 'asc') {
+        return a[dateProp] > b[dateProp] ? 1 : -1
+      } else {
+        return a[dateProp] < b[dateProp] ? 1 : -1
+      }
+    })
 
     const route = routes[type.toUpperCase()]
     const color = colors[route.name]

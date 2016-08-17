@@ -43,8 +43,8 @@ export const PASSWORD_SUCCESS = 'PASSWORD_SUCCESS'
 export const GET_INVITE_SUCCESS = 'GET_INVITE_SUCCESS'
 
 // notes:
-export const GET_NOTES_SUCCESS = 'GET_NOTES_SUCCESS'
-export const PUT_NOTE_SUCCESS = 'PUT_NOTE_SUCCESS'
+export const NOTES = 'NOTES'
+export const PUT_NOTE = 'PUT_NOTE'
 export const MOVE_NOTE = 'MOVE_NOTE'
 
 export const ITEM = 'ITEM'

@@ -23,8 +23,7 @@ class Activity extends Component {
   static propTypes = {
     // from redux:
     tid: PropTypes.string,
-    num_members: PropTypes.number.isRequired,
-    new_members: PropTypes.array.isRequired,
+    other_members: PropTypes.array.isRequired,
     activity: PropTypes.object.isRequired,
     unread: PropTypes.number,
     bot_token: PropTypes.string,
@@ -92,12 +91,12 @@ class Activity extends Component {
   }
 
   render() {
-    const {num_members, new_members, activity, unread} = this.props
+    const {other_members, activity, unread} = this.props
 
-    //const notEmpty = (new_members.length > 0 || ACTIVITIES.some((type) => activity[type].length > 0))
+    //const notEmpty = (other_members.length > 0 || ACTIVITIES.some((type) => activity[type].length > 0))
 
     let inviteButton
-    if (num_members === 1) {
+    if (other_members.length === 0 && !activity.loading) {
       inviteButton = (
         <View>
           <FormattedMessage id="welcome_message" style={styles.welcome} />
@@ -105,6 +104,8 @@ class Activity extends Component {
         </View>
       )
     }
+
+    const new_members = other_members.filter((user) => (user.joined > Date.now() - (7 * 86400 * 1000))) // new ones only
 
     return (
       <TabView onChangeTab={this.handleChange}>
@@ -116,7 +117,7 @@ class Activity extends Component {
             )
           }
           <View style={styles.footer}>
-            <ActivityIndicator size="small" color={colors.main} animating={this.props.activity.loading} />
+            <ActivityIndicator size="small" color={colors.main} animating={activity.loading} />
             {inviteButton}
             {
               // notEmpty && (
@@ -174,8 +175,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   tid: state.tribe.id,
-  num_members: state.tribe.users.length,
-  new_members: state.tribe.users.filter((user) => user.uid !== state.user.uid && user.joined > Date.now() - (7 * 86400 * 1000)), // new members (one week)
+  other_members: state.tribe.users.filter((user) => user.uid !== state.user.uid),
   activity: state.activity,
   unread: state.app.unread,
   bot_token: state.user.bot_token,

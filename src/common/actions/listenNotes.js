@@ -3,7 +3,7 @@ import {db, auth} from '../firebase'
 import {
   REQUEST,
   SUCCESS,
-  GET_NOTES_SUCCESS,
+  NOTES,
 } from '../constants/actions'
 
 import report from './error'
@@ -20,7 +20,7 @@ const on = () => {
     ref = db.ref('tribes/' + auth.currentUser.tid + '/notes')
     ref.on('value', (snapshot) => {
       dispatch({
-        type: GET_NOTES_SUCCESS,
+        type: NOTES,
         notes: snapshot.val(),
       })
       if (!gotOnce) {
@@ -42,7 +42,7 @@ const off = () => {
       ref = null
     }
     dispatch({
-      type: GET_NOTES_SUCCESS,
+      type: NOTES,
       notes: {},
     })
   }
