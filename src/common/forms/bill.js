@@ -10,7 +10,18 @@ const mapStateToProps = (state, ownProps) => {
   let initialValues
   if (bill) {
     const parts = state.tribe.users
-      .map((user) => ({uid: user.uid, amount: bill.parts[user.uid] || ''}))
+      .map((user) => {
+        let amount
+        if (bill.shares) {
+          amount = bill.shares[user.uid] || 0
+        } else {
+          amount = bill.parts[user.uid] || ''
+        }
+        return {
+          uid: user.uid,
+          amount,
+        }
+      })
       .sort((a, b) => (a.amount > b.amount ? -1 : 1))
 
     initialValues = {
@@ -19,7 +30,7 @@ const mapStateToProps = (state, ownProps) => {
       payer: bill.payer,
       paid: bill.paid,
       amount: bill.amount,
-      method: 'amounts',
+      method: bill.method,
       description: bill.description || '',
       parts,
       added: bill.added,

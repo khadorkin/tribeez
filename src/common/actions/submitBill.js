@@ -8,9 +8,6 @@ import saveLog from './saveLog'
 import report from './error'
 
 const calculateParts = (bill) => {
-  // remove empty shares
-  bill.parts = bill.parts.filter((part) => part.amount > 0)
-
   // total number of shares, or sum of ammounts
   const sum = decimal(bill.parts.reduce((prev, curr) => (prev + curr.amount), 0))
 
@@ -40,7 +37,20 @@ const calculateParts = (bill) => {
 export default (values, dispatch) => {
   const tid = auth.currentUser.tid
   return new Promise((resolve, reject) => {
+    // remove empty shares
+    values.parts = values.parts.filter((part) => part.amount > 0)
+
+    // store the original shares in order to find them again when editing:
+    if (values.method === 'shares') {
+      values.shares = {}
+      values.parts.forEach((part) => {
+        values.shares[part.uid] = part.amount
+      })
+    }
+
+    // get parts object from form array:
     values.parts = calculateParts(values)
+
     let id = values.id
     delete values.id
     let action
