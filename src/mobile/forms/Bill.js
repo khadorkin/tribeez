@@ -38,11 +38,15 @@ class BillForm extends Component {
   handleMethodChange(value) {
     if (value === 'shares') {
       this.props.fields.parts.forEach((part) => {
-        part.amount.onChange(1)
+        if (part.amount.value === '') {
+          part.amount.onChange(1)
+        }
       })
     } else {
       this.props.fields.parts.forEach((part) => {
-        part.amount.onChange('')
+        if (part.amount.value === 1) {
+          part.amount.onChange('')
+        }
       })
     }
     this.props.fields.method.onChange(value)
