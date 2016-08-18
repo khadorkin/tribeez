@@ -68,7 +68,13 @@ export const reportIssue = (error, reason) => {
       lineNumber: 0,
       columnNumber: 0,
     })
-    Crashlytics.recordCustomExceptionName(error.message, reason, stack)
+    if (__DEV__) {
+      /*eslint-disable no-console*/
+      console.error('ISSUE REPORT:', error.message, reason)
+      /*eslint-enable no-console*/
+    } else {
+      Crashlytics.recordCustomExceptionName(error.message, reason, stack)
+    }
   })
 }
 
