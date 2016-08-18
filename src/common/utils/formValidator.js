@@ -21,6 +21,10 @@ export default (required, optional = []) => {
           if (total <= 0) {
             errors._error = 'no_parts'
           }
+        } else {
+          if (total !== values.amount) {
+            errors._error = 'amount_mismatch'
+          }
         }
       } else if (field === 'users') {
         const notEmpty = values.users.some((task_user) => task_user.checked)
