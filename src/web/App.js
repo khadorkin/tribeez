@@ -27,7 +27,7 @@ import config from '../common/config'
 import {WEB_DRAWER_WIDTH, FB_LOCALES} from '../common/constants/product'
 import routes from './routes'
 import scriptLoader from './utils/scriptLoader'
-import langs from '../common/resources/langs'
+import langs from '../common/constants/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />

@@ -10,7 +10,7 @@ import createLogger from 'redux-logger'
 import {addLocaleData} from 'react-intl'
 import 'intl'
 
-// app locales (keep list in sync with resources/langs.js and messages/*.js):
+// app locales (keep list in sync with constants/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'
 import locale_fr from 'react-intl/locale-data/fr'
 addLocaleData(locale_en)

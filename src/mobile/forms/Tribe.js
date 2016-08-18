@@ -8,7 +8,7 @@ import CityField from './fields/City'
 
 import form from '../../common/forms/tribe'
 import submitTribe from '../../common/actions/submitTribe'
-import currencies from '../../common/resources/currencies'
+import currencies from '../../common/constants/currencies'
 
 import {TRIBE_TYPES} from '../../common/constants/product'
 

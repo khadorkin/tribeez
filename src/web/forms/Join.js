@@ -11,7 +11,7 @@ import SelectField from './fields/Select'
 import form from '../../common/forms/join'
 import focus from '../../common/utils/formFocus'
 import submitJoin from '../../common/actions/submitJoin'
-import langs from '../../common/resources/langs'
+import langs from '../../common/constants/langs'
 import colors from '../../common/constants/colors'
 
 const langItems = langs.map((item) =>

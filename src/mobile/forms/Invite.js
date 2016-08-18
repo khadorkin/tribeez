@@ -7,7 +7,7 @@ import SelectField from './fields/Select'
 
 import form from '../../common/forms/invite'
 import submitInvite from '../../common/actions/submitInvite'
-import langs from '../../common/resources/langs'
+import langs from '../../common/constants/langs'
 
 class InviteForm extends Component {
   static propTypes = {

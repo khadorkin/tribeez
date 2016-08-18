@@ -14,7 +14,7 @@ import colors from '../../common/constants/colors'
 import form from '../../common/forms/join'
 import getInvite from '../../common/actions/getInvite'
 import submitJoin from '../../common/actions/submitJoin'
-import langs from '../../common/resources/langs'
+import langs from '../../common/constants/langs'
 
 class JoinForm extends Component {
   static propTypes = {

@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-import {map as langs} from '../resources/langs'
+import {map as langs} from '../constants/langs'
 
 import {android} from '../config'
 

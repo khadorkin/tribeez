@@ -11,7 +11,7 @@ import CityField from './fields/City'
 import form from '../../common/forms/tribe'
 import focus from '../../common/utils/formFocus'
 import submitTribe from '../../common/actions/submitTribe'
-import currencies from '../../common/resources/currencies'
+import currencies from '../../common/constants/currencies'
 
 import {TRIBE_TYPES} from '../../common/constants/product'
 

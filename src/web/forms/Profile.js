@@ -11,7 +11,7 @@ import DatePicker from './fields/Date'
 import form from '../../common/forms/profile'
 import focus from '../../common/utils/formFocus'
 import submitProfile from '../../common/actions/submitProfile'
-import langs from '../../common/resources/langs'
+import langs from '../../common/constants/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />

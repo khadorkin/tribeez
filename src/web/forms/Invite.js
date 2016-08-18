@@ -10,7 +10,7 @@ import SelectField from './fields/Select'
 import form from '../../common/forms/invite'
 import focus from '../../common/utils/formFocus'
 import submitInvite from '../../common/actions/submitInvite'
-import langs from '../../common/resources/langs'
+import langs from '../../common/constants/langs'
 
 const langItems = langs.map((item) =>
   <MenuItem value={item.code} key={item.code} primaryText={item.name} />

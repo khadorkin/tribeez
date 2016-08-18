@@ -14,8 +14,8 @@ import colors from '../../common/constants/colors'
 
 import form from '../../common/forms/register'
 import submitRegister from '../../common/actions/submitRegister'
-import langs from '../../common/resources/langs'
-import currencies from '../../common/resources/currencies'
+import langs from '../../common/constants/langs'
+import currencies from '../../common/constants/currencies'
 
 import {TRIBE_TYPES} from '../../common/constants/product'
 

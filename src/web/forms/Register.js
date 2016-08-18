@@ -13,8 +13,8 @@ import Captcha from './fields/Captcha'
 import form from '../../common/forms/register'
 import focus from '../../common/utils/formFocus'
 import submitRegister from '../../common/actions/submitRegister'
-import currencies from '../../common/resources/currencies'
-import langs from '../../common/resources/langs'
+import currencies from '../../common/constants/currencies'
+import langs from '../../common/constants/langs'
 import {TRIBE_TYPES} from '../../common/constants/product'
 
 const currencyItems = currencies.map((item) =>

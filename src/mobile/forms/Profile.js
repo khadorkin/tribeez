@@ -10,7 +10,7 @@ import FormattedMessage from '../components/FormattedMessage'
 
 import form from '../../common/forms/profile'
 import submitProfile from '../../common/actions/submitProfile'
-import langs from '../../common/resources/langs'
+import langs from '../../common/constants/langs'
 
 const today = Date.now()
 

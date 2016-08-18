@@ -44,7 +44,7 @@ import './index.css'
 import webfont from 'webfontloader'
 webfont.load({google: {families: ['Roboto:400,300,500:latin']}})
 
-// app locales (keep list in sync with resources/langs.js and messages/*.js):
+// app locales (keep list in sync with constants/langs.js and messages/*.js):
 import locale_en from 'react-intl/locale-data/en'
 import locale_fr from 'react-intl/locale-data/fr'
 addLocaleData(locale_en)
