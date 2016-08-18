@@ -1,9 +1,8 @@
-import Locale from 'react-native-locale'
 import moment from 'moment'
 
 import {map as langs} from '../resources/langs'
 
-const deviceLang = Locale.constants().localeIdentifier.substr(0, 2).toLowerCase()
+import {android} from '../config'
 
 export const getLang = () => {
   let lang
@@ -11,7 +10,7 @@ export const getLang = () => {
     lang = localStorage.getItem('lang')
   }
   if (!lang) {
-    lang = deviceLang
+    lang = android.deviceLocale.substr(0, 2).toLowerCase()
   }
   if (!langs[lang]) {
     lang = 'en'

@@ -8,6 +8,8 @@ import report from './error'
 
 import listenTribe from './listenTribe'
 
+import {android} from '../config'
+
 let publicRef
 let privateRef
 
@@ -19,7 +21,16 @@ const on = (uid) => {
     const onToken = (token) => {
       const userTokens = getState().user.fcm_tokens
       if (!userTokens || !userTokens[token]) {
-        privateRef.child('fcm_tokens').child(token).set(timestamp)
+        privateRef.child('fcm_tokens').child(token).set({
+          timestamp,
+          model: android.model,
+          appVersion: android.appVersion,
+          systemName: android.systemName,
+          systemVersion: android.systemVersion,
+          manufacturer: android.systemManufacturer,
+          locale: android.deviceLocale,
+          timezone: android.timezone,
+        })
         .catch((error) => {
           dispatch(report(error, 'listenUser/fcm_tokens'))
         })

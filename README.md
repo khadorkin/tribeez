@@ -101,9 +101,7 @@ You can see the logs by running:
 
 ### Production
 
-Bump version:
-
-* Edit `versionCode` and `versionName` in `android/app/build.gradle` and in `src/common/config.js`
+Bump version: edit `versionCode` and `versionName` in `android/app/build.gradle`
 
 Generate production builds:
 

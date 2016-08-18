@@ -14,7 +14,7 @@ import FormattedMessage from '../components/FormattedMessage'
 import routes from '../../common/routes'
 import router from '../../common/router'
 
-import config from '../../common/config'
+import {android} from '../../common/config'
 import {ACTIVITIES} from '../../common/constants/product'
 import colors from '../../common/constants/colors'
 import listenActivity from '../../common/actions/listenActivity'
@@ -133,7 +133,7 @@ class Activity extends Component {
               // )
             }
             <Text style={styles.version}>
-              App version: beta {config.android.versionName}
+              App version: beta {android.appVersion}
             </Text>
           </View>
         </ScrollView>

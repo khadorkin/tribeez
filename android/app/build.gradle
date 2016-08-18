@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
 
 buildscript {
     repositories {
@@ -149,7 +148,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-locale')
+    compile project(':react-native-device-info')
     compile project(':react-native-material-kit')
     compile project(':react-native-fabric')
     compile project(':react-native-fcm')
@@ -168,3 +167,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
   from configurations.compile
   into 'libs'
 }
+
+apply plugin: 'com.google.gms.google-services'
