@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import InfoBox from '../components/InfoBox'
 import FormattedMessage from '../components/FormattedMessage'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
@@ -34,6 +35,7 @@ class RegisterForm extends Component {
     return (
       <ScrollView>
         <Form name="register" action={submitRegister} {...props}>
+          <InfoBox type="info" id="register_info" />
           <View style={styles.section}>
             <View style={styles.sectionIcon}>
               <Icon name="person" size={24} color={colors.members} />

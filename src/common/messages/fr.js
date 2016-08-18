@@ -128,6 +128,7 @@ const fr = {
 
   // FORMS
   // subtitles:
+  register_info: 'Note : vous avez besoin d’une invitation pour rejoindre une tribu existante. Si c’est votre cas, cliquez sur le lien reçu dans votre e-mail d’invitation.',
   password_reset: 'Renplissez ce formulaire pour recevoir un lien de réinitialisation de mot de passe par e-mail',
   password_change: '{name}, choisissez votre nouveau mot de passe',
   invited_you: '{name} vous a invité-e',

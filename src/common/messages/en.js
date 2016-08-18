@@ -128,6 +128,7 @@ export default {
 
   // FORMS
   // subtitles:
+  register_info: 'Note that you need an invite to join an existing tribe. In that case, follow the link in the invite email you received.',
   password_reset: 'Fill this form to receive a reset link via email',
   password_change: '{name}, please choose a new password',
   invited_you: '{name} invited you',
