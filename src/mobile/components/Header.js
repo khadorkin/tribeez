@@ -17,7 +17,7 @@ class HeaderImage extends Component {
 
   render() {
     return (
-      <Image source={require('../../common/images/header.png')}
+      <Image source={require('../images/header.png')}
         resizeMode="cover"
         style={[styles.image, this.props.style]}
       />
@@ -32,7 +32,7 @@ class HeaderShadow extends Component {
 
   render() {
     return (
-      <Image source={require('../../common/images/header-shadow.png')}
+      <Image source={require('../images/header-shadow.png')}
         resizeMode="cover"
         style={[styles.shadow, this.props.style]}
       />

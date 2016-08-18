@@ -16,37 +16,37 @@ const {width, height} = Dimensions.get('window')
 const slides = [
   {
     id: 'start',
-    background: require('../../common/images/slides/logo.png'),
+    background: require('../images/slides/logo.png'),
     illustration: require('../../common/images/illustrations/logo.png'),
   },
   {
     id: 'bills',
-    background: require('../../common/images/slides/bills.png'),
+    background: require('../images/slides/bills.png'),
     illustration: require('../../common/images/illustrations/bills.png'),
   },
   {
     id: 'events',
-    background: require('../../common/images/slides/events.png'),
+    background: require('../images/slides/events.png'),
     illustration: require('../../common/images/illustrations/events.png'),
   },
   {
     id: 'polls',
-    background: require('../../common/images/slides/polls.png'),
+    background: require('../images/slides/polls.png'),
     illustration: require('../../common/images/illustrations/polls.png'),
   },
   {
     id: 'tasks',
-    background: require('../../common/images/slides/tasks.png'),
+    background: require('../images/slides/tasks.png'),
     illustration: require('../../common/images/illustrations/tasks.png'),
   },
   {
     id: 'notes',
-    background: require('../../common/images/slides/notes.png'),
+    background: require('../images/slides/notes.png'),
     illustration: require('../../common/images/illustrations/notes.png'),
   },
   {
     id: 'end',
-    background: require('../../common/images/slides/logo.png'),
+    background: require('../images/slides/logo.png'),
     illustration: require('../../common/images/illustrations/logo.png'),
   },
 ]
@@ -101,6 +101,7 @@ const contentWidth = (width * 0.73)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.members,
   },
   swiper: {
     flex: 1,

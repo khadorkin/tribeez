@@ -62,7 +62,7 @@ Object.assign(config, {
       description: user_config.description,
       url: user_config.url,
       twitter: user_config.twitter,
-      image: user_config.url + '/logo.png',
+      image: user_config.url + '/images/logo.png',
       env: env,
       rollbar_token: user_config.rollbar_token,
       ga_id: user_config.ga_id,
@@ -74,8 +74,8 @@ Object.assign(config, {
     }),
     new webpack.IgnorePlugin(/\.(android|ios)\.js/),
     new CopyWebpackPlugin([
-      {context: 'src/web/static', from: '*.*'},
-      {context: 'src/common/images', from: '*.*'},
+      {context: 'src/web/images', from: '**/*.*'},
+      {context: 'src/common/images', from: '**/*.*', to: 'images'},
     ]),
   ]),
   module: {
