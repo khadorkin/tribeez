@@ -13,7 +13,7 @@ export default (values, dispatch) => {
 
     // EDIT CURRENT TRIBE:
     if (values.id) {
-      const tid = auth.currentUser.tid
+      const tid = values.id
       let current_city
       db.ref('tribes/' + tid + '/infos').transaction((infos) => {
         current_city = infos.city.place_id
@@ -77,8 +77,6 @@ export default (values, dispatch) => {
         },
       })
       .then(() => {
-        auth.currentUser.tid = tid
-        auth.currentUser.tribe = values.tribe_name
         // add to new city
         return db.ref('cities/' + values.city.place_id).transaction((city) => {
           if (!city) {
