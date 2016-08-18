@@ -1,6 +1,9 @@
 import en from './en'
 
 const fr = {
+  // web-only
+  android_banner: 'Installez l’application Tribeez pour une meilleure expérience !',
+
   // titles
   welcome: 'Bienvenue',
   register: 'Inscription',

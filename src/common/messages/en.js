@@ -1,6 +1,9 @@
 // base messages: this file is the fallback for other langs
 
 export default {
+  // web-only
+  android_banner: 'Install the Tribeez app for a better experience!',
+
   // titles
   welcome: 'Welcome',
   register: 'Register',

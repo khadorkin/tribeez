@@ -21,6 +21,7 @@ import Snackbar from 'material-ui/Snackbar'
 // import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
 
+import MobileBanner from './components/MobileBanner'
 import DrawerContent from './components/DrawerContent'
 
 import config from '../common/config'
@@ -229,6 +230,7 @@ class App extends Component {
       <IntlProvider locale={lang} messages={this.props.messages} formats={this.props.formats}>
         <div className="app" style={{marginLeft: dockedUserMenu ? WEB_DRAWER_WIDTH : 0}}>
           {nav}
+          <MobileBanner lang={lang} />
           <AppBar title={title} zDepth={0}
             iconElementLeft={iconLeft} iconElementRight={iconRight}
             onLeftIconButtonTouchTap={this.handleMenuButton}
