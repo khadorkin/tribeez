@@ -65,29 +65,30 @@ export default (values, dispatch) => {
     let updatedMembers
 
     db.ref('tribes/' + tid + '/bills/' + id).transaction((bill) => {
-      current = bill // null if new bill
+      current = bill // stays null if new
       return {...bill, ...values} // to keep the log
     })
     .then(() => {
       return db.ref('tribes/' + tid + '/members').transaction((members) => {
-        if (current) {
-          // remove old offsets
-          for (const uid in current.parts) {
-            members[uid].balance += current.parts[uid]
+        if (members) {
+          if (current) {
+            // remove old offsets
+            for (const uid in current.parts) {
+              members[uid].balance += current.parts[uid]
+            }
+            members[current.payer].balance -= current.amount
           }
-          members[current.payer].balance -= current.amount
+          // add new offsets
+          for (const uid in values.parts) {
+            members[uid].balance -= values.parts[uid]
+          }
+          members[values.payer].balance += values.amount
         }
-        // add new offsets
-        for (const uid in values.parts) {
-          members[uid].balance -= values.parts[uid]
-        }
-        members[values.payer].balance += values.amount
-
-        updatedMembers = members
         return members
       })
     })
-    .then(() => {
+    .then((res) => {
+      updatedMembers = res.snapshot.val()
       values.id = id
       return saveLog('bill', action, values)
     })

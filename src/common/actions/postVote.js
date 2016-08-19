@@ -13,10 +13,12 @@ export default (id, choices) => {
       type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/polls/' + id).transaction((poll) => {
-      if (!poll.answers) {
-        poll.answers = {}
+      if (poll) {
+        if (!poll.answers) {
+          poll.answers = {}
+        }
+        poll.answers[auth.currentUser.uid] = choices
       }
-      poll.answers[auth.currentUser.uid] = choices
       return poll
     })
     .then(() => {

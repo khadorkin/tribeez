@@ -24,12 +24,14 @@ export default (reauth_prompt, tribe_ids, values, dispatch) => {
     .catch(checkReAuth)
     .then(() => {
       return db.ref('users/' + auth.currentUser.uid).transaction((user) => {
-        user.name = values.name
-        user.lang = values.lang
-        user.email = values.email
-        user.gravatar = gravatar
-        user.birthdate = values.birthdate || null
-        user.phone = values.phone || null
+        if (user) {
+          user.name = values.name
+          user.lang = values.lang
+          user.email = values.email
+          user.gravatar = gravatar
+          user.birthdate = values.birthdate || null
+          user.phone = values.phone || null
+        }
         return user
       })
     })

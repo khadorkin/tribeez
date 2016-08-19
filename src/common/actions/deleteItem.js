@@ -29,13 +29,16 @@ export default (type, id) => {
     .then(() => {
       if (type === 'bill') {
         return db.ref('tribes/' + tid + '/members').transaction((members) => {
-          for (const uid in item.parts) {
-            members[uid].balance += item.parts[uid]
+          if (members) {
+            for (const uid in item.parts) {
+              members[uid].balance += item.parts[uid]
+            }
+            members[item.payer].balance -= item.amount
           }
-          members[item.payer].balance -= item.amount
-
-          updatedMembers = members
           return members
+        })
+        .then((res) => {
+          updatedMembers = res.snapshot.val()
         })
       }
       if (type === 'event' && item.reminder !== 'none') {

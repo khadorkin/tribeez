@@ -16,12 +16,14 @@ export default (values, dispatch) => {
       const tid = values.id
       let current_city
       db.ref('tribes/' + tid + '/infos').transaction((infos) => {
-        current_city = infos.city.place_id
-        infos.name = values.tribe_name
-        infos.type = values.tribe_type
-        infos.currency = values.currency
-        infos.city = values.city
-        infos.created = timestamp
+        if (infos) {
+          current_city = infos.city.place_id
+          infos.name = values.tribe_name
+          infos.type = values.tribe_type
+          infos.currency = values.currency
+          infos.city = values.city
+          infos.created = timestamp
+        }
         return infos
       })
       .then(() => {
@@ -91,8 +93,10 @@ export default (values, dispatch) => {
       })
       .then(() => {
         return db.ref('users/' + uid).transaction((user) => {
-          user.current_tribe = tid
-          user.tribes[tid] = values.tribe_name
+          if (user) {
+            user.current_tribe = tid
+            user.tribes[tid] = values.tribe_name
+          }
           return user
         })
       })

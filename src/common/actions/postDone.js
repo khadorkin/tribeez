@@ -13,8 +13,10 @@ export default (id) => {
       type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/tasks/' + id).transaction((task) => {
-      task.counters[auth.currentUser.uid]++
-      task.done = timestamp
+      if (task) {
+        task.counters[auth.currentUser.uid]++
+        task.done = timestamp
+      }
       return task
     })
     .then(() => {

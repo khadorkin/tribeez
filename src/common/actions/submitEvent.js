@@ -39,7 +39,7 @@ export default (values, dispatch) => {
     values.end = storedTime(values.end)
 
     db.ref('tribes/' + tid + '/events/' + id).transaction((event) => {
-      current = event // null if new bill
+      current = event // stays null if new
       return {...event, ...values} // to keep the log
     })
     .then(() => {
