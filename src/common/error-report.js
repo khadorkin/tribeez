@@ -23,11 +23,9 @@ export const setAttr = (key, value) => {
 }
 
 export const log = (value) => {
-  /*eslint-disable no-console*/
-  if (window.console && console.warn) {
-    console.warn('[error-report]', value)
+  if (window.console) {
+    console.warn('[error-report]', value) // eslint-disable-line no-console
   }
-  /*eslint-enable no-console*/
 }
 
 export const reportIssue = (error, reason) => {

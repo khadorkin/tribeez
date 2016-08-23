@@ -69,9 +69,7 @@ let store
 if (__DEV__) {
   const logger = createLogger({
     errorTransformer: (error) => {
-      /*eslint-disable no-console*/
-      console.error(error)
-      /*eslint-enable no-console*/
+      console.error(error) // eslint-disable-line no-console
       return error
     },
     collapsed: true,

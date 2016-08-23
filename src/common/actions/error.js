@@ -7,9 +7,7 @@ import {
 export default (error, origin, type = 'firebase') => {
   return (dispatch) => {
     if (__DEV__) {
-      /*eslint-disable no-console*/
-      console.error(type + ' error from ' + origin + ':', error)
-      /*eslint-enable no-console*/
+      console.error(type + ' error from ' + origin + ':', error) // eslint-disable-line no-console
     }
 
     reportIssue(error, type + '::' + origin)
