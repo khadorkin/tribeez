@@ -64,49 +64,45 @@ class Entry extends Component {
     } else {
       values.author = author.name
     }
-
-    let infos
-
-    switch (entry.type) {
-      case 'member':
-        if (entry.inviter) {
-          const inviter = userMap[entry.inviter]
-          if (inviter) {
-            infos = <FormattedMessage id={`entry.member.${entry.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
-          }
-        }
-        break
-      case 'bill':
-        values.name = entry.item.name
-        values.amount = entry.item.amount
-        const amount = entry.item.parts[uid]
-        if (amount) {
-          infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount}} style={styles.infos} />
-        } else {
-          infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} style={styles.infos} />
-        }
-        break
-      case 'poll':
-        values.name = entry.item.name
-        break
-      case 'event':
-        values.name = entry.item.name
-        values.when = getTimestamp(entry.item.start)
-        break
-      case 'task':
-        values.name = entry.item.name
-        break
-      default:
-        return null
+    if (entry.item) {
+      values.name = entry.item.name
     }
 
+    let infos
     let backgroundColor
+
     if (entry.action === 'comment') {
+      backgroundColor = colors.background
+
       const infosStyle = {color: colors[entry.type + 's']}
       infos = <Text style={[styles.infos, infosStyle]}>{entry.item.text}</Text>
-      backgroundColor = colors.background
     } else {
       backgroundColor = colors[entry.type + 's_light']
+
+      switch (entry.type) {
+        case 'member':
+          if (entry.inviter) {
+            const inviter = userMap[entry.inviter]
+            if (inviter) {
+              infos = <FormattedMessage id={`entry.member.${entry.action}.infos`} values={{inviter: inviter.name}} style={styles.infos} />
+            }
+          }
+          break
+        case 'bill':
+          values.amount = entry.item.amount
+          const amount = entry.item.parts[uid]
+          if (amount) {
+            infos = <FormattedMessage id={`entry.bill.${entry.action}.infos`} values={{amount}} style={styles.infos} />
+          } else {
+            infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} style={styles.infos} />
+          }
+          break
+        case 'poll':
+          break
+        case 'event':
+          values.when = getTimestamp(entry.item.start)
+          break
+      }
     }
 
     const title = <FormattedMessage id={`entry.${entry.type}.${entry.action}`} values={values} />
