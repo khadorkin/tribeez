@@ -42,10 +42,24 @@ class MobileBanner extends Component {
     lang: PropTypes.string.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: true,
+    }
+    this.handleClose = this.handleClose.bind(this)
+  }
+
+  handleClose() {
+    this.setState({
+      open: false,
+    })
+  }
+
   render() {
     const android = /android/i.test(navigator.userAgent)
 
-    if (android) {
+    if (android && this.state.open) {
       return (
         <div style={styles.container}>
           <a href={config.play_url} style={styles.link}>
@@ -55,7 +69,7 @@ class MobileBanner extends Component {
             </p>
             <img src={'/play_badge_' + this.props.lang + '.png'} alt="Google Play" style={styles.button} />
           </a>
-          <a href="test" style={styles.close}>
+          <a href="#" onTouchTap={this.handleClose} style={styles.close}>
             <CloseIcon color={cyan500} />
           </a>
         </div>
