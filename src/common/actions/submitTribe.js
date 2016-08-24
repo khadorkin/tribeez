@@ -45,6 +45,17 @@ export default (values, dispatch) => {
         })
       })
       .then(() => {
+        return db.ref('tribes/' + tid + '/members').once('value')
+      })
+      .then((snapshot) => {
+        const members = snapshot.val()
+        const promises = []
+        for (const id in members) {
+          promises.push(db.ref('users/' + id + '/tribes/' + tid).set(values.tribe_name))
+        }
+        return Promise.all(promises)
+      })
+      .then(() => {
         resolve()
         dispatch({
           type: SNACK_MESSAGE,

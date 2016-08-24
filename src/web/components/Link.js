@@ -16,6 +16,7 @@ class Link extends Component {
     if (!event.defaultPrevented) {
       event.preventDefault()
     }
+    event.stopPropagation()
   }
 
   handleTap(event) {
@@ -26,6 +27,7 @@ class Link extends Component {
       return // modified event
     }
     this.props.router.push(this.props.to)
+    event.stopPropagation()
   }
 
   render() {
