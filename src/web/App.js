@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
 import {IntlProvider, FormattedMessage} from 'react-intl'
 import {bindActionCreators} from 'redux'
 
@@ -20,6 +19,8 @@ import Snackbar from 'material-ui/Snackbar'
 // import TelegramIcon from './resources/telegram-icon'
 // import MessengerIcon from './resources/messenger-icon'
 import Dialog from 'material-ui/Dialog'
+
+import Link from './components/Link'
 
 import MobileBanner from './components/MobileBanner'
 import DrawerContent from './components/DrawerContent'

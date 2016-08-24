@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage, FormattedRelative} from 'react-intl'
@@ -14,6 +13,8 @@ import EditButton from 'material-ui/svg-icons/image/edit'
 import DeleteButton from 'material-ui/svg-icons/action/delete'
 import Paper from 'material-ui/Paper'
 import * as colors from 'material-ui/styles/colors'
+
+import Link from '../components/Link'
 
 import gravatar from '../../common/utils/gravatar'
 import pollAnswers from '../../common/utils/pollAnswers'

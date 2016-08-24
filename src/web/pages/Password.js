@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
 import {FormattedMessage} from 'react-intl'
 
 import {Card} from 'material-ui/Card'
@@ -8,6 +7,8 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
 import PasswordForm from '../forms/Password'
+
+import Link from '../components/Link'
 
 import routes from '../routes'
 

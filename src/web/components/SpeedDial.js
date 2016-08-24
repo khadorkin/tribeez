@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 
@@ -11,6 +10,8 @@ import EventIcon from 'material-ui/svg-icons/action/event'
 import CheckIcon from 'material-ui/svg-icons/action/assignment-turned-in'
 import PasteIcon from 'material-ui/svg-icons/content/content-paste'
 import PollIcon from 'material-ui/svg-icons/social/poll'
+
+import Link from '../components/Link'
 
 import routes from '../routes'
 

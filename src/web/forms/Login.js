@@ -1,9 +1,10 @@
 import React, {Component, PropTypes} from 'react'
 import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router'
 
 import Form from '../hoc/Form'
 import TextField from './fields/Text'
+
+import Link from '../components/Link'
 
 import routes from '../routes'
 

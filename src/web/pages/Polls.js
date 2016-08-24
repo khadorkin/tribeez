@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
-import {Link} from 'react-router'
 import {FormattedMessage} from 'react-intl'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
@@ -12,6 +11,7 @@ import FlatButton from 'material-ui/FlatButton'
 import AsyncContent from '../hoc/AsyncContent'
 
 import Poll from '../components/Poll'
+import Link from '../components/Link'
 
 import styles from '../styles'
 import routes from '../routes'

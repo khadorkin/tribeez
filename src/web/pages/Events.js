@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router'
 
 import BigCalendar from 'react-big-calendar'
 import moment from 'moment'
@@ -22,6 +21,8 @@ import * as colors from 'material-ui/styles/colors'
 import FlatButton from 'material-ui/FlatButton'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
+
+import Link from '../components/Link'
 
 import styles from '../styles'
 import routes from '../routes'

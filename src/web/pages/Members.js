@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router'
 
 import {Tabs, Tab} from 'material-ui/Tabs'
 import Dialog from 'material-ui/Dialog'
@@ -14,6 +13,7 @@ import AsyncContent from '../hoc/AsyncContent'
 
 import Member from '../components/Member'
 import Invite from '../components/Invite'
+import Link from '../components/Link'
 
 import styles from '../styles'
 import routes from '../routes'

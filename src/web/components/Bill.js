@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {FormattedMessage, FormattedDate, FormattedNumber} from 'react-intl'
 
@@ -10,6 +9,8 @@ import IconButton from 'material-ui/IconButton'
 import EditButton from 'material-ui/svg-icons/image/edit'
 import DeleteButton from 'material-ui/svg-icons/action/delete'
 import * as colors from 'material-ui/styles/colors'
+
+import Link from '../components/Link'
 
 import gravatar from '../../common/utils/gravatar'
 

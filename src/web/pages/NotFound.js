@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router'
 import {FormattedMessage} from 'react-intl'
 
 import RaisedButton from 'material-ui/RaisedButton'
+
+import Link from '../components/Link'
 
 import routes from '../routes'
 

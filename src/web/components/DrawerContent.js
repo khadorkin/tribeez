@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router'
 
 import MenuItem from 'material-ui/MenuItem'
 import Avatar from 'material-ui/Avatar'
@@ -23,6 +22,8 @@ import DropUpIcon from 'material-ui/svg-icons/navigation/arrow-drop-up'
 import AddIcon from 'material-ui/svg-icons/content/add'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import * as colors from 'material-ui/styles/colors'
+
+import Link from '../components/Link'
 
 import postLogout from '../../common/actions/postLogout'
 import putSwitch from '../../common/actions/putSwitch'
