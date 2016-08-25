@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import {
   ActivityIndicator,
-  DrawerLayoutAndroid,
   Navigator,
   BackAndroid,
   Linking,
@@ -10,11 +9,14 @@ import {
   StatusBar,
   Dimensions,
   View,
+  Platform,
 } from 'react-native'
 
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
+
+import DrawerLayout from 'react-native-drawer-layout'
 
 import {deviceInfo} from '../common/config'
 import {auth} from '../common/firebase'
@@ -138,8 +140,17 @@ class App extends Component {
   }
 
   routeMapper(loading, items) {
+    const color = this.props.uid ? colors.lightText : colors.main
+
     return {
-      LeftButton: (/*route, navigator, index, navState*/) => {
+      LeftButton: (route/*, navigator, index, navState*/) => {
+        if (Platform.OS === 'ios') {
+          if (!route.root) {
+            return (
+              <IconButton name="arrow-back" color={color} onPress={this.handleBack} style={styles.hamburger} />
+            )
+          }
+        }
         return this.props.uid && (
           <IconButton name="menu" color="white" onPress={this.handleOpenDrawer} style={styles.hamburger} />
         )
@@ -161,7 +172,7 @@ class App extends Component {
         if (loading) {
           return <ActivityIndicator size="small" color="white" style={styles.loading} />
         }
-        if (route.type === 'details') { //TODO: not show if item does not exist
+        if (route.details) { //TODO: not show if item does not exist
           if (route.name === 'member') {
             if (route.props.id === this.props.uid) {
               return (
@@ -200,6 +211,10 @@ class App extends Component {
     this.setState({
       drawerOpened: false,
     })
+  }
+
+  handleBack() {
+    router.pop()
   }
 
   handleEdit(currentRoute) {
@@ -247,7 +262,7 @@ class App extends Component {
 
     return (
       <IntlProvider locale={this.props.lang} messages={this.props.messages} formats={this.props.formats}>
-        <DrawerLayoutAndroid
+        <DrawerLayout
           renderNavigationView={this.renderNavigation}
           ref={this.ref}
           onDrawerOpen={this.handleDrawerOpened}
@@ -264,7 +279,7 @@ class App extends Component {
           />
           <Snackbar />
           <Alerts />
-        </DrawerLayoutAndroid>
+        </DrawerLayout>
       </IntlProvider>
     )
   }
@@ -282,7 +297,7 @@ const styles = StyleSheet.create({
   navTitle: {
     color: colors.lightText,
     fontSize: 24,
-    marginTop: 10,
+    marginTop: (Platform.OS === 'ios' ? 12 : 10),
     marginRight: 56, // to not overlap the right icon
   },
   rightIcons: {
@@ -290,6 +305,7 @@ const styles = StyleSheet.create({
   },
   rightIcon: {
     padding: 12,
+    paddingLeft: 6,
   },
   loading: {
     padding: 17,

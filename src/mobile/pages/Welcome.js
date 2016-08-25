@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: colors.transparent,
   },
   action: {
     color: colors.lightText,

@@ -21,9 +21,9 @@ export const elevation = (height) => {
     }
   } else {
     return {
-      shadowColor: 'rgba(0, 0, 0, 0.5)',
-      shadowOpacity: 0.8,
-      shadowRadius: (height * 2),
+      shadowColor: colors.shadow,
+      shadowOpacity: 0.3,
+      shadowRadius: height,
       shadowOffset: {
         height,
         width: 0,

@@ -44,17 +44,13 @@ class TabBar extends Component {
     return (
       <TabButton
         key={id}
-        accessible={true}
-        accessibilityLabel={name}
-        accessibilityTraits="button"
         onPress={() => this.props.goToPage(index)}
+        style={styles.tab}
       >
-        <View style={styles.tab}>
-          <Text style={[styles.text, {fontWeight}]}>
-            {name}
-          </Text>
-          {badgeNode}
-        </View>
+        <Text style={[styles.text, {fontWeight}]}>
+          {name}
+        </Text>
+        {badgeNode}
       </TabButton>
     )
   }
@@ -96,8 +92,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 10,
     flexDirection: 'row',
+    backgroundColor: colors.transparent,
   },
   text: {
     color: colors.lightText,
@@ -107,6 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.error,
     borderRadius: 10,
     paddingHorizontal: 5,
+    paddingVertical: 2,
     marginLeft: 10,
   },
   badgeText: {

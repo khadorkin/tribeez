@@ -4,6 +4,7 @@ import {Platform, View, TouchableOpacity, TouchableNativeFeedback, StyleSheet} f
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import colors from '../../common/constants/colors'
+import {elevation} from '../dimensions'
 
 class Fab extends Component {
   static propTypes = {
@@ -47,9 +48,7 @@ const styles = StyleSheet.create({
     bottom: 16,
     right: 16,
     borderRadius: 32,
-    // Android:
-    elevation: 6,
-    //iOS: TODO
+    ...elevation(6),
   },
   button: {
     padding: 12,

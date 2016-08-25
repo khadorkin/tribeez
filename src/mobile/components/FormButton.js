@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View, Text, ActivityIndicator, StyleSheet} from 'react-native'
+import {View, Text, ActivityIndicator, StyleSheet} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
+
+import Touchable from './Touchable'
 
 import colors from '../../common/constants/colors'
 
@@ -25,14 +27,9 @@ class FormButton extends Component {
     )
 
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={loading ? null : onPress}
-      >
-        <View style={[styles.button, style]}>
-          {content}
-        </View>
-      </TouchableNativeFeedback>
+      <Touchable onPress={loading ? null : onPress} style={[styles.button, style]}>
+        {content}
+      </Touchable>
     )
   }
 }

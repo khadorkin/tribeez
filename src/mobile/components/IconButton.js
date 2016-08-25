@@ -1,8 +1,10 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
+
+import Touchable from './Touchable'
 
 import colors from '../../common/constants/colors'
 
@@ -23,15 +25,10 @@ class IconButton extends Component {
     const Icon = ((family === 'evil') ? EvilIcon : MaterialIcon)
 
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={onPress}
-      >
-        <View style={[styles.button, style]}>
-          <Icon size={size || 30} color={colors.icon} style={iconStyle} {...props} />
-          {children && <View style={separator ? styles.childrenWithSeparator : styles.children}>{children}</View>}
-        </View>
-      </TouchableNativeFeedback>
+      <Touchable onPress={onPress} style={[styles.button, style]}>
+        <Icon size={size || 30} color={colors.icon} style={iconStyle} {...props} />
+        {children && <View style={separator ? styles.childrenWithSeparator : styles.children}>{children}</View>}
+      </Touchable>
     )
   }
 }

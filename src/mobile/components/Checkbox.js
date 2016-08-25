@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import Touchable from './Touchable'
 
 import colors from '../../common/constants/colors'
 
@@ -31,15 +33,10 @@ class Checkbox extends Component {
     const unchecked_icon = multiple ? 'check-box-outline-blank' : 'radio-button-unchecked'
 
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={this.handlePress}
-      >
-        <View style={[styles.container, style]}>
-          <Icon size={24} color={colors.main} name={value ? checked_icon : unchecked_icon} />
-          <Text style={[styles.label, textStyle]} {...props}>{children}</Text>
-        </View>
-      </TouchableNativeFeedback>
+      <Touchable onPress={this.handlePress} style={[styles.container, style]}>
+        <Icon size={24} color={colors.main} name={value ? checked_icon : unchecked_icon} />
+        <Text style={[styles.label, textStyle]} {...props}>{children}</Text>
+      </Touchable>
     )
   }
 }

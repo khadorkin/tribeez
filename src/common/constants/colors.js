@@ -6,6 +6,7 @@ const colors = {
   new: '#FFFFDD', // light yellow
   primaryText: 'rgba(0, 0, 0, 0.8)',
   secondaryText: 'rgba(0, 0, 0, 0.5)',
+  shadow: 'black',
   icon: 'rgb(117, 117, 117)', // grey
   underline: 'rgb(224, 224, 224)', // light grey
   positive: '#4CAF50', // green500
@@ -14,6 +15,7 @@ const colors = {
   input: '#00ACC1', // cyan600
   statusBar: 'rgba(38, 198, 218, 0)', // transparent from colors.main to make the transition work
   dot: 'rgba(255, 255, 255, 0.4)', // for slides
+  transparent: 'transparent',
 
   // module colors:
   members: '#AB47BC', // purple400

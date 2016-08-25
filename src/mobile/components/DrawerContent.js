@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
   ////////////////////////// MENU //////////////////////////
   menu: {
     flex: 1,
+    backgroundColor: colors.background,
   },
   entry: {
     borderLeftColor: colors.background, // overwritten when current entry

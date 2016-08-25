@@ -109,4 +109,20 @@ Generate production builds:
 
 The two generated APKs can be found at `android/app/build/outputs/apk/app-[platform]-release.apk`
 
-When the change is breaking, update `config/android/minimum_version` with a minimum `versionCode` in Firebase database
+When the change is breaking, update `config/android/version` with a minimum major version in Firebase database
+
+## iOS app
+
+### Development
+
+Install the React Native Cli:
+
+    npm install -g react-native-cli
+
+Connect a device or start an emulator, then run:
+
+    react-native run-ios
+
+You can see the logs by running:
+
+    react-native log-ios

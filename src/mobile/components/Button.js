@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
+
+import Touchable from './Touchable'
 
 import colors from '../../common/constants/colors'
 import {elevation} from '../dimensions'
@@ -20,16 +22,11 @@ class Button extends Component {
     const {intl, id, onPress, style, textStyle, flat, ...props} = this.props
 
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={onPress}
-      >
-        <View style={[styles.button, (flat ? styles.flat : styles.raised), style]}>
-          <Text style={[styles.text, (flat ? styles.flatText : styles.raisedText), textStyle]} {...props}>
-            {intl.formatMessage({id}).toUpperCase()}
-          </Text>
-        </View>
-      </TouchableNativeFeedback>
+      <Touchable onPress={onPress} style={[styles.button, (flat ? styles.flat : styles.raised), style]}>
+        <Text style={[styles.text, (flat ? styles.flatText : styles.raisedText), textStyle]} {...props}>
+          {intl.formatMessage({id}).toUpperCase()}
+        </Text>
+      </Touchable>
     )
   }
 }

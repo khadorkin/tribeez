@@ -2,7 +2,7 @@
   "title": "Tribeez",
   "description": "A simple app to organize your group life",
   "url": "https://tribeez.net",
-  "play_url": "https://play.google.com/apps/testing/net.tribeez",
+  "play_url": "https://play.google.com/store/apps/details?id=net.tribeez",
   "twitter": "TribeezApp",
   "api_endpoint": "https://api.tribeez.net",
   "rollbar_token": "xxxxxxxx",

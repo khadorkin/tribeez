@@ -25,41 +25,41 @@ import TaskForm from './forms/Task'
 
 export default {
   // public routes
-  WELCOME: {name: 'welcome', component: Welcome, noHeader: true},
+  WELCOME: {name: 'welcome', component: Welcome, noHeader: true, root: true},
   LOGIN: {name: 'login', component: LoginForm, noHeader: true},
   PASSWORD: {name: 'password', component: PasswordForm, noHeader: true},
   REGISTER: {name: 'register', component: RegisterForm},
   JOIN: {name: 'join', component: JoinForm},
 
   // private routes
-  ACTIVITY: {name: 'activity', component: Activity, type: 'list'},
-  TRIBE_NEW: {name: 'tribe_new', component: TribeForm, type: 'new'},
-  TRIBE_EDIT: {name: 'tribe_edit', component: TribeForm, type: 'edit'},
+  ACTIVITY: {name: 'activity', component: Activity, root: true},
+  TRIBE_NEW: {name: 'tribe_new', component: TribeForm},
+  TRIBE_EDIT: {name: 'tribe_edit', component: TribeForm},
 
-  MEMBERS: {name: 'members', component: Members, type: 'list', icon: 'group'},
-  MEMBER: {name: 'member', component: MemberDetails, type: 'details'},
-  MEMBERS_NEW: {name: 'members_new', component: InviteForm, type: 'new'},
-  MEMBERS_EDIT: {name: 'profile', component: ProfileForm, type: 'edit'},
+  MEMBERS: {name: 'members', component: Members, root: true, icon: 'group'},
+  MEMBER: {name: 'member', component: MemberDetails, details: true},
+  MEMBERS_NEW: {name: 'members_new', component: InviteForm},
+  MEMBERS_EDIT: {name: 'profile', component: ProfileForm},
 
-  BILLS: {name: 'bills', component: Bills, type: 'list', icon: 'shopping-cart'},
-  BILL: {name: 'bill', component: BillDetails, type: 'details'},
-  BILLS_NEW: {name: 'bills_new', component: BillForm, type: 'new'},
-  BILLS_EDIT: {name: 'bills_edit', component: BillForm, type: 'edit'},
+  BILLS: {name: 'bills', component: Bills, root: true, icon: 'shopping-cart'},
+  BILL: {name: 'bill', component: BillDetails, details: true},
+  BILLS_NEW: {name: 'bills_new', component: BillForm},
+  BILLS_EDIT: {name: 'bills_edit', component: BillForm},
 
-  EVENTS: {name: 'events', component: Events, type: 'list', icon: 'event'},
-  EVENT: {name: 'event', component: EventDetails, type: 'details'},
-  EVENTS_NEW: {name: 'events_new', component: EventForm, type: 'new'},
-  EVENTS_EDIT: {name: 'events_edit', component: EventForm, type: 'edit'},
+  EVENTS: {name: 'events', component: Events, root: true, icon: 'event'},
+  EVENT: {name: 'event', component: EventDetails, details: true},
+  EVENTS_NEW: {name: 'events_new', component: EventForm},
+  EVENTS_EDIT: {name: 'events_edit', component: EventForm},
 
-  NOTES: {name: 'notes', component: Notes, type: 'list', icon: 'content-paste'},
+  NOTES: {name: 'notes', component: Notes, root: true, icon: 'content-paste'},
 
-  POLLS: {name: 'polls', component: Polls, type: 'list', icon: 'poll'},
-  POLL: {name: 'poll', component: PollDetails, type: 'details'},
-  POLLS_NEW: {name: 'polls_new', component: PollForm, type: 'new'},
-  POLLS_EDIT: {name: 'polls_edit', component: PollForm, type: 'edit'},
+  POLLS: {name: 'polls', component: Polls, root: true, icon: 'poll'},
+  POLL: {name: 'poll', component: PollDetails, details: true},
+  POLLS_NEW: {name: 'polls_new', component: PollForm},
+  POLLS_EDIT: {name: 'polls_edit', component: PollForm},
 
-  TASKS: {name: 'tasks', component: Tasks, type: 'list', icon: 'assignment-turned-in'},
-  TASK: {name: 'task', component: TaskDetails, type: 'details'},
-  TASKS_NEW: {name: 'tasks_new', component: TaskForm, type: 'new'},
-  TASKS_EDIT: {name: 'tasks_edit', component: TaskForm, type: 'edit'},
+  TASKS: {name: 'tasks', component: Tasks, root: true, icon: 'assignment-turned-in'},
+  TASK: {name: 'task', component: TaskDetails, details: true},
+  TASKS_NEW: {name: 'tasks_new', component: TaskForm},
+  TASKS_EDIT: {name: 'tasks_edit', component: TaskForm},
 }

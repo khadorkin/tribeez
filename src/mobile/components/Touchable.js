@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {TouchableNativeFeedback, View} from 'react-native'
+import {Platform, TouchableOpacity, TouchableNativeFeedback, View} from 'react-native'
 
 class Touchable extends Component {
   static propTypes = {
@@ -9,15 +9,21 @@ class Touchable extends Component {
 
   render() {
     const {onPress, children, ...props} = this.props
+
+    let Comp = TouchableOpacity
+    let background
+
+    if (Platform.OS === 'android') {
+      Comp = TouchableNativeFeedback
+      background = TouchableNativeFeedback.SelectableBackground()
+    }
+
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.SelectableBackground()}
-        onPress={onPress}
-      >
+      <Comp background={background} onPress={onPress}>
         <View {...props}>
           {children}
         </View>
-      </TouchableNativeFeedback>
+      </Comp>
     )
   }
 }
