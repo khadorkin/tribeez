@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>930262263426-0if9pg4qvo9q0n2ckl836qa9ei4h8l4v.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.930262263426-0if9pg4qvo9q0n2ckl836qa9ei4h8l4v</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDrM4i9Z-nGVmoUlbXeSkT4UyE9wFKGLBg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>930262263426</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>net.tribeez</string>
+	<key>PROJECT_ID</key>
+	<string>tribeez-e0677</string>
+	<key>STORAGE_BUCKET</key>
+	<string>tribeez-e0677.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:930262263426:ios:4a16baf1ddb6c0e8</string>
+	<key>DATABASE_URL</key>
+	<string>https://tribeez-e0677.firebaseio.com</string>
+</dict>
+</plist>

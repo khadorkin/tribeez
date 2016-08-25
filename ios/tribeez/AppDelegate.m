@@ -8,9 +8,13 @@
  */
 
 #import "AppDelegate.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
+
+#import "RNFIRMessaging.h"
 
 @implementation AppDelegate
 
@@ -31,7 +35,17 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [FIRApp configure];
+  [Fabric with:@[[Crashlytics class]]];
   return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+  fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))handler
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName:FCMNotificationReceived object:self userInfo:notification];
+  handler(UIBackgroundFetchResultNewData);
 }
 
 @end
