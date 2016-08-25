@@ -6,7 +6,7 @@ import platform from '../platform'
 import {rand} from '../utils/text'
 import {login} from './auth'
 
-import report from './error'
+import failure from './failure'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -101,7 +101,7 @@ export default (values, dispatch) => {
         })
         .catch((error) => {
           reject({_error: 'request'})
-          dispatch(report(error, 'submitRegister/' + errorOrigin))
+          dispatch(failure(error, 'submitRegister/' + errorOrigin))
           // silently rollback user creation:
           Promise.all([
             user.delete(),
@@ -123,12 +123,12 @@ export default (values, dispatch) => {
             break
           default:
             reject({_error: 'request'})
-            dispatch(report(error, 'submitRegister/createUser'))
+            dispatch(failure(error, 'submitRegister/createUser'))
         }
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'submitRegister', 'api'))
+      dispatch(failure(error, 'submitRegister', 'api'))
       reject({_error: 'request'})
     })
   })

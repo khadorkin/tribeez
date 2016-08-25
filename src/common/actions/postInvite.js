@@ -7,7 +7,7 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 const origin = 'postInvite'
 
@@ -45,11 +45,11 @@ export default (invite) => {
         })
       })
       .catch((error) => {
-        dispatch(report(error, origin, 'api'))
+        dispatch(failure(error, origin, 'api'))
       })
     })
     .catch((error) => {
-      dispatch(report(error, origin))
+      dispatch(failure(error, origin))
     })
   }
 }

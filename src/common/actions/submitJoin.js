@@ -6,7 +6,7 @@ import {login} from './auth'
 
 import {SNACK_MESSAGE} from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 export default (invite, values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -84,9 +84,9 @@ export default (invite, values, dispatch) => {
           ])
         })
         .catch(() => {
-          dispatch(report(error, 'submitJoin/rollback'))
+          dispatch(failure(error, 'submitJoin/rollback'))
         })
-        dispatch(report(error, 'submitJoin/' + errorOrigin))
+        dispatch(failure(error, 'submitJoin/' + errorOrigin))
         return Promise.reject()
       })
       .then(() => {
@@ -115,7 +115,7 @@ export default (invite, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          dispatch(report(error, 'submitJoin/createUser'))
+          dispatch(failure(error, 'submitJoin/createUser'))
       }
     })
   })

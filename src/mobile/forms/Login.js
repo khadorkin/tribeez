@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     ...elevation(1),
     margin: 16,
     padding: 16,
+    borderRadius: 2,
   },
   subtitle: {
     marginBottom: 50,

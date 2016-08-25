@@ -1,6 +1,6 @@
 import {auth} from '../firebase'
 import {login} from './auth'
-import report from './error'
+import failure from './failure'
 
 export default (destination, values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ export default (destination, values, dispatch) => {
           break
         default:
           reject({_error: 'request'})
-          dispatch(report(error, 'submitLogin'))
+          dispatch(failure(error, 'submitLogin'))
       }
     })
   })

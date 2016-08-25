@@ -7,7 +7,7 @@ import {
   ITEM_CLEAR,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 let ref
 
@@ -42,7 +42,7 @@ const on = (itemType, id) => {
         gotOnce = true
       }
     }, (error) => {
-      dispatch(report(error, 'listenItem/' + itemType))
+      dispatch(failure(error, 'listenItem/' + itemType))
     })
   }
 }

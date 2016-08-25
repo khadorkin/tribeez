@@ -3,12 +3,12 @@ import fcm from '../fcm'
 
 import {REQUEST, USER_UPDATED} from '../constants/actions'
 
-import {setAttr, setUser, clearUser} from '../error-report'
-import report from './error'
+import report from '../report'
+import failure from './failure'
 
 import listenTribe from './listenTribe'
 
-import {android} from '../config'
+import {deviceInfo} from '../config'
 
 let publicRef
 let privateRef
@@ -23,16 +23,16 @@ const on = (uid) => {
       if (!userTokens || !userTokens[token]) {
         privateRef.child('fcm_tokens').child(token).set({
           timestamp,
-          model: android.model,
-          appVersion: android.appVersion,
-          systemName: android.systemName,
-          systemVersion: android.systemVersion,
-          manufacturer: android.systemManufacturer,
-          locale: android.deviceLocale,
-          timezone: android.timezone,
+          model: deviceInfo.model,
+          appVersion: deviceInfo.appVersion,
+          systemName: deviceInfo.systemName,
+          systemVersion: deviceInfo.systemVersion,
+          manufacturer: deviceInfo.systemManufacturer,
+          locale: deviceInfo.deviceLocale,
+          timezone: deviceInfo.timezone,
         })
         .catch((error) => {
-          dispatch(report(error, 'listenUser/fcm_tokens'))
+          dispatch(failure(error, 'listenUser/fcm_tokens'))
         })
       }
     }
@@ -46,8 +46,8 @@ const on = (uid) => {
     publicRef.on('value', (snapshot) => {
       const user = snapshot.val()
       const tid = user.current_tribe
-      setUser(uid, user)
-      setAttr('tribe', tid)
+      report.setUser(uid, user)
+      report.setAttr('tribe', tid)
 
       auth.currentUser.name = user.name
       auth.currentUser.gravatar = user.gravatar
@@ -62,7 +62,7 @@ const on = (uid) => {
         dispatch(listenTribe.on(tid))
       }
     }, (error) => {
-      dispatch(report(error, 'listenUser/user'))
+      dispatch(failure(error, 'listenUser/user'))
     })
 
 
@@ -78,7 +78,7 @@ const on = (uid) => {
 
       fcm.subscribeToken(onToken)
     }, (error) => {
-      dispatch(report(error, 'listenUser/users_private'))
+      dispatch(failure(error, 'listenUser/users_private'))
     })
   }
 }
@@ -89,7 +89,7 @@ const off = () => {
     privateRef.off()
     dispatch(listenTribe.off())
     fcm.unsubscribeToken()
-    clearUser()
+    report.clearUser()
   }
 }
 

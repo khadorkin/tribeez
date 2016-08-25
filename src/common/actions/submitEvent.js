@@ -4,7 +4,7 @@ import routes from '../routes'
 import {db, auth, timestamp} from '../firebase'
 
 import saveLog from './saveLog'
-import report from './error'
+import failure from './failure'
 import {reminderTimeId, storedTime} from '../utils/time'
 
 export default (values, dispatch) => {
@@ -63,7 +63,7 @@ export default (values, dispatch) => {
       router.resetTo(routes.EVENTS, dispatch)
     })
     .catch((error) => {
-      dispatch(report(error, 'submitEvent'))
+      dispatch(failure(error, 'submitEvent'))
       reject({_error: 'request'})
     })
   })

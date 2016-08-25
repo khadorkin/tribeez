@@ -9,7 +9,7 @@ import {
   ACTIVITY_REMOVED,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 import {oneLine} from '../utils/text'
 import {getTimestamp} from '../utils/time'
@@ -64,7 +64,7 @@ const on = (tid) => {
         data: {polls},
       })
     }, (error) => {
-      dispatch(report(error, 'listenActivity/polls'))
+      dispatch(failure(error, 'listenActivity/polls'))
     })
 
 
@@ -110,7 +110,7 @@ const on = (tid) => {
         data: {tasks},
       })
     }, (error) => {
-      dispatch(report(error, 'listenActivity/tasks'))
+      dispatch(failure(error, 'listenActivity/tasks'))
     })
 
 
@@ -140,13 +140,13 @@ const on = (tid) => {
     }
 
     eventsRef.on('child_added', eventsCallback.bind(null, ACTIVITY_ADDED), (error) => {
-      dispatch(report(error, 'listenActivity/events/added'))
+      dispatch(failure(error, 'listenActivity/events/added'))
     })
     eventsRef.on('child_changed', eventsCallback.bind(null, ACTIVITY_CHANGED), (error) => {
-      dispatch(report(error, 'listenActivity/events/changed'))
+      dispatch(failure(error, 'listenActivity/events/changed'))
     })
     eventsRef.on('child_removed', eventsCallback.bind(null, ACTIVITY_REMOVED), (error) => {
-      dispatch(report(error, 'listenActivity/events/removed'))
+      dispatch(failure(error, 'listenActivity/events/removed'))
     })
 
 
@@ -177,13 +177,13 @@ const on = (tid) => {
     }
 
     billsRef.on('child_added', billsCallback.bind(null, ACTIVITY_ADDED), (error) => {
-      dispatch(report(error, 'listenActivity/bills/added'))
+      dispatch(failure(error, 'listenActivity/bills/added'))
     })
     billsRef.on('child_changed', billsCallback.bind(null, ACTIVITY_CHANGED), (error) => {
-      dispatch(report(error, 'listenActivity/bills/changed'))
+      dispatch(failure(error, 'listenActivity/bills/changed'))
     })
     billsRef.on('child_removed', billsCallback.bind(null, ACTIVITY_REMOVED), (error) => {
-      dispatch(report(error, 'listenActivity/bills/removed'))
+      dispatch(failure(error, 'listenActivity/bills/removed'))
     })
 
 
@@ -214,7 +214,7 @@ const on = (tid) => {
         data: {notes},
       })
     }, (error) => {
-      dispatch(report(error, 'listenActivity/tasks'))
+      dispatch(failure(error, 'listenActivity/tasks'))
     })
   }
 }

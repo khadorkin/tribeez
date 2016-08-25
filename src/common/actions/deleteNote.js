@@ -6,7 +6,7 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 export default (id) => {
   return (dispatch) => {
@@ -24,7 +24,7 @@ export default (id) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'deleteNote'))
+      dispatch(failure(error, 'deleteNote'))
     })
   }
 }

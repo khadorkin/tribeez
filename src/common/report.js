@@ -1,40 +1,42 @@
 const extra = {}
 
-export const initHandler = () => {
+const init = () => {
   log('Already intialized in index.html')
 }
 
-export const setUser = (uid, infos) => {
+const setUser = (uid, infos) => {
   extra.user = uid
   extra.email = infos.email
   extra.name = infos.name
   extra.lang = infos.lang
 }
 
-export const clearUser = () => {
+const clearUser = () => {
   delete extra.user
   delete extra.email
   delete extra.name
   delete extra.lang
 }
 
-export const setAttr = (key, value) => {
+const setAttr = (key, value) => {
   extra[key] = value
 }
 
-export const log = (value) => {
+const log = (value) => {
   if (window.console) {
-    console.warn('[error-report]', value) // eslint-disable-line no-console
+    console.warn('[report]', value) // eslint-disable-line no-console
   }
 }
 
-export const reportIssue = (error, reason) => {
+const issue = (error, reason) => {
   if (window.Rollbar) {
     const errorStr = (error.code || error.message || error.toString()) //TODO: improve
     Rollbar.error(reason + ': ' + errorStr, extra)
   }
 }
 
-export const crash = () => {
+const crash = () => {
   log('CRASH')
 }
+
+export default {init, setUser, clearUser, setAttr, log, issue, crash}

@@ -5,7 +5,7 @@ import {db, auth, timestamp} from '../firebase'
 import api from '../utils/api'
 
 import {SNACK_MESSAGE} from '../constants/actions'
-import report from './error'
+import failure from './failure'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -42,17 +42,17 @@ export default (values, dispatch) => {
         if (error.email) {
           reject({email: error.email})
         } else {
-          dispatch(report(error, 'submitInvite', 'api'))
+          dispatch(failure(error, 'submitInvite', 'api'))
           reject({_error: 'request'})
         }
         ref.child(token).remove()
         .catch(() => {
-          dispatch(report(error, 'submitInvite/rollback'))
+          dispatch(failure(error, 'submitInvite/rollback'))
         })
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'submitInvite'))
+      dispatch(failure(error, 'submitInvite'))
       reject({_error: 'request'})
     })
   })

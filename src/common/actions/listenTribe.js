@@ -10,7 +10,7 @@ import {
   SUCCESS,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 let tribeRef
 let memberRef
@@ -41,7 +41,7 @@ const on = (tid) => {
         gotOnce = true
       }
     }, (error) => {
-      dispatch(report(error, 'listenUser/tribe_infos'))
+      dispatch(failure(error, 'listenUser/tribe_infos'))
     })
 
     memberRef = db.ref('tribes/' + tid + '/members')
@@ -54,7 +54,7 @@ const on = (tid) => {
         member,
       })
     }, (error) => {
-      dispatch(report(error, 'listenUser/tribe_members/added'))
+      dispatch(failure(error, 'listenUser/tribe_members/added'))
     })
 
     memberRef.on('child_changed', (sub_snapshot) => {
@@ -65,7 +65,7 @@ const on = (tid) => {
         member,
       })
     }, (error) => {
-      dispatch(report(error, 'listenUser/tribe_members/changed'))
+      dispatch(failure(error, 'listenUser/tribe_members/changed'))
     })
 
     historyRef = db.ref('tribes/' + tid + '/history')
@@ -73,7 +73,7 @@ const on = (tid) => {
     let lastKey
 
     const onError = (error) => {
-      dispatch(report(error, 'listenTribe'))
+      dispatch(failure(error, 'listenTribe'))
     }
 
     const countUnread = () => {

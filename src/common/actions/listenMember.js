@@ -6,7 +6,7 @@ import {
   MEMBER_UPDATED,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 let ref
 
@@ -32,7 +32,7 @@ const on = (uid) => {
         gotOnce = true
       }
     }, (error) => {
-      dispatch(report(error, 'listenMember'))
+      dispatch(failure(error, 'listenMember'))
     })
   }
 }

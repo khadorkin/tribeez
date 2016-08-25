@@ -1,11 +1,11 @@
 import {Crashlytics, Answers} from 'react-native-fabric'
 import StackTrace from 'stacktrace-js'
 
-export const initHandler = () => {
+const init = () => {
   const originalHandler = global.ErrorUtils.getGlobalHandler()
 
   const handler = (error) => {
-    reportIssue(error, 'uncaught')
+    issue(error, 'uncaught')
     if (originalHandler) {
       originalHandler(error)
     }
@@ -13,7 +13,7 @@ export const initHandler = () => {
   global.ErrorUtils.setGlobalHandler(handler)
 }
 
-export const setUser = (uid, infos) => {
+const setUser = (uid, infos) => {
   Crashlytics.setUserIdentifier(uid)
   Crashlytics.setUserEmail(infos.email)
   Crashlytics.setUserName(infos.name)
@@ -21,13 +21,13 @@ export const setUser = (uid, infos) => {
   Answers.logLogin('Email', true)
 }
 
-export const clearUser = () => {
+const clearUser = () => {
   Crashlytics.setUserIdentifier('(anonymous)')
   Crashlytics.setUserEmail('(anonymous)')
   Crashlytics.setUserName('(anonymous)')
 }
 
-export const setAttr = (key, value) => {
+const setAttr = (key, value) => {
   key = String(key)
   switch (typeof value) {
     case 'string':
@@ -41,14 +41,14 @@ export const setAttr = (key, value) => {
   }
 }
 
-export const log = (value) => {
+const log = (value) => {
   if (value instanceof Error) {
     value = value.stack || value.message
   }
   Crashlytics.log(String(value))
 }
 
-export const reportIssue = (error, reason) => {
+const issue = (error, reason) => {
   StackTrace.fromError(error, {offline: true})
   .then((stack) => {
     stack = stack.map((row) => {
@@ -76,6 +76,8 @@ export const reportIssue = (error, reason) => {
   })
 }
 
-export const crash = () => {
+const crash = () => {
   Crashlytics.crash()
 }
+
+export default {init, setUser, clearUser, setAttr, log, issue, crash}

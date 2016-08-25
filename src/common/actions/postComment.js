@@ -6,7 +6,7 @@ import {
   UPDATE_COMMENT_TEXT,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 export default (type, item, text) => {
   return (dispatch) => {
@@ -42,7 +42,7 @@ export default (type, item, text) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'postComment'))
+      dispatch(failure(error, 'postComment'))
     })
   }
 }

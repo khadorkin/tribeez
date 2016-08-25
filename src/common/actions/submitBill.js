@@ -5,7 +5,7 @@ import {db, auth, timestamp} from '../firebase'
 import {decimal} from '../utils/number'
 
 import saveLog from './saveLog'
-import report from './error'
+import failure from './failure'
 
 const calculateParts = (bill) => {
   // total number of shares, or sum of ammounts
@@ -113,7 +113,7 @@ export default (values, dispatch) => {
       router.resetTo(routes.BILLS, dispatch)
     })
     .catch((error) => {
-      dispatch(report(error, 'submitBill'))
+      dispatch(failure(error, 'submitBill'))
       reject({_error: 'request'})
     })
   })

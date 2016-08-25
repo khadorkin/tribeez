@@ -6,7 +6,7 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 import {reminderTimeId} from '../utils/time'
 
 export default (type, id) => {
@@ -84,7 +84,7 @@ export default (type, id) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'deleteItem/' + type))
+      dispatch(failure(error, 'deleteItem/' + type))
       dispatch({
         type: SNACK_MESSAGE,
         message: 'error',

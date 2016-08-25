@@ -7,7 +7,7 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 import listenActivity from './listenActivity'
 import listenItem from './listenItem'
@@ -49,7 +49,7 @@ export default () => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'postLogout'))
+      dispatch(failure(error, 'postLogout'))
     })
   }
 }

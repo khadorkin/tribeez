@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
-import {initHandler} from '../common/error-report'
-initHandler()
+import report from '../common/report'
+report.init()
 
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'

@@ -9,7 +9,7 @@ import {
 import router from '../router'
 import routes from '../routes'
 
-import report from './error'
+import failure from './failure'
 
 export default (tid) => {
   return (dispatch) => {
@@ -30,7 +30,7 @@ export default (tid) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'putSwitch'))
+      dispatch(failure(error, 'putSwitch'))
     })
   }
 }

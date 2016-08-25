@@ -4,7 +4,7 @@ import routes from '../routes'
 import {db, auth, timestamp} from '../firebase'
 
 import saveLog from './saveLog'
-import report from './error'
+import failure from './failure'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export default (values, dispatch) => {
       router.resetTo(routes.POLLS, dispatch)
     })
     .catch((error) => {
-      dispatch(report(error, 'submitPoll'))
+      dispatch(failure(error, 'submitPoll'))
       reject({_error: 'request'})
     })
   })

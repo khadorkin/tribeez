@@ -6,7 +6,7 @@ import {
   PUT_NOTE,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 export default (data) => {
   return (dispatch) => {
@@ -30,7 +30,7 @@ export default (data) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'putNote'))
+      dispatch(failure(error, 'putNote'))
     })
   }
 }

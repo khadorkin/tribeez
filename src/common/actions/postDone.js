@@ -5,7 +5,7 @@ import {
   SUCCESS,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 export default (id) => {
   return (dispatch) => {
@@ -25,7 +25,7 @@ export default (id) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'postDone'))
+      dispatch(failure(error, 'postDone'))
     })
   }
 }

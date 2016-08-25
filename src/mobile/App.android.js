@@ -16,7 +16,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {IntlProvider} from 'react-intl'
 
-import {android} from '../common/config'
+import {deviceInfo} from '../common/config'
 import {auth} from '../common/firebase'
 import colors from '../common/constants/colors'
 
@@ -120,7 +120,7 @@ class App extends Component {
 
   componentWillReceiveProps(props) {
     if (props.config && !this.props.config) {
-      const version = Number(android.appVersion.split('.')[0]) // the major bit ('2.1.0' => 2)
+      const version = Number(deviceInfo.appVersion.split('.')[0]) // the major bit ('2.1.0' => 2)
       if (props.config.version > version) {
         this.props.alert({
           title_id: 'dialog_update_title',
@@ -224,8 +224,8 @@ class App extends Component {
   }
 
   handleOpenStore() {
-    Linking.openURL('market://details?id=' + android.bundleId).catch(() => {
-      Linking.openURL('https://play.google.com/store/apps/details?id=' + android.bundleId)
+    Linking.openURL('market://details?id=' + deviceInfo.bundleId).catch(() => {
+      Linking.openURL('https://play.google.com/store/apps/details?id=' + deviceInfo.bundleId)
     })
   }
 

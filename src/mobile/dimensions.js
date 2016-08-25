@@ -20,7 +20,14 @@ export const elevation = (height) => {
       }
     }
   } else {
-    //TODO: iOS shadows
-    return null
+    return {
+      shadowColor: 'rgba(0, 0, 0, 0.5)',
+      shadowOpacity: 0.8,
+      shadowRadius: (height * 2),
+      shadowOffset: {
+        height,
+        width: 0,
+      },
+    }
   }
 }

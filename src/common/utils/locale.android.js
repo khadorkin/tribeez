@@ -2,7 +2,7 @@ import moment from 'moment'
 
 import {map as langs} from '../constants/langs'
 
-import {android} from '../config'
+import {deviceInfo} from '../config'
 
 export const getLang = () => {
   let lang
@@ -10,7 +10,7 @@ export const getLang = () => {
     lang = localStorage.getItem('lang')
   }
   if (!lang) {
-    lang = android.deviceLocale.substr(0, 2).toLowerCase()
+    lang = deviceInfo.deviceLocale.substr(0, 2).toLowerCase()
   }
   if (!langs[lang]) {
     lang = 'en'

@@ -12,7 +12,7 @@ import {
   CLOSE_ALERT,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 
 export const toggleMenu = (open) => {
   return (dispatch) => {
@@ -87,7 +87,7 @@ export const setLastViewedHistoryKey = (key) => {
       })
     })
     .catch((error) => {
-      dispatch(report(error, 'setLastViewedHistoryKey'))
+      dispatch(failure(error, 'setLastViewedHistoryKey'))
     })
   }
 }

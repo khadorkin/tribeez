@@ -5,7 +5,7 @@ import {SNACK_MESSAGE} from '../constants/actions'
 import router from '../router'
 import routes from '../routes'
 
-import report from './error'
+import failure from './failure'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
@@ -64,7 +64,7 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: 'request'})
-        dispatch(report(error, 'submitTribe/edit'))
+        dispatch(failure(error, 'submitTribe/edit'))
       })
 
     // CREATE NEW TRIBE:
@@ -130,7 +130,7 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         reject({_error: 'request'})
-        dispatch(report(error, 'submitTribe/new'))
+        dispatch(failure(error, 'submitTribe/new'))
       })
     }
   })

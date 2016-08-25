@@ -10,7 +10,7 @@ import {
   SNACK_MESSAGE,
 } from '../constants/actions'
 
-import report from './error'
+import failure from './failure'
 import autoLogin from './autoLogin'
 
 export default (tribe, token) => {
@@ -44,7 +44,7 @@ export default (tribe, token) => {
       }
     })
     .catch((error) => {
-      dispatch(report(error, 'getInvite', 'api'))
+      dispatch(failure(error, 'getInvite', 'api'))
     })
   }
 }
