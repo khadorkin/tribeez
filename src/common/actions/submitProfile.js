@@ -78,6 +78,9 @@ export default (reauth_prompt, tribe_ids, values, dispatch) => {
         case 'auth/argument-error':
           reject({_error: 'reauth'})
           break
+        case 'auth/network-request-failed':
+          reject({_error: 'network'})
+          break
         default:
           reject({_error: 'request'})
           dispatch(failure(error, 'submitProfile'))

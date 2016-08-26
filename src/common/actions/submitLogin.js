@@ -19,6 +19,9 @@ export default (destination, values, dispatch) => {
         case 'auth/wrong-password':
           reject({password: 'wrong'})
           break
+        case 'auth/network-request-failed':
+          reject({_error: 'network'})
+          break
         default:
           reject({_error: 'request'})
           dispatch(failure(error, 'submitLogin'))

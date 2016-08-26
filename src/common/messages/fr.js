@@ -326,7 +326,8 @@ const fr = {
   log: 'Historique et commentaires',
 
   // Common error handling
-  'error.request': 'Erreur: veuillez rééssayer plus tard',
+  'error.request': 'Erreur : veuillez rééssayer plus tard',
+  'error.network': 'Erreur réseau : veuillez vérifier votre connexion',
   'error.not_found': 'Cet élément n’existe plus',
   'error.reauth': 'Mot de passe actuel incorrect',
 }

@@ -327,6 +327,7 @@ export default {
 
   // Common error handling
   'error.request': 'Request error: please try again later',
+  'error.network': 'Network error: please try again when your connection is back',
   'error.not_found': 'This item does not exist anymore',
   'error.reauth': 'Wrong current password',
 }

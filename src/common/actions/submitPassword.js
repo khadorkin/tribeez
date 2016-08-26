@@ -19,6 +19,9 @@ export default (values, dispatch) => {
         case 'auth/user-not-found':
           reject({email: 'unknown'})
           break
+        case 'auth/network-request-failed':
+          reject({_error: 'network'})
+          break
         default:
           reject({_error: 'request'})
           dispatch(failure(error, 'submitPassword'))

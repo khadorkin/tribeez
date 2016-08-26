@@ -121,6 +121,9 @@ export default (values, dispatch) => {
           case 'auth/weak-password':
             reject({password: 'weak'})
             break
+          case 'auth/network-request-failed':
+            reject({_error: 'network'})
+            break
           default:
             reject({_error: 'request'})
             dispatch(failure(error, 'submitRegister/createUser'))
