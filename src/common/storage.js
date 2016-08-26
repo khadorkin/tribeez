@@ -1,19 +1,21 @@
+const ERR = 'Browser does not support localStorage'
+
 const get = (key) => {
   return new Promise((resolve, reject) => {
-    if (window.localStorage) {
+    try {
       resolve(localStorage.getItem(key))
-    } else {
-      reject('Browser does not support localStorage')
+    } catch (err) {
+      reject(ERR)
     }
   })
 }
 
 const set = (key, val) => {
   return new Promise((resolve, reject) => {
-    if (window.localStorage) {
+    try {
       resolve(localStorage.setItem(key, val))
-    } else {
-      reject('Browser does not support localStorage')
+    } catch (err) {
+      reject(ERR)
     }
   })
 }

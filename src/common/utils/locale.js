@@ -6,8 +6,10 @@ const browserLang = (navigator.language || navigator.userLanguage || 'en').subst
 
 export const getLang = () => {
   let lang
-  if (window.localStorage) {
+  try {
     lang = localStorage.getItem('lang')
+  } catch (err) {
+    // ignore
   }
   if (!lang) {
     lang = browserLang
@@ -27,7 +29,9 @@ export const setLang = (lang) => {
       moment.locale('en')
       break
   }
-  if (window.localStorage) {
-    localStorage.setItem('lang', lang) //TODO: mobile
+  try {
+    localStorage.setItem('lang', lang)
+  } catch (err) {
+    // ignore
   }
 }

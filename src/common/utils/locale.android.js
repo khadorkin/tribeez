@@ -5,13 +5,7 @@ import {map as langs} from '../constants/langs'
 import {deviceInfo} from '../config'
 
 export const getLang = () => {
-  let lang
-  if (window.localStorage) {
-    lang = localStorage.getItem('lang')
-  }
-  if (!lang) {
-    lang = deviceInfo.deviceLocale.substr(0, 2).toLowerCase()
-  }
+  let lang = deviceInfo.deviceLocale.substr(0, 2).toLowerCase()
   if (!langs[lang]) {
     lang = 'en'
   }
@@ -26,8 +20,5 @@ export const setLang = (lang) => {
     default:
       moment.locale('en')
       break
-  }
-  if (window.localStorage) {
-    localStorage.setItem('lang', lang) //TODO: mobile
   }
 }
