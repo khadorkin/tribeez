@@ -50,6 +50,10 @@ export default () => {
     })
     .catch((error) => {
       dispatch(failure(error, 'postLogout'))
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
     })
   }
 }

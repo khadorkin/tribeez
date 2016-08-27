@@ -43,7 +43,8 @@ export default (values, dispatch) => {
           reject({email: error.email})
         } else {
           dispatch(failure(error, 'submitInvite', 'api'))
-          reject({_error: 'request'})
+          const _error = /fetch/.test(error.message) ? 'network' : 'request'
+          reject({_error})
         }
         ref.child(token).remove()
         .catch(() => {

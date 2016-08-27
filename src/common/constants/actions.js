@@ -41,6 +41,7 @@ export const LOGIN_EMAIL = 'LOGIN_EMAIL'
 export const PASSWORD_SUCCESS = 'PASSWORD_SUCCESS'
 
 export const GET_INVITE_SUCCESS = 'GET_INVITE_SUCCESS'
+export const GET_INVITE_ERROR = 'GET_INVITE_ERROR'
 
 // notes:
 export const NOTES = 'NOTES'

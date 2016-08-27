@@ -25,6 +25,10 @@ export default (id) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'deleteNote'))
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
     })
   }
 }

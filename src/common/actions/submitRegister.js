@@ -132,7 +132,8 @@ export default (values, dispatch) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'submitRegister', 'api'))
-      reject({_error: 'request'})
+      const _error = /fetch/.test(error.message) ? 'network' : 'request'
+      reject({_error})
     })
   })
 }

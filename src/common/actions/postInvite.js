@@ -46,10 +46,18 @@ export default (invite) => {
       })
       .catch((error) => {
         dispatch(failure(error, origin, 'api'))
+        dispatch({
+          type: SNACK_MESSAGE,
+          message: 'error',
+        })
       })
     })
     .catch((error) => {
       dispatch(failure(error, origin))
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
     })
   }
 }

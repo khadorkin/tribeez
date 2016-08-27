@@ -31,6 +31,10 @@ export default (tid) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'putSwitch'))
+      dispatch({
+        type: SNACK_MESSAGE,
+        message: 'error',
+      })
     })
   }
 }

@@ -29,6 +29,7 @@ class JoinForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     invite: PropTypes.object,
+    err: PropTypes.object,
   }
 
   constructor(props) {
@@ -42,7 +43,17 @@ class JoinForm extends Component {
   }
 
   render() {
-    const {fields: {name, email, password, lang}, invite} = this.props
+    const {fields: {name, email, password, lang}, invite, err} = this.props
+
+    if (err) {
+      const _error = /fetch/.test(err.message) ? 'network' : 'request'
+
+      return (
+        <div style={{textAlign: 'center', margin: '150px 0', color: 'red'}}>
+          <FormattedMessage id={'error.' + _error} />
+        </div>
+      )
+    }
 
     if (!invite || invite.converted) {
       return (

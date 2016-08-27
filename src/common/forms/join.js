@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
     token: ownProps.token,
   },
   invite: state.join.invite,
+  err: state.join.error,
 })
 
 export default (component) => {

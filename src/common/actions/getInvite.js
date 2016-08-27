@@ -7,6 +7,7 @@ import {
   REQUEST,
   SUCCESS,
   GET_INVITE_SUCCESS,
+  GET_INVITE_ERROR,
   SNACK_MESSAGE,
 } from '../constants/actions'
 
@@ -45,6 +46,10 @@ export default (tribe, token) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'getInvite', 'api'))
+      dispatch({
+        type: GET_INVITE_ERROR,
+        error,
+      })
     })
   }
 }
