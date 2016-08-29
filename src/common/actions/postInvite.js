@@ -30,7 +30,9 @@ export default (invite) => {
         lang: invite.lang,
         tribe: auth.currentUser.tid,
         tribe_name: auth.currentUser.tribe,
+        inviter: auth.currentUser.uid,
         inviter_name: auth.currentUser.name,
+        inviter_email: auth.currentUser.email,
       })
       .then((response) => {
         if (response.error) {
