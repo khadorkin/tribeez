@@ -30,7 +30,6 @@ class ActivityCard extends Component {
     data: PropTypes.array.isRequired,
     // from redux:
     userMap: PropTypes.object.isRequired,
-    uid: PropTypes.string,
   }
 
   constructor(props) {
@@ -160,7 +159,6 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   userMap: state.tribe.userMap,
-  uid: state.user.uid,
 })
 
 export default connect(mapStateToProps)(ActivityCard)

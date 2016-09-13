@@ -17,7 +17,6 @@ class TaskForm extends Component {
     // from redux:
     initialValues: PropTypes.object,
     task: PropTypes.object,
-    users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
   }
 

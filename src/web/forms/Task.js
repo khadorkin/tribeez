@@ -23,7 +23,6 @@ class TaskForm extends Component {
     initialValues: PropTypes.object,
     task: PropTypes.object,
     tid: PropTypes.string,
-    users: PropTypes.array.isRequired,
     userMap: PropTypes.object.isRequired,
     // action creators:
     subscribe: PropTypes.func.isRequired,

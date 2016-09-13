@@ -8,10 +8,7 @@ class TextArea extends Component {
     intl: intlShape.isRequired,
     style: TextInput.propTypes.style,
     minHeight: PropTypes.number,
-    onChange: PropTypes.func,
-    value: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
-    id: PropTypes.string, // used in componentWillReceiveProps to detect initial height change
   }
 
   constructor(props) {

@@ -32,7 +32,6 @@ import routes from '../common/routes'
 import router from '../common/router'
 import getConfig from '../common/actions/getConfig'
 import autoLogin from '../common/actions/autoLogin'
-import submitLogin from '../common/actions/submitLogin'
 import deleteItem from '../common/actions/deleteItem'
 import {alert} from '../common/actions/app'
 
@@ -45,16 +44,13 @@ class App extends Component {
     // from redux store:
     config: PropTypes.object,
     uid: PropTypes.string,
-    user: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
     lang: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     formats: PropTypes.object,
     item: PropTypes.object.isRequired,
     // action creators:
     getConfig: PropTypes.func.isRequired,
-    submitLogin: PropTypes.func.isRequired,
     deleteItem: PropTypes.func.isRequired,
     autoLogin: PropTypes.func.isRequired,
     alert: PropTypes.func.isRequired,
@@ -318,18 +314,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   config: state.app.config,
   uid: state.user.uid,
-  user: state.user,
   lang: state.app.lang, // here is the app language
   messages: state.app.messages,
   formats: state.tribe.formats,
   loading: state.app.loading > 0 || state.app.submitting,
-  error: state.app.error,
   item: state.item,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   getConfig,
-  submitLogin,
   deleteItem,
   autoLogin,
   alert,

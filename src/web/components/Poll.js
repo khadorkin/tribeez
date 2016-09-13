@@ -31,7 +31,6 @@ class Poll extends Component {
     // from redux:
     uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
-    currency: PropTypes.string,
     // action creators:
     postVote: PropTypes.func.isRequired,
   }
@@ -195,7 +194,6 @@ const styles = {
 const mapStateToProps = (state) => ({
   uid: state.user.uid,
   userMap: state.tribe.userMap,
-  currency: state.tribe.currency,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

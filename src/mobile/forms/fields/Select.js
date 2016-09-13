@@ -14,7 +14,6 @@ class SelectField extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
-    touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
   }
 

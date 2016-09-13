@@ -23,9 +23,7 @@ import postInvite from '../../common/actions/postInvite'
 class Members extends Component {
   static propTypes = {
     // redux state:
-    uid: PropTypes.string,
     users: PropTypes.array.isRequired,
-    userMap: PropTypes.object.isRequired,
     // action creators:
     postInvite: PropTypes.func.isRequired,
   }
@@ -111,9 +109,7 @@ class Members extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.user.uid,
   users: state.tribe.users,
-  userMap: state.tribe.userMap,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

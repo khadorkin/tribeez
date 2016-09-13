@@ -13,12 +13,10 @@ import colors from '../../common/constants/colors'
 
 class Poll extends Component {
   static propTypes = {
-    // from redux:
-    uid: PropTypes.string,
-    userMap: PropTypes.object.isRequired,
-    currency: PropTypes.string,
     // from parent:
     poll: PropTypes.object.isRequired,
+    // from redux:
+    userMap: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -60,9 +58,7 @@ class Poll extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.user.uid,
   userMap: state.tribe.userMap,
-  currency: state.tribe.currency,
 })
 
 const styles = StyleSheet.create({

@@ -20,8 +20,6 @@ class AsyncContent extends Component {
   static propTypes = {
     // redux state
     tid: PropTypes.string,
-    uid: PropTypes.string,
-    socketStatus: PropTypes.string,
     // from parent component
     name: PropTypes.string.isRequired,
     renderRow: PropTypes.func.isRequired,
@@ -29,7 +27,6 @@ class AsyncContent extends Component {
     orderBy: PropTypes.string,
     startAt: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     ascending: PropTypes.bool, // default false (descending)
-    children: PropTypes.node,
     footer: PropTypes.node,
     // action creators:
     setLastViewedHistoryKey: PropTypes.func.isRequired,
@@ -294,8 +291,6 @@ class AsyncContent extends Component {
 
 const mapStateToProps = (state) => ({
   tid: state.tribe.id,
-  uid: state.user.uid,
-  socketStatus: state.app.socketStatus,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

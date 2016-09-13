@@ -109,7 +109,6 @@ class Note extends Component {
             value={this.state.title}
             style={styles.title}
             onChangeText={this.handleTitleChange}
-            id={this.props.note.id} // to refresh TextArea height when drag&dropping
           />
           <TextArea
             placeholder="content"
@@ -117,7 +116,6 @@ class Note extends Component {
             style={styles.content}
             minHeight={64}
             onChangeText={this.handleContentChange}
-            id={this.props.note.id} // to refresh TextArea height when drag&dropping
           />
           <View style={styles.icons}>
             <IconButton name={this.state.unsaved ? 'cloud-queue' : 'cloud-done'} />

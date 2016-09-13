@@ -16,7 +16,6 @@ class AsyncContent extends Component {
   static propTypes = {
     // redux state
     tid: PropTypes.string,
-    uid: PropTypes.string,
     // from parent component
     name: PropTypes.string.isRequired,
     renderRow: PropTypes.func.isRequired,
@@ -239,7 +238,6 @@ const styles = {
 
 const mapStateToProps = (state) => ({
   tid: state.tribe.id,
-  uid: state.user.uid,
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

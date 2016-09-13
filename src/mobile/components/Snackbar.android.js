@@ -13,7 +13,6 @@ class Snackbar extends Component {
     // from redux:
     userMap: PropTypes.object.isRequired,
     uid: PropTypes.string,
-    tid: PropTypes.string,
     snack: PropTypes.object.isRequired,
     // action creators:
     closeSnack: PropTypes.func.isRequired,
@@ -48,7 +47,6 @@ class Snackbar extends Component {
 const mapStateToProps = (state) => ({
   userMap: state.tribe.userMap,
   uid: state.user.uid,
-  tid: state.tribe.id,
   snack: state.app.snack,
 })
 

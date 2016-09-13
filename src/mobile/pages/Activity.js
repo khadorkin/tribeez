@@ -26,7 +26,7 @@ class Activity extends Component {
     other_members: PropTypes.array.isRequired,
     activity: PropTypes.object.isRequired,
     unread: PropTypes.number,
-    bot_token: PropTypes.string,
+    // bot_token: PropTypes.string,
     // action creators:
     subscribe: PropTypes.func.isRequired,
     unsubscribe: PropTypes.func.isRequired,
@@ -178,7 +178,7 @@ const mapStateToProps = (state) => ({
   other_members: state.tribe.users.filter((user) => user.uid !== state.user.uid),
   activity: state.activity,
   unread: state.app.unread,
-  bot_token: state.user.bot_token,
+  // bot_token: state.user.bot_token,
   lang: state.app.lang, // hack to force update when lang changes
   currency: state.tribe.currency, // hack to force update when currency changes
 })

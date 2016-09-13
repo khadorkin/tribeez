@@ -29,7 +29,6 @@ class ActivityCard extends Component {
     data: PropTypes.array.isRequired,
     // from redux:
     userMap: PropTypes.object.isRequired,
-    uid: PropTypes.string,
   }
 
   constructor(props) {
@@ -62,9 +61,9 @@ class ActivityCard extends Component {
       author = authorObj.name
     }
 
+    const date = row[sorters[type].date]
     let textId
     let values
-    let date = row[sorters[type].date]
     let dateFallback
 
     switch (type) {
@@ -197,7 +196,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   userMap: state.tribe.userMap,
-  uid: state.user.uid,
 })
 
 export default connect(mapStateToProps)(ActivityCard)

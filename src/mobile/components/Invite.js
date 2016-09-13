@@ -18,7 +18,6 @@ class Invite extends Component {
     invite: PropTypes.object.isRequired,
     // from redux:
     userMap: PropTypes.object.isRequired,
-    messages: PropTypes.object.isRequired,
     // action creators:
     postInvite: PropTypes.func.isRequired,
     alert: PropTypes.func.isRequired,
@@ -80,7 +79,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   userMap: state.tribe.userMap,
-  messages: state.app.messages, //TODO
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

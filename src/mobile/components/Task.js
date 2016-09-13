@@ -13,9 +13,7 @@ import colors from '../../common/constants/colors'
 class Task extends Component {
   static propTypes = {
     // from redux:
-    uid: PropTypes.string,
     userMap: PropTypes.object.isRequired,
-    currency: PropTypes.string,
     // from parent:
     task: PropTypes.object.isRequired,
   }
@@ -60,9 +58,7 @@ class Task extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  uid: state.user.uid,
   userMap: state.tribe.userMap,
-  currency: state.tribe.currency,
 })
 
 const styles = StyleSheet.create({

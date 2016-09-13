@@ -22,7 +22,6 @@ export default (values, dispatch) => {
           infos.type = values.tribe_type
           infos.currency = values.currency
           infos.city = values.city
-          infos.created = timestamp
         }
         return infos
       })
@@ -78,6 +77,7 @@ export default (values, dispatch) => {
           type: values.tribe_type,
           currency: values.currency,
           city: values.city,
+          created: timestamp,
         },
         members: {
           [uid]: {

@@ -18,7 +18,6 @@ class Entry extends Component {
     entry: PropTypes.object,
     // from redux:
     userMap: PropTypes.object.isRequired,
-    currency: PropTypes.string,
     uid: PropTypes.string,
   }
 
@@ -125,7 +124,6 @@ class Entry extends Component {
 
 const mapStateToProps = (state) => ({
   userMap: state.tribe.userMap,
-  currency: state.tribe.currency,
   uid: state.user.uid,
 })
 
