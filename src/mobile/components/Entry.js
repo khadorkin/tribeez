@@ -52,6 +52,7 @@ class Entry extends Component {
   render() {
     const {entry, userMap, uid} = this.props
 
+    // to render an activity, the users must be loaded for the current tribe activity (see parent component)
     const author = userMap[entry.author]
     if (!author) {
       return null
@@ -95,8 +96,6 @@ class Entry extends Component {
           } else {
             infos = <FormattedMessage id={`entry.bill.${entry.action}.stranger`} style={styles.infos} />
           }
-          break
-        case 'poll':
           break
         case 'event':
           values.when = getTimestamp(entry.item.start)
