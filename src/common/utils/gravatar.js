@@ -4,7 +4,7 @@ export default (user, size = 80) => {
   if (!user) {
     return null
   }
-  if (!user.gravatar) {
+  if (!user.gravatar && user.email) {
     user.gravatar = md5(user.email)
   }
   return `https://secure.gravatar.com/avatar/${user.gravatar}?d=retro&s=${size}`
