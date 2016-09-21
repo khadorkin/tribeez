@@ -61,6 +61,7 @@ class TextField extends Component {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
+    marginBottom: 8,
   },
   currency: {
     position: 'absolute',
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     right: 0,
   },
   error: {
+    fontSize: 12,
     color: colors.error,
     marginVertical: 8,
   },
