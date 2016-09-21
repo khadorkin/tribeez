@@ -219,6 +219,7 @@ export default {
   'select.1d': 'The day before',
   'select.2h': '2 hours before',
   'select.1h': '1 hour before',
+  'select.0h': 'When it starts',
   'error.reminder': 'Invalid reminder',
   // task:
   'field.wait': 'Waiting period (days)',

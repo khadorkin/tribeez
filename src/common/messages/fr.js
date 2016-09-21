@@ -219,6 +219,7 @@ const fr = {
   'select.1d': 'La veille',
   'select.2h': '2 heures avant',
   'select.1h': '1 heure avant',
+  'select.0h': 'Au début',
   'error.reminder': 'Rappel invalide',
   // task:
   'field.wait': 'Période de carence (jours)',
