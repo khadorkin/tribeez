@@ -210,7 +210,11 @@ class App extends Component {
   }
 
   handleBack() {
-    router.pop()
+    if (router.getCurrentRoutes().length === 1) {
+      router.resetTo(routes.ACTIVITY)
+    } else {
+      router.pop()
+    }
   }
 
   handleEdit(currentRoute) {
