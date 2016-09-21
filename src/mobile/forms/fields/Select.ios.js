@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Picker, StyleSheet, View, Modal, Dimensions} from 'react-native'
+import {Picker, StyleSheet, View, Text, Modal, Dimensions} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
@@ -50,15 +50,20 @@ class SelectField extends Component {
   render() {
     const {intl, name, value, items, error/*, ...props*/} = this.props
 
-    const children = items.map((item) =>
-      <Picker.Item label={item.name || intl.formatMessage({id: 'select.' + item.code})} value={item.code} key={item.code} />
-    )
+    let valueName
+    const children = items.map((item) => {
+      const label = item.name || intl.formatMessage({id: 'select.' + item.code})
+      if (item.code === value) {
+        valueName = label
+      }
+      return <Picker.Item label={label} value={item.code} key={item.code} />
+    })
 
     return (
       <View style={styles.container}>
         <FormattedMessage id={'field.' + name} style={styles.label} />
         <Touchable onPress={this.handleOpen} style={styles.valueContainer}>
-          <FormattedMessage id={'select.' + value} style={styles.value} />
+          <Text style={styles.value}>{valueName}</Text>
         </Touchable>
         <FormattedMessage id={error && 'error.' + name} style={styles.error} />
         <Modal animationType="fade" visible={this.state.showModal} onRequestClose={this.handleClose} transparent={true}>
