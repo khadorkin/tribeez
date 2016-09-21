@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {StyleSheet, View, Text} from 'react-native'
 import {injectIntl, intlShape} from 'react-intl'
 
-import {MKTextField} from 'react-native-material-kit'
+import MaterialTextField from '../../components/MaterialTextField'
 
 import FormattedMessage from '../../components/FormattedMessage'
 
@@ -17,18 +17,12 @@ class TextField extends Component {
     error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     errorId: PropTypes.string,
     currency: PropTypes.string,
-    multiline: PropTypes.bool,
-    onChange: PropTypes.func,
   }
 
   constructor(props) {
     super(props)
-    this.state = {
-      height: null, // only used when props.multiline
-    }
     this.ref = this.ref.bind(this)
     this.focus = this.focus.bind(this)
-    this.handleContentSizeChange = this.handleContentSizeChange.bind(this)
   }
 
   ref(element) {
@@ -37,14 +31,6 @@ class TextField extends Component {
 
   focus() {
     this.element.focus()
-  }
-
-  handleContentSizeChange(event) {
-    if (this.props.multiline) {
-      this.setState({
-        height: event.nativeEvent.contentSize.height + 24,
-      })
-    }
   }
 
   render() {
@@ -56,23 +42,14 @@ class TextField extends Component {
       <Text style={styles.currency}>{currency}</Text>
     )
 
-    const fieldStyle = {}
-    if (this.state.height) {
-      fieldStyle.height = Math.max(54, this.state.height)
-    }
-
     return (
       <View style={styles.container}>
-        <MKTextField ref={this.ref}
+        <MaterialTextField ref={this.ref}
           value={String(value)}
-          placeholder={intl.formatMessage({id: 'field.' + name})}
-          floatingLabelEnabled={true}
-          highlightColor={colors.input} // Color of highlighted underline & floating label
-          style={fieldStyle} // must be set even if empty, otherwise the height of the fields is broken
-          textInputStyle={styles.input}
+          label={intl.formatMessage({id: 'field.' + name})}
           keyboardType={currency && 'numeric'}
+          isError={Boolean(touched && error)}
           {...props}
-          onContentSizeChange={this.handleContentSizeChange}
         />
         {currencyLabel}
         <FormattedMessage id={errorMessage} style={styles.error} />
@@ -84,9 +61,6 @@ class TextField extends Component {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
-  },
-  input: {
-    color: colors.text,
   },
   currency: {
     position: 'absolute',

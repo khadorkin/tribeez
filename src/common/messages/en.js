@@ -84,6 +84,7 @@ export default {
   submit_vote: 'Vote',
   return_home: 'Return to Activity',
   retry: 'Retry',
+  ok: 'OK',
 
   // Dialogs
   dialog_delete: 'Are you sure you want to delete this?',

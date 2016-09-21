@@ -6,6 +6,7 @@ const colors = {
   new: '#FFFFDD', // light yellow
   primaryText: 'rgba(0, 0, 0, 0.8)',
   secondaryText: 'rgba(0, 0, 0, 0.5)',
+  overlay: 'rgba(0, 0, 0, 0.5)',
   shadow: 'black',
   icon: 'rgb(117, 117, 117)', // grey
   underline: 'rgb(224, 224, 224)', // light grey
