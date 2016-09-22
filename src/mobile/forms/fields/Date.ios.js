@@ -177,7 +177,7 @@ class DateField extends Component {
   }
 
   renderTime() {
-    const {intl, touched, error, name, value} = this.props
+    const {intl, name, value} = this.props
 
     let ts = Date.now()
     let label = <Text style={styles.value}>{' '}</Text>
@@ -196,7 +196,7 @@ class DateField extends Component {
       fontSize: this.state.timeLabelSize,
       position: 'absolute',
       top: this.state.timeLabelPosition,
-      color: (touched && error) ? colors.error : colors.secondaryText,
+      color: colors.secondaryText,
       backgroundColor: 'transparent',
     }
 
@@ -225,8 +225,8 @@ class DateField extends Component {
     const {time, touched, error, name} = this.props
 
     return (
-      <View>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.fields}>
           {this.renderDate()}
           {time && this.renderTime()}
         </View>
@@ -238,8 +238,10 @@ class DateField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     marginBottom: 8,
+  },
+  fields: {
+    flexDirection: 'row',
   },
   field: {
     paddingTop: 30,
@@ -252,7 +254,6 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.underline,
     paddingTop: 6,
     paddingBottom: 9,
-    //backgroundColor: 'yellow',
   },
   value: {
     fontSize: 16,
@@ -261,7 +262,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -36,
     right: -8,
-    //backgroundColor: 'yellow',
   },
   error: {
     color: colors.error,

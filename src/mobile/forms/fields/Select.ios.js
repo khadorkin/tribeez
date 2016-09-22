@@ -84,15 +84,18 @@ class SelectField extends Component {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
+    position: 'relative',
   },
   label: {
     fontSize: 12,
+    position: 'absolute',
+    top: 16,
     color: colors.secondaryText,
   },
   valueContainer: {
     borderBottomWidth: 0.8,
     borderBottomColor: colors.underline,
-    paddingTop: 6,
+    paddingTop: 36,
     paddingBottom: 9,
   },
   value: {

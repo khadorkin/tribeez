@@ -14,11 +14,6 @@ class FormattedDate extends Component {
   render() {
     const {intl, value, format, options, ...props} = this.props
 
-    //TODO: remove this when https://github.com/andyearnshaw/Intl.js/issues/179 is closed and used by react-intl:
-    if (options && options.month === 'long') {
-      options.formatMatcher = 'basic'
-    }
-
     return (
       <Text {...props}>
         {value ? intl.formatDate(value, {format, ...options}) : ' '}
