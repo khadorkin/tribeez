@@ -1,10 +1,10 @@
 {
   "title": "Tribeez",
   "description": "A simple app to organize your group life",
-  "url": "https://tribeez.net",
+  "url": "https://tribeez.com",
   "play_url": "https://play.google.com/store/apps/details?id=net.tribeez",
   "twitter": "TribeezApp",
-  "api_endpoint": "https://api.tribeez.net",
+  "api_endpoint": "https://api.tribeez.com",
   "rollbar_token": "xxxxxxxx",
   "ga_id": "UA-XXXXXXXX-X",
   "recaptcha_site_key": "xxxxxxxx",

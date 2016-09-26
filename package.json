@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/antoinerousseau/tribeez/issues"
   },
-  "homepage": "https://tribeez.net",
+  "homepage": "https://tribeez.com",
   "dependencies": {
     "array-includes": "^3.0.2",
     "array.prototype.find": "^2.0.0",

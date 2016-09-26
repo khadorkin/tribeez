@@ -73,7 +73,7 @@ Serve with [nginx](http://nginx.org/):
 
 ```
 server {
-    server_name tribeez.net www.tribeez.net;
+    server_name tribeez.com www.tribeez.com;
     root /home/<user>/apps/tribeez;
     #access_log off;
 
