@@ -771,6 +771,7 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+			showEnvVarsInLog = 1;
 		};
 		021C0BFCC0FD4DB0A5B8C08C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -941,7 +942,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tribeez;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tribeez.app/tribeez";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tribeez.app/Tribeez";
 			};
 			name = Debug;
 		};
@@ -965,7 +966,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tribeez;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tribeez.app/tribeez";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tribeez.app/Tribeez";
 			};
 			name = Release;
 		};

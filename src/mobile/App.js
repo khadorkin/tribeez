@@ -298,7 +298,8 @@ const styles = StyleSheet.create({
     color: colors.lightText,
     fontSize: 24,
     marginTop: (Platform.OS === 'ios' ? 12 : 10),
-    marginRight: 56, // to not overlap the right icon
+    marginRight: (Platform.OS === 'ios' ? 95 : 56), // to not overlap the right icon
+    marginLeft: (Platform.OS === 'ios' ? 45 : 0),
   },
   rightIcons: {
     flexDirection: 'row',
