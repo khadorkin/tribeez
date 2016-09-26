@@ -94,8 +94,8 @@ const on = (tid) => {
             minimum = counter
           }
         }
-        if (task.counters[uid] > minimum) {
-          continue // some members did it less times => skip
+        if (task.counters[uid] !== minimum) {
+          continue // some members did it less times OR member is not included in this task => skip
         }
 
         tasks.push({
@@ -117,8 +117,9 @@ const on = (tid) => {
     // EVENTS
 
     const oneHourAgo = now - 3600000
+    const oneWeekAhead = now + (DAYS_NEW * ONE_DAY)
 
-    const eventsRef = tribeRef.child('events').orderByChild('index').startAt(oneHourAgo).limitToLast(FETCH_MAX)
+    const eventsRef = tribeRef.child('events').orderByChild('index').startAt(oneHourAgo).endAt(oneWeekAhead).limitToLast(FETCH_MAX)
     refs.push(eventsRef)
 
     const eventsCallback = (type, snapshot) => {
