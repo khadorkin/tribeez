@@ -100,7 +100,10 @@ export default (state = initialState, action = null) => {
     case CLOSE_SNACK:
       return {
         ...state,
-        snack: {...initialState.snack},
+        snack: {
+          ...state.snack,
+          open: false,
+        },
       }
     case ALERT:
       return {

@@ -17,6 +17,7 @@ const colors = {
   statusBar: 'rgba(38, 198, 218, 0)', // transparent from colors.main to make the transition work
   dot: 'rgba(255, 255, 255, 0.4)', // for slides
   transparent: 'transparent',
+  snack: 'rgba(0, 0, 0, 0.87)',
 
   // module colors:
   members: '#AB47BC', // purple400
