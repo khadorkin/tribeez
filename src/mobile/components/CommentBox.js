@@ -11,15 +11,38 @@ class CommentBox extends Component {
     user: PropTypes.object.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      height: 0,
+    }
+    this.handleContentSizeChange = this.handleContentSizeChange.bind(this)
+  }
+
+  handleContentSizeChange(event) {
+    this.setState({
+      height: event.nativeEvent.contentSize.height,
+    })
+  }
+
   render() {
     const {intl, user, ...props} = this.props
+
+    const inputStyle = {
+      height: Math.max(34, this.state.height),
+    }
+
     return (
       <View style={styles.container}>
         <Avatar user={user} />
         <TextInput
+          ref="input"
           underlineColorAndroid="transparent"
           placeholder={intl.formatMessage({id: 'comment'})}
-          style={styles.input}
+          style={[styles.input, inputStyle]}
+          multiline={true}
+          blurOnSubmit={true}
+          onContentSizeChange={this.handleContentSizeChange}
           {...props}
         />
       </View>
@@ -34,9 +57,9 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    marginLeft: 12,
-    paddingVertical: 12,
+    marginLeft: 16,
+    fontSize: 14,
   },
 })
 
-export default injectIntl(CommentBox)
+export default injectIntl(CommentBox, {withRef: true})

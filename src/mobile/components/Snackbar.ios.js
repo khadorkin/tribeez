@@ -36,16 +36,14 @@ class Snackbar extends Component {
     const {snack} = props
 
     if (snack.open !== this.props.snack.open) {
-      return
-    }
+      Animated.timing(this.state.bottom, {
+        toValue: snack.open ? 0 : -HEIGHT,
+        duration: 200,
+      }).start()
 
-    Animated.timing(this.state.bottom, {
-      toValue: snack.open ? 0 : -HEIGHT,
-      duration: 200,
-    }).start()
-
-    if (snack.open) {
-      this.timeout = setTimeout(this.props.closeSnack, 3000)
+      if (snack.open) {
+        this.timeout = setTimeout(this.props.closeSnack, 3000)
+      }
     }
   }
 

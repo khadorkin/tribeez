@@ -111,7 +111,7 @@ class Log extends Component {
   }
 
   render() {
-    const {item, comment, user} = this.props
+    const {item, comment, user, ...props} = this.props
 
     const entries = item.log //TODO: get from item
 
@@ -127,10 +127,12 @@ class Log extends Component {
         <View style={styles.header}>
           <FormattedMessage id="log" style={styles.title} />
           <CommentBox
+            ref="box"
             user={user}
             value={comment}
             onChangeText={this.handleChange}
             onSubmitEditing={this.handleComment}
+            {...props}
           />
         </View>
         {
@@ -147,6 +149,7 @@ const styles = StyleSheet.create({
     borderTopColor: colors.underline,
     marginHorizontal: 16,
     marginTop: 8,
+    paddingBottom: 16,
   },
   title: {
     color: colors.primaryText,
@@ -184,4 +187,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   postComment,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Log)
+export default connect(mapStateToProps, mapDispatchToProps, null, {withRef: true})(Log)

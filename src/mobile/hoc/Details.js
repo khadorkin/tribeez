@@ -33,6 +33,11 @@ class Details extends Component {
     unsubscribe: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    this.handleFocus = this.handleFocus.bind(this)
+  }
+
   componentDidMount() {
     this.props.subscribe(this.props.type, this.props.id)
   }
@@ -43,6 +48,11 @@ class Details extends Component {
 
   handlePress(url) {
     Linking.openURL(url)
+  }
+
+  handleFocus() {
+    const input = this.refs.log.getWrappedInstance().refs.box.getWrappedInstance().refs.input
+    this.refs.sv.scrollFocus(input, 100)
   }
 
   render() {
@@ -56,7 +66,10 @@ class Details extends Component {
       content = mapper(item, userMap)
         .filter((info) => item[info.id])
         .map((info, index) => {
-          const style = (index === 0) ? styles.title : styles.text
+          const style = {
+            color: colors.primaryText,
+            fontSize: (index === 0) ? 20 : 16,
+          }
 
           let element
           if (info.message) {
@@ -86,7 +99,7 @@ class Details extends Component {
         body = renderBody(item, userMap, uid)
       }
 
-      log = <Log type={type} item={item} />
+      log = <Log type={type} item={item} ref="log" onFocus={this.handleFocus} />
     } else {
       if (loading) {
         content = (
@@ -106,7 +119,7 @@ class Details extends Component {
     }
 
     return (
-      <ScrollView>
+      <ScrollView ref="sv">
         {content}
         {body}
         {log}
@@ -125,14 +138,6 @@ const styles = StyleSheet.create({
     color: colors.error,
     textAlign: 'center',
     margin: 32,
-  },
-  title: {
-    color: colors.primaryText,
-    fontSize: 20,
-  },
-  text: {
-    color: colors.primaryText,
-    fontSize: 16,
   },
   button: {
     paddingHorizontal: 16,
