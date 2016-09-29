@@ -3,10 +3,7 @@ import {View, TextInput, Animated, StyleSheet} from 'react-native'
 
 import colors from '../../common/constants/colors'
 
-const getLabelSize = (focused) => focused ? 12 : 16
-const getLabelPosition = (focused) => focused ? 16 : 37
-
-const ANIMATION_DURATION = 200
+import {getLabelSize, getLabelPosition, ANIMATION_DURATION} from '../dimensions'
 
 export default class MaterialTextField extends Component {
   static propTypes = {

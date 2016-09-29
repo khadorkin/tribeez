@@ -33,7 +33,7 @@ class RegisterForm extends Component {
     const {fields: {name, email, password, lang, tribe_name, tribe_type, city, currency}, ...props} = this.props
 
     return (
-      <ScrollView>
+      <ScrollView ref="sv">
         <Form name="register" action={submitRegister} {...props}>
           <InfoBox type="info" id="register_info" />
           <View style={styles.section}>
@@ -79,7 +79,7 @@ class RegisterForm extends Component {
           />
           <CityField ref="city"
             {...city}
-            //onFocus={this.handleFocus} //TODO: make visible the list of proposals
+            onFocus={() => this.refs.sv.scrollFocus(this.refs.city, 380)}
           />
           <SelectField ref="currency"
             {...currency}

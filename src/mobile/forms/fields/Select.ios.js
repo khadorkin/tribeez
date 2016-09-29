@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Picker, StyleSheet, View, Text, Modal, Dimensions} from 'react-native'
+import {Picker, StyleSheet, View, Text, Modal, Dimensions, Animated} from 'react-native'
 
 import {injectIntl, intlShape} from 'react-intl'
 
@@ -9,7 +9,7 @@ import Button from '../../components/Button'
 
 import colors from '../../../common/constants/colors'
 
-import {elevation} from '../../dimensions'
+import {elevation, getLabelSize, getLabelPosition, ANIMATION_DURATION} from '../../dimensions'
 
 class SelectField extends Component {
   static propTypes = {
@@ -18,6 +18,7 @@ class SelectField extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     onChange: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
+    touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
   }
 
@@ -25,10 +26,26 @@ class SelectField extends Component {
     super(props)
     this.state = {
       showModal: false,
+      labelSize: new Animated.Value(getLabelSize(props.value)),
+      labelPosition: new Animated.Value(getLabelPosition(props.value)),
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
+  }
+
+  componentWillReceiveProps(props) {
+    const hasValue = Boolean(props.value)
+    if (hasValue !== Boolean(this.props.value)) {
+      Animated.timing(this.state.labelSize, {
+        toValue: getLabelSize(hasValue),
+        duration: ANIMATION_DURATION,
+      }).start()
+      Animated.timing(this.state.labelPosition, {
+        toValue: getLabelPosition(hasValue),
+        duration: ANIMATION_DURATION,
+      }).start()
+    }
   }
 
   handleChange(value/*, index*/) {
@@ -45,12 +62,16 @@ class SelectField extends Component {
     this.setState({
       showModal: false,
     })
+    // default value = first proposal (this behavior could be improved)
+    if (!this.props.value) {
+      this.props.onChange(this.props.items[0].code)
+    }
   }
 
   render() {
-    const {intl, name, value, items, error/*, ...props*/} = this.props
+    const {intl, name, value, items, touched, error/*, ...props*/} = this.props
 
-    let valueName
+    let valueName = ' '
     const children = items.map((item) => {
       const label = item.name || intl.formatMessage({id: 'select.' + item.code})
       if (item.code === value) {
@@ -59,13 +80,23 @@ class SelectField extends Component {
       return <Picker.Item label={label} value={item.code} key={item.code} />
     })
 
+    const labelStyle = {
+      fontSize: this.state.labelSize,
+      position: 'absolute',
+      top: this.state.labelPosition,
+      color: (touched && error) ? colors.error : colors.secondaryText,
+      backgroundColor: 'transparent',
+    }
+
     return (
       <View style={styles.container}>
-        <FormattedMessage id={'field.' + name} style={styles.label} />
         <Touchable onPress={this.handleOpen} style={styles.valueContainer}>
           <Text style={styles.value}>{valueName}</Text>
         </Touchable>
-        <FormattedMessage id={error && 'error.' + name} style={styles.error} />
+        <Animated.Text style={labelStyle} onPress={this.handleOpen}>
+          {intl.formatMessage({id: 'field.' + name})}
+        </Animated.Text>
+        <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
         <Modal animationType="fade" visible={this.state.showModal} onRequestClose={this.handleClose} transparent={true}>
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
@@ -85,12 +116,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
     position: 'relative',
-  },
-  label: {
-    fontSize: 12,
-    position: 'absolute',
-    top: 16,
-    color: colors.secondaryText,
+    marginBottom: 8,
   },
   valueContainer: {
     borderBottomWidth: 0.8,
@@ -102,8 +128,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   error: {
+    fontSize: 12,
     color: colors.error,
-    margin: 8,
+    marginVertical: 8,
   },
   modalContainer: {
     flex: 1,

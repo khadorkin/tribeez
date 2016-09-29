@@ -11,12 +11,7 @@ import IconButton from '../../components/IconButton'
 
 import colors from '../../../common/constants/colors'
 
-import {elevation} from '../../dimensions'
-
-const getLabelSize = (focused) => focused ? 12 : 16
-const getLabelPosition = (focused) => focused ? 16 : 37
-
-const ANIMATION_DURATION = 200
+import {elevation, getLabelSize, getLabelPosition, ANIMATION_DURATION} from '../../dimensions'
 
 class DateField extends Component {
   static propTypes = {
@@ -205,7 +200,7 @@ class DateField extends Component {
         <Touchable onPress={this.handleOpenTime} style={styles.valueContainer}>
           {label}
         </Touchable>
-        <Animated.Text style={labelStyle} onPress={this.handleOpenTime}>
+        <Animated.Text style={labelStyle} onPress={this.handleOpenTime} numberOfLines={1}>
           {intl.formatMessage({id: 'field.time.' + name})}
         </Animated.Text>
         {clearButton}

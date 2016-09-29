@@ -31,3 +31,7 @@ export const elevation = (height) => {
     }
   }
 }
+
+export const getLabelSize = (focused) => focused ? 12 : 16
+export const getLabelPosition = (focused) => focused ? 16 : 37
+export const ANIMATION_DURATION = 200

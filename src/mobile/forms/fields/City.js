@@ -1,9 +1,8 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Text} from 'react-native'
+import {Platform, StyleSheet, View, Text} from 'react-native'
 import {injectIntl, intlShape} from 'react-intl'
 
-import {MKTextField} from 'react-native-material-kit'
-
+import MaterialTextField from '../../components/MaterialTextField'
 import FormattedMessage from '../../components/FormattedMessage'
 import Touchable from '../../components/Touchable'
 
@@ -13,7 +12,8 @@ import config from '../../../common/config'
 import colors from '../../../common/constants/colors'
 
 const requestPlace = (service, query) => {
-  query.key = config.google_android_key
+  query.key = Platform.OS === 'ios' ? config.google_ios_key : config.google_android_key
+
   const url = 'https://maps.googleapis.com/maps/api/place/' + service + '/json' + buildQuery(query)
   return fetch(url, {method: 'GET'})
     .then((response) => {
@@ -53,6 +53,8 @@ class CityField extends Component {
       predictions: [],
     }
     this.handleChange = this.handleChange.bind(this)
+    this.ref = this.ref.bind(this)
+    this.focus = this.focus.bind(this)
   }
 
   handleChange(value) {
@@ -111,31 +113,33 @@ class CityField extends Component {
       })
   }
 
+  ref(element) {
+    this.element = element
+  }
+
+  focus() {
+    this.element.focus()
+  }
+
   render() {
     const {intl, name, value, touched, error, ...props} = this.props
 
     return (
       <View style={styles.container}>
-        <MKTextField
-          floatingLabelEnabled={true}
-          highlightColor={colors.input} // Color of highlighted underline & floating label
-          style={styles.field}
-          textInputStyle={styles.input}
-          placeholder={intl.formatMessage({id: 'field.' + name})}
-          {...props}
+        <MaterialTextField ref={this.ref}
           value={(value && value.name) ? value.name : ''}
-          onChange={null}
+          label={intl.formatMessage({id: 'field.' + name})}
+          isError={Boolean(touched && error)}
           onChangeText={this.handleChange}
+          {...props}
         />
-        <View style={styles.suggestions}>
-          {
-            this.state.textPredictions.map((description, index) => (
-              <Touchable key={index} onPress={this.handleSelect.bind(this, index)}>
-                <Text style={styles.suggestion}>{description}</Text>
-              </Touchable>
-            ))
-          }
-        </View>
+        {
+          this.state.textPredictions.map((description, index) => (
+            <Touchable key={index} onPress={this.handleSelect.bind(this, index)}>
+              <Text style={styles.suggestion}>{description}</Text>
+            </Touchable>
+          ))
+        }
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
       </View>
     )
@@ -145,22 +149,15 @@ class CityField extends Component {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 8,
-  },
-  field: {
-    //
-  },
-  input: {
-    color: colors.text,
-  },
-  suggestions: {
-    paddingTop: 8,
+    marginBottom: 8,
   },
   suggestion: {
-    paddingVertical: 8,
+    paddingVertical: 6,
     color: colors.main,
     fontSize: 16,
   },
   error: {
+    fontSize: 12,
     color: colors.error,
     marginVertical: 8,
   },

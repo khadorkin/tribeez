@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Dimensions, View, ScrollView, StyleSheet} from 'react-native'
+import {Dimensions, KeyboardAvoidingView, ScrollView, View, StyleSheet, findNodeHandle} from 'react-native'
 
 import Header from '../components/Header'
 
@@ -18,6 +18,18 @@ class ScrollViewWithHeader extends Component {
       scrolled: false,
     }
     this.handleScroll = this.handleScroll.bind(this)
+    this.ref = this.ref.bind(this)
+    this.scrollFocus = this.scrollFocus.bind(this)
+  }
+
+  ref(element) {
+    this.element = element
+  }
+
+  scrollFocus(ref, add) {
+    const nativeHandle = findNodeHandle(ref)
+    const scrollResponder = this.element.getScrollResponder()
+    scrollResponder.scrollResponderScrollNativeHandleToKeyboard(nativeHandle, add, true)
   }
 
   handleScroll(event) {
@@ -35,13 +47,14 @@ class ScrollViewWithHeader extends Component {
     const headerStyle = {opacity: this.state.scrolled ? 0 : 1}
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <ScrollView
           keyboardShouldPersistTaps={true}
           onScroll={this.handleScroll}
           contentContainerStyle={styles.content}
           scrollEventThrottle={16}
           bounces={false}
+          ref={this.ref}
         >
           <Header.Image style={headerStyle} />
           <Header.Shadow style={headerStyle} />
@@ -51,7 +64,7 @@ class ScrollViewWithHeader extends Component {
           <Header.Image />
           <Header.Shadow />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }

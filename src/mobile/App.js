@@ -136,12 +136,11 @@ class App extends Component {
   }
 
   routeMapper(loading, items) {
-    const color = this.props.uid ? colors.lightText : colors.main
-
     return {
       LeftButton: (route/*, navigator, index, navState*/) => {
         if (Platform.OS === 'ios') {
           if (!route.root) {
+            const color = ['login', 'password'].includes(route.name) ? colors.main : colors.lightText
             return (
               <IconButton name="arrow-back" color={color} onPress={this.handleBack} style={styles.hamburger} />
             )

@@ -3,7 +3,6 @@ import {StyleSheet, View, Text} from 'react-native'
 import {injectIntl, intlShape} from 'react-intl'
 
 import MaterialTextField from '../../components/MaterialTextField'
-
 import FormattedMessage from '../../components/FormattedMessage'
 
 import colors from '../../../common/constants/colors'
@@ -65,8 +64,9 @@ const styles = StyleSheet.create({
   },
   currency: {
     position: 'absolute',
-    top: 28,
+    top: 39,
     right: 0,
+    color: colors.secondaryText,
   },
   error: {
     fontSize: 12,

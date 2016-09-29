@@ -33,7 +33,7 @@ class TribeForm extends Component {
     const {fields: {tribe_name, tribe_type, city, currency}, ...props} = this.props
 
     return (
-      <ScrollView>
+      <ScrollView ref="sv">
         <Form name={'tribe.' + this.props.type} action={submitTribe} {...props}>
           <TextField
             {...tribe_name}
@@ -45,6 +45,8 @@ class TribeForm extends Component {
           />
           <CityField
             {...city}
+            ref="city"
+            onFocus={() => this.refs.sv.scrollFocus(this.refs.city, 380)}
           />
           <SelectField
             {...currency}
