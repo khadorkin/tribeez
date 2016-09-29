@@ -97,21 +97,15 @@ class App extends Component {
     })
 
     Linking.getInitialURL().then((url) => {
-      if (url) {
-        const join = url.match(/\/join\/([^\/]+)\/([^\/]+)/)
-        if (join) {
-          const route = routes.JOIN
-          route.props = {
-            tribe: join[1],
-            token: join[2],
-          }
-          router.push(route)
-          return
-        }
+      if (!url || !this.handleInitialUrl(url)) {
+        this.props.autoLogin() // always triggered in iOS (TODO: handle conflict with logged in user vs /join link)
       }
-      this.props.autoLogin()
     })
     .catch(() => {}) // ignore fails
+
+    Linking.addEventListener('url', (event) => {
+      this.handleInitialUrl(event.url)
+    })
 
     this.props.getConfig()
   }
@@ -133,6 +127,20 @@ class App extends Component {
 
   ref(drawer) {
     this.drawer = drawer
+  }
+
+  handleInitialUrl(url) {
+    const join = url.match(/\/join\/([^\/]+)\/([^\/]+)/)
+    if (join) {
+      const route = routes.JOIN
+      route.props = {
+        tribe: join[1],
+        token: join[2],
+      }
+      router.push(route)
+      return true
+    }
+    return false
   }
 
   routeMapper(loading, items) {

@@ -8,6 +8,8 @@ import getInvite from '../../common/actions/getInvite'
 
 import JoinForm from '../forms/Join'
 
+import config from '../../common/config'
+
 class Join extends Component {
   static propTypes = {
     // action creators:
@@ -18,6 +20,10 @@ class Join extends Component {
 
   componentDidMount() {
     this.props.getInvite(this.props.params.tribe, this.props.params.token)
+
+    if (/iPhone|iPod/.test(navigator.userAgent)) {
+      window.location = config.app_scheme + '://join/' + this.props.params.tribe + '/' + this.props.params.token
+    }
   }
 
   render() {
