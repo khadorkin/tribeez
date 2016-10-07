@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 16,
+    color: colors.primaryText,
   },
   clear: {
     position: 'absolute',

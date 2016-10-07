@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.smixx.fabric.FabricPackage;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -41,7 +40,6 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new RNDeviceInfo(),
-          new ReactMaterialKitPackage(),
           new FabricPackage(),
           new FIRMessagingPackage(),
           new VectorIconsPackage()

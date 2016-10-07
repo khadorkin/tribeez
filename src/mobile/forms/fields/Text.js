@@ -10,11 +10,10 @@ import colors from '../../../common/constants/colors'
 class TextField extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    touched: PropTypes.bool.isRequired,
-    error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    errorId: PropTypes.string,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+    labelId: PropTypes.string,
+    errorIsCustom: PropTypes.bool,
     currency: PropTypes.string,
   }
 
@@ -33,9 +32,19 @@ class TextField extends Component {
   }
 
   render() {
-    const {intl, name, value, touched, error, errorId, currency, ...props} = this.props
+    const {intl, input: {name, value, ...input}, meta: {touched, error}, labelId, errorIsCustom, currency, ...props} = this.props
 
-    const errorMessage = touched && error && ('error.' + (errorId || name))
+    const label = labelId || name
+
+    let errorMessage
+    if (touched && error) {
+      errorMessage = 'error.'
+      if (errorIsCustom) {
+        errorMessage += name + '_' + error
+      } else {
+        errorMessage += label
+      }
+    }
 
     const currencyLabel = currency && (
       <Text style={styles.currency}>{currency}</Text>
@@ -45,9 +54,10 @@ class TextField extends Component {
       <View style={styles.container}>
         <MaterialTextField ref={this.ref}
           value={String(value)}
-          label={intl.formatMessage({id: 'field.' + name})}
+          label={intl.formatMessage({id: 'field.' + label})}
           keyboardType={currency && 'numeric'}
           isError={Boolean(touched && error)}
+          {...input}
           {...props}
         />
         {currencyLabel}

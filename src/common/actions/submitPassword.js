@@ -1,6 +1,8 @@
+import {SubmissionError} from 'redux-form'
+
 import {auth} from '../firebase'
 
-import {PASSWORD_SUCCESS} from '../constants/actions'
+import {PASSWORD_SUCCESS, ALERT} from '../constants/actions'
 import failure from './failure'
 
 export default (values, dispatch) => {
@@ -9,7 +11,17 @@ export default (values, dispatch) => {
     .then(() => {
       resolve()
       dispatch({
-        type: PASSWORD_SUCCESS,
+        type: PASSWORD_SUCCESS, // Web
+      })
+      dispatch({
+        type: ALERT, // Mobile // TODO: make for Web
+        options: {
+          title_id: 'dialog_reset_title',
+          text_id: 'dialog_reset_text',
+          buttons: [
+            {text_id: 'ok'},
+          ],
+        },
       })
     })
     .catch((error) => {
@@ -17,13 +29,13 @@ export default (values, dispatch) => {
         case 'auth/invalid-email':
         case 'auth/user-disabled':
         case 'auth/user-not-found':
-          reject({email: 'unknown'})
+          reject(new SubmissionError({email: 'unknown'}))
           break
         case 'auth/network-request-failed':
-          reject({_error: 'network'})
+          reject(new SubmissionError({_error: 'network'}))
           break
         default:
-          reject({_error: 'request'})
+          reject(new SubmissionError({_error: 'request'}))
           dispatch(failure(error, 'submitPassword'))
       }
     })

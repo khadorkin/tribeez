@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {KeyboardAvoidingView, StatusBar, View, Image, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import TextField from './fields/Text'
 import FormattedMessage from '../components/FormattedMessage'
 import Touchable from '../components/Touchable'
@@ -16,7 +17,6 @@ import {elevation} from '../dimensions'
 class LoginForm extends Component {
   static propTypes = {
     // from redux-form:
-    fields: PropTypes.object,
     handleSubmit: PropTypes.func,
     // from redux:
     destination: PropTypes.object, // next route after login (when trying to directly access a page when anonymous)
@@ -31,7 +31,7 @@ class LoginForm extends Component {
   }
 
   handleNext() {
-    this.refs.password.getWrappedInstance().focus()
+    this.refs.password.getRenderedComponent().getWrappedInstance().focus()
   }
 
   handleSubmit(event) {
@@ -47,34 +47,34 @@ class LoginForm extends Component {
   }
 
   render() {
-    const {fields: {email, password}, invite, ...props} = this.props
+    const {invite, initialValues, destination, ...props} = this.props
 
     const subtitle = invite && invite.converted && (
       <FormattedMessage id="login_to_join" values={invite} style={styles.subtitle} />
     )
 
-    const emptyEmail = !email.initialValue
+    const emptyEmail = !initialValues.email
 
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <StatusBar backgroundColor={colors.main} animated={true} />
-        <Form name="login" action={submitLogin.bind(null, this.props.destination)} style={styles.form} {...props}>
+        <Form name="login" action={submitLogin.bind(null, destination)} style={styles.form} {...props}>
           <Image source={require('../../common/images/logo.png')} style={styles.logo} />
           <View style={styles.box}>
             {subtitle}
-            <TextField ref="email"
-              {...email}
-              icon="mail-outline"
+            <Field
+              name="email"
+              component={TextField}
               autoFocus={emptyEmail}
               autoCorrect={false}
               keyboardType="email-address"
               onSubmitEditing={this.handleNext}
             />
-            <TextField ref="password"
-              {...password}
-              icon="lock-outline"
+            <Field ref="password" withRef={true}
+              name="password"
+              labelId="login_password"
+              component={TextField}
               autoFocus={!emptyEmail}
-              name="login_password"
               secureTextEntry={true}
               onSubmitEditing={this.handleSubmit}
             />

@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DateField from './fields/Date'
@@ -16,61 +17,61 @@ const today = Date.now()
 
 class ProfileForm extends Component {
   static propTypes = {
-    // from redux-form:
-    fields: PropTypes.object,
     // from redux:
     initialValues: PropTypes.object,
     tribe_ids: PropTypes.array,
   }
 
   render() {
-    const {fields: {name, email, lang, birthdate, phone, password, password2}, ...props} = this.props
+    const {tribe_ids, ...props} = this.props
 
     return (
       <ScrollView>
-        <Form name="profile" action={submitProfile.bind(null, '', this.props.tribe_ids)} {...props}>
+        <Form name="profile" action={submitProfile.bind(null, '', tribe_ids)} {...props}>
           <FormattedMessage
             id="gravatar"
             values={{link: 'gravatar.com'}}
             style={styles.gravatar}
           />
-          <TextField ref="name"
-            {...name}
+          <Field
+            name="name"
+            labelId="username"
+            component={TextField}
             autoCorrect={false}
-            name="username"
-            onSubmitEditing={this.handleSubmit}
           />
-          <TextField ref="email"
-            {...email}
+          <Field
+            name="email"
+            component={TextField}
             autoCorrect={false}
             keyboardType="email-address"
-            onSubmitEditing={this.handleSubmit}
-            errorId={email.error && 'email_' + email.error}
+            errorIsCustom={true}
           />
-          <SelectField ref="lang"
-            {...lang}
+          <Field
+            name="lang"
+            component={SelectField}
             items={langs}
           />
-          <DateField ref="birthdate"
+          <Field
+            name="birthdate"
+            component={DateField}
             max={today}
-            {...birthdate}
           />
-          <TextField ref="phone"
-            {...phone}
+          <Field
+            name="phone"
+            component={TextField}
             keyboardType="phone-pad"
-            onSubmitEditing={this.handleSubmit}
           />
-          <TextField ref="password"
-            {...password}
-            name="new_password"
+          <Field
+            name="password"
+            labelId="new_password"
+            component={TextField}
             secureTextEntry={true}
-            onSubmitEditing={this.handleSubmit}
-            errorId={password.error && 'password_' + password.error}
+            errorIsCustom={true}
           />
-          <TextField ref="password2"
-            {...password2}
+          <Field
+            name="password2"
+            component={TextField}
             secureTextEntry={true}
-            onSubmitEditing={this.handleSubmit}
           />
         </Form>
       </ScrollView>

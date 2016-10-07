@@ -146,8 +146,9 @@ export default (state = initialState, action = null) => {
         error: action.error,
       }
     case formActions.CHANGE: {
-      if (['register', 'join', 'profile'].includes(action.form) && action.field === 'lang') {
-        const lang = action.value
+      const {form, field} = action.meta
+      if (['register', 'join', 'profile'].includes(form) && field === 'lang') {
+        const lang = action.payload
         setLang(lang)
         return {
           ...state,

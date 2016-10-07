@@ -1,24 +1,25 @@
+import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
 import platform from '../platform'
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  lang: state.app.lang, //TODO: this should also update fields
   initialValues: {
+    lang: state.app.lang,
     city: {},
   },
 })
 
-const validate = ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency']
+const validate_fields = ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency']
 if (platform === 'web') {
-  validate.push('captcha')
+  validate_fields.push('captcha')
 }
 
 export default (component) => {
-  return reduxForm({
+  return connect(mapStateToProps)(reduxForm({
     form: 'register',
-    fields: ['name', 'email', 'password', 'lang', 'tribe_name', 'tribe_type', 'city', 'currency', 'captcha'],
-    validate: validator(validate),
+    validate: validator(validate_fields),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps)(component)
+  })(component))
 }

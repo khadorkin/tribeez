@@ -45,12 +45,14 @@ class TabBar extends Component {
       <TabButton
         key={id}
         onPress={() => this.props.goToPage(index)}
-        style={styles.tab}
+        style={styles.tabButton}
       >
-        <Text style={[styles.text, {fontWeight}]}>
-          {name}
-        </Text>
-        {badgeNode}
+        <View style={styles.tab}>
+          <Text style={[styles.text, {fontWeight}]}>
+            {name}
+          </Text>
+          {badgeNode}
+        </View>
       </TabButton>
     )
   }
@@ -87,6 +89,9 @@ const styles = StyleSheet.create({
     height: TabBar.height,
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  tabButton: {
+    flex: 1,
   },
   tab: {
     flex: 1,

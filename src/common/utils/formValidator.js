@@ -4,7 +4,7 @@ export default (required, optional = []) => {
     const fields = [...required, ...optional]
     fields.forEach((field) => {
       if (values[field] === undefined) {
-        values[field] = null // for Firebase
+        values[field] = null // for Firebase and Redux Form
       }
       if ((values[field] == null || values[field] === '') && !optional.includes(field)) {
         errors[field] = 'empty'
@@ -12,8 +12,13 @@ export default (required, optional = []) => {
         errors.city = 'invalid'
       } else if (field === 'password2' && values.password && values.password2 !== values.password) {
         errors.password2 = 'mismatch'
+      } else if (field === 'amount') {
+        const amount = Number(values.amount)
+        if (isNaN(amount)) {
+          errors.amount = 'invalid'
+        }
       } else if (field === 'parts') {
-        values.amount = Number(values.amount)
+        const amount = Number(values.amount)
         const total = values.parts.reduce((prev, curr) => {
           return curr.amount + prev
         }, 0)
@@ -22,7 +27,7 @@ export default (required, optional = []) => {
             errors._error = 'no_parts'
           }
         } else {
-          if (total !== values.amount) {
+          if (total !== amount) {
             errors._error = 'amount_mismatch'
           }
         }
@@ -32,8 +37,8 @@ export default (required, optional = []) => {
           errors._error = 'no_users'
         }
       } else if (field === 'wait') {
-        values.wait = Number(values.wait)
-        if (isNaN(values.wait) || values.wait < 0 || values.wait > 255 || !Number.isInteger(values.wait)) {
+        const wait = Number(values.wait)
+        if (isNaN(wait) || wait < 0 || wait > 255 || !Number.isInteger(wait)) {
           errors.wait = 'invalid'
         }
       }

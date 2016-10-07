@@ -27,16 +27,18 @@ class ListItem extends Component {
     )
 
     return (
-      <Touchable onPress={onPress} style={[styles.container, style]}>
-        <Avatar user={user} style={styles.avatar} />
-        <View style={styles.content}>
-          <View style={styles.text}>
-            {children}
+      <View>
+        <Touchable onPress={onPress} style={[styles.container, style]}>
+          <Avatar user={user} style={styles.avatar} />
+          <View style={styles.content}>
+            <View style={styles.text}>
+              {children}
+            </View>
+            {rightLabel}
           </View>
-          {rightLabel}
-          {action}
-        </View>
-      </Touchable>
+        </Touchable>
+        {action}
+      </View>
     )
   }
 }
@@ -63,8 +65,8 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 0,
     position: 'absolute',
-    bottom: -16,
-    right: -16,
+    bottom: 0,
+    right: 0,
   },
 })
 

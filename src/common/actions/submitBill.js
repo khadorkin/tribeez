@@ -1,3 +1,5 @@
+import {SubmissionError} from 'redux-form'
+
 import router from '../router'
 import routes from '../routes'
 
@@ -35,38 +37,50 @@ const calculateParts = (bill) => {
 }
 
 export default (values, dispatch) => {
-  const tid = auth.currentUser.tid
   return new Promise((resolve, reject) => {
-    // remove empty shares
-    values.parts = values.parts.filter((part) => part.amount > 0)
+    const bill = {
+      name: values.name,
+      description: values.description,
+      payer: values.payer,
+      paid: values.paid,
+      amount: Number(values.amount),
+      method: values.method,
+      parts: values.parts
+        .map((part) => ({uid: part.uid, amount: Number(part.amount)}))
+        .filter((part) => part.amount > 0), // remove empty shares
+      added: values.added || timestamp,
+      author: values.author,
+    }
 
     // store the original shares in order to find them again when editing:
-    if (values.method === 'shares') {
-      values.shares = {}
-      values.parts.forEach((part) => {
-        values.shares[part.uid] = part.amount
+    if (bill.method === 'shares') {
+      bill.shares = {}
+      bill.parts.forEach((part) => {
+        bill.shares[part.uid] = part.amount
       })
     }
 
     // get parts object from form array:
-    values.parts = calculateParts(values)
+    bill.parts = calculateParts(bill)
 
+    const tid = auth.currentUser.tid
     let id = values.id
-    delete values.id
     let action
     let current
     if (id) {
       action = 'update'
     } else {
       action = 'new'
-      values.added = timestamp
       id = db.ref('tribes/' + tid + '/bills').push().key
     }
     let updatedMembers
 
-    db.ref('tribes/' + tid + '/bills/' + id).transaction((bill) => {
-      current = bill // stays null if new
-      return {...bill, ...values} // to keep the log
+    db.ref('tribes/' + tid + '/bills/' + id).transaction((currentBill) => {
+      if (currentBill) {
+        current = currentBill // stays undefined if new
+        bill.log = currentBill.log
+      }
+      return bill
     })
     .then(() => {
       return db.ref('tribes/' + tid + '/members').transaction((members) => {
@@ -79,18 +93,18 @@ export default (values, dispatch) => {
             members[current.payer].balance -= current.amount
           }
           // add new offsets
-          for (const uid in values.parts) {
-            members[uid].balance -= values.parts[uid]
+          for (const uid in bill.parts) {
+            members[uid].balance -= bill.parts[uid]
           }
-          members[values.payer].balance += values.amount
+          members[bill.payer].balance += bill.amount
         }
         return members
       })
     })
     .then((res) => {
       updatedMembers = res.snapshot.val()
-      values.id = id
-      return saveLog('bill', action, values)
+      bill.id = id
+      return saveLog('bill', action, bill)
     })
     .then(() => {
       return db.ref('reminders/balance/' + tid).transaction((balances) => {
@@ -114,7 +128,7 @@ export default (values, dispatch) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'submitBill'))
-      reject({_error: 'request'})
+      reject(new SubmissionError({_error: 'request'}))
     })
   })
 }

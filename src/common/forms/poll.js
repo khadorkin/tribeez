@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
@@ -10,8 +11,8 @@ const mapStateToProps = (state, ownProps) => {
     initialValues = {
       id: poll.id,
       name: poll.name,
-      description: poll.description || '',
-      multiple: Boolean(poll.multiple),
+      description: poll.description,
+      multiple: poll.multiple,
       options: poll.options.concat(''), // update poll => add an empty option to be able to add options
       added: poll.added,
       author: poll.author,
@@ -35,11 +36,9 @@ export default (component, actionCreators) => {
   if (actionCreators) {
     mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
   }
-  return reduxForm({
+  return connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'poll',
-    fields: ['id', 'name', 'description', 'multiple', 'options[]', 'added', 'author'],
     validate: validator(['name', 'options'], ['description', 'multiple']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps, mapDispatchToProps)(component)
+  })(component))
 }

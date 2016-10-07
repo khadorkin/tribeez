@@ -1,11 +1,15 @@
 import React, {Component, PropTypes} from 'react'
 import {Switch, View, Text, StyleSheet} from 'react-native'
 
+import {connect} from 'react-redux'
+
 class TaskUser extends Component {
   static propTypes = {
     // from parent form:
-    user: PropTypes.object.isRequired,
-    checked: PropTypes.object.isRequired,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+    // from redux:
+    userMap: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -14,15 +18,22 @@ class TaskUser extends Component {
   }
 
   handleCheck(value) {
-    this.props.checked.onChange(value)
+    const {input} = this.props
+
+    input.onChange({
+      uid: input.value.uid,
+      checked: value,
+    })
   }
 
   render() {
-    const {user, checked} = this.props
+    const {input: {value: {uid, checked}}, userMap} = this.props
+
+    const user = userMap[uid]
 
     return (
       <View style={styles.container}>
-        <Switch value={checked.value} onValueChange={this.handleCheck} />
+        <Switch value={checked} onValueChange={this.handleCheck} />
         <Text style={styles.label}>{user.name}</Text>
       </View>
     )
@@ -41,4 +52,8 @@ const styles = StyleSheet.create({
   },
 })
 
-export default TaskUser
+const mapStateToProps = (state) => ({
+  userMap: state.tribe.userMap,
+})
+
+export default connect(mapStateToProps)(TaskUser)

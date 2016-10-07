@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {KeyboardAvoidingView, View, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import TextField from './fields/Text'
 import FormattedMessage from '../components/FormattedMessage'
 
@@ -13,10 +14,7 @@ import {elevation} from '../dimensions'
 class PasswordForm extends Component {
   static propTypes = {
     // from redux-form:
-    fields: PropTypes.object,
     handleSubmit: PropTypes.func,
-    // from redux:
-    initialValues: PropTypes.object,
   }
 
   constructor(props) {
@@ -29,17 +27,14 @@ class PasswordForm extends Component {
   }
 
   render() {
-    const {fields: {email}, ...props} = this.props
-
-    const subtitle = <FormattedMessage id="password_reset" style={styles.subtitle} />
-
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Form name="password" action={submitPassword} style={styles.form} {...props}>
+        <Form name="password" action={submitPassword} style={styles.form} {...this.props}>
           <View style={styles.box}>
-            {subtitle}
-            <TextField ref="email"
-              {...email}
+            <FormattedMessage id="password_reset" style={styles.subtitle} />
+            <Field
+              name="email"
+              component={TextField}
               autoFocus={true}
               autoCorrect={false}
               keyboardType="email-address"

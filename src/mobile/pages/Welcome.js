@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Image, StyleSheet, Dimensions} from 'react-native'
+import {View, Image, StyleSheet, Platform, Dimensions} from 'react-native'
 
 import Swiper from 'react-native-swiper'
 
@@ -66,7 +66,7 @@ class Welcome extends Component {
 
     return (
       <View style={styles.container}>
-        <Swiper loop={false} dot={dot} activeDot={activeDot} style={styles.swiper} paginationStyle={styles.paginationStyle}>
+        <Swiper loop={false} dot={dot} activeDot={activeDot} paginationStyle={styles.paginationStyle}>
           {
             slides.map((slide, index) => {
               return (
@@ -103,9 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.members,
   },
-  swiper: {
-    flex: 1,
-  },
   slide: {
     flex: 1,
   },
@@ -125,9 +122,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.lightText,
-    fontSize: (width / 12),
+    fontSize: (width / (Platform.OS === 'ios' ? 10 : 12)),
     position: 'absolute',
-    top: (height * 0.25),
+    top: (height * (Platform.OS === 'ios' ? 0.28 : 0.25)),
     width: contentWidth,
     textAlign: 'center',
   },

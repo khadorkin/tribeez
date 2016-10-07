@@ -1,3 +1,4 @@
+import {SubmissionError} from 'redux-form'
 import md5 from 'md5'
 import firebase from 'firebase'
 
@@ -65,24 +66,24 @@ export default (reauth_prompt, tribe_ids, values, dispatch) => {
     .catch((error) => {
       switch (error.code) {
         case 'auth/email-already-in-use':
-          reject({email: 'exists'})
+          reject(new SubmissionError({email: 'exists'}))
           break
         case 'auth/invalid-email':
-          reject({email: 'invalid'})
+          reject(new SubmissionError({email: 'invalid'}))
           break
         case 'auth/weak-password':
-          reject({password: 'weak'})
+          reject(new SubmissionError({password: 'weak'}))
           break
         // from reauthenticate:
         case 'auth/wrong-password':
         case 'auth/argument-error':
-          reject({_error: 'reauth'})
+          reject(new SubmissionError({_error: 'reauth'}))
           break
         case 'auth/network-request-failed':
-          reject({_error: 'network'})
+          reject(new SubmissionError({_error: 'network'}))
           break
         default:
-          reject({_error: 'request'})
+          reject(new SubmissionError({_error: 'request'}))
           dispatch(failure(error, 'submitProfile'))
       }
     })

@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
 import platform from '../platform'
@@ -19,11 +20,10 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default (component) => {
-  return reduxForm({
+  return connect(mapStateToProps)(reduxForm({
     form: 'tribe',
-    fields: ['id', 'tribe_name', 'tribe_type', 'city', 'currency'],
     validate: validator(['tribe_name', 'tribe_type', 'city', 'currency']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps)(component)
+    enableReinitialize: true, //TODO
+  })(component))
 }

@@ -10,11 +10,9 @@ import colors from '../../../common/constants/colors'
 class SelectField extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    onChange: PropTypes.func.isRequired,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
     items: PropTypes.array.isRequired,
-    error: PropTypes.string,
   }
 
   constructor(props) {
@@ -22,20 +20,32 @@ class SelectField extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(value/*, index*/) {
-    this.props.onChange(value)
+  componentDidMount() {
+    const {input, items} = this.props
+    //TODO: allow no default value
+    if (!input.value) {
+      input.onChange(items[0].code)
+    }
+  }
+
+  handleChange(value) {
+    this.props.input.onChange(value)
   }
 
   render() {
-    const {intl, name, value, items, error/*, ...props*/} = this.props
+    const {intl, items, input: {name, value}, meta: {touched, error}} = this.props
 
     const children = items.map((item) =>
       <Picker.Item label={item.name || intl.formatMessage({id: 'select.' + item.code})} value={item.code} key={item.code} />
     )
 
+    const labelStyle = {
+      color: (touched && error) ? colors.error : colors.secondaryText,
+    }
+
     return (
-      <View>
-        <FormattedMessage id={'field.' + name} style={styles.label} />
+      <View style={styles.container}>
+        <FormattedMessage id={'field.' + name} style={[styles.label, labelStyle]} />
         <Picker selectedValue={value} onValueChange={this.handleChange} style={styles.picker}>
           {children}
         </Picker>
@@ -47,20 +57,25 @@ class SelectField extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 8,
+    marginTop: 16,
+  },
   label: {
     marginHorizontal: 8,
     fontSize: 12,
   },
   picker: {
-    height: 36,
+    height: 32,
+    marginRight: 16,
   },
   bottom: {
-    marginTop: -5,
     marginHorizontal: 8,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.8,
     borderBottomColor: colors.underline,
   },
   error: {
+    fontSize: 12,
     color: colors.error,
     margin: 8,
   },

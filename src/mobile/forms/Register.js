@@ -1,10 +1,11 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import InfoBox from '../components/InfoBox'
 import FormattedMessage from '../components/FormattedMessage'
 import TextField from './fields/Text'
@@ -23,18 +24,10 @@ import {TRIBE_TYPES} from '../../common/constants/product'
 const types = TRIBE_TYPES.map((type) => ({code: type}))
 
 class RegisterForm extends Component {
-  static propTypes = {
-    // from redux-form:
-    fields: PropTypes.object,
-    initialValues: PropTypes.object,
-  }
-
   render() {
-    const {fields: {name, email, password, lang, tribe_name, tribe_type, city, currency}, ...props} = this.props
-
     return (
       <ScrollView ref="sv">
-        <Form name="register" action={submitRegister} {...props}>
+        <Form name="register" action={submitRegister} {...this.props}>
           <InfoBox type="info" id="register_info" />
           <View style={styles.section}>
             <View style={styles.sectionIcon}>
@@ -42,25 +35,29 @@ class RegisterForm extends Component {
             </View>
             <FormattedMessage id="you" style={styles.sectionText} />
           </View>
-          <SelectField ref="lang"
-            {...lang}
+          <Field
+            name="lang"
+            component={SelectField}
             items={langs}
           />
-          <TextField ref="name"
-            {...name}
+          <Field
+            name="name"
+            labelId="username"
+            component={TextField}
             autoCorrect={false}
-            name="username"
           />
-          <TextField ref="email"
-            {...email}
+          <Field
+            name="email"
+            component={TextField}
             autoCorrect={false}
             keyboardType="email-address"
-            errorId={email.error && 'email_' + email.error}
+            errorIsCustom={true}
           />
-          <TextField ref="password"
-            {...password}
+          <Field
+            name="password"
+            component={TextField}
             secureTextEntry={true}
-            errorId={password.error && 'password_' + password.error}
+            errorIsCustom={true}
           />
 
           <View style={styles.section}>
@@ -69,20 +66,24 @@ class RegisterForm extends Component {
             </View>
             <FormattedMessage id="your_tribe" style={styles.sectionText} />
           </View>
-          <TextField ref="tribe_name"
-            {...tribe_name}
+          <Field
+            name="tribe_name"
+            component={TextField}
             autoCorrect={false}
           />
-          <SelectField ref="tribe_type"
-            {...tribe_type}
+          <Field
+            name="tribe_type"
+            component={SelectField}
             items={types}
           />
-          <CityField ref="city"
-            {...city}
+          <Field ref="city"
+            name="city"
+            component={CityField}
             onFocus={() => this.refs.sv.scrollFocus(this.refs.city, 380)}
           />
-          <SelectField ref="currency"
-            {...currency}
+          <Field
+            name="currency"
+            component={SelectField}
             items={currencies}
           />
         </Form>

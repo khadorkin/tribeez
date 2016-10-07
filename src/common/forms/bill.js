@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
@@ -27,11 +28,11 @@ const mapStateToProps = (state, ownProps) => {
     initialValues = {
       id: bill.id,
       name: bill.name,
+      description: bill.description,
       payer: bill.payer,
       paid: bill.paid,
       amount: bill.amount,
       method: bill.method,
-      description: bill.description || '',
       parts,
       added: bill.added,
       author: bill.author,
@@ -40,6 +41,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues = {
       payer: state.user.uid,
       paid: now,
+      amount: '',
       method: 'shares',
       parts: state.tribe.users.map((user) => ({uid: user.uid, amount: 1})),
       author: state.user.uid,
@@ -60,11 +62,9 @@ export default (component, actionCreators) => {
   if (actionCreators) {
     mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
   }
-  return reduxForm({
+  return connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'bill',
-    fields: ['id', 'name', 'payer', 'paid', 'amount', 'method', 'description', 'parts[].uid', 'parts[].amount', 'added', 'author'],
     validate: validator(['name', 'payer', 'amount', 'paid', 'method', 'parts'], ['description']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps, mapDispatchToProps)(component)
+  })(component))
 }

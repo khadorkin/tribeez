@@ -39,11 +39,8 @@ const requestPlace = (service, query) => {
 class CityField extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.object, //TODO: fix bug
-    onChange: PropTypes.func.isRequired,
-    touched: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -59,7 +56,7 @@ class CityField extends Component {
 
   handleChange(value) {
     this.currentRequest = value
-    this.props.onChange({
+    this.props.input.onChange({
       name: value,
     })
     if (value) {
@@ -98,7 +95,7 @@ class CityField extends Component {
         // short: place.name (city name only)
         // medium: this.props.value
         // long: place.formatted_address
-        this.props.onChange({
+        this.props.input.onChange({
           name: prediction.description,
           place_id: place.place_id,
           country_code: country.short_name,
@@ -122,7 +119,7 @@ class CityField extends Component {
   }
 
   render() {
-    const {intl, name, value, touched, error, ...props} = this.props
+    const {intl, input: {name, value}, meta: {touched, error}, ...props} = this.props
 
     return (
       <View style={styles.container}>

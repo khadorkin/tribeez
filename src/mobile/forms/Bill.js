@@ -2,10 +2,12 @@ import React, {Component, PropTypes} from 'react'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field, FieldArray} from 'redux-form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import DateField from './fields/Date'
-import Part from './deep/Part'
+import Parts from './fields/Parts'
+//import Part from './deep/Part'
 
 import form from '../../common/forms/bill'
 import submitBill from '../../common/actions/submitBill'
@@ -18,83 +20,54 @@ const methods = [
 
 class BillForm extends Component {
   static propTypes = {
-    // from parent:
-    current: PropTypes.object,
-    // from redux-form:
-    fields: PropTypes.object,
     // from redux:
     users: PropTypes.array.isRequired,
-    userMap: PropTypes.object.isRequired,
     currency: PropTypes.string,
-    initialValues: PropTypes.object,
     bill: PropTypes.object,
   }
 
-  constructor(props) {
-    super(props)
-    this.handleMethodChange = this.handleMethodChange.bind(this)
-  }
-
-  handleMethodChange(value) {
-    if (value === 'shares') {
-      this.props.fields.parts.forEach((part) => {
-        if (part.amount.value === '') {
-          part.amount.onChange(1)
-        }
-      })
-    } else {
-      this.props.fields.parts.forEach((part) => {
-        if (part.amount.value === 1) {
-          part.amount.onChange('')
-        }
-      })
-    }
-    this.props.fields.method.onChange(value)
-  }
-
   render() {
-    const {fields: {name, description, payer, paid, amount, method, parts}, users, userMap, currency, ...props} = this.props
+    const {users, currency, ...props} = this.props
 
     const userItems = users.map((user) => ({name: user.name, code: user.uid}))
 
     return (
       <ScrollView>
         <Form name={'bill.' + (this.props.bill ? 'update' : 'create')} action={submitBill} {...props}>
-          <TextField
-            {...name}
-            name="title"
+          <Field
+            name="name"
+            labelId="title"
+            component={TextField}
           />
-          <TextField
+          <Field
+            name="description"
+            component={TextField}
             multiline={true}
-            {...description}
           />
-          <SelectField
+          <Field
+            name="payer"
+            component={SelectField}
             items={userItems}
-            {...payer}
           />
-          <DateField
+          <Field
+            name="paid"
+            component={DateField}
             max={today}
-            {...paid}
           />
-          <TextField
+          <Field
+            name="amount"
+            component={TextField}
             currency={currency}
-            {...amount}
           />
-          <SelectField
-            {...method}
+          <Field
+            name="method"
+            component={SelectField}
             items={methods}
-            onChange={this.handleMethodChange}
           />
-          {
-            parts.map((part, index) =>
-              <Part key={index}
-                method={method.value}
-                amount={part.amount}
-                currency={currency}
-                user={userMap[part.uid.value]}
-              />
-            )
-          }
+          <FieldArray
+            name="parts"
+            component={Parts}
+          />
         </Form>
       </ScrollView>
     )

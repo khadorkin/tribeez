@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
@@ -10,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     initialValues = {
       id: task.id,
       name: task.name,
-      description: task.description || '',
+      description: task.description,
       wait: task.wait,
       users: state.tribe.users.map((user) => ({uid: user.uid, checked: (task.counters[user.uid] !== undefined)})),
       added: task.added,
@@ -25,8 +26,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     initialValues,
     task,
-    tid: state.tribe.id,
-    userMap: state.tribe.userMap,
+    tid: state.tribe.id, // Web
   }
 }
 
@@ -35,11 +35,9 @@ export default (component, actionCreators) => {
   if (actionCreators) {
     mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
   }
-  return reduxForm({
+  return connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'task',
-    fields: ['id', 'name', 'description', 'wait', 'users[].uid', 'users[].checked', 'added', 'author'],
     validate: validator(['name', 'wait', 'users'], ['description']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps, mapDispatchToProps)(component)
+  })(component))
 }

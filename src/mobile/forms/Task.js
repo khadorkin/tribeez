@@ -2,50 +2,44 @@ import React, {Component, PropTypes} from 'react'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field, FieldArray} from 'redux-form'
 import TextField from './fields/Text'
-import TaskUser from './deep/TaskUser'
+import TaskUsers from './fields/TaskUsers'
 
 import form from '../../common/forms/task'
 import submitTask from '../../common/actions/submitTask'
 
 class TaskForm extends Component {
   static propTypes = {
-    // from parent:
-    current: PropTypes.object,
-    // from redux-form:
-    fields: PropTypes.object,
     // from redux:
-    initialValues: PropTypes.object,
     task: PropTypes.object,
-    userMap: PropTypes.object.isRequired,
   }
 
   render() {
-    const {fields: {name, description, wait, users}, userMap, ...props} = this.props
+    const {task, ...props} = this.props
 
     return (
       <ScrollView>
-        <Form name={'task.' + (this.props.task ? 'update' : 'create')} action={submitTask} {...props}>
-          <TextField
-            {...name}
-            name="title"
+        <Form name={'task.' + (task ? 'update' : 'create')} action={submitTask} {...props}>
+          <Field
+            name="name"
+            labelId="title"
+            component={TextField}
           />
-          <TextField
+          <Field
+            name="description"
+            component={TextField}
             multiline={true}
-            {...description}
           />
-          <TextField ref="wait"
+          <Field
+            name="wait"
+            component={TextField}
             keyboardType="numeric"
-            {...wait}
           />
-          {
-            users.map((task_user, index) =>
-              <TaskUser key={index}
-                checked={task_user.checked}
-                user={userMap[task_user.uid.value]}
-              />
-            )
-          }
+          <FieldArray
+            name="users"
+            component={TaskUsers}
+          />
         </Form>
       </ScrollView>
     )

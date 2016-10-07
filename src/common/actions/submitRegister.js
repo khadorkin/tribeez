@@ -1,3 +1,4 @@
+import {SubmissionError} from 'redux-form'
 import md5 from 'md5'
 
 import api from '../utils/api'
@@ -19,7 +20,7 @@ export default (values, dispatch) => {
 
     promise.then((response) => {
       if (response.error) {
-        reject(response.error)
+        reject(new SubmissionError(response.error))
         return
       }
 
@@ -100,7 +101,7 @@ export default (values, dispatch) => {
           dispatch(login(user))
         })
         .catch((error) => {
-          reject({_error: 'request'})
+          reject(new SubmissionError({_error: 'request'}))
           dispatch(failure(error, 'submitRegister/' + errorOrigin))
           // silently rollback user creation:
           Promise.all([
@@ -113,19 +114,19 @@ export default (values, dispatch) => {
       .catch((error) => {
         switch (error.code) {
           case 'auth/email-already-in-use':
-            reject({email: 'exists'})
+            reject(new SubmissionError({email: 'exists'}))
             break
           case 'auth/invalid-email':
-            reject({email: 'invalid'})
+            reject(new SubmissionError({email: 'invalid'}))
             break
           case 'auth/weak-password':
-            reject({password: 'weak'})
+            reject(new SubmissionError({password: 'weak'}))
             break
           case 'auth/network-request-failed':
-            reject({_error: 'network'})
+            reject(new SubmissionError({_error: 'network'}))
             break
           default:
-            reject({_error: 'request'})
+            reject(new SubmissionError({_error: 'request'}))
             dispatch(failure(error, 'submitRegister/createUser'))
         }
       })
@@ -133,7 +134,7 @@ export default (values, dispatch) => {
     .catch((error) => {
       dispatch(failure(error, 'submitRegister', 'api'))
       const _error = /fetch/.test(error.message) ? 'network' : 'request'
-      reject({_error})
+      reject(new SubmissionError({_error}))
     })
   })
 }

@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
 import platform from '../platform'
@@ -12,11 +13,10 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export default (component) => {
-  return reduxForm({
+  return connect(mapStateToProps)(reduxForm({
     form: 'join',
-    fields: ['name', 'email', 'password', 'lang', 'token'],
     validate: validator(['name', 'email', 'password', 'lang']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps)(component)
+    enableReinitialize: true, // because the email address is filled in asynchronously
+  })(component))
 }

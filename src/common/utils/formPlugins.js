@@ -3,30 +3,25 @@ import {
   UPDATE_LANG,
 } from '../constants/actions'
 
-import {actionTypes as formActions} from 'redux-form'
-
-import {getLang} from './locale'
+import {actionTypes} from 'redux-form'
 
 const userPlugin = (state, action) => {
   switch (action.type) {
     case GET_MEMBER_SUCCESS:
       return {
         ...state,
-        lang: {value: action.user.lang},
+        values: {
+          ...state.values,
+          lang: action.user.lang,
+        },
       }
     case UPDATE_LANG:
       return {
         ...state,
-        lang: {value: action.lang},
-      }
-    case formActions.DESTROY:
-      return {
-        lang: {value: getLang()},
-      }
-    case formActions.INITIALIZE:
-      return {
-        ...state,
-        lang: {value: getLang()},
+        values: {
+          ...state.values,
+          lang: action.lang,
+        },
       }
     default:
       return state
@@ -35,13 +30,17 @@ const userPlugin = (state, action) => {
 
 const pollPlugin = (state, action) => {
   switch (action.type) {
-    case formActions.CHANGE:
-      if (action.form === 'poll' && action.field.indexOf('options') === 0) {
-        const last = state.options[state.options.length - 1]
-        if (last.value) {
+    case actionTypes.CHANGE:
+      const {form, field} = action.meta
+      if (form === 'poll' && field.indexOf('options') === 0) {
+        const {options} = state.values
+        if (options[options.length - 1]) { // last option not empty => create another one below
           return {
             ...state,
-            options: [...state.options, {value: ''}],
+            values: {
+              ...state.values,
+              options: [...options, ''],
+            },
           }
         }
       }

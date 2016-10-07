@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
@@ -11,11 +12,11 @@ const mapStateToProps = (state, ownProps) => {
     initialValues = {
       id: event.id,
       name: event.name,
-      description: event.description || '',
+      description: event.description,
       start: getTimestamp(event.start),
       end: getTimestamp(event.end),
-      location: event.location || '',
-      url: event.url || '',
+      location: event.location,
+      url: event.url,
       reminder: event.reminder || 'none',
       added: event.added,
       author: event.author || state.user.uid,
@@ -38,11 +39,9 @@ export default (component, actionCreators) => {
   if (actionCreators) {
     mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
   }
-  return reduxForm({
+  return connect(mapStateToProps, mapDispatchToProps)(reduxForm({
     form: 'event',
-    fields: ['id', 'name', 'description', 'start', 'end', 'location', 'url', 'reminder', 'added', 'author'],
     validate: validator(['name', 'start'], ['end', 'description', 'location', 'url', 'reminder']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps, mapDispatchToProps)(component)
+  })(component))
 }

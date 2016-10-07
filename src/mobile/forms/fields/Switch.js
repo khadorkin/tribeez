@@ -7,20 +7,17 @@ import colors from '../../../common/constants/colors'
 
 class SwitchField extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
-    value: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired,
-    touched: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
   }
 
   render() {
-    const {name, value, touched, error/*, ...props*/} = this.props
+    const {input: {name, value, onChange}, meta: {touched, error}} = this.props
 
     return (
       <View style={styles.container}>
         <View style={styles.field}>
-          <Switch value={value} onValueChange={this.props.onChange} />
+          <Switch value={value} onValueChange={onChange} />
           <FormattedMessage id={'field.' + name} style={styles.label} />
         </View>
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
@@ -43,6 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   error: {
+    fontSize: 12,
     color: colors.error,
     margin: 8,
   },

@@ -1,3 +1,5 @@
+import {SubmissionError} from 'redux-form'
+
 import {auth} from '../firebase'
 import {login} from './auth'
 import failure from './failure'
@@ -14,16 +16,16 @@ export default (destination, values, dispatch) => {
         case 'auth/invalid-email':
         case 'auth/user-disabled':
         case 'auth/user-not-found':
-          reject({email: 'unknown'})
+          reject(new SubmissionError({email: 'unknown'}))
           break
         case 'auth/wrong-password':
-          reject({password: 'wrong'})
+          reject(new SubmissionError({password: 'wrong'}))
           break
         case 'auth/network-request-failed':
-          reject({_error: 'network'})
+          reject(new SubmissionError({_error: 'network'}))
           break
         default:
-          reject({_error: 'request'})
+          reject(new SubmissionError({_error: 'request'}))
           dispatch(failure(error, 'submitLogin'))
       }
     })

@@ -2,7 +2,9 @@ import React, {Component, PropTypes} from 'react'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field, FieldArray} from 'redux-form'
 import TextField from './fields/Text'
+import Options from './fields/Options'
 import SwitchField from './fields/Switch'
 import InfoBox from '../components/InfoBox'
 
@@ -11,17 +13,12 @@ import submitPoll from '../../common/actions/submitPoll'
 
 class PollForm extends Component {
   static propTypes = {
-    // from parent:
-    current: PropTypes.object,
-    // from redux-form:
-    fields: PropTypes.object,
     // from redux:
-    initialValues: PropTypes.object,
     poll: PropTypes.object,
   }
 
   render() {
-    const {fields: {name, description, multiple, options}, poll, ...props} = this.props
+    const {poll, ...props} = this.props
 
     const subtitle = poll && poll.answers && <InfoBox type="alert" id="poll_edit_warning" />
 
@@ -29,24 +26,23 @@ class PollForm extends Component {
       <ScrollView>
         <Form name={'poll.' + (poll ? 'update' : 'create')} action={submitPoll} {...props}>
           {subtitle}
-          <TextField
-            {...name}
-            name="title"
+          <Field
+            name="name"
+            component={TextField}
+            labelId="title"
           />
-          <TextField
+          <Field
+            name="description"
+            component={TextField}
             multiline={true}
-            {...description}
           />
-          {
-            options.map((option, index) => (
-              <TextField key={index}
-                {...option}
-                name="option"
-              />
-            ))
-          }
-          <SwitchField
-            {...multiple}
+          <FieldArray
+            name="options"
+            component={Options}
+          />
+          <Field
+            name="multiple"
+            component={SwitchField}
           />
         </Form>
       </ScrollView>

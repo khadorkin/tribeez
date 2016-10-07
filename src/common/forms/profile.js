@@ -1,3 +1,4 @@
+import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import validator from '../utils/formValidator'
 import platform from '../platform'
@@ -15,11 +16,9 @@ const mapStateToProps = (state) => ({
 })
 
 export default (component) => {
-  return reduxForm({
+  return connect(mapStateToProps)(reduxForm({
     form: 'profile',
-    fields: ['name', 'email', 'lang', 'phone', 'birthdate', 'password', 'password2'],
     validate: validator(['name', 'email', 'lang'], ['birthdate', 'phone', 'password', 'password2']),
     touchOnBlur: (platform === 'web'),
-    returnRejectedSubmitPromise: (platform === 'web'),
-  }, mapStateToProps)(component)
+  })(component))
 }

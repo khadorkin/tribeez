@@ -1,7 +1,8 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 
@@ -10,28 +11,20 @@ import submitInvite from '../../common/actions/submitInvite'
 import langs from '../../common/constants/langs'
 
 class InviteForm extends Component {
-  static propTypes = {
-    // from redux-form:
-    fields: PropTypes.object,
-    // from redux:
-    initialValues: PropTypes.object,
-  }
-
   render() {
-    const {fields: {email, lang}, ...props} = this.props
-
     return (
       <ScrollView>
-        <Form name="invite" action={submitInvite} {...props}>
-          <TextField ref="email"
-            {...email}
+        <Form name="invite" action={submitInvite} {...this.props}>
+          <Field
+            name="email"
+            component={TextField}
             autoCorrect={false}
             keyboardType="email-address"
-            errorId={email.error && 'email_' + email.error}
-            onSubmitEditing={this.handleSubmit}
+            errorIsCustom={true}
           />
-          <SelectField ref="lang"
-            {...lang}
+          <Field
+            name="lang"
+            component={SelectField}
             items={langs}
           />
         </Form>

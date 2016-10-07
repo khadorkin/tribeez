@@ -1,3 +1,5 @@
+import {SubmissionError} from 'redux-form'
+
 import {auth, db, timestamp} from '../firebase'
 
 import {SNACK_MESSAGE} from '../constants/actions'
@@ -62,7 +64,7 @@ export default (values, dispatch) => {
         })
       })
       .catch((error) => {
-        reject({_error: 'request'})
+        reject(new SubmissionError({_error: 'request'}))
         dispatch(failure(error, 'submitTribe/edit'))
       })
 
@@ -129,7 +131,7 @@ export default (values, dispatch) => {
         })
       })
       .catch((error) => {
-        reject({_error: 'request'})
+        reject(new SubmissionError({_error: 'request'}))
         dispatch(failure(error, 'submitTribe/new'))
       })
     }

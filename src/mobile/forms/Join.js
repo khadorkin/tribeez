@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import FormattedMessage from '../components/FormattedMessage'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
@@ -35,7 +36,7 @@ class JoinForm extends Component {
   }
 
   render() {
-    const {fields: {name, email, password, lang}, invite, ...props} = this.props
+    const {invite, ...props} = this.props
 
     if (!invite || invite.converted) {
       return (
@@ -50,25 +51,29 @@ class JoinForm extends Component {
         <Form name="join" action={submitJoin.bind(null, this.props.invite)} {...props}>
           <Text style={styles.title}>{invite.tribe_name}</Text>
           <FormattedMessage id="invited_you" values={{name: invite.inviter_name}} style={styles.subtitle} />
-          <SelectField ref="lang"
-            {...lang}
+          <Field
+            name="lang"
+            component={SelectField}
             items={langs}
           />
-          <TextField ref="name"
-            {...name}
+          <Field
+            name="name"
+            labelId="username"
+            component={TextField}
             autoCorrect={false}
-            name="username"
           />
-          <TextField ref="email"
-            {...email}
+          <Field
+            name="email"
+            component={TextField}
             autoCorrect={false}
             keyboardType="email-address"
-            errorId={email.error && 'email_' + email.error}
+            errorIsCustom={true}
           />
-          <TextField ref="password"
-            {...password}
+          <Field
+            name="password"
+            component={TextField}
             secureTextEntry={true}
-            errorId={password.error && 'password_' + password.error}
+            errorIsCustom={true}
           />
         </Form>
       </ScrollView>

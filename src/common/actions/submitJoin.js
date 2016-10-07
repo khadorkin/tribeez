@@ -1,3 +1,4 @@
+import {SubmissionError} from 'redux-form'
 import md5 from 'md5'
 
 import {auth, db, timestamp} from '../firebase'
@@ -99,25 +100,25 @@ export default (invite, values, dispatch) => {
         })
       })
       .catch(() => { // either from a firebase fail or from a login dispatch fail
-        reject({_error: 'request'})
+        reject(new SubmissionError({_error: 'request'}))
       })
     })
     .catch((error) => {
       switch (error.code) {
         case 'auth/email-already-in-use':
-          reject({email: 'exists'})
+          reject(new SubmissionError({email: 'exists'}))
           break
         case 'auth/invalid-email':
-          reject({email: 'invalid'})
+          reject(new SubmissionError({email: 'invalid'}))
           break
         case 'auth/weak-password':
-          reject({password: 'weak'})
+          reject(new SubmissionError({password: 'weak'}))
           break
         case 'auth/network-request-failed':
-          reject({_error: 'network'})
+          reject(new SubmissionError({_error: 'network'}))
           break
         default:
-          reject({_error: 'request'})
+          reject(new SubmissionError({_error: 'request'}))
           dispatch(failure(error, 'submitJoin/createUser'))
       }
     })

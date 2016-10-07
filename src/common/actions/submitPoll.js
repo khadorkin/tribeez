@@ -1,3 +1,5 @@
+import {SubmissionError} from 'redux-form'
+
 import router from '../router'
 import routes from '../routes'
 
@@ -8,34 +10,39 @@ import failure from './failure'
 
 export default (values, dispatch) => {
   return new Promise((resolve, reject) => {
-    values.options = values.options.filter((option) => option)
-    if (values.options.length < 2) {
-      reject({_error: 'no_options'})
+    const poll = {
+      name: values.name,
+      description: values.description,
+      multiple: values.multiple,
+      options: values.options.filter((option) => option), // remove empty options
+      added: values.added || timestamp,
+      author: values.author,
+    }
+    if (poll.options.length < 2) {
+      reject(new SubmissionError({_error: 'no_options'}))
       return
     }
 
     const tid = auth.currentUser.tid
     let id = values.id
-    delete values.id
     let action
     if (id) {
       action = 'update'
     } else {
       action = 'new'
-      values.added = timestamp
       id = db.ref('tribes/' + tid + '/polls').push().key
     }
 
-    db.ref('tribes/' + tid + '/polls/' + id).transaction((poll) => {
-      // delete existing answers since the options might have changed:
-      if (poll) {
-        delete poll.answers
+    db.ref('tribes/' + tid + '/polls/' + id).transaction((currentPoll) => {
+      // do not keep existing answers since the options might have changed
+      if (currentPoll) {
+        poll.log = currentPoll.log
       }
-      return {...poll, ...values} // to keep the log
+      return poll
     })
     .then(() => {
-      values.id = id
-      return saveLog('poll', action, values)
+      poll.id = id
+      return saveLog('poll', action, poll)
     })
     .then(() => {
       return db.ref().update({
@@ -49,7 +56,7 @@ export default (values, dispatch) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'submitPoll'))
-      reject({_error: 'request'})
+      reject(new SubmissionError({_error: 'request'}))
     })
   })
 }

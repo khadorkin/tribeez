@@ -1,3 +1,5 @@
+import {SubmissionError} from 'redux-form'
+
 import router from '../router'
 import routes from '../routes'
 
@@ -42,11 +44,11 @@ export default (values, dispatch) => {
       })
       .catch((error) => {
         if (error.email) {
-          reject({email: error.email})
+          reject(new SubmissionError({email: error.email}))
         } else {
           dispatch(failure(error, 'submitInvite', 'api'))
           const _error = /fetch/.test(error.message) ? 'network' : 'request'
-          reject({_error})
+          reject(new SubmissionError({_error}))
         }
         ref.child(token).remove()
         .catch(() => {
@@ -56,7 +58,7 @@ export default (values, dispatch) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'submitInvite'))
-      reject({_error: 'request'})
+      reject(new SubmissionError({_error: 'request'}))
     })
   })
 }

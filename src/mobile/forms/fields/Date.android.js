@@ -1,59 +1,100 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, View, Text, DatePickerAndroid, TimePickerAndroid} from 'react-native'
+import {StyleSheet, View, Text, Animated, DatePickerAndroid, TimePickerAndroid} from 'react-native'
+import {injectIntl, intlShape} from 'react-intl'
 
 import FormattedDate from '../../components/FormattedDate'
 import FormattedTime from '../../components/FormattedTime'
 import FormattedMessage from '../../components/FormattedMessage'
 import Touchable from '../../components/Touchable'
+import IconButton from '../../components/IconButton'
 
 import colors from '../../../common/constants/colors'
 
+import {getLabelSize, getLabelPosition, ANIMATION_DURATION} from '../../dimensions'
+
 class DateField extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
+    intl: intlShape.isRequired,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
     min: PropTypes.number, // timestamp
     max: PropTypes.number, // timestamp
     time: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    onChange: PropTypes.func.isRequired,
-    touched: PropTypes.bool.isRequired,
-    error: PropTypes.string,
   }
 
   constructor(props) {
     super(props)
     let time = false
-    if (typeof props.value === 'number') {
-      const date = new Date(props.value)
+    const {input: {value}} = props
+    if (typeof value === 'number') {
+      const date = new Date(value)
       time = (date.getHours() !== 0 || date.getMinutes() !== 0)
     }
     this.state = {
       time,
+      dateLabelSize: new Animated.Value(getLabelSize(value)),
+      dateLabelPosition: new Animated.Value(getLabelPosition(value)),
+      timeLabelSize: new Animated.Value(getLabelSize(time)),
+      timeLabelPosition: new Animated.Value(getLabelPosition(time)),
     }
     this.handleOpenDate = this.handleOpenDate.bind(this)
     this.handleOpenTime = this.handleOpenTime.bind(this)
+    this.handleClearDate = this.handleClearDate.bind(this)
+    this.handleClearTime = this.handleClearTime.bind(this)
+    this.renderDate = this.renderDate.bind(this)
+    this.renderTime = this.renderTime.bind(this)
+  }
+
+  componentWillReceiveProps(props) {
+    const hasValue = Boolean(props.input.value)
+    if (hasValue !== Boolean(this.props.input.value)) {
+      Animated.timing(this.state.dateLabelSize, {
+        toValue: getLabelSize(hasValue),
+        duration: ANIMATION_DURATION,
+      }).start()
+      Animated.timing(this.state.dateLabelPosition, {
+        toValue: getLabelPosition(hasValue),
+        duration: ANIMATION_DURATION,
+      }).start()
+    }
+
+    let hasTime = hasValue
+    if (hasValue) {
+      const date = new Date(props.input.value)
+      hasTime = (date.getHours() !== 0 || date.getMinutes() !== 0)
+    }
+    Animated.timing(this.state.timeLabelSize, {
+      toValue: getLabelSize(hasTime),
+      duration: ANIMATION_DURATION,
+    }).start()
+    Animated.timing(this.state.timeLabelPosition, {
+      toValue: getLabelPosition(hasTime),
+      duration: ANIMATION_DURATION,
+    }).start()
   }
 
   handleOpenDate() {
+    const {input: {value, onChange}, min, max} = this.props
+
     DatePickerAndroid.open({
-      date: this.props.value || Date.now(),
-      minDate: this.props.min,
-      maxDate: this.props.max,
+      date: value || Date.now(),
+      minDate: min,
+      maxDate: max,
     }).then((values) => {
       if (values.action === DatePickerAndroid.dismissedAction) {
         return
       }
       const picked = new Date(values.year, values.month, values.day)
-      this.props.onChange(picked.getTime())
+      onChange(picked.getTime())
     })
   }
 
   handleOpenTime() {
-    const date = (typeof this.props.value === 'number') ? new Date(this.props.value) : new Date()
+    const {input: {value, onChange}} = this.props
+    const date = (typeof value === 'number') ? new Date(value) : new Date()
     TimePickerAndroid.open({
       hour: date.getHours(),
       minute: date.getMinutes(),
-      //is24Hour: true, //TODO: depends on phone's locale?
     }).then((values) => {
       if (values.action === TimePickerAndroid.dismissedAction) {
         return
@@ -61,56 +102,110 @@ class DateField extends Component {
       this.setState({
         time: true,
       })
-      if (this.props.value) {
-        const picked = new Date(this.props.value)
+      if (value) {
+        const picked = new Date(value)
         picked.setHours(values.hour)
         picked.setMinutes(values.minute)
-        this.props.onChange(picked.getTime())
+        onChange(picked.getTime())
       }
     })
   }
 
+  handleClearDate() {
+    this.props.input.onChange('')
+  }
+
+  handleClearTime() {
+    const date = new Date(this.props.input.value)
+    const picked = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    this.props.input.onChange(picked.getTime())
+  }
+
   //TODO: distinguish date/time errors
 
-  render() {
-    const {name, value, touched, error/*, ...props*/} = this.props
+  renderDate() {
+    const {intl, input: {name, value}, meta: {touched, error}} = this.props
 
-    let dateLabel = <Text style={styles.label}>{' '}</Text>
-    let datePlaceholder = <FormattedMessage id={'field.' + name} style={styles.placeholder} />
-    let timeLabel = <Text style={styles.label}>{' '}</Text>
-    let timePlaceholder = <FormattedMessage id={'field.time.' + name} style={styles.placeholder} />
-
+    let ts
+    let label
+    let clearButton
     if (value) {
-      dateLabel = <FormattedMessage id={'field.' + name} style={styles.label} />
-      datePlaceholder = <FormattedDate value={Number(value)} style={styles.date} />
-      if (this.state.time) {
-        timeLabel = <FormattedMessage id={'field.time.' + name} style={styles.label} />
-        timePlaceholder = <FormattedTime value={this.state.time && Number(value)} style={styles.date} />
+      ts = Number(value)
+      label = <FormattedDate value={ts} style={styles.value} />
+      clearButton = <IconButton name="clear" size={16} color={colors.secondaryText} style={styles.clear} onPress={this.handleClearDate} />
+    } else {
+      ts = Date.now()
+      label = <Text style={styles.value}>{' '}</Text>
+    }
+
+    const labelStyle = {
+      fontSize: this.state.dateLabelSize,
+      position: 'absolute',
+      top: this.state.dateLabelPosition,
+      color: (touched && error) ? colors.error : colors.secondaryText,
+      backgroundColor: 'transparent',
+    }
+
+    return (
+      <View style={styles.field}>
+        <Touchable onPress={this.handleOpenDate} style={styles.valueContainer}>
+          {label}
+        </Touchable>
+        <Animated.Text style={labelStyle} onPress={this.handleOpenDate} numberOfLines={1}>
+          {intl.formatMessage({id: 'field.' + name})}
+        </Animated.Text>
+        {clearButton}
+      </View>
+    )
+  }
+
+  renderTime() {
+    const {intl, input: {name, value}} = this.props
+
+    let ts = Date.now()
+    let label = <Text style={styles.value}>{' '}</Text>
+    let clearButton
+    if (value) {
+      ts = Number(value)
+      const date = new Date(ts)
+      const time = (date.getHours() !== 0 || date.getMinutes() !== 0)
+      if (time) {
+        label = <FormattedTime value={ts} style={styles.value} />
+        clearButton = <IconButton name="clear" size={16} color={colors.secondaryText} style={styles.clear} onPress={this.handleClearTime} />
       }
     }
 
-    const errorText = <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
+    const labelStyle = {
+      fontSize: this.state.timeLabelSize,
+      position: 'absolute',
+      top: this.state.timeLabelPosition,
+      color: colors.secondaryText,
+      backgroundColor: 'transparent',
+    }
 
     return (
-      <View>
-        <View style={styles.container}>
-          {dateLabel}
-          <Touchable onPress={this.handleOpenDate} style={styles.field}>
-            {datePlaceholder}
-          </Touchable>
-          {errorText}
+      <View style={styles.field}>
+        <Touchable onPress={this.handleOpenTime} style={styles.valueContainer}>
+          {label}
+        </Touchable>
+        <Animated.Text style={labelStyle} onPress={this.handleOpenTime} numberOfLines={1}>
+          {intl.formatMessage({id: 'field.time.' + name})}
+        </Animated.Text>
+        {clearButton}
+      </View>
+    )
+  }
+
+  render() {
+    const {time, input: {name}, meta: {touched, error}} = this.props
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.fields}>
+          {this.renderDate()}
+          {time && this.renderTime()}
         </View>
-        {
-          this.props.time && (
-            <View style={styles.container}>
-              {timeLabel}
-              <Touchable onPress={this.handleOpenTime} style={styles.field}>
-                {timePlaceholder}
-              </Touchable>
-              {errorText}
-            </View>
-          )
-        }
+        <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />
       </View>
     )
   }
@@ -118,28 +213,37 @@ class DateField extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 8,
+    marginBottom: 8,
   },
-  label: {
-    fontSize: 12,
+  fields: {
+    flexDirection: 'row',
   },
   field: {
-    paddingTop: 9,
-    paddingBottom: 5,
-    borderBottomWidth: 1,
+    paddingTop: 30,
+    marginHorizontal: 8,
+    flex: 1,
+    position: 'relative',
+  },
+  valueContainer: {
+    borderBottomWidth: 0.8,
     borderBottomColor: colors.underline,
+    paddingTop: 6,
+    paddingBottom: 9,
   },
-  placeholder: {
+  value: {
     fontSize: 16,
+    color: colors.primaryText,
   },
-  date: {
-    fontSize: 16,
-    color: colors.text,
+  clear: {
+    position: 'absolute',
+    top: 29,
+    right: 0,
   },
   error: {
     color: colors.error,
-    marginVertical: 8,
+    margin: 8,
+    fontSize: 12,
   },
 })
 
-export default DateField
+export default injectIntl(DateField)

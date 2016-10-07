@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
+import {Field} from 'redux-form'
 import TextField from './fields/Text'
 import SelectField from './fields/Select'
 import CityField from './fields/City'
@@ -19,37 +20,37 @@ class TribeForm extends Component {
     // from parent:
     type: PropTypes.string.isRequired,
     // from redux-form:
-    fields: PropTypes.object,
-    resetForm: PropTypes.func.isRequired,
-    // from redux:
-    initialValues: PropTypes.object,
+    initialize: PropTypes.func.isRequired,
+    initialValues: PropTypes.object.isRequired,
   }
 
-  componentDidMount() {
-    this.props.resetForm() // because remounting the same component does not clear the form :/
-  }
+  //TODO: solve same-page issue (reinitialize form when remounting)
 
   render() {
-    const {fields: {tribe_name, tribe_type, city, currency}, ...props} = this.props
+    const {type, ...props} = this.props
 
     return (
       <ScrollView ref="sv">
-        <Form name={'tribe.' + this.props.type} action={submitTribe} {...props}>
-          <TextField
-            {...tribe_name}
+        <Form name={'tribe.' + type} action={submitTribe} {...props}>
+          <Field
+            name="tribe_name"
+            component={TextField}
             autoCorrect={false}
           />
-          <SelectField
-            {...tribe_type}
+          <Field
+            name="tribe_type"
+            component={SelectField}
             items={types}
           />
-          <CityField
-            {...city}
+          <Field
+            name="city"
+            component={CityField}
             ref="city"
             onFocus={() => this.refs.sv.scrollFocus(this.refs.city, 380)}
           />
-          <SelectField
-            {...currency}
+          <Field
+            name="currency"
+            component={SelectField}
             items={currencies}
           />
         </Form>

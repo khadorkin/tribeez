@@ -150,6 +150,7 @@ export default class MaterialTextField extends Component {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           onContentSizeChange={this.handleContentSizeChange}
+          underlineColorAndroid="transparent"
         />
         <View style={styles.underline} onLayout={this.handleLayout}>
           <Animated.View style={underlineStyle} />
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     //height: 34,
     lineHeight: 34,
+    padding: 0,
   },
   underline: {
     height: 0.8,
