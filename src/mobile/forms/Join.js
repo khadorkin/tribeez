@@ -67,6 +67,7 @@ class JoinForm extends Component {
             component={TextField}
             autoCorrect={false}
             keyboardType="email-address"
+            autoCapitalize="none"
             errorIsCustom={true}
           />
           <Field

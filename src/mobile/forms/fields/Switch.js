@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     marginHorizontal: 8,
     fontSize: 16,
+    color: colors.primaryText,
   },
   error: {
     fontSize: 12,

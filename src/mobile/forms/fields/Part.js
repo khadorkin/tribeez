@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.8,
     borderBottomColor: colors.underline,
     padding: 0,
+    color: colors.primaryText,
   },
   amount: {
     width: 120,
@@ -144,11 +145,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.8,
     borderBottomColor: colors.underline,
     padding: 0,
+    color: colors.primaryText,
   },
   currency: {
     position: 'absolute',
     top: 5.5,
     right: 3,
+    color: colors.secondaryText,
   },
 })
 

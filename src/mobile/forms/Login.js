@@ -68,6 +68,7 @@ class LoginForm extends Component {
               autoFocus={emptyEmail}
               autoCorrect={false}
               keyboardType="email-address"
+              autoCapitalize="none"
               onSubmitEditing={this.handleNext}
             />
             <Field ref="password" withRef={true}

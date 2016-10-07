@@ -24,18 +24,18 @@ class DateField extends Component {
 
   constructor(props) {
     super(props)
-    let time = false
     const {input: {value}} = props
-    if (typeof value === 'number') {
+
+    let hasTime = false
+    if (value) {
       const date = new Date(value)
-      time = (date.getHours() !== 0 || date.getMinutes() !== 0)
+      hasTime = (date.getHours() !== 0 || date.getMinutes() !== 0)
     }
     this.state = {
-      time,
       dateLabelSize: new Animated.Value(getLabelSize(value)),
       dateLabelPosition: new Animated.Value(getLabelPosition(value)),
-      timeLabelSize: new Animated.Value(getLabelSize(time)),
-      timeLabelPosition: new Animated.Value(getLabelPosition(time)),
+      timeLabelSize: new Animated.Value(getLabelSize(hasTime)),
+      timeLabelPosition: new Animated.Value(getLabelPosition(hasTime)),
     }
     this.handleOpenDate = this.handleOpenDate.bind(this)
     this.handleOpenTime = this.handleOpenTime.bind(this)
@@ -46,7 +46,9 @@ class DateField extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const hasValue = Boolean(props.input.value)
+    const {input: {value}} = props
+
+    const hasValue = Boolean(value)
     if (hasValue !== Boolean(this.props.input.value)) {
       Animated.timing(this.state.dateLabelSize, {
         toValue: getLabelSize(hasValue),
@@ -60,7 +62,7 @@ class DateField extends Component {
 
     let hasTime = hasValue
     if (hasValue) {
-      const date = new Date(props.input.value)
+      const date = new Date(value)
       hasTime = (date.getHours() !== 0 || date.getMinutes() !== 0)
     }
     Animated.timing(this.state.timeLabelSize, {

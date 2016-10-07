@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     //height: 34,
     lineHeight: 34,
     padding: 0,
+    color: colors.primaryText,
   },
   underline: {
     height: 0.8,

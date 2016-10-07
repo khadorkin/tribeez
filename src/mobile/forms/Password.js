@@ -38,6 +38,7 @@ class PasswordForm extends Component {
               autoFocus={true}
               autoCorrect={false}
               keyboardType="email-address"
+              autoCapitalize="none"
               onSubmitEditing={this.handleSubmit}
             />
           </View>

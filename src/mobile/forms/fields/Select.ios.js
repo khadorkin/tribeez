@@ -14,20 +14,17 @@ import {elevation, getLabelSize, getLabelPosition, ANIMATION_DURATION} from '../
 class SelectField extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    onChange: PropTypes.func.isRequired,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
     items: PropTypes.array.isRequired,
-    touched: PropTypes.bool.isRequired,
-    error: PropTypes.string,
   }
 
   constructor(props) {
     super(props)
     this.state = {
       showModal: false,
-      labelSize: new Animated.Value(getLabelSize(props.value)),
-      labelPosition: new Animated.Value(getLabelPosition(props.value)),
+      labelSize: new Animated.Value(getLabelSize(props.input.value)),
+      labelPosition: new Animated.Value(getLabelPosition(props.input.value)),
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
@@ -35,8 +32,8 @@ class SelectField extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const hasValue = Boolean(props.value)
-    if (hasValue !== Boolean(this.props.value)) {
+    const hasValue = Boolean(props.input.value)
+    if (hasValue !== Boolean(this.props.input.value)) {
       Animated.timing(this.state.labelSize, {
         toValue: getLabelSize(hasValue),
         duration: ANIMATION_DURATION,
@@ -48,8 +45,8 @@ class SelectField extends Component {
     }
   }
 
-  handleChange(value/*, index*/) {
-    this.props.onChange(value)
+  handleChange(value) {
+    this.props.input.onChange(value)
   }
 
   handleOpen() {
@@ -62,14 +59,16 @@ class SelectField extends Component {
     this.setState({
       showModal: false,
     })
+
+    const {input, items} = this.props
     // default value = first proposal (this behavior could be improved)
-    if (!this.props.value) {
-      this.props.onChange(this.props.items[0].code)
+    if (!input.value) {
+      input.onChange(items[0].code)
     }
   }
 
   render() {
-    const {intl, name, value, items, touched, error/*, ...props*/} = this.props
+    const {intl, items, input: {name, value}, meta: {touched, error}} = this.props
 
     let valueName = ' '
     const children = items.map((item) => {
@@ -126,6 +125,7 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 16,
+    color: colors.primaryText,
   },
   error: {
     fontSize: 12,

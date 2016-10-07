@@ -16,25 +16,29 @@ import {elevation, getLabelSize, getLabelPosition, ANIMATION_DURATION} from '../
 class DateField extends Component {
   static propTypes = {
     intl: intlShape.isRequired,
-    name: PropTypes.string.isRequired,
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
     min: PropTypes.number, // timestamp
     max: PropTypes.number, // timestamp
     time: PropTypes.bool,
-    value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    onChange: PropTypes.func.isRequired,
-    touched: PropTypes.bool.isRequired,
-    error: PropTypes.string,
   }
 
   constructor(props) {
     super(props)
+    const {input: {value}} = props
+
+    let hasTime = false
+    if (value) {
+      const date = new Date(value)
+      hasTime = (date.getHours() !== 0 || date.getMinutes() !== 0)
+    }
     this.state = {
       showDatePicker: false,
       showTimePicker: false,
-      dateLabelSize: new Animated.Value(getLabelSize(props.value)),
-      dateLabelPosition: new Animated.Value(getLabelPosition(props.value)),
-      timeLabelSize: new Animated.Value(getLabelSize(props.value)),
-      timeLabelPosition: new Animated.Value(getLabelPosition(props.value)),
+      dateLabelSize: new Animated.Value(getLabelSize(value)),
+      dateLabelPosition: new Animated.Value(getLabelPosition(value)),
+      timeLabelSize: new Animated.Value(getLabelSize(hasTime)),
+      timeLabelPosition: new Animated.Value(getLabelPosition(hasTime)),
     }
     this.handleChangeDate = this.handleChangeDate.bind(this)
     this.handleChangeTime = this.handleChangeTime.bind(this)
@@ -49,8 +53,10 @@ class DateField extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const hasValue = Boolean(props.value)
-    if (hasValue !== Boolean(this.props.value)) {
+    const {input: {value}} = props
+
+    const hasValue = Boolean(value)
+    if (hasValue !== Boolean(this.props.input.value)) {
       Animated.timing(this.state.dateLabelSize, {
         toValue: getLabelSize(hasValue),
         duration: ANIMATION_DURATION,
@@ -63,7 +69,7 @@ class DateField extends Component {
 
     let hasTime = hasValue
     if (hasValue) {
-      const date = new Date(props.value)
+      const date = new Date(value)
       hasTime = (date.getHours() !== 0 || date.getMinutes() !== 0)
     }
     Animated.timing(this.state.timeLabelSize, {
@@ -78,11 +84,11 @@ class DateField extends Component {
 
   handleChangeDate(date) {
     const picked = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-    this.props.onChange(picked.getTime())
+    this.props.input.onChange(picked.getTime())
   }
 
   handleChangeTime(date) {
-    this.props.onChange(date.getTime())
+    this.props.input.onChange(date.getTime())
   }
 
   handleOpenDate() {
@@ -92,10 +98,12 @@ class DateField extends Component {
   }
 
   handleCloseDate() {
-    if (!this.props.value) {
+    const {input} = this.props
+
+    if (!input.value) {
       const date = new Date()
       const picked = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-      this.props.onChange(picked.getTime())
+      input.onChange(picked.getTime())
     }
     this.setState({
       showDatePicker: false,
@@ -109,8 +117,10 @@ class DateField extends Component {
   }
 
   handleCloseTime() {
-    if (!this.props.value) {
-      this.props.onChange(Date.now())
+    const {input} = this.props
+
+    if (!input.value) {
+      input.onChange(Date.now())
     }
     this.setState({
       showTimePicker: false,
@@ -118,17 +128,19 @@ class DateField extends Component {
   }
 
   handleClearDate() {
-    this.props.onChange('')
+    this.props.input.onChange('')
   }
 
   handleClearTime() {
-    const date = new Date(this.props.value)
+    const {input} = this.props
+
+    const date = new Date(input.value)
     const picked = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-    this.props.onChange(picked.getTime())
+    input.onChange(picked.getTime())
   }
 
   renderDate() {
-    const {intl, touched, error, name, value} = this.props
+    const {intl, input: {name, value}, meta: {touched, error}} = this.props
 
     let ts
     let label
@@ -172,7 +184,7 @@ class DateField extends Component {
   }
 
   renderTime() {
-    const {intl, name, value} = this.props
+    const {intl, input: {name, value}} = this.props
 
     let ts = Date.now()
     let label = <Text style={styles.value}>{' '}</Text>
@@ -217,7 +229,7 @@ class DateField extends Component {
   }
 
   render() {
-    const {time, touched, error, name} = this.props
+    const {time, input: {name}, meta: {touched, error}} = this.props
 
     return (
       <View style={styles.container}>
@@ -257,7 +269,7 @@ const styles = StyleSheet.create({
   clear: {
     position: 'absolute',
     top: -36,
-    right: -8,
+    right: 0,
   },
   error: {
     color: colors.error,
