@@ -113,7 +113,7 @@ class Log extends Component {
   render() {
     const {item, comment, user, ...props} = this.props
 
-    const entries = item.log //TODO: get from item
+    const entries = item.log
 
     if (!entries || !user) {
       return null // loading
