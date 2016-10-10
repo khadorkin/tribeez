@@ -64,7 +64,7 @@ class Details extends Component {
 
     if (item) {
       content = mapper(item, userMap)
-        .filter((info) => item[info.id])
+        .filter((info) => (item[info.id] || info.id === 'done'))
         .map((info, index) => {
           const style = {
             color: colors.primaryText,

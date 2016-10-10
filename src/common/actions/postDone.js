@@ -9,13 +9,16 @@ import failure from './failure'
 
 export default (id) => {
   return (dispatch) => {
+    const uid = auth.currentUser.uid
+
     dispatch({
       type: REQUEST,
     })
     db.ref('tribes/' + auth.currentUser.tid + '/tasks/' + id).transaction((task) => {
       if (task) {
-        task.counters[auth.currentUser.uid]++
+        task.counters[uid]++
         task.done = timestamp
+        task.done_by = uid
       }
       return task
     })

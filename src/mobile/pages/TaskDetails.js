@@ -12,6 +12,10 @@ import Avatar from '../components/Avatar'
 import colors from '../../common/constants/colors'
 import postDone from '../../common/actions/postDone'
 
+// wether to show the button or not (for concerned users):
+const MIN_WAIT_ZERO = 600000 // 10 minutes
+const MIN_WAIT_MORE = 43200000 // 12 hours
+
 class TaskDetails extends Component {
   static propTypes = {
     // from parent:
@@ -31,6 +35,20 @@ class TaskDetails extends Component {
   }
 
   mapper(task, userMap) {
+    let message = 'never_done'
+    let icon = 'thumb-down'
+    const values = {}
+    if (task.done) {
+      values.ago = task.done
+      icon = 'thumb-up'
+      if (task.done_by) {
+        message = 'last_done_by'
+        values.user = userMap[task.done_by].name
+      } else {
+        message = 'last_done'
+      }
+    }
+
     return [
       {
         id: 'author',
@@ -43,17 +61,25 @@ class TaskDetails extends Component {
         icon: 'description',
         text: task.description,
       },
+      {
+        id: 'done',
+        icon, // or 'schedule'
+        message,
+        values,
+      },
     ]
   }
 
   renderBody(task, userMap, uid) {
-    let active = true
-    if (task.done) {
+    let showButton = (task.counters[uid] !== undefined)
+
+    if (showButton && task.done) {
       const elapsed = Date.now() - task.done
-      const wait = (task.wait * 86400000) || 600000 // minimum 10 minutes
-      active = (elapsed > wait)
+      const wait = task.wait ? MIN_WAIT_MORE : MIN_WAIT_ZERO
+      if (elapsed < wait) {
+        showButton = false
+      }
     }
-    const userIsConcerned = (active && task.counters[uid] !== undefined)
 
     // smallest counters first:
     const keys = Object.keys(task.counters).sort((a, b) => {
@@ -78,7 +104,7 @@ class TaskDetails extends Component {
           })
         }
         {
-          userIsConcerned && (
+          showButton && (
             <Button id="mark_done" onPress={this.handleDone} style={styles.button} />
           )
         }
