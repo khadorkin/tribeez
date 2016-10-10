@@ -125,8 +125,8 @@ const fr = {
   'snack.update_task': '{author, select, _you_ {Tâche modifiée} other {{author} a modifié la tâche "{name}"}}',
   'snack.delete_task': '{author, select, _you_ {Tâche supprimée} other {{author} a supprimé la tâche "{name}"}}',
   'snack.comment_task': '{author, select, _you_ {Commentaire envoyé} other {{author} a commenté la tâche "{name}"}}',
+  'snack.done_task': '{author, select, _you_ {Tâche marquée comme effectuée} other {{author} a effectué la tâche "{name}"}}',
   'snack.voted': 'Voté',
-  'snack.task_done': 'Tâche marquée comme effectuée',
   'snack.logout_success': 'Vous êtes déconnecté',
   'snack.error': 'Erreur: veuillez rééssayer',
 
@@ -283,6 +283,7 @@ const fr = {
   'entry.task.update': '{author, select, _you_ {Vous avez} other {{author} a}} modifié la tâche "{name}"',
   'entry.task.delete': '{author, select, _you_ {Vous avez} other {{author} a}} supprimé la tâche "{name}"',
   'entry.task.comment': '{author, select, _you_ {Vous avez} other {{author} a}} commenté la tâche "{name}" :',
+  'entry.task.done': '{author, select, _you_ {Vous avez} other {{author} a}} effectué la tâche "{name}"',
   'entry.comments': '{num, plural, =0 {Aucun commentaire} one {# commentaire} other {# commentaires}}',
   //telegram: 'Vous utilisez Telegram ?\nDiscutez avec le TribeezBot !',
 

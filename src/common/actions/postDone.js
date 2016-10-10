@@ -5,22 +5,29 @@ import {
   SUCCESS,
 } from '../constants/actions'
 
+import saveLog from './saveLog'
 import failure from './failure'
 
 export default (id) => {
   return (dispatch) => {
     const uid = auth.currentUser.uid
+    let task
 
     dispatch({
       type: REQUEST,
     })
-    db.ref('tribes/' + auth.currentUser.tid + '/tasks/' + id).transaction((task) => {
-      if (task) {
-        task.counters[uid]++
-        task.done = timestamp
-        task.done_by = uid
+    db.ref('tribes/' + auth.currentUser.tid + '/tasks/' + id).transaction((currentTask) => {
+      if (currentTask) {
+        currentTask.counters[uid]++
+        currentTask.done = timestamp
+        currentTask.done_by = uid
+        task = currentTask
       }
-      return task
+      return currentTask
+    })
+    .then(() => {
+      task.id = id
+      return saveLog('task', 'done', task)
     })
     .then(() => {
       dispatch({

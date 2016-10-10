@@ -125,8 +125,8 @@ export default {
   'snack.update_task': '{author, select, _you_ {Task updated} other {{author} updated the "{name}" task}}',
   'snack.delete_task': '{author, select, _you_ {Task deleted} other {{author} deleted the "{name}" task}}',
   'snack.comment_task': '{author, select, _you_ {Comment sent} other {{author} commented the "{name}" task}}',
+  'snack.done_task': '{author, select, _you_ {Task marked as done} other {{author} did the "{name}" task}}',
   'snack.voted': 'Voted',
-  'snack.task_done': 'Task marked as done',
   'snack.logout_success': 'You have been logged out',
   'snack.error': 'Error: please try again',
 
@@ -283,6 +283,7 @@ export default {
   'entry.task.update': '{author, select, _you_ {You} other {{author}}} modified the "{name}" task',
   'entry.task.delete': '{author, select, _you_ {You} other {{author}}} deleted the "{name}" task',
   'entry.task.comment': '{author, select, _you_ {You} other {{author}}} commented the "{name}" task:',
+  'entry.task.done': '{author, select, _you_ {You} other {{author}}} did the "{name}" task',
   'entry.comments': '{num, plural, =0 {No comments} one {# comment} other {# comments}}',
   //telegram: 'Using Telegram?\nChat with TribeezBot!',
 
