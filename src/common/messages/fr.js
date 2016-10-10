@@ -49,6 +49,7 @@ const fr = {
   messenger_bot: 'Robot pour Facebook Messenger',
   not_found: 'Page introuvable',
   title: 'Titre',
+  feedback: 'Donnez nous votre avis sur cette app !',
 
   // tabs
   'tab.activity': 'Quoi de neuf',

@@ -49,6 +49,7 @@ export default {
   messenger_bot: 'Facebook Messenger Bot',
   not_found: 'Page not found',
   title: 'Title',
+  feedback: 'Give us some feedback about this app!',
 
   // tabs
   'tab.activity': 'What\'s up',

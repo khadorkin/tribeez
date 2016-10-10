@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {ActivityIndicator, View, ScrollView, Text, StyleSheet/*, Linking*/} from 'react-native'
+import {ActivityIndicator, View, ScrollView, Text, StyleSheet, Linking} from 'react-native'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
@@ -8,13 +8,14 @@ import ActivityCard from '../components/ActivityCard'
 import AsyncContent from '../hoc/AsyncContent'
 import Entry from '../components/Entry'
 import Button from '../components/Button'
+import Touchable from '../components/Touchable'
 // import IconButton from '../components/IconButton'
 import FormattedMessage from '../components/FormattedMessage'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
 
-import {deviceInfo} from '../../common/config'
+import config, {deviceInfo} from '../../common/config'
 import {ACTIVITIES} from '../../common/constants/product'
 import colors from '../../common/constants/colors'
 import listenActivity from '../../common/actions/listenActivity'
@@ -84,6 +85,10 @@ class Activity extends Component {
     router.push(routes.MEMBERS_NEW)
   }
 
+  handleFeedback() {
+    Linking.openURL(config.feedback_url)
+  }
+
   ref(element) {
     if (element) {
       this.history = element.getWrappedInstance()
@@ -132,6 +137,9 @@ class Activity extends Component {
               //   </IconButton>
               // )
             }
+            <Touchable onPress={this.handleFeedback}>
+              <FormattedMessage id="feedback" style={styles.feedback} />
+            </Touchable>
             <Text style={styles.version}>
               App version: beta {deviceInfo.appVersion}
             </Text>
@@ -165,6 +173,10 @@ const styles = StyleSheet.create({
   // telegramIcon: {
   //   marginTop: 8,
   // },
+  feedback: {
+    padding: 16,
+    color: colors.positive,
+  },
   //TODO: remove (or move):
   version: {
     marginTop: 32,
