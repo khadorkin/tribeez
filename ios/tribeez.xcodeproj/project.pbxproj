@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -22,6 +23,7 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		2ED6CBFF98A64AC9ACA120EB /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F5DBA9B769546BEA8508DE6 /* MaterialIcons.ttf */; };
+		3291989BC78699E67AB46784 /* libPods-tribeezTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3EC2C6FE10ACE762C953BFA /* libPods-tribeezTests.a */; };
 		3FEC94C17D0E439B96AF152F /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 085F5EFB15AF43E3AB9EDA92 /* libRNDeviceInfo.a */; };
 		7169D4551D6E4A6D003AFF89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7169D4541D6E4A6D003AFF89 /* GoogleService-Info.plist */; };
 		7169D4561D6E4A6D003AFF89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7169D4541D6E4A6D003AFF89 /* GoogleService-Info.plist */; };
@@ -30,9 +32,8 @@
 		82A9E3990A474FE99B8FFDD2 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8F77B1D7D8944B439364F2E3 /* Zocial.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		89FBCC94518C427C88FFEE61 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B49000F869042719FA65F60 /* Foundation.ttf */; };
-		AC46F24D5155DC43661FDD20 /* libPods-tribeezTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9C0803F0DD7F38F1302736D /* libPods-tribeezTests.a */; };
-		B4CDA936FC6DA49D1CC8F060 /* libPods-tribeez.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFF2C65DFF858EAD93CF3509 /* libPods-tribeez.a */; };
 		B5D168245618441CB806B627 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A34E41997A824A258D359E0F /* libSMXCrashlytics.a */; };
+		C111A2A05B83B90201AA2F8E /* libPods-tribeez.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B510AA8676625D30426743 /* libPods-tribeez.a */; };
 		C3971B9E5B8949BE9ED12A42 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F32D9D8604C4048B03E62A1 /* FontAwesome.ttf */; };
 		DD186683AC0140B18CBE2E51 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9956355D749D49B69E242210 /* Entypo.ttf */; };
 		E61C752F03FC4701B3544D02 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC2AF7D4AAF34D1B8688D393 /* Ionicons.ttf */; };
@@ -187,10 +188,10 @@
 		8F77B1D7D8944B439364F2E3 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		9956355D749D49B69E242210 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A34E41997A824A258D359E0F /* libSMXCrashlytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSMXCrashlytics.a; sourceTree = "<group>"; };
+		A3EC2C6FE10ACE762C953BFA /* libPods-tribeezTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tribeezTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A57B8B90B23C49B1A32B7E4B /* libRNFIRMessaging.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFIRMessaging.a; sourceTree = "<group>"; };
-		AFF2C65DFF858EAD93CF3509 /* libPods-tribeez.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tribeez.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5A3B986C98D9A466E30233D /* Pods-tribeez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tribeez.debug.xcconfig"; path = "Pods/Target Support Files/Pods-tribeez/Pods-tribeez.debug.xcconfig"; sourceTree = "<group>"; };
-		B9C0803F0DD7F38F1302736D /* libPods-tribeezTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tribeezTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0B510AA8676625D30426743 /* libPods-tribeez.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tribeez.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC2AF7D4AAF34D1B8688D393 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		EFEE67D0A84D476FB3CE9B3A /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		F80B1799E18149D69A9305E7 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -202,7 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
-				AC46F24D5155DC43661FDD20 /* libPods-tribeezTests.a in Frameworks */,
+				3291989BC78699E67AB46784 /* libPods-tribeezTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,8 +224,8 @@
 				FC896F21186E4D9F882E56F8 /* libRNVectorIcons.a in Frameworks */,
 				B5D168245618441CB806B627 /* libSMXCrashlytics.a in Frameworks */,
 				3FEC94C17D0E439B96AF152F /* libRNDeviceInfo.a in Frameworks */,
-				B4CDA936FC6DA49D1CC8F060 /* libPods-tribeez.a in Frameworks */,
 				7FBD55943A054853BFBE2E7E /* libRNFIRMessaging.a in Frameworks */,
+				C111A2A05B83B90201AA2F8E /* libPods-tribeez.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,8 +292,8 @@
 		0933E4FE98E388004B60752E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AFF2C65DFF858EAD93CF3509 /* libPods-tribeez.a */,
-				B9C0803F0DD7F38F1302736D /* libPods-tribeezTests.a */,
+				C0B510AA8676625D30426743 /* libPods-tribeez.a */,
+				A3EC2C6FE10ACE762C953BFA /* libPods-tribeezTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -803,7 +804,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" c8482c9488aea5b2e8a2bb347d7fa5a3fc98afa7 805290f6ecb58e97329b306d19d606ee1f7310e4375488ece6da93165e2018d2";
+			shellScript = "${PODS_ROOT}/Fabric/run c8482c9488aea5b2e8a2bb347d7fa5a3fc98afa7 805290f6ecb58e97329b306d19d606ee1f7310e4375488ece6da93165e2018d2";
+			showEnvVarsInLog = 0;
 		};
 		8866509EB9045D678DE44419 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -905,10 +907,7 @@
 				INFOPLIST_FILE = tribeezTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -929,10 +928,7 @@
 				INFOPLIST_FILE = tribeezTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

@@ -49,7 +49,7 @@ const fr = {
   messenger_bot: 'Robot pour Facebook Messenger',
   not_found: 'Page introuvable',
   title: 'Titre',
-  feedback: 'Donnez nous votre avis sur cette app !',
+  feedback: 'Donnez-nous votre avis sur cette app !',
 
   // tabs
   'tab.activity': 'Quoi de neuf',
@@ -193,7 +193,7 @@ const fr = {
   'field.payer': 'Qui a payé ?',
   'error.payer': 'Veuillez indiquer la personne qui a payé',
   'field.paid': 'Date de paiement',
-  'error.paid': 'date incorrecte',
+  'error.paid': 'Date incorrecte',
   'field.amount': 'Montant total',
   'error.amount': 'Montant incorrect',
   'field.method': 'Méthode de partage',
