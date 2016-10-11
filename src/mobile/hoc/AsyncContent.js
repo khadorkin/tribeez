@@ -299,8 +299,9 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 const styles = StyleSheet.create({
   section: {
-    marginTop: 16,
-    alignSelf: 'center',
+    paddingTop: 16,
+    paddingBottom: 8,
+    textAlign: 'center',
   },
   spinner: {
     marginTop: 16,
