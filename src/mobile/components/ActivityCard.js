@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Touchable from './Touchable'
 import FormattedMessage from './FormattedMessage'
 import FormattedRelative from './FormattedRelative'
+import IconButton from './IconButton'
 
 import routes from '../../common/routes'
 import router from '../../common/router'
@@ -34,6 +35,7 @@ class ActivityCard extends Component {
   constructor(props) {
     super(props)
     this.renderItem = this.renderItem.bind(this)
+    this.handleIconPress = this.handleIconPress.bind(this)
   }
 
   handlePress(type, row) {
@@ -47,6 +49,11 @@ class ActivityCard extends Component {
       route.title = row.name
       router.push(route)
     }
+  }
+
+  handleIconPress() {
+    const route = routes[this.props.type.toUpperCase()]
+    router.resetTo(route)
   }
 
   renderItem(row) {
@@ -136,7 +143,7 @@ class ActivityCard extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.iconContainer}>
-          <Icon name={route.icon} color={color} size={30} />
+          <IconButton name={route.icon} color={color} onPress={this.handleIconPress} />
         </View>
         <View style={styles.content}>
           <FormattedMessage id={'activity.' + type} values={{num: data.length}} style={styles.title} />
@@ -155,12 +162,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginHorizontal: 8,
     padding: 16,
+    paddingLeft: 8,
     flexDirection: 'row',
     alignItems: 'center',
     ...elevation(1),
   },
   iconContainer: {
-    paddingRight: 16,
+    paddingRight: 8,
     borderRightWidth: 1,
     borderRightColor: colors.underline,
   },
