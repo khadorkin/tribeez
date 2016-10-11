@@ -223,7 +223,7 @@ export default {
   'select.0h': 'When it starts',
   'error.reminder': 'Invalid reminder',
   // task:
-  'field.wait': 'Waiting period (days)',
+  'field.wait': 'To be done every X days',
   'error.wait': 'Invalid period',
   'field.task_users': 'Concerned members:',
   'error.no_users': 'You must choose at lease one concerned member',
@@ -310,12 +310,13 @@ export default {
   'calendar.agenda': 'Agenda',
 
   // Tasks
-  task_counter: '{user} {count, plural, =0 {never did it} one {did it once} other {did it # times}}',
+  task_wait: 'To be done {num, plural, =0 {all the time} one {everyday} other {every # days}}',
   last_done: 'Last done {ago}',
   last_done_by: 'Last done {ago} by {user}',
   never_done: 'Never done',
   mark_done: 'I just did it',
   counters: 'Counters',
+  task_counter: '{user} {count, plural, =0 {never did it} one {did it once} other {did it # times}}',
 
   // Notes
   'placeholder.title': 'Title',

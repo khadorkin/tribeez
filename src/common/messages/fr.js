@@ -223,7 +223,7 @@ const fr = {
   'select.0h': 'Au début',
   'error.reminder': 'Rappel invalide',
   // task:
-  'field.wait': 'Période de carence (jours)',
+  'field.wait': 'À faire tous les combien de jours ?',
   'error.wait': 'Période incorrecte',
   'field.task_users': 'Membres concernés :',
   'error.no_users': 'Vous devez choisir au moins un membre concerné',
@@ -310,12 +310,13 @@ const fr = {
   'calendar.agenda': 'Agenda',
 
   // Tasks
-  task_counter: '{user} {count, plural, =0 {ne l’a jamais fait} other {l’a fait # fois}}',
+  task_wait: 'À faire {num, plural, =0 {tout le temps} one {tous les jours} other {tous les # jours}}',
   last_done: 'Dernière fois {ago}',
   last_done_by: 'Dernière fois {ago} par {user}',
   never_done: 'Jamais effectuée',
   mark_done: 'Je viens de le faire',
   counters: 'Compteurs',
+  task_counter: '{user} {count, plural, =0 {ne l’a jamais fait} other {l’a fait # fois}}',
 
   // Notes
   'placeholder.title': 'Titre',

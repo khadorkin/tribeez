@@ -62,8 +62,14 @@ class TaskDetails extends Component {
         text: task.description,
       },
       {
+        id: 'wait',
+        icon: 'schedule',
+        message: 'task_wait',
+        values: {num: task.wait},
+      },
+      {
         id: 'done',
-        icon, // or 'schedule'
+        icon,
         message,
         values,
       },
