@@ -283,6 +283,7 @@ class AsyncContent extends Component {
         renderFooter={this.renderFooter}
         renderSectionHeader={this.renderSectionHeader}
         onEndReached={this.handleLoad}
+        removeClippedSubviews={false} //TODO: https://github.com/facebook/react-native/issues/10142
       />
     )
   }
@@ -302,6 +303,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
     textAlign: 'center',
+    //backgroundColor: '#F9F9F9',
   },
   spinner: {
     marginTop: 16,
