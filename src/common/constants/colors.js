@@ -1,9 +1,7 @@
 const colors = {
   main: '#26C6DA', // cyan400
-  text: '#222', // black
   lightText: 'white',
   background: 'white',
-  new: '#FFFFDD', // light yellow
   primaryText: 'rgba(0, 0, 0, 0.8)',
   secondaryText: 'rgba(0, 0, 0, 0.5)',
   overlay: 'rgba(0, 0, 0, 0.5)',
@@ -13,7 +11,7 @@ const colors = {
   positive: '#4CAF50', // green500
   warning: '#F57C00', // orange700
   error: '#F44336', // red500
-  input: '#00ACC1', // cyan600
+  input: '#00ACC1', // cyan600 //TODO: use per-module color
   statusBar: 'rgba(38, 198, 218, 0)', // transparent from colors.main to make the transition work
   dot: 'rgba(255, 255, 255, 0.4)', // for slides
   transparent: 'transparent',

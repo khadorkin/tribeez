@@ -26,11 +26,10 @@ export default class MaterialTextField extends Component {
     }
     this.focus = this.focus.bind(this)
     this.blur = this.blur.bind(this)
-    this.handleFocus = this.handleFocus.bind(this)
-    this.handleBlur = this.handleBlur.bind(this)
-    this.handleLabelPress = this.handleLabelPress.bind(this)
     this.ref = this.ref.bind(this)
     this.handleLayout = this.handleLayout.bind(this)
+    this.handleFocus = this.handleFocus.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
     this.handleContentSizeChange = this.handleContentSizeChange.bind(this)
   }
 
@@ -109,10 +108,6 @@ export default class MaterialTextField extends Component {
     this.focused = false
   }
 
-  handleLabelPress() {
-    this.focus()
-  }
-
   handleContentSizeChange(event) {
     if (this.props.multiline) {
       this.setState({
@@ -144,20 +139,20 @@ export default class MaterialTextField extends Component {
 
     return (
       <View style={styles.wrapper}>
-        <TextInput {...props}
-          ref={this.ref}
+        <Animated.Text style={labelStyle} numberOfLines={1}>
+          {label}
+        </Animated.Text>
+        <TextInput ref={this.ref}
+          underlineColorAndroid="transparent"
+          {...props}
+          onContentSizeChange={this.handleContentSizeChange}
           style={[styles.input, inputStyle]}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          onContentSizeChange={this.handleContentSizeChange}
-          underlineColorAndroid="transparent"
         />
         <View style={styles.underline} onLayout={this.handleLayout}>
           <Animated.View style={underlineStyle} />
         </View>
-        <Animated.Text style={labelStyle} onPress={this.handleLabelPress}>
-          {label}
-        </Animated.Text>
       </View>
     )
   }

@@ -1,7 +1,5 @@
 import React, {Component, PropTypes} from 'react'
 import {View, ActivityIndicator, Text, StyleSheet} from 'react-native'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
 
 import ScrollView from '../hoc/ScrollView'
 import Form from '../hoc/Form'
@@ -25,8 +23,8 @@ class JoinForm extends Component {
     // from redux-form:
     fields: PropTypes.object,
     // from redux:
-    initialValues: PropTypes.object,
     invite: PropTypes.object,
+    lang: PropTypes.string.isRequired,
     // action creators:
     getInvite: PropTypes.func.isRequired,
   }
@@ -36,7 +34,7 @@ class JoinForm extends Component {
   }
 
   render() {
-    const {invite, ...props} = this.props
+    const {invite, lang, ...props} = this.props
 
     if (!invite || invite.converted) {
       return (
@@ -55,12 +53,14 @@ class JoinForm extends Component {
             name="lang"
             component={SelectField}
             items={langs}
+            lang={lang}
           />
           <Field
             name="name"
             labelId="username"
             component={TextField}
             autoCorrect={false}
+            lang={lang}
           />
           <Field
             name="email"
@@ -69,12 +69,14 @@ class JoinForm extends Component {
             keyboardType="email-address"
             autoCapitalize="none"
             errorIsCustom={true}
+            lang={lang}
           />
           <Field
             name="password"
             component={TextField}
             secureTextEntry={true}
             errorIsCustom={true}
+            lang={lang}
           />
         </Form>
       </ScrollView>
@@ -97,8 +99,6 @@ const styles = StyleSheet.create({
   },
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+export default form(JoinForm, {
   getInvite,
-}, dispatch)
-
-export default connect(null, mapDispatchToProps)(form(JoinForm))
+})

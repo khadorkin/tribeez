@@ -39,6 +39,7 @@ const initialState = {
   },
   unread: 0,
   loading: 0,
+  init: true,
   submitting: false,
   error: null,
   config: null,
@@ -132,6 +133,7 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         loading: state.loading + 1,
+        init: false,
       }
     case SUCCESS:
       return {

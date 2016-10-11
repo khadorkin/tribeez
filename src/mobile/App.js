@@ -172,7 +172,7 @@ class App extends Component {
         }
       },
       RightButton: (route/*, navigator, index, navState*/) => {
-        if (loading) {
+        if (loading && route.name !== 'welcome') {
           return <ActivityIndicator size="small" color="white" style={styles.loading} />
         }
         if (route.details) { //TODO: not show if item does not exist

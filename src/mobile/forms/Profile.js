@@ -18,12 +18,12 @@ const today = Date.now()
 class ProfileForm extends Component {
   static propTypes = {
     // from redux:
-    initialValues: PropTypes.object,
     tribe_ids: PropTypes.array,
+    lang: PropTypes.string.isRequired,
   }
 
   render() {
-    const {tribe_ids, ...props} = this.props
+    const {tribe_ids, lang, ...props} = this.props
 
     return (
       <ScrollView>
@@ -38,6 +38,7 @@ class ProfileForm extends Component {
             labelId="username"
             component={TextField}
             autoCorrect={false}
+            lang={lang}
           />
           <Field
             name="email"
@@ -46,21 +47,25 @@ class ProfileForm extends Component {
             keyboardType="email-address"
             autoCapitalize="none"
             errorIsCustom={true}
+            lang={lang}
           />
           <Field
             name="lang"
             component={SelectField}
             items={langs}
+            lang={lang}
           />
           <Field
             name="birthdate"
             component={DateField}
             max={today}
+            lang={lang}
           />
           <Field
             name="phone"
             component={TextField}
             keyboardType="phone-pad"
+            lang={lang}
           />
           <Field
             name="password"
@@ -68,11 +73,13 @@ class ProfileForm extends Component {
             component={TextField}
             secureTextEntry={true}
             errorIsCustom={true}
+            lang={lang}
           />
           <Field
             name="password2"
             component={TextField}
             secureTextEntry={true}
+            lang={lang}
           />
         </Form>
       </ScrollView>

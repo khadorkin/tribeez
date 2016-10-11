@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {View, StyleSheet} from 'react-native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -24,7 +24,14 @@ import {TRIBE_TYPES} from '../../common/constants/product'
 const types = TRIBE_TYPES.map((type) => ({code: type}))
 
 class RegisterForm extends Component {
+  static propTypes = {
+    // from redux:
+    lang: PropTypes.string.isRequired,
+  }
+
   render() {
+    const {lang} = this.props
+
     return (
       <ScrollView ref="sv">
         <Form name="register" action={submitRegister} {...this.props}>
@@ -39,12 +46,14 @@ class RegisterForm extends Component {
             name="lang"
             component={SelectField}
             items={langs}
+            lang={lang}
           />
           <Field
             name="name"
             labelId="username"
             component={TextField}
             autoCorrect={false}
+            lang={lang}
           />
           <Field
             name="email"
@@ -53,12 +62,14 @@ class RegisterForm extends Component {
             keyboardType="email-address"
             autoCapitalize="none"
             errorIsCustom={true}
+            lang={lang}
           />
           <Field
             name="password"
             component={TextField}
             secureTextEntry={true}
             errorIsCustom={true}
+            lang={lang}
           />
 
           <View style={styles.section}>
@@ -71,21 +82,25 @@ class RegisterForm extends Component {
             name="tribe_name"
             component={TextField}
             autoCorrect={false}
+            lang={lang}
           />
           <Field
             name="tribe_type"
             component={SelectField}
             items={types}
+            lang={lang}
           />
           <Field ref="city"
             name="city"
             component={CityField}
             onFocus={() => this.refs.sv.scrollFocus(this.refs.city, 380)}
+            lang={lang}
           />
           <Field
             name="currency"
             component={SelectField}
             items={currencies}
+            lang={lang}
           />
         </Form>
       </ScrollView>

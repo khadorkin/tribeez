@@ -4,7 +4,7 @@ import validator from '../utils/formValidator'
 import platform from '../platform'
 
 const mapStateToProps = (state) => ({
-  lang: state.app.lang, //TODO: this should also update fields
+  lang: state.app.lang, //force field label update when hot switching lang
   initialValues: {
     lang: state.app.lang,
     city: {},

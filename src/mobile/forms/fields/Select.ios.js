@@ -92,7 +92,7 @@ class SelectField extends Component {
         <Touchable onPress={this.handleOpen} style={styles.valueContainer}>
           <Text style={styles.value}>{valueName}</Text>
         </Touchable>
-        <Animated.Text style={labelStyle} onPress={this.handleOpen}>
+        <Animated.Text style={labelStyle} onPress={this.handleOpen} numberOfLines={1}>
           {intl.formatMessage({id: 'field.' + name})}
         </Animated.Text>
         <FormattedMessage id={touched && error && 'error.' + name} style={styles.error} />

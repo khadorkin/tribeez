@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
-import {View, Image, StyleSheet, Platform, Dimensions} from 'react-native'
+import React, {Component, PropTypes} from 'react'
+import {View, ActivityIndicator, Image, StyleSheet, Platform, Dimensions} from 'react-native'
 
+import {connect} from 'react-redux'
 import Swiper from 'react-native-swiper'
 
 import FormattedMessage from '../components/FormattedMessage'
@@ -52,6 +53,12 @@ const slides = [
 ]
 
 class Welcome extends Component {
+  static propTypes = {
+    // from redux store:
+    init: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
+  }
+
   handleLogin() {
     router.push(routes.LOGIN)
   }
@@ -61,6 +68,14 @@ class Welcome extends Component {
   }
 
   render() {
+    if (this.props.init || this.props.loading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color="white" />
+        </View>
+      )
+    }
+
     const dot = <View style={styles.dot} />
     const activeDot = <View style={[styles.dot, styles.activeDot]} />
 
@@ -96,12 +111,13 @@ class Welcome extends Component {
   }
 }
 
-const contentWidth = (width * 0.73)
+const contentWidth = (width * 0.75)
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.members,
+    justifyContent: 'center',
   },
   slide: {
     flex: 1,
@@ -122,7 +138,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.lightText,
-    fontSize: (width / (Platform.OS === 'ios' ? 10 : 12)),
+    fontSize: (width / 12),
     position: 'absolute',
     top: (height * (Platform.OS === 'ios' ? 0.28 : 0.25)),
     width: contentWidth,
@@ -166,4 +182,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Welcome
+const mapStateToProps = (state) => ({
+  lang: state.app.lang, // force lang refresh when coming back from register form and lang changed there
+  init: state.app.init,
+  loading: state.app.loading > 0,
+})
+
+export default connect(mapStateToProps)(Welcome)
