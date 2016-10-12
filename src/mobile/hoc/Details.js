@@ -15,6 +15,11 @@ import listenItem from '../../common/actions/listenItem'
 
 import colors from '../../common/constants/colors'
 
+const always = {
+  done: true,
+  wait: true,
+}
+
 class Details extends Component {
   static propTypes = {
     // from parent component
@@ -64,7 +69,7 @@ class Details extends Component {
 
     if (item) {
       content = mapper(item, userMap)
-        .filter((info) => (item[info.id] || info.id === 'done'))
+        .filter((info) => (item[info.id] || always[info.id]))
         .map((info, index) => {
           const style = {
             color: colors.primaryText,

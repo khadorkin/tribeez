@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   label: {
-    marginVertical: 2,
+    marginVertical: 4,
     marginHorizontal: 8,
     fontSize: 16,
     color: colors.primaryText,
