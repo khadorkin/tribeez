@@ -922,7 +922,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tribeez;
 				PRODUCT_NAME = Tribeez;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6b780cde-180b-4dcc-b890-338d76c08789";
+				PROVISIONING_PROFILE_SPECIFIER = "Antoine's Provisioning for Distribution";
 			};
 			name = Debug;
 		};
@@ -953,7 +954,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tribeez;
 				PRODUCT_NAME = Tribeez;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6b780cde-180b-4dcc-b890-338d76c08789";
+				PROVISIONING_PROFILE_SPECIFIER = "Antoine's Provisioning for Distribution";
 			};
 			name = Release;
 		};

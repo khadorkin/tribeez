@@ -111,7 +111,7 @@ class DrawerContent extends Component {
 
     // first route in stack == current menu entry \o/
     // works because router.resetTo is called when clicking an entry
-    const currentRoute = router.getRoute().name
+    const currentRoute = router.getCurrentRoutes()[0].name
 
     const extras = {
       'bills': <FormattedNumber value={balance} format="money" sign={true} style={balance < 0 ? styles.negativeBalance : styles.positiveBalance} />,

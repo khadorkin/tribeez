@@ -18,7 +18,7 @@ import {IntlProvider} from 'react-intl'
 
 import DrawerLayout from 'react-native-drawer-layout'
 
-import {deviceInfo} from '../common/config'
+import config, {deviceInfo} from '../common/config'
 import {auth} from '../common/firebase'
 import colors from '../common/constants/colors'
 
@@ -127,6 +127,16 @@ class App extends Component {
 
   ref(drawer) {
     this.drawer = drawer
+  }
+
+  handleOpenStore() {
+    if (Platform.OS === 'ios') {
+      Linking.openURL(config.app_url)
+    } else {
+      Linking.openURL('market://details?id=' + deviceInfo.bundleId).catch(() => {
+        Linking.openURL('https://play.google.com/store/apps/details?id=' + deviceInfo.bundleId)
+      })
+    }
   }
 
   handleInitialUrl(url) {
@@ -243,12 +253,6 @@ class App extends Component {
   handleConfirmDelete(route) {
     this.props.deleteItem(route.name, route.props.id)
     router.pop()
-  }
-
-  handleOpenStore() {
-    Linking.openURL('market://details?id=' + deviceInfo.bundleId).catch(() => {
-      Linking.openURL('https://play.google.com/store/apps/details?id=' + deviceInfo.bundleId)
-    })
   }
 
   renderNavigation() {

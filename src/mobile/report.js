@@ -2,6 +2,7 @@ import {Platform} from 'react-native'
 import StackTrace from 'stacktrace-js'
 
 import config, {deviceInfo} from '../common/config'
+import router from './router'
 
 const person = {}
 
@@ -52,6 +53,8 @@ const issue = (error, context) => {
         }
       })
 
+      const route = router.getRoute()
+
       const params = {
         access_token: config.rollbar_token,
         data: {
@@ -70,6 +73,14 @@ const issue = (error, context) => {
             },
           },
           person,
+          custom: {
+            device: deviceInfo,
+            page: {
+              route: route.name,
+              props: route.props,
+              title: route.title,
+            },
+          },
         },
       }
 

@@ -14,5 +14,8 @@ export default {
   resetTo: (route) => navigator.resetTo(route),
   resetHard: (route) => navigator.immediatelyResetRouteStack([route]),
   getCurrentRoutes: () => navigator.getCurrentRoutes(),
-  getRoute: () => navigator.getCurrentRoutes()[0],
+  getRoute: () => {
+    const routes = navigator.getCurrentRoutes()
+    return routes[routes.length - 1]
+  },
 }
