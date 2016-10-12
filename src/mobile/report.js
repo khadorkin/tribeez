@@ -1,5 +1,9 @@
-import {Crashlytics, Answers} from 'react-native-fabric'
+import {Platform} from 'react-native'
 import StackTrace from 'stacktrace-js'
+
+import config, {deviceInfo} from '../common/config'
+
+const person = {}
 
 const init = () => {
   const originalHandler = global.ErrorUtils.getGlobalHandler()
@@ -14,70 +18,75 @@ const init = () => {
 }
 
 const setUser = (uid, infos) => {
-  Crashlytics.setUserIdentifier(uid)
-  Crashlytics.setUserEmail(infos.email)
-  Crashlytics.setUserName(infos.name)
-  Crashlytics.setString('lang', infos.lang)
-  Answers.logLogin('Email', true)
+  person.id = uid
+  person.email = infos.email
+  person.name = infos.name
+  person.lang = infos.lang
 }
 
 const clearUser = () => {
-  Crashlytics.setUserIdentifier('(anonymous)')
-  Crashlytics.setUserEmail('(anonymous)')
-  Crashlytics.setUserName('(anonymous)')
+  delete person.id
+  delete person.email
+  delete person.name
+  delete person.lang
 }
 
 const setAttr = (key, value) => {
-  key = String(key)
-  switch (typeof value) {
-    case 'string':
-      return Crashlytics.setString(key, value)
-    case 'number':
-      return Crashlytics.setNumber(key, value)
-    case 'boolean':
-      return Crashlytics.setBool(key, value)
-    default:
-      return Crashlytics.setString(key, JSON.stringify(value))
+  person[key] = value
+}
+
+const issue = (error, context) => {
+  if (__DEV__) {
+    if (context !== 'uncaught') {
+      console.error('ISSUE REPORT:', error.message, context) // eslint-disable-line no-console
+    } // else it's handled by react native
+  } else {
+    StackTrace.fromError(error, {offline: true})
+    .then((stack) => {
+      const frames = stack.map((frame) => {
+        return {
+          filename: frame.fileName,
+          lineno: frame.lineNumber,
+          colno: frame.columnNumber,
+          method: frame.functionName,
+        }
+      })
+
+      const params = {
+        access_token: config.rollbar_token,
+        data: {
+          environment: (__DEV__ ? 'development' : 'production'),
+          code_version: deviceInfo.appVersion,
+          platform: Platform.OS,
+          framework: Platform.OS,
+          context,
+          body: {
+            trace: {
+              frames,
+              exception: {
+                class: error.name,
+                message: error.message,
+              },
+            },
+          },
+          person,
+        },
+      }
+
+      fetch('https://api.rollbar.com/api/1/item/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params),
+      })
+      .then((response) => {
+        if (__DEV__ && response.status >= 400) {
+          console.error('Rollbar response status is ' + response.status) // eslint-disable-line no-console
+        }
+      })
+    })
   }
 }
 
-const log = (value) => {
-  if (value instanceof Error) {
-    value = value.stack || value.message
-  }
-  Crashlytics.log(String(value))
-}
-
-const issue = (error, reason) => {
-  StackTrace.fromError(error, {offline: true})
-  .then((stack) => {
-    stack = stack.map((row) => {
-      const numbers = row.source.split(':').slice(-2)
-      if (!row.lineNumber) {
-        row.lineNumber = Number(numbers[0]) || 0
-      }
-      if (!row.columnNumber) {
-        row.columnNumber = Number(numbers[1]) || 0
-      }
-      return row
-    })
-    // add a row at the top with more useful info, since this row is the one used by Fabric as the title:
-    stack.unshift({
-      fileName: error.message,
-      functionName: reason,
-      lineNumber: 0,
-      columnNumber: 0,
-    })
-    if (__DEV__) {
-      console.error('ISSUE REPORT:', error.message, reason) // eslint-disable-line no-console
-    } else {
-      Crashlytics.recordCustomExceptionName(error.message, reason, stack)
-    }
-  })
-}
-
-const crash = () => {
-  Crashlytics.crash()
-}
-
-export default {init, setUser, clearUser, setAttr, log, issue, crash}
+export default {init, setUser, clearUser, setAttr, issue}

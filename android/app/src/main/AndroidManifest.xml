@@ -18,10 +18,6 @@
       android:icon="@mipmap/ic_launcher"
       android:theme="@style/AppTheme">
 
-      <meta-data
-        android:name="io.fabric.ApiKey"
-        android:value="c8482c9488aea5b2e8a2bb347d7fa5a3fc98afa7" />
-
       <service android:name="com.evollu.react.fcm.MessagingService">
         <intent-filter>
           <action android:name="com.google.firebase.MESSAGING_EVENT"/>

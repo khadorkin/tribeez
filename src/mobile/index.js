@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 
 import report from '../common/report'
-report.init()
+report.init() // hook the global handler
 
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'

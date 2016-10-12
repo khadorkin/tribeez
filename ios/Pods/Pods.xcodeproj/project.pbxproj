@@ -7,380 +7,471 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D1ABD7E23A6F6CEFE0B82D6F0F2A471 /* Pods-tribeezTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A3B23D129D72428803C642A8A02BA1 /* Pods-tribeezTests-dummy.m */; };
-		867167A1A72F99AAC23C76568ED92994 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
-		E6D598CC75286F6B7C3AB78EBFC289AA /* Pods-tribeez-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FA364685D75C61D3C0F00A34397E4A0 /* Pods-tribeez-dummy.m */; };
-		F5DD4BFF388CF692B7269B0C2C618CEB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
+		002079D14505A70D96E455965AA5B429 /* Pods-tribeezTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E259CF4EEA7095113735406B12323A7 /* Pods-tribeezTests-dummy.m */; };
+		0BB06CA2A775B5456BFDA77B27452C70 /* RollbarLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DA1498C535EA6A391BF0783B711050F /* RollbarLogger.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		0F73E08D4C0E532790D4306EE434E4CC /* Rollbar-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E0F3CAF909E9056F314F7BA6A6FFEED /* Rollbar-dummy.m */; };
+		1D3207805B451A9F540DCDD4F1855BFD /* RollbarConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CEBB7D45E3FBD87CEF28AA492B274E4 /* RollbarConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1FA0A61EDFB3BE1627CEF6065908FAB3 /* Pods-tribeezTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7290A08A72084F27FBDD286422E8903A /* Pods-tribeezTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		26490FFE4E684BF080AFCA026340D599 /* Pods-tribeez-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 25DA849A8E562533105B23C99966675E /* Pods-tribeez-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3AB5E8525172C777F6ECA408F25D8CEE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F597D73DE6225A6DEF1FC248D787EE74 /* Foundation.framework */; };
+		509FF1113F77D5E256F665E8C60BA33E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F597D73DE6225A6DEF1FC248D787EE74 /* Foundation.framework */; };
+		5ADFF6027B2BBBCB9CA5B1CF3B8601B8 /* RollbarFileReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3BCEAB01884C2DBC690DDC38F444BEE2 /* RollbarFileReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		60E988F757FF7587B2F9E7EEB49A3E8A /* Rollbar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CE35339C52783B441D49E9E875FD2833 /* Rollbar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61B858A991FBF32C4A3E139059E8C09B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F597D73DE6225A6DEF1FC248D787EE74 /* Foundation.framework */; };
+		6AED993D297CAA5B69544D64D4D89FD9 /* RollbarReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2339A9C344F0D3E2DD9A8D5B6EEAEDEC /* RollbarReachability.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		7C95FD69905048C0DDBB6A0A319B9C51 /* Rollbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CEF1B1F92743ABA3BEEA66A7ECCF533 /* Rollbar.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		9800373D5CB87B7D2DFC70ED37CAEF93 /* RollbarReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = A0B12C76B6C65EA0749EE95E9F7B84B3 /* RollbarReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A6AED2F2FCBD2DC8250914CF3848AF1E /* RollbarThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A40C151FF426B8BA966DC44FE0008B4 /* RollbarThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B1716429D6E3540877F0CF8BAC0A86F5 /* RollbarLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 165B345341BC7D1319EAFBA19720B96F /* RollbarLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2C37B46FAC65CF43B04980E39ABC26B /* RollbarFileReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D03AFE916B311E34B8A0FC735685A722 /* RollbarFileReader.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		BD49197A88D570402E040DAAD84F6DAA /* Pods-tribeez-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4589E7071A9A12335C92007C1D6EE45C /* Pods-tribeez-dummy.m */; };
+		BEFA4B64E1120EB76F4B1ED99E09F60C /* RollbarNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 456FD43A42B6E0268FE71409F76884AF /* RollbarNotifier.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		C2F53312A8DEA1B25EE86A8CE7559DB0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D228F2F2E83B00B409DB523C811A216 /* UIKit.framework */; };
+		C692B267587E6EFA890D1BC7E66C0C75 /* RollbarThread.m in Sources */ = {isa = PBXBuildFile; fileRef = A99AF4D8BC68ACCBCFDAFFD10A7C4920 /* RollbarThread.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		D2C49E5B4FD7E44C5675FC8FA6C46C9C /* Rollbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 912543C1A19FEC7A5E33B1E0C7285233 /* Rollbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DD4ACBAA6BA1347B0D2372A37E69DEBE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95924A893926B0F85F07D91A4EEB5B98 /* SystemConfiguration.framework */; };
+		EEAB42B83A5B2EA21F9180DD69FFFA34 /* RollbarConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AD6F41542520DAE85F580BE54BA20C /* RollbarConfiguration.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		F5E8704A4C346F41F9BC6A0E939974D8 /* RollbarNotifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D083AB60E6B95BC3F7587F17F2179A22 /* RollbarNotifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		47795478CE86C6FB5FD9A130A0B012B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A19BCE908234D829B58C8B98119397FC;
+			remoteInfo = Rollbar;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		03F356AB6DBF29CB23F6421727A66B7D /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
-		04FDCED39B587ED93727122D12441ED3 /* libPods-tribeezTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tribeezTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		09D6F600A05C640A48F7C5FD14F1F850 /* Pods-tribeez-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeez-frameworks.sh"; sourceTree = "<group>"; };
-		0FA364685D75C61D3C0F00A34397E4A0 /* Pods-tribeez-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-tribeez-dummy.m"; sourceTree = "<group>"; };
-		141725CDD3008B53D17E65715652314B /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseMessaging.framework; path = Frameworks/frameworks/FirebaseMessaging.framework; sourceTree = "<group>"; };
-		1488D13920563C05ADD21DDFEBA891A4 /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
-		1674A702DF992C4160482DABB301EC11 /* Pods-tribeezTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-tribeezTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		1D952CABF4DA45BB760501477CF53F2D /* Pods-tribeezTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tribeezTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		1D99E66C9B96A62EA98986A6C9DE8E4B /* FIRMessaging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessaging.h; path = Sources/FIRMessaging.h; sourceTree = "<group>"; };
-		2884697AAABEA6EF61AD5008CF9C048F /* CLSLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSLogging.h; path = iOS/Crashlytics.framework/Headers/CLSLogging.h; sourceTree = "<group>"; };
-		32EE032E9B2D37E2242834B78985C16C /* CLSStackFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSStackFrame.h; path = iOS/Crashlytics.framework/Headers/CLSStackFrame.h; sourceTree = "<group>"; };
-		3852F65B42FD0BBB2720E184854D2432 /* CLSAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSAttributes.h; path = iOS/Crashlytics.framework/Headers/CLSAttributes.h; sourceTree = "<group>"; };
-		4619E473DB90FCA426EEB5788169A625 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Frameworks/frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
-		468C916F4DC48570981C2F10B5646C82 /* Pods-tribeezTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeezTests-frameworks.sh"; sourceTree = "<group>"; };
-		565F104D571C2F313BA925D126DECFC0 /* FIRInstanceID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceID.h; path = Sources/FIRInstanceID.h; sourceTree = "<group>"; };
-		5BCCA6422214D6FCFC101746CCC52EE4 /* Pods-tribeez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeez.debug.xcconfig"; sourceTree = "<group>"; };
-		5D28C687F6D8916255B8BBCAE2D75C72 /* ANSCompatibility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ANSCompatibility.h; path = iOS/Crashlytics.framework/Headers/ANSCompatibility.h; sourceTree = "<group>"; };
-		6085817A0C5C032CF37C075AC4CA8E52 /* Answers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Answers.h; path = iOS/Crashlytics.framework/Headers/Answers.h; sourceTree = "<group>"; };
-		61B2B945DC747A427935237BD4CAF00F /* Pods-tribeez-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tribeez-acknowledgements.markdown"; sourceTree = "<group>"; };
-		6364AA341405D2A30358F7AD9D78B95C /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Frameworks/frameworks/GoogleUtilities.framework; sourceTree = "<group>"; };
-		6D493D6A57AA267607B0EEC4C702EDB9 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = iOS/Fabric.framework; sourceTree = "<group>"; };
-		744F452886DFAEB5393045C00844DF7D /* Pods-tribeez-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-tribeez-acknowledgements.plist"; sourceTree = "<group>"; };
-		7829937C52905B848C57D7095EF26866 /* GoogleIPhoneUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleIPhoneUtilities.framework; path = Frameworks/GoogleIPhoneUtilities.framework; sourceTree = "<group>"; };
-		79EAEB6D400015A6961117135CF45300 /* CLSReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSReport.h; path = iOS/Crashlytics.framework/Headers/CLSReport.h; sourceTree = "<group>"; };
-		838D158FAF805FC72B26E6A86A6AF3F0 /* Pods-tribeezTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeezTests.debug.xcconfig"; sourceTree = "<group>"; };
-		8D463E9ADD55FEEF3D603D60B62ED0F5 /* Crashlytics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Crashlytics.h; path = iOS/Crashlytics.framework/Headers/Crashlytics.h; sourceTree = "<group>"; };
+		01AD6F41542520DAE85F580BE54BA20C /* RollbarConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RollbarConfiguration.m; path = Rollbar/RollbarConfiguration.m; sourceTree = "<group>"; };
+		06764D50063E6FB15559B75A054BF9FA /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		0E216E22C2DE3FF8BCF2BD51C3009354 /* Pods-tribeezTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeezTests-frameworks.sh"; sourceTree = "<group>"; };
+		0F4BE1E9A39E5C13AD5548C96EDE7BB3 /* Pods-tribeez-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeez-resources.sh"; sourceTree = "<group>"; };
+		15BA85D4E7A217A85633C387ED963AD6 /* Rollbar.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Rollbar.modulemap; sourceTree = "<group>"; };
+		165B345341BC7D1319EAFBA19720B96F /* RollbarLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RollbarLogger.h; path = Rollbar/RollbarLogger.h; sourceTree = "<group>"; };
+		2339A9C344F0D3E2DD9A8D5B6EEAEDEC /* RollbarReachability.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RollbarReachability.m; path = Rollbar/RollbarReachability.m; sourceTree = "<group>"; };
+		257DF43F85504E61726A4AA26A2FF28B /* FirebaseInstanceID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseInstanceID.framework; path = Frameworks/frameworks/FirebaseInstanceID.framework; sourceTree = "<group>"; };
+		25DA849A8E562533105B23C99966675E /* Pods-tribeez-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-tribeez-umbrella.h"; sourceTree = "<group>"; };
+		2B1A85187FB4CB13B1D716BAD6C8F1C9 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
+		2DA1498C535EA6A391BF0783B711050F /* RollbarLogger.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RollbarLogger.m; path = Rollbar/RollbarLogger.m; sourceTree = "<group>"; };
+		3588627CE300141C28D6E4CF7AC25122 /* Pods-tribeez-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-tribeez-acknowledgements.plist"; sourceTree = "<group>"; };
+		3BCEAB01884C2DBC690DDC38F444BEE2 /* RollbarFileReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RollbarFileReader.h; path = Rollbar/RollbarFileReader.h; sourceTree = "<group>"; };
+		3CEBB7D45E3FBD87CEF28AA492B274E4 /* RollbarConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RollbarConfiguration.h; path = Rollbar/RollbarConfiguration.h; sourceTree = "<group>"; };
+		3E0F3CAF909E9056F314F7BA6A6FFEED /* Rollbar-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Rollbar-dummy.m"; sourceTree = "<group>"; };
+		3E26BC47EB11CBD4C79F6F0A10B16CC8 /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleUtilities.framework; path = Frameworks/frameworks/GoogleUtilities.framework; sourceTree = "<group>"; };
+		3E9A6826ECFEE60413DFE7EB361971CD /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CrashReporter.framework; path = Vendor/CrashReporter.framework; sourceTree = "<group>"; };
+		456FD43A42B6E0268FE71409F76884AF /* RollbarNotifier.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RollbarNotifier.m; path = Rollbar/RollbarNotifier.m; sourceTree = "<group>"; };
+		4589E7071A9A12335C92007C1D6EE45C /* Pods-tribeez-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-tribeez-dummy.m"; sourceTree = "<group>"; };
+		4774A688C8E8BA7E7AE634675316A3DC /* Rollbar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rollbar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49ADEB3839B3AEC79452E851226D3207 /* Pods-tribeez-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tribeez-acknowledgements.markdown"; sourceTree = "<group>"; };
+		4A40C151FF426B8BA966DC44FE0008B4 /* RollbarThread.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RollbarThread.h; path = Rollbar/RollbarThread.h; sourceTree = "<group>"; };
+		4AB3853BB49CE420AF3138704B2295AB /* Pods_tribeezTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tribeezTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4FC92EFED9DEDD45E03ED910FBF58920 /* Rollbar-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Rollbar-prefix.pch"; sourceTree = "<group>"; };
+		5E259CF4EEA7095113735406B12323A7 /* Pods-tribeezTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-tribeezTests-dummy.m"; sourceTree = "<group>"; };
+		617152E54D9F0513B1D35EE7CE762B07 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6220DD895A162983E59C234B0EDF4AF4 /* Pods-tribeezTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeezTests.release.xcconfig"; sourceTree = "<group>"; };
+		663ED0B599F2D5AFE09084EC5C060339 /* Pods-tribeez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeez.debug.xcconfig"; sourceTree = "<group>"; };
+		6CEF1B1F92743ABA3BEEA66A7ECCF533 /* Rollbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Rollbar.m; path = Rollbar/Rollbar.m; sourceTree = "<group>"; };
+		7290A08A72084F27FBDD286422E8903A /* Pods-tribeezTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-tribeezTests-umbrella.h"; sourceTree = "<group>"; };
+		730B156DA4D63DDA71B38A5665DE0687 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = Frameworks/frameworks/FirebaseCore.framework; sourceTree = "<group>"; };
+		7358FE3F5004DFE2812E5A8A88781AF9 /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Core/Sources/Firebase.h; sourceTree = "<group>"; };
+		8447DD29965B02F345365E677042CC94 /* Pods-tribeez.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-tribeez.modulemap"; sourceTree = "<group>"; };
+		8FEFA0F01FB20FDF2F39A31B54E80F9A /* Pods-tribeez-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeez-frameworks.sh"; sourceTree = "<group>"; };
+		912543C1A19FEC7A5E33B1E0C7285233 /* Rollbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Rollbar.h; path = Rollbar/Rollbar.h; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		93E2DEB3C868051873D59AABA608F189 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = iOS/Crashlytics.framework; sourceTree = "<group>"; };
-		A1301FAB59BCDBED4263F717A8E7BD20 /* Pods-tribeez.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeez.release.xcconfig"; sourceTree = "<group>"; };
-		A275946628E6ED1AA57B74C411EB4362 /* Firebase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Firebase.h; path = Core/Sources/Firebase.h; sourceTree = "<group>"; };
-		AE5CAA16A215D6B0F884EC23DD49DCDE /* Pods-tribeez-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeez-resources.sh"; sourceTree = "<group>"; };
-		B5A3B23D129D72428803C642A8A02BA1 /* Pods-tribeezTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-tribeezTests-dummy.m"; sourceTree = "<group>"; };
-		B6145A6D86E3B9A7E1DB389928A1C7E9 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = Frameworks/frameworks/FirebaseAnalytics.framework; sourceTree = "<group>"; };
-		BC4934BEB5AA81AB59E6681640943360 /* Fabric.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Fabric.h; path = iOS/Fabric.framework/Headers/Fabric.h; sourceTree = "<group>"; };
-		BE8000AA5CE8185462E2091469443588 /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInterchangeUtilities.framework; path = Frameworks/frameworks/GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
-		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		D4FD70D3ACF106581092A623A3229E93 /* libPods-tribeez.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tribeez.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E70917A48875FCC9EA2FE94A591ADB26 /* Pods-tribeezTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeezTests.release.xcconfig"; sourceTree = "<group>"; };
-		ECEA3F426C570B635AAC13A3B9789517 /* Pods-tribeezTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeezTests-resources.sh"; sourceTree = "<group>"; };
-		F99FEDD06BA764DE420039D42C2D9FEF /* GoogleSymbolUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSymbolUtilities.framework; path = Frameworks/frameworks/GoogleSymbolUtilities.framework; sourceTree = "<group>"; };
+		95924A893926B0F85F07D91A4EEB5B98 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		95CA27495F5F92D19E4F3B380E9A41E6 /* Pods-tribeez.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeez.release.xcconfig"; sourceTree = "<group>"; };
+		9935925B36CAD74578F79AFACBD4A78D /* FirebaseMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseMessaging.framework; path = Frameworks/frameworks/FirebaseMessaging.framework; sourceTree = "<group>"; };
+		9B58E61ED0394BF53EB0E88685D0DB8B /* Pods_tribeez.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tribeez.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D228F2F2E83B00B409DB523C811A216 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		A0B12C76B6C65EA0749EE95E9F7B84B3 /* RollbarReachability.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RollbarReachability.h; path = Rollbar/RollbarReachability.h; sourceTree = "<group>"; };
+		A99AF4D8BC68ACCBCFDAFFD10A7C4920 /* RollbarThread.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RollbarThread.m; path = Rollbar/RollbarThread.m; sourceTree = "<group>"; };
+		B5F3C5D4FD7BC48034D3CDFBE8D6E93B /* Pods-tribeezTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-tribeezTests-resources.sh"; sourceTree = "<group>"; };
+		BAAA3EFDFE377C4A2DA4AD4D7F56C7AF /* Pods-tribeezTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-tribeezTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		BDA28240A9990FB7244B25ABE50DF10E /* Pods-tribeezTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-tribeezTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C8D838A244C973CC24E0005EE08A1C85 /* Pods-tribeezTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-tribeezTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		C97D2A21481EDAA0A82C78322D3372E8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE35339C52783B441D49E9E875FD2833 /* Rollbar-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Rollbar-umbrella.h"; sourceTree = "<group>"; };
+		D03AFE916B311E34B8A0FC735685A722 /* RollbarFileReader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RollbarFileReader.m; path = Rollbar/RollbarFileReader.m; sourceTree = "<group>"; };
+		D083AB60E6B95BC3F7587F17F2179A22 /* RollbarNotifier.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RollbarNotifier.h; path = Rollbar/RollbarNotifier.h; sourceTree = "<group>"; };
+		D20CF9E8226BA6F81FD6008DDC85CF47 /* GoogleIPhoneUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleIPhoneUtilities.framework; path = Frameworks/GoogleIPhoneUtilities.framework; sourceTree = "<group>"; };
+		D8CBE615C66C1DDB5DB6F89B0AF79B8F /* Pods-tribeezTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-tribeezTests.modulemap"; sourceTree = "<group>"; };
+		E08ABDE9657C6E13617A4BE8AB315958 /* FIRMessaging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMessaging.h; path = Sources/FIRMessaging.h; sourceTree = "<group>"; };
+		E23BCD51766CF84FBBD72E262EB6D8DB /* Rollbar.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Rollbar.xcconfig; sourceTree = "<group>"; };
+		E284973AA21C1D7A6DDAA828BA3E7745 /* GoogleInterchangeUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleInterchangeUtilities.framework; path = Frameworks/frameworks/GoogleInterchangeUtilities.framework; sourceTree = "<group>"; };
+		E3B42E756651E6164E4885543E98DD6F /* FIRInstanceID.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRInstanceID.h; path = Sources/FIRInstanceID.h; sourceTree = "<group>"; };
+		E9649E4BA7E031E8145C7F5D9722E7B6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F597D73DE6225A6DEF1FC248D787EE74 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		39EB4532912D6C36FBB12A0691AD6481 /* Frameworks */ = {
+		41759E4B84F67F240466EF0F93115F82 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5DD4BFF388CF692B7269B0C2C618CEB /* Foundation.framework in Frameworks */,
+				3AB5E8525172C777F6ECA408F25D8CEE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		531700063CA6868BE73253C7DC268C7F /* Frameworks */ = {
+		96986E2A3447CE2DF391D4642B694F58 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				867167A1A72F99AAC23C76568ED92994 /* Foundation.framework in Frameworks */,
+				509FF1113F77D5E256F665E8C60BA33E /* Foundation.framework in Frameworks */,
+				DD4ACBAA6BA1347B0D2372A37E69DEBE /* SystemConfiguration.framework in Frameworks */,
+				C2F53312A8DEA1B25EE86A8CE7559DB0 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E18797FD1F9E61F97E0759A8862BFCFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61B858A991FBF32C4A3E139059E8C09B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		03DA821638A3EC3FD9C35FAE660AE9C8 /* GoogleInterchangeUtilities */ = {
+		0459F0B22C3E1888752D99ADA41F91C6 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				6477D55201D63715D1DAAE2DE0549C04 /* Frameworks */,
+				F597D73DE6225A6DEF1FC248D787EE74 /* Foundation.framework */,
+				95924A893926B0F85F07D91A4EEB5B98 /* SystemConfiguration.framework */,
+				9D228F2F2E83B00B409DB523C811A216 /* UIKit.framework */,
 			);
-			path = GoogleInterchangeUtilities;
+			name = iOS;
 			sourceTree = "<group>";
 		};
-		0EA7A592B05A1407D174F93617F88289 /* GoogleIPhoneUtilities */ = {
+		06A002B438DF3BABD826DA7F9C359E28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CB8B1F9FE73B589CC6A7BCA6424B3F1 /* Frameworks */,
+				3E26BC47EB11CBD4C79F6F0A10B16CC8 /* GoogleUtilities.framework */,
 			);
-			path = GoogleIPhoneUtilities;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		14ECFBE5C9A513E969EAA0A0117C1C21 /* FirebaseMessaging */ = {
+		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1D99E66C9B96A62EA98986A6C9DE8E4B /* FIRMessaging.h */,
-				3A4382C21FBE499D97D17D0B041DF524 /* Frameworks */,
+				0459F0B22C3E1888752D99ADA41F91C6 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2313DA6ED5FE68CE34AA959C1423FA6A /* FirebaseInstanceID */ = {
+			isa = PBXGroup;
+			children = (
+				E3B42E756651E6164E4885543E98DD6F /* FIRInstanceID.h */,
+				892918CCE9C886D356A25243CA0E93CC /* Frameworks */,
+			);
+			path = FirebaseInstanceID;
+			sourceTree = "<group>";
+		};
+		269A70166AC2E2545A534AECCB626361 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2B1A85187FB4CB13B1D716BAD6C8F1C9 /* FirebaseAnalytics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CFB83012CF4715C933003B4F78505EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9935925B36CAD74578F79AFACBD4A78D /* FirebaseMessaging.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		32005F16A462CCD53EC1C30F4A793485 /* FirebaseMessaging */ = {
+			isa = PBXGroup;
+			children = (
+				E08ABDE9657C6E13617A4BE8AB315958 /* FIRMessaging.h */,
+				2CFB83012CF4715C933003B4F78505EC /* Frameworks */,
 			);
 			path = FirebaseMessaging;
 			sourceTree = "<group>";
 		};
-		2086A6A510046E7143F0FBCD8CA35B86 /* Frameworks */ = {
+		36BFCA4375B984B404959FDD8FAA22B2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F99FEDD06BA764DE420039D42C2D9FEF /* GoogleSymbolUtilities.framework */,
+				86878BD2A7802299DD8AE579B9C56E36 /* Firebase */,
+				7A59CAC10D12BF84BF31D0960534F7DC /* FirebaseAnalytics */,
+				627AA979194DCC7BB77EAD9B0992073A /* FirebaseCore */,
+				2313DA6ED5FE68CE34AA959C1423FA6A /* FirebaseInstanceID */,
+				32005F16A462CCD53EC1C30F4A793485 /* FirebaseMessaging */,
+				DFDFDFD5756E1B667B77CDC84DAE9EF7 /* GoogleInterchangeUtilities */,
+				5968221AC6E40DBE6309D0B2DAD33E7D /* GoogleIPhoneUtilities */,
+				DBAD51C9BDC74BE4FFBC0240B6FE5CFA /* GoogleSymbolUtilities */,
+				4E57186F0FA9F057CA0D99FF6FA7B01A /* GoogleUtilities */,
+				C8306E00402F9F9FE64F52760AE78629 /* Rollbar */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4E57186F0FA9F057CA0D99FF6FA7B01A /* GoogleUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				06A002B438DF3BABD826DA7F9C359E28 /* Frameworks */,
+			);
+			path = GoogleUtilities;
+			sourceTree = "<group>";
+		};
+		56B6EC95BD20DA5A9D7013D0397ED5CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D20CF9E8226BA6F81FD6008DDC85CF47 /* GoogleIPhoneUtilities.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		213569F4F7022C0BEF2291044FA8A758 /* Frameworks */ = {
+		5968221AC6E40DBE6309D0B2DAD33E7D /* GoogleIPhoneUtilities */ = {
 			isa = PBXGroup;
 			children = (
-				4619E473DB90FCA426EEB5788169A625 /* FirebaseCore.framework */,
+				56B6EC95BD20DA5A9D7013D0397ED5CD /* Frameworks */,
+			);
+			path = GoogleIPhoneUtilities;
+			sourceTree = "<group>";
+		};
+		5CED430580A8FCFFF5C4F9CAF72EC7CA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				E9649E4BA7E031E8145C7F5D9722E7B6 /* Info.plist */,
+				15BA85D4E7A217A85633C387ED963AD6 /* Rollbar.modulemap */,
+				E23BCD51766CF84FBBD72E262EB6D8DB /* Rollbar.xcconfig */,
+				3E0F3CAF909E9056F314F7BA6A6FFEED /* Rollbar-dummy.m */,
+				4FC92EFED9DEDD45E03ED910FBF58920 /* Rollbar-prefix.pch */,
+				CE35339C52783B441D49E9E875FD2833 /* Rollbar-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Rollbar";
+			sourceTree = "<group>";
+		};
+		5E56B5D499344CC37F316E6444A85F03 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				730B156DA4D63DDA71B38A5665DE0687 /* FirebaseCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		270A09197D44B38112EB227120F2DACE /* Pods-tribeez */ = {
+		627AA979194DCC7BB77EAD9B0992073A /* FirebaseCore */ = {
 			isa = PBXGroup;
 			children = (
-				61B2B945DC747A427935237BD4CAF00F /* Pods-tribeez-acknowledgements.markdown */,
-				744F452886DFAEB5393045C00844DF7D /* Pods-tribeez-acknowledgements.plist */,
-				0FA364685D75C61D3C0F00A34397E4A0 /* Pods-tribeez-dummy.m */,
-				09D6F600A05C640A48F7C5FD14F1F850 /* Pods-tribeez-frameworks.sh */,
-				AE5CAA16A215D6B0F884EC23DD49DCDE /* Pods-tribeez-resources.sh */,
-				5BCCA6422214D6FCFC101746CCC52EE4 /* Pods-tribeez.debug.xcconfig */,
-				A1301FAB59BCDBED4263F717A8E7BD20 /* Pods-tribeez.release.xcconfig */,
+				5E56B5D499344CC37F316E6444A85F03 /* Frameworks */,
+			);
+			path = FirebaseCore;
+			sourceTree = "<group>";
+		};
+		68674F5A196764E602CA71FDFEECF5B4 /* Pods-tribeez */ = {
+			isa = PBXGroup;
+			children = (
+				C97D2A21481EDAA0A82C78322D3372E8 /* Info.plist */,
+				8447DD29965B02F345365E677042CC94 /* Pods-tribeez.modulemap */,
+				49ADEB3839B3AEC79452E851226D3207 /* Pods-tribeez-acknowledgements.markdown */,
+				3588627CE300141C28D6E4CF7AC25122 /* Pods-tribeez-acknowledgements.plist */,
+				4589E7071A9A12335C92007C1D6EE45C /* Pods-tribeez-dummy.m */,
+				8FEFA0F01FB20FDF2F39A31B54E80F9A /* Pods-tribeez-frameworks.sh */,
+				0F4BE1E9A39E5C13AD5548C96EDE7BB3 /* Pods-tribeez-resources.sh */,
+				25DA849A8E562533105B23C99966675E /* Pods-tribeez-umbrella.h */,
+				663ED0B599F2D5AFE09084EC5C060339 /* Pods-tribeez.debug.xcconfig */,
+				95CA27495F5F92D19E4F3B380E9A41E6 /* Pods-tribeez.release.xcconfig */,
 			);
 			name = "Pods-tribeez";
 			path = "Target Support Files/Pods-tribeez";
 			sourceTree = "<group>";
 		};
-		28B099F747C284269C8E0D48A1340115 /* FirebaseAnalytics */ = {
+		7324C420CBBF8F01797136A5AD7180CE /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				C679280DB3F9F66DC417141484689822 /* Frameworks */,
+				68674F5A196764E602CA71FDFEECF5B4 /* Pods-tribeez */,
+				FC0C61653011397FFD4B5773860F801A /* Pods-tribeezTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		7A59CAC10D12BF84BF31D0960534F7DC /* FirebaseAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				269A70166AC2E2545A534AECCB626361 /* Frameworks */,
 			);
 			path = FirebaseAnalytics;
-			sourceTree = "<group>";
-		};
-		29789837EA7241C005EE1584C81ACA90 /* Crashlytics */ = {
-			isa = PBXGroup;
-			children = (
-				5D28C687F6D8916255B8BBCAE2D75C72 /* ANSCompatibility.h */,
-				6085817A0C5C032CF37C075AC4CA8E52 /* Answers.h */,
-				3852F65B42FD0BBB2720E184854D2432 /* CLSAttributes.h */,
-				2884697AAABEA6EF61AD5008CF9C048F /* CLSLogging.h */,
-				79EAEB6D400015A6961117135CF45300 /* CLSReport.h */,
-				32EE032E9B2D37E2242834B78985C16C /* CLSStackFrame.h */,
-				8D463E9ADD55FEEF3D603D60B62ED0F5 /* Crashlytics.h */,
-				BB14DC847F46A00DC20A461F92D74198 /* Frameworks */,
-			);
-			path = Crashlytics;
-			sourceTree = "<group>";
-		};
-		2E593876E9789B2D5A4599E46660F386 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D4FD70D3ACF106581092A623A3229E93 /* libPods-tribeez.a */,
-				04FDCED39B587ED93727122D12441ED3 /* libPods-tribeezTests.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		2F40D6F19E476CB66A54420015DF7825 /* GoogleUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				F4DA9BEDB51DAECE149A6D9C1C9787B8 /* Frameworks */,
-			);
-			path = GoogleUtilities;
-			sourceTree = "<group>";
-		};
-		3A4382C21FBE499D97D17D0B041DF524 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				141725CDD3008B53D17E65715652314B /* FirebaseMessaging.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		4CB8B1F9FE73B589CC6A7BCA6424B3F1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7829937C52905B848C57D7095EF26866 /* GoogleIPhoneUtilities.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		528555F4986065D7031F06D55A33E1EF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6D493D6A57AA267607B0EEC4C702EDB9 /* Fabric.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		55C7FB3E4F13AE41110ECCD2A62AC2B1 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				789F592985EA0DA9BB5D98F5D659FAF4 /* Core */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
-		6477D55201D63715D1DAAE2DE0549C04 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BE8000AA5CE8185462E2091469443588 /* GoogleInterchangeUtilities.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		665DD8490966C0A416C51A970691F857 /* GoogleSymbolUtilities */ = {
-			isa = PBXGroup;
-			children = (
-				2086A6A510046E7143F0FBCD8CA35B86 /* Frameworks */,
-			);
-			path = GoogleSymbolUtilities;
-			sourceTree = "<group>";
-		};
-		789F592985EA0DA9BB5D98F5D659FAF4 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				A275946628E6ED1AA57B74C411EB4362 /* Firebase.h */,
-			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
-				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				8AF7B06B38F2A6072727FAE767579055 /* Pods */,
-				2E593876E9789B2D5A4599E46660F386 /* Products */,
-				E271D48C21D462FDB0B81A9FF8521107 /* Targets Support Files */,
+				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
+				36BFCA4375B984B404959FDD8FAA22B2 /* Pods */,
+				FC28276AD835B17D163BBF1C7DB62534 /* Products */,
+				7324C420CBBF8F01797136A5AD7180CE /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		87E7B707799D90CA70251EBB7A03F937 /* Pods-tribeezTests */ = {
+		86878BD2A7802299DD8AE579B9C56E36 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				1D952CABF4DA45BB760501477CF53F2D /* Pods-tribeezTests-acknowledgements.markdown */,
-				1674A702DF992C4160482DABB301EC11 /* Pods-tribeezTests-acknowledgements.plist */,
-				B5A3B23D129D72428803C642A8A02BA1 /* Pods-tribeezTests-dummy.m */,
-				468C916F4DC48570981C2F10B5646C82 /* Pods-tribeezTests-frameworks.sh */,
-				ECEA3F426C570B635AAC13A3B9789517 /* Pods-tribeezTests-resources.sh */,
-				838D158FAF805FC72B26E6A86A6AF3F0 /* Pods-tribeezTests.debug.xcconfig */,
-				E70917A48875FCC9EA2FE94A591ADB26 /* Pods-tribeezTests.release.xcconfig */,
+				CB0D17E01546A213E4D8344F75F5DB7F /* Core */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		892918CCE9C886D356A25243CA0E93CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				257DF43F85504E61726A4AA26A2FF28B /* FirebaseInstanceID.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C8306E00402F9F9FE64F52760AE78629 /* Rollbar */ = {
+			isa = PBXGroup;
+			children = (
+				912543C1A19FEC7A5E33B1E0C7285233 /* Rollbar.h */,
+				6CEF1B1F92743ABA3BEEA66A7ECCF533 /* Rollbar.m */,
+				3CEBB7D45E3FBD87CEF28AA492B274E4 /* RollbarConfiguration.h */,
+				01AD6F41542520DAE85F580BE54BA20C /* RollbarConfiguration.m */,
+				3BCEAB01884C2DBC690DDC38F444BEE2 /* RollbarFileReader.h */,
+				D03AFE916B311E34B8A0FC735685A722 /* RollbarFileReader.m */,
+				165B345341BC7D1319EAFBA19720B96F /* RollbarLogger.h */,
+				2DA1498C535EA6A391BF0783B711050F /* RollbarLogger.m */,
+				D083AB60E6B95BC3F7587F17F2179A22 /* RollbarNotifier.h */,
+				456FD43A42B6E0268FE71409F76884AF /* RollbarNotifier.m */,
+				A0B12C76B6C65EA0749EE95E9F7B84B3 /* RollbarReachability.h */,
+				2339A9C344F0D3E2DD9A8D5B6EEAEDEC /* RollbarReachability.m */,
+				4A40C151FF426B8BA966DC44FE0008B4 /* RollbarThread.h */,
+				A99AF4D8BC68ACCBCFDAFFD10A7C4920 /* RollbarThread.m */,
+				DB57CBC0A31A9AFA6A2E985884C393C5 /* Frameworks */,
+				5CED430580A8FCFFF5C4F9CAF72EC7CA /* Support Files */,
+			);
+			path = Rollbar;
+			sourceTree = "<group>";
+		};
+		CB0D17E01546A213E4D8344F75F5DB7F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				7358FE3F5004DFE2812E5A8A88781AF9 /* Firebase.h */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		CE7C17EF2168A3DD07FB35B5E35BBB15 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E284973AA21C1D7A6DDAA828BA3E7745 /* GoogleInterchangeUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB57CBC0A31A9AFA6A2E985884C393C5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E9A6826ECFEE60413DFE7EB361971CD /* CrashReporter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DBAD51C9BDC74BE4FFBC0240B6FE5CFA /* GoogleSymbolUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				F4A1D8539DC7B0A579200B947AFDC039 /* Frameworks */,
+			);
+			path = GoogleSymbolUtilities;
+			sourceTree = "<group>";
+		};
+		DFDFDFD5756E1B667B77CDC84DAE9EF7 /* GoogleInterchangeUtilities */ = {
+			isa = PBXGroup;
+			children = (
+				CE7C17EF2168A3DD07FB35B5E35BBB15 /* Frameworks */,
+			);
+			path = GoogleInterchangeUtilities;
+			sourceTree = "<group>";
+		};
+		F4A1D8539DC7B0A579200B947AFDC039 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				06764D50063E6FB15559B75A054BF9FA /* GoogleSymbolUtilities.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FC0C61653011397FFD4B5773860F801A /* Pods-tribeezTests */ = {
+			isa = PBXGroup;
+			children = (
+				617152E54D9F0513B1D35EE7CE762B07 /* Info.plist */,
+				D8CBE615C66C1DDB5DB6F89B0AF79B8F /* Pods-tribeezTests.modulemap */,
+				C8D838A244C973CC24E0005EE08A1C85 /* Pods-tribeezTests-acknowledgements.markdown */,
+				BAAA3EFDFE377C4A2DA4AD4D7F56C7AF /* Pods-tribeezTests-acknowledgements.plist */,
+				5E259CF4EEA7095113735406B12323A7 /* Pods-tribeezTests-dummy.m */,
+				0E216E22C2DE3FF8BCF2BD51C3009354 /* Pods-tribeezTests-frameworks.sh */,
+				B5F3C5D4FD7BC48034D3CDFBE8D6E93B /* Pods-tribeezTests-resources.sh */,
+				7290A08A72084F27FBDD286422E8903A /* Pods-tribeezTests-umbrella.h */,
+				BDA28240A9990FB7244B25ABE50DF10E /* Pods-tribeezTests.debug.xcconfig */,
+				6220DD895A162983E59C234B0EDF4AF4 /* Pods-tribeezTests.release.xcconfig */,
 			);
 			name = "Pods-tribeezTests";
 			path = "Target Support Files/Pods-tribeezTests";
 			sourceTree = "<group>";
 		};
-		8AF7B06B38F2A6072727FAE767579055 /* Pods */ = {
+		FC28276AD835B17D163BBF1C7DB62534 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				29789837EA7241C005EE1584C81ACA90 /* Crashlytics */,
-				946EDD33B8DB7695D1F80665EFCE4339 /* Fabric */,
-				55C7FB3E4F13AE41110ECCD2A62AC2B1 /* Firebase */,
-				28B099F747C284269C8E0D48A1340115 /* FirebaseAnalytics */,
-				AC8999274A6B6512C5A13E45AB606AC0 /* FirebaseCore */,
-				9B010FC7D13F59128F19FF942BDEB143 /* FirebaseInstanceID */,
-				14ECFBE5C9A513E969EAA0A0117C1C21 /* FirebaseMessaging */,
-				03DA821638A3EC3FD9C35FAE660AE9C8 /* GoogleInterchangeUtilities */,
-				0EA7A592B05A1407D174F93617F88289 /* GoogleIPhoneUtilities */,
-				665DD8490966C0A416C51A970691F857 /* GoogleSymbolUtilities */,
-				2F40D6F19E476CB66A54420015DF7825 /* GoogleUtilities */,
+				9B58E61ED0394BF53EB0E88685D0DB8B /* Pods_tribeez.framework */,
+				4AB3853BB49CE420AF3138704B2295AB /* Pods_tribeezTests.framework */,
+				4774A688C8E8BA7E7AE634675316A3DC /* Rollbar.framework */,
 			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		946EDD33B8DB7695D1F80665EFCE4339 /* Fabric */ = {
-			isa = PBXGroup;
-			children = (
-				03F356AB6DBF29CB23F6421727A66B7D /* FABAttributes.h */,
-				BC4934BEB5AA81AB59E6681640943360 /* Fabric.h */,
-				528555F4986065D7031F06D55A33E1EF /* Frameworks */,
-			);
-			path = Fabric;
-			sourceTree = "<group>";
-		};
-		9B010FC7D13F59128F19FF942BDEB143 /* FirebaseInstanceID */ = {
-			isa = PBXGroup;
-			children = (
-				565F104D571C2F313BA925D126DECFC0 /* FIRInstanceID.h */,
-				A3BEF716BF1E998F0DBF8423D45CB8D6 /* Frameworks */,
-			);
-			path = FirebaseInstanceID;
-			sourceTree = "<group>";
-		};
-		A3BEF716BF1E998F0DBF8423D45CB8D6 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				1488D13920563C05ADD21DDFEBA891A4 /* FirebaseInstanceID.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AC8999274A6B6512C5A13E45AB606AC0 /* FirebaseCore */ = {
-			isa = PBXGroup;
-			children = (
-				213569F4F7022C0BEF2291044FA8A758 /* Frameworks */,
-			);
-			path = FirebaseCore;
-			sourceTree = "<group>";
-		};
-		BB14DC847F46A00DC20A461F92D74198 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				93E2DEB3C868051873D59AABA608F189 /* Crashlytics.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C679280DB3F9F66DC417141484689822 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B6145A6D86E3B9A7E1DB389928A1C7E9 /* FirebaseAnalytics.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E271D48C21D462FDB0B81A9FF8521107 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				270A09197D44B38112EB227120F2DACE /* Pods-tribeez */,
-				87E7B707799D90CA70251EBB7A03F937 /* Pods-tribeezTests */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		F4DA9BEDB51DAECE149A6D9C1C9787B8 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				6364AA341405D2A30358F7AD9D78B95C /* GoogleUtilities.framework */,
-			);
-			name = Frameworks;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
-/* Begin PBXNativeTarget section */
-		4B7B2F22574D71BE48CFBF426EC3227A /* Pods-tribeez */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B348E5586A8BB95B76DDE64DD3396A30 /* Build configuration list for PBXNativeTarget "Pods-tribeez" */;
-			buildPhases = (
-				6F662A5856155764BCABAA3624B2F9BE /* Sources */,
-				39EB4532912D6C36FBB12A0691AD6481 /* Frameworks */,
+/* Begin PBXHeadersBuildPhase section */
+		333137FD0E7F41EEEFF50F9F8EC7C99F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60E988F757FF7587B2F9E7EEB49A3E8A /* Rollbar-umbrella.h in Headers */,
+				D2C49E5B4FD7E44C5675FC8FA6C46C9C /* Rollbar.h in Headers */,
+				1D3207805B451A9F540DCDD4F1855BFD /* RollbarConfiguration.h in Headers */,
+				5ADFF6027B2BBBCB9CA5B1CF3B8601B8 /* RollbarFileReader.h in Headers */,
+				B1716429D6E3540877F0CF8BAC0A86F5 /* RollbarLogger.h in Headers */,
+				F5E8704A4C346F41F9BC6A0E939974D8 /* RollbarNotifier.h in Headers */,
+				9800373D5CB87B7D2DFC70ED37CAEF93 /* RollbarReachability.h in Headers */,
+				A6AED2F2FCBD2DC8250914CF3848AF1E /* RollbarThread.h in Headers */,
 			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-tribeez";
-			productName = "Pods-tribeez";
-			productReference = D4FD70D3ACF106581092A623A3229E93 /* libPods-tribeez.a */;
-			productType = "com.apple.product-type.library.static";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5B44DF9AC965C0240349A8B294D30743 /* Pods-tribeezTests */ = {
+		86833C2B9B12D5F614A1A5C59870A11F /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26490FFE4E684BF080AFCA026340D599 /* Pods-tribeez-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9B40B81FBCBE35D41E0C7D6C58ED0EC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FA0A61EDFB3BE1627CEF6065908FAB3 /* Pods-tribeezTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6365A0ACFFFB77BABAD88F6AE6A46595 /* Pods-tribeezTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E174297B9A0385F5D8E5ED23CEA8194B /* Build configuration list for PBXNativeTarget "Pods-tribeezTests" */;
+			buildConfigurationList = 072489A9120231A2CA108589805EF063 /* Build configuration list for PBXNativeTarget "Pods-tribeezTests" */;
 			buildPhases = (
-				D8997817FC37C979ABDD937BE749284F /* Sources */,
-				531700063CA6868BE73253C7DC268C7F /* Frameworks */,
+				1A328C7774526138D93353790973B944 /* Sources */,
+				41759E4B84F67F240466EF0F93115F82 /* Frameworks */,
+				B9B40B81FBCBE35D41E0C7D6C58ED0EC /* Headers */,
 			);
 			buildRules = (
 			);
@@ -388,8 +479,43 @@
 			);
 			name = "Pods-tribeezTests";
 			productName = "Pods-tribeezTests";
-			productReference = 04FDCED39B587ED93727122D12441ED3 /* libPods-tribeezTests.a */;
-			productType = "com.apple.product-type.library.static";
+			productReference = 4AB3853BB49CE420AF3138704B2295AB /* Pods_tribeezTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7BA4F9C168C39ED2B061973EB996B6E2 /* Pods-tribeez */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18E5ED0F5430D4C46E8B1462E78DEE51 /* Build configuration list for PBXNativeTarget "Pods-tribeez" */;
+			buildPhases = (
+				EB5E845295D96AFF6762E04BFE4D1FFF /* Sources */,
+				E18797FD1F9E61F97E0759A8862BFCFE /* Frameworks */,
+				86833C2B9B12D5F614A1A5C59870A11F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				06900A7D555CA9BB3A53CB44CC3BE69D /* PBXTargetDependency */,
+			);
+			name = "Pods-tribeez";
+			productName = "Pods-tribeez";
+			productReference = 9B58E61ED0394BF53EB0E88685D0DB8B /* Pods_tribeez.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		A19BCE908234D829B58C8B98119397FC /* Rollbar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBA9F2D69B99D8C3248C8551ABCF2F07 /* Build configuration list for PBXNativeTarget "Rollbar" */;
+			buildPhases = (
+				C28420E5C7C3694FF9D28827742AA3DB /* Sources */,
+				96986E2A3447CE2DF391D4642B694F58 /* Frameworks */,
+				333137FD0E7F41EEEFF50F9F8EC7C99F /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Rollbar;
+			productName = Rollbar;
+			productReference = 4774A688C8E8BA7E7AE634675316A3DC /* Rollbar.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -408,36 +534,123 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 2E593876E9789B2D5A4599E46660F386 /* Products */;
+			productRefGroup = FC28276AD835B17D163BBF1C7DB62534 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4B7B2F22574D71BE48CFBF426EC3227A /* Pods-tribeez */,
-				5B44DF9AC965C0240349A8B294D30743 /* Pods-tribeezTests */,
+				7BA4F9C168C39ED2B061973EB996B6E2 /* Pods-tribeez */,
+				6365A0ACFFFB77BABAD88F6AE6A46595 /* Pods-tribeezTests */,
+				A19BCE908234D829B58C8B98119397FC /* Rollbar */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		6F662A5856155764BCABAA3624B2F9BE /* Sources */ = {
+		1A328C7774526138D93353790973B944 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6D598CC75286F6B7C3AB78EBFC289AA /* Pods-tribeez-dummy.m in Sources */,
+				002079D14505A70D96E455965AA5B429 /* Pods-tribeezTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D8997817FC37C979ABDD937BE749284F /* Sources */ = {
+		C28420E5C7C3694FF9D28827742AA3DB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D1ABD7E23A6F6CEFE0B82D6F0F2A471 /* Pods-tribeezTests-dummy.m in Sources */,
+				0F73E08D4C0E532790D4306EE434E4CC /* Rollbar-dummy.m in Sources */,
+				7C95FD69905048C0DDBB6A0A319B9C51 /* Rollbar.m in Sources */,
+				EEAB42B83A5B2EA21F9180DD69FFFA34 /* RollbarConfiguration.m in Sources */,
+				B2C37B46FAC65CF43B04980E39ABC26B /* RollbarFileReader.m in Sources */,
+				0BB06CA2A775B5456BFDA77B27452C70 /* RollbarLogger.m in Sources */,
+				BEFA4B64E1120EB76F4B1ED99E09F60C /* RollbarNotifier.m in Sources */,
+				6AED993D297CAA5B69544D64D4D89FD9 /* RollbarReachability.m in Sources */,
+				C692B267587E6EFA890D1BC7E66C0C75 /* RollbarThread.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EB5E845295D96AFF6762E04BFE4D1FFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD49197A88D570402E040DAAD84F6DAA /* Pods-tribeez-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		06900A7D555CA9BB3A53CB44CC3BE69D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Rollbar;
+			target = A19BCE908234D829B58C8B98119397FC /* Rollbar */;
+			targetProxy = 47795478CE86C6FB5FD9A130A0B012B6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		03CEC1CD7402E28AD9B7D2EF02D28D4D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 663ED0B599F2D5AFE09084EC5C060339 /* Pods-tribeez.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-tribeez/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-tribeez/Pods-tribeez.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_tribeez;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		3F5E0BDC309AE6F984CD5B084D8716C5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E23BCD51766CF84FBBD72E262EB6D8DB /* Rollbar.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Rollbar/Rollbar-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Rollbar/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Rollbar/Rollbar.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Rollbar;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		47BEF9D903506B003EA5C2B249729489 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -480,89 +693,71 @@
 			};
 			name = Debug;
 		};
-		6763D9685D5D1AC5C9F12345EB2C0B31 /* Debug */ = {
+		5FD7F9CB164C094FF1FBADB2CE2C974C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 838D158FAF805FC72B26E6A86A6AF3F0 /* Pods-tribeezTests.debug.xcconfig */;
+			baseConfigurationReference = 95CA27495F5F92D19E4F3B380E9A41E6 /* Pods-tribeez.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		96571EF2D68C13955172823FB224F819 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1301FAB59BCDBED4263F717A8E7BD20 /* Pods-tribeez.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-tribeez/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-tribeez/Pods-tribeez.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Pods_tribeez;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		9BC2B106DDC8AB2224F0EA9706B61FCD /* Release */ = {
+		8D92E67005EB9514096E7BBEA133F523 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E70917A48875FCC9EA2FE94A591ADB26 /* Pods-tribeezTests.release.xcconfig */;
+			baseConfigurationReference = 6220DD895A162983E59C234B0EDF4AF4 /* Pods-tribeezTests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-tribeezTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-tribeezTests/Pods-tribeezTests.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Pods_tribeezTests;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		A2743452FBAEDC3BA8A0270B32DC9F1F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5BCCA6422214D6FCFC101746CCC52EE4 /* Pods-tribeez.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
 		};
 		AAF678CED40D3499169D10F63CA0719E /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -602,9 +797,89 @@
 			};
 			name = Release;
 		};
+		C55AE87EAED48852430385ED0E41E219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BDA28240A9990FB7244B25ABE50DF10E /* Pods-tribeezTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-tribeezTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-tribeezTests/Pods-tribeezTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_tribeezTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E4D03D5DA5DA6C71121933A32C453717 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E23BCD51766CF84FBBD72E262EB6D8DB /* Rollbar.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Rollbar/Rollbar-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Rollbar/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Rollbar/Rollbar.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Rollbar;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		072489A9120231A2CA108589805EF063 /* Build configuration list for PBXNativeTarget "Pods-tribeezTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C55AE87EAED48852430385ED0E41E219 /* Debug */,
+				8D92E67005EB9514096E7BBEA133F523 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18E5ED0F5430D4C46E8B1462E78DEE51 /* Build configuration list for PBXNativeTarget "Pods-tribeez" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03CEC1CD7402E28AD9B7D2EF02D28D4D /* Debug */,
+				5FD7F9CB164C094FF1FBADB2CE2C974C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -614,20 +889,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B348E5586A8BB95B76DDE64DD3396A30 /* Build configuration list for PBXNativeTarget "Pods-tribeez" */ = {
+		EBA9F2D69B99D8C3248C8551ABCF2F07 /* Build configuration list for PBXNativeTarget "Rollbar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A2743452FBAEDC3BA8A0270B32DC9F1F /* Debug */,
-				96571EF2D68C13955172823FB224F819 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E174297B9A0385F5D8E5ED23CEA8194B /* Build configuration list for PBXNativeTarget "Pods-tribeezTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6763D9685D5D1AC5C9F12345EB2C0B31 /* Debug */,
-				9BC2B106DDC8AB2224F0EA9706B61FCD /* Release */,
+				3F5E0BDC309AE6F984CD5B084D8716C5 /* Debug */,
+				E4D03D5DA5DA6C71121933A32C453717 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

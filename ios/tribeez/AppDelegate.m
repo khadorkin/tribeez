@@ -11,8 +11,7 @@
 
 #import "RCTLinkingManager.h"
 
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
+#import <Rollbar/Rollbar.h>
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
@@ -28,7 +27,7 @@
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation moduleName:@"tribeez" initialProperties:nil launchOptions:launchOptions];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+  rootView.backgroundColor = [[UIColor alloc] initWithRed:0.670588f green:0.27843f blue:0.7372549f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
@@ -36,12 +35,14 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
+  RollbarConfiguration *config = [RollbarConfiguration configuration];
+  config.environment = @"production";
+  [Rollbar initWithAccessToken:@"714c4e5507e74032be9848257ae18045" configuration:config];
+
   [FIRApp configure];
   #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
   #endif
-
-  [Fabric with:@[[Crashlytics class]]];
 
   return YES;
 }

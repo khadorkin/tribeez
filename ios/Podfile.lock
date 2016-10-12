@@ -1,7 +1,4 @@
 PODS:
-  - Crashlytics (3.8.2):
-    - Fabric (~> 1.6.3)
-  - Fabric (1.6.9)
   - Firebase (3.7.1):
     - Firebase/Core (= 3.7.1)
   - Firebase/Core (3.7.1):
@@ -33,16 +30,14 @@ PODS:
   - GoogleSymbolUtilities (1.1.2)
   - GoogleUtilities (1.3.2):
     - GoogleSymbolUtilities (~> 1.1)
+  - Rollbar (0.2.0)
 
 DEPENDENCIES:
-  - Crashlytics
-  - Fabric
   - Firebase
   - Firebase/Messaging
+  - Rollbar
 
 SPEC CHECKSUMS:
-  Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
-  Fabric: bc5bec42cef4bcf1ee3ce0e218fc518e4b44dfbb
   Firebase: be473484f0d515e72ffd04acf22f981773c23e58
   FirebaseAnalytics: 0533a00b681e08fd0b2cd0444b7ddf0ef9fd7a1a
   FirebaseCore: 5a885548bbc5f0c410b04f8e9ac9d73ff1221907
@@ -52,7 +47,8 @@ SPEC CHECKSUMS:
   GoogleIPhoneUtilities: 63f25e93a3ddcb66884d182aab3a660d98f1479b
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleUtilities: 8bbc733218aad26306f9d4a253823986110e3358
+  Rollbar: 7f9f6faab9138cbb1b152f0a500e68f0469554ef
 
-PODFILE CHECKSUM: 9ade76bb5297a4ee53b2ff4629217caaed84a9d8
+PODFILE CHECKSUM: 6a8c73be2818f20d49c7369ef4fd8985a1a08ca0
 
 COCOAPODS: 1.0.1
