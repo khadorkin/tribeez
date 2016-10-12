@@ -2,14 +2,6 @@
 // removed funds codes and unused codes
 
 export const map = {
-  EUR: 'Euro',
-  USD: 'United Stated dollar',
-  GBP: 'Pound sterling',
-  MXN: 'Mexican peso',
-  COP: 'Colombian peso',
-  JPY: 'Japanese yen',
-  BTC: 'Bitcoin',
-/*
   AED: 'United Arab Emirates dirham',
   AFN: 'Afghan afghani',
   ALL: 'Albanian lek',
@@ -31,6 +23,7 @@ export const map = {
   BOB: 'Boliviano',
   BRL: 'Brazilian real',
   BSD: 'Bahamian dollar',
+  BTC: 'Bitcoin',
   BTN: 'Bhutanese ngultrum',
   BWP: 'Botswana pula',
   BYR: 'Belarusian ruble',
@@ -165,7 +158,6 @@ export const map = {
   YER: 'Yemeni rial',
   ZAR: 'South African rand',
   ZMW: 'Zambian kwacha',
-*/
 }
 
 // export a sorted array:

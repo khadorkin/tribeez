@@ -8,6 +8,7 @@ const mapStateToProps = (state) => ({
   initialValues: {
     lang: state.app.lang,
     city: {},
+    currency: 'EUR',
   },
 })
 
