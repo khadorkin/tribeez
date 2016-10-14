@@ -46,8 +46,7 @@ const on = (uid) => {
     publicRef.on('value', (snapshot) => {
       const user = snapshot.val()
       const tid = user.current_tribe
-      report.setUser(uid, user)
-      report.setAttr('tribe', tid)
+      report.setUser(uid, user, tid)
 
       auth.currentUser.name = user.name
       auth.currentUser.gravatar = user.gravatar

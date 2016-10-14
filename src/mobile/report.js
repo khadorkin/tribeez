@@ -1,10 +1,15 @@
 import {Platform} from 'react-native'
-import StackTrace from 'stacktrace-js'
+import Raven from 'raven-js'
+import ReactNativePlugin from 'raven-js/plugins/react-native'
 
 import config, {deviceInfo} from '../common/config'
 import router from './router'
 
-const person = {}
+ReactNativePlugin(Raven)
+Raven.config(config.raven_dsn, {
+  release: deviceInfo.appVersion,
+  serverName: deviceInfo.uniqueId,
+}).install()
 
 const init = () => {
   const originalHandler = global.ErrorUtils.getGlobalHandler()
@@ -18,86 +23,36 @@ const init = () => {
   global.ErrorUtils.setGlobalHandler(handler)
 }
 
-const setUser = (uid, infos) => {
-  person.id = uid
-  person.email = infos.email
-  person.name = infos.name
-  person.lang = infos.lang
+const setUser = (id, user, tribe) => {
+  Raven.setUserContext({
+    id,
+    email: user.email,
+    name: user.name,
+    lang: user.lang,
+    tribe,
+  })
 }
 
 const clearUser = () => {
-  delete person.id
-  delete person.email
-  delete person.name
-  delete person.lang
-}
-
-const setAttr = (key, value) => {
-  person[key] = value
+  Raven.setUserContext()
 }
 
 const issue = (error, context) => {
-  if (__DEV__) {
-    if (context !== 'uncaught') {
-      console.error('ISSUE REPORT:', error.message, context) // eslint-disable-line no-console
-    } // else it's handled by react native
-  } else {
-    StackTrace.fromError(error, {offline: true})
-    .then((stack) => {
-      const frames = stack.map((frame) => {
-        return {
-          filename: frame.fileName,
-          lineno: frame.lineNumber,
-          colno: frame.columnNumber,
-          method: frame.functionName,
-        }
-      })
-
-      const route = router.getRoute()
-
-      const params = {
-        access_token: config.rollbar_token,
-        data: {
-          environment: (__DEV__ ? 'development' : 'production'),
-          code_version: deviceInfo.appVersion,
-          platform: Platform.OS,
-          framework: Platform.OS,
-          context,
-          body: {
-            trace: {
-              frames,
-              exception: {
-                class: error.name,
-                message: error.message,
-              },
-            },
-          },
-          person,
-          custom: {
-            device: deviceInfo,
-            page: {
-              route: route.name,
-              props: route.props,
-              title: route.title,
-            },
-          },
-        },
-      }
-
-      fetch('https://api.rollbar.com/api/1/item/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(params),
-      })
-      .then((response) => {
-        if (__DEV__ && response.status >= 400) {
-          console.error('Rollbar response status is ' + response.status) // eslint-disable-line no-console
-        }
-      })
-    })
+  const route = router.getRoute()
+  const page = {
+    route: route.name,
+    props: route.props,
+    title: route.title,
   }
+
+  Raven.captureException(error, {
+    extra: {
+      platform: Platform.OS,
+      context,
+      deviceInfo,
+      page,
+    },
+  })
 }
 
-export default {init, setUser, clearUser, setAttr, issue}
+export default {init, setUser, clearUser, issue}

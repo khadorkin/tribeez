@@ -9,6 +9,7 @@
   "twitter": "TribeezApp",
   "api_endpoint": "https://api.tribeez.com",
   "rollbar_token": "xxxxxxxx",
+  "raven_dsn": "https://xxxxxxxx@sentry.io/82198",
   "ga_id": "UA-XXXXXXXX-X",
   "recaptcha_site_key": "xxxxxxxx",
   "google_web_key": "xxxxxxxx",

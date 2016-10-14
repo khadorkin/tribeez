@@ -472,6 +472,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E31BEAA37C088963340038DD /* [CP] Embed Pods Frameworks */,
 				E1EF271182C8D446AF747F55 /* [CP] Copy Pods Resources */,
+				71F243BD1DAF8A0500B84130 /* Run Script: upload dSYM to Rollbar */,
 			);
 			buildRules = (
 			);
@@ -497,6 +498,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 8JAA38R856;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -761,6 +763,20 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		71F243BD1DAF8A0500B84130 /* Run Script: upload dSYM to Rollbar */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script: upload dSYM to Rollbar";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/python;
+			shellScript = "\"\"\"\nPython script that zips and uploads a dSYM file package to Rollbar\nduring an iOS app's build process.\n\nFor instructions on setting up this script for your app in Xcode, see\nthe README at https://github.com/rollbar/rollbar-ios/blob/master/README.md.\n\"\"\"\n\nimport os\nimport subprocess\nimport zipfile\n\nif (os.environ['DEBUG_INFORMATION_FORMAT'] != 'dwarf-with-dsym' or\n        os.environ['EFFECTIVE_PLATFORM_NAME'] == '-iphonesimulator'):\n    exit(0)\n\nACCESS_TOKEN = '445713b5c7ce42b78b90816faf60918d'\n\ndsym_file_path = os.path.join(os.environ['DWARF_DSYM_FOLDER_PATH'],\n                              os.environ['DWARF_DSYM_FILE_NAME'])\nzip_location = '%s.zip' % (dsym_file_path)\n\nos.chdir(os.environ['DWARF_DSYM_FOLDER_PATH'])\nwith zipfile.ZipFile(zip_location, 'w', zipfile.ZIP_DEFLATED) as zipf:\n    for root, dirs, files in os.walk(os.environ['DWARF_DSYM_FILE_NAME']):\n        zipf.write(root)\n\n        for f in files:\n            zipf.write(os.path.join(root, f))\n\n# You may need to change the following path to match your application\n# settings and Xcode version\nplist_command = '/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"%s\"'\np = subprocess.Popen(plist_command % os.environ['PRODUCT_SETTINGS_PATH'],\n                     stdout=subprocess.PIPE, shell=True)\nstdout, stderr = p.communicate()\nversion = stdout.strip()\n\ncurl_command = ('curl -X POST \"https://api.rollbar.com/api/1/dsym\" '\n                '-F access_token=%s -F version=%s -F bundle_identifier=\"%s\" '\n                '-F dsym=@\"%s\"')\np = subprocess.Popen(curl_command % (ACCESS_TOKEN, version,\n                     os.environ['PRODUCT_BUNDLE_IDENTIFIER'], zip_location),\n                     shell=True)\np.communicate()\n";
+		};
 		8866509EB9045D678DE44419 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -900,10 +916,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = tribeez/Tribeez.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Antoine Rousseau (8JAA38R856)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 8JAA38R856;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -922,8 +938,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tribeez;
 				PRODUCT_NAME = Tribeez;
-				PROVISIONING_PROFILE = "6b780cde-180b-4dcc-b890-338d76c08789";
-				PROVISIONING_PROFILE_SPECIFIER = "Antoine's Provisioning for Distribution";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -933,9 +949,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = tribeez/Tribeez.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Antoine Rousseau (8JAA38R856)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 8JAA38R856;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -954,8 +970,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.tribeez;
 				PRODUCT_NAME = Tribeez;
-				PROVISIONING_PROFILE = "6b780cde-180b-4dcc-b890-338d76c08789";
-				PROVISIONING_PROFILE_SPECIFIER = "Antoine's Provisioning for Distribution";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
