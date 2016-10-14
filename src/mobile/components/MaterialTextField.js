@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, TextInput, Animated, StyleSheet} from 'react-native'
+import {View, TextInput, Animated, StyleSheet, Platform} from 'react-native'
 
 import colors from '../../common/constants/colors'
 
@@ -144,6 +144,7 @@ export default class MaterialTextField extends Component {
         </Animated.Text>
         <TextInput ref={this.ref}
           underlineColorAndroid="transparent"
+          autoCapitalize="sentences"
           {...props}
           onContentSizeChange={this.handleContentSizeChange}
           style={[styles.input, inputStyle]}
@@ -168,7 +169,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     //height: 34,
     lineHeight: 34,
-    padding: 0,
+    paddingHorizontal: 0,
+    paddingVertical: (Platform.OS === 'ios' ? 0 : 6),
     color: colors.primaryText,
   },
   underline: {

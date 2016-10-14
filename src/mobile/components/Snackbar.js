@@ -62,7 +62,11 @@ class Snackbar extends Component {
     let snack_author_name
     if (snack.author) {
       const snack_author = userMap[snack.author]
-      snack_author_name = (snack.author === uid ? '_you_' : snack_author.name)
+      if (snack_author) {
+        snack_author_name = (snack.author === uid ? '_you_' : snack_author.name)
+      } else {
+        snack.message = null // when logging out, userMap is not valid but the closed snack message remains (hidden)...
+      }
     }
 
     const id = 'snack.' + (snack.message || 'error')
