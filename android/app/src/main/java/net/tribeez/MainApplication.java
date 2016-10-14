@@ -13,12 +13,17 @@ import com.facebook.react.shell.MainReactPackage;
 import java.util.Arrays;
 import java.util.List;
 
-// Vector icons:
-import com.oblador.vectoricons.VectorIconsPackage;
-
 import com.evollu.react.fcm.FIRMessagingPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.rollbar.android.Rollbar;
 
 public class MainApplication extends Application implements ReactApplication {
+
+  @Override
+  public void onCreate() {
+    super.onCreate();
+    Rollbar.init(this, "714c4e5507e74032be9848257ae18045", "production");
+  }
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
