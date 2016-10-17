@@ -17,6 +17,7 @@ import {
   ALERT,
   CLOSE_ALERT,
   CONFIG,
+  CLOSE,
 } from '../constants/actions'
 
 import {getLang, setLang} from '../utils/locale'
@@ -169,6 +170,11 @@ export default (state = initialState, action = null) => {
       return {
         ...state,
         submitting: false,
+      }
+    case CLOSE:
+      return {
+        ...state,
+        init: true,
       }
     default:
       return state

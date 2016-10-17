@@ -10,6 +10,7 @@ import {
   SUCCESS,
   ALERT,
   CLOSE_ALERT,
+  CLOSE,
 } from '../constants/actions'
 
 import failure from './failure'
@@ -88,6 +89,15 @@ export const setLastViewedHistoryKey = (key) => {
     })
     .catch((error) => {
       dispatch(failure(error, 'setLastViewedHistoryKey'))
+    })
+  }
+}
+
+export const close = () => {
+  return (dispatch) => {
+    auth.currentUser.tid = null
+    dispatch({
+      type: CLOSE,
     })
   }
 }

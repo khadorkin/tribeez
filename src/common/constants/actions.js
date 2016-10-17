@@ -8,6 +8,7 @@ export const UPDATE_LANG = 'UPDATE_LANG'
 export const ALERT = 'ALERT'
 export const CLOSE_ALERT = 'CLOSE_ALERT'
 export const CONFIG = 'CONFIG'
+export const CLOSE = 'CLOSE'
 
 // Firebase events:
 export const LOGGED_IN = 'LOGGED_IN'
