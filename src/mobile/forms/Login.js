@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {KeyboardAvoidingView, StatusBar, View, Image, StyleSheet} from 'react-native'
+import {StatusBar, View, Image, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import {Field} from 'redux-form'
@@ -56,40 +56,38 @@ class LoginForm extends Component {
     const emptyEmail = !initialValues.email
 
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <Form name="login" action={submitLogin.bind(null, destination)} style={styles.form} {...props}>
         <StatusBar backgroundColor={colors.main} animated={true} />
-        <Form name="login" action={submitLogin.bind(null, destination)} style={styles.form} {...props}>
-          <Image source={require('../../common/images/logo.png')} style={styles.logo} />
-          <View style={styles.box}>
-            {subtitle}
-            <Field
-              name="email"
-              component={TextField}
-              autoFocus={emptyEmail}
-              autoCorrect={false}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              onSubmitEditing={this.handleNext}
-            />
-            <Field ref="password" withRef={true}
-              name="password"
-              labelId="login_password"
-              component={TextField}
-              autoFocus={!emptyEmail}
-              secureTextEntry={true}
-              onSubmitEditing={this.handleSubmit}
-            />
-          </View>
-          <View style={styles.links}>
-            <Touchable onPress={this.handleCreateAccount}>
-              <FormattedMessage id="create_account" style={styles.link} />
-            </Touchable>
-            <Touchable onPress={this.handleLostPassword}>
-              <FormattedMessage id="password_lost" style={styles.link} />
-            </Touchable>
-          </View>
-        </Form>
-      </KeyboardAvoidingView>
+        <Image source={require('../../common/images/logo.png')} style={styles.logo} />
+        <View style={styles.box}>
+          {subtitle}
+          <Field
+            name="email"
+            component={TextField}
+            autoFocus={emptyEmail}
+            autoCorrect={false}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onSubmitEditing={this.handleNext}
+          />
+          <Field ref="password" withRef={true}
+            name="password"
+            labelId="login_password"
+            component={TextField}
+            autoFocus={!emptyEmail}
+            secureTextEntry={true}
+            onSubmitEditing={this.handleSubmit}
+          />
+        </View>
+        <View style={styles.links}>
+          <Touchable onPress={this.handleCreateAccount}>
+            <FormattedMessage id="create_account" style={styles.link} />
+          </Touchable>
+          <Touchable onPress={this.handleLostPassword}>
+            <FormattedMessage id="password_lost" style={styles.link} />
+          </Touchable>
+        </View>
+      </Form>
     )
   }
 }

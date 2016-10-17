@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {KeyboardAvoidingView, View, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 
 import Form from '../hoc/Form'
 import {Field} from 'redux-form'
@@ -28,22 +28,20 @@ class PasswordForm extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Form name="password" action={submitPassword} style={styles.form} {...this.props}>
-          <View style={styles.box}>
-            <FormattedMessage id="password_reset" style={styles.subtitle} />
-            <Field
-              name="email"
-              component={TextField}
-              autoFocus={true}
-              autoCorrect={false}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              onSubmitEditing={this.handleSubmit}
-            />
-          </View>
-        </Form>
-      </KeyboardAvoidingView>
+      <Form name="password" action={submitPassword} style={styles.form} {...this.props}>
+        <View style={styles.box}>
+          <FormattedMessage id="password_reset" style={styles.subtitle} />
+          <Field
+            name="email"
+            component={TextField}
+            autoFocus={true}
+            autoCorrect={false}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            onSubmitEditing={this.handleSubmit}
+          />
+        </View>
+      </Form>
     )
   }
 }

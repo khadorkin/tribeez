@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {Dimensions, KeyboardAvoidingView, ScrollView, View, StyleSheet, findNodeHandle} from 'react-native'
+import {Dimensions, ScrollView, View, StyleSheet, findNodeHandle} from 'react-native'
 
 import Header from '../components/Header'
 
@@ -47,7 +47,7 @@ class ScrollViewWithHeader extends Component {
     const headerStyle = {opacity: this.state.scrolled ? 0 : 1}
 
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <View style={styles.container}>
         <ScrollView
           keyboardShouldPersistTaps={true}
           onScroll={this.handleScroll}
@@ -64,7 +64,7 @@ class ScrollViewWithHeader extends Component {
           <Header.Image />
           <Header.Shadow />
         </View>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
